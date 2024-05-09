@@ -1,0 +1,33 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.row {
+  margin-top: 2rem;
+}
+
+.timeline {
+  overflow: hidden;
+  position: relative;
+  scroll-behavior: smooth;
+}
+
+[data-theme='dark'] .timeline {
+  background: radial-gradient(#9ca9dc, #1a244b);
+}
+
+[data-theme='light'] .timeline {
+  background: radial-gradient(#fff, #b9c3e6);
+}
+
+@media print {
+  .row {
+    margin-top: 0;
+  }
+
+  [data-theme] .timeline {
+    background: transparent;
+  }
+}

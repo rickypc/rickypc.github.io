@@ -1,0 +1,39 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.row {
+  margin-top: 2rem;
+}
+
+.portfolio {
+  max-height: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  scroll-behavior: smooth;
+}
+
+[data-theme='dark'] .portfolio {
+  background: linear-gradient(45deg, #062540, #797979);
+}
+
+[data-theme='light'] .portfolio {
+  background: linear-gradient(45deg, #fefefe, #e5f2fd);
+}
+
+@media print {
+  .filter.row {
+    display: none;
+  }
+
+  .row {
+    margin-top: 0;
+  }
+
+  [data-theme] .portfolio {
+    background: transparent;
+  }
+}

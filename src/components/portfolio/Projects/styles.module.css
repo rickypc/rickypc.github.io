@@ -1,0 +1,109 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.portfolio {
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+[data-theme='dark'] .portfolio {
+  background: #e6e6e6;
+  border: 1px solid #84c0f4;
+}
+
+[data-theme='light'] .portfolio {
+  background: #fafafa;
+  border: 1px solid #deeefc;
+}
+
+.portfolio figure {
+  margin: 1rem;
+}
+
+.portfolio figcaption {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+}
+
+.portfolio figcaption .tags {
+  font-size: 0.75rem;
+  list-style: none;
+  margin-bottom: 0.75rem;
+  padding: 0;
+  text-align: center;
+}
+
+.portfolio figcaption .tags li {
+  border: 1px solid #3b566e;
+  border-radius: 1rem;
+  color: #3b566e;
+  display: inline-block;
+  font: 400 0.75rem Poppins, sans-serif;
+  line-height: normal;
+  margin-bottom: 0.2rem;
+  margin-right: 0.3rem;
+  padding: 0 0.3rem;
+  text-decoration: none;
+  transition: all 0.1s;
+}
+
+.portfolio figcaption .tags li:hover {
+  background: #f4f9fe;
+  border: 1px solid #1f8ceb;
+}
+
+[data-theme='dark'] .portfolio figcaption h2,
+[data-theme='dark'] .portfolio figcaption h2>a[class^="link_"],
+[data-theme='dark'] .portfolio figcaption span>span[class^="heart_"],
+[data-theme='dark'] .portfolio figcaption span>span[class^="count_"],
+.portfolio figcaption p {
+  color: #282f49;
+}
+
+[data-theme='dark'] .portfolio figcaption h2>a[class^="link_"]:hover {
+  color: #248aaa;
+}
+
+[data-theme='dark'] .portfolio figcaption span>span[class^="heart_"]:hover {
+  color: #ff3040;
+}
+
+.portfolio figcaption h2 {
+  font: normal 1.5rem 'Yeseva One', cursive;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.portfolio figcaption h2 span[class*='reaction_'] span[class*='heart_'] {
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  margin-left: 1rem;
+}
+
+.portfolio figcaption p {
+  font: 400 0.9rem Poppins, sans-serif;
+  margin-bottom: 0.5rem;
+}
+
+.portfolios {
+  display: grid;
+  grid-gap: 1.5rem;
+  /* min: (bigger width between 15rem and 1/3 of total width minus gaps) */
+  /* max: 1fr */
+  grid-template-columns: repeat(auto-fill, minmax(max(15rem, calc((100% - 3rem) / 3)), 1fr));
+  margin: 1.5rem;
+  overflow: hidden;
+  padding: 0;
+}
+
+@media print {
+  .portfolios {
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 2rem;
+  }
+}

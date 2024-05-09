@@ -1,0 +1,18 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.picture {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.picture img {
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: block;
+  user-select: none;
+}

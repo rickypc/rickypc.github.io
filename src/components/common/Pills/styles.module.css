@@ -1,0 +1,78 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.pills {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 2rem auto 0 auto;
+  padding: 0;
+}
+
+.pills .item {
+  margin-right: 0.3rem;
+}
+
+.pills .item,
+.pills .active.item .indicator {
+  background: #f8f8f8;
+  border: 1px solid #c1dff9;
+  border-radius: 1.5rem;
+  font: 400 0.95rem Poppins, sans-serif;
+  line-height: normal;
+  margin-bottom: 0.25rem;
+  min-width: 3.125rem;
+  opacity: 0.5;
+  padding: 0.3rem 1rem;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.pills .item {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.1s;
+  will-change: opacity;
+}
+
+.pills .active.item .indicator {
+  cursor: default;
+  display: inline-block;
+  left: -0.0625rem;
+  position: absolute;
+  top: -0.0625rem;
+}
+
+[data-theme='dark'] .pills .item {
+  color: #5a758c;
+}
+
+[data-theme='light'] .pills .item {
+  color: #3b566e;
+}
+
+[data-theme='dark'] .pills .active.item .indicator,
+[data-theme='dark'] .pills .item:hover {
+  background: #d0e5fb;
+  border: 1px solid #1f8ceb;
+  color: #6088aa;
+  opacity: 1;
+}
+
+[data-theme='light'] .pills .active.item .indicator,
+[data-theme='light'] .pills .item:hover {
+  background: #f4f9fe;
+  border: 1px solid #1f8ceb;
+  color: #3b566e;
+  opacity: 1;
+}
+
+@media print {
+  .pills {
+    display: none;
+  }
+}

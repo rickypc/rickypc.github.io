@@ -1,0 +1,102 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.hats {
+  display: grid;
+  grid-gap: 0;
+  /* min: (bigger width between 15rem and 1/2 of total width minus gaps) */
+  /* max: 1fr */
+  grid-template-columns: repeat(auto-fill, minmax(max(15rem, 50%), 1fr));
+  overflow: hidden;
+  padding: 0;
+}
+
+.hats .hat {
+  padding: 1rem 2rem;
+}
+
+.hats .hat h2 {
+  text-shadow: 0.125rem 0.125rem 0.1875rem rgba(255, 255, 255, 0.1);
+}
+
+.hats .hat h2 .reader {
+  display: none;
+}
+
+.hats .hat p {
+  font: 500 1.25rem Poppins, sans-serif;
+  line-height: 1.875rem;
+  margin: 0 0 1rem 0;
+}
+
+.hats .hat p:last-of-type {
+  margin: 0;
+}
+
+[data-theme='dark'] .hats .hat p {
+  color: #d3d3d3;
+}
+
+[data-theme='light'] .hats .hat p {
+  color: #282f49;
+}
+
+.hats .hat h2 i {
+  background: linear-gradient(to right, #6666ff, #0099ff, #00ff00, #ff3399, #6666ff);
+  background-clip: text;
+  background-size: 400% 100%;
+  color: transparent;
+  display: inline-block;
+  white-space: nowrap;
+  will-change: background-position;
+}
+
+.hats .hat h2 [class*='phrases_'][class*='play_'] i {
+  animation: rainbow 6s ease-in-out;
+}
+
+.hats .hat h2,
+.hats .hat h2 [class*='word_'] [class*='character_'] {
+  font: 500 2rem Poppins, sans-serif;
+}
+
+@keyframes rainbow {
+  0%,
+  100% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+}
+
+@media print {
+  .hats .hat {
+    padding: 0.3rem 1.5rem;
+  }
+
+  [data-theme] .hats .hat h2 i {
+    color: #000;
+  }
+
+  [data-theme] .hats .hat p {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .hats .hat h2 {
+    margin-bottom: 0;
+  }
+
+  .hats .hat h2 [class*='word_'] {
+    margin-right: 0.3rem;
+  }
+
+  .hats .hat h2,
+  .hats .hat h2 [class*='word_'] [class*='character_'] {
+    font-size: 1.25rem;
+  }
+}

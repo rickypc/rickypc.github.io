@@ -1,0 +1,62 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.greeting {
+  display: block;
+  font: 1.75rem Poppins, sans-serif;
+  margin: 3rem 0 1.25rem 1.875rem;
+  position: relative;
+}
+
+.greeting::before {
+  content: '';
+  height: 0.125rem;
+  left: -1.25rem;
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%);
+  width: 1.25rem;
+}
+
+.greeting span[class*='reaction_'] span[class*='heart_'] {
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+  margin-left: 1rem;
+}
+
+[data-theme='dark'] .greeting {
+  color: #d3d3d3;
+}
+
+[data-theme='dark'] .greeting::before {
+  background: #d3d3d3;
+}
+
+[data-theme='light'] .greeting {
+  color: #282f49;
+}
+
+[data-theme='light'] .greeting::before {
+  background: #282f49;
+}
+
+@media print {
+  .greeting {
+    font: 1.25rem Poppins, sans-serif;
+    margin: 3rem 0 0.75rem 1.875rem;
+  }
+
+  [data-theme] .greeting::before {
+    background: #000;
+    print-color-adjust: exact;
+  }
+
+  .greeting span[class*='reaction_'] span[class*='heart_'] {
+    font-size: 1rem;
+    line-height: 1rem;
+    margin-left: 0.75rem;
+  }
+}

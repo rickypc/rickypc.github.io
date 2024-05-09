@@ -1,0 +1,141 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.content {
+  column-count: 2;
+  column-gap: 2rem;
+  margin: 2rem auto;
+}
+
+.content .story {
+  border-radius: 1rem;
+  break-inside: avoid;
+  margin-bottom: 2rem;
+  max-width: 100%;
+  object-fit: cover;
+  padding: 1.25rem;
+  width: 100%;
+}
+
+[data-theme='dark'] .content .story {
+  border: 1px solid #c6c6cc;
+}
+[data-theme='light'] .content .story {
+  border: 1px solid #7e7e8a;
+}
+
+.content .story h2 {
+  font: normal 2.15rem 'Yeseva One', cursive;
+  margin: 0.5rem 0;
+}
+
+.content .story h2 span[class*='reaction_'] span[class*='heart_'] {
+  font-size: 1.75rem;
+  line-height: 1.75rem;
+  margin-left: 1.25rem;
+}
+
+.content .story p {
+  font: 400 1rem Poppins, sans-serif;
+}
+
+.content .story address {
+  font: 400 0.95rem Poppins, sans-serif;
+}
+
+.content .story:last-of-type {
+  margin-bottom: 0;
+}
+
+[data-theme='dark'] .content .story address .affiliation,
+[data-theme='dark'] .content .story address .title {
+  color: #c6c6cc;
+}
+
+[data-theme='dark'] .content .story h2 a.topic:hover,
+[data-theme='dark'] .content .story address a.affiliation:hover,
+[data-theme='dark'] .content .story address a.name:hover,
+[data-theme='dark'] .content .story address a.title:hover {
+  color: #45b5d8;
+  transition: color 0.3s ease-in;
+}
+
+[data-theme='light'] .content .story address .affiliation,
+[data-theme='light'] .content .story address .title {
+  color: #7e7e8a;
+}
+
+[data-theme='light'] .content .story h2 a.topic:hover,
+[data-theme='light'] .content .story address a.affiliation:hover,
+[data-theme='light'] .content .story address a.name:hover,
+[data-theme='light'] .content .story address a.title:hover {
+  color: #248aaa;
+  transition: color 0.3s ease-in;
+}
+
+.content .story address .dash {
+  position: relative;
+}
+
+.content .story address .dash::before {
+  content: '';
+  height: 0.125rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.25rem;
+}
+
+[data-theme='dark'] .content .story address .dash::before {
+  background: #d3d3d3;
+}
+
+[data-theme='light'] .content .story address .dash::before {
+  background: #282f49;
+}
+
+.content .story address .name {
+  font-weight: bold;
+  margin-right: 0.3rem;
+  padding-left: 2rem;
+}
+
+.content .story address .title {
+  margin: 0 0.3rem;
+}
+
+.content .story address .affiliation {
+  margin-left: 0.3rem;
+}
+
+@media screen and (max-width: 48rem) {
+  .content {
+    column-count: 1;
+  }
+}
+
+@media print {
+  .content {
+    column-count: 1;
+  }
+
+  [data-theme] .content .story {
+    opacity: 1;
+    transform: rotate(0) translate(0);
+  }
+
+  [data-theme] .content .story h2 {
+    font-size: 1.25rem;
+  }
+
+  [data-theme] .content .story p {
+    font-size: 0.85rem;
+  }
+
+  .content .story address .dash::before {
+    print-color-adjust: exact;
+  }
+}

@@ -1,0 +1,23 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+a.link {
+  text-decoration: none;
+}
+
+[data-theme='dark'] .link {
+  color: #d3d3d3;
+}
+
+[data-theme='light'] .link {
+  color: #282f49;
+}
+
+/* Take precedence than theme color. */
+a.link:hover {
+  color: #248aaa;
+  transition: color 0.3s ease-in-out;
+}

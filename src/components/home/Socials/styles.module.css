@@ -1,0 +1,37 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.social {
+  display: flex;
+  list-style: none;
+  padding: 2rem 0 0 0;
+}
+
+.social li>a {
+  display: inline-block;
+  font-size: 2.5rem;
+  padding-right: 1.5rem;
+  text-shadow: 0.125rem 0.125rem 0.1875rem rgba(255, 255, 255, 0.1);
+  user-select: none;
+}
+
+.social li>a svg {
+  filter: drop-shadow(0.1875rem 0.3rem 0.125rem rgb(0 0 0 / 0.4));
+}
+
+.social li .reaction {
+  padding-top: 0.5rem;
+}
+
+@media print {
+  .social {
+    padding: 0;
+  }
+
+  .social li>a {
+    display: none;
+  }
+}

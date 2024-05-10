@@ -5,7 +5,7 @@
  */
 
 export const layout = {
-  description: 'Stories from my clients, partners, and teammates on how I helped them build their successful business - Ricky Huang',
+  description: 'Stories from my clients, partners, and teammates on how I helped them build their successful business | Ricky Huang',
   keywords: [
     'ricky huang',
     'richard huang',

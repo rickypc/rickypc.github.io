@@ -469,7 +469,7 @@ export const catalog = [
 ];
 
 export const layout = {
-  description: 'My portfolio describes the technology stack used to make each successful - Ricky Huang',
+  description: 'My portfolio describes the technology stack used to make each successful | Ricky Huang',
   keywords: [
     'ricky huang',
     'richard huang',

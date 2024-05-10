@@ -44,7 +44,7 @@ export const context = ({
   '@context': 'https://schema.org/',
   '@type': 'ProfilePage',
   description,
-  headline: 'About Ricky Huang - Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
+  headline: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic',
   keywords: keywords.join(','),
   mainEntity: {
     '@id': 'https://ricky.one#Person',

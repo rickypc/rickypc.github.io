@@ -69,7 +69,7 @@ const config = {
       metadata: [
         { name: 'author', content: 'Ricky Huang' },
         { property: 'og:image', content: 'https://ricky.one/img/home/self.png' },
-        { property: 'og:site_name', content: 'Ricky Huang Leadership, Full Stack Development, Innovation, Characteristic' },
+        { property: 'og:site_name', content: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic' },
         { property: 'og:type', content: 'website' },
         { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:image', content: 'https://ricky.one/img/home/self.png' },
@@ -102,13 +102,13 @@ const config = {
         ],
         logo: {
           height: 'auto',
-          src: '/img/home/self.webp',
+          src: '/img/home/logo.webp',
           width: 'auto',
         },
         title: 'Ricky Huang',
       },
     }),
-  title: 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
+  title: 'Ricky Huang',
   trailingSlash: true,
   url: 'https://ricky.one',
 };

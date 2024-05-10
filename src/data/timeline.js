@@ -7,7 +7,7 @@
 /* eslint-disable global-require */
 
 export const layout = {
-  description: 'My experiences and education throughout the years - Ricky Huang',
+  description: 'My experiences and education throughout the years | Ricky Huang',
   keywords: [
     'ricky huang',
     'richard huang',

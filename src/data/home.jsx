@@ -79,7 +79,7 @@ export const image = {
 };
 
 export const layout = {
-  description: 'I put the focus on achieving team goals with thoughtful analysis and judgment - Ricky Huang',
+  description: 'I put the focus on achieving team goals with thoughtful analysis and judgment | Ricky Huang',
   keywords: [
     'ricky huang',
     'richard huang',

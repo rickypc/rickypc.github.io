@@ -23,7 +23,7 @@ export const characteristic = {
 export const headline = 'I am a Transformer-Transactor type and I build ultimate things.';
 
 export const layout = {
-  description: 'I am a Transformer-Transactor type and I build ultimate things - Ricky Huang',
+  description: 'I am a Transformer-Transactor type and I build ultimate things | Ricky Huang',
   keywords: [
     'ricky huang',
     'richard huang',

@@ -103,6 +103,37 @@ html * {
   -webkit-font-smoothing: antialiased;
 }
 
+#__docusaurus {
+  position: relative;
+}
+
+#__docusaurus::before {
+  animation: shimmer 1s 1 linear;
+  background: linear-gradient(-45deg, #eee 40%, #fafafa 50%, #eee 60%);
+  background-position-x: 150%;
+  background-size: 300%;
+  content: '';
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+#__docusaurus footer,
+#__docusaurus .main-wrapper,
+#__docusaurus nav {
+  opacity: 0;
+}
+
+#__docusaurus.docusaurus--welcome::before {
+  content: none;
+}
+
+#__docusaurus.docusaurus--welcome footer,
+#__docusaurus.docusaurus--welcome .main-wrapper,
+#__docusaurus.docusaurus--welcome nav {
+  opacity: 1;
+}
+
 .navbar__item.navbar__item--github,
 .navbar__item.navbar__item--linkedin {
   border-radius: 50%;
@@ -150,4 +181,10 @@ html * {
 .navbar__item.navbar__item--github:hover,
 .navbar__item.navbar__item--linkedin:hover {
   background: var(--ifm-color-emphasis-200);
+}
+
+@keyframes shimmer {
+  to {
+    background-position-x: 0;
+  }
 }

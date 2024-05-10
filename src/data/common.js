@@ -42,7 +42,7 @@ export const context = ({
   title = 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
 } = {}) => JSON.stringify({
   '@context': 'https://schema.org/',
-  '@type': 'WebSite',
+  '@type': 'ProfilePage',
   description,
   keywords: keywords.join(','),
   logo: 'https://ricky.one/img/home/self.png',

@@ -108,6 +108,7 @@ const config = {
       },
     }),
   title: 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
+  trailingSlash: true,
   url: 'https://ricky.one',
 };
 

@@ -44,21 +44,48 @@ export const context = ({
   '@context': 'https://schema.org/',
   '@type': 'ProfilePage',
   description,
+  headline: 'About Ricky Huang - Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
   keywords: keywords.join(','),
-  logo: 'https://ricky.one/img/home/self.png',
   mainEntity: {
+    '@id': 'https://ricky.one#Person',
     '@type': 'Person',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Orange County',
       addressRegion: 'CA',
     },
-    alumniOf: 'California State University, Fullerton',
-    gender: 'male',
+    alumniOf: [
+      {
+        '@type': 'OrganizationRole',
+        alumniOf: {
+          '@type': 'CollegeOrUniversity',
+          name: 'California State University, Fullerton',
+          sameAs: 'https://en.wikipedia.org/wiki/California_State_University,_Fullerton',
+        },
+        startDate: '2007',
+      },
+      {
+        '@type': 'OrganizationRole',
+        alumniOf: {
+          '@type': 'CollegeOrUniversity',
+          name: 'Petra Christian University',
+          sameAs: 'https://en.wikipedia.org/wiki/Petra_Christian_University',
+        },
+        startDate: '1997',
+      },
+    ],
+    familyName: 'Huang',
+    gender: 'Male',
+    givenName: 'Richard',
+    honorificSuffix: 'MSE',
     image: 'https://ricky.one/img/home/self.png',
     jobTitle: 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
     name: 'Ricky Huang',
-    nationality: 'Southeast Asian American',
+    nationality: {
+      '@type': 'Country',
+      name: 'USA',
+      sameAs: 'https://en.wikipedia.org/wiki/United_States',
+    },
     sameAs: [
       'https://hub.docker.com/u/rickypc',
       'https://github.com/rickypc',
@@ -67,9 +94,14 @@ export const context = ({
       'https://www.linkedin.com/in/rihuang',
       'https://www.npmjs.com/~rickypc',
     ],
+    worksFor: {
+      '@type': 'Organization',
+      name: 'Experian',
+      sameAs: 'https://en.wikipedia.org/wiki/Experian',
+    },
   },
   name: title,
-  url: 'https://ricky.one/',
+  url: 'https://ricky.one',
 });
 
 export const key = (value, prefix = '') => `${prefix ? `${prefix}-` : ''}${value.toLowerCase().replace(/\s+/, '-').replace(/\.[^/.]+$/, '')}`;

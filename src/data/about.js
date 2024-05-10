@@ -40,7 +40,7 @@ export const layout = {
     'smart creative',
     'master degree',
   ],
-  title: 'About Ricky Huang type and key characteristics',
+  title: 'Type and key characteristics',
 };
 
 export const paragraphs = [

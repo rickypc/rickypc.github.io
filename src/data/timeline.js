@@ -25,7 +25,7 @@ export const layout = {
     'smart creative',
     'master degree',
   ],
-  title: 'Ricky Huang experiences, knowledge and education',
+  title: 'Experiences, knowledge and education',
 };
 
 export const preamble = {

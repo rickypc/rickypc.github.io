@@ -24,7 +24,7 @@ export const layout = {
     'smart creative',
     'master degree',
   ],
-  title: 'Ricky Huang client, partner, and teammate stories',
+  title: 'Client, partner, and teammate stories',
 };
 
 export const preamble = {

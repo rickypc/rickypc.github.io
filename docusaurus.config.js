@@ -9,6 +9,7 @@
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   baseUrl: '/',
+  deploymentBranch: 'gh-pages',
   favicon: 'img/favicon.ico',
   headTags: [
     {

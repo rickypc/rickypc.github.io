@@ -11,6 +11,9 @@ import {
   useRef,
   useState,
 } from 'react';
+import useIsBrowser from '@docusaurus/useIsBrowser';
+
+const docusaurus = 'docusaurus';
 
 export function useMedia(query) {
   const [change, setChange] = useState(false);
@@ -130,4 +133,19 @@ export function useVisibility({ ref = useRef(), threshold = 1.0, ...rest } = {})
   }, []);
 
   return { ref, visible };
+}
+
+export function useWelcome() {
+  const browser = useIsBrowser();
+
+  useEffect(() => {
+    if (browser) {
+      // eslint-disable-next-line no-restricted-globals
+      if (top === window) {
+        document.getElementById(`__${docusaurus}`)
+          .classList.add(`${docusaurus}--welcome`);
+      }
+    }
+    // return none.
+  }, [browser]);
 }

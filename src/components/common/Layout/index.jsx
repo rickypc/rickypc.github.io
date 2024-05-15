@@ -6,12 +6,10 @@
 
 import { context } from '@site/src/data/common';
 import Head from '@docusaurus/Head';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import ThemeLayout from '@theme/Layout';
-import useIsBrowser from '@docusaurus/useIsBrowser';
-
-const docusaurus = 'docusaurus';
+import { useWelcome } from '@site/src/hooks/observer';
 
 export default memo(Object.assign(function Layout({
   children,
@@ -21,19 +19,7 @@ export default memo(Object.assign(function Layout({
   metadatas,
   title,
 }) {
-  const browser = useIsBrowser();
-
-  useEffect(() => {
-    if (browser) {
-      // eslint-disable-next-line no-restricted-globals
-      if (top === window) {
-        document.getElementById(`__${docusaurus}`)
-          .classList.add(`${docusaurus}--welcome`);
-      }
-    }
-    // return none.
-  }, [browser]);
-
+  useWelcome();
   return (
     <ThemeLayout description={description} title={title}>
       <Head>

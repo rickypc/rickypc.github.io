@@ -37,13 +37,15 @@ export default memo(Object.assign(function Layout({
     </ThemeLayout>
   );
 }, {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  className: PropTypes.string,
-  description: PropTypes.string,
-  keywords: PropTypes.arrayOf(PropTypes.string),
-  metadatas: PropTypes.arrayOf(PropTypes.shape()),
-  title: PropTypes.string,
+  propTypes: {
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node,
+    ]).isRequired,
+    className: PropTypes.string,
+    description: PropTypes.string,
+    keywords: PropTypes.arrayOf(PropTypes.string),
+    metadatas: PropTypes.arrayOf(PropTypes.shape()),
+    title: PropTypes.string,
+  },
 }));

@@ -4,11 +4,24 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+import Layout from '@theme/Layout';
 import { memo } from 'react';
-import NotFound from '@theme-original/NotFound';
-import { useWelcome } from '@site/src/hooks/observer';
+import NotFoundContent from '@theme/NotFound/Content';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { PageMetadata } from '@docusaurus/theme-common';
+import { translate } from '@docusaurus/Translate';
 
-export default memo(function NotFoundWrapper(props) {
-  useWelcome();
-  return <NotFound {...props} />;
+export default memo(function NotFound() {
+  const title = translate({
+    id: 'theme.NotFound.title',
+    message: 'Page Not Found',
+  });
+  return (
+    <>
+      <PageMetadata title={title} />
+      <Layout>
+        <NotFoundContent navigation="true" />
+      </Layout>
+    </>
+  );
 });

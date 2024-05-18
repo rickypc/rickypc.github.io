@@ -4,6 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+import { clsx } from '@site/src/data/common';
 import {
   useCallback,
   useEffect,
@@ -105,6 +106,18 @@ export function usePrint() {
 
 const useSafeLayoutEffect = typeof (window) !== 'undefined' ? useLayoutEffect : useEffect;
 
+export function useSpeech() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    if (typeof (speechSynthesis) !== 'undefined') {
+      setReady(true);
+    }
+  }, []);
+
+  return [ready];
+}
+
 // eslint-disable-next-line no-param-reassign,react-hooks/rules-of-hooks
 export function useVisibility({ ref = useRef(), threshold = 1.0, ...rest } = {}) {
   const [visible, setVisible] = useState(false);
@@ -135,17 +148,19 @@ export function useVisibility({ ref = useRef(), threshold = 1.0, ...rest } = {})
   return { ref, visible };
 }
 
-export function useWelcome() {
+export function useWelcome({ navigation = true } = {}) {
   const browser = useIsBrowser();
 
   useEffect(() => {
     if (browser) {
       // eslint-disable-next-line no-restricted-globals
       if (top === window) {
-        document.getElementById(`__${docusaurus}`)
-          .classList.add(`${docusaurus}--welcome`);
+        document.getElementById(`__${docusaurus}`).className = clsx(
+          !navigation && `${docusaurus}--exclusive`,
+          `${docusaurus}--welcome`,
+        );
       }
     }
     // return none.
-  }, [browser]);
+  }, [browser, navigation]);
 }

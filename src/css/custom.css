@@ -134,6 +134,16 @@ html * {
   opacity: 1;
 }
 
+#__docusaurus.docusaurus--exclusive nav.navbar .navbar__inner .navbar__items>a {
+  visibility: hidden;
+}
+
+#__docusaurus.docusaurus--exclusive nav.navbar .navbar-sidebar .navbar-sidebar__brand>a,
+#__docusaurus.docusaurus--exclusive nav.navbar .navbar-sidebar .menu.navbar-sidebar__item>button,
+#__docusaurus.docusaurus--exclusive nav.theme-doc-breadcrumbs ul.breadcrumbs li:first-of-type {
+  display: none;
+}
+
 .navbar__item.navbar__item--github,
 .navbar__item.navbar__item--linkedin {
   border-radius: 50%;
@@ -186,5 +196,12 @@ html * {
 @keyframes shimmer {
   to {
     background-position-x: 0;
+  }
+}
+
+@media print {
+  footer.theme-doc-footer .theme-doc-footer-tags-row,
+  nav.theme-doc-breadcrumbs {
+    display: none;
   }
 }

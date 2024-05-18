@@ -6,6 +6,8 @@
  * @ts-check
  */
 
+import { themes as prismThemes } from 'prism-react-renderer';
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   baseUrl: '/',
@@ -28,23 +30,47 @@ const config = {
   onBrokenMarkdownLinks: 'warn',
   organizationName: 'rickypc',
   plugins: [
-    [
-      '@docusaurus/plugin-ideal-image',
-      {
-        disableInDev: false,
-        max: 2160,
-        min: 256,
-        quality: 70,
-        steps: 16,
+    () => ({
+      name: 'ricky-plugin-image',
+      configureWebpack(_, isServer) {
+        return {
+          mergeStrategy: {
+            'module.rules': 'prepend',
+          },
+          module: {
+            rules: [
+              {
+                test: /\.(?:png|jpe?g)$/i,
+                use: [
+                  require.resolve('@docusaurus/lqip-loader'),
+                  {
+                    loader: require.resolve('@docusaurus/responsive-loader'),
+                    options: {
+                      // eslint-disable-next-line global-require,import/no-extraneous-dependencies
+                      adapter: require('@docusaurus/responsive-loader/sharp'),
+                      // Don't emit for server-side rendering
+                      emitFile: !isServer,
+                      max: 2160,
+                      min: 256,
+                      name: 'assets/images/[name].[hash:hex:7].[width].[ext]',
+                      quality: 70,
+                      steps: 16,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        };
       },
-    ],
+    }),
   ],
   presets: [
     [
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
-        docs: false,
+        docs: {},
         gtag: {
           trackingID: ['G-5G7P214N03', 'G-657RY80FJE', 'G-JYD543XZTH'],
         },
@@ -107,9 +133,13 @@ const config = {
         },
         title: 'Ricky Huang',
       },
+      prism: {
+        darkTheme: prismThemes.dracula,
+        theme: prismThemes.github,
+      },
     }),
   title: 'Ricky Huang',
-  trailingSlash: true,
+  trailingSlash: process.env.NODE_ENV === 'production',
   url: 'https://ricky.one',
 };
 

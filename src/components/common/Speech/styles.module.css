@@ -7,5 +7,25 @@
 .control {
   filter: drop-shadow(0.075rem 0.075rem 0.075rem rgba(0, 0, 0, 0.4));
   font-size: 1.25rem;
-  margin: 0.25rem;
+  margin: 0 0.25rem;
+}
+
+.controls {
+  display: flex;
+  margin-bottom: var(--ifm-leading);
+}
+
+.controls .control,
+.controls span {
+  line-height: 1.25rem;
+}
+
+.controls span {
+  margin-right: 0.5rem;
+}
+
+@media print {
+  .controls .control {
+    display: none;
+  }
 }

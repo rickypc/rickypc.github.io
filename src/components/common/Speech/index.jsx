@@ -15,7 +15,7 @@ import {
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import useIsBrowser from '@docusaurus/useIsBrowser';
+import { useSpeech } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
 function GrPause(props) {
@@ -49,6 +49,16 @@ function GrStop(props) {
   })(props);
 }
 
+const Repetition = memo(function Repetition({ value = 1 }) {
+  if (value < 2) {
+    return null;
+  }
+  return <span className="badge badge--primary" title={`Preferred repetition: ${value} times`}>{`${value}x`}</span>;
+});
+Repetition.propTypes = {
+  value: PropTypes.number,
+};
+
 export default memo(Object.assign(function Speech({
   children,
   className,
@@ -56,11 +66,12 @@ export default memo(Object.assign(function Speech({
   name = 'Damayanti',
   pitch = 1,
   rate = 1,
+  repetition = 1,
   volume = 1,
 }) {
-  const browser = useIsBrowser();
   const [paused, setPaused] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [ready] = useSpeech();
   const synth = useRef();
   const utterance = useRef();
 
@@ -95,9 +106,11 @@ export default memo(Object.assign(function Speech({
   }, []);
 
   useEffect(() => {
-    if (browser) {
+    if (ready) {
       synth.current = speechSynthesis;
-      utterance.current = new SpeechSynthesisUtterance(children);
+      const text = typeof (children) === 'string'
+        ? children : children.props.children;
+      utterance.current = new SpeechSynthesisUtterance(text);
       utterance.current.onend = onStop;
       utterance.current.onerror = onStop;
       utterance.current.pitch = pitch;
@@ -110,15 +123,20 @@ export default memo(Object.assign(function Speech({
       utterance.volume = volume;
     }
     return () => synth.current?.cancel();
-  }, [browser, children, lang, name, onStop, pitch, rate, volume]);
+  }, [children, lang, name, onStop, pitch, rate, ready, volume]);
 
-  if (!browser || (browser && typeof (speechSynthesis) === 'undefined')) {
-    return null;
+  if (!ready) {
+    return (
+      <div className={styles.controls}>
+        <Repetition value={repetition} />
+      </div>
+    );
   }
 
   if (playing) {
     return (
-      <>
+      <div className={styles.controls}>
+        <Repetition value={repetition} />
         <Button
           aria-label="Stop"
           className={clsx(className, styles.control)}
@@ -135,19 +153,22 @@ export default memo(Object.assign(function Speech({
         >
           <GrPause />
         </Button>
-      </>
+      </div>
     );
   }
 
   return (
-    <Button
-      aria-label={paused ? 'Resume' : 'Play'}
-      className={clsx(className, styles.control)}
-      onClick={paused ? onResume : onPlay}
-      whileTap={{ scale: 0.85 }}
-    >
-      {paused ? <GrResume /> : <GrPlay />}
-    </Button>
+    <div className={styles.controls}>
+      <Repetition value={repetition} />
+      <Button
+        aria-label={paused ? 'Resume' : 'Play'}
+        className={clsx(className, styles.control)}
+        onClick={paused ? onResume : onPlay}
+        whileTap={{ scale: 0.85 }}
+      >
+        {paused ? <GrResume /> : <GrPlay />}
+      </Button>
+    </div>
   );
 }, {
   propTypes: {
@@ -160,6 +181,7 @@ export default memo(Object.assign(function Speech({
     name: PropTypes.string,
     pitch: PropTypes.number,
     rate: PropTypes.number,
+    repetition: PropTypes.number,
     volume: PropTypes.number,
   },
 }));

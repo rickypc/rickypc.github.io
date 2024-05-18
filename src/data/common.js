@@ -11,6 +11,10 @@ export const admonitions = {
     text: 'The print content is not ready. Please try again.',
     type: 'warning',
   },
+  speech: {
+    text: 'Change or update your browser for a better experience.',
+    type: 'warning',
+  },
 };
 
 export function clsx(...classes) {

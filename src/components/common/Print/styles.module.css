@@ -1,0 +1,30 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.control {
+  filter: drop-shadow(0.075rem 0.075rem 0.075rem rgba(0, 0, 0, 0.4));
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.control svg {
+  vertical-align: middle;
+}
+
+.controls {
+  display: inline-flex;
+  margin-bottom: var(--ifm-leading);
+}
+
+.controls .control {
+  line-height: 1.25rem;
+}
+
+@media print {
+  .controls .control {
+    display: none;
+  }
+}

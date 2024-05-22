@@ -72,11 +72,13 @@ export const hats = [
 export const image = {
   alt: 'Ricky Huang',
   picture: {
-    avif: require('@site/static/img/home/self.avif').default,
-    fallback: require('@site/static/img/home/self.png'),
-    webp: require('@site/static/img/home/self.webp').default,
+    avif: require('@site/src/img/home/self.avif').default,
+    fallback: require('@site/src/img/home/self.png'),
+    webp: require('@site/src/img/home/self.webp').default,
   },
 };
+
+export const ipa = '/ˈɹɪki ˈhwɑːŋ/';
 
 export const layout = {
   description: 'I put the focus on achieving team goals with thoughtful analysis and judgment | Ricky Huang',

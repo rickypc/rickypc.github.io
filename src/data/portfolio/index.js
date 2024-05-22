@@ -14,25 +14,25 @@ export const catalog = [
       {
         alt: 'Yahoo! Tickets Landing',
         picture: {
-          avif: require('@site/static/img/portfolio/yahoo-tickets-landing.avif').default,
-          fallback: require('@site/static/img/portfolio/yahoo-tickets-landing.jpg'),
-          webp: require('@site/static/img/portfolio/yahoo-tickets-landing.webp').default,
+          avif: require('@site/src/img/portfolio/yahoo-tickets-landing.avif').default,
+          fallback: require('@site/src/img/portfolio/yahoo-tickets-landing.jpg'),
+          webp: require('@site/src/img/portfolio/yahoo-tickets-landing.webp').default,
         },
       },
       {
         alt: 'Yahoo! Tickets Category',
         picture: {
-          avif: require('@site/static/img/portfolio/yahoo-tickets-category.avif').default,
-          fallback: require('@site/static/img/portfolio/yahoo-tickets-category.jpg'),
-          webp: require('@site/static/img/portfolio/yahoo-tickets-category.webp').default,
+          avif: require('@site/src/img/portfolio/yahoo-tickets-category.avif').default,
+          fallback: require('@site/src/img/portfolio/yahoo-tickets-category.jpg'),
+          webp: require('@site/src/img/portfolio/yahoo-tickets-category.webp').default,
         },
       },
       {
         alt: 'Yahoo! Tickets Search',
         picture: {
-          avif: require('@site/static/img/portfolio/yahoo-tickets-search.avif').default,
-          fallback: require('@site/static/img/portfolio/yahoo-tickets-search.jpg'),
-          webp: require('@site/static/img/portfolio/yahoo-tickets-search.webp').default,
+          avif: require('@site/src/img/portfolio/yahoo-tickets-search.avif').default,
+          fallback: require('@site/src/img/portfolio/yahoo-tickets-search.jpg'),
+          webp: require('@site/src/img/portfolio/yahoo-tickets-search.webp').default,
         },
       },
     ],
@@ -59,73 +59,73 @@ export const catalog = [
       {
         alt: 'GigaOm Landing',
         picture: {
-          avif: require('@site/static/img/portfolio/gigaom-landing.avif').default,
-          fallback: require('@site/static/img/portfolio/gigaom-landing.jpg'),
-          webp: require('@site/static/img/portfolio/gigaom-landing.webp').default,
+          avif: require('@site/src/img/portfolio/gigaom-landing.avif').default,
+          fallback: require('@site/src/img/portfolio/gigaom-landing.jpg'),
+          webp: require('@site/src/img/portfolio/gigaom-landing.webp').default,
         },
       },
       {
         alt: 'GigaOm Apple',
         picture: {
-          avif: require('@site/static/img/portfolio/gigaom-apple.avif').default,
-          fallback: require('@site/static/img/portfolio/gigaom-apple.jpg'),
-          webp: require('@site/static/img/portfolio/gigaom-apple.webp').default,
+          avif: require('@site/src/img/portfolio/gigaom-apple.avif').default,
+          fallback: require('@site/src/img/portfolio/gigaom-apple.jpg'),
+          webp: require('@site/src/img/portfolio/gigaom-apple.webp').default,
         },
       },
       {
         alt: 'GigaOm Clean Tech',
         picture: {
-          avif: require('@site/static/img/portfolio/gigaom-cleantech.avif').default,
-          fallback: require('@site/static/img/portfolio/gigaom-cleantech.jpg'),
-          webp: require('@site/static/img/portfolio/gigaom-cleantech.webp').default,
+          avif: require('@site/src/img/portfolio/gigaom-cleantech.avif').default,
+          fallback: require('@site/src/img/portfolio/gigaom-cleantech.jpg'),
+          webp: require('@site/src/img/portfolio/gigaom-cleantech.webp').default,
         },
       },
       {
         alt: 'GigaOm Cloud',
         picture: {
-          avif: require('@site/static/img/portfolio/gigaom-cloud.avif').default,
-          fallback: require('@site/static/img/portfolio/gigaom-cloud.jpg'),
-          webp: require('@site/static/img/portfolio/gigaom-cloud.webp').default,
+          avif: require('@site/src/img/portfolio/gigaom-cloud.avif').default,
+          fallback: require('@site/src/img/portfolio/gigaom-cloud.jpg'),
+          webp: require('@site/src/img/portfolio/gigaom-cloud.webp').default,
         },
       },
       {
         alt: 'GigaOm Collaboration',
         picture: {
-          avif: require('@site/static/img/portfolio/gigaom-collaboration.avif').default,
-          fallback: require('@site/static/img/portfolio/gigaom-collaboration.jpg'),
-          webp: require('@site/static/img/portfolio/gigaom-collaboration.webp').default,
+          avif: require('@site/src/img/portfolio/gigaom-collaboration.avif').default,
+          fallback: require('@site/src/img/portfolio/gigaom-collaboration.jpg'),
+          webp: require('@site/src/img/portfolio/gigaom-collaboration.webp').default,
         },
       },
       {
         alt: 'GigaOm Mobile',
         picture: {
-          avif: require('@site/static/img/portfolio/gigaom-mobile.avif').default,
-          fallback: require('@site/static/img/portfolio/gigaom-mobile.jpg'),
-          webp: require('@site/static/img/portfolio/gigaom-mobile.webp').default,
+          avif: require('@site/src/img/portfolio/gigaom-mobile.avif').default,
+          fallback: require('@site/src/img/portfolio/gigaom-mobile.jpg'),
+          webp: require('@site/src/img/portfolio/gigaom-mobile.webp').default,
         },
       },
       {
         alt: 'GigaOm Video',
         picture: {
-          avif: require('@site/static/img/portfolio/gigaom-video.avif').default,
-          fallback: require('@site/static/img/portfolio/gigaom-video.jpg'),
-          webp: require('@site/static/img/portfolio/gigaom-video.webp').default,
+          avif: require('@site/src/img/portfolio/gigaom-video.avif').default,
+          fallback: require('@site/src/img/portfolio/gigaom-video.jpg'),
+          webp: require('@site/src/img/portfolio/gigaom-video.webp').default,
         },
       },
       {
         alt: 'GigaOm Events',
         picture: {
-          avif: require('@site/static/img/portfolio/gigaom-events.avif').default,
-          fallback: require('@site/static/img/portfolio/gigaom-events.jpg'),
-          webp: require('@site/static/img/portfolio/gigaom-events.webp').default,
+          avif: require('@site/src/img/portfolio/gigaom-events.avif').default,
+          fallback: require('@site/src/img/portfolio/gigaom-events.jpg'),
+          webp: require('@site/src/img/portfolio/gigaom-events.webp').default,
         },
       },
       {
         alt: 'GigaOm TV',
         picture: {
-          avif: require('@site/static/img/portfolio/gigaom-tv.avif').default,
-          fallback: require('@site/static/img/portfolio/gigaom-tv.jpg'),
-          webp: require('@site/static/img/portfolio/gigaom-tv.webp').default,
+          avif: require('@site/src/img/portfolio/gigaom-tv.avif').default,
+          fallback: require('@site/src/img/portfolio/gigaom-tv.jpg'),
+          webp: require('@site/src/img/portfolio/gigaom-tv.webp').default,
         },
       },
     ],
@@ -151,41 +151,41 @@ export const catalog = [
       {
         alt: 'RazorGator Landing',
         picture: {
-          avif: require('@site/static/img/portfolio/razorgator-landing.avif').default,
-          fallback: require('@site/static/img/portfolio/razorgator-landing.jpg'),
-          webp: require('@site/static/img/portfolio/razorgator-landing.webp').default,
+          avif: require('@site/src/img/portfolio/razorgator-landing.avif').default,
+          fallback: require('@site/src/img/portfolio/razorgator-landing.jpg'),
+          webp: require('@site/src/img/portfolio/razorgator-landing.webp').default,
         },
       },
       {
         alt: 'RazorGator FOX Sports',
         picture: {
-          avif: require('@site/static/img/portfolio/razorgator-foxsports.avif').default,
-          fallback: require('@site/static/img/portfolio/razorgator-foxsports.jpg'),
-          webp: require('@site/static/img/portfolio/razorgator-foxsports.webp').default,
+          avif: require('@site/src/img/portfolio/razorgator-foxsports.avif').default,
+          fallback: require('@site/src/img/portfolio/razorgator-foxsports.jpg'),
+          webp: require('@site/src/img/portfolio/razorgator-foxsports.webp').default,
         },
       },
       {
         alt: 'RazorGator Tickets.com',
         picture: {
-          avif: require('@site/static/img/portfolio/razorgator-ticketscom.avif').default,
-          fallback: require('@site/static/img/portfolio/razorgator-ticketscom.jpg'),
-          webp: require('@site/static/img/portfolio/razorgator-ticketscom.webp').default,
+          avif: require('@site/src/img/portfolio/razorgator-ticketscom.avif').default,
+          fallback: require('@site/src/img/portfolio/razorgator-ticketscom.jpg'),
+          webp: require('@site/src/img/portfolio/razorgator-ticketscom.webp').default,
         },
       },
       {
         alt: 'RazorGator MSN',
         picture: {
-          avif: require('@site/static/img/portfolio/razorgator-msn.avif').default,
-          fallback: require('@site/static/img/portfolio/razorgator-msn.jpg'),
-          webp: require('@site/static/img/portfolio/razorgator-msn.webp').default,
+          avif: require('@site/src/img/portfolio/razorgator-msn.avif').default,
+          fallback: require('@site/src/img/portfolio/razorgator-msn.jpg'),
+          webp: require('@site/src/img/portfolio/razorgator-msn.webp').default,
         },
       },
       {
         alt: 'RazorGator Jacksonville',
         picture: {
-          avif: require('@site/static/img/portfolio/razorgator-jacksonville.avif').default,
-          fallback: require('@site/static/img/portfolio/razorgator-jacksonville.jpg'),
-          webp: require('@site/static/img/portfolio/razorgator-jacksonville.webp').default,
+          avif: require('@site/src/img/portfolio/razorgator-jacksonville.avif').default,
+          fallback: require('@site/src/img/portfolio/razorgator-jacksonville.jpg'),
+          webp: require('@site/src/img/portfolio/razorgator-jacksonville.webp').default,
         },
       },
     ],
@@ -213,9 +213,9 @@ export const catalog = [
       {
         alt: 'Rainbow Guitars',
         picture: {
-          avif: require('@site/static/img/portfolio/rainbowguitars.avif').default,
-          fallback: require('@site/static/img/portfolio/rainbowguitars.jpg'),
-          webp: require('@site/static/img/portfolio/rainbowguitars.webp').default,
+          avif: require('@site/src/img/portfolio/rainbowguitars.avif').default,
+          fallback: require('@site/src/img/portfolio/rainbowguitars.jpg'),
+          webp: require('@site/src/img/portfolio/rainbowguitars.webp').default,
         },
       },
     ],
@@ -238,9 +238,9 @@ export const catalog = [
       {
         alt: 'Fortini Home',
         picture: {
-          avif: require('@site/static/img/portfolio/fortinihome.avif').default,
-          fallback: require('@site/static/img/portfolio/fortinihome.jpg'),
-          webp: require('@site/static/img/portfolio/fortinihome.webp').default,
+          avif: require('@site/src/img/portfolio/fortinihome.avif').default,
+          fallback: require('@site/src/img/portfolio/fortinihome.jpg'),
+          webp: require('@site/src/img/portfolio/fortinihome.webp').default,
         },
       },
     ],
@@ -264,9 +264,9 @@ export const catalog = [
       {
         alt: 'Exhibit Transport',
         picture: {
-          avif: require('@site/static/img/portfolio/exhibittransport.avif').default,
-          fallback: require('@site/static/img/portfolio/exhibittransport.jpg'),
-          webp: require('@site/static/img/portfolio/exhibittransport.webp').default,
+          avif: require('@site/src/img/portfolio/exhibittransport.avif').default,
+          fallback: require('@site/src/img/portfolio/exhibittransport.jpg'),
+          webp: require('@site/src/img/portfolio/exhibittransport.webp').default,
         },
       },
     ],
@@ -290,9 +290,9 @@ export const catalog = [
       {
         alt: 'S&M Bikes',
         picture: {
-          avif: require('@site/static/img/portfolio/sandmbikes.avif').default,
-          fallback: require('@site/static/img/portfolio/sandmbikes.jpg'),
-          webp: require('@site/static/img/portfolio/sandmbikes.webp').default,
+          avif: require('@site/src/img/portfolio/sandmbikes.avif').default,
+          fallback: require('@site/src/img/portfolio/sandmbikes.jpg'),
+          webp: require('@site/src/img/portfolio/sandmbikes.webp').default,
         },
       },
     ],
@@ -316,9 +316,9 @@ export const catalog = [
       {
         alt: 'Clipper Corp',
         picture: {
-          avif: require('@site/static/img/portfolio/clippercorp.avif').default,
-          fallback: require('@site/static/img/portfolio/clippercorp.jpg'),
-          webp: require('@site/static/img/portfolio/clippercorp.webp').default,
+          avif: require('@site/src/img/portfolio/clippercorp.avif').default,
+          fallback: require('@site/src/img/portfolio/clippercorp.jpg'),
+          webp: require('@site/src/img/portfolio/clippercorp.webp').default,
         },
       },
     ],
@@ -342,25 +342,25 @@ export const catalog = [
       {
         alt: 'Aircept Landing',
         picture: {
-          avif: require('@site/static/img/portfolio/aircept-landing.avif').default,
-          fallback: require('@site/static/img/portfolio/aircept-landing.jpg'),
-          webp: require('@site/static/img/portfolio/aircept-landing.webp').default,
+          avif: require('@site/src/img/portfolio/aircept-landing.avif').default,
+          fallback: require('@site/src/img/portfolio/aircept-landing.jpg'),
+          webp: require('@site/src/img/portfolio/aircept-landing.webp').default,
         },
       },
       {
         alt: 'Aircept NationTrack',
         picture: {
-          avif: require('@site/static/img/portfolio/aircept-nationstrack.avif').default,
-          fallback: require('@site/static/img/portfolio/aircept-nationstrack.jpg'),
-          webp: require('@site/static/img/portfolio/aircept-nationstrack.webp').default,
+          avif: require('@site/src/img/portfolio/aircept-nationstrack.avif').default,
+          fallback: require('@site/src/img/portfolio/aircept-nationstrack.jpg'),
+          webp: require('@site/src/img/portfolio/aircept-nationstrack.webp').default,
         },
       },
       {
         alt: 'Aircept RentalTrack',
         picture: {
-          avif: require('@site/static/img/portfolio/aircept-rentaltrack.avif').default,
-          fallback: require('@site/static/img/portfolio/aircept-rentaltrack.jpg'),
-          webp: require('@site/static/img/portfolio/aircept-rentaltrack.webp').default,
+          avif: require('@site/src/img/portfolio/aircept-rentaltrack.avif').default,
+          fallback: require('@site/src/img/portfolio/aircept-rentaltrack.jpg'),
+          webp: require('@site/src/img/portfolio/aircept-rentaltrack.webp').default,
         },
       },
     ],
@@ -385,17 +385,17 @@ export const catalog = [
       {
         alt: 'AnchorBlue Community',
         picture: {
-          avif: require('@site/static/img/portfolio/anchorblue-community.avif').default,
-          fallback: require('@site/static/img/portfolio/anchorblue-community.jpg'),
-          webp: require('@site/static/img/portfolio/anchorblue-community.webp').default,
+          avif: require('@site/src/img/portfolio/anchorblue-community.avif').default,
+          fallback: require('@site/src/img/portfolio/anchorblue-community.jpg'),
+          webp: require('@site/src/img/portfolio/anchorblue-community.webp').default,
         },
       },
       {
         alt: 'AnchorBlue Girls',
         picture: {
-          avif: require('@site/static/img/portfolio/anchorblue-girls.avif').default,
-          fallback: require('@site/static/img/portfolio/anchorblue-girls.jpg'),
-          webp: require('@site/static/img/portfolio/anchorblue-girls.webp').default,
+          avif: require('@site/src/img/portfolio/anchorblue-girls.avif').default,
+          fallback: require('@site/src/img/portfolio/anchorblue-girls.jpg'),
+          webp: require('@site/src/img/portfolio/anchorblue-girls.webp').default,
         },
       },
     ],
@@ -420,9 +420,9 @@ export const catalog = [
       {
         alt: 'WheelBuilder',
         picture: {
-          avif: require('@site/static/img/portfolio/wheelbuilder.avif').default,
-          fallback: require('@site/static/img/portfolio/wheelbuilder.jpg'),
-          webp: require('@site/static/img/portfolio/wheelbuilder.webp').default,
+          avif: require('@site/src/img/portfolio/wheelbuilder.avif').default,
+          fallback: require('@site/src/img/portfolio/wheelbuilder.jpg'),
+          webp: require('@site/src/img/portfolio/wheelbuilder.webp').default,
         },
       },
     ],
@@ -447,9 +447,9 @@ export const catalog = [
       {
         alt: 'Pacifica Services',
         picture: {
-          avif: require('@site/static/img/portfolio/pacificaservices.avif').default,
-          fallback: require('@site/static/img/portfolio/pacificaservices.jpg'),
-          webp: require('@site/static/img/portfolio/pacificaservices.webp').default,
+          avif: require('@site/src/img/portfolio/pacificaservices.avif').default,
+          fallback: require('@site/src/img/portfolio/pacificaservices.jpg'),
+          webp: require('@site/src/img/portfolio/pacificaservices.webp').default,
         },
       },
     ],

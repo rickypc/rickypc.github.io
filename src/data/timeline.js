@@ -42,9 +42,9 @@ export const timelines = [
     },
     description: 'I accepted the Senior Software Engineer position with Experian Consumer Services to become a more well-rounded entrepreneur. I have been awarded the Experian Platinum Aspire, the EMF Hero - Above and Beyond, and the Experian Spot - Excellence in Action four times.',
     picture: {
-      avif: require('@site/static/img/timeline/experian.avif').default,
-      fallback: require('@site/static/img/timeline/experian.jpg'),
-      webp: require('@site/static/img/timeline/experian.webp').default,
+      avif: require('@site/src/img/timeline/experian.avif').default,
+      fallback: require('@site/src/img/timeline/experian.jpg'),
+      webp: require('@site/src/img/timeline/experian.webp').default,
     },
     title: {
       children: 'Senior Software Engineer',
@@ -59,9 +59,9 @@ export const timelines = [
     },
     description: 'I accepted the Automation Engineer position with Experian Consumer Services to become a more well-rounded engineer. I have been promoted to Senior Automation Engineer.',
     picture: {
-      avif: require('@site/static/img/timeline/experian.avif').default,
-      fallback: require('@site/static/img/timeline/experian.jpg'),
-      webp: require('@site/static/img/timeline/experian.webp').default,
+      avif: require('@site/src/img/timeline/experian.avif').default,
+      fallback: require('@site/src/img/timeline/experian.jpg'),
+      webp: require('@site/src/img/timeline/experian.webp').default,
     },
     title: {
       children: 'Senior Automation Engineer',
@@ -76,9 +76,9 @@ export const timelines = [
     },
     description: 'I graduated from the California State University of Fullerton with a master\'s degree in Software Engineering. I learned to deliver software- enabled systems with mission readiness, boost productivity, spur innovation, and provide a competitive edge. I was awarded the Outstanding Graduate Project for Master of Science in Software Engineering.',
     picture: {
-      avif: require('@site/static/img/timeline/csuf.avif').default,
-      fallback: require('@site/static/img/timeline/csuf.jpg'),
-      webp: require('@site/static/img/timeline/csuf.webp').default,
+      avif: require('@site/src/img/timeline/csuf.avif').default,
+      fallback: require('@site/src/img/timeline/csuf.jpg'),
+      webp: require('@site/src/img/timeline/csuf.webp').default,
     },
     title: {
       children: 'Master of Science, Software Engineering',
@@ -93,9 +93,9 @@ export const timelines = [
     },
     description: 'I accepted the Senior Software Engineer position with Experian CheetahMail to become a more well-rounded engineer and great leader. I was awarded the Experian CheetahMail Pinnacle, and I was promoted to Software Development Lead.',
     picture: {
-      avif: require('@site/static/img/timeline/cheetahmail.avif').default,
-      fallback: require('@site/static/img/timeline/cheetahmail.jpg'),
-      webp: require('@site/static/img/timeline/cheetahmail.webp').default,
+      avif: require('@site/src/img/timeline/cheetahmail.avif').default,
+      fallback: require('@site/src/img/timeline/cheetahmail.jpg'),
+      webp: require('@site/src/img/timeline/cheetahmail.webp').default,
     },
     title: {
       children: 'Software Development Lead',
@@ -110,9 +110,9 @@ export const timelines = [
     },
     description: 'I accepted a Software Engineer position with AirIQ to become a more well-rounded engineer.',
     picture: {
-      avif: require('@site/static/img/timeline/airiq.avif').default,
-      fallback: require('@site/static/img/timeline/airiq.jpg'),
-      webp: require('@site/static/img/timeline/airiq.webp').default,
+      avif: require('@site/src/img/timeline/airiq.avif').default,
+      fallback: require('@site/src/img/timeline/airiq.jpg'),
+      webp: require('@site/src/img/timeline/airiq.webp').default,
     },
     title: {
       children: 'Software Engineer',
@@ -127,9 +127,9 @@ export const timelines = [
     },
     description: 'I accepted a Web Developer position with RazorGator to become a more well-rounded web engineer.',
     picture: {
-      avif: require('@site/static/img/timeline/razorgator.avif').default,
-      fallback: require('@site/static/img/timeline/razorgator.jpg'),
-      webp: require('@site/static/img/timeline/razorgator.webp').default,
+      avif: require('@site/src/img/timeline/razorgator.avif').default,
+      fallback: require('@site/src/img/timeline/razorgator.jpg'),
+      webp: require('@site/src/img/timeline/razorgator.webp').default,
     },
     title: {
       children: 'Web Developer',
@@ -144,9 +144,9 @@ export const timelines = [
     },
     description: 'I graduated from Petra Christian University with a bachelor\'s degree in Architecture. I learned both the process and the product of planning, designing, and constructing physical structures. I then applied those to software development activities.',
     picture: {
-      avif: require('@site/static/img/timeline/petra.avif').default,
-      fallback: require('@site/static/img/timeline/petra.jpg'),
-      webp: require('@site/static/img/timeline/petra.webp').default,
+      avif: require('@site/src/img/timeline/petra.avif').default,
+      fallback: require('@site/src/img/timeline/petra.jpg'),
+      webp: require('@site/src/img/timeline/petra.webp').default,
     },
     title: {
       children: 'Bachelor of Engineering, Architecture',
@@ -162,9 +162,9 @@ export const timelines = [
     description: 'As an Independent Professional, I am wearing many hats, multi-task expert, extremely organized, and can adapt to many different scenarios or challenges that arise. I bring those valuable insights, experiences, and technical competencies with me to my partners and my employers.',
     // This is smaller size than the one in home.
     picture: {
-      avif: require('@site/static/img/timeline/self.avif').default,
-      fallback: require('@site/static/img/timeline/self.jpg'),
-      webp: require('@site/static/img/timeline/self.webp').default,
+      avif: require('@site/src/img/timeline/self.avif').default,
+      fallback: require('@site/src/img/timeline/self.jpg'),
+      webp: require('@site/src/img/timeline/self.webp').default,
     },
     title: {
       children: 'Independent Professional',

@@ -82,7 +82,7 @@ export const context = ({
     gender: 'Male',
     givenName: 'Richard',
     honorificSuffix: 'MSE',
-    image: 'https://ricky.one/img/home/self.png',
+    image: 'https://ricky.one/img/self.png',
     jobTitle: 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
     name: 'Ricky Huang',
     nationality: {

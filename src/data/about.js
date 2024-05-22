@@ -4,8 +4,8 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import People from '@site/static/img/about/type.people.svg';
-import Task from '@site/static/img/about/type.task.svg';
+import People from '@site/src/img/about/type.people.svg';
+import Task from '@site/src/img/about/type.task.svg';
 
 export const characteristic = {
   attributes: [

@@ -5,7 +5,7 @@
  */
 
 import Button from '@site/src/components/common/Button';
-import { clsx } from '@site/src/data/common';
+import { a11y, clsx } from '@site/src/data/common';
 import { GenIcon } from 'react-icons/lib';
 import {
   memo,
@@ -138,7 +138,7 @@ export default memo(Object.assign(function Speech({
       <div className={styles.controls}>
         <Repetition value={repetition} />
         <Button
-          aria-label="Stop"
+          {...a11y('Stop')}
           className={clsx(className, styles.control)}
           onClick={onStop}
           whileTap={{ scale: 0.85 }}
@@ -146,7 +146,7 @@ export default memo(Object.assign(function Speech({
           <GrStop />
         </Button>
         <Button
-          aria-label="Pause"
+          {...a11y('Pause')}
           className={clsx(className, styles.control)}
           onClick={onPause}
           whileTap={{ scale: 0.85 }}
@@ -161,7 +161,7 @@ export default memo(Object.assign(function Speech({
     <div className={styles.controls}>
       <Repetition value={repetition} />
       <Button
-        aria-label={paused ? 'Resume' : 'Play'}
+        {...a11y(paused ? 'Resume' : 'Play')}
         className={clsx(className, styles.control)}
         onClick={paused ? onResume : onPlay}
         whileTap={{ scale: 0.85 }}

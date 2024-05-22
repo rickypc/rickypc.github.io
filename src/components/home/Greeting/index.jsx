@@ -4,16 +4,19 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { greeting } from '@site/src/data/home';
+import { greeting, ipa } from '@site/src/data/home';
 import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
 import { memo } from 'react';
+import Speech from '@site/src/components/common/Speech';
 import styles from './styles.module.css';
 
 export default memo(function Greeting() {
   return (
     <Heading as="h1" className={styles.greeting}>
       <span>{greeting}</span>
+      <span className={styles.ipa}>{ipa}</span>
+      <Speech>ricky huang</Speech>
       <Heart className={styles.reaction} id="home-landing" />
     </Heading>
   );

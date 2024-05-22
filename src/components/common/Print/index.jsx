@@ -37,11 +37,11 @@ export default memo(Object.assign(function Print({
     }
     const { origin } = window.location;
     // eslint-disable-next-line global-require
-    const devanagari = `${origin}${require('@site/src/font/noto/NotoSerifDevanagari-Regular.ttf').default}`;
+    const devanagari = `${origin}${require('@site/src/components/common/Print/font/noto/NotoSerifDevanagari-Regular.ttf').default}`;
     // eslint-disable-next-line global-require
-    const devanagariBold = `${origin}${require('@site/src/font/noto/NotoSerifDevanagari-Bold.ttf').default}`;
+    const devanagariBold = `${origin}${require('@site/src/components/common/Print/font/noto/NotoSerifDevanagari-Bold.ttf').default}`;
     // eslint-disable-next-line global-require
-    const kokonor = `${origin}${require('@site/src/font/kokonor/Kokonor-Regular.ttf').default}`;
+    const kokonor = `${origin}${require('@site/src/components/common/Print/font/kokonor/Kokonor-Regular.ttf').default}`;
     return {
       Kokonor: {
         bold: kokonor,
@@ -51,13 +51,13 @@ export default memo(Object.assign(function Print({
       },
       NotoSans: {
         // eslint-disable-next-line global-require
-        bold: `${origin}${require('@site/src/font/noto/NotoSans-Bold.ttf').default}`,
+        bold: `${origin}${require('@site/src/components/common/Print/font/noto/NotoSans-Bold.ttf').default}`,
         // eslint-disable-next-line global-require
-        bolditalics: `${origin}${require('@site/src/font/noto/NotoSans-BoldItalic.ttf').default}`,
+        bolditalics: `${origin}${require('@site/src/components/common/Print/font/noto/NotoSans-BoldItalic.ttf').default}`,
         // eslint-disable-next-line global-require
-        italics: `${origin}${require('@site/src/font/noto/NotoSans-Italic.ttf').default}`,
+        italics: `${origin}${require('@site/src/components/common/Print/font/noto/NotoSans-Italic.ttf').default}`,
         // eslint-disable-next-line global-require
-        normal: `${origin}${require('@site/src/font/noto/NotoSans-Regular.ttf').default}`,
+        normal: `${origin}${require('@site/src/components/common/Print/font/noto/NotoSans-Regular.ttf').default}`,
       },
       NotoSerifDevanagari: {
         bold: devanagariBold,

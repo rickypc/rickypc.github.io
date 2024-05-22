@@ -11,7 +11,7 @@ import {
   m,
 } from 'framer-motion';
 import Button from '@site/src/components/common/Button';
-import { clsx, key } from '@site/src/data/common';
+import { a11y, clsx, key } from '@site/src/data/common';
 import { GenIcon } from 'react-icons/lib';
 import Image from '@site/src/components/common/Image';
 import {
@@ -54,14 +54,14 @@ const Buttons = memo(function Buttons({ api }) {
   return (
     <div className={styles.buttons}>
       <Button
-        aria-label="Previous"
+        {...a11y('Previous')}
         onClick={onPrevious}
         whileTap={{ scale: 0.85 }}
       >
         <FaAngleLeft />
       </Button>
       <Button
-        aria-label="Next"
+        {...a11y('Next')}
         onClick={onNext}
         whileTap={{ scale: 0.85 }}
       >
@@ -95,7 +95,7 @@ const DotGroup = memo(function DotGroup({ api, images, prefix }) {
           const current = active === index;
           return (
             <Button
-              aria-label={index}
+              {...a11y(index + 1)}
               className={clsx(current && styles.active, styles.dot)}
               key={`dot-${prefix}-${alt}`}
               onClick={current ? null : () => onDot(index)}

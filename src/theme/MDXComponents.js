@@ -5,6 +5,7 @@
  */
 
 import MDXComponents from '@theme-original/MDXComponents';
+import RollPrint from '@site/src/components/common/RollPrint';
 import Speech from '@site/src/components/common/Speech';
 import Welcome from '@site/src/components/common/Welcome';
 
@@ -12,6 +13,7 @@ export default {
   // Re-use the default mapping.
   ...MDXComponents,
   // Map majority of the custom components.
+  RollPrint,
   Speech,
   Welcome,
 };

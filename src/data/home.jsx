@@ -72,9 +72,9 @@ export const hats = [
 export const image = {
   alt: 'Ricky Huang',
   picture: {
-    avif: require('@site/src/img/home/self.avif').default,
-    fallback: require('@site/src/img/home/self.png'),
-    webp: require('@site/src/img/home/self.webp').default,
+    avif: require('@site/src/pages/img/self.avif').default,
+    fallback: require('@site/src/pages/img/self.png'),
+    webp: require('@site/src/pages/img/self.webp').default,
   },
 };
 

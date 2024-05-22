@@ -10,7 +10,7 @@ import Layout from '@site/src/components/common/Layout';
 import { layout, preamble } from '@site/src/data/timeline';
 import { memo } from 'react';
 import Preamble from '@site/src/components/common/Preamble';
-import styles from './timeline.module.css';
+import styles from './styles.module.css';
 
 export default memo(function Timeline() {
   return (

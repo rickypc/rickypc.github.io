@@ -12,7 +12,7 @@ import { memo, useCallback, useState } from 'react';
 import Preamble from '@site/src/components/common/Preamble';
 import Projects from '@site/src/components/portfolio/Projects';
 import Zoom from '@site/src/components/portfolio/Zoom';
-import styles from './portfolio.module.css';
+import styles from './styles.module.css';
 
 export default memo(function Portfolio() {
   const [[current, filtered], setFilter] = useState(['All', catalog]);

@@ -14,7 +14,9 @@
   align-items: center;
   color: var(--ifm-toc-link-color);
   display: flex;
-  font: 400 0.975rem Poppins, sans-serif;
+  font-family: Poppins, sans-serif;
+  font-size: 0.975rem;
+  font-weight: 400;
   justify-content: space-between;
   padding: 0.4rem 0.8rem;
   width: 100%;
@@ -61,7 +63,9 @@
 
 .collapsible .items>dl {
   border-top: 1px solid var(--ifm-color-emphasis-300);
-  font: 400 0.9rem Poppins, sans-serif;
+  font-family: Poppins, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
   margin: 0;
   padding: 0.2rem 0;
 }

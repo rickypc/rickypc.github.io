@@ -43,7 +43,9 @@
   border-radius: 1rem;
   color: #3b566e;
   display: inline-block;
-  font: 400 0.75rem Poppins, sans-serif;
+  font-family: Poppins, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
   line-height: normal;
   margin-bottom: 0.2rem;
   margin-right: 0.3rem;
@@ -74,7 +76,9 @@
 }
 
 .portfolio figcaption h2 {
-  font: normal 1.5rem 'Yeseva One', cursive;
+  font-family: 'Yeseva One', cursize;
+  font-size: 1.5rem;
+  font-weight: 400;
   margin-bottom: 0.5rem;
   text-align: center;
 }
@@ -86,7 +90,9 @@
 }
 
 .portfolio figcaption p {
-  font: 400 0.9rem Poppins, sans-serif;
+  font-family: Poppins, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
   margin-bottom: 0.5rem;
 }
 

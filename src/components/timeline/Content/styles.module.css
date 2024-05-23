@@ -99,12 +99,16 @@
 }
 
 .timeline .inner h2 {
-  font: normal 2rem 'Yeseva One', cursive;
+  font-family: 'Yeseva One', cursive;
+  font-size: 2rem;
+  font-weight: 400;
   margin: 0.3rem 0;
 }
 
 .timeline .inner h3 {
-  font: normal 1.45rem 'Yeseva One', cursive;
+  font-family: 'Yeseva One', cursive;
+  font-size: 1.45rem;
+  font-weight: 400;
   margin: 0.3rem 0;
 }
 
@@ -130,12 +134,17 @@
 }
 
 .timeline .inner h4 {
-  font: italic 1rem 'Yeseva One', sans-serif;
+  font-family: 'Yeseva One', sans-serif;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 400;
   margin: 0.5rem 0;
 }
 
 .timeline .inner p {
-  font: 400 1rem Poppins, sans-serif;
+  font-family: Poppins, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 @media screen and (max-width: 48rem) {

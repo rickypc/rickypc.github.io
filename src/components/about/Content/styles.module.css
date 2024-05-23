@@ -25,7 +25,9 @@
 }
 
 .content h2 {
-  font: normal 2rem 'Yeseva One', cursive;
+  font-family: 'Yeseva One', cursive;
+  font-size: 2rem;
+  font-weight: 400;
   margin-bottom: 1rem;
 }
 
@@ -36,12 +38,16 @@
 }
 
 .content h3 {
-  font: normal 1.5rem 'Yeseva One', cursive;
+  font-family: 'Yeseva One', cursive;
+  font-size: 1.5rem;
+  font-weight: 400;
   margin: 1.5rem 0 1rem;
 }
 
 .content p {
-  font: normal 1.15rem Poppins, sans-serif;
+  font-family: Poppins, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 400;
   line-height: 1.5rem;
   margin-bottom: 1.15rem;
 }
@@ -51,7 +57,9 @@
 }
 
 .content ul li {
-  font: normal 1rem Poppins, sans-serif;
+  font-family: Poppins, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
   line-height: 1.55rem;
 }
 

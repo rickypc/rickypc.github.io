@@ -22,7 +22,9 @@
   background: #f8f8f8;
   border: 1px solid #c1dff9;
   border-radius: 1.5rem;
-  font: 400 0.95rem Poppins, sans-serif;
+  font-family: Poppins, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
   line-height: normal;
   margin-bottom: 0.25rem;
   min-width: 3.125rem;

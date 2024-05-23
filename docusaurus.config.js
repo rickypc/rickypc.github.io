@@ -6,7 +6,8 @@
  * @ts-check
  */
 
-import { themes as prismThemes } from 'prism-react-renderer';
+import { FontaineTransform } from 'fontaine';
+import { themes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -14,6 +15,7 @@ const config = {
   deploymentBranch: 'gh-pages',
   favicon: 'img/favicon.ico',
   headTags: [
+    /*
     {
       attributes: {
         href: 'https://counterapi.com',
@@ -21,6 +23,7 @@ const config = {
       },
       tagName: 'link',
     },
+    */
   ],
   i18n: {
     defaultLocale: 'en',
@@ -31,7 +34,6 @@ const config = {
   organizationName: 'rickypc',
   plugins: [
     () => ({
-      name: 'ricky-plugin-image',
       configureWebpack(_, isServer) {
         return {
           mergeStrategy: {
@@ -61,8 +63,26 @@ const config = {
               },
             ],
           },
+          plugins: [
+            FontaineTransform.webpack({
+              fallbacks: [
+                'system-ui',
+                '-apple-system',
+                'BlinkMacSystemFont',
+                'Segoe UI',
+                'Roboto',
+                'Oxygen',
+                'Ubuntu',
+                'Cantarell',
+                'Open Sans',
+                'Helvetica Neue',
+                'sans-serif',
+              ],
+            }),
+          ],
         };
       },
+      name: 'ricky-plugin-webpack',
     }),
   ],
   presets: [
@@ -94,11 +114,11 @@ const config = {
       },
       metadata: [
         { name: 'author', content: 'Ricky Huang' },
-        { property: 'og:image', content: 'https://ricky.one/img/home/self.png' },
+        { property: 'og:image', content: 'https://ricky.one/img/self.png' },
         { property: 'og:site_name', content: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic' },
         { property: 'og:type', content: 'website' },
         { name: 'twitter:card', content: 'summary' },
-        { name: 'twitter:image', content: 'https://ricky.one/img/home/self.png' },
+        { name: 'twitter:image', content: 'https://ricky.one/img/self.png' },
         { name: 'twitter:site', content: '@rickypc2000' },
       ],
       navbar: {
@@ -128,14 +148,14 @@ const config = {
         ],
         logo: {
           height: 'auto',
-          src: '/img/home/logo.webp',
+          src: '/img/logo.webp',
           width: 'auto',
         },
         title: 'Ricky Huang',
       },
       prism: {
-        darkTheme: prismThemes.dracula,
-        theme: prismThemes.github,
+        darkTheme: themes.dracula,
+        theme: themes.github,
       },
     }),
   title: 'Ricky Huang',

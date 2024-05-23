@@ -64,8 +64,8 @@ export default memo(Object.assign(function Speech({
   className,
   lang = 'id-ID',
   name = 'Damayanti',
-  pitch = 0.5,
-  rate = 0,
+  pitch = 1,
+  rate = 0.9,
   repetition = 1,
   volume = 1,
 }) {
@@ -121,8 +121,10 @@ export default memo(Object.assign(function Speech({
         || voices.find((voice) => voice.default)
         || voices[0];
       // After voice assignment.
-      utterance.current.lang = utterance.current.voice.lang;
-      utterance.current.voiceURI = utterance.current.voice.voiceURI;
+      utterance.current.lang = utterance.current.voice?.lang || lang;
+      if (utterance.current.voice?.voiceURI) {
+        utterance.current.voiceURI = utterance.current.voice?.voiceURI;
+      }
       utterance.volume = volume;
     }
     return () => synth.current?.cancel();

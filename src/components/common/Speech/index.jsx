@@ -4,6 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+import Admonition from '@theme/Admonition';
 import Button from '@site/src/components/common/Button';
 import { a11y, clsx } from '@site/src/data/common';
 import { GenIcon } from 'react-icons/lib';
@@ -57,6 +58,13 @@ const Repetition = memo(function Repetition({ value = 1 }) {
 });
 Repetition.propTypes = {
   value: PropTypes.number,
+};
+
+// Name matching takes precendence.
+const voice = (name, lang) => {
+  const voices = speechSynthesis.getVoices();
+  return voices.find((voi) => voi.name === name)
+    || voices.find((voi) => voi.lang === lang);
 };
 
 export default memo(Object.assign(function Speech({
@@ -115,11 +123,7 @@ export default memo(Object.assign(function Speech({
       utterance.current.onerror = onStop;
       utterance.current.pitch = pitch;
       utterance.current.rate = rate;
-      const voices = synth.current.getVoices();
-      utterance.current.voice = voices.find((voice) => voice.name === name)
-        || voices.find((voice) => voice.lang === lang)
-        || voices.find((voice) => voice.default)
-        || voices[0];
+      utterance.current.voice = voice(name, lang);
       // After voice assignment.
       utterance.current.lang = utterance.current.voice?.lang || lang;
       if (utterance.current.voice?.voiceURI) {
@@ -130,11 +134,21 @@ export default memo(Object.assign(function Speech({
     return () => synth.current?.cancel();
   }, [children, lang, name, onStop, pitch, rate, ready, volume]);
 
-  if (!ready) {
+  if (!ready || (ready && voice(name, lang)?.lang !== lang)) {
+    const language = ready ? new Intl.DisplayNames(['en'], { type: 'language' }).of(lang) : '';
     return (
-      <div className={styles.controls}>
-        <Repetition value={repetition} />
-      </div>
+      <>
+        {ready ? (
+          <Admonition type="info">
+            <p>
+              {`${language} voice is not available in this browser. Please try different browser.`}
+            </p>
+          </Admonition>
+        ) : null}
+        <div className={styles.controls}>
+          <Repetition value={repetition} />
+        </div>
+      </>
     );
   }
 

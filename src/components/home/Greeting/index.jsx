@@ -16,7 +16,7 @@ export default memo(function Greeting() {
     <Heading as="h1" className={styles.greeting}>
       <span>{greeting}</span>
       <span className={styles.ipa}>{ipa}</span>
-      <Speech>ricky huang</Speech>
+      <Speech lang="en-US" name="Victoria">ricky huang</Speech>
       <Heart className={styles.reaction} id="home-landing" />
     </Heading>
   );

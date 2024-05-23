@@ -95,6 +95,7 @@ html * {
 #__docusaurus .main-wrapper,
 #__docusaurus nav {
   opacity: 0;
+  visibility: hidden;
 }
 
 #__docusaurus.docusaurus--welcome::before {
@@ -105,6 +106,7 @@ html * {
 #__docusaurus.docusaurus--welcome .main-wrapper,
 #__docusaurus.docusaurus--welcome nav {
   opacity: 1;
+  visibility: visible;
 }
 
 #__docusaurus.docusaurus--exclusive nav.navbar .navbar__inner .navbar__items>a {

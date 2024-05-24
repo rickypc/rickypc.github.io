@@ -19,6 +19,29 @@ import PropTypes from 'prop-types';
 import { useSpeech } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
+const getVoice = async (name, lang) => {
+  const voices = await new Promise((resolve) => {
+    // `voiceschanged` event is not reliable cross-browser.
+    let count = 0;
+    const interval = setInterval(() => {
+      count += 1;
+      // Max 30 times.
+      if (count === 30) {
+        clearInterval(interval);
+      }
+      const accents = speechSynthesis?.getVoices();
+      if (accents.length) {
+        clearInterval(interval);
+        resolve(accents);
+      }
+    }, 250);
+  });
+  // Name matching takes precendence.
+  return voices?.find((voi) => voi.name === name)
+    || voices?.find((voi) => voi.lang === lang)
+    || { lang: false };
+};
+
 function GrPause(props) {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'path', attr: { fill: 'none', strokeWidth: '2', d: 'M3,21 L9,21 L9,3 L3,3 L3,21 Z M15,21 L21,21 L21,3 L15,3 L15,21 Z' }, child: [] }] })(props);
 }
@@ -60,13 +83,6 @@ Repetition.propTypes = {
   value: PropTypes.number,
 };
 
-// Name matching takes precendence.
-const voice = (name, lang) => {
-  const voices = speechSynthesis.getVoices();
-  return voices.find((voi) => voi.name === name)
-    || voices.find((voi) => voi.lang === lang);
-};
-
 export default memo(Object.assign(function Speech({
   children,
   className,
@@ -77,16 +93,15 @@ export default memo(Object.assign(function Speech({
   repetition = 1,
   volume = 1,
 }) {
-  const [paused, setPaused] = useState(false);
-  const [playing, setPlaying] = useState(false);
+  const [{ paused, playing }, setControl] = useState({ paused: false, playing: false });
   const [ready] = useSpeech();
   const synth = useRef();
   const utterance = useRef();
+  const [voice, setVoice] = useState({ lang: null });
 
   const onPause = useCallback(() => {
     synth.current?.pause();
-    setPaused(true);
-    setPlaying(false);
+    setControl({ paused: true, playing: false });
   }, []);
 
   const onPlay = useCallback(async () => {
@@ -97,44 +112,45 @@ export default memo(Object.assign(function Speech({
       });
     }
     synth.current?.speak(utterance.current);
-    setPaused(false);
-    setPlaying(true);
+    setControl({ paused: false, playing: true });
   }, []);
 
   const onResume = useCallback(() => {
     synth.current?.resume();
-    setPaused(false);
-    setPlaying(true);
+    setControl({ paused: false, playing: true });
   }, []);
 
   const onStop = useCallback(() => {
     synth.current?.cancel();
-    setPaused(false);
-    setPlaying(false);
+    setControl({ paused: false, playing: false });
   }, []);
 
   useEffect(() => {
     if (ready) {
-      synth.current = speechSynthesis;
-      const text = typeof (children) === 'string'
-        ? children : children.props.children;
-      utterance.current = new SpeechSynthesisUtterance(text);
-      utterance.current.onend = onStop;
-      utterance.current.onerror = onStop;
-      utterance.current.pitch = pitch;
-      utterance.current.rate = rate;
-      utterance.current.voice = voice(name, lang);
-      // After voice assignment.
-      utterance.current.lang = utterance.current.voice?.lang || lang;
-      if (utterance.current.voice?.voiceURI) {
-        utterance.current.voiceURI = utterance.current.voice?.voiceURI;
-      }
-      utterance.volume = volume;
+      (async () => {
+        synth.current = speechSynthesis;
+        const text = typeof (children) === 'string'
+          ? children : children.props.children;
+        utterance.current = new SpeechSynthesisUtterance(text);
+        utterance.current.onend = onStop;
+        utterance.current.onerror = onStop;
+        utterance.current.pitch = pitch;
+        utterance.current.rate = rate;
+        utterance.volume = volume;
+        const accent = await getVoice(name, lang);
+        if (accent?.lang !== false) {
+          utterance.current.lang = accent.lang;
+          utterance.current.voice = accent;
+          utterance.current.voiceURI = accent.voiceURI;
+          setVoice(accent);
+        }
+      })();
     }
     return () => synth.current?.cancel();
   }, [children, lang, name, onStop, pitch, rate, ready, volume]);
 
-  if (!ready || (ready && voice(name, lang)?.lang !== lang)) {
+  // The fist load or when voice is truly not found.
+  if (!ready || voice?.lang === false) {
     const language = ready ? new Intl.DisplayNames(['en'], { type: 'language' }).of(lang) : '';
     return (
       <>

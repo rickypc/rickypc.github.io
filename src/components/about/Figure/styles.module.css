@@ -18,7 +18,7 @@
 }
 
 .figure .shape {
-  mask: url(/img/about/mask.svg);
+  mask: url(/src/pages/about/img/mask.svg);
   mask-position: center center;
   mask-repeat: no-repeat;
   mask-size: contain;

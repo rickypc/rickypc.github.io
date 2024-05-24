@@ -12,7 +12,7 @@
 
 .home::before {
   backface-visibility: hidden;
-  background: 0/cover fixed no-repeat url(/img/home/hero.webp);
+  background: 0/cover fixed no-repeat url(/src/pages/img/hero.webp);
   content: '';
   display: block;
   height: 100%;

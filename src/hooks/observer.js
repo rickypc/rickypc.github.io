@@ -110,7 +110,7 @@ export function useSpeech() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (typeof (speechSynthesis) !== 'undefined') {
+    if (typeof (speechSynthesis) !== 'undefined' && typeof (SpeechSynthesisUtterance) !== 'undefined') {
       setReady(true);
     }
   }, []);

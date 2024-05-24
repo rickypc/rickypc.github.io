@@ -1,0 +1,6 @@
+user-agent: *
+disallow: /assets/
+disallow: /font/
+disallow: /img/
+
+sitemap: https://ricky.one/sitemap.xml

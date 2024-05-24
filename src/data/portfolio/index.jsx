@@ -484,6 +484,10 @@ export const layout = {
     'smart creative',
     'master degree',
   ],
+  metadatas: [
+    // eslint-disable-next-line global-require
+    <link as="font" fetchPriority="high" href={require('@site/src/font/yesevaone/OpNJno4ck8vc-xYpwWWxli1VWzfAw0Y.woff2').default} key={0} rel="preload" type="font/woff2" />,
+  ],
   title: 'Portfolio and successful projects',
 };
 

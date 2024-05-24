@@ -22,7 +22,7 @@ export default memo(Object.assign(function Layout({
   useWelcome();
   return (
     <ThemeLayout description={description} title={title}>
-      <Head>
+      <Head prioritizeSeoTags>
         <meta name="keyword" content={keywords.join(',')} />
         {metadatas?.map((metadata) => metadata)}
         <script type="application/ld+json">{context({ description, keywords, title })}</script>

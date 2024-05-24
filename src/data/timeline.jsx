@@ -44,7 +44,7 @@ export const timelines = [
       children: 'Experian Consumer Services',
       href: 'https://bit.ly/4ar63Wq',
     },
-    description: 'I accepted the Senior Software Engineer position with Experian Consumer Services to become a more well-rounded entrepreneur. I have been awarded the Experian Platinum Aspire, the EMF Hero - Above and Beyond, and the Experian Spot - Excellence in Action four times.',
+    description: 'I accepted the Senior Software Engineer position with Experian Consumer Services to become a more well-rounded entrepreneur. I have been awarded the Experian Platinum Aspire, the EMF Hero - Above and Beyond, and the Experian Spot - Excellence in Action frequently.',
     picture: {
       avif: require('@site/src/pages/timeline/img/experian.avif').default,
       fallback: require('@site/src/pages/timeline/img/experian.jpg'),

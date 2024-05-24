@@ -7,6 +7,7 @@
 /* eslint-disable global-require */
 
 import { GenIcon } from 'react-icons/lib';
+import Link from '@site/src/components/common/Link';
 import Reveal from '@site/src/components/common/Reveal';
 
 function FaGithub(props) {
@@ -27,7 +28,15 @@ export const hats = [
         <Reveal coeff={0}>An Engineering Leader</Reveal>
       </>
     ),
-    description: 'I am a leader who focuses on achieving engineering team goals with thoughtful analysis and judgment to thrive on ever-changing and challenging business requirements.',
+    description: (
+      <>
+        <span>I am a leader who focuses on achieving engineering team goals with </span>
+        <Link href="/about" title="thoughtful analysis and judgment">thoughtful analysis and judgment</Link>
+        <span> to thrive on ever-changing and </span>
+        <Link href="/stories" title="challenging business requirements">challenging business requirements</Link>
+        <span>.</span>
+      </>
+    ),
     label: 'An Engineering Leader',
   },
   {
@@ -43,7 +52,16 @@ export const hats = [
         </Reveal>
       </>
     ),
-    description: 'I am a full-stack developer who bridges the communication gap between the front-end and back-end teams with the idea of one common cause to create a robust and versatile application.',
+    description: (
+      <>
+        <span>I am a full-stack developer who </span>
+        <Link href="/about" title="bridges the communication gap">bridges the communication gap</Link>
+        <span> between the front-end and back-end teams with the idea of</span>
+        <span> one common cause to create a </span>
+        <Link href="/portfolio" title="robust and versatile application">robust and versatile application</Link>
+        <span>.</span>
+      </>
+    ),
     label: 'A Full Stack Developer',
   },
   {
@@ -54,7 +72,14 @@ export const hats = [
         <Reveal coeff={2.5}>A Smart Creative</Reveal>
       </>
     ),
-    description: 'I am a smart creative who combines technical innovation, business strategy, and creativity to lead and align the engineering team with the company\'s business objectives.',
+    description: (
+      <>
+        <span>I am a smart creative who </span>
+        <Link href="/about" title="combines technical innovation, business strategy, and creativity">combines technical innovation, business strategy, and creativity</Link>
+        <span> to lead and align the engineering team</span>
+        <span> with the company&#39;s business objectives.</span>
+      </>
+    ),
     label: 'A Smart Creative',
   },
   {
@@ -64,7 +89,15 @@ export const hats = [
         <Reveal coeff={4}>An Innovator</Reveal>
       </>
     ),
-    description: 'With over 25 years of professionally enriched experiences and an advanced academic background in Software Engineering, I help shape my partner\'s and employer\'s technology foundation to deliver their unique value proposition.',
+    description: (
+      <>
+        <span>With over 25 years of professionally </span>
+        <Link href="/timeline" title="enriched experiences and an advanced academic background">enriched experiences and an advanced academic background</Link>
+        <span> in Software Engineering, I help shape my partner&#39;s and employer&#39;s </span>
+        <Link href="/portfolio" title="technology foundation">technology foundation</Link>
+        <span> to deliver their unique value proposition.</span>
+      </>
+    ),
     label: 'An Innovator',
   },
 ];

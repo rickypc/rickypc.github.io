@@ -87,7 +87,7 @@ export default memo(Object.assign(function Print({
     }
   }, [definition, label, siteConfig]);
 
-  return browser ? (
+  return browser && (
     <div className={styles.controls}>
       <Button
         {...a11y(label)}
@@ -98,7 +98,7 @@ export default memo(Object.assign(function Print({
         <Icon />
       </Button>
     </div>
-  ) : null;
+  );
 }, {
   propTypes: {
     className: PropTypes.string,

@@ -49,9 +49,9 @@ const Timeline = memo(function Timeline({
         >
           <Heading as="h2">{year}</Heading>
           <Heading as="h3">
-            {className === styles.left ? <Heart id={id} /> : null}
+            {className === styles.left && <Heart id={id} />}
             <Link {...title} />
-            {className === styles.right ? <Heart id={id} /> : null}
+            {className === styles.right && <Heart id={id} />}
           </Heading>
           <Heading as="h4"><Link {...affiliation} /></Heading>
           <p>{description}</p>

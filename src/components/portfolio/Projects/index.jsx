@@ -82,13 +82,13 @@ export default memo(Object.assign(function Projects({ filtered, onClick }) {
   return (
     <LazyMotion features={domMax}>
       <m.div className={styles.portfolios} layout>
-        {filtered.length ? (
+        {filtered.length && (
           <AnimatePresence>
             {filtered.map(({ prefix, ...rest }) => (
               <Project key={`project-${prefix}`} onClick={onClick} prefix={prefix} {...rest} />
             ))}
           </AnimatePresence>
-        ) : null}
+        )}
       </m.div>
     </LazyMotion>
   );

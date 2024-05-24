@@ -58,14 +58,14 @@ const Picture = memo(function Picture({
     <picture className={styles.picture} ref={ref}>
       <LazyMotion features={domAnimation}>
         <AnimatePresence>
-          {(fit.width && !loaded && visible) || loaded ? (
+          {((fit.width && !loaded && visible) || loaded) && (
             <>
-              {picture?.avif ? <source srcSet={picture.avif} type="image/avif" /> : null}
-              {picture?.webp ? <source srcSet={picture.webp} type="image/webp" /> : null}
-              {picture?.fallback ? (
+              {picture?.avif && <source srcSet={picture.avif} type="image/avif" />}
+              {picture?.webp && <source srcSet={picture.webp} type="image/webp" />}
+              {picture?.fallback && (
                 <m.img
                   {...rest}
-                  alt={loaded ? alt : null}
+                  alt={loaded && alt}
                   animate={{ opacity: loaded ? 1 : 0.9 }}
                   draggable={false}
                   height={fit.height}
@@ -77,9 +77,9 @@ const Picture = memo(function Picture({
                   transition={{ duration: 0.25 }}
                   width={fit.width}
                 />
-              ) : null}
+              )}
             </>
-          ) : null}
+          )}
         </AnimatePresence>
       </LazyMotion>
     </picture>

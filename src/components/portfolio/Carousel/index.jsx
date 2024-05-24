@@ -102,12 +102,12 @@ const DotGroup = memo(function DotGroup({ api, images, prefix }) {
               whileTap={current ? null : { scale: 0.85 }}
             >
               <LazyMotion features={domMax}>
-                {current ? (
+                {current && (
                   <m.span
                     className={styles.outline}
                     layoutId={`dot-outline-${prefix}`}
                   />
-                ) : null}
+                )}
               </LazyMotion>
             </Button>
           );
@@ -152,7 +152,7 @@ const LazySlide = memo(function LazySlide({
       role="button"
       tabIndex={0}
     >
-      {inView || loaded ? <Image {...image} onLoad={() => setLoaded(true)} /> : null}
+      {(inView || loaded) && <Image {...image} onLoad={() => setLoaded(true)} />}
     </div>
   );
 });
@@ -193,12 +193,12 @@ export default memo(Object.assign(function Carousel({ images, onClick, prefix })
           ))}
         </div>
       </div>
-      {images.length > 1 ? (
+      {images.length > 1 && (
         <div className={styles.controls}>
           <Buttons api={api} />
           <DotGroup api={api} images={images} prefix={prefix} />
         </div>
-      ) : null}
+      )}
     </div>
   );
 }, {

@@ -63,7 +63,7 @@ export default memo(Object.assign(function Zoom({ onClick, open }) {
           ref={ref}
           transition={transition}
         >
-          {opened ? <Image {...open} /> : null}
+          {opened && <Image {...open} />}
         </m.figure>
       </LazyMotion>
     </div>

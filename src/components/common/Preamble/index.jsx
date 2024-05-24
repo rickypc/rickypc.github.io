@@ -14,7 +14,7 @@ import styles from './styles.module.css';
 export default memo(Object.assign(function Preamble({ description, printAdmonition, title }) {
   return (
     <>
-      {printAdmonition ? <PrintAdmonition /> : null}
+      {printAdmonition && <PrintAdmonition />}
       <header className="row">
         <div className={clsx('col', 'col--8', 'col--offset-2', styles.preamble)}>
           <Heading as="h1">{title}</Heading>

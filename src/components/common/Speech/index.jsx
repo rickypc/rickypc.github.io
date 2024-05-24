@@ -154,13 +154,13 @@ export default memo(Object.assign(function Speech({
     const language = ready ? new Intl.DisplayNames(['en'], { type: 'language' }).of(lang) : '';
     return (
       <>
-        {ready ? (
+        {ready && (
           <Admonition type="info">
             <p>
               {`${language} voice is not available in this browser. Please try different browser.`}
             </p>
           </Admonition>
-        ) : null}
+        )}
         <div className={styles.controls}>
           <Repetition value={repetition} />
         </div>

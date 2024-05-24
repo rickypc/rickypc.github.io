@@ -27,7 +27,7 @@ const Item = memo(function Item({
         {...rest}
       >
         <span {...rest}>{item}</span>
-        {current ? (
+        {current && (
           <m.span
             className={styles.indicator}
             layoutId={`pill-indicator-${prefix}`}
@@ -35,7 +35,7 @@ const Item = memo(function Item({
           >
             {item}
           </m.span>
-        ) : null}
+        )}
       </m.dt>
     </LazyMotion>
   );

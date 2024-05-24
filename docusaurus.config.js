@@ -147,6 +147,7 @@ const config = {
           },
         ],
         logo: {
+          alt: 'Logo',
           height: 'auto',
           src: '/img/logo.webp',
           width: 'auto',

@@ -60,7 +60,7 @@ export const context = ({
     },
     alumniOf: [
       {
-        '@type': 'OrganizationRole',
+        '@type': 'EducationalOrganization',
         alumniOf: {
           '@type': 'CollegeOrUniversity',
           name: 'California State University, Fullerton',
@@ -69,7 +69,7 @@ export const context = ({
         startDate: '2007',
       },
       {
-        '@type': 'OrganizationRole',
+        '@type': 'EducationalOrganization',
         alumniOf: {
           '@type': 'CollegeOrUniversity',
           name: 'Petra Christian University',

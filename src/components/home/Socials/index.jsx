@@ -4,7 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { a11y, key } from '@site/src/data/common';
+import { key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
 import { memo } from 'react';
 import PropTypes from 'prop-types';
@@ -12,10 +12,11 @@ import { socials } from '@site/src/data/home';
 import styles from './styles.module.css';
 
 const Social = memo(function Social({ href, Icon, title }) {
+  // We can't use a11y here because it will create SEO problem.
   return (
     <li>
       <Link href={href} title={title} whileTap={{ scale: 0.85 }}>
-        <Icon {...a11y(title, { role: 'img' })} />
+        <Icon {...{ 'aria-label': title, role: 'img' }} />
       </Link>
     </li>
   );

@@ -4,10 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import {
-  // a11y,
-  clsx,
-} from '@site/src/data/common';
+import { clsx } from '@site/src/data/common';
 // import { GenIcon } from 'react-icons/lib';
 import {
   memo,
@@ -86,6 +83,7 @@ export default memo(Object.assign(function Heart({ className /* , id */ }) {
     // return none.
   }, [added, fetchAsJson, key, onUpdate, timestamp, url]);
 
+  // We can't use a11y here because it will create SEO problem.
   return (
     <span className={clsx(className, styles.reaction)}>
       <span
@@ -94,7 +92,7 @@ export default memo(Object.assign(function Heart({ className /* , id */ }) {
         onClick={onClick}
         onKeyPress={onClick}
       >
-        <Icon {...a11y(title, { role: 'img' })} />
+        <Icon {...{ 'aria-label': title, role: 'img' }} />
       </span>
       <span aria-hidden="true" className={styles.count}>{browser ? (count || 0) : 0}</span>
     </span>

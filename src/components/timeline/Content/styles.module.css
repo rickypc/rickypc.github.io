@@ -82,8 +82,12 @@
   opacity: 1;
 }
 
-.timeline .logo img {
+.timeline .logo picture,
+.timeline .logo picture img {
   border-radius: 50%;
+}
+
+.timeline .logo img {
   height: 100%;
   width: 100%;
 }

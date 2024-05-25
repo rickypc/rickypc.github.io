@@ -19,11 +19,19 @@
 }
 
 .hats .hat h2 {
+  align-items: center;
+  display: inline-flex;
   text-shadow: 0.125rem 0.125rem 0.1875rem rgba(255, 255, 255, 0.1);
 }
 
 .hats .hat h2 .reader {
   display: none;
+}
+
+.hats .hat h2>img {
+  height: 2rem;
+  margin-right: 0.75rem;
+  width: 2rem;
 }
 
 .hats .hat p {

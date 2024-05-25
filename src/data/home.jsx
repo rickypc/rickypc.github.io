@@ -24,7 +24,7 @@ export const hats = [
   {
     children: (
       <>
-        🧑🏻‍✈️&nbsp;
+        <img alt="Pilot" src={require('@site/src/pages/img/pilot.webp').default} />
         <Reveal coeff={0}>An Engineering Leader</Reveal>
       </>
     ),
@@ -42,7 +42,7 @@ export const hats = [
   {
     children: (
       <>
-        👨🏻‍💻&nbsp;
+        <img alt="Software Engineer" src={require('@site/src/pages/img/technologist.webp').default} />
         <Reveal coeff={4}>
           <>
             A
@@ -68,7 +68,7 @@ export const hats = [
 
     children: (
       <>
-        🦄&nbsp;
+        <img alt="Unicorn" src={require('@site/src/pages/img/unicorn.webp').default} />
         <Reveal coeff={2.5}>A Smart Creative</Reveal>
       </>
     ),
@@ -85,7 +85,7 @@ export const hats = [
   {
     children: (
       <>
-        🚀&nbsp;
+        <img alt="Rocket" src={require('@site/src/pages/img/rocket.webp').default} />
         <Reveal coeff={4}>An Innovator</Reveal>
       </>
     ),

@@ -31,6 +31,7 @@ const Picture = memo(function Picture({
   ref,
   ...rest
 }) {
+  const [background, setBackground] = useState(true);
   const { images } = picture?.fallback?.src || {};
   // After images assignment.
   const [fit, setFit] = useState(images?.[0] || { width: 0 });
@@ -42,6 +43,7 @@ const Picture = memo(function Picture({
   const onFallbackLoad = useCallback((evt) => {
     setLoaded(true);
     onLoad?.(evt);
+    setTimeout(() => setBackground(false), 450);
   }, [onLoad]);
 
   useEffect(() => {
@@ -53,7 +55,11 @@ const Picture = memo(function Picture({
 
   // a11y() doesn't provide `alt` by design.
   return (
-    <picture className={styles.picture} ref={ref}>
+    <picture
+      className={styles.picture}
+      ref={ref}
+      style={{ backgroundImage: background ? `url(${picture.fallback.preSrc})` : 'none' }}
+    >
       <LazyMotion features={domAnimation}>
         <AnimatePresence>
           {((fit.width && !loaded && visible) || loaded) && (
@@ -63,16 +69,16 @@ const Picture = memo(function Picture({
               {picture?.fallback && (
                 <m.img
                   {...rest}
-                  alt={loaded && alt}
-                  animate={{ opacity: loaded ? 1 : 0.9 }}
+                  alt={loaded ? alt : null}
+                  animate={{ opacity: loaded ? 1 : 0 }}
                   draggable={false}
                   height={fit.height}
+                  initial={{ opacity: 0 }}
                   key={key(alt, 'picture')}
                   onLoad={onFallbackLoad}
                   src={fit.path}
                   srcSet={picture.fallback.src.srcSet}
-                  style={!loaded && { backgroundImage: `url(${picture.fallback.preSrc})` }}
-                  transition={{ duration: 0.25 }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
                   width={fit.width}
                 />
               )}

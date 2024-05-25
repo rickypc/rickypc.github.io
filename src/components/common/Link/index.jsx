@@ -32,8 +32,8 @@ const Link = forwardRef(({
         className={clsx(className, styles.link)}
         href={href}
         ref={ref}
-        rel={href?.includes('https://') && 'noopener noreferrer'}
-        target={href?.includes('https://') && '_blank'}
+        rel={href?.includes('https://') ? 'noopener noreferrer' : null}
+        target={href?.includes('https://') ? '_blank' : null}
         {...rest}
       >
         {children}

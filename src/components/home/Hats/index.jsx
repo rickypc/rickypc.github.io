@@ -30,7 +30,10 @@ Hat.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.oneOfType([
+    PropTypes.shape(),
+    PropTypes.string,
+  ]).isRequired,
   label: PropTypes.string.isRequired,
 };
 

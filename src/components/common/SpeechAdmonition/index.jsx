@@ -13,7 +13,7 @@ import styles from './styles.module.css';
 export default memo(function SpeechAdmonition() {
   const [ready] = useSpeech();
 
-  return !ready && (
+  return ready === false && (
     <aside aria-hidden="true" className={clsx(styles.admonition, 'row')}>
       <div className="col">
         <Admonition type={admonitions.speech.type}>

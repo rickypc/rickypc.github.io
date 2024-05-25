@@ -149,61 +149,49 @@ export default memo(Object.assign(function Speech({
     return () => synth.current?.cancel();
   }, [children, lang, name, onStop, pitch, rate, ready, volume]);
 
-  // The fist load or when voice is truly not found.
-  if (!ready || voice?.lang === false) {
-    const language = ready ? new Intl.DisplayNames(['en'], { type: 'language' }).of(lang) : '';
-    return (
-      <>
-        {ready && (
-          <Admonition type="info">
-            <p>
-              {`${language} voice is not available in this browser. Please try different browser.`}
-            </p>
-          </Admonition>
-        )}
-        <div className={styles.controls}>
-          <Repetition value={repetition} />
-        </div>
-      </>
-    );
-  }
-
-  if (playing) {
-    return (
+  return (
+    <>
+      {ready && voice?.lang === false && (
+        <Admonition type="info">
+          <p>
+            {`${new Intl.DisplayNames(['en'], { type: 'language' }).of(lang)} voice is not available in this browser. Please try different browser.`}
+          </p>
+        </Admonition>
+      )}
       <div className={styles.controls}>
         <Repetition value={repetition} />
-        <Button
-          {...a11y('Stop')}
-          className={clsx(className, styles.control)}
-          onClick={onStop}
-          whileTap={{ scale: 0.85 }}
-        >
-          <GrStop />
-        </Button>
-        <Button
-          {...a11y('Pause')}
-          className={clsx(className, styles.control)}
-          onClick={onPause}
-          whileTap={{ scale: 0.85 }}
-        >
-          <GrPause />
-        </Button>
+        {playing && (
+          <>
+            <Button
+              {...a11y('Stop')}
+              className={clsx(className, styles.control)}
+              onClick={onStop}
+              whileTap={{ scale: 0.85 }}
+            >
+              <GrStop />
+            </Button>
+            <Button
+              {...a11y('Pause')}
+              className={clsx(className, styles.control)}
+              onClick={onPause}
+              whileTap={{ scale: 0.85 }}
+            >
+              <GrPause />
+            </Button>
+          </>
+        )}
+        {!playing && typeof (voice?.lang) === 'string' && (
+          <Button
+            {...a11y(paused ? 'Resume' : 'Play')}
+            className={clsx(className, styles.control)}
+            onClick={paused ? onResume : onPlay}
+            whileTap={{ scale: 0.85 }}
+          >
+            {paused ? <GrResume /> : <GrPlay />}
+          </Button>
+        )}
       </div>
-    );
-  }
-
-  return (
-    <div className={styles.controls}>
-      <Repetition value={repetition} />
-      <Button
-        {...a11y(paused ? 'Resume' : 'Play')}
-        className={clsx(className, styles.control)}
-        onClick={paused ? onResume : onPlay}
-        whileTap={{ scale: 0.85 }}
-      >
-        {paused ? <GrResume /> : <GrPlay />}
-      </Button>
-    </div>
+    </>
   );
 }, {
   propTypes: {

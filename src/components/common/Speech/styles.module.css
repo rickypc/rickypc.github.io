@@ -17,6 +17,7 @@
 .controls {
   display: inline-flex;
   margin-bottom: var(--ifm-leading);
+  margin-right: 0.25rem;
 }
 
 .controls .control,

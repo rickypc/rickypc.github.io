@@ -13,7 +13,7 @@ import styles from './styles.module.css';
 export default memo(function PrintAdmonition() {
   const [ready] = usePrint();
 
-  return ready ? null : (
+  return !ready && (
     <aside aria-hidden="true" className={clsx(styles.admonition, 'row')}>
       <div className="col">
         <Admonition type={admonitions.print.type}>

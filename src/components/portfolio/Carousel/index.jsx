@@ -99,7 +99,7 @@ const DotGroup = memo(function DotGroup({ api, images, prefix }) {
               className={clsx(current && styles.active, styles.dot)}
               key={`dot-${prefix}-${alt}`}
               onClick={current ? null : () => onDot(index)}
-              whileTap={current ? null : { scale: 0.85 }}
+              whileTap={!current && { scale: 0.85 }}
             >
               <LazyMotion features={domMax}>
                 {current && (

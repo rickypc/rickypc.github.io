@@ -51,8 +51,6 @@ const Picture = memo(function Picture({
     }
   }, [images, ref]);
 
-  // initial={{ opacity: 0.5 }}
-
   // a11y() doesn't provide `alt` by design.
   return (
     <picture className={styles.picture} ref={ref}>
@@ -73,7 +71,7 @@ const Picture = memo(function Picture({
                   onLoad={onFallbackLoad}
                   src={fit.path}
                   srcSet={picture.fallback.src.srcSet}
-                  style={loaded ? null : { backgroundImage: `url(${picture.fallback.preSrc})` }}
+                  style={!loaded && { backgroundImage: `url(${picture.fallback.preSrc})` }}
                   transition={{ duration: 0.25 }}
                   width={fit.width}
                 />

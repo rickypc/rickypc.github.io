@@ -10,6 +10,7 @@ import {
   LazyMotion,
   m,
 } from 'framer-motion';
+import { clsx, key } from '@site/src/data/common';
 import {
   forwardRef,
   memo,
@@ -18,7 +19,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import { key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
 import PropTypes from 'prop-types';
 import { useVisibility } from '@site/src/hooks/observer';
@@ -49,39 +49,46 @@ const Picture = memo(function Picture({
   const { visible } = useVisibility({ ref, threshold: 0.1 });
 
   const onFallbackLoad = useCallback((evt) => {
-    setRender((previous) => ({ ...previous, loaded: true }));
+    setRender((previous) => (!previous.loaded ? { ...previous, loaded: true } : previous));
     onLoad?.(evt);
-    setTimeout(() => setRender((previous) => ({ ...previous, background: false })), 450);
+    setTimeout(() => setRender((previous) => (previous.background ? {
+      ...previous,
+      background: false,
+    } : previous)), 450);
   }, [onLoad]);
 
   useEffect(() => {
     if (ref?.current) {
+      let responsive = images;
       const width = ref.current.clientWidth || ref.current.parentNode.clientWidth;
-      setRender((previous) => ({
-        ...previous,
-        fit: images?.find((image) => image.width >= width) || images?.slice(-1)?.[0],
-      }));
+      if (!Array.isArray(responsive) && typeof (picture?.fallback) === 'string') {
+        responsive = [{ path: picture.fallback, width }];
+      }
+      setRender((previous) => {
+        const found = responsive?.find((image) => image.width >= width)
+          || responsive?.slice(-1)?.[0];
+        return found.path === previous.fit?.path ? previous : {
+          ...previous,
+          fit: found,
+        };
+      });
     }
-  }, [images, ref]);
+  }, [images, picture, ref]);
 
   useEffect(() => {
     if (visible) {
-      setRender((previous) => {
-        if (previous.show) {
-          return previous;
-        }
-        return previous.fit.width && !previous.loaded
-          ? { ...previous, show: true } : previous;
-      });
+      setRender((previous) => (!previous.show ? { ...previous, show: true } : previous));
     }
   }, [visible]);
 
   // a11y() doesn't provide `alt` by design.
   return (
     <picture
-      className={styles.picture}
+      className={clsx(styles.picture, (background && !picture.fallback?.preSrc) && styles.shimmer)}
       ref={ref}
-      style={{ backgroundImage: background ? `url(${picture.fallback.preSrc})` : 'none' }}
+      style={background && picture.fallback?.preSrc ? {
+        backgroundImage: `url(${picture.fallback?.preSrc})`,
+      } : {}}
     >
       <LazyMotion features={domAnimation}>
         <AnimatePresence>
@@ -100,7 +107,7 @@ const Picture = memo(function Picture({
                   key={key(alt, 'picture')}
                   onLoad={onFallbackLoad}
                   src={fit.path}
-                  srcSet={picture.fallback.src.srcSet}
+                  srcSet={picture.fallback?.src?.srcSet}
                   transition={{ duration: 0.5, ease: 'easeInOut' }}
                   width={fit.width}
                 />
@@ -117,7 +124,10 @@ Picture.propTypes = {
   onLoad: PropTypes.func,
   picture: PropTypes.shape({
     avif: PropTypes.string,
-    fallback: PropTypes.shape(),
+    fallback: PropTypes.oneOfType([
+      PropTypes.shape(),
+      PropTypes.string,
+    ]),
     webp: PropTypes.string,
   }),
   ref: PropTypes.oneOfType([

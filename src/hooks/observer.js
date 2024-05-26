@@ -107,10 +107,11 @@ export function usePrint() {
 const useSafeLayoutEffect = typeof (window) !== 'undefined' ? useLayoutEffect : useEffect;
 
 export function useSpeech() {
-  const [ready, setReady] = useState(null);
+  const [ready, setReady] = useState();
 
   useEffect(() => {
     setReady(typeof (speechSynthesis) !== 'undefined' && typeof (SpeechSynthesisUtterance) !== 'undefined');
+    // return none.
   }, []);
 
   return [ready];

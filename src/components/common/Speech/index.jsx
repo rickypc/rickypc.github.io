@@ -19,29 +19,6 @@ import PropTypes from 'prop-types';
 import { useSpeech } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
-const getVoice = async (name, lang) => {
-  const voices = await new Promise((resolve) => {
-    // `voiceschanged` event is not reliable cross-browser.
-    let count = 0;
-    const interval = setInterval(() => {
-      count += 1;
-      // Max 30 times.
-      if (count === 30) {
-        clearInterval(interval);
-      }
-      const accents = speechSynthesis?.getVoices();
-      if (accents.length) {
-        clearInterval(interval);
-        resolve(accents);
-      }
-    }, 250);
-  });
-  // Name matching takes precendence.
-  return voices?.find((voi) => voi.name === name)
-    || voices?.find((voi) => voi.lang === lang)
-    || { lang: false };
-};
-
 function GrPause(props) {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'path', attr: { fill: 'none', strokeWidth: '2', d: 'M3,21 L9,21 L9,3 L3,3 L3,21 Z M15,21 L21,21 L21,3 L15,3 L15,21 Z' }, child: [] }] })(props);
 }
@@ -87,7 +64,7 @@ export default memo(Object.assign(function Speech({
   children,
   className,
   lang = 'id-ID',
-  name = 'Damayanti',
+  names,
   pitch = 1,
   rate = 0.9,
   repetition = 1,
@@ -126,6 +103,39 @@ export default memo(Object.assign(function Speech({
   }, []);
 
   useEffect(() => {
+    const list = names?.length ? names : [
+      'Damayanti',
+      'Microsoft Gadis Online (Natural) - Indonesian (Indonesia)',
+      'Google Bahasa Indonesia',
+    ];
+    (async () => {
+      let voices = speechSynthesis?.getVoices();
+      if (!voices?.length) {
+        await new Promise((resolve) => {
+          speechSynthesis?.addEventListener('voiceschanged', resolve, { once: true });
+        });
+        voices = speechSynthesis?.getVoices();
+      }
+      let accent = voices.find((voi) => list.includes(voi.name));
+      if (lang && typeof (accent?.lang) !== 'string') {
+        // Handle browser inconsistency.
+        if ((voices[0]?.lang?.split(/-_/g)?.[0]?.length || 0) > 2) {
+          const lng = lang.split('-')[0];
+          accent = voices.find((voi) => voi.lang?.startsWith(lng));
+        } else {
+          accent = voices.find((voi) => voi.lang?.replace(/_/g, '-') === lang);
+        }
+      }
+      // Set default value.
+      if (typeof (accent?.lang) !== 'string') {
+        accent = { lang: false };
+      }
+      setVoice(accent);
+    })();
+    // return none.
+  }, [lang, names]);
+
+  useEffect(() => {
     if (ready) {
       (async () => {
         synth.current = speechSynthesis;
@@ -137,17 +147,15 @@ export default memo(Object.assign(function Speech({
         utterance.current.pitch = pitch;
         utterance.current.rate = rate;
         utterance.volume = volume;
-        const accent = await getVoice(name, lang);
-        if (accent?.lang !== false) {
-          utterance.current.lang = accent.lang;
-          utterance.current.voice = accent;
-          utterance.current.voiceURI = accent.voiceURI;
-          setVoice(accent);
+        if (typeof (voice?.lang) === 'string') {
+          utterance.current.lang = voice.lang;
+          utterance.current.voice = voice;
+          utterance.current.voiceURI = voice.voiceURI;
         }
       })();
     }
     return () => synth.current?.cancel();
-  }, [children, lang, name, onStop, pitch, rate, ready, volume]);
+  }, [children, onStop, pitch, rate, ready, voice, volume]);
 
   return (
     <>
@@ -201,7 +209,7 @@ export default memo(Object.assign(function Speech({
     ]).isRequired,
     className: PropTypes.string,
     lang: PropTypes.string,
-    name: PropTypes.string,
+    names: PropTypes.arrayOf(PropTypes.string),
     pitch: PropTypes.number,
     rate: PropTypes.number,
     repetition: PropTypes.number,

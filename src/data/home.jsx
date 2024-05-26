@@ -129,10 +129,26 @@ export const layout = {
     'smart creative',
     'master degree',
   ],
+  /*
   metadatas: [
-    <link as="font" fetchPriority="high" href={require('@site/src/font/yesevaone/OpNJno4ck8vc-xYpwWWxli1VWzfAw0Y.woff2').default} key={0} rel="preload" type="font/woff2" />,
-    <link as="image" fetchPriority="high" href={require('@site/src/pages/img/hero.webp').default} key={1} rel="preload" type="image/webp" />,
+    <link
+      as="font"
+      fetchPriority="high"
+      href={require('@site/src/font/yesevaone/OpNJno4ck8vc-xYpwWWxli1VWzfAw0Y.woff2').default}
+      key={0}
+      rel="preload"
+      type="font/woff2"
+    />,
+    <link
+      as="image"
+      fetchPriority="high"
+      href={require('@site/src/pages/img/hero.webp').default}
+      key={1}
+      rel="preload"
+      type="image/webp"
+    />,
   ],
+  */
   title: 'Diverse expertise, roles, and responsibilities',
 };
 

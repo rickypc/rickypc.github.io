@@ -35,14 +35,14 @@ const Picture = memo(function Picture({
   // After images assignment.
   const [{
     background,
-    drawn,
     fit,
     loaded,
+    show,
   }, setRender] = useState({
     background: true,
-    drawn: false,
     fit: images?.[0] || { width: 0 },
     loaded: false,
+    show: false,
   });
   // eslint-disable-next-line no-param-reassign,react-hooks/rules-of-hooks
   ref = ref || useRef();
@@ -67,11 +67,11 @@ const Picture = memo(function Picture({
   useEffect(() => {
     if (visible) {
       setRender((previous) => {
-        if (previous.drawn) {
+        if (previous.show) {
           return previous;
         }
         return previous.fit.width && !previous.loaded
-          ? { ...previous, drawn: true } : previous;
+          ? { ...previous, show: true } : previous;
       });
     }
   }, [visible]);
@@ -85,7 +85,7 @@ const Picture = memo(function Picture({
     >
       <LazyMotion features={domAnimation}>
         <AnimatePresence>
-          {drawn && (
+          {show && (
             <>
               {picture?.avif && <source srcSet={picture.avif} type="image/avif" />}
               {picture?.webp && <source srcSet={picture.webp} type="image/webp" />}

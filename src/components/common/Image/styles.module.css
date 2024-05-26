@@ -8,7 +8,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   display: block;
-  height: 100%;
+  height: auto;
   transition: background-image 0.5s ease-in-out;
   width: 100%;
 }

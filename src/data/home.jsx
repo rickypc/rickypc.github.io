@@ -105,7 +105,8 @@ export const hats = [
 export const image = {
   alt: 'Ricky Huang',
   picture: {
-    avif: require('@site/src/pages/img/self.avif').default,
+    // Safari doesn't support transparent avif.
+    // avif: require('@site/src/pages/img/self.avif').default,
     fallback: require('@site/src/pages/img/self.png'),
     webp: require('@site/src/pages/img/self.webp').default,
   },

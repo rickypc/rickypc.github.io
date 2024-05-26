@@ -31,27 +31,50 @@ const Picture = memo(function Picture({
   ref,
   ...rest
 }) {
-  const [background, setBackground] = useState(true);
   const { images } = picture?.fallback?.src || {};
   // After images assignment.
-  const [fit, setFit] = useState(images?.[0] || { width: 0 });
-  const [loaded, setLoaded] = useState(false);
+  const [{
+    background,
+    drawn,
+    fit,
+    loaded,
+  }, setRender] = useState({
+    background: true,
+    drawn: false,
+    fit: images?.[0] || { width: 0 },
+    loaded: false,
+  });
   // eslint-disable-next-line no-param-reassign,react-hooks/rules-of-hooks
   ref = ref || useRef();
-  const { visible } = useVisibility({ ref, threshold: 0.15 });
+  const { visible } = useVisibility({ ref, threshold: 0.1 });
 
   const onFallbackLoad = useCallback((evt) => {
-    setLoaded(true);
+    setRender((previous) => ({ ...previous, loaded: true }));
     onLoad?.(evt);
-    setTimeout(() => setBackground(false), 450);
+    setTimeout(() => setRender((previous) => ({ ...previous, background: false })), 450);
   }, [onLoad]);
 
   useEffect(() => {
     if (ref?.current) {
       const width = ref.current.clientWidth || ref.current.parentNode.clientWidth;
-      setFit(images?.find((image) => image.width >= width) || images?.slice(-1)?.[0]);
+      setRender((previous) => ({
+        ...previous,
+        fit: images?.find((image) => image.width >= width) || images?.slice(-1)?.[0],
+      }));
     }
   }, [images, ref]);
+
+  useEffect(() => {
+    if (visible) {
+      setRender((previous) => {
+        if (previous.drawn) {
+          return previous;
+        }
+        return previous.fit.width && !previous.loaded
+          ? { ...previous, drawn: true } : previous;
+      });
+    }
+  }, [visible]);
 
   // a11y() doesn't provide `alt` by design.
   return (
@@ -62,7 +85,7 @@ const Picture = memo(function Picture({
     >
       <LazyMotion features={domAnimation}>
         <AnimatePresence>
-          {((fit.width && !loaded && visible) || loaded) && (
+          {drawn && (
             <>
               {picture?.avif && <source srcSet={picture.avif} type="image/avif" />}
               {picture?.webp && <source srcSet={picture.webp} type="image/webp" />}

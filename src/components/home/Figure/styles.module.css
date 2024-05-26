@@ -10,7 +10,7 @@
   max-width: 31.25rem;
 }
 
-.figure img {
+.figure picture img {
   filter: drop-shadow(0.1875rem 0.3rem 0.125rem rgb(0 0 0 / 0.4));
   height: auto;
   margin: 50% 0;

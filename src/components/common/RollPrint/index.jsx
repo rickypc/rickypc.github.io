@@ -64,8 +64,7 @@ export default memo(Object.assign(function RollPrint({
       paddingTop: () => paddingTop,
     },
   };
-  const text = typeof (children) === 'string'
-    ? children : children.props.children;
+  const text = typeof (children) === 'string' ? children : children?.props?.children;
 
   const content = Array.from({ length: total }, (_total, index) => ([
     {
@@ -124,6 +123,25 @@ export default memo(Object.assign(function RollPrint({
   const definition = {
     content,
     defaultStyle: { font: 'NotoSans', fontSize: 6, lineHeight },
+    info: {
+      keywords: [
+        label.toLowerCase(),
+        'mantra',
+        'roll',
+        'scroll',
+        'sacred',
+        'statue',
+        'stupa',
+        'purify',
+        'consecration',
+        'prayer wheel',
+        'wisdom',
+        'compassion',
+        'relic',
+      ].join(';'),
+      subject: 'Placing mantra rolls inside the Buddha statue or prayer wheel will purify defilement and obscuration, increase wisdom, and attain Buddhahood in this lifetime',
+      title: `${label} mantra roll`,
+    },
     pageMargins: [7.5, 7.5, 7.5, 7.5],
     pageOrientation: 'landscape',
     pageSize: 'LETTER',
@@ -133,7 +151,7 @@ export default memo(Object.assign(function RollPrint({
     },
   };
 
-  return (
+  return !!text?.length && (
     <Print
       {...props}
       definition={definition}
@@ -149,7 +167,7 @@ export default memo(Object.assign(function RollPrint({
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node,
-    ]).isRequired,
+    ]),
     className: PropTypes.string,
     label: PropTypes.string.isRequired,
     lang: PropTypes.string,

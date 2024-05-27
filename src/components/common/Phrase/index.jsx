@@ -7,6 +7,7 @@
 import CodeBlock from '@theme/CodeBlock';
 import { memo } from 'react';
 import PropTypes from 'prop-types';
+import Repetition from '@site/src/components/common/Repetition';
 import RollPrint from '@site/src/components/common/RollPrint';
 import Speech from '@site/src/components/common/Speech';
 
@@ -31,14 +32,13 @@ export default memo(Object.assign(function Phrase({
         {transliteration.children}
         ॥
       </CodeBlock>
-      <Speech repetition={repetition || transliteration.repetition}>
-        {transliteration.speech}
-      </Speech>
+      <Repetition value={repetition || transliteration.repetition} />
       {print.children && (
         <RollPrint label={transliteration.title} lang={lang} repeat={print.repeat}>
           {print.children}
         </RollPrint>
       )}
+      <Speech>{transliteration.speech}</Speech>
     </>
   );
 }, {

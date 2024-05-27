@@ -17,7 +17,7 @@ export default {
   transliteration: {
     children: 'ye dhammā hetuppabhavā tesaṁ hetuṁ tathāgato āha । tesaṃ ca yo nirodho evaṁvādī mahāsamaṇo',
     repetition: 7,
-    speech: 'y dhamma hei tu pabawa t samm hei tum tathagato aha, t samm ca yo nirodho ewam wadi maha samano.',
+    speech: 'y dhamma hei tu pabawa t samm hei tum tathagato aha, t samm ca yo nirodho ewam wadi maha samano',
     title: 'Dependent Origination',
   },
 };

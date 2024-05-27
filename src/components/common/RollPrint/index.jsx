@@ -138,9 +138,10 @@ export default memo(Object.assign(function RollPrint({
       {...props}
       definition={definition}
       Icon={FaScroll}
-      label={`Print ${label} roll`}
+      label={`Print ${label} mantra roll`}
       lang={lang}
       layouts={layouts}
+      title={label}
     />
   );
 }, {

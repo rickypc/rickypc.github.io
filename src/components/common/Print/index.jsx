@@ -29,6 +29,7 @@ export default memo(Object.assign(function Print({
   Icon = FaPrint,
   label = 'Print',
   layouts,
+  title,
 }) {
   const browser = useIsBrowser();
   pdfMake.fonts = useMemo(() => {
@@ -81,11 +82,27 @@ export default memo(Object.assign(function Print({
       definition.info = {
         author: siteConfig.title,
         creator: siteConfig.url,
+        keywords: [
+          (title || label).toLowerCase(),
+          'mantra',
+          'roll',
+          'scroll',
+          'sacred',
+          'statue',
+          'stupa',
+          'purify',
+          'consecration',
+          'prayer wheel',
+          'wisdom',
+          'compassion',
+          'relic',
+        ].join(';'),
         producer: siteConfig.url,
-        title: label,
+        subject: 'Placing the mantra roll inside Buddha statue or prayer wheel to purify defilement and obscuration, increase in wisdom, and attain Buddhahood swiftly',
+        title: `${title || label} mantra roll`,
       };
     }
-  }, [definition, label, siteConfig]);
+  }, [definition, label, siteConfig, title]);
 
   return browser && (
     <div className={styles.controls}>
@@ -106,5 +123,6 @@ export default memo(Object.assign(function Print({
     Icon: PropTypes.func,
     label: PropTypes.string,
     layouts: PropTypes.shape(),
+    title: PropTypes.string,
   },
 }));

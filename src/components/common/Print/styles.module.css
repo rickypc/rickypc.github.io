@@ -7,7 +7,7 @@
 .control {
   filter: drop-shadow(0.075rem 0.075rem 0.075rem rgba(0, 0, 0, 0.4));
   font-size: 1.25rem;
-  margin: 0;
+  margin: 0 0.25rem;
 }
 
 .control svg {
@@ -17,6 +17,7 @@
 .controls {
   display: inline-flex;
   margin-bottom: var(--ifm-leading);
+  margin-right: 0.25rem;
 }
 
 .controls .control {

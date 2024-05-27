@@ -50,16 +50,6 @@ function GrStop(props) {
   })(props);
 }
 
-const Repetition = memo(function Repetition({ value = 1 }) {
-  if (value < 2) {
-    return null;
-  }
-  return <span className="badge badge--primary" title={`Preferred repetition: ${value} times`}>{`${value}x`}</span>;
-});
-Repetition.propTypes = {
-  value: PropTypes.number,
-};
-
 export default memo(Object.assign(function Speech({
   children,
   className,
@@ -67,12 +57,12 @@ export default memo(Object.assign(function Speech({
   names,
   pitch = 1,
   rate = 0.9,
-  repetition = 1,
   volume = 1,
 }) {
   const [{ paused, playing }, setControl] = useState({ paused: false, playing: false });
   const [ready] = useSpeech();
   const synth = useRef();
+  const text = typeof (children) === 'string' ? children : children?.props?.children;
   const utterance = useRef();
   const [voice, setVoice] = useState({ lang: null });
 
@@ -139,23 +129,24 @@ export default memo(Object.assign(function Speech({
     if (ready) {
       (async () => {
         synth.current = speechSynthesis;
-        const text = typeof (children) === 'string'
-          ? children : children.props.children;
         utterance.current = new SpeechSynthesisUtterance(text);
-        utterance.current.onend = onStop;
-        utterance.current.onerror = onStop;
+        utterance.current.addEventListener('end', onStop);
+        utterance.current.addEventListener('error', onStop);
         utterance.current.pitch = pitch;
         utterance.current.rate = rate;
         utterance.volume = volume;
         if (typeof (voice?.lang) === 'string') {
           utterance.current.lang = voice.lang;
           utterance.current.voice = voice;
-          utterance.current.voiceURI = voice.voiceURI;
         }
       })();
     }
-    return () => synth.current?.cancel();
-  }, [children, onStop, pitch, rate, ready, voice, volume]);
+    return () => {
+      synth.current?.cancel();
+      utterance.current?.removeEventListener('end', onStop);
+      utterance.current?.removeEventListener('error', onStop);
+    };
+  }, [onStop, pitch, rate, ready, text, voice, volume]);
 
   return (
     <>
@@ -167,7 +158,6 @@ export default memo(Object.assign(function Speech({
         </Admonition>
       )}
       <div className={styles.controls}>
-        <Repetition value={repetition} />
         {playing && (
           <>
             <Button
@@ -188,7 +178,7 @@ export default memo(Object.assign(function Speech({
             </Button>
           </>
         )}
-        {!playing && typeof (voice?.lang) === 'string' && (
+        {!playing && !!text?.length && typeof (voice?.lang) === 'string' && (
           <Button
             {...a11y(paused ? 'Resume' : 'Play')}
             className={clsx(className, styles.control)}
@@ -206,13 +196,12 @@ export default memo(Object.assign(function Speech({
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node,
-    ]).isRequired,
+    ]),
     className: PropTypes.string,
     lang: PropTypes.string,
     names: PropTypes.arrayOf(PropTypes.string),
     pitch: PropTypes.number,
     rate: PropTypes.number,
-    repetition: PropTypes.number,
     volume: PropTypes.number,
   },
 }));

@@ -108,4 +108,14 @@ export const context = ({
   url: 'https://ricky.one',
 });
 
-export const key = (value, prefix = '') => `${prefix ? `${prefix}-` : ''}${value.toLowerCase().replace(/\s+/, '-').replace(/\.[^/.]+$/, '')}`;
+export const key = (
+  value,
+  prefix = '',
+  prefixSeparator = '-',
+  suffix = '',
+  suffixSeparator = '',
+) => {
+  const begin = prefix ? `${prefix}${prefixSeparator}` : '';
+  const end = suffix ? `${suffixSeparator}${suffix}` : '';
+  return `${begin}${value.toLowerCase().replace(/\s+/, '-').replace(/\.[^/.]+$/, '')}${end}`;
+};

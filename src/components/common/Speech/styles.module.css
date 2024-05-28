@@ -11,6 +11,11 @@
   margin: 0 0.25rem;
 }
 
+.control:hover {
+  color: #248aaa;
+  transition: color 0.3s ease-in-out;
+}
+
 .control svg {
   vertical-align: middle;
 }

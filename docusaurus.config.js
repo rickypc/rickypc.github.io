@@ -6,8 +6,9 @@
  * @ts-check
  */
 
-import { FontaineTransform } from 'fontaine';
 import { themes } from 'prism-react-renderer';
+// eslint-disable-next-line import/extensions
+import { createSitemapItems } from './src/plugins/docusaurus-plugin-local/index.js';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -32,59 +33,7 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   organizationName: 'rickypc',
-  plugins: [
-    () => ({
-      configureWebpack(_, isServer) {
-        return {
-          mergeStrategy: {
-            'module.rules': 'prepend',
-          },
-          module: {
-            rules: [
-              {
-                test: /\.(?:png|jpe?g)$/i,
-                use: [
-                  require.resolve('@docusaurus/lqip-loader'),
-                  {
-                    loader: require.resolve('@docusaurus/responsive-loader'),
-                    options: {
-                      // eslint-disable-next-line global-require,import/no-extraneous-dependencies
-                      adapter: require('@docusaurus/responsive-loader/sharp'),
-                      // Don't emit for server-side rendering
-                      emitFile: !isServer,
-                      max: 2160,
-                      min: 256,
-                      name: 'assets/images/[name].[hash:hex:7].[width].[ext]',
-                      quality: 70,
-                      steps: 16,
-                    },
-                  },
-                ],
-              },
-            ],
-          },
-          plugins: [
-            FontaineTransform.webpack({
-              fallbacks: [
-                'system-ui',
-                '-apple-system',
-                'BlinkMacSystemFont',
-                'Segoe UI',
-                'Roboto',
-                'Oxygen',
-                'Ubuntu',
-                'Cantarell',
-                'Open Sans',
-                'Helvetica Neue',
-                'sans-serif',
-              ],
-            }),
-          ],
-        };
-      },
-      name: 'ricky-plugin-webpack',
-    }),
-  ],
+  plugins: ['./src/plugins/docusaurus-plugin-local'],
   presets: [
     [
       'classic',
@@ -95,6 +44,7 @@ const config = {
           trackingID: ['G-5G7P214N03', 'G-657RY80FJE', 'G-JYD543XZTH'],
         },
         sitemap: {
+          createSitemapItems,
           ignorePatterns: ['/tags/**'],
           lastmod: 'date',
         },

@@ -1,0 +1,15 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.roll {
+  font-size: 1.25rem;
+  line-height: 1.25rem;
+  margin: 0 0.5rem var(--ifm-leading) 0.25rem;
+}
+
+.roll svg {
+  vertical-align: middle;
+}

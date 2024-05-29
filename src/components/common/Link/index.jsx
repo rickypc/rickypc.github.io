@@ -21,7 +21,7 @@ const Link = forwardRef(({
 }, ref) => {
   const links = useBrokenLinks();
 
-  if (href && !href?.includes('https://')) {
+  if (href && !['https://', '.pdf'].filter((part) => href.includes(part)).length) {
     links.collectLink(href);
   }
 

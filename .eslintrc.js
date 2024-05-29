@@ -33,7 +33,7 @@ module.exports = {
   rules: {
     // Better React debugging.
     'prefer-arrow-callback': 'off',
-    'import/no-unresolved': ['error', { ignore: ['^@docusaurus', '^@site', '^@theme'] }],
+    'import/no-unresolved': ['error', { ignore: ['^[@#].+$'] }],
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
   },

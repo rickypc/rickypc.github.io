@@ -35,6 +35,10 @@
   "engines": {
     "node": ">=20.0"
   },
+  "imports": {
+    "#buddhism/*": "./docs/buddhism/*",
+    "#root/*": "./*"
+  },
   "name": "rickypc.github.io",
   "optionalDependencies": {
     "@docusaurus/eslint-plugin": "3.3.2",
@@ -53,6 +57,7 @@
     "deploy": "docusaurus deploy",
     "docusaurus": "docusaurus",
     "lint": "eslint .",
+    "local:pdf": "docusaurus local:pdf",
     "serve": "docusaurus serve",
     "start": "docusaurus start",
     "swizzle": "docusaurus swizzle",

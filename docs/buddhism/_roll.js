@@ -6,11 +6,14 @@
 
 export default function roll(path) {
   const {
-    lang = 'bo-CN',
-    sanskrit,
-    tibetan,
-    total = 6,
-    transliteration,
+    default: {
+      lang = 'bo-CN',
+      sanskrit,
+      tibetan,
+      total = 6,
+      transliteration,
+
+    },
     // eslint-disable-next-line global-require,import/no-dynamic-require
   } = require(path);
   let infix = '|';
@@ -30,17 +33,17 @@ export default function roll(path) {
   switch (lang) {
     case 'bo-CN':
       infix = '།';
-      lastPhrase = tibetan.repeat - 1;
+      lastPhrase = (tibetan?.repeat || 1) - 1;
       lineHeight = 0.84;
       paddingBottom = 1;
       paddingTop = 0.25;
       prefix = '༄༅། ';
       prefixFont = 'Kokonor';
-      repeat = tibetan.repeat;
+      repeat = tibetan?.repeat;
       rollFont = 'Kokonor';
       suffix = '༎';
-      text = typeof (tibetan.children) === 'string'
-        ? tibetan.children : tibetan.children?.props?.children;
+      text = typeof (tibetan?.children) === 'string'
+        ? tibetan.children : tibetan?.children?.props?.children;
       break;
     case 'sa-IN':
       lastPhrase = sanskrit.repeat - 1;
@@ -73,7 +76,7 @@ export default function roll(path) {
                 text: [
                   {
                     fontSize: 4,
-                    text: `${transliteration.title.toUpperCase()} ${repeat}x `,
+                    text: `${transliteration?.title?.toUpperCase()} ${repeat}x `,
                   },
                   {
                     text: [
@@ -120,7 +123,7 @@ export default function roll(path) {
       defaultStyle: { font: 'NotoSans', fontSize: 6, lineHeight },
       info: {
         keywords: [
-          transliteration.title.toLowerCase(),
+          transliteration?.title?.toLowerCase(),
           'mantra',
           'roll',
           'scroll',
@@ -135,7 +138,7 @@ export default function roll(path) {
           'relic',
         ].join(';'),
         subject: 'Placing mantra rolls inside the Buddha statue or prayer wheel will purify defilement and obscuration, increase wisdom, and attain Buddhahood in this lifetime',
-        title: `${transliteration.title} mantra roll`,
+        title: `${transliteration?.title} mantra roll`,
       },
       pageMargins: [7.5, 7.5, 7.5, 7.5],
       pageOrientation: 'landscape',

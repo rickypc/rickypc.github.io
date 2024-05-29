@@ -5,8 +5,8 @@
  */
 
 // eslint-disable-next-line import/extensions
-import roll from './_roll.js';
+import roll from '#buddhism/_roll.js';
 
 export default {
-  'dependent-origination': roll('./phrases/_dependent_origination'),
+  'dependent-origination': roll('#buddhism/phrases/_dependent_origination.js'),
 };

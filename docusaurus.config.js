@@ -8,7 +8,7 @@
 
 import { themes } from 'prism-react-renderer';
 // eslint-disable-next-line import/extensions
-import { createSitemapItems } from './src/plugins/docusaurus-plugin-local/index.js';
+import { createSitemapItems } from '#root/src/plugins/docusaurus-plugin-local/index.js';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {

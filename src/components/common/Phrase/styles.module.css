@@ -4,6 +4,14 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+.picture {
+  margin: 0;
+}
+
+.picture img {
+  width: 100%;
+}
+
 .roll {
   font-size: 1.25rem;
   line-height: 1.25rem;

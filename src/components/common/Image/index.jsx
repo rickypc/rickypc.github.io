@@ -26,6 +26,7 @@ import styles from './styles.module.css';
 
 const Picture = memo(function Picture({
   alt,
+  className,
   onLoad,
   picture,
   ref,
@@ -84,7 +85,11 @@ const Picture = memo(function Picture({
   // a11y() doesn't provide `alt` by design.
   return (
     <picture
-      className={clsx(styles.picture, (background && !picture.fallback?.preSrc) && styles.shimmer)}
+      className={clsx(
+        className,
+        styles.picture,
+        (background && !picture.fallback?.preSrc) && styles.shimmer,
+      )}
       ref={ref}
       style={background && picture.fallback?.preSrc ? {
         backgroundImage: `url(${picture.fallback?.preSrc})`,
@@ -121,6 +126,7 @@ const Picture = memo(function Picture({
 });
 Picture.propTypes = {
   alt: PropTypes.string,
+  className: PropTypes.string,
   onLoad: PropTypes.func,
   picture: PropTypes.shape({
     avif: PropTypes.string,

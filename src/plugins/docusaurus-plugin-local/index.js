@@ -17,11 +17,16 @@ import PdfMake from 'pdfmake';
 import { simpleGit } from 'simple-git';
 // eslint-disable-next-line import/extensions
 import pdf from '#buddhism/_pdf.js';
+// eslint-disable-next-line import/extensions
+import roll from '#buddhism/_roll.js';
+
+const templates = { roll };
 
 export async function createSitemapItems({ defaultCreateSitemapItems, ...rest }) {
   const git = simpleGit();
   const items = await defaultCreateSitemapItems(rest);
-  const pdfs = await Promise.all(Object.entries(pdf).map(async ([key, { path }]) => {
+  // eslint-disable-next-line no-unused-vars
+  const pdfs = await Promise.all(Object.entries(pdf).map(async ([key, [_, path]]) => {
     const lastmod = (await git.log({
       '--date': 'format:%Y-%m-%d',
       file: join('docs', 'buddhism', `${path}.js`),
@@ -66,7 +71,8 @@ export async function postBuild({ outDir, siteConfig }) {
   // Ensure the folder exist.
   mkdirSync(join(outDir, 'pdf'), { recursive: true });
 
-  await Promise.all(Object.entries(pdf).map(async ([key, { definition, options }]) => {
+  await Promise.all(Object.entries(pdf).map(async ([key, [template, path]]) => {
+    const { definition, options } = templates[template](path);
     await new Promise((settle) => {
       const document = printer.createPdfKitDocument({
         ...definition,
@@ -109,7 +115,7 @@ export default function pluginLocal(context) {
                 {
                   loader: require.resolve('@docusaurus/responsive-loader'),
                   options: {
-                    // eslint-disable-next-line global-require,import/no-extraneous-dependencies
+                    // eslint-disable-next-line global-require
                     adapter: require('@docusaurus/responsive-loader/sharp'),
                     // Don't emit for server-side rendering
                     emitFile: !isServer,

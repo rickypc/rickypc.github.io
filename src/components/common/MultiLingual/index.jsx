@@ -8,7 +8,8 @@ import CodeBlock from '@theme/CodeBlock';
 import { memo } from 'react';
 import PropTypes from 'prop-types';
 
-export default memo(Object.assign(function Phrases({
+export default memo(Object.assign(function MultiLingual({
+  chinese,
   sanskrit,
   tibetan,
 }) {
@@ -26,10 +27,17 @@ export default memo(Object.assign(function Phrases({
           ༎
         </CodeBlock>
       )}
+      {chinese && (
+        <CodeBlock title={chinese.title}>
+          {chinese.children}
+          。
+        </CodeBlock>
+      )}
     </>
   );
 }, {
   propTypes: {
+    chinese: PropTypes.shape(),
     sanskrit: PropTypes.shape(),
     tibetan: PropTypes.shape(),
   },

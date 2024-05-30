@@ -12,7 +12,6 @@ export default function roll(path) {
       tibetan,
       total = 6,
       transliteration,
-
     },
     // eslint-disable-next-line global-require,import/no-dynamic-require
   } = require(path);
@@ -158,6 +157,5 @@ export default function roll(path) {
         },
       },
     },
-    path,
   };
 }

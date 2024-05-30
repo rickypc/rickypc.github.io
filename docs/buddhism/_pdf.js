@@ -4,9 +4,9 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-// eslint-disable-next-line import/extensions
-import roll from '#buddhism/_roll.js';
-
 export default {
-  'dependent-origination': roll('#buddhism/phrases/_dependent_origination.js'),
+  'arya-tara': ['roll', '#buddhism/phrases/_arya_tara.js'],
+  'dependent-origination': ['roll', '#buddhism/phrases/_dependent_origination.js'],
+  'rakta-tara': ['roll', '#buddhism/phrases/_rakta_tara.js'],
+  'sita-tara': ['roll', '#buddhism/phrases/_sita_tara.js'],
 };

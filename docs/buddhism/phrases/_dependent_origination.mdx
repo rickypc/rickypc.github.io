@@ -1,11 +1,17 @@
-import dependentOrigination from '#buddhism/phrases/_dependent_origination.js';
+{/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */}
+
+import phrase from '#buddhism/phrases/_dependent_origination.js';
 
 ### Paṭiccasamuppāda
 
-<Phrase {...dependentOrigination} />
+<Phrase {...phrase} {...props} />
 
 <details>
-  <summary>{dependentOrigination.transliteration.title}</summary>
+  <summary>{phrase.transliteration.title}</summary>
   <div>
     Dependent origination can be contrasted with the classic Western concept of [causation](https://en.wikipedia.org/wiki/Causality_(philosophy)) in which an action by one thing is said to cause a change in another thing.
     Dependent origination instead views the change as being caused by many factors, not just one or even a few.
@@ -13,6 +19,6 @@ import dependentOrigination from '#buddhism/phrases/_dependent_origination.js';
     > Those [dharmas](https://en.wikipedia.org/wiki/Abhidharma) which arise from a cause, the [Tathāgata](https://en.wikipedia.org/wiki/Tath%C4%81gata) has declared their cause, and that which is the cessation of them.
     > Thus the great renunciant ([sramana](https://en.wikipedia.org/wiki/%C5%9Arama%E1%B9%87a)) has taught.
 
-    <Phrases {...dependentOrigination} />
+    <MultiLingual {...phrase} />
   </div>
 </details>

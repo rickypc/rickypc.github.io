@@ -50,7 +50,7 @@ export default memo(Object.assign(function Phrase({
         ॥
       </CodeBlock>
       <Repetition value={repetition || transliteration.repetition} />
-      {Object.prototype.hasOwnProperty.call(pdf, transliteration.pdf) && (
+      {Object.prototype.hasOwnProperty.call(pdf, transliteration?.pdf) && (
         <Link
           className={styles.roll}
           href={key(transliteration.title, '/pdf', '/', 'pdf', '.')}

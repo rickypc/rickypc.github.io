@@ -4,26 +4,25 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-.control {
+.controls {
+  display: inline-flex;
+  margin-right: 0.25rem;
+}
+
+.controls .control {
   filter: drop-shadow(0.075rem 0.075rem 0.075rem rgba(0, 0, 0, 0.4));
   font-size: 1.25rem;
   line-height: 1.25rem;
   margin: 0 0.25rem;
 }
 
-.control:hover {
+.controls .control:hover {
   color: #248aaa;
   transition: color 0.3s ease-in-out;
 }
 
-.control svg {
+.controls .control svg {
   vertical-align: middle;
-}
-
-.controls {
-  display: inline-flex;
-  margin-bottom: var(--ifm-leading);
-  margin-right: 0.25rem;
 }
 
 @media print {

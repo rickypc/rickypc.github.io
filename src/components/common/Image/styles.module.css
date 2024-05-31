@@ -10,6 +10,8 @@
   background-size: cover;
   display: block;
   height: auto;
+  overflow: hidden;
+  position: relative;
   transition: background-image 0.5s ease-in-out;
   width: 100%;
 }

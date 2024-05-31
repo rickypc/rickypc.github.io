@@ -16,6 +16,7 @@ export default {
   },
   transliteration: {
     children: 'oṃ tāre tuttāre ture mama āyuḥ-puṇya-jñāna-puṣṭiṃ kuru svāhā',
+    className: 'gray',
     pdf: 'sita-tara',
     repetition: 21,
     speech: 'oum tare tu tare ture mama ayu punya jiana pustim kuru swaha',

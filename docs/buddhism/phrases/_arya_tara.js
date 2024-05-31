@@ -20,6 +20,7 @@ export default {
   },
   transliteration: {
     children: 'oṃ tāre tuttāre ture svāhā',
+    className: 'green',
     pdf: 'arya-tara',
     repetition: 21,
     speech: 'oum tare tu tare ture swaha',

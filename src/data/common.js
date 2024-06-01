@@ -4,9 +4,9 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-export const a11y = (value, rest = {}) => ({ 'aria-label': value, title: value, ...rest });
+const a11y = (value, rest = {}) => ({ 'aria-label': value, title: value, ...rest });
 
-export const admonitions = {
+const admonitions = {
   print: {
     text: 'The print content is not ready. Please try again.',
     type: 'warning',
@@ -17,13 +17,9 @@ export const admonitions = {
   },
 };
 
-export function clsx(...classes) {
-  return classes
-    .filter((cls) => cls && typeof (cls) === 'string')
-    .join(' ');
-}
+const clsx = (...classes) => classes.filter((cls) => cls && typeof (cls) === 'string').join(' ');
 
-export const context = ({
+const context = ({
   description = 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
   keywords = [
     'ricky huang',
@@ -108,7 +104,7 @@ export const context = ({
   url: 'https://ricky.one',
 });
 
-export const key = (
+const key = (
   value,
   prefix = '',
   prefixSeparator = '-',
@@ -118,4 +114,19 @@ export const key = (
   const begin = prefix ? `${prefix}${prefixSeparator}` : '';
   const end = suffix ? `${suffixSeparator}${suffix}` : '';
   return `${begin}${value.toLowerCase().replace(/\s+/, '-').replace(/\.[^/.]+$/, '')}${end}`;
+};
+
+const tail = (path, keyword) => (path?.substr((path?.lastIndexOf(keyword) || -1) + 1) || '');
+
+// After key & tail assignments.
+const fileName = (path) => (key(tail(path, '/').replace(/_/g, '-').replace(/^-/, '')));
+
+export {
+  a11y,
+  admonitions,
+  clsx,
+  context,
+  fileName,
+  key,
+  tail,
 };

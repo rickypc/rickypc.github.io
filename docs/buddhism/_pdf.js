@@ -4,9 +4,11 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-export default {
-  'arya-tara': ['roll', '#buddhism/phrases/_arya_tara.js'],
-  'dependent-origination': ['roll', '#buddhism/phrases/_dependent_origination.js'],
-  'rakta-tara': ['roll', '#buddhism/phrases/_rakta_tara.js'],
-  'sita-tara': ['roll', '#buddhism/phrases/_sita_tara.js'],
-};
+const phrases = '#buddhism/phrases';
+
+export default [
+  ['roll', `${phrases}/_arya_tara.js`],
+  ['roll', `${phrases}/_dependent_origination.js`],
+  ['roll', `${phrases}/_rakta_tara.js`],
+  ['roll', `${phrases}/_sita_tara.js`],
+];

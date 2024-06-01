@@ -12,7 +12,7 @@ import {
   loadFreshModule,
 } from '@docusaurus/utils';
 import { FontaineTransform } from 'fontaine';
-import { join, resolve } from 'node:path';
+import { join, parse, resolve } from 'node:path';
 import PdfMake from 'pdfmake';
 import { simpleGit } from 'simple-git';
 // eslint-disable-next-line import/extensions
@@ -20,24 +20,26 @@ import pdf from '#buddhism/_pdf.js';
 // eslint-disable-next-line import/extensions
 import roll from '#buddhism/_roll.js';
 
+const fileName = (path) => parse(path).name.replace(/_/g, '-').replace(/^-/, '');
 const templates = { roll };
 
 export async function createSitemapItems({ defaultCreateSitemapItems, ...rest }) {
   const git = simpleGit();
   const items = await defaultCreateSitemapItems(rest);
+  const today = new Date().toISOString().split('T')[0];
   // eslint-disable-next-line no-unused-vars
-  const pdfs = await Promise.all(Object.entries(pdf).map(async ([key, [_, path]]) => {
+  const pdfs = await Promise.all(pdf.map(async ([_, path]) => {
     const lastmod = (await git.log({
       '--date': 'format:%Y-%m-%d',
-      file: join('docs', 'buddhism', `${path}.js`),
+      file: path.replace(/^#/, 'docs/'),
       format: { date: '%cd' },
       maxCount: 1,
-    }))?.latest?.date || new Date().toISOString().split('T')[0];
+    }))?.latest?.date || today;
     return {
       changefreq: 'weekly',
       lastmod,
       priority: 0.5,
-      url: join(rest.siteConfig.url, 'pdf', `${key}.pdf`),
+      url: join(rest.siteConfig.url, 'pdf', `${fileName(path)}.pdf`),
     };
   }));
   return [...items, ...pdfs];
@@ -71,7 +73,7 @@ export async function postBuild({ outDir, siteConfig }) {
   // Ensure the folder exist.
   mkdirSync(join(outDir, 'pdf'), { recursive: true });
 
-  await Promise.all(Object.entries(pdf).map(async ([key, [template, path]]) => {
+  await Promise.all(pdf.map(async ([template, path]) => {
     const { definition, options } = templates[template](path);
     await new Promise((settle) => {
       const document = printer.createPdfKitDocument({
@@ -84,7 +86,7 @@ export async function postBuild({ outDir, siteConfig }) {
         },
       }, options);
       document.on('end', settle);
-      document.pipe(createWriteStream(join(outDir, 'pdf', `${key}.pdf`)));
+      document.pipe(createWriteStream(join(outDir, 'pdf', `${fileName(path)}.pdf`)));
       document.end();
     });
   }));

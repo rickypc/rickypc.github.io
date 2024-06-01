@@ -7,7 +7,12 @@
 import CodeBlock from '@theme/CodeBlock';
 import { GenIcon } from 'react-icons/lib';
 import Image from '@site/src/components/common/Image';
-import { clsx, key } from '@site/src/data/common';
+import {
+  clsx,
+  fileName,
+  key,
+  tail,
+} from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
 import MDXDetails from '@theme-original/MDXComponents/Details';
 import { memo } from 'react';
@@ -66,22 +71,20 @@ const Repetition = memo(Object.assign(function Repetition({ value = 1 }) {
   },
 }));
 
-const Support = memo(function Support({ repetition = 0, transliteration }) {
-  if (
-    !repetition
-    && !Object.prototype.hasOwnProperty.call(pdf, transliteration?.pdf)
-    && !transliteration.repetition
-    && !transliteration.speech
-  ) {
+const Support = memo(function Support({ path, repetition = 0, transliteration }) {
+  const alias = `#${tail(path, '/buddhism')}`;
+  const hasRoll = pdf.some((entry) => entry?.[1] === alias);
+  const value = repetition || transliteration.repetition;
+  if (!value && !hasRoll && !transliteration.speech) {
     return null;
   }
   return (
     <div className={styles.support}>
-      <Repetition value={repetition || transliteration.repetition} />
-      {Object.prototype.hasOwnProperty.call(pdf, transliteration?.pdf) && (
+      <Repetition value={value} />
+      {hasRoll && (
         <Link
           className={styles.roll}
-          href={key(transliteration.pdf, '/pdf', '/', 'pdf', '.')}
+          href={key(fileName(path), '/pdf', '/', 'pdf', '.')}
           rel="noopener noreferrer"
           target="_blank"
           title={`Open ${transliteration.title} mantra roll`}
@@ -94,6 +97,7 @@ const Support = memo(function Support({ repetition = 0, transliteration }) {
   );
 });
 Support.propTypes = {
+  path: PropTypes.string,
   repetition: PropTypes.number,
   transliteration: PropTypes.shape(),
 };
@@ -101,6 +105,7 @@ Support.propTypes = {
 export default memo(Object.assign(function Phrase({
   image,
   instruction,
+  path,
   repetition = 0,
   transliteration,
 }) {
@@ -115,7 +120,7 @@ export default memo(Object.assign(function Phrase({
         {transliteration.children}
         ॥
       </CodeBlock>
-      <Support repetition={repetition} transliteration={transliteration} />
+      <Support path={path} repetition={repetition} transliteration={transliteration} />
     </>
   );
 }, {

@@ -12,14 +12,14 @@
     ]
   },
   "dependencies": {
-    "@docusaurus/core": "3.3.2",
-    "@docusaurus/lqip-loader": "3.3.2",
-    "@docusaurus/preset-classic": "3.3.2",
+    "@docusaurus/core": "3.4.0",
+    "@docusaurus/lqip-loader": "3.4.0",
+    "@docusaurus/preset-classic": "3.4.0",
     "@docusaurus/responsive-loader": "1.7.0",
     "@mdx-js/react": "3.0.1",
     "embla-carousel-react": "8.1.3",
     "fontaine": "0.5.0",
-    "framer-motion": "11.2.9",
+    "framer-motion": "11.2.10",
     "pdfmake": "0.2.10",
     "prism-react-renderer": "2.3.1",
     "prop-types": "15.8.1",
@@ -29,8 +29,8 @@
     "simple-git": "3.24.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.3.2",
-    "@docusaurus/types": "3.3.2"
+    "@docusaurus/module-type-aliases": "3.4.0",
+    "@docusaurus/types": "3.4.0"
   },
   "engines": {
     "node": ">=20.0"
@@ -41,7 +41,7 @@
   },
   "name": "rickypc.github.io",
   "optionalDependencies": {
-    "@docusaurus/eslint-plugin": "3.3.2",
+    "@docusaurus/eslint-plugin": "3.4.0",
     "eslint": "8.57.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-plugin-import": "2.29.1",

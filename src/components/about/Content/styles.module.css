@@ -76,7 +76,7 @@
 /* FF specific as 2024. */
 @supports (-moz-appearance:none) {
   .content ul li {
-    line-height: 1.525rem;
+    line-height: 1.475rem;
   }
 }
 

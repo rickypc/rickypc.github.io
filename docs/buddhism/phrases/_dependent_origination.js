@@ -5,6 +5,7 @@
  */
 
 export default {
+  path: new URL('', import.meta.url).pathname,
   sanskrit: {
     children: 'ये धर्मा हेतु प्रभवा हेतुं तेषां तथागतः ह्यवदत् तेषां च यो निरोध एवं वादी महाश्रमणः',
     title: 'प्रतीत्यसमुत्पाद',
@@ -16,7 +17,6 @@ export default {
   },
   transliteration: {
     children: 'ye dhammā hetuppabhavā tesaṁ hetuṁ tathāgato āha । tesaṃ ca yo nirodho evaṁvādī mahāsamaṇo',
-    pdf: 'dependent-origination',
     repetition: 7,
     speech: 'y dhamma hei tu pabawa t samm hei tum tathagato aha, t samm ca yo nirodho ewam wadi maha samano',
     title: 'Dependent Origination',

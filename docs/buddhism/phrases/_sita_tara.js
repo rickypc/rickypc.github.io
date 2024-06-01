@@ -5,6 +5,7 @@
  */
 
 export default {
+  path: new URL('', import.meta.url).pathname,
   sanskrit: {
     children: 'ॐ तारे तुत्तारे तुरे मम आयुः-पुण्य-ज्ञान पुष्टिंकुरु स्वहा',
     title: 'सिततारा',
@@ -17,7 +18,6 @@ export default {
   transliteration: {
     children: 'oṃ tāre tuttāre ture mama āyuḥ-puṇya-jñāna-puṣṭiṃ kuru svāhā',
     className: 'gray',
-    pdf: 'sita-tara',
     repetition: 21,
     speech: 'oum tare tu tare ture mama ayu punya jiana pustim kuru swaha',
     title: 'Sitā Tārā',

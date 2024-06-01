@@ -5,6 +5,7 @@
  */
 
 export default {
+  path: new URL('', import.meta.url).pathname,
   sanskrit: {
     children: 'ॐ तारे ताँ सोहा',
     title: 'रक्ततर',
@@ -17,7 +18,6 @@ export default {
   transliteration: {
     children: 'oṃ tāre tāṃ svāhā',
     className: 'red',
-    pdf: 'rakta-tara',
     repetition: 21,
     speech: 'oum tare tamm swaha',
     title: 'Rakta Tārā',

@@ -9,6 +9,7 @@ export default {
     children: '嗡 達拉 都達拉 都拉 梭哈',
     title: '多羅菩薩',
   },
+  path: new URL('', import.meta.url).pathname,
   sanskrit: {
     children: 'ॐ तारे तुत्तारे तुरे सोहा',
     title: 'आर्यतारा',
@@ -21,7 +22,6 @@ export default {
   transliteration: {
     children: 'oṃ tāre tuttāre ture svāhā',
     className: 'green',
-    pdf: 'arya-tara',
     repetition: 21,
     speech: 'oum tare tu tare ture swaha',
     title: 'Ārya Tārā',

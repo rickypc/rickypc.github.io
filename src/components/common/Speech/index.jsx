@@ -134,7 +134,7 @@ export default memo(Object.assign(function Speech({
         utterance.current.addEventListener('error', onStop);
         utterance.current.pitch = pitch;
         utterance.current.rate = rate;
-        utterance.volume = volume;
+        utterance.volume = document.documentElement.dataset.volume === 'silent' ? 0 : volume;
         if (typeof (voice?.lang) === 'string') {
           utterance.current.lang = voice.lang;
           utterance.current.voice = voice;

@@ -4,9 +4,9 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const a11y = (value, rest = {}) => ({ 'aria-label': value, title: value, ...rest });
+export const a11y = (value, rest = {}) => ({ 'aria-label': value, title: value, ...rest });
 
-const admonitions = {
+export const admonitions = {
   print: {
     text: 'The print content is not ready. Please try again.',
     type: 'warning',
@@ -17,9 +17,9 @@ const admonitions = {
   },
 };
 
-const clsx = (...classes) => classes.filter((cls) => cls && typeof (cls) === 'string').join(' ');
+export const clsx = (...classes) => classes.filter((cls) => cls && typeof (cls) === 'string').join(' ');
 
-const context = ({
+export const context = ({
   description = 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
   keywords = [
     'ricky huang',
@@ -121,12 +121,4 @@ const tail = (path, keyword) => (path?.substr((path?.lastIndexOf(keyword) || -1)
 // After key & tail assignments.
 const fileName = (path) => (key(tail(path, '/').replace(/_/g, '-').replace(/^-/, '')));
 
-export {
-  a11y,
-  admonitions,
-  clsx,
-  context,
-  fileName,
-  key,
-  tail,
-};
+export { fileName, key, tail };

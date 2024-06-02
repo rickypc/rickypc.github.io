@@ -7,7 +7,6 @@
 import Layout from '@theme/Layout';
 import { memo } from 'react';
 import NotFoundContent from '@theme/NotFound/Content';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { PageMetadata } from '@docusaurus/theme-common';
 import { translate } from '@docusaurus/Translate';
 

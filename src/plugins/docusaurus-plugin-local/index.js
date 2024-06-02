@@ -5,7 +5,6 @@
  */
 
 import { createWriteStream, mkdirSync } from 'node:fs';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import {
   DEFAULT_BUILD_DIR_NAME,
   DEFAULT_CONFIG_FILE_NAME,

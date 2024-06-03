@@ -20,10 +20,8 @@ const url = '/portfolio';
 test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
 
 test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url));
-
-test('has correct title', async ({ page }) => hasTitle(page, 'Portfolio and successful projects | Ricky Huang'));
-
-test('has correct header', async ({ page }) => hasHeader(page));
+test('has correct title', hasTitle);
+test('has correct header', hasHeader);
 
 test('has 12 portfolios', async ({ page }) => {
   await band(12, async (index) => {

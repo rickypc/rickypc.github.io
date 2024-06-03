@@ -19,10 +19,8 @@ const url = '/about';
 test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
 
 test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url));
-
-test('has correct title', async ({ page }) => hasTitle(page, 'Type and key characteristics | Ricky Huang'));
-
-test('has correct header', async ({ page }) => hasHeader(page));
+test('has correct title', hasTitle);
+test('has correct header', hasHeader);
 
 test('has types', async ({ page }) => {
   await Promise.all(['Transformer People Type', 'Transactor Task Type'].map(async (label, index) => {

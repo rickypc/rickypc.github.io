@@ -20,8 +20,7 @@ const url = '/';
 test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
 
 test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url));
-
-test('has correct title', async ({ page }) => hasTitle(page, 'Diverse expertise, roles, and responsibilities | Ricky Huang'));
+test('has correct title', hasTitle);
 
 test('has greeting', async ({ page }) => {
   await hasSpeech(page, 'main header h1 [class*="controls_"]', url);

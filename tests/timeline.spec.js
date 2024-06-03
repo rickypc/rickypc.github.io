@@ -20,10 +20,8 @@ const url = '/timeline';
 test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
 
 test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url));
-
-test('has correct title', async ({ page }) => hasTitle(page, 'Experiences, knowledge, and education | Ricky Huang'));
-
-test('has correct header', async ({ page }) => hasHeader(page));
+test('has correct title', hasTitle);
+test('has correct header', hasHeader);
 
 test('has 8 events', async ({ page }) => {
   await band(8, async (index) => {

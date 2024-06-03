@@ -14,13 +14,13 @@ export const beforeEach = async (page, testInfo, url) => {
     'has correct light theme screenshot',
     'has greeting',
   ].includes(testInfo.title)) {
-    await page.goto(url);
+    await page.goto(url, { waitUntil: 'networkidle' });
   }
 };
 
 export { expect };
 
-export const hasHeader = async (page) => {
+export const hasHeader = async ({ page }) => {
   expect(await page.textContent('main header h1')).toMatchSnapshot('header-headline.txt');
   expect(await page.textContent('main header p')).toMatchSnapshot('header-description.txt');
 };
@@ -28,7 +28,7 @@ export const hasHeader = async (page) => {
 export const hasScreenshot = async (page, testInfo, theme, url) => {
   const options = { animations: 'disabled', fullPage: true, scale: 'css' };
   const themeLower = theme.toLowerCase();
-  await page.goto(`${url}?docusaurus-theme=${themeLower}`);
+  await page.goto(`${url}?docusaurus-theme=${themeLower}`, { waitUntil: 'networkidle' });
   await page.waitForSelector('#__docusaurus .main-wrapper', { visible: true });
   await expect(page).toHaveScreenshot(`${themeLower}.png`, options);
   await testInfo.attach(`${theme} Theme`, {
@@ -38,7 +38,7 @@ export const hasScreenshot = async (page, testInfo, theme, url) => {
 };
 
 export const hasSpeech = async (page, selector, url) => {
-  await page.goto(`${url}?docusaurus-data-volume=silent`);
+  await page.goto(`${url}?docusaurus-data-volume=silent`, { waitUntil: 'networkidle' });
   const locator = page.locator(selector);
   if (await locator.isVisible()) {
     await locator.click();
@@ -47,8 +47,9 @@ export const hasSpeech = async (page, selector, url) => {
   }
 };
 
-export const hasTitle = async (page, title) => {
-  await expect(page).toHaveTitle(title);
+export const hasTitle = async ({ page }) => {
+  await page.waitForSelector('#__docusaurus .main-wrapper', { visible: true });
+  expect(await page.textContent('head>title')).toMatchSnapshot('title.txt');
 };
 
 export const hasUrl = async (baseURL, page, url) => {

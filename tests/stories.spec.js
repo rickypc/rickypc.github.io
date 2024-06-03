@@ -20,10 +20,8 @@ const url = '/stories';
 test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
 
 test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url));
-
-test('has correct title', async ({ page }) => hasTitle(page, 'Client, partner, and teammate stories | Ricky Huang'));
-
-test('has correct header', async ({ page }) => hasHeader(page));
+test('has correct title', hasTitle);
+test('has correct header', hasHeader);
 
 test('has 4 stories', async ({ page }) => {
   await band(4, async (index) => {

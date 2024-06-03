@@ -38,7 +38,7 @@ export const layout = {
     />,
   ],
   */
-  title: 'Experiences, knowledge and education',
+  title: 'Experiences, knowledge, and education',
 };
 
 export const preamble = {

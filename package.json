@@ -42,6 +42,8 @@
   "name": "rickypc.github.io",
   "optionalDependencies": {
     "@docusaurus/eslint-plugin": "3.4.0",
+    "@playwright/test": "1.44.1",
+    "@types/node": "20.14.0",
     "eslint": "8.57.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-plugin-import": "2.29.1",

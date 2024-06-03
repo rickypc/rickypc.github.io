@@ -9,5 +9,9 @@
 .env.*
 *.log*
 /node_modules
+/playwright/.cache/
+/playwright/report/
+/playwright/results/
+/playwright/snapshots/
 *.report.html
 .searchignore

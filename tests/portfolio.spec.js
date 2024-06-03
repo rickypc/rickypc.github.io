@@ -23,6 +23,10 @@ test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url))
 test('has correct title', hasTitle);
 test('has correct header', hasHeader);
 
+test('has active navigation', async ({ page }) => {
+  await expect(page.getByRole('link', { name: 'Portfolio' })).toHaveClass(/navbar__link--active/);
+});
+
 test('has 12 portfolios', async ({ page }) => {
   await band(12, async (index) => {
     const nth = index + 1;

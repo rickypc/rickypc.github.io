@@ -22,6 +22,10 @@ test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url))
 test('has correct title', hasTitle);
 test('has correct header', hasHeader);
 
+test('has active navigation', async ({ page }) => {
+  await expect(page.getByRole('link', { name: 'About Me' })).toHaveClass(/navbar__link--active/);
+});
+
 test('has types', async ({ page }) => {
   await Promise.all(['Transformer People Type', 'Transactor Task Type'].map(async (label, index) => {
     const locator = page.locator(`figure[class*='figure_'] div[class*='shape_'] svg:nth-of-type(${index + 1})`);

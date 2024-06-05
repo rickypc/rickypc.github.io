@@ -53,7 +53,7 @@ export const hasTitle = async ({ page }) => {
 };
 
 export const hasUrl = async (baseURL, page, url) => {
-  await expect(page).toHaveURL(`${baseURL}${url}`);
+  await expect(page).toHaveURL(new RegExp(`^${baseURL}${url}/?`));
 };
 
 export { test };

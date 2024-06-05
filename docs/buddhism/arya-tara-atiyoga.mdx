@@ -12,10 +12,16 @@ tags: [Buddhism]
 title: Ārya Tārā Atiyoga
 ---
 
+import Ahvana from '#buddhism/phrases/_ahvana.mdx';
 import AryaTara from '#buddhism/phrases/_arya_tara.mdx';
 import AryaTaraAstaghoraTaraniSutra from '#buddhism/phrases/_arya_tara_astaghora_tarani_sutra.mdx';
+import EkadasamukhaLokesvara from '#buddhism/phrases/_ekadasamukhalokesvara.mdx';
+import MandalaArpana from '#buddhism/phrases/_mandala_arpana.mdx';
 import RaktaTara from '#buddhism/phrases/_rakta_tara.mdx';
 import SitaTara from '#buddhism/phrases/_sita_tara.mdx';
+import Sukhavativyuha from '#buddhism/phrases/_sukhavativyuha.mdx';
+import Trikaya from '#buddhism/phrases/_trikaya.mdx';
+import Vajragita from '#buddhism/phrases/_vajragita.mdx';
 
 <Welcome />
 
@@ -29,6 +35,22 @@ Work in progress.
 
 
 {/* ------------------------- */}
+
+<Ahvana
+  image={require('#buddhism/img/arya-tara.webp').default}
+  instruction={(
+    <div className="row">
+      <Image
+        alt="Ārya Tārā Mudrā"
+        className="col col--2"
+        picture={{ fallback: require('#buddhism/img/mudra-tara.webp').default }}
+      />
+      <span className="col col--10">
+        Ārya Tārā mudrā.
+      </span>
+    </div>
+  )}
+/>
 
 ### Ārya Tārā Recitation
 
@@ -47,7 +69,18 @@ Work in progress.
 
 ### Āryatārā Invocation
 
-<Phrase instruction="Communicating and invoking Her directly." transliteration={{ children: '​​tāre', className: 'green', speech: 'tare' }} />
+<Phrase
+  instruction="Communicating and invoking Her directly."
+  transliteration={{ children: '​​tāre', className: 'green', speech: 'tare' }}
+/>
+<details>
+  <summary>
+    Tārā's name.
+  </summary>
+  <div>
+    <MultiLingual sanskrit={{ children: 'तारे' }} />
+  </div>
+</details>
 
 ### Āryatārā Ātma Utpatti
 
@@ -63,12 +96,46 @@ Work in progress.
   )}
   transliteration={{ children: 'tāṃ', className: 'green', speech: 'tamm', title: 'Āryatārā Ātma Utpatti' }}
 />
+<details>
+  <summary>
+    Tārā's seed syllable.
+  </summary>
+  <div>
+    <MultiLingual sanskrit={{ children: 'ताँ' }} />
+  </div>
+</details>
 
+### Offering
 
+#### Trikāya
 
+<Trikaya
+  instruction={(
+    <>
+      <span style={{color: 'gray'}}>ॐ</span> at our <Link href="https://en.wikipedia.org/wiki/Glabella">glabella</Link>, <span style={{color: 'red'}}>आः</span> at our <Link href="https://en.wikipedia.org/wiki/Throat">throat</Link>, <span style={{color: 'blue'}}>हूँ</span> at our <Link href="https://en.wikipedia.org/wiki/Aorta">heart</Link>.
+    </>
+  )}
+  repetition={3}
+/>
 
+#### Maṇḍala Arpaṇa
 
-{/* ------------------------- */}
+<MandalaArpana
+  image={require('#buddhism/img/self-generation-mandala.webp').default}
+  instruction={(
+    <div className="row">
+      <Image
+        alt="Maṇḍala Arpaṇa Mudrā"
+        className="col col--2"
+        picture={{ fallback: require('#buddhism/img/mudra-mandala-arpana.webp').default }}
+      />
+      <span className="col col--10">
+        Maṇḍala arpaṇa mudrā with the sun behind our back and the moon in front of us.
+        Offering self-generated and pure land to all enlightened beings.
+      </span>
+    </div>
+  )}
+/>
 
 <RaktaTara
   image={require('#buddhism/img/self-generation-red.webp').default}
@@ -104,3 +171,28 @@ Work in progress.
     </>
   )}
 />
+
+<Vajragita
+  image={require('#buddhism/img/samantabhadra.webp').default}
+  instruction={(
+    <>
+      Remain within the all-pervasive expanse of the mind’s nature.
+    </>
+  )}
+/>
+
+<Sukhavativyuha
+  image={require('#buddhism/img/amitabha.webp').default}
+/>
+
+<EkadasamukhaLokesvara
+  image={require('#buddhism/img/ekadasamukha.webp').default}
+/>
+
+{/* ------------------------- */}
+
+:::note
+
+Work in progress.
+
+:::

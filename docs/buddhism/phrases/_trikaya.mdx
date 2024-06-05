@@ -1,0 +1,21 @@
+{/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */}
+
+import phrase from '#buddhism/phrases/_trikaya.js';
+
+<Phrase {...phrase} {...props} />
+
+<details>
+  <summary>
+    The seed syllables <code>{phrase.transliteration.children}</code> represent [vajra](https://en.wikipedia.org/wiki/Vajra), or wisdom, body, speech, and mind.
+    The syllable `oṃ` represents the union of form and emptiness.
+    And `āḥ` represents the indivisibility of speech and emptiness.
+    And finally, `hūṃ` represents the union of pure awareness and emptiness.
+  </summary>
+  <div>
+    <MultiLingual {...phrase} />
+  </div>
+</details>

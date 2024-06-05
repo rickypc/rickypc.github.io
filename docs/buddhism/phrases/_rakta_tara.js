@@ -20,6 +20,7 @@ export default {
     className: 'red',
     repetition: 21,
     speech: 'oum tare tamm swaha',
+    // Red Tara.
     title: 'Rakta Tārā',
   },
 };

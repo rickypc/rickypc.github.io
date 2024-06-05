@@ -20,6 +20,7 @@ export default {
     className: 'gray',
     repetition: 21,
     speech: 'oum tare tu tare ture mama ayu punya jiana pustim kuru swaha',
+    // White Tara.
     title: 'Sitā Tārā',
   },
 };

@@ -13,6 +13,7 @@ export default {
     children: 'oṃ namo bhagavate ārya tārāye । oṃ tāre tuttāre ture sarvaduṣṭān praduṣṭān । mama kṛte jambhaya stambhaya mohaya bandhaya vidhvaṃsaya । hūṃ hūṃ hūṃ phaṭ phaṭ phaṭ svāhā । sarvaduṣṭastambhani tāre svāhā',
     repetition: 3,
     speech: 'oum namo bhagawate arya taraye, oum tare tu tare ture sarwa dustan pradustan, mama kirte jambaya stambaya mohaya bandaya widwam saya, houm houm houm patt patt patt swaha, sarwa dusta stambani tare swaha',
+    // Noble Tara who protects from the 8 dangers.
     title: 'Ārya Tārā Aṣṭaghora Tāraṇī Sūtra',
   },
 };

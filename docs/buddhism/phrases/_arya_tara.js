@@ -24,6 +24,7 @@ export default {
     className: 'green',
     repetition: 21,
     speech: 'oum tare tu tare ture swaha',
+    // Noble Tara.
     title: 'Ārya Tārā',
   },
 };

@@ -5,8 +5,9 @@
  */
 
 .carousel .viewport,
-.carousel .slider .slide {
-  aspect-ratio: 4/3;
+.carousel .slider .slide,
+.carousel .slider .slide picture {
+  aspect-ratio: 4 / 3;
 }
 
 .carousel .viewport {
@@ -35,10 +36,6 @@
 
 .carousel .dragging.viewport .slider .slide {
   cursor: grabbing;
-}
-
-.carousel .slider .slide picture {
-  aspect-ratio: 4 / 3;
 }
 
 .carousel .controls {

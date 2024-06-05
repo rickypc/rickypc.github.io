@@ -27,74 +27,58 @@
   width: 100%;
 }
 
-.oracle .oracular1 {
+.oracle .oracular1,
+.oracle .oracular2,
+.oracle .oracular3 {
   aspect-ratio: 1 / 1;
   border-radius: 31.25rem;
-  filter: blur(4.375rem);
-  height: 25rem;
   left: 50%;
   overflow: visible;
   position: absolute;
   top: 57%;
-  width: 25rem;
   will-change: transform;
+}
+
+.oracle .oracular1::before,
+.oracle .oracular2::before,
+.oracle .oracular3::before {
+  border-radius: 50%;
+  content: '';
+  inset: 0;
+  overflow: hidden;
+  position: absolute;
+  will-change: transform;
+}
+
+.oracle .oracular1 {
+  filter: blur(4.375rem);
+  height: 25rem;
+  width: 25rem;
 }
 
 .oracle .oracular1::before {
   background: conic-gradient(rgb(255, 0, 128) 0deg, rgb(238, 0, 255) 54.8916deg, rgb(0, 166, 255) 106.699deg, rgb(71, 151, 255) 162deg, rgb(0, 68, 255) 252deg, rgb(255, 128, 0) 306deg, rgb(255, 0, 204) 360deg);
-  border-radius: 50%;
-  content: '';
-  inset: 0;
-  overflow: hidden;
-  position: absolute;
-  will-change: transform;
 }
 
 .oracle .oracular2 {
-  aspect-ratio: 1 / 1;
-  border-radius: 31.25rem;
   filter: blur(2rem);
   height: 18.75rem;
-  left: 50%;
-  overflow: visible;
-  position: absolute;
-  top: 57%;
   width: 18.75rem;
-  will-change: transform;
 }
 
 .oracle .oracular2::before {
   background: conic-gradient(rgb(255, 255, 255) 0deg, rgb(18, 180, 230) 180deg, rgb(220, 76, 252) 360deg);
-  border-radius: 50%;
-  content: '';
-  inset: 0;
-  overflow: hidden;
-  position: absolute;
-  will-change: transform;
 }
 
 .oracle .oracular3 {
-  aspect-ratio: 1 / 1;
-  border-radius: 31.25rem;
   filter: blur(2rem);
   height: 18.75rem;
-  left: 50%;
   mix-blend-mode: overlay;
-  overflow: visible;
-  position: absolute;
-  top: 57%;
   width: 18.75rem;
-  will-change: transform;
 }
 
 .oracle .oracular3::before {
   background: conic-gradient(rgb(166, 239, 255) 0deg, rgb(18, 173, 230) 180deg, rgb(76, 99, 252) 360deg);
-  border-radius: 50%;
-  content: '';
-  inset: 0;
-  overflow: hidden;
-  position: absolute;
-  will-change: transform;
 }
 
 .oracle.play .oracular1,

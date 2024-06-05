@@ -87,7 +87,7 @@ const Support = memo(function Support({ path, repetition = 0, transliteration })
           href={key(fileName(path), '/pdf', '/', 'pdf', '.')}
           rel="noopener noreferrer"
           target="_blank"
-          title={`Open ${transliteration.title} mantra roll`}
+          title={`Open ${transliteration.title} prayer roll`}
         >
           <FaScroll />
         </Link>

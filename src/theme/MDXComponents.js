@@ -4,6 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+import Image from '@site/src/components/common/Image';
 import Link from '@docusaurus/Link';
 import MDXComponents from '@theme-original/MDXComponents';
 import MultiLingual from '@site/src/components/common/MultiLingual';
@@ -14,6 +15,7 @@ export default {
   // Re-use the default mapping.
   ...MDXComponents,
   // Map majority of the custom components.
+  Image,
   Link,
   MultiLingual,
   Phrase,

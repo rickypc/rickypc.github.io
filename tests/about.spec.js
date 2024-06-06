@@ -7,6 +7,7 @@
 const {
   beforeEach,
   expect,
+  hasActiveNavigation,
   hasHeader,
   hasScreenshot,
   hasTitle,
@@ -21,10 +22,7 @@ test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
 test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url));
 test('has correct title', hasTitle);
 test('has correct header', hasHeader);
-
-test('has active navigation', async ({ page }) => {
-  await expect(page.getByRole('link', { name: 'About Me' })).toHaveClass(/navbar__link--active/);
-});
+test('has active navigation', async ({ page }, testInfo) => hasActiveNavigation('About Me', page, testInfo));
 
 test('has types', async ({ page }) => {
   await Promise.all(['Transformer People Type', 'Transactor Task Type'].map(async (label, index) => {

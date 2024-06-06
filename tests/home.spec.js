@@ -12,6 +12,7 @@ const {
   hasSpeech,
   hasTitle,
   hasUrl,
+  mobile,
   test,
 } = require('./utils/helper');
 
@@ -43,8 +44,11 @@ test('has 4 paragraphs', async ({ page }) => {
 });
 
 test('has self image', async ({ page }, testInfo) => {
-  const selector = /^mobile/i.test(testInfo.project.name) ? 'main figure picture' : 'main figure picture img';
-  await expect(page.locator(selector)).toBeVisible();
+  if (mobile(testInfo)) {
+    await expect(page.locator('main figure picture')).toHaveCount(1);
+  } else {
+    await expect(page.locator('main figure picture img')).toBeVisible();
+  }
 });
 
 test('has social links', async ({ page }) => {

@@ -6,6 +6,8 @@
 
 const { expect, test } = require('@playwright/test');
 
+const mobile = (testInfo) => /^mobile/i.test(testInfo?.project?.name);
+
 export const band = async (count, callback) => Promise.all([...Array(count).keys()].map(callback));
 
 export const beforeEach = async (page, testInfo, url) => {
@@ -15,10 +17,20 @@ export const beforeEach = async (page, testInfo, url) => {
     'has greeting',
   ].includes(testInfo.title)) {
     await page.goto(url, { waitUntil: 'networkidle' });
+    await page.waitForSelector('#__docusaurus .main-wrapper', { visible: true });
   }
 };
 
 export { expect };
+
+export const hasActiveNavigation = async (name, page, testInfo) => {
+  if (mobile(testInfo)) {
+    await page.locator('nav .navbar__inner button.navbar__toggle').click();
+    await expect(page.getByRole('link', { name })).toHaveClass(/menu__link--active/);
+  } else {
+    await expect(page.getByRole('link', { name })).toHaveClass(/navbar__link--active/);
+  }
+};
 
 export const hasHeader = async ({ page }) => {
   expect(await page.textContent('main header h1')).toMatchSnapshot('header-headline.txt');
@@ -39,6 +51,7 @@ export const hasScreenshot = async (page, testInfo, theme, url) => {
 
 export const hasSpeech = async (page, selector, url) => {
   await page.goto(`${url}?docusaurus-data-volume=silent`, { waitUntil: 'networkidle' });
+  await page.waitForSelector('#__docusaurus .main-wrapper', { visible: true });
   const locator = page.locator(selector);
   if (await locator.isVisible()) {
     await locator.click();
@@ -48,7 +61,6 @@ export const hasSpeech = async (page, selector, url) => {
 };
 
 export const hasTitle = async ({ page }) => {
-  await page.waitForSelector('#__docusaurus .main-wrapper', { visible: true });
   expect(await page.textContent('head>title')).toMatchSnapshot('title.txt');
 };
 
@@ -56,4 +68,4 @@ export const hasUrl = async (baseURL, page, url) => {
   await expect(page).toHaveURL(new RegExp(`^${baseURL}${url}/?`));
 };
 
-export { test };
+export { mobile, test };

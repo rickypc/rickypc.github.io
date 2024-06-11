@@ -103,11 +103,18 @@ export default function roll(path) {
     index === lastRoll ? null : {
       canvas: [
         {
-          dash: { length: 3.5, space: 2.5 },
-          lineWidth: 1,
+          lineWidth: 0.5,
           type: 'line',
-          x1: 0,
-          x2: 777,
+          x1: -5,
+          x2: -0.5,
+          y1: 0,
+          y2: 0,
+        },
+        {
+          lineWidth: 0.5,
+          type: 'line',
+          x1: 777.5,
+          x2: 782,
           y1: 0,
           y2: 0,
         },

@@ -55,7 +55,7 @@ export const hasSpeech = async (page, selector, url) => {
   const locator = page.locator(selector);
   if (await locator.isVisible()) {
     await locator.click();
-    expect(await page.evaluate(() => speechSynthesis.speaking)).toBeTruthy();
+    await expect(page.evaluate(() => speechSynthesis.speaking)).toBeTruthy();
     await page.waitForFunction(() => !speechSynthesis.speaking);
   }
 };

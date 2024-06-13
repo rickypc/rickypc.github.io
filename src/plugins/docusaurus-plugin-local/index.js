@@ -120,11 +120,9 @@ export default function pluginLocal(context) {
                     adapter: require('@docusaurus/responsive-loader/sharp'),
                     // Don't emit for server-side rendering
                     emitFile: !isServer,
-                    max: 2160,
-                    min: 256,
                     name: 'assets/images/[name].[hash:hex:7].[width].[ext]',
                     quality: 70,
-                    steps: 16,
+                    sizes: [320, 480, 640, 768, 1024, 1366, 1600, 1920],
                   },
                 },
               ],

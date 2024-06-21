@@ -5,9 +5,15 @@
  */
 
 export default {
+  path: new URL('', import.meta.url).pathname,
   sanskrit: {
     children: 'ॐ गते गते पारगते पारसंगते बोधि स्वाहा',
     title: 'प्रज्ञापारमिताहृदय',
+  },
+  tibetan: {
+    children: 'ཨོཾ་ག་ཏེ་ག་ཏེ་པཱ་ར་ག་ཏེ་པཱ་ར་སཾ་ག་ཏེ་བོ་དྷི་སྭཱ་ཧཱ',
+    repeat: 90,
+    title: 'ཤེས་རབ་སྙིང་པོ',
   },
   transliteration: {
     children: 'oṃ gate gate pāragate pārasaṃgate bodhi svāhā',

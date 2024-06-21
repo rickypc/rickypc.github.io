@@ -10,13 +10,13 @@ export default {
     title: '十一面观音陀罗尼',
   },
   sanskrit: {
-    children: 'ॐ धर धर धीरे धीरे ध्रु ध्रु ईट्टे वति । चले चले प्रचले प्रचले कुसुमे कुसुम वरे । इली मिरी चिरि चित्ति जालमपनय । परम शुद्धसत्त्व महा कारुणिक स्वाहा',
+    children: 'ॐ धर धर धीरे धीरे धुरु धुरु ईट्टे विट्टे । चले चले प्रचले प्रचले कुसुमे कुसुमवरे । इली मिल् विटि चित्ति ज्वालम् आपनाय । परम शुद्धसत्त्व महा कारुणिक स्वाहा',
     title: 'एकादशमुखलोकेश्वर',
   },
   transliteration: {
-    children: 'oṃ dhara dhara dhīre dhīre dhru dhru īṭṭe vati । cale cale pracale pracale kusume kusuma vare । ilī mirī ciri citti jālamapanaya । parama śuddhasattva mahā kāruṇika svāhā',
+    children: 'oṃ dhara dhara dhīre dhīre dhuru dhuru iṭṭe viṭṭe । cale cale । pracale pracale । kusume kusumavare । ili mili viṭi citti jvālaṃ āpanāya । parama śuddhasattva mahā kāruṇika svāhā',
     repetition: 3,
-    speech: 'oum, dhara dhara, dhire dhire, dhru dhru, it-t wati, cale cale, pracale pracale, kusume, kusuma wa-re, ili miri, ciri citti, jalam-apanaya, parama suddha sattwa, maha karunika swaha',
+    speech: 'oum, dhara dhara, dhire dhire, dhuru dhuru, it-t wi-t, cale cale, pracale pracale, kusume, kusuma wa-re, ili mili, witi citti, jwalam apanaya, parama suddha sattwa, maha karunika swaha',
     // The eleven-faced lord of the world (Avalokiteśvara).
     title: 'Ekādaśamukhalokeśvara',
   },

@@ -8,7 +8,9 @@ const phrases = '#buddhism/phrases';
 
 export default [
   ['roll', `${phrases}/_arya_tara.js`],
+  ['roll', `${phrases}/_prajna_paramita.js`],
   ['roll', `${phrases}/_pratityasamutpada.js`],
   ['roll', `${phrases}/_rakta_tara.js`],
+  ['roll', `${phrases}/_sapta_atitabuddha_karasaniya.js`],
   ['roll', `${phrases}/_sita_tara.js`],
 ];

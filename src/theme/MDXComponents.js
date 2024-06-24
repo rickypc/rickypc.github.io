@@ -8,7 +8,7 @@ import Image from '@site/src/components/common/Image';
 import Link from '@docusaurus/Link';
 import MDXComponents from '@theme-original/MDXComponents';
 import MultiLingual from '@site/src/components/common/MultiLingual';
-import Phrase from '@site/src/components/common/Phrase';
+import Phrase, { Instruction } from '@site/src/components/common/Phrase';
 import Welcome from '@site/src/components/common/Welcome';
 
 export default {
@@ -16,6 +16,7 @@ export default {
   ...MDXComponents,
   // Map majority of the custom components.
   Image,
+  Instruction,
   Link,
   MultiLingual,
   Phrase,

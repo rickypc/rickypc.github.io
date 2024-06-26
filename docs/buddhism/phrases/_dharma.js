@@ -7,13 +7,13 @@
 export default {
   sanskrit: {
     children: 'ॐ धुरु धुरु जयामुखे स्वाहा',
-    title: 'कुशल',
+    title: 'धर्म',
   },
   transliteration: {
     children: 'oṃ dhuru dhuru jayaṃukḥe svāhā',
     repetition: 3,
     speech: 'oum dhuru dhuru jaya-muke swaha',
     // The virtue blessing.
-    title: 'Kuśala',
+    title: 'Dharma',
   },
 };

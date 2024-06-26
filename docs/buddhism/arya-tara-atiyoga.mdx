@@ -16,16 +16,19 @@ import Ahvana from '#buddhism/phrases/_ahvana.mdx';
 import AmoghapasaManiPuja from '#buddhism/phrases/_amoghapasa_mani_puja.mdx';
 import AryaTara from '#buddhism/phrases/_arya_tara.mdx';
 import AryaTaraAstaghoraTaraniSutra from '#buddhism/phrases/_arya_tara_astaghora_tarani_sutra.mdx';
+import AryaTaraSataksara from '#buddhism/phrases/_arya_tara_sataksara.mdx';
+import AryaTaraSvaPratijnaNama from '#buddhism/phrases/_arya_tara_svapratijna_nama.mdx';
 import DhanadaTara from '#buddhism/phrases/_dhanadatara.mdx';
+import Dharma from '#buddhism/phrases/_dharma.mdx';
 import EkadasamukhaLokesvara from '#buddhism/phrases/_ekadasamukhalokesvara.mdx';
 import Japa from '#buddhism/phrases/_japa.mdx';
-import Kusala from '#buddhism/phrases/_kusala.mdx';
 import MahaCakraVajra from '#buddhism/phrases/_maha_cakra_vajra.mdx';
 import MahamaniVipulavimana from '#buddhism/phrases/_mahamani_vipulavimana.mdx';
 import Mala from '#buddhism/phrases/_mala.mdx';
 import MandalaPuja from '#buddhism/phrases/_mandala_puja.mdx';
 import Namaskara from '#buddhism/phrases/_namaskara.mdx';
 import Pancabhuta from '#buddhism/phrases/_pancabhuta.mdx';
+import Parinamana from '#buddhism/phrases/_parinamana.mdx';
 import PrajnaParamita from '#buddhism/phrases/_prajna_paramita.mdx';
 import RaktaTara from '#buddhism/phrases/_rakta_tara.mdx';
 import SaptaAtitaBuddhaKarasaniya from '#buddhism/phrases/_sapta_atitabuddha_karasaniya.mdx';
@@ -38,8 +41,8 @@ import Vajragita from '#buddhism/phrases/_vajragita.mdx';
 
 <Welcome />
 
-### Udgama
-Merit Multiplication.
+### Maṅgala
+Blessing.
 
 #### Mālā
 <Mala
@@ -53,8 +56,8 @@ Merit Multiplication.
 #### Japa
 <Japa />
 
-#### Kuśala
-<Kusala />
+#### Dharma
+<Dharma />
 
 #### Namaskāra
 <Namaskara />
@@ -354,7 +357,7 @@ Offering.
       <Image
         alt="Maṇḍalapūjā Mudrā"
         className="col col--2"
-        picture={{ fallback: require('#buddhism/img/mudra-mandala-puja.webp').default }}
+        picture={{ fallback: require('#buddhism/img/mudra-mandala-arpana.webp').default }}
       />
       <span className="col col--10">
         Mandala offering mudrā with the sun behind our back and the moon in front of us.
@@ -464,12 +467,96 @@ Offering.
 />
 
 ### Puṇyapariṇāmanā
-Merit dedication.
+Merit dedication (in our own words).
 
-{/* ------------------------- */}
+<AryaTaraSvaPratijnaNama />
 
-:::note
+<Parinamana />
 
-Work in progress.
+<AryaTaraSataksara />
 
-:::
+### Trimūla Namaskāra
+Three Roots Homage.
+
+#### [Gurus](https://en.wikipedia.org/wiki/Lama) ([Buddhas](https://en.wikipedia.org/wiki/Buddhahood), [Dharmakāya](https://en.wikipedia.org/wiki/Dharmak%C4%81ya)) of all times and directions
+<Trikaya
+  instruction={(
+    <div className="row">
+      <Image
+        alt="Añjali Mudrā"
+        className="col col--2"
+        picture={{ fallback: require('#buddhism/img/mudra-anjali.webp').default }}
+      />
+      <span className="col col--10">
+        Kneel with <Link href="https://en.m.wikipedia.org/w/index.php?title=A%C3%B1jali_Mudr%C4%81">añjali mudrā</Link>,
+        say <span style={{color: 'gray'}}>ॐ</span> at our <Link href="https://en.wikipedia.org/wiki/Glabella">glabella</Link>,
+        say <span style={{color: 'red'}}>आः</span> at our <Link href="https://en.wikipedia.org/wiki/Throat">throat</Link>,
+        say <span style={{color: 'blue'}}>हूँ</span> at our <Link href="https://en.wikipedia.org/wiki/Aorta">heart</Link>,
+        then back to our <Link href="https://en.wikipedia.org/wiki/Glabella">glabella</Link>.
+        Bow with palm and head down on the ground to pay homage
+        and then palm up to receive their wisdom and empowerment.
+      </span>
+    </div>
+  )}
+/>
+
+#### [Devás](https://en.wikipedia.org/wiki/Yidam) ([Dharmas](https://en.wikipedia.org/wiki/Dharma_(Buddhism)), [Saṃbhogakāya](https://en.wikipedia.org/wiki/Sa%E1%B9%83bhogak%C4%81ya)) of all times and directions
+<Trikaya
+  instruction={(
+    <div className="row">
+      <Image
+        alt="Padma Mudrā"
+        className="col col--2"
+        picture={{ fallback: require('#buddhism/img/mudra-padma.webp').default }}
+      />
+      <span className="col col--10">
+        Kneel with padma mudrā,
+        say <span style={{color: 'gray'}}>ॐ</span> at our <Link href="https://en.wikipedia.org/wiki/Glabella">glabella</Link>,
+        say <span style={{color: 'red'}}>आः</span> at our <Link href="https://en.wikipedia.org/wiki/Throat">throat</Link>,
+        say <span style={{color: 'blue'}}>हूँ</span> at our <Link href="https://en.wikipedia.org/wiki/Aorta">heart</Link>,
+        then back to our <Link href="https://en.wikipedia.org/wiki/Glabella">glabella</Link>.
+        Bow with palm and head down on the ground to pay homage
+        and then palm up to receive their wisdom and empowerment.
+      </span>
+    </div>
+  )}
+/>
+
+#### [Ḍākinīs](https://en.wikipedia.org/wiki/Dakini) ([Saṅghas](https://en.wikipedia.org/wiki/Sangha), [Nirmāṇakāya](https://en.wikipedia.org/wiki/Nirm%C4%81%E1%B9%87ak%C4%81ya)) of all times and directions
+<Trikaya
+  instruction={(
+    <div className="row">
+      <Image
+        alt="Karkaṭa Mudrā"
+        className="col col--2"
+        picture={{ fallback: require('#buddhism/img/mudra-karkata.webp').default }}
+      />
+      <span className="col col--10">
+        Kneel with karkaṭa mudrā,
+        say <span style={{color: 'gray'}}>ॐ</span> at our <Link href="https://en.wikipedia.org/wiki/Glabella">glabella</Link>,
+        say <span style={{color: 'red'}}>आः</span> at our <Link href="https://en.wikipedia.org/wiki/Throat">throat</Link>,
+        say <span style={{color: 'blue'}}>हूँ</span> at our <Link href="https://en.wikipedia.org/wiki/Aorta">heart</Link>,
+        then back to our <Link href="https://en.wikipedia.org/wiki/Glabella">glabella</Link>.
+        Bow with palm and head down on the ground to pay homage
+        and then palm up to receive their wisdom and empowerment.
+      </span>
+    </div>
+  )}
+/>
+
+#### All enlightened beings of all times and directions
+<Instruction
+  text={(
+    <div className="row">
+      <Image
+        alt="Uttarabodhi Mudrā"
+        className="col col--2"
+        picture={{ fallback: require('#buddhism/img/mudra-uttarabodhi.webp').default }}
+      />
+      <span className="col col--10">
+        Kneel with uttarabodhi mudrā at our <Link href="https://en.wikipedia.org/wiki/Glabella">glabella</Link>,
+        half bow, then back to our <Link href="https://en.wikipedia.org/wiki/Glabella">glabella</Link>.
+      </span>
+    </div>
+  )}
+/>

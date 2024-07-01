@@ -4,6 +4,25 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+const body = (infix, lastPhrase, prefix, repeat, suffix, text) => ({
+  text: (Array.isArray(text) ? text : [text]).flatMap((phrase, index) => [
+    { style: 'prefix', text: index === 0 ? prefix : ` ${prefix}` },
+    {
+      text: Array.from(
+        { length: repeat },
+        (_repeat, idx) => ({
+          style: 'roll',
+          text: `${infix}${phrase}${idx === lastPhrase ? '' : `${infix} `}`,
+        }),
+      ),
+    },
+    { style: 'roll', text: suffix },
+  ]),
+});
+
+const substance = (children) => (Array.isArray(children) || typeof (children) === 'string'
+  ? children : children?.props?.children);
+
 export default function roll(path) {
   const {
     default: {
@@ -41,8 +60,7 @@ export default function roll(path) {
       repeat = tibetan?.repeat;
       rollFont = 'Kokonor';
       suffix = '༎';
-      text = typeof (tibetan?.children) === 'string'
-        ? tibetan.children : tibetan?.children?.props?.children;
+      text = substance(tibetan?.children);
       break;
     case 'sa-IN':
       lastPhrase = sanskrit.repeat - 1;
@@ -53,14 +71,12 @@ export default function roll(path) {
       repeat = sanskrit.repeat;
       rollFont = 'NotoSerifDevanagari';
       suffix = '॥';
-      text = typeof (sanskrit.children) === 'string'
-        ? sanskrit.children : sanskrit.children?.props?.children;
+      text = substance(sanskrit.children);
       break;
     default:
       lastPhrase = transliteration.repeat - 1;
       repeat = transliteration.repeat;
-      text = typeof (transliteration.children) === 'string'
-        ? transliteration.children : transliteration.children?.props?.children;
+      text = substance(transliteration.children);
   }
 
   const content = Array.from({ length: total }, (_total, index) => ([
@@ -77,21 +93,7 @@ export default function roll(path) {
                     fontSize: 4,
                     text: `${transliteration?.title?.toUpperCase()} ${repeat}x `,
                   },
-                  {
-                    text: [
-                      { style: 'prefix', text: prefix },
-                      {
-                        text: Array.from(
-                          { length: repeat },
-                          (_repeat, idx) => ({
-                            style: 'roll',
-                            text: `${infix}${text}${idx === lastPhrase ? '' : `${infix} `}`,
-                          }),
-                        ),
-                      },
-                      { style: 'roll', text: suffix },
-                    ],
-                  },
+                  body(infix, lastPhrase, prefix, repeat, suffix, text),
                 ],
               },
             ],

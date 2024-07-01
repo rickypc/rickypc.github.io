@@ -106,8 +106,6 @@ const config = {
       },
       prism: {
         darkTheme: themes.dracula,
-        magicComments: ['gray', 'green', 'red']
-          .map((line) => ({ className: `code__block--${line}`, line })),
         theme: themes.github,
       },
     }),

@@ -21,7 +21,7 @@ export default {
   },
   transliteration: {
     children: 'oṃ tāre tuttāre ture svāhā',
-    className: 'green',
+    className: 'code__block--green',
     repetition: 21,
     speech: 'oum tare tu tare ture swaha',
     // Noble Tara.

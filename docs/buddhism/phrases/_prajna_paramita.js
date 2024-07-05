@@ -20,6 +20,6 @@ export default {
     repetition: 3,
     speech: 'oum ga-t ga-t paragate paramsamgate bodi swaha',
     // The heart of the perfection of wisdom.
-    title: 'Prajñāpāramitāhṛdaya',
+    title: 'Prajñāpāramitā Hṛdaya',
   },
 };

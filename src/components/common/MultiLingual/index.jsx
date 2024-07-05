@@ -4,50 +4,47 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import CodeBlock from '@theme/CodeBlock';
 import { memo } from 'react';
+import PhraseBlock from '@site/src/components/common/PhraseBlock';
 import PropTypes from 'prop-types';
-
-const body = (prefix, suffix, variant) => (
-  <span className={variant.className}>
-    {
-      (Array.isArray(variant.children) ? variant.children : [variant.children])
-        .map((phrase, _, array) => {
-          const multi = array.length > 1;
-          return (
-            <>
-              {multi && prefix}
-              {phrase}
-              {suffix}
-              {multi && '\n'}
-            </>
-          );
-        })
-    }
-  </span>
-);
 
 export default memo(Object.assign(function MultiLingual({
   chinese,
   sanskrit,
   tibetan,
+  transliteration = {},
 }) {
   return (
     <>
       {sanskrit && (
-        <CodeBlock title={sanskrit.title}>
-          {body('꣼ ', '॥', sanskrit)}
-        </CodeBlock>
+        <PhraseBlock
+          phrase={{
+            ...sanskrit,
+            className: transliteration.className,
+          }}
+          prefix="꣼ "
+          suffix="॥"
+        />
       )}
       {tibetan && (
-        <CodeBlock title={tibetan.title}>
-          {body('༄༅། །', '༎', tibetan)}
-        </CodeBlock>
+        <PhraseBlock
+          phrase={{
+            ...tibetan,
+            className: transliteration.className,
+          }}
+          prefix="༄༅། །"
+          suffix="༎"
+        />
       )}
       {chinese && (
-        <CodeBlock title={chinese.title}>
-          {body('꣼ ', '。', chinese)}
-        </CodeBlock>
+        <PhraseBlock
+          phrase={{
+            ...chinese,
+            className: transliteration.className,
+          }}
+          prefix="꣼ "
+          suffix="。"
+        />
       )}
     </>
   );
@@ -56,5 +53,6 @@ export default memo(Object.assign(function MultiLingual({
     chinese: PropTypes.shape(),
     sanskrit: PropTypes.shape(),
     tibetan: PropTypes.shape(),
+    transliteration: PropTypes.shape(),
   },
 }));

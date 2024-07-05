@@ -17,7 +17,7 @@ export default {
   },
   transliteration: {
     children: 'oṃ tāre tuttāre ture mama āyuḥ-puṇya-jñāna-puṣṭiṃ kuru svāhā',
-    className: 'code__block--gray',
+    className: 'phrase--gray',
     repetition: 21,
     speech: 'oum tare tu tare ture mama ayu punya jiana pustim kuru swaha',
     // White Tara.

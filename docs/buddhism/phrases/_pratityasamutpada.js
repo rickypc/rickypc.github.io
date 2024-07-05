@@ -7,19 +7,19 @@
 export default {
   path: new URL('', import.meta.url).pathname,
   sanskrit: {
-    children: 'ये धर्मा हेतु प्रभवा हेतुं तेषां तथागतः ह्यवदत् तेषां च यो निरोध एवं वादी महाश्रमणः',
-    title: 'प्रतीत्यसमुत्पाद',
+    children: 'ये धर्मा हेतु-प्रभवा हेतुं तेषां तथागत उवाच । तेषां च यो निरोध एवं वादी महाश्रमणः । अज्ञानाच्चीयते कर्म जन्मनः कर्म कारणम् । ज्ञानान्नचीयते कर्म कर्माभावान्न जायते',
+    title: 'प्रतीत्यसमुत्पाद गाथा',
   },
   tibetan: {
-    children: 'ཡེ་དྷརྨ་ཧེ་ཏུ་པྲ་བྷ་ཝཱ་ཧེ་ཏུནྟེ་ཥཱནྟ་ཐཱ་ག་ཏཔོ་ཧྱ་ཝ་དཏ། ཏེ་ཥཱཉྩ་ཡཔོ་ནི་རཔོ་དྷ་ཨེ་ཝཾ་བཱ་དཱི་མ་ཧཱ་ཤྲ་མ་ཎཨཡེ་སྭཱཧཱ',
-    repeat: 40,
-    title: 'རྟེན་ཅིང་འབྲེལ་བར་འབྱུང་བ',
+    children: 'ཡེ་དྷརྨཱ་ཧེ་ཏུ་པྲ་བྷ་ཝཱ་ཧེ་ཏུནྟེ་ཥཱནྟ་ཐཱ་ག་ཏོ་ཧྱ་ཝ་དཏ། ཏེ་ཥཱཉྩ་ཡོ་ནི་རོ་དྷ་ཨེ་ཝཾ་བཱ་དཱི་མ་ཧཱ་ཤྲཱ་མ་ཎ',
+    repeat: 46,
+    title: 'རྟེན་ཅིང་འབྲེལ་བར་འབྱུང་བའི་ཚིགས་སུ་བཅད་པ།',
   },
   transliteration: {
-    children: 'ye dhammā hetuppabhavā tesaṁ hetuṁ tathāgato āha । tesaṃ ca yo nirodho evaṁvādī mahāsamaṇo',
+    children: 'ye dharmā hetuprabhavā hetuṃ teṣāṃ tathāgata uvāca । teṣāṃ ca yo nirodha evaṃ vādi mahāśramaṇaḥ । ajñānāc cīyate karma janmanaḥ karma kāraṇam । jñānān na cīyate karma karmābhāvān na jāyate',
     repetition: 7,
-    speech: 'y dhamma hei tu pabawa t samm hei tum tathagato aha, t samm ca yo nirodho ewam wadi maha samano',
+    speech: 'y dharma hei-tu-prabawa hei-tum t-samm tathagata uwaca, t-samm ca yo nirodha ewam wadi mahasramanah, a-jena-nac ciya-t karma jan-manah karma karanam, jena-nan na ciya-t karma karmabawan na jayate',
     // Dependent Origination.
-    title: 'Pratītyasamutpāda',
+    title: 'Pratītyasamutpāda Gāthā',
   },
 };

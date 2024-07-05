@@ -1,0 +1,106 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.block {
+  --ifm-pre-background: var(--prism-background-color);
+  margin: 0;
+  padding: 0;
+}
+
+.buttons {
+  column-gap: 0.2rem;
+  display: flex;
+  position: absolute;
+  right: calc(var(--ifm-pre-padding) / 2);
+  top: calc(var(--ifm-pre-padding) / 2);
+}
+
+.buttons button {
+  align-items: center;
+  background: var(--prism-background-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  color: var(--prism-color);
+  display: flex;
+  line-height: 0;
+  opacity: 0;
+  padding: 0.4rem;
+  transition: opacity var(--ifm-transition-fast) ease-in-out;
+}
+
+.buttons button:focus-visible,
+.buttons button:hover {
+  opacity: 1 !important;
+}
+
+:global(.theme-code-block:hover) .buttons button {
+  opacity: 0.4;
+}
+
+.content {
+  border-radius: inherit;
+  direction: ltr;
+  position: relative;
+}
+
+.lines {
+  float: left;
+  font: inherit;
+  min-width: 100%;
+  padding: var(--ifm-pre-padding);
+}
+
+.lines :global(.phrase--gray),
+.lines :global(.phrase--green),
+.lines :global(.phrase--red) {
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0.3rem var(--ifm-pre-padding);
+}
+
+.lines :global(.phrase--gray) {
+  background-color: var(--ifm-color-secondary-contrast-background);
+  border-left: 0.1875rem solid var(--ifm-color-secondary-dark);
+}
+
+.lines :global(.phrase--green) {
+  background-color: var(--ifm-color-success-contrast-background);
+  border-left: 0.1875rem solid var(--ifm-color-success-dark);
+}
+
+.lines :global(.phrase--red) {
+  background-color: var(--ifm-color-danger-contrast-background);
+  border-left: 0.1875rem solid var(--ifm-color-danger-dark);
+}
+
+.numbers {
+  display: table;
+  padding: var(--ifm-pre-padding) 0;
+}
+
+.standalone {
+  padding: 0;
+}
+
+.title {
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  font-size: var(--ifm-code-font-size);
+  font-weight: 500;
+  padding: 0.75rem var(--ifm-pre-padding);
+}
+
+.title+.content .block {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+@media print {
+  .lines {
+    white-space: pre-wrap;
+  }
+}

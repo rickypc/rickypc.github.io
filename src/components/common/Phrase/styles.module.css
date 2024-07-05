@@ -4,11 +4,6 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-/* Colors */
-.green {
-  color: green;
-}
-
 .instruction {
   margin-bottom: var(--ifm-spacing-vertical);
 }
@@ -19,33 +14,6 @@
 
 .picture img {
   width: 100%;
-}
-
-.phrase {
-  display: inherit;
-}
-
-.phrase :global(.code__block--gray),
-.phrase :global(.code__block--green),
-.phrase :global(.code__block--red) {
-  display: block;
-  margin: 0 calc(-1 * var(--ifm-pre-padding));
-  padding: 0.3rem var(--ifm-pre-padding);
-}
-
-.phrase :global(.code__block--gray) {
-  background-color: var(--ifm-color-secondary-contrast-background);
-  border-left: 0.1875rem solid var(--ifm-color-secondary-dark);
-}
-
-.phrase :global(.code__block--green) {
-  background-color: var(--ifm-color-success-contrast-background);
-  border-left: 0.1875rem solid var(--ifm-color-success-dark);
-}
-
-.phrase :global(.code__block--red) {
-  background-color: var(--ifm-color-danger-contrast-background);
-  border-left: 0.1875rem solid var(--ifm-color-danger-dark);
 }
 
 .support {

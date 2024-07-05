@@ -17,7 +17,7 @@ export default {
   },
   transliteration: {
     children: 'oṃ tāre tāṃ svāhā',
-    className: 'code__block--red',
+    className: 'phrase--red',
     repetition: 21,
     speech: 'oum tare tamm swaha',
     // Red Tara.

@@ -4,10 +4,10 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { clsx } from '@site/src/data/common';
+import { clsx, key } from '@site/src/data/common';
 import Container from '@theme/CodeBlock/Container';
 import CopyButton from '@theme/CodeBlock/CopyButton';
-import { memo } from 'react';
+import { Fragment, memo } from 'react';
 import PropTypes from 'prop-types';
 import { useCodeWordWrap } from '@docusaurus/theme-common/internal';
 import WordWrapButton from '@theme/CodeBlock/WordWrapButton';
@@ -18,19 +18,19 @@ const body = (phrase, prefix, infix, suffix) => {
   const last = group.length - 1;
   const multi = group.length > 1;
   return (
-    <span className={phrase.className}>
+    <>
       {
         group.map((words, index) => (
-          <>
+          <Fragment key={key(`${index}`, `${last}`)}>
             {(words && !phrase.unify && multi) && prefix}
             {words}
             {(words && phrase.unify && index !== last) && infix}
             {(words && ((phrase.unify && index === last) || !phrase.unify)) && suffix}
             {multi && '\n'}
-          </>
+          </Fragment>
         ))
       }
-    </span>
+    </>
   );
 };
 
@@ -67,7 +67,7 @@ export default memo(Object.assign(function PhraseBlock({
           // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
           tabIndex={0}
         >
-          <code className={styles.lines}>{content}</code>
+          <code className={clsx(styles.lines, phrase.className)}>{content}</code>
         </pre>
         {plain && (
           <div className={styles.buttons}>

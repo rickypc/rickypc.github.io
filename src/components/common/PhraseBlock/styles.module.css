@@ -53,27 +53,19 @@
   padding: var(--ifm-pre-padding);
 }
 
-.lines :global(.phrase--gray),
-.lines :global(.phrase--green),
-.lines :global(.phrase--red) {
-  display: block;
-  margin: 0 calc(-1 * var(--ifm-pre-padding));
-  padding: 0.3rem var(--ifm-pre-padding);
-}
-
-.lines :global(.phrase--gray) {
+.lines:global(.phrase--gray) {
   background-color: var(--ifm-color-secondary-contrast-background);
-  border-left: 0.1875rem solid var(--ifm-color-secondary-dark);
+  border-left: 0.35rem solid var(--ifm-color-secondary-dark);
 }
 
-.lines :global(.phrase--green) {
+.lines:global(.phrase--green) {
   background-color: var(--ifm-color-success-contrast-background);
-  border-left: 0.1875rem solid var(--ifm-color-success-dark);
+  border-left: 0.35rem solid var(--ifm-color-success-dark);
 }
 
-.lines :global(.phrase--red) {
+.lines:global(.phrase--red) {
   background-color: var(--ifm-color-danger-contrast-background);
-  border-left: 0.1875rem solid var(--ifm-color-danger-dark);
+  border-left: 0.35rem solid var(--ifm-color-danger-dark);
 }
 
 .numbers {

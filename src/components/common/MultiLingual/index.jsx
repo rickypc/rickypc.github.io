@@ -16,31 +16,37 @@ export default memo(Object.assign(function MultiLingual({
 }) {
   return (
     <>
-      {sanskrit && (
+      {sanskrit?.children && (
         <PhraseBlock
+          infix="।"
           phrase={{
             ...sanskrit,
             className: transliteration.className,
+            unify: transliteration.unify,
           }}
           prefix="꣼ "
           suffix="॥"
         />
       )}
-      {tibetan && (
+      {tibetan?.children && (
         <PhraseBlock
+          infix="།"
           phrase={{
             ...tibetan,
             className: transliteration.className,
+            unify: transliteration.unify,
           }}
           prefix="༄༅། །"
           suffix="༎"
         />
       )}
-      {chinese && (
+      {chinese?.children && (
         <PhraseBlock
+          infix="·"
           phrase={{
             ...chinese,
             className: transliteration.className,
+            unify: transliteration.unify,
           }}
           prefix="꣼ "
           suffix="。"

@@ -116,6 +116,7 @@ export default memo(Object.assign(function Phrase({
     <>
       <Instruction image={image} text={instruction} transliteration={transliteration} />
       <PhraseBlock
+        infix="।"
         phrase={{ ...transliteration, title: '' }}
         prefix="꣼ "
         suffix="॥"

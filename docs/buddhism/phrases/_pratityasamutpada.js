@@ -18,7 +18,7 @@ export default {
   transliteration: {
     children: 'ye dharmā hetuprabhavā hetuṃ teṣāṃ tathāgata uvāca । teṣāṃ ca yo nirodha evaṃ vādi mahāśramaṇaḥ । ajñānāc cīyate karma janmanaḥ karma kāraṇam । jñānān na cīyate karma karmābhāvān na jāyate',
     repetition: 7,
-    speech: 'y dharma hei-tu-prabawa hei-tum t-samm tathagata uwaca, t-samm ca yo nirodha ewam wadi mahasramanah, a-jena-nac ciya-t karma jan-manah karma karanam, jena-nan na ciya-t karma karmabawan na jayate',
+    speech: 'y dharma hei-tu-prabawa hei-tum t-samm tathagata uwaca, t-samm ca yo nirodha ewam wadi mahasramanah, ajnanac ciya-t karma jan-manah karma karanam, jnanan na ciya-t karma karmabawan na jayate',
     // Dependent Origination.
     title: 'Pratītyasamutpāda Gāthā',
   },

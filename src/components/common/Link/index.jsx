@@ -4,12 +4,11 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { a11y, clsx } from '@site/src/data/common';
+import { a11y } from '@site/src/data/common';
 import { domAnimation, LazyMotion, m } from 'framer-motion';
 import { forwardRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import useBrokenLinks from '@docusaurus/useBrokenLinks';
-import styles from './styles.module.css';
 
 const Link = forwardRef(({
   children,
@@ -29,7 +28,7 @@ const Link = forwardRef(({
     <LazyMotion features={domAnimation}>
       <m.a
         {...a11y(title)}
-        className={clsx(className, styles.link)}
+        className={className}
         href={href}
         ref={ref}
         rel={href?.includes('https://') ? 'noopener noreferrer' : null}

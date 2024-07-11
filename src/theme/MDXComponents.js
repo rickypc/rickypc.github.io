@@ -5,7 +5,7 @@
  */
 
 import Image from '@site/src/components/common/Image';
-import Link from '@docusaurus/Link';
+import Link from '@site/src/components/common/Link';
 import MDXComponents from '@theme-original/MDXComponents';
 import MultiLingual from '@site/src/components/common/MultiLingual';
 import Phrase, { Instruction } from '@site/src/components/common/Phrase';

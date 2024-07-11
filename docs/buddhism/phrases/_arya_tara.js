@@ -19,12 +19,14 @@ export default {
     repeat: 159,
     title: 'སྒྲོལ་ལྗང',
   },
+  translation: {
+    title: 'Noble Tārā Primary',
+  },
   transliteration: {
     children: 'oṃ tāre tuttāre ture svāhā',
     className: 'phrase--green',
     repetition: 21,
     speech: 'oum tare tu tare ture swaha',
-    // Noble Tara.
-    title: 'Ārya Tārā',
+    title: 'Āryatārā Hṛdaya',
   },
 };

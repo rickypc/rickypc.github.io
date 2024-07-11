@@ -15,12 +15,14 @@ export default {
     repeat: 227,
     title: 'སྒྲོལ་མ་དམར་མོ',
   },
+  translation: {
+    title: 'Red Tārā Primary',
+  },
   transliteration: {
     children: 'oṃ tāre tāṃ svāhā',
     className: 'phrase--red',
     repetition: 21,
     speech: 'oum tare tamm swaha',
-    // Red Tara.
-    title: 'Rakta Tārā',
+    title: 'Raktatārā Hṛdaya',
   },
 };

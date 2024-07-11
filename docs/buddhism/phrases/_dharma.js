@@ -9,6 +9,9 @@ export default {
     children: 'ॐ धुरु धुरु जयामुखे स्वाहा',
     title: 'धर्म',
   },
+  translation: {
+    title: 'Virtue',
+  },
   transliteration: {
     children: 'oṃ dhuru dhuru jayaṃukḥe svāhā',
     repetition: 3,

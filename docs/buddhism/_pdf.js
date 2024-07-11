@@ -7,6 +7,8 @@
 const phrases = '#buddhism/phrases';
 
 export default [
+  ['book', '#buddhism/_arya_tara_atiyoga.js'],
+  ['book', '#buddhism/_arya_tara_atiyoga_cover.js'],
   ['roll', `${phrases}/_arya_tara.js`],
   ['roll', `${phrases}/_arya_tara_sataksara.js`],
   ['roll', `${phrases}/_panca_maha_dharani.js`],

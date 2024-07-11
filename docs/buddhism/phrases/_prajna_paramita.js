@@ -15,11 +15,13 @@ export default {
     repeat: 90,
     title: 'ཤེས་རབ་སྙིང་པོ',
   },
+  translation: {
+    title: 'Heart of the Perfection of Wisdom',
+  },
   transliteration: {
     children: 'oṃ gate gate pāragate pārasaṃgate bodhi svāhā',
     repetition: 3,
     speech: 'oum ga-t ga-t paragate paramsamgate bodi swaha',
-    // The heart of the perfection of wisdom.
     title: 'Prajñāpāramitā Hṛdaya',
   },
 };

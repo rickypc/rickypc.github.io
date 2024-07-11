@@ -15,12 +15,14 @@ export default {
     repeat: 73,
     title: 'སྒྲོལ་དཀར',
   },
+  translation: {
+    title: 'White Tārā Primary',
+  },
   transliteration: {
     children: 'oṃ tāre tuttāre ture mama āyuḥ-puṇya-jñāna-puṣṭiṃ kuru svāhā',
     className: 'phrase--gray',
     repetition: 21,
     speech: 'oum tare tu tare ture mama ayu punya jiana pustim kuru swaha',
-    // White Tara.
-    title: 'Sitā Tārā',
+    title: 'Sitātārā Hṛdaya',
   },
 };

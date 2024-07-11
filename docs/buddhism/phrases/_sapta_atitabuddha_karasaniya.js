@@ -16,10 +16,12 @@ export default {
     repeat: 61,
     title: 'सप्त अतीतबुद्ध करसणिया',
   },
+  translation: {
+    title: 'Seven Past Buddhas Offense Eradication',
+  },
   transliteration: {
     children: 'ripa ripate kuhā kuhāte traṇite ṇigalate vimarite mahāgate jaṃlaṃcaṃte svāhā',
     speech: 'ripa ripa-t, kuha kuha-t, trani-t, nigala-t, vimari-t, maha ga-t, jamlam cam-t, swaha',
-    // The seven Buddhas offenses eradication.
     title: 'Sapta Atītabuddha Karasaniya',
   },
 };

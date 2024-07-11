@@ -99,13 +99,14 @@ export default function roll(path) {
             ],
           ],
         ],
-        heights: [65],
+        // (page height - (margins + borders)) / 6.
+        heights: [82.5],
       },
     },
     index === lastRoll ? null : {
       canvas: [
         {
-          lineWidth: 0.5,
+          lineWidth: 0.25,
           type: 'line',
           x1: -5,
           x2: -0.5,
@@ -113,7 +114,7 @@ export default function roll(path) {
           y2: 0,
         },
         {
-          lineWidth: 0.5,
+          lineWidth: 0.25,
           type: 'line',
           x1: 777.5,
           x2: 782,
@@ -143,7 +144,10 @@ export default function roll(path) {
           'prayer wheel',
           'wisdom',
           'compassion',
+          'buddhahood',
           'relic',
+          'dhāraṇī',
+          'zung',
         ].join(';'),
         subject: 'Placing prayer rolls inside the Buddha statue or prayer wheel will purify defilement and obscuration, increase wisdom, and attain Buddhahood in this lifetime',
         title: `${transliteration?.title} prayer roll`,

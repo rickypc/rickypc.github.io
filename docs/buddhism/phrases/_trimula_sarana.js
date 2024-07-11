@@ -9,10 +9,12 @@ export default {
     children: 'नमो गुरुभ्यः । नमो देवभ्यः । नमो डाकिनीभ्यः',
     title: 'त्रिमूल शरण',
   },
+  translation: {
+    title: 'Three Roots Refuge',
+  },
   transliteration: {
     children: 'namo gurubhyaḥ । namo devábhyaḥ । namo ḍākinībhyaḥ',
     speech: 'namo guru-byah, namo dewa-byah, namo dakini-byah',
-    // Three Roots Refuge.
     title: 'Trimūla Śaraṇa',
   },
 };

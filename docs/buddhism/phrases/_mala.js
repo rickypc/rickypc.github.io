@@ -9,6 +9,9 @@ export default {
     children: 'ॐ रुचिरा मणि प्रवर्तमानये स्वाहा',
     title: 'माला',
   },
+  translation: {
+    title: 'Prayer Beads',
+  },
   transliteration: {
     children: 'oṃ rucirā maṇi pravartamānaye svāhā',
     repetition: 3,

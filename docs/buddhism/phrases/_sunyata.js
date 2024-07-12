@@ -13,11 +13,13 @@ export default {
     children: 'ཨོཾ་སྭ་བྷཱ་ཝ་ཤུདྡྷཱཿསརྦ་དྷརྨཱཿསྭ་བྷཱ་ཝ་ཤུདྡྷོ྅ཧཾ',
     title: 'སྟོང་པ་ཉིད',
   },
+  translation: {
+    title: 'Buddha Nature',
+  },
   transliteration: {
     children: 'oṃ svabhāva śuddhā sarva dharmāḥ svabhāva śuddho \'ham',
     repetition: 7,
     speech: 'oum swabawa suddha sarwa dharmah swabawa suddho hamm',
-    // The Buddha nature.
     title: 'Śūnyatā',
   },
 };

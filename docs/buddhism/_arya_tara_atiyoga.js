@@ -4,10 +4,14 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const body = (phrase) => (Array.isArray(phrase.children)
-  ? phrase.children : [phrase.children])
-  .flatMap((words) => (words?.props?.children
-    ? words.props.children : words)).join(' । ');
+const body = (phrase) => {
+  const group = Array.isArray(phrase.children) ? phrase.children : [phrase.children];
+  const last = group.length - 1;
+  return group.flatMap((words, index) => {
+    const text = `${words?.props?.children ? words.props.children : words}`;
+    return `${text ? `${text}${index !== last ? '।' : ''}` : ''}`;
+  }).join('\n');
+};
 
 const instruction = (direction) => ({
   text: [

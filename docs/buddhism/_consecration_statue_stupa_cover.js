@@ -11,13 +11,13 @@ export default {
         {
           alignment: 'center',
           fontSize: 28,
-          margin: [0, 14, 0, 0],
-          text: 'Supplies Consecration',
+          lineHeight: 0.85,
+          text: 'Buddha Statue/Stupa/Sculpture Consecration',
         },
       ],
     },
     '',
   ],
   path: new URL('', import.meta.url).pathname,
-  title: 'Supplies Consecration',
+  title: 'Buddha Statue/Stupa/Sculpture Consecration',
 };

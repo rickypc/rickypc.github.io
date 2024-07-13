@@ -25,6 +25,9 @@ export default {
     ],
     title: 'प्रतीत्यसमुत्पाद समुदय निरोध',
   },
+  translation: {
+    title: 'Arising and Cessation of Causality',
+  },
   transliteration: {
     children: [
       'avijjā paccayā saṅkhārā । saṅkhāra paccayā viññāṇaṁ',
@@ -60,7 +63,6 @@ export default {
       'jati nirodha jara maranam soka pari dewa duka domanasupayasa nirujanti',
       'ewa-mei-tasa qe-wa-lasa dukakandasa nirodho hoti',
     ].join(', '),
-    // The Arising and Cessation of Causality.
     title: 'Pratītyasamutpāda Samudaya Nirodha',
     unify: 1,
   },

@@ -8,11 +8,17 @@ const { extname } = require('node:path');
 const { readFileSync } = require('node:fs');
 const sharp = require('sharp');
 
+const chapterWidth = 12;
+const coverHeight = 70;
+const coverMargin = (coverHeight / 2) - 5;
 // ((8.5" * 72pt) - (margins + borders)) / 3.
-const height = 182.5;
-const imageWidth = (height * 0.75) - 15;
+const height = 187.75;
+const imageWidth = (height * 0.75) - 18;
 // 300px = 72pt = 1".
 const pixels = 300 / 72;
+const unalomeWidth = 44.375;
+// After unalomeWidth assignment.
+const unalomeMargin = (unalomeWidth * 2) + 5;
 
 const image = async (img) => {
   if (!img) {
@@ -61,34 +67,34 @@ export default async function book(path) {
           page?.title ? [
             {
               layout: 'noBorders',
-              margin: [94, 32.5, 94, 0],
+              margin: [unalomeMargin, coverMargin, unalomeMargin, 0],
               table: {
                 body: [
                   [
-                    await image({ path: '#buddhism/img/unalome-male.webp', width: 44.375 }),
+                    await image({ path: '#buddhism/img/unalome-male.webp', width: unalomeWidth }),
                     {
-                      margin: [15, 21.25, 15, 0],
-                      table: { body: [[page.title]], heights: [68], widths: ['100%'] },
+                      margin: [15, ((height - (coverMargin * 2) - coverHeight) / 2) - 5, 15, 0],
+                      table: { body: [[page.title]], heights: [coverHeight], widths: ['100%'] },
                     },
-                    await image({ path: '#buddhism/img/unalome-female.webp', width: 44.375 }),
+                    await image({ path: '#buddhism/img/unalome-female.webp', width: unalomeWidth }),
                   ],
                 ],
-                heights: [112.5],
-                widths: [44.375, '*', 44.375],
+                heights: [height - coverHeight],
+                widths: [unalomeWidth, '*', unalomeWidth],
               },
             },
           ] : [
             page?.contents?.length ? {
               margin: [0, 0, 0, -5],
               svg: `
-                <svg height="182.5" width="12">
+                <svg height="${height}" width="${chapterWidth}">
                   <text
                     dominant-baseline="central"
                     font-size="8pt"
                     text-anchor="middle"
-                    transform="rotate(90, 6, 91.25)"
-                    x="6"
-                    y="91.25"
+                    transform="rotate(90, ${chapterWidth / 2}, ${height / 2})"
+                    x="${chapterWidth / 2}"
+                    y="${height / 2}"
                   >
                     ${page?.chapters?.[0] || ''}
                   </text>
@@ -104,14 +110,14 @@ export default async function book(path) {
               {
                 margin: [0, 0, 0, -5],
                 svg: `
-                  <svg height="166.5" width="12">
+                  <svg height="${height - 16}" width="${chapterWidth}">
                     <text
                       dominant-baseline="central"
                       font-size="8pt"
                       text-anchor="middle"
-                      transform="rotate(-90, 6, 83.25)"
-                      x="6"
-                      y="83.25"
+                      transform="rotate(-90, ${chapterWidth / 2}, ${(height - 16) / 2})"
+                      x="${chapterWidth / 2}"
+                      y="${(height - 16) / 2}"
                     >
                       ${page?.chapters?.[1] || ''}
                     </text>
@@ -120,13 +126,13 @@ export default async function book(path) {
               },
               {
                 svg: `
-                  <svg height="16" width="12">
+                  <svg height="16" width="${chapterWidth}">
                     <text
                       dominant-baseline="central"
                       font-size="8pt"
                       text-anchor="start"
-                      transform="rotate(-90, 6, 16)"
-                      x="6"
+                      transform="rotate(-90, ${chapterWidth / 2}, 16)"
+                      x="${chapterWidth / 2}"
                       y="16"
                     >
                       ${page?.number || ''}
@@ -139,13 +145,13 @@ export default async function book(path) {
         ],
         heights: [height],
         widths: [
-          page?.contents?.length ? 12 : '100%',
+          page?.contents?.length ? chapterWidth : '100%',
           page?.images?.left ? imageWidth - 10 : null,
           page?.contents?.length ? '*' : null,
           page?.images?.middle ? imageWidth - 10 : null,
           page?.contents?.length === 2 ? '*' : null,
           page?.images?.right ? imageWidth - 10 : null,
-          page?.contents?.length ? 12 : null,
+          page?.contents?.length ? chapterWidth : null,
         ].filter(Boolean),
       },
     },
@@ -203,7 +209,7 @@ export default async function book(path) {
         sanskrit: { font: 'NotoSerifDevanagari', fontSize: 7.5, lineHeight: 0.85 },
         section: { bold: true, fontSize: 8 },
         'section-set': { lineHeight: 0.85, margin: [0, 2.75, 0, 1.5] },
-        tibetan: { font: 'Kokonor', fontSize: 7.5 },
+        tibetan: { font: 'Kokonor', fontSize: 7.5, lineHeight: 0.85 },
       },
     },
     options: {
@@ -211,7 +217,7 @@ export default async function book(path) {
         empty: {
           hLineColor: () => '#ffffff',
           hLineWidth: () => 0.5,
-          paddingBottom: () => 5,
+          paddingBottom: () => 0,
           paddingLeft: () => 5,
           paddingRight: () => 5,
           paddingTop: () => 0,
@@ -220,7 +226,7 @@ export default async function book(path) {
         },
         page: {
           hLineWidth: () => 0.5,
-          paddingBottom: () => 5,
+          paddingBottom: () => 0,
           paddingLeft: () => 5,
           paddingRight: () => 5,
           paddingTop: () => 0,

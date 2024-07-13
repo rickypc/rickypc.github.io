@@ -4,10 +4,14 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const body = (phrase) => (Array.isArray(phrase.children)
-  ? phrase.children : [phrase.children])
-  .flatMap((words) => (words?.props?.children
-    ? words.props.children : words)).join(' । ');
+const body = (phrase) => {
+  const group = Array.isArray(phrase.children) ? phrase.children : [phrase.children];
+  const last = group.length - 1;
+  return group.flatMap((words, index) => {
+    const text = `${words?.props?.children ? words.props.children : words}`;
+    return `${text ? `${text}${index !== last ? '।' : ''}` : ''}`;
+  }).join('\n');
+};
 
 const instruction = (direction) => ({
   text: [
@@ -49,13 +53,13 @@ export default {
         {
           alignment: 'center',
           fontSize: 28,
-          margin: [0, 12, 0, 0],
+          margin: [0, 14, 0, 0],
           text: 'Supplies Consecration',
         },
       ],
     },
     {
-      chapters: ['Maṅgala', 'Consecration'],
+      chapters: ['Maṅgala', 'Abhiṣeka'],
       contents: [
         [
           ...phrase('#buddhism/phrases/_mala.js', ' (recite the prayer, then blow and rub the mālā gently)'),
@@ -75,7 +79,7 @@ export default {
     '',
     '',
     {
-      chapters: ['Consecration'],
+      chapters: ['Abhiṣeka'],
       contents: [
         [
           ...phrase('#buddhism/phrases/_vairocana_sarvakata_danavidhih.js'),

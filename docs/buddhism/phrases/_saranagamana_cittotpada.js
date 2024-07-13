@@ -9,6 +9,9 @@ export default {
     children: 'बुद्धं च धर्मं च गणोत्तमं च यावद्धि बोधिं शरणं प्रयामि । दानादिकृत्यैश्च कृतैर्मयैभिर्बुद्धो भवेयं जगतो हिताय',
     title: 'शरणगमनचित्तोत्पादगाथा',
   },
+  translation: {
+    title: 'Refuge And Bodhicitta',
+  },
   transliteration: {
     children: 'buddhaṁ ca dharmaṁ ca gaṇottamaṁ ca । yāvaddhi bodhiṁ śaraṇaṁ prayāmi । dānādi kṛtyaścā kṛtaiḥ mayāebhīḥ buddho । bhāvyaṁ jagato hitāya',
     repetition: 3,

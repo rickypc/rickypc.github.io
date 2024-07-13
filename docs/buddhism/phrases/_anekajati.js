@@ -12,6 +12,9 @@ export default {
     ],
     title: 'अनेकजाति गाथा',
   },
+  translation: {
+    title: 'Buddha Auspicious Victories Verses',
+  },
   transliteration: {
     children: [
       'anekajāti saṃsāraṃ । sandhāvissaṃ anibbisaṃ । gahakārakaṁ gavesanto । dukkhā jāti punappunaṃ',
@@ -25,7 +28,6 @@ export default {
       'sabba t pasuka bhagga, gahakutam wisankatam',
       'wisankara gatam cittam, tanhanam kayamajaga',
     ].join(', '),
-    // The Buddha Auspicious Victories Verses.
     title: 'Anekajāti Gāthā',
     unify: 1,
   },

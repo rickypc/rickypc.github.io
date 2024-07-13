@@ -11,6 +11,8 @@ export default [
   ['book', '#buddhism/_arya_tara_atiyoga.js'],
   ['book', '#buddhism/_arya_tara_atiyoga_cover.js'],
   ['roll', `${phrases}/_arya_tara_sataksara.js`],
+  ['book', '#buddhism/_consecration_statue_stupa.js'],
+  ['book', '#buddhism/_consecration_statue_stupa_cover.js'],
   ['book', '#buddhism/_consecration_supplies.js'],
   ['book', '#buddhism/_consecration_supplies_cover.js'],
   ['roll', `${phrases}/_panca_maha_dharani.js`],

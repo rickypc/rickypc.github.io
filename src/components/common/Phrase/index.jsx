@@ -107,7 +107,7 @@ const Support = memo(function Support({ path, repetition = 0, transliteration })
           href={key(fileName(path, 'thangka'), '/pdf', '/', 'pdf', '.')}
           rel="noopener noreferrer"
           target="_blank"
-          title={`Open ${transliteration.title} paubha/thangka prayer`}
+          title={`Open ${transliteration.title} paubhā/thangka prayer`}
         >
           <FaFileImage />
         </Link>

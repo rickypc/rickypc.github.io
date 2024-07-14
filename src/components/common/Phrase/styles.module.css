@@ -30,12 +30,12 @@
   margin-right: 0.5rem;
 }
 
-.support .roll {
+.support .icon {
   font-size: 1.25rem;
   line-height: 1.25rem;
   margin: 0 0.5rem 0 0.25rem;
 }
 
-.support .roll svg {
+.support .icon svg {
   vertical-align: middle;
 }

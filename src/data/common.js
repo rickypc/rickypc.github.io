@@ -119,6 +119,12 @@ const key = (
 const tail = (path, keyword) => (path?.substr((path?.lastIndexOf(keyword) || -1) + 1) || '');
 
 // After key & tail assignments.
-const fileName = (path) => (key(tail(path, '/').replace(/_/g, '-').replace(/^-/, '')));
+const fileName = (path, template) => {
+  let response = key(tail(path, '/').replace(/_/g, '-').replace(/^-/, ''));
+  if (['thangka'].includes(template)) {
+    response += `-${template}`;
+  }
+  return response;
+};
 
 export { fileName, key, tail };

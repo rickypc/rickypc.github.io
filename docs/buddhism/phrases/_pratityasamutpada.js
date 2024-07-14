@@ -5,6 +5,10 @@
  */
 
 export default {
+  pali: {
+    children: 'ye dhammā hetuppabhavā hetuṁ tesaṁ tathāgato uvāca । tesañ-ca yo nirodho evaṁvādī mahāsamaṇo । aññāṇaṁ cīyate kammaṁ jananaṁ kammakāraṇaṁ । ñāṇaṁ na cīyate kammaṁ kammābhāvaṁ na jāyate',
+    title: 'Paṭiccasamuppāda Gāthā',
+  },
   path: new URL('', import.meta.url).pathname,
   sanskrit: {
     children: 'ये धर्मा हेतु-प्रभवा हेतुं तेषां तथागत उवाच । तेषां च यो निरोध एवं वादी महाश्रमणः । अज्ञानाच्चीयते कर्म जन्मनः कर्म कारणम् । ज्ञानान्नचीयते कर्म कर्माभावान्न जायते',

@@ -20,16 +20,24 @@ import book from '#buddhism/_book.js';
 import pdf from '#buddhism/_pdf.js';
 // eslint-disable-next-line import/extensions
 import roll from '#buddhism/_roll.js';
+// eslint-disable-next-line import/extensions
+import thangka from '#buddhism/_thangka.js';
 
-const fileName = (path) => parse(path).name.replace(/_/g, '-').replace(/^-/, '');
-const templates = { book, roll };
+const fileName = (path, template) => {
+  let response = parse(path).name.replace(/_/g, '-').replace(/^-/, '');
+  if (['thangka'].includes(template)) {
+    response += `-${template}`;
+  }
+  return response;
+};
+const templates = { book, roll, thangka };
 
 export async function createSitemapItems({ defaultCreateSitemapItems, ...rest }) {
   const git = simpleGit();
   const items = await defaultCreateSitemapItems(rest);
   const today = new Date().toISOString().split('T')[0];
   // eslint-disable-next-line no-unused-vars
-  const pdfs = await Promise.all(pdf.map(async ([_, path]) => {
+  const pdfs = await Promise.all(pdf.map(async ([template, path]) => {
     const lastmod = (await git.log({
       '--date': 'format:%Y-%m-%d',
       file: path.replace(/^#/, 'docs/'),
@@ -40,7 +48,7 @@ export async function createSitemapItems({ defaultCreateSitemapItems, ...rest })
       changefreq: 'weekly',
       lastmod,
       priority: 0.5,
-      url: join(rest.siteConfig.url, 'pdf', `${fileName(path)}.pdf`),
+      url: join(rest.siteConfig.url, 'pdf', `${fileName(path, template)}.pdf`),
     };
   }));
   return [...items, ...pdfs];
@@ -87,7 +95,7 @@ export async function postBuild({ outDir, siteConfig }) {
         },
       }, options);
       document.on('end', settle);
-      document.pipe(createWriteStream(join(outDir, 'pdf', `${fileName(path)}.pdf`)));
+      document.pipe(createWriteStream(join(outDir, 'pdf', `${fileName(path, template)}.pdf`)));
       document.end();
     });
   }));

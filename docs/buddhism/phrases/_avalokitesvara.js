@@ -6,7 +6,7 @@
 
 export default {
   chinese: {
-    children: '唵嘛呢叭咪吽',
+    children: '唵 嘛呢叭咪 吽',
     title: '觀世音',
   },
   pali: {
@@ -21,7 +21,7 @@ export default {
   sanskrit: {
     children: 'ॐ मणिपद्मे हूँ',
     siddham: {
-      children: '𑖌𑖼𑖦𑖜𑖰𑖢𑖟𑖿𑖦𑖸𑖮𑖳𑖽',
+      children: '𑖌𑖼 𑖦𑖜𑖰𑖢𑖟𑖿𑖦𑖸 𑖮𑖳𑖽',
       title: '𑖀𑖪𑖩𑖺𑖎𑖰𑖝𑖸𑖫𑖿𑖪𑖨',
     },
     title: 'अवलोकितेश्वर',
@@ -32,7 +32,7 @@ export default {
     title: 'སྤྱན་རས་གཟིགས',
   },
   translation: {
-    title: 'Watchful Lord',
+    title: 'Watchful Lord Primary',
   },
   transliteration: {
     children: 'oṃ maṇipadme hūṃ',

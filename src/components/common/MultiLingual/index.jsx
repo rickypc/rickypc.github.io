@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 
 export default memo(Object.assign(function MultiLingual({
   chinese,
+  pali,
   sanskrit,
   tibetan,
   transliteration = {},
@@ -28,6 +29,18 @@ export default memo(Object.assign(function MultiLingual({
           suffix="॥"
         />
       )}
+      {sanskrit?.siddham?.children && (
+        <PhraseBlock
+          infix="।"
+          phrase={{
+            ...sanskrit.siddham,
+            className: transliteration.className,
+            unify: transliteration.unify,
+          }}
+          prefix="꣼ "
+          suffix="॥"
+        />
+      )}
       {tibetan?.children && (
         <PhraseBlock
           infix="།"
@@ -38,6 +51,18 @@ export default memo(Object.assign(function MultiLingual({
           }}
           prefix="༄༅། །"
           suffix="༎"
+        />
+      )}
+      {pali?.sinhala?.children && (
+        <PhraseBlock
+          infix="।"
+          phrase={{
+            ...pali.sinhala,
+            className: transliteration.className,
+            unify: transliteration.unify,
+          }}
+          prefix="꣼ "
+          suffix="॥"
         />
       )}
       {chinese?.children && (

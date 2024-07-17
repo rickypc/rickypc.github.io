@@ -33,6 +33,8 @@ export default [
   ['roll', `${phrases}/_sapta_atitabuddha_karasaniya.js`],
   ['roll', `${phrases}/_sita_tara.js`],
   ['thangka', `${phrases}/_sita_tara.js`],
+  ['roll', `${phrases}/_usnisa_vijaya.js`],
+  ['thangka', `${phrases}/_usnisa_vijaya.js`],
   ['roll', `${phrases}/_vasuratna.js`],
   ['thangka', `${phrases}/_vasuratna.js`],
 ];

@@ -20,6 +20,8 @@ export default [
   ['book', '#buddhism/_consecration_statue_stupa_cover.js'],
   ['book', '#buddhism/_consecration_supplies.js'],
   ['book', '#buddhism/_consecration_supplies_cover.js'],
+  ['roll', `${phrases}/_manjusri.js`],
+  ['thangka', `${phrases}/_manjusri.js`],
   ['roll', `${phrases}/_panca_maha_dharani.js`],
   ['roll', `${phrases}/_prajna_paramita.js`],
   ['thangka', `${phrases}/_prajna_paramita.js`],

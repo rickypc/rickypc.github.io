@@ -12,6 +12,7 @@ export default memo(Object.assign(function MultiLingual({
   chinese,
   pali,
   sanskrit,
+  thai,
   tibetan,
   transliteration = {},
 }) {
@@ -31,14 +32,14 @@ export default memo(Object.assign(function MultiLingual({
       )}
       {sanskrit?.siddham?.children && (
         <PhraseBlock
-          infix="।"
+          infix="𑗂"
           phrase={{
             ...sanskrit.siddham,
             className: transliteration.className,
             unify: transliteration.unify,
           }}
           prefix="꣼ "
-          suffix="॥"
+          suffix="𑗃"
         />
       )}
       {tibetan?.children && (
@@ -55,14 +56,14 @@ export default memo(Object.assign(function MultiLingual({
       )}
       {pali?.sinhala?.children && (
         <PhraseBlock
-          infix="।"
+          infix="."
           phrase={{
             ...pali.sinhala,
             className: transliteration.className,
             unify: transliteration.unify,
           }}
           prefix="꣼ "
-          suffix="॥"
+          suffix="෴"
         />
       )}
       {chinese?.children && (
@@ -75,6 +76,18 @@ export default memo(Object.assign(function MultiLingual({
           }}
           prefix="꣼ "
           suffix="。"
+        />
+      )}
+      {thai?.children && (
+        <PhraseBlock
+          infix="ฯ"
+          phrase={{
+            ...thai,
+            className: transliteration.className,
+            unify: transliteration.unify,
+          }}
+          prefix="꣼ "
+          suffix="๚"
         />
       )}
     </>

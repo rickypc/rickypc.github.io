@@ -379,7 +379,7 @@ export default {
       chapters: ['Vajragītā'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_vajragita.js', ' (remain within the all-pervasive expanse of the mind\'s nature)'),
+          ...phrase('#buddhism/phrases/_vajra_gita.js', ' (remain within the all-pervasive expanse of the mind\'s nature)'),
         ],
       ],
       images: {

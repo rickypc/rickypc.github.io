@@ -11,8 +11,8 @@ export default {
     title: 'रक्ततर',
   },
   tibetan: {
-    children: 'ༀ་ཏཱ་རེ་ཏཱྃ་སྭཱ་ཧཱ༔',
-    repeat: 226,
+    children: 'ༀ་ཏཱ་རེ་ཏཱྃ་སྭཱ་ཧཱ',
+    repeat: 244,
     title: 'སྒྲོལ་མ་དམར་མོ',
   },
   translation: {

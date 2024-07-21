@@ -31,7 +31,7 @@ export default {
     children: [
       'oṃ śodhani śodhani । sarva pāpaṁ viśodhani । śuddhe viśuddhe । sarva karma āvaraṇa viśodhani svāhā',
       'oṃ kaṃkaṇi kaṃkaṇi । rocani rocani । troṭani troṭani । trāsani trāsani । pratihana pratihana । sarva karma paramparāṇi me sarva sattvānāñca svāhā',
-      'oṃ bhrūṃ svāhā । oṃ amṛtā āyuḥdade svāhā',
+      'oṃ bhrūṃ svāhā । oṃ amṛta āyuḥdade svāhā',
       'oṃ namas tryadhvikānāṃ । sarva tathāgata hṛdaya garbhe । jvala jvala । dharmadhātu garbhe । saṃbhara mama āyuḥ saṃśodhaya mama sarva pāpaṃ । sarva tathāgata samanta uṣṇīṣa vimale viśuddhe । hūṃ hūṃ hūṃ hūṃ । aṃ vaṃ saṃ jaḥ svāhā',
       'oṃ padma uṣṇīṣa vimale hūṃ phaṭ',
     ],

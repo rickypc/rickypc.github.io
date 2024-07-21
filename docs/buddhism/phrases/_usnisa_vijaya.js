@@ -23,7 +23,7 @@ export default {
     title: 'Victorious Crown',
   },
   transliteration: {
-    children: 'oṃ bhrūṃ svāhā । oṃ amṛtā āyuḥdade svāhā',
+    children: 'oṃ bhrūṃ svāhā । oṃ amṛta āyuḥdade svāhā',
     speech: 'oum bhrum swaha, oum amrita ayuhdade swaha',
     title: 'Uṣṇīṣavijayā Hṛdaya',
   },

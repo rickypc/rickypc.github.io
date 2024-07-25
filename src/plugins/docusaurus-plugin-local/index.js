@@ -22,15 +22,22 @@ import pdf from '#buddhism/_pdf.js';
 import roll from '#buddhism/_roll.js';
 // eslint-disable-next-line import/extensions
 import thangka from '#buddhism/_thangka.js';
+// eslint-disable-next-line import/extensions
+import wheel from '#buddhism/_wheel.js';
 
 const fileName = (path, template) => {
   let response = parse(path).name.replace(/_/g, '-').replace(/^-/, '');
-  if (['thangka'].includes(template)) {
+  if (['thangka', 'wheel'].includes(template)) {
     response += `-${template}`;
   }
   return response;
 };
-const templates = { book, roll, thangka };
+const templates = {
+  book,
+  roll,
+  thangka,
+  wheel,
+};
 
 export async function createSitemapItems({ defaultCreateSitemapItems, ...rest }) {
   const git = simpleGit();

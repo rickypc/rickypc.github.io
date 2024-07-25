@@ -12,7 +12,10 @@ export default {
   },
   tibetan: {
     children: 'ༀ་ཏཱ་རེ་ཏུཏྟཱ་རེ་ཏུ་རེ་མ་མ་ཨ་ཡུར་པུཎྱཻ་ཛྙཱ་ན་པུཥྚིཾ་ཀུ་རུ་སྭཱ་ཧཱ',
-    repeat: 73,
+    repeat: {
+      roll: 73,
+      wheel: 71,
+    },
     title: 'སྒྲོལ་དཀར',
   },
   translation: {

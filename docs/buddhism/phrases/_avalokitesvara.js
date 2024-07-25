@@ -6,7 +6,7 @@
 
 export default {
   chinese: {
-    children: '唵 嘛呢叭咪 吽',
+    children: '嗡 嘛呢叭咪 吽',
     title: '觀世音',
   },
   pali: {
@@ -28,7 +28,10 @@ export default {
   },
   tibetan: {
     children: 'ཨོཾ་མ་ཎི་པདྨེ་ཧཱུྃ',
-    repeat: 250,
+    repeat: {
+      roll: 250,
+      wheel: 242,
+    },
     title: 'སྤྱན་རས་གཟིགས',
   },
   translation: {

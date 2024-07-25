@@ -30,6 +30,10 @@ export function FaPrint(props) {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 512 512' }, child: [{ tag: 'path', attr: { d: 'M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z' }, child: [] }] })(props);
 }
 
+function FaRev(props) {
+  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 448 512' }, child: [{ tag: 'path', attr: { d: 'M289.67 274.89a65.57 65.57 0 1 1-65.56-65.56 65.64 65.64 0 0 1 65.56 65.56zm139.55-5.05h-.13a204.69 204.69 0 0 0-74.32-153l-45.38 26.2a157.07 157.07 0 0 1 71.81 131.84C381.2 361.5 310.73 432 224.11 432S67 361.5 67 274.88c0-81.88 63-149.27 143-156.43v39.12l108.77-62.79L210 32v38.32c-106.7 7.25-191 96-191 204.57 0 111.59 89.12 202.29 200.06 205v.11h210.16V269.84z' }, child: [] }] })(props);
+}
+
 function FaScroll(props) {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 576 512' }, child: [{ tag: 'path', attr: { d: 'M0 80v48c0 17.7 14.3 32 32 32H48 96V80c0-26.5-21.5-48-48-48S0 53.5 0 80zM112 32c10 13.4 16 30 16 48V384c0 35.3 28.7 64 64 64s64-28.7 64-64v-5.3c0-32.4 26.3-58.7 58.7-58.7H480V128c0-53-43-96-96-96H112zM464 480c61.9 0 112-50.1 112-112c0-8.8-7.2-16-16-16H314.7c-14.7 0-26.7 11.9-26.7 26.7V384c0 53-43 96-96 96H368h96z' }, child: [] }] })(props);
 }
@@ -83,8 +87,9 @@ const Support = memo(function Support({ path, repetition = 0, transliteration })
   const alias = `#${tail(path, '/buddhism')}`;
   const hasRoll = pdf.some(([template, source]) => template === 'roll' && source === alias);
   const hasThangka = pdf.some(([template, source]) => template === 'thangka' && source === alias);
+  const hasWheel = pdf.some(([template, source]) => template === 'wheel' && source === alias);
   const value = repetition || transliteration.repetition;
-  if (!value && !hasRoll && !hasThangka && !transliteration.speech) {
+  if (!value && !hasRoll && !hasThangka && !hasWheel && !transliteration.speech) {
     return null;
   }
   return (
@@ -99,6 +104,17 @@ const Support = memo(function Support({ path, repetition = 0, transliteration })
           title={`Open ${transliteration.title} prayer roll`}
         >
           <FaScroll />
+        </Link>
+      )}
+      {hasWheel && (
+        <Link
+          className={styles.icon}
+          href={key(fileName(path, 'wheel'), '/pdf', '/', 'pdf', '.')}
+          rel="noopener noreferrer"
+          target="_blank"
+          title={`Open ${transliteration.title} prayer wheel`}
+        >
+          <FaRev />
         </Link>
       )}
       {hasThangka && (

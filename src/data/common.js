@@ -121,7 +121,7 @@ const tail = (path, keyword) => (path?.substr((path?.lastIndexOf(keyword) || -1)
 // After key & tail assignments.
 const fileName = (path, template) => {
   let response = key(tail(path, '/').replace(/_/g, '-').replace(/^-/, ''));
-  if (['thangka'].includes(template)) {
+  if (['thangka', 'wheel'].includes(template)) {
     response += `-${template}`;
   }
   return response;

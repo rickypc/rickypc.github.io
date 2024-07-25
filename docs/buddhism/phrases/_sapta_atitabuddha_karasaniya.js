@@ -13,7 +13,10 @@ export default {
   path: new URL('', import.meta.url).pathname,
   sanskrit: {
     children: 'रिप रिपते कुह कुहते त्रणिते णिगलते विमरिते महागते जंलंचंते वाहा',
-    repeat: 61,
+    repeat: {
+      roll: 61,
+      wheel: 59,
+    },
     title: 'सप्त अतीतबुद्ध करसणिया',
   },
   translation: {

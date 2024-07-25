@@ -16,7 +16,10 @@ export default {
   },
   tibetan: {
     children: 'ཨོཾ་ཨ་མི་ཏ་བྷ་ཧྲཱིཿ',
-    repeat: 228,
+    repeat: {
+      roll: 228,
+      wheel: 221,
+    },
     title: 'འོད་དཔག་མེད',
   },
   translation: {

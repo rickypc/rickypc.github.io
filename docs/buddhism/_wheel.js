@@ -34,6 +34,8 @@ export default function roll(path) {
     },
     // eslint-disable-next-line global-require,import/no-dynamic-require
   } = require(path);
+  // ((page height - (margins + borders)) / 6) - paddings.
+  const height = 77.5;
   let infix = '|';
   const lastRoll = total - 1;
   let lineHeight = 0.71;
@@ -44,6 +46,7 @@ export default function roll(path) {
   let prefixFont = 'NotoSerifDevanagari';
   let repeat = 1;
   let rollFont = 'NotoSans';
+  const rowHeight = height / 3;
   let suffix = '||';
   let text = '';
 
@@ -55,7 +58,7 @@ export default function roll(path) {
       paddingTop = 0.25;
       prefix = '༄༅། ';
       prefixFont = 'Kokonor';
-      repeat = tibetan?.repeat?.roll || 1;
+      repeat = tibetan?.repeat?.wheel || 1;
       rollFont = 'Kokonor';
       suffix = '༎';
       text = substance(tibetan?.children);
@@ -65,13 +68,13 @@ export default function roll(path) {
       lineHeight = 0.81;
       paddingBottom = 0.825;
       paddingTop = 1;
-      repeat = sanskrit?.repeat?.roll || 1;
+      repeat = sanskrit?.repeat?.wheel || 1;
       rollFont = 'NotoSerifDevanagari';
       suffix = '॥';
       text = substance(sanskrit.children);
       break;
     default:
-      repeat = transliteration?.repeat?.roll || 1;
+      repeat = transliteration?.repeat?.wheel || 1;
       text = substance(transliteration.children);
   }
 
@@ -84,21 +87,23 @@ export default function roll(path) {
       table: {
         body: [
           [
-            [
-              {
-                text: [
-                  {
-                    fontSize: 4,
-                    text: `${transliteration?.title?.toUpperCase()} ${repeat}x `,
-                  },
-                  body(infix, lastPhrase, prefix, repeat, suffix, text),
-                ],
-              },
-            ],
+            { margin: [0, 5, 0, -5], style: 'intro', text: 'ༀ' },
+            {
+              rowSpan: 3,
+              text: [
+                {
+                  fontSize: 4,
+                  text: `${transliteration?.title?.toUpperCase()} ${repeat}x `,
+                },
+                body(infix, lastPhrase, prefix, repeat, suffix, text),
+              ],
+            },
           ],
+          [{ margin: [0, 0, 0, 0], style: 'intro', text: 'ཨཱཿ' }],
+          [{ margin: [0, 1, 0, -1], style: 'intro', text: 'ཧཱུྃ' }],
         ],
-        // (page height - (margins + borders)) / 6.
-        heights: [82.5],
+        heights: [rowHeight, rowHeight, rowHeight],
+        widths: [18, '*'],
       },
     },
     index === lastRoll ? null : {
@@ -154,6 +159,7 @@ export default function roll(path) {
       pageOrientation: 'landscape',
       pageSize: 'LETTER',
       styles: {
+        intro: { alignment: 'center', font: 'Kokonor', fontSize: 16 },
         prefix: { font: prefixFont },
         roll: { font: rollFont },
       },

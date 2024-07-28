@@ -36,6 +36,7 @@ export default [
   ['wheel', `${phrases}/_prajna_paramita.js`],
   ['roll', `${phrases}/_pratityasamutpada.js`],
   ['wheel', `${phrases}/_pratityasamutpada.js`],
+  ['base', '#buddhism/_prayer_wheels.js'],
   ['roll', `${phrases}/_rakta_tara.js`],
   ['thangka', `${phrases}/_rakta_tara.js`],
   ['wheel', `${phrases}/_rakta_tara.js`],

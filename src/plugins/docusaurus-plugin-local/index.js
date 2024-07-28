@@ -15,6 +15,8 @@ import { join, parse, resolve } from 'node:path';
 import PdfMake from 'pdfmake';
 import { simpleGit } from 'simple-git';
 // eslint-disable-next-line import/extensions
+import base from '#buddhism/_base.js';
+// eslint-disable-next-line import/extensions
 import book from '#buddhism/_book.js';
 // eslint-disable-next-line import/extensions
 import pdf from '#buddhism/_pdf.js';
@@ -33,6 +35,7 @@ const fileName = (path, template) => {
   return response;
 };
 const templates = {
+  base,
   book,
   roll,
   thangka,

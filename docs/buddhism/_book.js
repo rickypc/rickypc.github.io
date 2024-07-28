@@ -4,9 +4,8 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const { extname } = require('node:path');
-const { readFileSync } = require('node:fs');
-const sharp = require('sharp');
+// eslint-disable-next-line import/extensions
+const image = require('./_image.js');
 
 const chapterWidth = 12;
 const coverHeight = 70;
@@ -14,41 +13,9 @@ const coverMargin = (coverHeight / 2) - 5;
 // ((8.5" * 72pt) - (margins + borders)) / 3.
 const height = 187.75;
 const imageWidth = (height * 0.75) - 18;
-// 300px = 72pt = 1".
-const pixels = 300 / 72;
 const unalomeWidth = 44.375;
 // After unalomeWidth assignment.
 const unalomeMargin = (unalomeWidth * 2) + 5;
-
-const image = async (img) => {
-  if (!img) {
-    return null;
-  }
-  let buffer = Buffer.from(readFileSync(require.resolve(img.path)));
-  const ext = extname(img.path);
-  if (ext === '.webp') {
-    buffer = await sharp(buffer)
-      .resize({ width: Math.ceil((img.width || imageWidth) * pixels) })
-      .png()
-      .toBuffer();
-  }
-  const mime = ext === '.jpg' ? 'image/jpeg' : 'image/png';
-  return [
-    {
-      alignment: 'center',
-      fit: [img.width || imageWidth, height - 10],
-      image: `data:${mime};base64,${buffer.toString('base64')}`,
-      margin: [0, 0, 0, 1.5],
-    },
-    img.alt ? {
-      alignment: 'center',
-      fontSize: 8,
-      lineHeight: 0.85,
-      margin: [-5, 0, -5, 0],
-      text: img.alt,
-    } : null,
-  ].filter(Boolean);
-};
 
 export default async function book(path) {
   // eslint-disable-next-line global-require,import/no-dynamic-require
@@ -71,12 +38,12 @@ export default async function book(path) {
               table: {
                 body: [
                   [
-                    await image({ path: '#buddhism/img/unalome-male.webp', width: unalomeWidth }),
+                    await image({ height, path: '#buddhism/img/unalome-male.webp', width: unalomeWidth }),
                     {
                       margin: [15, ((height - (coverMargin * 2) - coverHeight) / 2) - 5, 15, 0],
                       table: { body: [[page.title]], heights: [coverHeight], widths: ['100%'] },
                     },
-                    await image({ path: '#buddhism/img/unalome-female.webp', width: unalomeWidth }),
+                    await image({ height, path: '#buddhism/img/unalome-female.webp', width: unalomeWidth }),
                   ],
                 ],
                 heights: [height - coverHeight],
@@ -101,11 +68,11 @@ export default async function book(path) {
                 </svg>
               `,
             } : ' ',
-            await image(page?.images?.left),
+            await image({ ...page?.images?.left, height }),
             page?.contents?.length ? page.contents[0] : null,
-            await image(page?.images?.middle),
+            await image({ ...page?.images?.middle, height }),
             page?.contents?.length === 2 ? page.contents[1] : null,
-            await image(page?.images?.right),
+            await image({ ...page?.images?.right, height }),
             page?.contents?.length ? [
               {
                 margin: [0, 0, 0, -5],

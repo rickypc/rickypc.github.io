@@ -26,6 +26,7 @@ export default [
   ['book', '#buddhism/_consecration_supplies_cover.js'],
   ['roll', `${phrases}/_ekajati.js`],
   ['wheel', `${phrases}/_ekajati.js`],
+  ['base', '#buddhism/_mandala-wheels.js'],
   ['roll', `${phrases}/_manjusri.js`],
   ['thangka', `${phrases}/_manjusri.js`],
   ['wheel', `${phrases}/_manjusri.js`],

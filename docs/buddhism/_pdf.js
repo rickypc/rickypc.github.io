@@ -27,6 +27,7 @@ export default [
   ['roll', `${phrases}/_ekajati.js`],
   ['wheel', `${phrases}/_ekajati.js`],
   ['base', '#buddhism/_mandala-wheels.js'],
+  ['base', '#buddhism/_mandala-wheels-strip.js'],
   ['roll', `${phrases}/_manjusri.js`],
   ['thangka', `${phrases}/_manjusri.js`],
   ['wheel', `${phrases}/_manjusri.js`],

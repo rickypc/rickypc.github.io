@@ -22,7 +22,8 @@ export default async function image(img) {
   if (ext === '.webp') {
     buffer = await sharp(buffer)
       .resize({ width: Math.ceil(width * pixels) })
-      .png()
+      .flatten({ background: '#ffffff' })
+      .jpeg({ quality: 90 })
       .toBuffer();
   }
   const mime = ext === '.jpg' ? 'image/jpeg' : 'image/png';

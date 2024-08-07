@@ -7,7 +7,7 @@
 export default {
   chinese: {
     children: '離婆離婆帝 求訶求訶帝 陀羅尼帝 尼訶囉帝 毗黎你帝 摩訶伽帝 真陵幹帝 莎婆訶',
-    title: '七佛灭罪真言',
+    title: '七佛滅罪真言',
   },
   lang: 'sa-IN',
   path: new URL('', import.meta.url).pathname,

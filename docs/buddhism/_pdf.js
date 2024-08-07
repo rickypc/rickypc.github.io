@@ -66,4 +66,6 @@ export default [
   ['roll', `${phrases}/_vasuratna.js`],
   ['thangka', `${phrases}/_vasuratna.js`],
   ['wheel', `${phrases}/_vasuratna.js`],
+  ['roll', `${phrases}/_vimala_usnisa.js`],
+  ['wheel', `${phrases}/_vimala_usnisa.js`],
 ];

@@ -27,7 +27,7 @@ export default {
   },
   transliteration: {
     children: 'oṃ bhrūṃ svāhā । oṃ amṛta āyuḥdade svāhā । oṃ amṛta tejavati svāhā',
-    speech: 'oum bhrum swaha, oum amrita ayuhdade swaha, oum amrita tejawati swaha',
+    speech: 'oum bhrum swaha, oum amrita ayuhdade swaha, oum amrita t-jawati swaha',
     title: 'Uṣṇīṣavijayā Hṛdaya',
   },
 };

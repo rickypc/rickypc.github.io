@@ -23,7 +23,7 @@ export default {
   transliteration: {
     children: [
       'oṃ cakravarti cintāmaṇi mahāpadme ru ru tiṣṭha jvāla ākarṣāya hūṃ phaṭ svāhā । oṃ padma cintāmaṇi jvāla hūṃ । oṃ varada padme hūṃ',
-      'oṃ kha kha । khāhi khāhi । hūṃ hūṃ jvāla jvāla । prajvāla prajvāla । tiṣṭha tiṣṭha ṣṭiri ṣṭiri sphoṭa sphoṭa। śāntika śriye svāhā',
+      'oṃ kha kha । khāhi khāhi । hūṃ hūṃ jvāla jvāla । prajvāla prajvāla । tiṣṭha tiṣṭha ṣṭiri ṣṭiri sphoṭa sphoṭa । śāntika śriye svāhā',
       'oṃ siddhe huru huru sidhuru kṛpā kṛpā siddhāṇi puruṇi svāhā',
       'oṃ cale cule cunde svāhā',
       'oṃ sarva saṃskāra pariśuddha । dharmate gagana samudgate । svabhāva viśuddhe । mahānaya parivāre svāhā',
@@ -33,6 +33,18 @@ export default {
       'oṃ amṛte amṛtodbhave amṛta-saṃbhave amṛta-garbhe । amṛta siddhe amṛta tejas । amṛta vikrānte amṛta vikrānta gāmine । amṛta gagana kīrtikare amṛta dundubhisvare । sarvārtha sādhane sarva karma kleśa kṣayaṃkare svāhā',
       'oṃ paripūrṇa cāre । samanta darśane । mahā vihāra gate । samanta vidhāmane । mahā kārya pratiṣṭhāpane । sarvārtha sādhane supratipūre । āyāna dharmatā mahā vikurvite । mahā maitrī upasaṃhite । mahārṣi susaṃgṛhīte । samantārtha anupālane svāhā',
     ],
+    speech: [
+      'oum cakrawarti cintamani, maha padme, ru-ru, tista jwala akarsaya, houm patt swaha, oum padma cintamani jwala houm, oum warada padme houm',
+      'oum ka ka, khahi khahi, houm houm, jwala jwala, prajwala prajwala, tista tista, stiri stiri, sphota sphota, santika sriye swaha',
+      'oum siddhe, huru huru sidhuru, kripa kripa, siddhani puruni swaha',
+      'oum cale cule cun-d swaha',
+      'oum sarwa samskara parisuddha, dharmate gagana samudgate, swabawa wisuddhe, mahanaya pariware swaha',
+      'oum baisaye baisaye baisaya samudgate swaha',
+      'oum manipadme houm, maha niryana cittotpada, cittaksana witarka, sarwartha buri siddha kamapurna, buri dyototpanna, namah lokeswaraya swaha',
+      'ripa ripa-t, kuha kuha-t, trani-t, nigala-t, wimari-t, maha ga-t, jamlam cam-t, swaha',
+      'oum amrite amritod bawe amrita sambawe amrita garbe, amrita siddhe amrita t-jas, amrita wi-krante amrita wi-kranta gamine, amrita gagana kirtikare amrita dundu bisware, sarwarta sadane sarwa karma klesa kesayamkare swaha',
+      'oum paripurna ca-re, samanta darsane, maha wihara ga-te, samanta widhamane, maha karya pratisthapane, sarwartha sadhane supratipure, ayana dharmata maha wikurwite, maha maitri upasamhite, maharsi susamgrihite, samantartha anupalane swaha',
+    ].join(', '),
     // The Ten Short Dhāraṇī.
     title: 'Daśa Cūla Dhāraṇī',
   },

@@ -50,6 +50,7 @@ export default [
   ['wheel', `${phrases}/_samgharama.js`],
   ['roll', `${phrases}/_sapta_atitabuddha_karasaniya.js`],
   ['wheel', `${phrases}/_sapta_atitabuddha_karasaniya.js`],
+  ['roll', `${phrases}/_sat_dharmakaya_sarirah.js`],
   ['roll', `${phrases}/_sita_tara.js`],
   ['thangka', `${phrases}/_sita_tara.js`],
   ['wheel', `${phrases}/_sita_tara.js`],

@@ -24,7 +24,7 @@ export default {
   transliteration: {
     children: 'oṃ namastryadhvikānāṃ । sarva tathāgata hṛdaya garbhe । jvala jvala । dharmadhātu garbhe । saṁbhara mama āyuḥ saṃśodhaya mama sarva pāpaṁ । sarva tathāgata samanta uṣṇīṣa vimale viśuddhe । hūṁ hūṁ hūṁ hūṁ । aṁ vaṁ saṁ jaḥ svāhā',
     repetition: 21,
-    speech: 'oum namas-tryadhwikanam, sarwa tathagata hridaya garbe, jwala jwala, dharmadhatu garbe, sambara mama ayuh samsodhaya mama sarwa papam, sarwa tathagata samanta usnisa wimale wisuddhe, houm houm houm houm, ammm, wamm, samm, jah, swaha',
+    speech: 'oum namas-tryadhwikanam, sarwa tathagata hridaya garbe, jwala jwala, dharmadhatu garbe, sambara mama ayuh samsodhaya, mama sarwa papam, sarwa tathagata, samanta usnisa, wimale wisuddhe, houm houm houm houm, ammm, wamm, samm, jah, swaha',
     title: 'Vimala Uṣṇīṣa',
   },
 };

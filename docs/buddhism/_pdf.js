@@ -24,6 +24,7 @@ export default [
   ['book', '#buddhism/_consecration_statue_stupa_cover.js'],
   ['book', '#buddhism/_consecration_supplies.js'],
   ['book', '#buddhism/_consecration_supplies_cover.js'],
+  ['roll', `${phrases}/_dasa_cula_dharani.js`],
   ['roll', `${phrases}/_ekajati.js`],
   ['wheel', `${phrases}/_ekajati.js`],
   ['base', '#buddhism/_mandala-wheels.js'],

@@ -24,7 +24,7 @@ export default function thangka(path) {
     definition: {
       content: [
         { style: 'bija', text: 'ༀ' },
-        { style: 'prayer', margin: [0, -15, 0, 0], text: 'ༀ་སརྦ་བིདྱ་སྭཱ་ཧཱ། ༀ་སརྦ་བིདྱ་སྭཱ་ཧཱ།' },
+        { style: 'prayer', margin: [0, -15, 0, 0], text: 'ༀ་སརྦ་བི་དྱཱ་སྭཱ་ཧཱ། ༀ་སརྦ་བི་དྱཱ་སྭཱ་ཧཱ།' },
         { style: 'bija', text: 'ཨཱཿ' },
         { style: 'prayer', text: 'ཨ་ཨཱ། ཨི་ཨཱི། ཨུ་ཨཱུ། རྀ་རཱྀ། ལྀ་ལཱྀ། ཨེ་ཨཻ། ཨོ་ཨཽ། ཨཾ་ཨཿ ཀ་ཁ་ག་གྷ་ང།' },
         { fontSize: 21, text: 'ཙ་ཚ་ཛ་ཛྷ་ཉ། ཊ་ཋ་ཌ་ཌྷ་ཎ། ཏ་ཐ་ད་དྷ་ན། པ་ཕ་བ་བྷ་མ། ཡ་ར་ལ་ཝ། ཤ་ཥ་ས་ཧ་ཀྵ།' },

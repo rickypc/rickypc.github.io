@@ -4,24 +4,8 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const body = (infix, lastPhrase, prefix, repeat, suffix, text) => ({
-  text: (Array.isArray(text) ? text : [text]).flatMap((phrase, index) => [
-    { style: 'prefix', text: index === 0 ? prefix : ` ${prefix}` },
-    {
-      text: Array.from(
-        { length: repeat },
-        (_repeat, idx) => ({
-          style: 'roll',
-          text: `${infix}${phrase}${idx === lastPhrase ? '' : `${infix} `}`,
-        }),
-      ),
-    },
-    { style: 'roll', text: suffix },
-  ]),
-});
-
-const substance = (children) => (Array.isArray(children) || typeof (children) === 'string'
-  ? children : children?.props?.children);
+// eslint-disable-next-line import/extensions
+const { body, substance } = require('./_strip.js');
 
 export default function roll(path) {
   const {
@@ -84,17 +68,15 @@ export default function roll(path) {
       table: {
         body: [
           [
-            [
-              {
-                text: [
-                  {
-                    fontSize: 4,
-                    text: `${transliteration?.title?.toUpperCase()} ${repeat}x `,
-                  },
-                  body(infix, lastPhrase, prefix, repeat, suffix, text),
-                ],
-              },
-            ],
+            {
+              text: [
+                {
+                  fontSize: 4,
+                  text: `${transliteration?.title?.toUpperCase()} ${repeat}x `,
+                },
+                body(infix, lastPhrase, prefix, repeat, suffix, text),
+              ],
+            },
           ],
         ],
         // (page height - (margins + borders)) / 6.

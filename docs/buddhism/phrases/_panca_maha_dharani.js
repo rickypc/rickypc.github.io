@@ -35,7 +35,7 @@ export default {
       'oṃ śodhani śodhani । sarva pāpaṁ viśodhani । śuddhe viśuddhe । sarva karma āvaraṇa viśodhani svāhā',
       'oṃ kaṃkaṇi kaṃkaṇi । rocani rocani । troṭani troṭani । trāsani trāsani । pratihana pratihana । sarva karma paramparāṇi me sarva sattvānāñca svāhā',
       'oṃ bhrūṃ svāhā । oṃ amṛta āyuḥdade svāhā',
-      'oṃ namas tryadhvikānāṃ । sarva tathāgata hṛdaya garbhe । jvala jvala । dharmadhātu garbhe । saṃbhara mama āyuḥ saṃśodhaya mama sarva pāpaṃ । sarva tathāgata samanta uṣṇīṣa vimale viśuddhe । hūṃ hūṃ hūṃ hūṃ । aṃ vaṃ saṃ jaḥ svāhā',
+      'oṃ namas tryadhvikānāṃ । sarva tathāgata hṛdaya garbhe । jvāla jvāla । dharmadhātu garbhe । saṃbhara mama āyuḥ saṃśodhaya mama sarva pāpaṃ । sarva tathāgata samanta uṣṇīṣa vimale viśuddhe । hūṃ hūṃ hūṃ hūṃ । aṃ vaṃ saṃ jaḥ svāhā',
       'oṃ padma uṣṇīṣa vimale hūṃ phaṭ',
     ],
     speech: 'oum sodhani sodhani, sarwa papam wisodhani, suddhe wisuddhe, sarwa karma awarana wisodhani swaha.. oum kamkani kamkani, rocani rocani, trotani trotani, trasani trasani, pratihana pratihana, sarwa karma paramparani mei sarwa sattwananca swaha.. oum bhrum swaha, oum amrita ayuhdade swaha.. oum namas tryadhwikanam, sarwa tathagata hridaya garbe, jwala jwala, dharmadhatu garbe, sambara mama ayuh samsodhaya mama sarwa papam, sarwa tathagata samanta usnisa wimale wisuddhe, houm houm houm houm, ammm, wamm, samm, jah, swaha.. oum padma usnisa wimale houm patt',

@@ -20,6 +20,7 @@ export default [
   ['roll', `${phrases}/_avalokitesvara.js`],
   ['thangka', `${phrases}/_avalokitesvara.js`],
   ['wheel', `${phrases}/_avalokitesvara.js`],
+  ['base', '#buddhism/_cintamani_dharmacakra_yasti.js'],
   ['book', '#buddhism/_consecration_statue_stupa.js'],
   ['book', '#buddhism/_consecration_statue_stupa_cover.js'],
   ['book', '#buddhism/_consecration_supplies.js'],

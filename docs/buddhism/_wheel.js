@@ -4,24 +4,8 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const body = (infix, lastPhrase, prefix, repeat, suffix, text) => ({
-  text: (Array.isArray(text) ? text : [text]).flatMap((phrase, index) => [
-    { style: 'prefix', text: index === 0 ? prefix : ` ${prefix}` },
-    {
-      text: Array.from(
-        { length: repeat },
-        (_repeat, idx) => ({
-          style: 'roll',
-          text: `${infix}${phrase}${idx === lastPhrase ? '' : `${infix} `}`,
-        }),
-      ),
-    },
-    { style: 'roll', text: suffix },
-  ]),
-});
-
-const substance = (children) => (Array.isArray(children) || typeof (children) === 'string'
-  ? children : children?.props?.children);
+// eslint-disable-next-line import/extensions
+const { body, substance } = require('./_strip.js');
 
 export default function roll(path) {
   const {
@@ -44,7 +28,7 @@ export default function roll(path) {
   // Siddhaṃ sign.
   let prefix = '꣼ ';
   let prefixFont = 'NotoSerifDevanagari';
-  let repeat = 1;
+  let repeat = {};
   let rollFont = 'NotoSans';
   const rowHeight = height / 3;
   let suffix = '||';
@@ -58,7 +42,7 @@ export default function roll(path) {
       paddingTop = 0.25;
       prefix = '༄༅། ';
       prefixFont = 'Kokonor';
-      repeat = tibetan?.repeat?.wheel || 1;
+      repeat = tibetan?.repeat;
       rollFont = 'Kokonor';
       suffix = '༎';
       text = substance(tibetan?.children);
@@ -68,66 +52,79 @@ export default function roll(path) {
       lineHeight = 0.81;
       paddingBottom = 0.825;
       paddingTop = 1;
-      repeat = sanskrit?.repeat?.wheel || 1;
+      repeat = sanskrit?.repeat;
       rollFont = 'NotoSerifDevanagari';
       suffix = '॥';
       text = substance(sanskrit.children);
       break;
     default:
-      repeat = transliteration?.repeat?.wheel || 1;
+      repeat = transliteration?.repeat;
       text = substance(transliteration.children);
   }
 
-  const lastPhrase = repeat - 1;
-  // After lastPhrase assignment.
-  const content = Array.from({ length: total }, (_total, index) => ([
-    {
-      layout: 'roll',
-      margin: [0, 0, 0, index === lastRoll ? 0 : 7.5],
-      table: {
-        body: [
-          [
-            { margin: [0, 5, 0, -5], style: 'intro', text: 'ༀ' },
-            {
-              rowSpan: 3,
-              text: [
-                {
-                  fontSize: 4,
-                  text: `${transliteration?.title?.toUpperCase()} ${repeat}x `,
-                },
-                body(infix, lastPhrase, prefix, repeat, suffix, text),
-              ],
-            },
-          ],
-          [{ margin: [0, 0, 0, 0], style: 'intro', text: 'ཨཱཿ' }],
-          [{ margin: [0, 1, 0, -1], style: 'intro', text: 'ཧཱུྃ' }],
+  const content = Array.from({ length: total }, (_total, index) => {
+    const table = {};
+    if (index === 0) {
+      table.body = [
+        [
+          { margin: [0, 5, 0, -5], style: 'intro', text: 'ༀ' },
+          {
+            rowSpan: 3,
+            text: [
+              {
+                fontSize: 4,
+                text: `${transliteration?.title?.toUpperCase()} ${repeat?.wheel || 1}x `,
+              },
+              body(infix, (repeat?.wheel || 1) - 1, prefix, repeat?.wheel || 1, suffix, text),
+            ],
+          },
         ],
-        heights: [rowHeight, rowHeight, rowHeight],
-        widths: [18, '*'],
+        [{ margin: [0, 0, 0, 0], style: 'intro', text: 'ཨཱཿ' }],
+        [{ margin: [0, 1, 0, -1], style: 'intro', text: 'ཧཱུྃ' }],
+      ];
+      table.heights = [rowHeight, rowHeight, rowHeight];
+      table.widths = [18, '*'];
+    } else {
+      table.body = [
+        [
+          {
+            text: [
+              {
+                fontSize: 4,
+                text: `${transliteration?.title?.toUpperCase()} ${repeat?.roll || 1}x `,
+              },
+              body(infix, (repeat?.roll || 1) - 1, prefix, repeat?.roll || 1, suffix, text),
+            ],
+          },
+        ],
+      ];
+      table.heights = [82.5];
+    }
+    return [
+      { layout: 'roll', margin: [0, 0, 0, index === lastRoll ? 0 : 7.5], table },
+      index === lastRoll ? null : {
+        canvas: [
+          {
+            lineWidth: 0.25,
+            type: 'line',
+            x1: -5,
+            x2: -0.5,
+            y1: 0,
+            y2: 0,
+          },
+          {
+            lineWidth: 0.25,
+            type: 'line',
+            x1: 777.5,
+            x2: 782,
+            y1: 0,
+            y2: 0,
+          },
+        ],
+        margin: [0, 0, 0, 7.5],
       },
-    },
-    index === lastRoll ? null : {
-      canvas: [
-        {
-          lineWidth: 0.25,
-          type: 'line',
-          x1: -5,
-          x2: -0.5,
-          y1: 0,
-          y2: 0,
-        },
-        {
-          lineWidth: 0.25,
-          type: 'line',
-          x1: 777.5,
-          x2: 782,
-          y1: 0,
-          y2: 0,
-        },
-      ],
-      margin: [0, 0, 0, 7.5],
-    },
-  ]));
+    ];
+  });
 
   return {
     definition: {

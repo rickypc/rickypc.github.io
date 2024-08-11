@@ -11,11 +11,11 @@ export default {
   },
   path: new URL('', import.meta.url).pathname,
   sanskrit: {
-    children: 'ॐ भ्रूं स्वाहा । ॐ अमृतआयुःददे स्वाहा । ॐ अमृत तेजवति स्वाहा',
+    children: 'ॐ भ्रूं स्वाहा । ॐ अमृत आयुर्ददे स्वाहा । ॐ अमृत तेजवति स्वाहा',
     title: 'उष्णीषविजया',
   },
   tibetan: {
-    children: 'ཨོཾ་བྷྲཱུཾ་སྭཱ་ཧཱ། ཨོཾ་ཨ་མྲྀ་ཏ་ཨ་ཡུ་རྡ་དེ་སྭཱ་ཧཱ། ༀ་ཨ་མྲྀ་ཏ་ཏེ་ཛ་བ་ཏི་སྭཱ་ཧཱ',
+    children: 'ཨོཾ་བྷྲཱུཾ་སྭཱ་ཧཱ། ༀ་ཨ་མྲྀ་ཏ་ཨཱ་ཡུ་རྡ་དེ་སྭཱ་ཧཱ། ༀ་ཨ་མྲྀ་ཏ་ཏེ་ཛ་བ་ཏི་སྭཱ་ཧཱ',
     repeat: {
       roll: 64,
       wheel: 62,
@@ -26,8 +26,8 @@ export default {
     title: 'Victorious Crown',
   },
   transliteration: {
-    children: 'oṃ bhrūṃ svāhā । oṃ amṛta āyuḥdade svāhā । oṃ amṛta tejavati svāhā',
-    speech: 'oum bhrum swaha, oum amrita ayuhdade swaha, oum amrita t-jawati swaha',
+    children: 'oṃ bhrūṃ svāhā । oṃ amṛta āyurdade svāhā । oṃ amṛta tejavati svāhā',
+    speech: 'oum bhrum swaha, oum amrita ayurdade swaha, oum amrita t-jawati swaha',
     title: 'Uṣṇīṣavijayā Hṛdaya',
   },
 };

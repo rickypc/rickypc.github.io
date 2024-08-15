@@ -44,7 +44,7 @@ export default {
       'oum siddhe, huru huru sidhuru, kripa kripa, siddhani puruni swaha',
       'oum cale cule cun-d swaha',
       'oum sarwa samskara parisuddha, dharmate gagana samudgate, swabawa wisuddhe, mahanaya pariware swaha',
-      'oum baisaye baisaye baisaya samudgate swaha',
+      'oum baisaye baisaye, baisaya samudgate swaha',
       'oum manipadme houm, maha niryana cittotpada, cittaksana witarka, sarwartha buri siddha kamapurna, buri dyototpanna, namah lokeswaraya swaha',
       'ripa ripa-t, kuha kuha-t, trani-t, nigala-t, wimari-t, maha ga-t, jamlam cam-t, swaha',
       'oum amrite amritod bawe amrita sambawe amrita garbe, amrita siddhe amrita t-jas, amrita wi-krante amrita wi-kranta gamine, amrita gagana kirtikare amrita dundu bisware, sarwarta sadane sarwa karma klesa kesayamkare swaha',

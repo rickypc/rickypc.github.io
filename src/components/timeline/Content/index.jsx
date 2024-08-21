@@ -53,7 +53,7 @@ const Timeline = memo(function Timeline({
             <Link {...title} />
             {className === styles.right && <Heart id={id} />}
           </Heading>
-          <Heading as="h4"><Link {...affiliation} /></Heading>
+          <Heading as="h4" translation="no"><Link {...affiliation} /></Heading>
           <p>{description}</p>
         </m.article>
       </LazyMotion>

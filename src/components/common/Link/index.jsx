@@ -38,7 +38,7 @@ const Link = forwardRef(({
         {children}
       </m.a>
     </LazyMotion>
-  ) : <span className={className}>{children}</span>;
+  ) : <span className={className} {...rest}>{children}</span>;
 });
 Link.displayName = 'Link';
 Link.propTypes = {

@@ -23,7 +23,7 @@ export default memo(Object.assign(function Filter({ current, onClick }) {
   }, []);
 
   return collapsible
-    ? <Collapsible active={current} items={tags} onClick={onClick} />
+    ? <Collapsible active={current} items={tags} onClick={onClick} translate="no" />
     : (
       <Pills
         active={current}
@@ -31,6 +31,7 @@ export default memo(Object.assign(function Filter({ current, onClick }) {
         items={tags}
         onClick={onClick}
         prefix="portfolio"
+        translate="no"
       />
     );
 }, {

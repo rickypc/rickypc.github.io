@@ -37,13 +37,13 @@ const Story = memo(function Story({
         <p className={styles.endorsement}>{content}</p>
         <address>
           <i aria-hidden="true" className={styles.dash} />
-          <Link className={styles.name} validate {...author} />
+          <Link className={styles.name} translate="no" validate {...author} />
           {/* Reader view support. */}
           &nbsp;|&nbsp;
           <Link className={styles.title} validate {...title} />
           {/* Reader view support. */}
           &nbsp;|&nbsp;
-          <Link className={styles.affiliation} validate {...affiliation} />
+          <Link className={styles.affiliation} translate="no" validate {...affiliation} />
         </address>
       </m.article>
     </LazyMotion>

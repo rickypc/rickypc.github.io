@@ -36,7 +36,7 @@ const Project = memo(function Project({
           <Carousel images={images} onClick={onClick} prefix={prefix} />
           <figcaption>
             <Tags prefix={prefix} tags={tags} />
-            <Heading as="h2">
+            <Heading as="h2" translate="no">
               <Link href={href} validate>{title}</Link>
               <Heart id={`portfolio-${prefix}`} />
             </Heading>
@@ -66,7 +66,7 @@ Project.propTypes = {
 
 const Tags = memo(function Tags({ prefix, tags }) {
   return (
-    <ul className={styles.tags}>
+    <ul className={styles.tags} translate="no">
       {tags.map((tag) => (
         <li aria-hidden="true" key={key(`${prefix}-${tag}`, 'tag')}>{tag}</li>
       ))}

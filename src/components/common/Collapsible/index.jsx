@@ -59,7 +59,7 @@ export default memo(Object.assign(function Collapsible({
         {active}
       </Button>
       <div className={styles.items}>
-        <dl className="table-of-contents">
+        <dl className="table-of-contents" {...rest}>
           {items.map((item) => (
             <Item
               current={active === item}

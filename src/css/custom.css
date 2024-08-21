@@ -91,9 +91,9 @@ html * {
   width: 100%;
 }
 
-#__docusaurus footer,
-#__docusaurus .main-wrapper,
-#__docusaurus nav {
+html:not(.plugin-\@easyops-cn\/docusaurus-search-local) #__docusaurus:not(.docusaurus--welcome) footer,
+html:not(.plugin-\@easyops-cn\/docusaurus-search-local) #__docusaurus:not(.docusaurus--welcome) .main-wrapper,
+html:not(.plugin-\@easyops-cn\/docusaurus-search-local) #__docusaurus:not(.docusaurus--welcome) nav {
   opacity: 0;
   visibility: hidden;
 }
@@ -103,17 +103,8 @@ html * {
   content: none;
 }
 
-#__docusaurus.docusaurus--welcome footer,
-#__docusaurus.docusaurus--welcome .main-wrapper,
-#__docusaurus.docusaurus--welcome nav,
-.plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus footer,
-.plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus .main-wrapper,
-.plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus nav {
-  opacity: 1;
-  visibility: visible;
-}
-
 #__docusaurus.docusaurus--exclusive nav.navbar .navbar__inner .navbar__items>a,
+.plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus:not(.docusaurus--welcome)  nav.navbar .navbar__inner .navbar__items>a,
 #__docusaurus.docusaurus--exclusive nav.navbar .navbar-sidebar .navbar-sidebar__brand>a,
 #__docusaurus.docusaurus--exclusive nav.navbar .navbar-sidebar .menu.navbar-sidebar__item>button,
 #__docusaurus.docusaurus--exclusive nav.theme-doc-breadcrumbs ul.breadcrumbs li:first-of-type {
@@ -135,6 +126,10 @@ html * {
 
 .navbar__item.navbar__item--linkedin {
   padding: 0.25rem 0.35rem 0.25rem 0.35rem;
+}
+
+.navbar__items [class^="navbarSearchContainer_"] {
+  padding-left: 0;
 }
 
 .navbar__item.navbar__item--github::before,

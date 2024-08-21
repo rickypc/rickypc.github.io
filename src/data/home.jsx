@@ -20,8 +20,8 @@ function FaLinkedin(props) {
 
 export const greeting = (
   <>
-    <span>Hello, I am </span>
-    <span translate="no">Ricky Huang</span>
+    <span>Hello, I am</span>
+    <span translate="no"> Ricky Huang</span>
   </>
 );
 

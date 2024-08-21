@@ -59,7 +59,7 @@ export default memo(Object.assign(function PhraseBlock({
   const wordWrap = useCodeWordWrap();
   return (
     <Container as="div" className={className}>
-      {phrase.title && <div className={styles.title}>{phrase.title}</div>}
+      {phrase.title && <div className={styles.title} translate="no">{phrase.title}</div>}
       <div className={styles.content}>
         <pre
           className={clsx(styles.standalone, 'thin-scrollbar')}

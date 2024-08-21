@@ -4,6 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+import { Bar } from 'cli-progress';
 import { createWriteStream, mkdirSync } from 'node:fs';
 import {
   DEFAULT_BUILD_DIR_NAME,
@@ -65,6 +66,13 @@ export async function createSitemapItems({ defaultCreateSitemapItems, ...rest })
 }
 
 export async function postBuild({ outDir, siteConfig }) {
+  const bar = new Bar({}, {
+    barCompleteChar: '█',
+    barIncompleteChar: '░',
+    format: '\x1B[34m● Pdf {bar}\x1B[0m {percentage}% | ETA: {eta}s | {value}/{total}',
+    stopOnComplete: true,
+  });
+  bar.start(pdf.length, 0);
   const devanagari = new URL('./font/noto/NotoSerifDevanagari-Regular.ttf', import.meta.url).pathname;
   const devanagariBold = new URL('./font/noto/NotoSerifDevanagari-Bold.ttf', import.meta.url).pathname;
   const kokonor = new URL('./font/kokonor/Kokonor-Regular.ttf', import.meta.url).pathname;
@@ -108,6 +116,7 @@ export async function postBuild({ outDir, siteConfig }) {
       document.pipe(createWriteStream(join(outDir, 'pdf', `${fileName(path, template)}.pdf`)));
       document.end();
     });
+    bar.increment();
   }));
 }
 

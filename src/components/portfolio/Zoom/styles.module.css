@@ -32,6 +32,8 @@
 }
 
 .lens figure {
+  margin: 5rem auto 1rem auto;
+  max-width: 95%;
   text-align: center;
   z-index: 3;
 }
@@ -52,6 +54,5 @@
 
 .lens figure img {
   box-shadow: 0px 0.125rem 0.4375rem rgba(0, 0, 0, 0.2);
-  margin: 5rem auto 1rem auto;
-  max-width: 95%;
+  margin: 0 auto;
 }

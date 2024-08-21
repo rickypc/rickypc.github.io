@@ -98,21 +98,22 @@ html * {
   visibility: hidden;
 }
 
-#__docusaurus.docusaurus--welcome::before {
+#__docusaurus.docusaurus--welcome::before,
+.plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus::before {
   content: none;
 }
 
 #__docusaurus.docusaurus--welcome footer,
 #__docusaurus.docusaurus--welcome .main-wrapper,
-#__docusaurus.docusaurus--welcome nav {
+#__docusaurus.docusaurus--welcome nav,
+.plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus footer,
+.plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus .main-wrapper,
+.plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus nav {
   opacity: 1;
   visibility: visible;
 }
 
-#__docusaurus.docusaurus--exclusive nav.navbar .navbar__inner .navbar__items>a {
-  visibility: hidden;
-}
-
+#__docusaurus.docusaurus--exclusive nav.navbar .navbar__inner .navbar__items>a,
 #__docusaurus.docusaurus--exclusive nav.navbar .navbar-sidebar .navbar-sidebar__brand>a,
 #__docusaurus.docusaurus--exclusive nav.navbar .navbar-sidebar .menu.navbar-sidebar__item>button,
 #__docusaurus.docusaurus--exclusive nav.theme-doc-breadcrumbs ul.breadcrumbs li:first-of-type {

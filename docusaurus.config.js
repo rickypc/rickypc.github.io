@@ -109,6 +109,21 @@ const config = {
         theme: themes.github,
       },
     }),
+  themes: [
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+      ({
+        hashed: true,
+        hideSearchBarWithNoSearchContext: true,
+        indexBlog: false,
+        indexPages: true,
+        searchContextByPaths: [
+          { label: 'Notes', path: 'docs' },
+        ],
+      }),
+    ],
+  ],
   title: 'Ricky Huang',
   trailingSlash: process.env.NODE_ENV === 'production',
   url: 'https://ricky.one',

@@ -152,6 +152,7 @@ export function useWelcome({ navigation = true } = {}) {
 
   useEffect(() => {
     if (browser) {
+      document.querySelector('nav .navbar__brand .navbar__title')?.setAttribute?.('translate', 'no');
       // eslint-disable-next-line no-restricted-globals
       if (top === window) {
         document.getElementById(`__${docusaurus}`).className = clsx(

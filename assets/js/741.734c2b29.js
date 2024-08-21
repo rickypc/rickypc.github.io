@@ -1,0 +1,1 @@
+(self.webpackChunkrickypc_github_io=self.webpackChunkrickypc_github_io||[]).push([[741],{5741:()=>{}}]);

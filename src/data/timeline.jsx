@@ -52,6 +52,7 @@ export const timelines = [
     affiliation: {
       children: 'Experian Consumer Services',
       href: 'https://bit.ly/4ar63Wq',
+      translate: 'no',
     },
     description: 'I accepted the Senior Software Engineer position with Experian Consumer Services to become a more well-rounded entrepreneur. I have been awarded the Experian Platinum Aspire, the EMF Hero - Above and Beyond, and the Experian Spot - Excellence in Action frequently.',
     picture: {
@@ -69,6 +70,7 @@ export const timelines = [
     affiliation: {
       children: 'Experian Consumer Services',
       href: 'https://bit.ly/4ar63Wq',
+      translate: 'no',
     },
     description: 'I accepted the Automation Engineer position with Experian Consumer Services to become a more well-rounded engineer. I have been promoted to Senior Automation Engineer.',
     picture: {
@@ -86,6 +88,7 @@ export const timelines = [
     affiliation: {
       children: 'California State University, Fullerton',
       href: 'https://bit.ly/3PR1Umk',
+      translate: 'no',
     },
     description: 'I graduated from the California State University of Fullerton with a master\'s degree in Software Engineering. I learned to deliver software- enabled systems with mission readiness, boost productivity, spur innovation, and provide a competitive edge. I was awarded the Outstanding Graduate Project for Master of Science in Software Engineering.',
     picture: {
@@ -103,6 +106,7 @@ export const timelines = [
     affiliation: {
       children: 'Experian CheetahMail',
       href: 'https://bit.ly/3xAYihU',
+      translate: 'no',
     },
     description: 'I accepted the Senior Software Engineer position with Experian CheetahMail to become a more well-rounded engineer and great leader. I was awarded the Experian CheetahMail Pinnacle, and I was promoted to Software Development Lead.',
     picture: {
@@ -120,6 +124,7 @@ export const timelines = [
     affiliation: {
       children: 'AirIQ',
       href: 'https://bit.ly/4cRZaPq',
+      translate: 'no',
     },
     description: 'I accepted a Software Engineer position with AirIQ to become a more well-rounded engineer.',
     picture: {
@@ -137,6 +142,7 @@ export const timelines = [
     affiliation: {
       children: 'RazorGator',
       href: 'https://bit.ly/3PZ9c7B',
+      translate: 'no',
     },
     description: 'I accepted a Web Developer position with RazorGator to become a more well-rounded web engineer.',
     picture: {
@@ -154,6 +160,7 @@ export const timelines = [
     affiliation: {
       children: 'Petra Christian University',
       href: 'https://bit.ly/3VXWRnQ',
+      translate: 'no',
     },
     description: 'I graduated from Petra Christian University with a bachelor\'s degree in Architecture. I learned both the process and the product of planning, designing, and constructing physical structures. I then applied those to software development activities.',
     picture: {

@@ -36,8 +36,8 @@ const Project = memo(function Project({
           <Carousel images={images} onClick={onClick} prefix={prefix} />
           <figcaption>
             <Tags prefix={prefix} tags={tags} />
-            <Heading as="h2" translate="no">
-              <Link href={href} validate>{title}</Link>
+            <Heading as="h2">
+              <Link href={href} translate="no" validate>{title}</Link>
               <Heart id={`portfolio-${prefix}`} />
             </Heading>
             <p>{description}</p>

@@ -124,7 +124,7 @@ export default memo(Object.assign(function Reveal({ children, coeff }) {
   const { ref, visible } = useVisibility();
 
   return (
-    <span aria-hidden className={clsx(styles.phrases, visible && styles.play)} ref={ref}>
+    <span aria-hidden className={clsx(styles.phrases, visible && styles.play)} ref={ref} translate="no">
       {phrases.map((phrase) => cloneElement(phrase, { ...phrase.props, delays }))}
     </span>
   );

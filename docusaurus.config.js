@@ -80,6 +80,14 @@ const config = {
           { label: 'Stories', position: 'left', to: 'stories' },
           // Right.
           {
+            'aria-label': 'Translate',
+            className: 'navbar__item--translate',
+            label: ' ',
+            position: 'right',
+            title: 'Translate',
+            to: 'https://ricky-one.translate.goog/?_x_tr_sl=auto&_x_tr_tl=en',
+          },
+          {
             'aria-label': 'Github',
             className: 'navbar__item--github',
             label: ' ',

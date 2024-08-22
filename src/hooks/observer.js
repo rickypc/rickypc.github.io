@@ -152,7 +152,9 @@ export function useWelcome({ navigation = true } = {}) {
 
   useEffect(() => {
     if (browser) {
+      const target = ['mni-Mtei', 'zh-CN', 'zh-TW'].includes(navigator.language) ? navigator.language : navigator.language?.split?.('-')?.[0];
       document.querySelector('nav .navbar__brand .navbar__title')?.setAttribute?.('translate', 'no');
+      document.querySelector('nav .navbar__item.navbar__item--translate').href = `https://ricky-one.translate.goog/?_x_tr_sl=auto&_x_tr_tl=${target || 'en'}`;
       // eslint-disable-next-line no-restricted-globals
       if (top === window) {
         document.getElementById(`__${docusaurus}`).className = clsx(

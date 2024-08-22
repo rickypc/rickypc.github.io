@@ -107,8 +107,8 @@ html:not(.plugin-\@easyops-cn\/docusaurus-search-local) #__docusaurus:not(.docus
   content: none;
 }
 
-#__docusaurus.docusaurus--exclusive nav.navbar .navbar__inner .navbar__items>a,
-.plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus:not(.docusaurus--welcome)  nav.navbar .navbar__inner .navbar__items>a,
+#__docusaurus.docusaurus--exclusive nav.navbar .navbar__inner .navbar__items>a:not(.navbar__item--translate),
+.plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus:not(.docusaurus--welcome)  nav.navbar .navbar__inner .navbar__items>a:not(.navbar__item--translate),
 #gt-nvframe~#__docusaurus nav .navbar__item.navbar__item--translate,
 #__docusaurus.docusaurus--exclusive nav.navbar .navbar-sidebar .navbar-sidebar__brand>a,
 #__docusaurus.docusaurus--exclusive nav.navbar .navbar-sidebar .menu.navbar-sidebar__item>button,

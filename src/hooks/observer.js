@@ -13,6 +13,7 @@ import {
   useState,
 } from 'react';
 import useIsBrowser from '@docusaurus/useIsBrowser';
+import { useLocation } from '@docusaurus/router';
 
 const docusaurus = 'docusaurus';
 
@@ -149,12 +150,21 @@ export function useVisibility({ ref = useRef(), threshold = 1.0, ...rest } = {})
 
 export function useWelcome({ navigation = true } = {}) {
   const browser = useIsBrowser();
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = `${location.pathname}/`.replace(/\/\//g, '/');
+    const target = (['mni-Mtei', 'zh-CN', 'zh-TW'].includes(navigator.language) ? navigator.language : navigator.language?.split?.('-')?.[0]) || 'en';
+    // After target assignment.
+    const source = target === 'en' ? 'auto' : 'en';
+    document.querySelector('nav .navbar__item.navbar__item--translate')
+      .href = `https://ricky-one.translate.goog${path}?_x_tr_sl=${source}&_x_tr_tl=${target}`;
+    // return none.
+  }, [location.pathname]);
 
   useEffect(() => {
     if (browser) {
-      const target = ['mni-Mtei', 'zh-CN', 'zh-TW'].includes(navigator.language) ? navigator.language : navigator.language?.split?.('-')?.[0];
       document.querySelector('nav .navbar__brand .navbar__title')?.setAttribute?.('translate', 'no');
-      document.querySelector('nav .navbar__item.navbar__item--translate').href = `https://ricky-one.translate.goog/?_x_tr_sl=auto&_x_tr_tl=${target || 'en'}`;
       // eslint-disable-next-line no-restricted-globals
       if (top === window) {
         document.getElementById(`__${docusaurus}`).className = clsx(

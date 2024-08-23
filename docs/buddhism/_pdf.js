@@ -39,6 +39,8 @@ export default [
   ['wheel', `${phrases}/_dasa_mukta_mantrah.js`],
   ['roll', `${phrases}/_ekajati.js`],
   ['wheel', `${phrases}/_ekajati.js`],
+  ['roll', `${phrases}/_guhyadhatu_karanda.js`],
+  ['wheel', `${phrases}/_guhyadhatu_karanda.js`],
   ['roll', `${phrases}/_mahamani_vipulavimana.js`],
   ['wheel', `${phrases}/_mahamani_vipulavimana.js`],
   ['roll', `${phrases}/_mahavairocana_sarvadurgati_parisodhana.js`],

@@ -21,6 +21,7 @@ export default {
   transliteration: {
     children: 'oṃ śodhani śodhani । sarva pāpaṁ viśodhani । śuddhe viśuddhe । sarva karma āvaraṇa viśodhani svāhā',
     speech: 'oum sodhani sodhani, sarwa papam wisodhani, suddhe wisuddhe, sarwa karma awarana wisodhani swaha',
+    // The Great Vairocana All Misfortune Purification.
     title: 'Mahāvairocana Sarvadurgati Pariśodhana Dhāraṇī',
   },
 };

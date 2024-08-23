@@ -4,18 +4,32 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-export default {
+/* eslint-disable import/extensions */
+import amoghapasaPadmaUsnisa from './_amoghapasa_padma_usnisa.js';
+
+const core = {
   sanskrit: {
-    children: 'ॐ अमोघ पूजा मणिपद्म वज्रे तथागत विलोकिते समन्त प्रसर हूँ । ॐ पद्म उष्णीष विमले हूँ फट्',
+    children: 'ॐ अमोघ पूजा मणिपद्म वज्रे तथागत विलोकिते समन्त प्रसर हूँ',
+  },
+  transliteration: {
+    children: 'oṃ amogha pūja maṇipadma vajre tathāgata vilokite samanta prasara hūṃ',
+    speech: 'oum amoga puja mani padma wajre tathagata wiloki-t samanta prasara houm',
+  },
+};
+
+export default {
+  core,
+  sanskrit: {
+    children: [core.sanskrit.children, amoghapasaPadmaUsnisa.sanskrit.children].join(' । '),
     title: 'अमोघपाश मणि पूजा',
   },
   translation: {
     title: 'Amoghapāśa Jewels Offering',
   },
   transliteration: {
-    children: 'oṃ amogha pūja maṇipadma vajre tathāgata vilokite samanta prasara hūṃ । oṃ padma uṣṇīṣa vimale hūṃ phaṭ',
+    children: [core.transliteration.children, amoghapasaPadmaUsnisa.transliteration.children].join(' । '),
     repetition: 3,
-    speech: 'oum amoga puja mani padma wajre tathagata wiloki-t samanta prasara houm, oum padma usnisa wimale houm patt',
+    speech: [core.transliteration.speech, amoghapasaPadmaUsnisa.transliteration.speech].join(', '),
     title: 'Amoghapāśa Maṇi Pūja',
   },
 };

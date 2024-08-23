@@ -4,18 +4,36 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+/* eslint-disable import/extensions */
+import sadjaMukta from './_sadja_mukta.js';
+
 export default {
   sanskrit: {
-    children: 'ॐ धरे धरे बंधरे स्वहा । जय जय सिद्धि सिद्धि फल फल । अ आ शा स म ह । मम कॉलिंग समन्त',
+    children: [
+      'ॐ धरे धरे बंधरे स्वहा',
+      'जय जय सिद्धि सिद्धि फल फल',
+      sadjaMukta.sanskrit.children,
+      'मम कॉलिंग समन्त',
+    ].join(' । '),
     title: 'परिणमन',
   },
   translation: {
     title: 'Dedication',
   },
   transliteration: {
-    children: 'oṃ dhare dhare bandhare svāhā । jayā jayā siddhi siddhi phala phala । a āḥ śa sa ma ha । mama koling samanta',
+    children: [
+      'oṃ dhare dhare bandhare svāhā',
+      'jayā jayā siddhi siddhi phala phala',
+      sadjaMukta.transliteration.children,
+      'mama koling samanta',
+    ].join(' । '),
     repetition: 3,
-    speech: 'oum dhare dhare bandhare swaha, jaya jaya siddhi siddhi pala pala, a ah sha sa ma ha, mama koling samanta',
+    speech: [
+      'oum dhare dhare bandhare swaha',
+      'jaya jaya siddhi siddhi pala pala',
+      sadjaMukta.transliteration.speech,
+      'mama koling samanta',
+    ].join(', '),
     title: 'Pariṇāmanā',
   },
 };

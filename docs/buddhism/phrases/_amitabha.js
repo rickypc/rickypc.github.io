@@ -27,7 +27,7 @@ export default {
   },
   transliteration: {
     children: 'oṃ amitābha hrīḥ',
-    speech: 'oum amitaba hrih',
+    speech: 'oum amitaba, hrih',
     title: 'Amitābha Hṛdaya',
   },
 };

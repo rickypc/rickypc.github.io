@@ -4,9 +4,12 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+/* eslint-disable import/extensions */
+import bhaisajyaguru from './_bhaisajyaguru.js';
+import saptaAtitabuddhaKarasaniya from './_sapta_atitabuddha_karasaniya.js';
+import sukhavatiVyuha from './_sukhavativyuha.js';
+
 export default {
-  lang: 'sa-IN',
-  path: new URL('', import.meta.url).pathname,
   sanskrit: {
     children: [
       'ॐ चक्रवर्तिन् चिन्तामणि महापद्मे रु रु तिष्ठ ज्वल आकर्शाय हूँ फट् स्वाहा । ॐ पद्म चिन्तामणि ज्वल हूँ । ॐ वरद पद्मे हूँ',
@@ -14,15 +17,12 @@ export default {
       'ॐ सिद्धे हुरु हुरु सिधुरु कृपा कृपा सिद्धाणि पूरुणि स्वाहा',
       'ॐ चले चुले चुन्दी स्वाहा',
       'ॐ सर्वसंस्कार परिशुद्धे धर्मते गगन समुद्गते स्वभाव विशुद्धे महानय परिवारे स्वाहा',
-      'ॐ भैषज्ये भैषज्ये भैषज्य समुद्गते स्वाहा',
+      bhaisajyaguru.sanskrit.children,
       'ॐ मणिपद्मे हूँ । महा निर्याण चित्तोत्पाद । चित्तक्षन वितर्क । सर्वार्थ भूरि सिद्ध कामपूर्ण । भूरि द्योतोत्पान्न । नमः लोकेश्वराय स्वाहा',
-      'रिप रिपते कुह कुहते त्रणिते णिगलते विमरिते महागते जंलंचंते वाहा',
-      'ॐ अमृते अमृतोद्भवे अमृतसंभवे अमृतगर्भे । अमृत सिद्धे अमृत तेजस् । अमृत विक्रान्ते अमृत विक्रान्त गामिने । अमृत गगन कीर्तिकरे अमृत दुन्दुभिस्वरे । सर्वार्थ साधने सर्व कर्म क्लेश क्षयंकरे स्वाहा',
+      saptaAtitabuddhaKarasaniya.sanskrit.children,
+      sukhavatiVyuha.core.sanskrit.children,
       'ॐ परिपूर्ण चरे । समन्त दर्शने । महा विहार गते । समन्त विधामने । महा कार्य प्रतिष्ठापने । सर्वार्थ साधने सुप्रतिपूरे । आयान धर्मता महा विकुर्विते । महा मैत्री उपसंहिते । महार्षि सुसंगृहीते । समन्तार्थ अनुपालने स्वाहा',
     ],
-    repeat: {
-      roll: 4,
-    },
     title: 'दश चूल धारणी',
   },
   transliteration: {
@@ -32,10 +32,10 @@ export default {
       'oṃ siddhe huru huru sidhuru kṛpā kṛpā siddhāṇi puruṇi svāhā',
       'oṃ cale cule cunde svāhā',
       'oṃ sarva saṃskāra pariśuddha । dharmate gagana samudgate । svabhāva viśuddhe । mahānaya parivāre svāhā',
-      'oṃ bhaiṣajye bhaiṣajye bhaiṣajya samudgate svāhā',
+      bhaisajyaguru.transliteration.children,
       'oṃ maṇipadme hūṃ । mahā niryāṇa cittotpāda । cittakṣana vitarka । sarvārtha bhūri siddha kāmapūrṇa । bhūri dyototpanna । namaḥ lokeśvarāya svāhā',
-      'ripa ripate kuhā kuhāte traṇite ṇigalate vimarite mahāgate jaṃlaṃcaṃte svāhā',
-      'oṃ amṛte amṛtodbhave amṛta-saṃbhave amṛta-garbhe । amṛta siddhe amṛta tejas । amṛta vikrānte amṛta vikrānta gāmine । amṛta gagana kīrtikare amṛta dundubhisvare । sarvārtha sādhane sarva karma kleśa kṣayaṃkare svāhā',
+      saptaAtitabuddhaKarasaniya.transliteration.children,
+      sukhavatiVyuha.core.transliteration.children,
       'oṃ paripūrṇa cāre । samanta darśane । mahā vihāra gate । samanta vidhāmane । mahā kārya pratiṣṭhāpane । sarvārtha sādhane supratipūre । āyāna dharmatā mahā vikurvite । mahā maitrī upasaṃhite । mahārṣi susaṃgṛhīte । samantārtha anupālane svāhā',
     ],
     speech: [
@@ -44,10 +44,10 @@ export default {
       'oum siddhe, huru huru sidhuru, kripa kripa, siddhani puruni swaha',
       'oum cale cule cun-d swaha',
       'oum sarwa samskara parisuddha, dharmate gagana samudgate, swabawa wisuddhe, mahanaya pariware swaha',
-      'oum baisaye baisaye, baisaya samudgate swaha',
+      bhaisajyaguru.transliteration.speech,
       'oum manipadme houm, maha niryana cittotpada, cittaksana witarka, sarwartha buri siddha kamapurna, buri dyototpanna, namah lokeswaraya swaha',
-      'ripa ripa-t, kuha kuha-t, trani-t, nigala-t, wimari-t, maha ga-t, jamlam cam-t, swaha',
-      'oum amrite amritod bawe amrita sambawe amrita garbe, amrita siddhe amrita t-jas, amrita wi-krante amrita wi-kranta gamine, amrita gagana kirtikare amrita dundu bisware, sarwarta sadane sarwa karma klesa kesayamkare swaha',
+      saptaAtitabuddhaKarasaniya.transliteration.speech,
+      sukhavatiVyuha.core.transliteration.speech,
       'oum paripurna ca-re, samanta darsane, maha wihara ga-te, samanta widhamane, maha karya pratisthapane, sarwartha sadhane supratipure, ayana dharmata maha wikurwite, maha maitri upasamhite, maharsi susamgrihite, samantartha anupalane swaha',
     ].join(', '),
     // The Ten Short Dhāraṇī.

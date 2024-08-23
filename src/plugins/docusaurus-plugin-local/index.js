@@ -15,17 +15,12 @@ import { FontaineTransform } from 'fontaine';
 import { join, parse, resolve } from 'node:path';
 import PdfMake from 'pdfmake';
 import { simpleGit } from 'simple-git';
-// eslint-disable-next-line import/extensions
+/* eslint-disable import/extensions */
 import base from '#buddhism/_base.js';
-// eslint-disable-next-line import/extensions
 import book from '#buddhism/_book.js';
-// eslint-disable-next-line import/extensions
 import pdf from '#buddhism/_pdf.js';
-// eslint-disable-next-line import/extensions
 import roll from '#buddhism/_roll.js';
-// eslint-disable-next-line import/extensions
 import thangka from '#buddhism/_thangka.js';
-// eslint-disable-next-line import/extensions
 import wheel from '#buddhism/_wheel.js';
 
 const fileName = (path, template) => {

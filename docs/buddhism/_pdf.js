@@ -28,6 +28,8 @@ export default [
   ['roll', `${phrases}/_bhaisajyaguru.js`],
   ['thangka', `${phrases}/_bhaisajyaguru.js`],
   ['wheel', `${phrases}/_bhaisajyaguru.js`],
+  ['roll', `${phrases}/_bodhi_garbhalamkara_laksa.js`],
+  ['wheel', `${phrases}/_bodhi_garbhalamkara_laksa.js`],
   ['base', '#buddhism/_cintamani_dharmacakra_yasti.js'],
   ['book', '#buddhism/_consecration_statue_stupa.js'],
   ['book', '#buddhism/_consecration_statue_stupa_cover.js'],

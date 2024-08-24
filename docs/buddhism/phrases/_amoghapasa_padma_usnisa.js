@@ -5,6 +5,9 @@
  */
 
 export default {
+  chinese: {
+    title: '白蓮花頂髻無垢密咒',
+  },
   sanskrit: {
     children: 'ॐ पद्म उष्णीष विमले हूँ फट्',
     title: 'अमोघपाश पद्म उष्णीष',

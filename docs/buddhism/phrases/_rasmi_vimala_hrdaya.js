@@ -5,6 +5,9 @@
  */
 
 export default {
+  chinese: {
+    title: '遠塔陀羅尼',
+  },
   path: new URL('', import.meta.url).pathname,
   sanskrit: {
     children: 'नमो नव नवतीनां तथागत । गङ्गा नदी वालुका । कोटिनयुत शत सहस्रनाम् । ॐ भूभूरि । चारिनि चरि । चरण चिरे । मुनि मुनि । श्रेष्ठ अलंकारे स्वाहा',

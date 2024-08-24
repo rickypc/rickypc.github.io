@@ -27,6 +27,9 @@ const core = {
 };
 
 export default {
+  chinese: {
+    title: '緣起經',
+  },
   core,
   pali: {
     children: [core.pali.children, 'aññāṇaṁ cīyate kammaṁ jananaṁ kammakāraṇaṁ । ñāṇaṁ na cīyate kammaṁ kammābhāvaṁ na jāyate'].join(' । '),

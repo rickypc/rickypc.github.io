@@ -6,6 +6,7 @@
 
 /* eslint-disable import/extensions */
 import bhaisajyaguru from './_bhaisajyaguru.js';
+import mahaCundiDurga from './_maha_cundi_durga.js';
 import saptaAtitabuddhaKarasaniya from './_sapta_atitabuddha_karasaniya.js';
 import sukhavatiVyuha from './_sukhavativyuha.js';
 
@@ -15,7 +16,7 @@ export default {
       'ॐ चक्रवर्तिन् चिन्तामणि महापद्मे रु रु तिष्ठ ज्वल आकर्शाय हूँ फट् स्वाहा । ॐ पद्म चिन्तामणि ज्वल हूँ । ॐ वरद पद्मे हूँ',
       'ॐ ख ख । खाहि खाहि । हूँ हूँ ज्वल ज्वल । प्रज्वल प्रज्वल । तिष्ठ तिष्ठ ष्टिरि ष्टिरि स्फोट स्फोट । शान्तिक श्रिये स्वाहा',
       'ॐ सिद्धे हुरु हुरु सिधुरु कृपा कृपा सिद्धाणि पूरुणि स्वाहा',
-      'ॐ चले चुले चुन्दी स्वाहा',
+      mahaCundiDurga.sanskrit.children,
       'ॐ सर्वसंस्कार परिशुद्धे धर्मते गगन समुद्गते स्वभाव विशुद्धे महानय परिवारे स्वाहा',
       bhaisajyaguru.sanskrit.children,
       'ॐ मणिपद्मे हूँ । महा निर्याण चित्तोत्पाद । चित्तक्षन वितर्क । सर्वार्थ भूरि सिद्ध कामपूर्ण । भूरि द्योतोत्पान्न । नमः लोकेश्वराय स्वाहा',
@@ -30,7 +31,7 @@ export default {
       'oṃ cakravarti cintāmaṇi mahāpadme ru ru tiṣṭha jvāla ākarṣāya hūṃ phaṭ svāhā । oṃ padma cintāmaṇi jvāla hūṃ । oṃ varada padme hūṃ',
       'oṃ kha kha । khāhi khāhi । hūṃ hūṃ jvāla jvāla । prajvāla prajvāla । tiṣṭha tiṣṭha ṣṭiri ṣṭiri sphoṭa sphoṭa । śāntika śriye svāhā',
       'oṃ siddhe huru huru sidhuru kṛpā kṛpā siddhāṇi puruṇi svāhā',
-      'oṃ cale cule cunde svāhā',
+      mahaCundiDurga.transliteration.children,
       'oṃ sarva saṃskāra pariśuddha । dharmate gagana samudgate । svabhāva viśuddhe । mahānaya parivāre svāhā',
       bhaisajyaguru.transliteration.children,
       'oṃ maṇipadme hūṃ । mahā niryāṇa cittotpāda । cittakṣana vitarka । sarvārtha bhūri siddha kāmapūrṇa । bhūri dyototpanna । namaḥ lokeśvarāya svāhā',
@@ -42,7 +43,7 @@ export default {
       'oum cakrawarti cintamani, maha padme, ru-ru, tista jwala akarsaya, houm patt swaha, oum padma cintamani jwala houm, oum warada padme houm',
       'oum ka ka, khahi khahi, houm houm, jwala jwala, prajwala prajwala, tista tista, stiri stiri, sphota sphota, santika sriye swaha',
       'oum siddhe, huru huru sidhuru, kripa kripa, siddhani puruni swaha',
-      'oum cale cule cun-d swaha',
+      mahaCundiDurga.transliteration.speech,
       'oum sarwa samskara parisuddha, dharmate gagana samudgate, swabawa wisuddhe, mahanaya pariware swaha',
       bhaisajyaguru.transliteration.speech,
       'oum manipadme houm, maha niryana cittotpada, cittaksana witarka, sarwartha buri siddha kamapurna, buri dyototpanna, namah lokeswaraya swaha',

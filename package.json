@@ -21,7 +21,7 @@
     "cli-progress": "3.12.0",
     "embla-carousel-react": "8.2.0",
     "fontaine": "0.5.0",
-    "framer-motion": "11.3.28",
+    "framer-motion": "11.3.30",
     "pdfmake": "0.2.12",
     "prism-react-renderer": "2.3.1",
     "prop-types": "15.8.1",
@@ -46,7 +46,7 @@
   "optionalDependencies": {
     "@docusaurus/eslint-plugin": "3.5.2",
     "@playwright/test": "1.46.1",
-    "@types/node": "22.4.2",
+    "@types/node": "22.5.0",
     "eslint": "8.57.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-plugin-import": "2.29.1",

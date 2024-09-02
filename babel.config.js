@@ -4,6 +4,4 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-module.exports = {
-  presets: [require.resolve('@docusaurus/core/lib/babel/preset')],
-};
+module.exports = { presets: [require.resolve('@docusaurus/core/lib/babel/preset')] };

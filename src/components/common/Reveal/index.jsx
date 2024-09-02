@@ -38,34 +38,6 @@ Character.propTypes = {
   ]).isRequired,
 };
 
-const Phrase = memo(function Phrase({ children, coeff = 0, delays }) {
-  const prefix = delays.join(' ');
-
-  const words = (text) => text.split(' ').filter((word) => word).map((word) => (
-    <Word delay={coeff + delays.indexOf(word)} key={key(`${prefix}-${word}`)}>{word}</Word>
-  ));
-
-  return Children.map(children, (child) => {
-    const text = child?.type ? child.props.children : child;
-    if (child?.type) {
-      return cloneElement(child, {
-        ...child.props,
-        children: words(text),
-        key: key(`${prefix}-${text}`),
-      });
-    }
-    return words(text);
-  });
-});
-Phrase.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  coeff: PropTypes.number,
-  delays: PropTypes.arrayOf(PropTypes.string),
-};
-
 const Word = memo(function Word({ children, delay }) {
   return (
     <LazyMotion features={domAnimation}>
@@ -98,6 +70,35 @@ Word.propTypes = {
     PropTypes.node,
   ]).isRequired,
   delay: PropTypes.number,
+};
+
+// After Word assignment.
+const Phrase = memo(function Phrase({ children, coeff = 0, delays }) {
+  const prefix = delays.join(' ');
+
+  const words = (text) => text.split(' ').filter((word) => word).map((word) => (
+    <Word delay={coeff + delays.indexOf(word)} key={key(`${prefix}-${word}`)}>{word}</Word>
+  ));
+
+  return Children.map(children, (child) => {
+    const text = child?.type ? child.props.children : child;
+    if (child?.type) {
+      return cloneElement(child, {
+        ...child.props,
+        children: words(text),
+        key: key(`${prefix}-${text}`),
+      });
+    }
+    return words(text);
+  });
+});
+Phrase.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  coeff: PropTypes.number,
+  delays: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default memo(Object.assign(function Reveal({ children, coeff }) {

@@ -20,6 +20,21 @@ import PropTypes from 'prop-types';
 import transition from '@site/src/data/portfolio/common';
 import styles from './styles.module.css';
 
+const Tags = memo(function Tags({ prefix, tags }) {
+  return (
+    <ul className={styles.tags} translate="no">
+      {tags.map((tag) => (
+        <li aria-hidden="true" key={key(`${prefix}-${tag}`, 'tag')}>{tag}</li>
+      ))}
+    </ul>
+  );
+});
+Tags.propTypes = {
+  prefix: PropTypes.string.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+// After Tags assignment.
 const Project = memo(function Project({
   description,
   href,
@@ -62,20 +77,6 @@ Project.propTypes = {
   prefix: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   title: PropTypes.string.isRequired,
-};
-
-const Tags = memo(function Tags({ prefix, tags }) {
-  return (
-    <ul className={styles.tags} translate="no">
-      {tags.map((tag) => (
-        <li aria-hidden="true" key={key(`${prefix}-${tag}`, 'tag')}>{tag}</li>
-      ))}
-    </ul>
-  );
-});
-Tags.propTypes = {
-  prefix: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default memo(Object.assign(function Projects({ filtered, onClick }) {

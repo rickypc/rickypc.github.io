@@ -21,15 +21,15 @@
     "cli-progress": "3.12.0",
     "embla-carousel-react": "8.2.0",
     "fontaine": "0.5.0",
-    "framer-motion": "11.3.30",
+    "framer-motion": "11.3.31",
     "pdfmake": "0.2.12",
-    "prism-react-renderer": "2.3.1",
+    "prism-react-renderer": "2.4.0",
     "prop-types": "15.8.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-icons": "5.3.0",
     "sharp": "0.33.5",
-    "simple-git": "3.25.0"
+    "simple-git": "3.26.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.5.2",
@@ -45,14 +45,17 @@
   "name": "rickypc.github.io",
   "optionalDependencies": {
     "@docusaurus/eslint-plugin": "3.5.2",
+    "@eslint/eslintrc": "3.1.0",
+    "@eslint/js": "9.9.1",
     "@playwright/test": "1.46.1",
-    "@types/node": "22.5.0",
+    "@types/node": "22.5.2",
     "eslint": "8.57.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-jsx-a11y": "6.9.0",
     "eslint-plugin-react": "7.35.0",
     "eslint-plugin-react-hooks": "4.6.2",
+    "hermes-eslint": "0.23.1",
     "lighthouse": "12.2.0"
   },
   "peerDependenciesMeta": {

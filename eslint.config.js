@@ -43,7 +43,6 @@ module.exports = [
       ecmaFeatures: { jsx: true },
       ecmaVersion: 2020,
     },
-    plugins: ['import'],
     rules: {
       // Better React debugging.
       'prefer-arrow-callback': 'off',

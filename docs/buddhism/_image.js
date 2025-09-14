@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -11,10 +11,19 @@ const sharp = require('sharp');
 // 300px = 72pt = 1".
 const pixels = 300 / 72;
 
+/**
+ * @description Generates image object compatible with pdfMake document.
+ * @param {object} img - Image metadata.
+ * @param {number} img.height - Desired image height.
+ * @param {string} img.path - Path to the image file.
+ * @param {number} img.width - Desired image width.
+ * @returns {object} pdfMake compatible image object.
+ */
 export default async function image(img) {
   if (!img?.path) {
     return null;
   }
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
   let buffer = Buffer.from(readFileSync(require.resolve(img.path)));
   const ext = extname(img.path);
   const height = img.height || (img.width * 1.345) + 18;

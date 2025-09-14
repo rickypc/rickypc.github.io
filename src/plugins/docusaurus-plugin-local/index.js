@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -38,11 +38,16 @@ const templates = {
   wheel,
 };
 
+/**
+ * @description Extends sitemap items with generated PDFs.
+ * @param {object} options - Configuration options.
+ * @param {Function} options.defaultCreateSitemapItems - Sitemap generator.
+ * @returns {Array} Combined array of default items and PDF entries.
+ */
 export async function createSitemapItems({ defaultCreateSitemapItems, ...rest }) {
   const git = simpleGit();
   const items = await defaultCreateSitemapItems(rest);
   const today = new Date().toISOString().split('T')[0];
-  // eslint-disable-next-line no-unused-vars
   const pdfs = await Promise.all(pdf.map(async ([template, path]) => {
     const lastmod = (await git.log({
       '--date': 'format:%Y-%m-%d',
@@ -60,6 +65,12 @@ export async function createSitemapItems({ defaultCreateSitemapItems, ...rest })
   return [...items, ...pdfs];
 }
 
+/**
+ * @description Generates PDFs on Docusaurus postBuild, with progress bar.
+ * @param {object} options - Post-build configuration.
+ * @param {string} options.outDir - Directory to output generated PDFs.
+ * @param {object} options.siteConfig - Docusaurus site configuration object.
+ */
 export async function postBuild({ outDir, siteConfig }) {
   const bar = new Bar({}, {
     barCompleteChar: '█',
@@ -93,9 +104,11 @@ export async function postBuild({ outDir, siteConfig }) {
   });
 
   // Ensure the folder exist.
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
   mkdirSync(join(outDir, 'pdf'), { recursive: true });
 
   await Promise.all(pdf.map(async ([template, path]) => {
+    // eslint-disable-next-line security/detect-object-injection
     const { definition, options } = await templates[template](path);
     await new Promise((settle) => {
       const document = printer.createPdfKitDocument({
@@ -108,6 +121,7 @@ export async function postBuild({ outDir, siteConfig }) {
         },
       }, options);
       document.on('end', settle);
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
       document.pipe(createWriteStream(join(outDir, 'pdf', `${fileName(path, template)}.pdf`)));
       document.end();
     });
@@ -115,6 +129,16 @@ export async function postBuild({ outDir, siteConfig }) {
   }));
 }
 
+/**
+ * @description Main entry for custom Docusaurus plugin.
+ * @param {object} context - Docusaurus build context (e.g. webpack, CLI).
+ * @returns {{
+ *   configureWebpack: Function,
+ *   extendCli: Function,
+ *   name: string,
+ *   postBuild: Function
+ * }} Plugin interface with lifecycle methods and name.
+ */
 export default function pluginLocal(context) {
   return {
     configureWebpack(_, isServer) {
@@ -194,7 +218,7 @@ export default function pluginLocal(context) {
           await postBuild({ outDir, siteConfig });
         }, { hidden: false });
     },
-    postBuild,
     name: 'docusaurus-plugin-local',
+    postBuild,
   };
 }

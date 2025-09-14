@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -19,18 +19,50 @@ import PropTypes from 'prop-types';
 import { useSpeech } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
+/**
+ * @description Renders the `Pause` icon.
+ * @param {object} props - React props passed to the icon component.
+ * @param {string} [props.className] - Optional CSS class for styling.
+ * @param {object} [props.style] - Optional inline styles.
+ * @param {string} [props.title] - Optional title for accessibility.
+ * @returns {object} The icon.
+ */
 function GrPause(props) {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'path', attr: { fill: 'none', strokeWidth: '2', d: 'M3,21 L9,21 L9,3 L3,3 L3,21 Z M15,21 L21,21 L21,3 L15,3 L15,21 Z' }, child: [] }] })(props);
 }
 
+/**
+ * @description Renders the `Play` icon.
+ * @param {object} props - React props passed to the icon component.
+ * @param {string} [props.className] - Optional CSS class for styling.
+ * @param {object} [props.style] - Optional inline styles.
+ * @param {string} [props.title] - Optional title for accessibility.
+ * @returns {object} The icon.
+ */
 function GrPlay(props) {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'polygon', attr: { fill: 'none', strokeWidth: '2', points: '3 22 21 12 3 2' }, child: [] }] })(props);
 }
 
+/**
+ * @description Renders the `Resume` icon.
+ * @param {object} props - React props passed to the icon component.
+ * @param {string} [props.className] - Optional CSS class for styling.
+ * @param {object} [props.style] - Optional inline styles.
+ * @param {string} [props.title] - Optional title for accessibility.
+ * @returns {object} The icon.
+ */
 function GrResume(props) {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'path', attr: { fill: 'none', strokeWidth: '2', d: 'M1,20 L6,20 L6,4 L1,4 L1,20 Z M11,19.0000002 L22,12 L11,5 L11,19.0000002 Z' }, child: [] }] })(props);
 }
 
+/**
+ * @description Renders the `Stop` icon.
+ * @param {object} props - React props passed to the icon component.
+ * @param {string} [props.className] - Optional CSS class for styling.
+ * @param {object} [props.style] - Optional inline styles.
+ * @param {string} [props.title] - Optional title for accessibility.
+ * @returns {object} The icon.
+ */
 function GrStop(props) {
   return GenIcon({
     tag: 'svg',

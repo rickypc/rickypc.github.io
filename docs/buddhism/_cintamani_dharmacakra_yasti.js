@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -48,6 +48,10 @@ const prefix = '༄༅། ';
 const rowHeight = height / 3;
 const suffix = '༎';
 
+/**
+ * @description Generates a pdfMake object for `prayer wheel life force pillar`.
+ * @returns {object} A pdfMake compatible object.
+ */
 export default async function cintamaniDharmacakraYasti() {
   return {
     definition: {
@@ -57,9 +61,9 @@ export default async function cintamaniDharmacakraYasti() {
           margin: [0, 0, 0, 7.5],
           table: {
             body: phrase.tibetan.children.map((text, index) => {
-              const intro = phrase.tibetan.intros[index];
-              const margin = phrase.tibetan.margins[index];
-              const repeat = phrase.tibetan.repeats[index];
+              const intro = phrase.tibetan.intros.at(index);
+              const margin = phrase.tibetan.margins.at(index);
+              const repeat = phrase.tibetan.repeats.at(index);
               return [
                 { margin, style: 'intro', text: intro },
                 {

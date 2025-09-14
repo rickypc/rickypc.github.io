@@ -1,11 +1,15 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 import { useCallback } from 'react';
 
+/**
+ * @description Custom React hook for handling transport-related operations.
+ * @returns {{fetchAsJson: Function}} Object containing transport utilities.
+ */
 export default function useTransport() {
   return {
     fetchAsJson: useCallback(async (...args) => {
@@ -13,7 +17,7 @@ export default function useTransport() {
       const result = await fetch(...args);
       try {
         json = await result.json();
-      } catch (_) {
+      } catch {
         // no-op.
       }
       return json;

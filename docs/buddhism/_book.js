@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -17,9 +17,15 @@ const unalomeWidth = 44.375;
 // After unalomeWidth assignment.
 const unalomeMargin = (unalomeWidth * 2) + 5;
 
+/**
+ * @description Generates a pdfMake object for `prayer book`.
+ * @param {string} path - Multilingual file path.
+ * @returns {object} A pdfMake compatible object.
+ */
 export default async function book(path) {
-  // eslint-disable-next-line global-require,import/no-dynamic-require
+  /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   const { default: { pages = [], title } } = require(path);
+  /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   const { length } = pages;
   // After length assignment.
   const lastPage = length - 1;

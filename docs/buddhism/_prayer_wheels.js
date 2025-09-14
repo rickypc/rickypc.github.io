@@ -1,12 +1,16 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 // eslint-disable-next-line import/extensions
 const image = require('./_image.js');
 
+/**
+ * @description Generates a pdfMake object for `prayer wheel mandalas`.
+ * @returns {object} A pdfMake compatible object.
+ */
 export default async function prayerWheel() {
   return {
     definition: {

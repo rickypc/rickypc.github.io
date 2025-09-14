@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -24,10 +24,26 @@ import PropTypes from 'prop-types';
 import useEmblaCarousel from 'embla-carousel-react';
 import styles from './styles.module.css';
 
+/**
+ * @description Renders the `Angle Left` icon.
+ * @param {object} props - React props passed to the icon component.
+ * @param {string} [props.className] - Optional CSS class for styling.
+ * @param {object} [props.style] - Optional inline styles.
+ * @param {string} [props.title] - Optional title for accessibility.
+ * @returns {object} The icon.
+ */
 function FaAngleLeft(props) {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 320 512' }, child: [{ tag: 'path', attr: { d: 'M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z' }, child: [] }] })(props);
 }
 
+/**
+ * @description Renders the `Angle Right` icon.
+ * @param {object} props - React props passed to the icon component.
+ * @param {string} [props.className] - Optional CSS class for styling.
+ * @param {object} [props.style] - Optional inline styles.
+ * @param {string} [props.title] - Optional title for accessibility.
+ * @returns {object} The icon.
+ */
 function FaAngleRight(props) {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 320 512' }, child: [{ tag: 'path', attr: { d: 'M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z' }, child: [] }] })(props);
 }

@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -38,8 +38,9 @@ const main = (sanskrit, transliteration, repetition = 0) => ([
 ]);
 
 const phrase = (path, direction = '', repetition = 0, title = '') => {
-  // eslint-disable-next-line global-require,import/no-dynamic-require
+  /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   const { default: { sanskrit, translation, transliteration } } = require(path);
+  /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   return [
     header(title || `${transliteration.title}${translation?.title ? ` [${translation.title}]` : ''}`, direction),
     ...main(`${body(sanskrit)}॥`, `${body(transliteration)}॥`, repetition || transliteration.repetition),

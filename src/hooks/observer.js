@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -17,6 +17,11 @@ import { useLocation } from '@docusaurus/router';
 
 const docusaurus = 'docusaurus';
 
+/**
+ * @description Tracks media query change status using matchMedia and useState.
+ * @param {string} query - CSS media query string.
+ * @returns {[boolean]} React tuple: [change].
+ */
 export function useMedia(query) {
   const [change, setChange] = useState(false);
 
@@ -31,6 +36,10 @@ export function useMedia(query) {
   return [change];
 }
 
+/**
+ * @description Detects if page is ready for printing during initial load.
+ * @returns {[boolean]} React tuple: [ready].
+ */
 export function usePrint() {
   const [ready, setReady] = useState(false);
 
@@ -107,6 +116,10 @@ export function usePrint() {
 
 const useSafeLayoutEffect = typeof (window) !== 'undefined' ? useLayoutEffect : useEffect;
 
+/**
+ * @description Detects if speech synthesis is ready during page load.
+ * @returns {[boolean]} React tuple: [ready].
+ */
 export function useSpeech() {
   const [ready, setReady] = useState();
 
@@ -118,7 +131,14 @@ export function useSpeech() {
   return [ready];
 }
 
-// eslint-disable-next-line no-param-reassign,react-hooks/rules-of-hooks
+/**
+ * @description Detects if a DOM ref is visible using IntersectionObserver.
+ * @param {object} [options] - Options for visibility detection.
+ * @param {object} [options.ref] - React ref to observe (default: useRef()).
+ * @param {number} [options.threshold] - Visibility threshold (default: 1.0).
+ * @returns {{ref: object, visible: boolean}} Object with ref and visibility state.
+ */
+// eslint-disable-next-line react-hooks/rules-of-hooks
 export function useVisibility({ ref = useRef(), threshold = 1.0, ...rest } = {}) {
   const [visible, setVisible] = useState(false);
 
@@ -148,6 +168,12 @@ export function useVisibility({ ref = useRef(), threshold = 1.0, ...rest } = {})
   return { ref, visible };
 }
 
+/**
+ * @description Reveals page after validation to prevent automated abuse.
+ * @param {object} [options] - Configuration options.
+ * @param {boolean} [options.navigation] - Whether to enable navigation handling
+ *   (default: true).
+ */
 export function useWelcome({ navigation = true } = {}) {
   const browser = useIsBrowser();
   const location = useLocation();

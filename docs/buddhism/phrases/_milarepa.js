@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -8,7 +8,7 @@ export default {
   chinese: {
     title: '密勒日巴',
   },
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ आः गुरु हसवज्र सर्व सिद्धि फल हूं',
     title: 'मिलरेप',

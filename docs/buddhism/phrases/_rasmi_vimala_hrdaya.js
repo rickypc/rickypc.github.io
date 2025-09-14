@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -8,7 +8,7 @@ export default {
   chinese: {
     title: '遠塔陀羅尼',
   },
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'नमो नव नवतीनां तथागत । गङ्गा नदी वालुका । कोटिनयुत शत सहस्रनाम् । ॐ भूभूरि । चारिनि चरि । चरण चिरे । मुनि मुनि । श्रेष्ठ अलंकारे स्वाहा',
     siddham: {

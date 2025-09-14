@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -9,7 +9,7 @@ export default {
     children: '嗡 莫嘿 莫嘿 馬哈莫嘿 梭哈 · 嗡 牟尼 牟尼 思嗎拉 梭哈',
     title: '彌勒佛',
   },
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ मोहि मोहि महामोहि स्वाहा । ॐ मुनि मुनि स्मरा स्वाहा',
     title: 'मैत्रेय',

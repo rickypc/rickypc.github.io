@@ -1,11 +1,11 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 export default {
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ तारे तुत्तारे तुरे मम आयुः-पुण्य-ज्ञान पुष्टिंकुरु स्वहा',
     title: 'सिततारा',

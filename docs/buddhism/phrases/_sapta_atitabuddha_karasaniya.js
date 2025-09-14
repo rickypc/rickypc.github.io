@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -10,7 +10,7 @@ export default {
     title: '七佛滅罪真言',
   },
   lang: 'sa-IN',
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'रिप रिपते कुह कुहते त्रणिते णिगलते विमरिते महागते जंलंचंते वाहा',
     repeat: {

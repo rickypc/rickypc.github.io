@@ -1,11 +1,11 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 export default {
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ आर्य तारा समय मनुपालय । आर्य तारा त्वेनोपतिष्ठ । दृढो मे भव । सुतोष्यो मे भव । सुपोष्यो मे भव । अनुरक्तो मे भव । सर्वसिद्धिं मे प्रयच्छ । सर्वकर्मसु च मे । चित्तं श्रियं कुरु हूं । ह ह ह ह होः । भगवं सर्वतथागत तारा मा मे मुञ्च । तारा भव महासमय सत्त्व आः',
     title: 'आर्य तारा शताक्षर',

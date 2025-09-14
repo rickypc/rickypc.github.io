@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -9,7 +9,7 @@ export default {
     children: '嗡 折隸 主隸 準提 梭哈',
     title: '準提神咒',
   },
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ चले चुले चुन्दी स्वाहा',
     title: 'महा चुन्दी दुर्गा धारणी',

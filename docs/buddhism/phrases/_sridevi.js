@@ -1,11 +1,11 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 export default {
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'भ्योः रक्मोभ्यो । रक्मोभ्योभ्यो । रक्मोथूनभ्यो । विलारगचेनमो । रक्मोअव्यतथूनभ्यो । रुलु रुलु । हूँ भ्यो हूँ',
     title: 'श्रीदेवी',

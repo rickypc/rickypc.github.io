@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -8,7 +8,7 @@ export default {
   chinese: {
     title: '無垢仏頂',
   },
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ नमस्त्र्यध्विकानां । सर्वतथागता हृदय गर्भे । ज्वल ज्वल । धर्मधातु गर्भे । सांभारा मम आयु संशोधय मम सर्व पापं । सर्व तथागत समन्त उष्णीष विमले विशुद्धे । हूँ हूँ हूँ हूँ । अं वं सं जः स्वाहा',
     siddham: {

@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -8,7 +8,7 @@ export default {
   chinese: {
     title: '菩提場莊嚴陀羅尼經',
   },
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'बोधि बोधि । बोधनी बोधनी । सर्वतथागता गोचरी । धर धर । हर हर । प्रहर प्रहर । महा बोधिचित्त धारे । चुलु चुलु । शत रश्मि सञ्चोदिते । सर्व ­तथागताभिषिक्ते । गुणी गुणपाते । सर्व बुद्धा गुणावभासे । मिल् मिल् । गगनतले । सर्व ­तथागताधिष्ठिते । नभस्तले । शमे शमे । प्रशमे प्रशमे । सर्व पापं प्रशमे । सर्व पापं विशोधने । हुलु हुलु । महाबोधि मार्ग सम्प्रतिष्ठिते । सर्वतथागता­ सुप्रतिष्ठिते शुद्धे स्वाहा । ॐ सर्वतथागता व्यवलोकिते । जय जय स्वाहा । ॐ धुरु धुरु जयामुखे स्वाहा । ॐ वज्रायुषे स्वाहा',
     siddham: {

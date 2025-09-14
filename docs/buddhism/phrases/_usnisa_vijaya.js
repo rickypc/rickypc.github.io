@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -9,7 +9,7 @@ export default {
     children: '嗡 種 梭哈 · 嗡 阿彌達阿育達迭 梭哈 · 嗡 阿彌達 爹嘉瓦低 梭哈',
     title: '佛頂尊勝佛母',
   },
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ भ्रूं स्वाहा । ॐ अमृत आयुर्ददे स्वाहा । ॐ अमृत तेजवति स्वाहा',
     siddham: {

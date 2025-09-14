@@ -1,11 +1,11 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 export default {
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ आ हूं वज्र गुरु पद्म तोत्रेङ्ग त्सल सर्व वसुरत्न सिद्धि फल हूं आ',
     title: 'वसुरत्न',

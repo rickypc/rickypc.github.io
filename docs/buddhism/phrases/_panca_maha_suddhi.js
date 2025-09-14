@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -12,7 +12,7 @@ import usnisaVijaya from './_usnisa_vijaya.js';
 import vimalaUsnisa from './_vimala_usnisa.js';
 
 export default {
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: [
       mahavairocanaSarvadurgatiParisodhana.sanskrit.children,

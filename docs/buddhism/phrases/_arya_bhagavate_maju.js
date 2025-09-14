@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -9,7 +9,7 @@ export default {
     children: '嗡 阿利也 蘇利哆 陀密 梭哈',
     title: '天上聖母',
   },
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ आर्य सूर्य ततम स्वाहा',
     title: 'आर्य भगवते मजु',

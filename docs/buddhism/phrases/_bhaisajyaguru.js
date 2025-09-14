@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -9,7 +9,7 @@ export default {
     children: '嗡 貝堪則 貝堪則 貝堪雜 薩目嘎喋 梭哈',
     title: '藥師佛',
   },
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ भैषज्ये भैषज्ये भैषज्य समुद्गते स्वाहा',
     title: 'भैषज्यगुरु',

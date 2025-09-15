@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -48,7 +48,8 @@
 
 .lines {
   float: left;
-  font: inherit;
+  font-family: 'Noto Serif Devanagari',var(--ifm-font-family-monospace);
+  font-size: inherit;
   min-width: 100%;
   padding: var(--ifm-pre-padding);
 }

@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -40,20 +40,29 @@
   margin-left: 1.25rem;
 }
 
+.content .story address,
 .content .story p {
   font-family: Poppins, sans-serif;
-  font-size: 1rem;
   font-weight: 400;
 }
 
+.content .story p {
+  font-size: 1rem;
+}
+
 .content .story address {
-  font-family: Poppins, sans-serif;
   font-size: 0.95rem;
-  font-weight: 400;
 }
 
 .content .story:last-of-type {
   margin-bottom: 0;
+}
+
+.content .story h2 a.topic,
+.content .story address a.affiliation,
+.content .story address a.name,
+.content .story address a.title {
+  transition: color var(--ifm-transition-fast) ease-in;
 }
 
 [data-theme='dark'] .content .story address .affiliation,
@@ -66,7 +75,6 @@
 [data-theme='dark'] .content .story address a.name:hover,
 [data-theme='dark'] .content .story address a.title:hover {
   color: #45b5d8;
-  transition: color 0.3s ease-in;
 }
 
 [data-theme='light'] .content .story address .affiliation,
@@ -79,7 +87,6 @@
 [data-theme='light'] .content .story address a.name:hover,
 [data-theme='light'] .content .story address a.title:hover {
   color: #248aaa;
-  transition: color 0.3s ease-in;
 }
 
 .content .story address .dash {

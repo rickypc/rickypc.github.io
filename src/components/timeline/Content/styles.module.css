@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -46,7 +46,7 @@
   height: 10rem;
   margin-top: 0.625rem;
   position: relative;
-  transition: all 0.3s ease-in-out;
+  transition: all var(--ifm-transition-fast) ease-in-out;
   width: 10rem;
   z-index: 2;
 }
@@ -57,7 +57,7 @@
   height: 100%;
   opacity: 0;
   position: absolute;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity var(--ifm-transition-fast) ease-in-out;
   width: 100%;
   z-index: -1;
 }

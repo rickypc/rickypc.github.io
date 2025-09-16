@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -16,6 +16,7 @@
   padding-right: 1.5rem;
   text-decoration: none;
   text-shadow: 0.125rem 0.125rem 0.1875rem rgba(255, 255, 255, 0.1);
+  transition: color var(--ifm-transition-fast) ease-in-out;
   user-select: none;
 }
 
@@ -29,7 +30,6 @@
 
 .social li>a:hover {
   color: #248aaa;
-  transition: color 0.3s ease-in-out;
 }
 
 .social li>a svg {

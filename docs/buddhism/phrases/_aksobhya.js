@@ -18,6 +18,9 @@ export default {
       wheel: 31,
     },
     title: 'མི་བསྐྱོད་པ',
+    typographies: {
+      thangka: { default: 10, double: 18, single: 42.5 },
+    },
   },
   transliteration: {
     children: 'oṃ kaṃkaṇi kaṃkaṇi । rocani rocani । troṭani troṭani । trāsani trāsani । pratihana pratihana । sarva karma paramparāṇi me sarva sattvānāñca svāhā',

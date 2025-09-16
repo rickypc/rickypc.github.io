@@ -18,6 +18,9 @@ export default {
       wheel: 55,
     },
     title: 'རྡོ་རྗེ་ཕུར་པ',
+    typographies: {
+      thangka: { default: 10, double: 26, single: 42.5 },
+    },
   },
   translation: {
     title: 'Diamond Dagger Primary',

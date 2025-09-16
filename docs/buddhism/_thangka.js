@@ -4,12 +4,12 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const body = (phrase) => {
+const body = (phrase, infix) => {
   const group = Array.isArray(phrase.children) ? phrase.children : [phrase.children];
   const last = group.length - 1;
   return group.flatMap((words, index) => {
     const text = `${words?.props?.children ? words.props.children : words}`;
-    return `${text ? `${text}${index !== last ? '།' : ''}` : ''}`;
+    return `${text ? `${text}${index !== last ? infix : ''}` : ''}`;
   }).join('\n');
 };
 
@@ -19,12 +19,44 @@ const body = (phrase) => {
  * @returns {object} A pdfMake compatible object.
  */
 export default function thangka(path) {
+  const {
+    default: {
+      lang = 'bo-CN',
+      sanskrit,
+      tibetan,
+      transliteration,
+    },
   /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  const { default: { tibetan, transliteration } } = require(path);
+  } = require(path);
   /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  const text = `${body(tibetan)}།`;
+  let delimiter = ' ';
+  let font = 'NotoSans';
+  let fontSizes = { default: 10, double: 30, single: 52.5 };
+  let infix = '|';
+  let phrase = transliteration;
+
+  switch (lang) {
+    case 'bo-CN':
+      delimiter = '་';
+      font = 'Kokonor';
+      fontSizes = tibetan?.typographies?.thangka || fontSizes;
+      infix = '།';
+      phrase = tibetan;
+      break;
+    case 'sa-IN':
+      font = 'NotoSerifDevanagari';
+      fontSizes = sanskrit?.typographies?.thangka || fontSizes;
+      infix = '।';
+      phrase = sanskrit;
+      break;
+    default:
+      fontSizes = transliteration?.typographies?.thangka || fontSizes;
+  }
+
+  const text = `${body(phrase, infix)}${infix}`;
   // After text assignment.
-  const style = (text.replace(/[་།]/g, '').length / 2) >= 15 ? 'double' : 'single';
+  // eslint-disable-next-line security/detect-non-literal-regexp
+  const style = (text.replace(new RegExp(`[${delimiter}${infix}]`, 'g'), '').length / 2) >= 15 ? 'double' : 'single';
 
   return {
     definition: {
@@ -46,7 +78,7 @@ export default function thangka(path) {
         alignment: 'center',
         color: '#cc0000',
         font: 'Kokonor',
-        fontSize: 10,
+        fontSize: fontSizes.default,
         lineHeight: 0.85,
       },
       info: {
@@ -66,14 +98,14 @@ export default function thangka(path) {
         subject: 'Placing prayer on the back of paubhā/thangka will purify defilement and obscuration, increase wisdom, and attain Buddhahood in this lifetime',
         title: `${transliteration?.title} paubhā/thangka prayer`,
       },
-      pageMargins: [0, 0, 0, 0],
+      pageMargins: [7.5, 0, 7.5, 0],
       pageOrientation: 'portrait',
       pageSize: 'LETTER',
       styles: {
         bija: { fontSize: 52.5, margin: [0, 25, 0, 0] },
-        double: { fontSize: 30, margin: [0, 42.5, 0, 0] },
+        double: { font, fontSize: fontSizes.double, margin: [0, 42.5, 0, 0] },
         prayer: { fontSize: 21, margin: [0, 5, 0, 0] },
-        single: { fontSize: 52.5, margin: [0, 25, 0, -10] },
+        single: { font, fontSize: fontSizes.single, margin: [0, 25, 0, -10] },
       },
     },
   };

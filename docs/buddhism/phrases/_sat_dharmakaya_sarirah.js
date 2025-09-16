@@ -50,11 +50,14 @@ export default {
       [rasmiVimalaDharani.tibetan.children, rasmiVimalaHrdaya.tibetan.children].join('། '),
     ],
     repeat: {
-      condensed: 2,
+      condensed: 6,
       roll: 2,
       wheel: 1,
     },
     title: 'ཆོས་སྐུ་རིང་བསྲེལ་དྲུག',
+    typographies: {
+      condensed: { default: 1.94, title: 1.7 },
+    },
   },
   transliteration: {
     children: [

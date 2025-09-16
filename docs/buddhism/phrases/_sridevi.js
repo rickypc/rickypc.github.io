@@ -18,6 +18,9 @@ export default {
       wheel: 44,
     },
     title: 'དཔལ་ལྡན་ལྷ་མོ',
+    typographies: {
+      thangka: { default: 10, double: 21, single: 42.5 },
+    },
   },
   translation: {
     title: 'Glorious Goddess Primary',

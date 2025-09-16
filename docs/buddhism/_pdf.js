@@ -9,8 +9,7 @@ const phrases = '#buddhism/phrases';
 export default [
   ['condensed', `${phrases}/_aksobhya.js`],
   ['roll', `${phrases}/_aksobhya.js`],
-  // Only support max 2 lines.
-  // ['thangka', `${phrases}/_aksobhya.js`],
+  ['thangka', `${phrases}/_aksobhya.js`],
   ['wheel', `${phrases}/_aksobhya.js`],
   ['condensed', `${phrases}/_amitabha.js`],
   ['roll', `${phrases}/_amitabha.js`],
@@ -58,17 +57,14 @@ export default [
   ['condensed', `${phrases}/_dhanadatara.js`],
   ['roll', `${phrases}/_dhanadatara.js`],
   ['wheel', `${phrases}/_dhanadatara.js`],
-  // sa-IN doesn't have thangka version.
-  // ['thangka', `${phrases}/_dhanadatara.js`],
+  ['thangka', `${phrases}/_dhanadatara.js`],
   ['condensed', `${phrases}/_ekadasamukhalokesvara.js`],
   ['roll', `${phrases}/_ekadasamukhalokesvara.js`],
   ['wheel', `${phrases}/_ekadasamukhalokesvara.js`],
-  // Only support max 2 lines.
-  // ['thangka', `${phrases}/_ekadasamukhalokesvara.js`],
+  ['thangka', `${phrases}/_ekadasamukhalokesvara.js`],
   ['condensed', `${phrases}/_ekajati.js`],
   ['roll', `${phrases}/_ekajati.js`],
-  // Only support max 2 lines.
-  // ['thangka', `${phrases}/_ekajati.js`],
+  ['thangka', `${phrases}/_ekajati.js`],
   ['wheel', `${phrases}/_ekajati.js`],
   ['condensed', `${phrases}/_guhyadhatu_karanda.js`],
   ['roll', `${phrases}/_guhyadhatu_karanda.js`],
@@ -79,8 +75,7 @@ export default [
   ['wheel', `${phrases}/_maha_cundi_durga.js`],
   ['condensed', `${phrases}/_mahamani_ratana_patimakara.js`],
   ['roll', `${phrases}/_mahamani_ratana_patimakara.js`],
-  // sa-IN doesn't have thangka version.
-  // ['thangka', `${phrases}/_mahamani_ratana_patimakara.js`],
+  ['thangka', `${phrases}/_mahamani_ratana_patimakara.js`],
   ['wheel', `${phrases}/_mahamani_ratana_patimakara.js`],
   ['condensed', `${phrases}/_mahamani_vipulavimana.js`],
   ['roll', `${phrases}/_mahamani_vipulavimana.js`],
@@ -150,8 +145,7 @@ export default [
   ['wheel', `${phrases}/_sita_tara.js`],
   ['condensed', `${phrases}/_sridevi.js`],
   ['roll', `${phrases}/_sridevi.js`],
-  // Only support max 2 lines.
-  // ['thangka', `${phrases}/_sridevi.js`],
+  ['thangka', `${phrases}/_sridevi.js`],
   ['wheel', `${phrases}/_sridevi.js`],
   ['condensed', `${phrases}/_usnisa_sitatapatra.js`],
   ['roll', `${phrases}/_usnisa_sitatapatra.js`],
@@ -167,7 +161,6 @@ export default [
   ['wheel', `${phrases}/_vajra_dhara.js`],
   ['condensed', `${phrases}/_vajra_kilaya.js`],
   ['roll', `${phrases}/_vajra_kilaya.js`],
-  // Only support max 2 lines.
   ['thangka', `${phrases}/_vajra_kilaya.js`],
   ['wheel', `${phrases}/_vajra_kilaya.js`],
   ['condensed', `${phrases}/_vasuratna.js`],

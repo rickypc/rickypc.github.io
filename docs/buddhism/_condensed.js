@@ -24,6 +24,7 @@ export default function condensed(path) {
   /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   } = require(path);
   /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
+  let fontSizes = { default: 3, title: 2.5 };
   let infix = '|';
   const lastRoll = total - 1;
   let lineHeight = 0.71;
@@ -37,6 +38,7 @@ export default function condensed(path) {
 
   switch (lang) {
     case 'bo-CN':
+      fontSizes = tibetan?.typographies?.condensed || fontSizes;
       infix = '།';
       lineHeight = 0.895;
       prefix = '༄༅། ';
@@ -47,6 +49,7 @@ export default function condensed(path) {
       text = substance(tibetan?.children);
       break;
     case 'sa-IN':
+      fontSizes = sanskrit?.typographies?.condensed || fontSizes;
       infix = '।';
       lineHeight = 0.86;
       repeat = sanskrit?.repeat?.condensed || 1;
@@ -55,6 +58,7 @@ export default function condensed(path) {
       text = substance(sanskrit.children);
       break;
     default:
+      fontSizes = transliteration?.typographies?.condensed || fontSizes;
       repeat = transliteration?.repeat?.condensed || 1;
       text = substance(transliteration.children);
   }
@@ -71,7 +75,7 @@ export default function condensed(path) {
             {
               text: [
                 {
-                  fontSize: 2.5,
+                  fontSize: fontSizes.title,
                   text: `${transliteration?.title?.toUpperCase()} ${repeat}x `,
                 },
                 body(infix, lastPhrase, prefix, repeat, suffix, text),
@@ -109,7 +113,7 @@ export default function condensed(path) {
   return {
     definition: {
       content,
-      defaultStyle: { font: 'NotoSans', fontSize: 3, lineHeight },
+      defaultStyle: { font: 'NotoSans', fontSize: fontSizes.default, lineHeight },
       info: {
         keywords: [
           transliteration?.title?.toLowerCase(),

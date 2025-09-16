@@ -15,6 +15,9 @@ export default {
       wheel: 109,
     },
     title: 'धनदतारा',
+    typographies: {
+      thangka: { default: 10, double: 20, single: 42.5 },
+    },
   },
   translation: {
     title: 'Wealth And Prosperity Granting Tārā',

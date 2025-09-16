@@ -22,6 +22,9 @@ export default {
       wheel: 23,
     },
     title: 'བཅུ་གཅིག་ཞལ',
+    typographies: {
+      thangka: { default: 10, double: 18, single: 42.5 },
+    },
   },
   translation: {
     title: 'Eleven-Faced Avalokiteśvara',

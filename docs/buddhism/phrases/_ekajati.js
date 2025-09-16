@@ -18,6 +18,9 @@ export default {
       wheel: 47,
     },
     title: 'རལ་གཅིག་མ',
+    typographies: {
+      thangka: { default: 10, double: 22, single: 42.5 },
+    },
   },
   translation: {
     title: 'One Plait Lady Primary',

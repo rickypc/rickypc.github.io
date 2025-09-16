@@ -47,6 +47,7 @@ export default {
       amitabha.tibetan.children,
     ],
     repeat: {
+      condensed: 7,
       roll: 6,
       wheel: 6,
     },

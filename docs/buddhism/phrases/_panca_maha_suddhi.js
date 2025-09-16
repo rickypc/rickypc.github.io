@@ -32,7 +32,9 @@ export default {
       amoghapasaPadmaUsnisa.tibetan.children,
     ],
     repeat: {
+      condensed: 10,
       roll: 8,
+      wheel: 7,
     },
     title: 'དག་པ་ཆེན་སྡེ་ལྔ',
   },

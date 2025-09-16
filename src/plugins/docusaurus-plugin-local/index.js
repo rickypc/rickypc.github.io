@@ -12,27 +12,23 @@ import {
   loadFreshModule,
 } from '@docusaurus/utils';
 import { FontaineTransform } from 'fontaine';
-import { join, parse, resolve } from 'node:path';
+import { join, resolve } from 'node:path';
 import PdfMake from 'pdfmake';
 import { simpleGit } from 'simple-git';
 /* eslint-disable import/extensions */
 import base from '#buddhism/_base.js';
 import book from '#buddhism/_book.js';
+import condensed from '#buddhism/_condensed.js';
+import { fileName } from '#root/src/data/common.js';
 import pdf from '#buddhism/_pdf.js';
 import roll from '#buddhism/_roll.js';
 import thangka from '#buddhism/_thangka.js';
 import wheel from '#buddhism/_wheel.js';
 
-const fileName = (path, template) => {
-  let response = parse(path).name.replace(/_/g, '-').replace(/^-/, '');
-  if (['thangka', 'wheel'].includes(template)) {
-    response += `-${template}`;
-  }
-  return response;
-};
 const templates = {
   base,
   book,
+  condensed,
   roll,
   thangka,
   wheel,

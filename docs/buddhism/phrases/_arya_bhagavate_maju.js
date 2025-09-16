@@ -17,6 +17,7 @@ export default {
   tibetan: {
     children: 'ༀ་ཨཱ་རྱ་སཱུ་རྱ་ཏ་ཏ་མ་སྭཱ་ཧཱ',
     repeat: {
+      condensed: 184,
       roll: 149,
       wheel: 145,
     },

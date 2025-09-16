@@ -21,6 +21,7 @@ export default {
   tibetan: {
     children: 'ཨོཾ་བྷྲཱུཾ་སྭཱ་ཧཱ། ༀ་ཨ་མྲྀ་ཏ་ཨཱ་ཡུ་རྡ་དེ་སྭཱ་ཧཱ། ༀ་ཨ་མྲྀ་ཏ་ཏེ་ཛ་བ་ཏི་སྭཱ་ཧཱ',
     repeat: {
+      condensed: 79,
       roll: 64,
       wheel: 62,
     },

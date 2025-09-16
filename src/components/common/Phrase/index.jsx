@@ -23,51 +23,63 @@ import pdf from '#buddhism/_pdf.js';
 import styles from './styles.module.css';
 
 /**
- * @description Renders the `File Image` icon.
+ * @description Renders the `prayer wheel` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
  * @param {string} [props.title] - Optional title for accessibility.
  * @returns {object} The icon.
  */
-function FaFileImage(props) {
-  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 384 512' }, child: [{ tag: 'path', attr: { d: 'M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM64 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm152 32c5.3 0 10.2 2.6 13.2 6.9l88 128c3.4 4.9 3.7 11.3 1 16.5s-8.2 8.6-14.2 8.6H216 176 128 80c-5.8 0-11.1-3.1-13.9-8.1s-2.8-11.2 .2-16.1l48-80c2.9-4.8 8.1-7.8 13.7-7.8s10.8 2.9 13.7 7.8l12.8 21.4 48.3-70.2c3-4.3 7.9-6.9 13.2-6.9z' }, child: [] }] })(props);
+function GrCycle(props) {
+  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'path', attr: { fill: 'none', strokeWidth: '2', d: 'M13,20 C19,19 21,14 21,10 M14,16 L12,20 L16,23 M0,9 L4,6 L7,10 M9.00000008,20 C3,17 2.00000006,12 3.99999998,6 M20,6.99999999 C16,0.99999995 10,1 6,4.00609254 M20,2 L20,7 L15,7' }, child: [] }] })(props);
 }
 
 /**
- * @description Renders the `Print` icon.
+ * @description Renders the `thangka backside mantra` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
  * @param {string} [props.title] - Optional title for accessibility.
  * @returns {object} The icon.
  */
-export function FaPrint(props) {
-  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 512 512' }, child: [{ tag: 'path', attr: { d: 'M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z' }, child: [] }] })(props);
+function GrDocumentImage(props) {
+  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'path', attr: { fill: 'none', strokeWidth: '2', d: 'M4.99787498,6.99999999 L4.99787498,0.999999992 L19.4999998,0.999999992 L22.9999998,4.50000005 L23,23 L19.9999998,23 M18,1 L18,6 L23,6 M3,11 L16,11 L16,23 L3,23 L3,11 Z M7,16 C7.55228475,16 8,15.5522847 8,15 C8,14.4477153 7.55228475,14 7,14 C6.44771525,14 6,14.4477153 6,15 C6,15.5522847 6.44771525,16 7,16 Z M5,23 L7,20 L9,22 L13,16 L16,20' }, child: [] }] })(props);
 }
 
 /**
- * @description Renders the `Rev` icon.
+ * @description Renders the `condensed prayer roll` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
  * @param {string} [props.title] - Optional title for accessibility.
  * @returns {object} The icon.
  */
-function FaRev(props) {
-  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 448 512' }, child: [{ tag: 'path', attr: { d: 'M289.67 274.89a65.57 65.57 0 1 1-65.56-65.56 65.64 65.64 0 0 1 65.56 65.56zm139.55-5.05h-.13a204.69 204.69 0 0 0-74.32-153l-45.38 26.2a157.07 157.07 0 0 1 71.81 131.84C381.2 361.5 310.73 432 224.11 432S67 361.5 67 274.88c0-81.88 63-149.27 143-156.43v39.12l108.77-62.79L210 32v38.32c-106.7 7.25-191 96-191 204.57 0 111.59 89.12 202.29 200.06 205v.11h210.16V269.84z' }, child: [] }] })(props);
+function GrDocumentStore(props) {
+  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'path', attr: { fill: 'none', strokeWidth: '2', d: 'M4.99787498,6.99999999 L4.99787498,0.999999992 L19.4999998,0.999999992 L22.9999998,4.50000005 L23,23 L17,23 M18,1 L18,6 L23,6 M3,12 C3,12 4,10 9,10 C14,10 15,12 15,12 L15,21 C15,21 14,23 9,23 C4,23 3,21 3,21 L3,12 Z M3,17 C3,17 5,19 9,19 C13,19 15,17 15,17 M3,13 C3,13 5,15 9,15 C13,15 15,13 15,13' }, child: [] }] })(props);
 }
 
 /**
- * @description Renders the `Scroll` icon.
+ * @description Renders the `prayer roll` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
  * @param {string} [props.title] - Optional title for accessibility.
  * @returns {object} The icon.
  */
-function FaScroll(props) {
-  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 576 512' }, child: [{ tag: 'path', attr: { d: 'M0 80v48c0 17.7 14.3 32 32 32H48 96V80c0-26.5-21.5-48-48-48S0 53.5 0 80zM112 32c10 13.4 16 30 16 48V384c0 35.3 28.7 64 64 64s64-28.7 64-64v-5.3c0-32.4 26.3-58.7 58.7-58.7H480V128c0-53-43-96-96-96H112zM464 480c61.9 0 112-50.1 112-112c0-8.8-7.2-16-16-16H314.7c-14.7 0-26.7 11.9-26.7 26.7V384c0 53-43 96-96 96H368h96z' }, child: [] }] })(props);
+function GrDocumentText(props) {
+  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'path', attr: { fill: 'none', strokeWidth: '2', d: 'M6,16 L16,16 L6,16 L6,16 Z M6,12 L18,12 L6,12 L6,12 Z M6,8 L11,8 L6,8 L6,8 Z M14,1 L14,8 L21,8 M3,23 L3,1 L15,1 L21,7 L21,23 L3,23 Z' }, child: [] }] })(props);
+}
+
+/**
+ * @description Renders the `print` icon.
+ * @param {object} props - React props passed to the icon component.
+ * @param {string} [props.className] - Optional CSS class for styling.
+ * @param {object} [props.style] - Optional inline styles.
+ * @param {string} [props.title] - Optional title for accessibility.
+ * @returns {object} The icon.
+ */
+export function GrPrint(props) {
+  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'path', attr: { fill: 'none', strokeWidth: '2', d: 'M6,19 L1,19 L1,7 L23,7 L23,19 L18,19 M3,16 L21,16 M6,16 L6,23 L6,23 L18,23 L18,16 M18,7 L18,1 L6,1 L6,7 L6,7 M17,12 L19,12 L19,11 L17,11 L17,12 Z' }, child: [] }] })(props);
 }
 
 export const Instruction = memo(function Instruction({ image, text, transliteration }) {
@@ -117,6 +129,7 @@ const Repetition = memo(Object.assign(function Repetition({ value = 1 }) {
 
 const Support = memo(function Support({ path, repetition = 0, transliteration }) {
   const alias = `#${tail(path, '/buddhism')}`;
+  const hasCondensed = pdf.some(([template, source]) => template === 'condensed' && source === alias);
   const hasRoll = pdf.some(([template, source]) => template === 'roll' && source === alias);
   const hasThangka = pdf.some(([template, source]) => template === 'thangka' && source === alias);
   const hasWheel = pdf.some(([template, source]) => template === 'wheel' && source === alias);
@@ -135,7 +148,18 @@ const Support = memo(function Support({ path, repetition = 0, transliteration })
           target="_blank"
           title={`Open ${transliteration.title} prayer roll`}
         >
-          <FaScroll />
+          <GrDocumentText />
+        </Link>
+      )}
+      {hasCondensed && (
+        <Link
+          className={styles.icon}
+          href={key(fileName(path, 'condensed'), '/pdf', '/', 'pdf', '.')}
+          rel="noopener noreferrer"
+          target="_blank"
+          title={`Open ${transliteration.title} condensed prayer roll`}
+        >
+          <GrDocumentStore />
         </Link>
       )}
       {hasWheel && (
@@ -146,7 +170,7 @@ const Support = memo(function Support({ path, repetition = 0, transliteration })
           target="_blank"
           title={`Open ${transliteration.title} prayer wheel`}
         >
-          <FaRev />
+          <GrCycle />
         </Link>
       )}
       {hasThangka && (
@@ -157,7 +181,7 @@ const Support = memo(function Support({ path, repetition = 0, transliteration })
           target="_blank"
           title={`Open ${transliteration.title} paubhā/thangka prayer`}
         >
-          <FaFileImage />
+          <GrDocumentImage />
         </Link>
       )}
       <Speech>{transliteration.speech}</Speech>

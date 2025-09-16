@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -8,6 +8,7 @@ export default {
   chinese: {
     title: '白蓮花頂髻無垢密咒',
   },
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ पद्म उष्णीष विमले हूँ फट्',
     title: 'अमोघपाश पद्म उष्णीष',
@@ -15,6 +16,7 @@ export default {
   tibetan: {
     children: 'ཨོཾ་པདྨོ་ཨུཥྞཱི་ཥ་བི་མ་ལི་ཧཱུྃ་ཕཊ',
     repeat: {
+      condensed: 166,
       roll: 134,
       wheel: 130,
     },

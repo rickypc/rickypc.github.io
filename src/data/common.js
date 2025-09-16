@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -121,7 +121,7 @@ const tail = (path, keyword) => (path?.substr((path?.lastIndexOf(keyword) || -1)
 // After key & tail assignments.
 const fileName = (path, template) => {
   let response = key(tail(path, '/').replace(/_/g, '-').replace(/^-/, ''));
-  if (['thangka', 'wheel'].includes(template)) {
+  if (['condensed', 'thangka', 'wheel'].includes(template)) {
     response += `-${template}`;
   }
   return response;

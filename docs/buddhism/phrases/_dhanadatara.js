@@ -1,12 +1,19 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 export default {
+  lang: 'sa-IN',
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ तारे तुत्तारे तुरे धनम् मे दद सोहा',
+    repeat: {
+      condensed: 143,
+      roll: 113,
+      wheel: 109,
+    },
     title: 'धनदतारा',
   },
   translation: {

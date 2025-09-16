@@ -47,11 +47,16 @@
 }
 
 .lines {
-  float: left;
-  font-family: 'Noto Serif Devanagari',var(--ifm-font-family-monospace);
+  display: flex;
+  font-family: 'Noto Serif Devanagari',SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
   font-size: inherit;
   min-width: 100%;
-  padding: var(--ifm-pre-padding);
+  padding: 1.35rem 1rem 1rem 1rem;
+}
+
+.lines::after {
+  content: '';
+  flex: 0 0 1.25rem;
 }
 
 .lines:global(.phrase--gray) {

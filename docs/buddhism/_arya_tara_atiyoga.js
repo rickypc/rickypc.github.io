@@ -545,6 +545,6 @@ export default {
       number: '14',
     },
   ],
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   title: 'Āryatārā Atiyoga',
 };

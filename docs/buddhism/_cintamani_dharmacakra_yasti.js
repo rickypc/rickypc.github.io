@@ -74,6 +74,7 @@ export default async function cintamaniDharmacakraYasti() {
                 },
               ];
             }),
+            dontBreakRows: true,
             heights: [rowHeight, rowHeight, rowHeight],
             widths: [18, '*'],
           },

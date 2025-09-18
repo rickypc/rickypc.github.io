@@ -15,6 +15,9 @@ const config = {
   baseUrl: '/',
   deploymentBranch: 'gh-pages',
   favicon: 'img/favicon.ico',
+  future: {
+    experimental_faster: true,
+  },
   headTags: [
     /*
     {

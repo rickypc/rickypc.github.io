@@ -96,6 +96,6 @@ export default {
     },
     '',
   ],
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   title: 'Supplies Consecration',
 };

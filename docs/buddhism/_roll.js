@@ -89,6 +89,7 @@ export default function roll(path) {
             },
           ],
         ],
+        dontBreakRows: true,
         // (page height - (margins + borders)) / 6.
         heights: [82.5],
       },

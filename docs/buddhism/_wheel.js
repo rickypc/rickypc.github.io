@@ -108,6 +108,7 @@ export default function wheel(path) {
           },
         ],
       ];
+      table.dontBreakRows = true;
       table.heights = [82.5];
     }
     return [

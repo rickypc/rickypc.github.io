@@ -83,8 +83,9 @@ export default function condensed(path) {
             },
           ],
         ],
+        dontBreakRows: true,
         // (page height - (margins + borders)) / 18.
-        heights: [37.6],
+        heights: [36.7],
       },
     },
     index === lastRoll ? null : {
@@ -151,10 +152,10 @@ export default function condensed(path) {
       tableLayouts: {
         condensed: {
           hLineWidth: () => 0.25,
-          paddingBottom: () => 0.1,
+          paddingBottom: () => 0,
           paddingLeft: () => 1.5,
           paddingRight: () => 1,
-          paddingTop: () => 0.25,
+          paddingTop: () => 1.15,
           vLineWidth: () => 0.25,
         },
       },

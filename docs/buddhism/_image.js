@@ -41,7 +41,7 @@ export default async function image(img) {
       alignment: 'center',
       fit: [width, height - 10],
       image: `data:${mime};base64,${buffer.toString('base64')}`,
-      margin: [0, 0, 0, 1.5],
+      margin: Array.isArray(img.margin) ? img.margin : [0, 0, 0, 1.5],
     },
     img.alt ? {
       alignment: 'center',

@@ -17,7 +17,7 @@ module.exports = {
   logHeapUsage: true,
   moduleNameMapper: {
     '^.+\\.(css)$': 'identity-obj-proxy',
-    // '^.+\\.(css|jpe?g|png|svg|webp)$': '<rootDir>/jest/emptyModule.ts',
+    // '^.+\\.(css|jpe?g|png|svg|webp)$': '<rootDir>/__mocks__/empty.js',
     '@docusaurus/(BrowserOnly|ComponentCreator|constants|ExecutionEnvironment|Head|Interpolate|isInternalUrl|Link|Noop|renderRoutes|router|Translate|use.*)': '@docusaurus/core/lib/client/exports/$1',
     '@docusaurus/plugin-content-docs/client': '@docusaurus/plugin-content-docs/src/client/index.ts',
     '@site/(.*)': '<rootDir>/$1',
@@ -25,5 +25,17 @@ module.exports = {
   },
   testEnvironment: 'node',
   testRegex: 'tests/unit/.*.test.jsx?$',
+  transform: {
+    '^.+\\.[jt]sx?$': [
+      '@swc/jest',
+      {
+        jsc: {
+          parser: { syntax: 'typescript', tsx: true },
+          target: 'es2020',
+          transform: { react: { runtime: 'automatic' } },
+        },
+      },
+    ],
+  },
   transformIgnorePatterns: ['node_modules/(?!@docusaurus/.*)'],
 };

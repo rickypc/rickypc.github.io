@@ -202,6 +202,6 @@ export default {
       number: '8',
     },
   ],
-  path: new URL('', import.meta.url).pathname,
+  path: import.meta.url,
   title: 'Buddha Statue/Stupa/Sculpture Consecration',
 };

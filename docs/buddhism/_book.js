@@ -34,7 +34,7 @@ export default async function book(path) {
     {
       layout: (page?.contents?.length || page?.title) ? 'page' : 'empty',
       margin: [0, 0, 0, index === lastPage ? 0 : 7.5],
-      pageBreak: index % 3 === 2 && index !== lastPage ? 'after' : null,
+      // pageBreak: index % 3 === 2 && index !== lastPage ? 'after' : null,
       table: {
         body: [
           page?.title ? [
@@ -116,6 +116,7 @@ export default async function book(path) {
             ] : null,
           ].filter(Boolean),
         ],
+        dontBreakRows: true,
         heights: [height],
         widths: [
           page?.contents?.length ? chapterWidth : '100%',

@@ -4,7 +4,9 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+const docusaurus = require('@docusaurus/eslint-plugin');
 const { FlatCompat } = require('@eslint/eslintrc');
+const { globalIgnores } = require('eslint/config');
 const hermes = require('hermes-eslint');
 const jest = require('eslint-plugin-jest');
 const js = require('@eslint/js');
@@ -17,14 +19,19 @@ const testing = require('eslint-plugin-testing-library');
 const compat = new FlatCompat({ baseDirectory: __dirname });
 
 module.exports = [
+  globalIgnores(['build/', '.docusaurus/']),
+  { files: ['**/*.js?'], languageOptions: { parser: hermes } },
   // Order Matters™!
   js.configs.recommended,
-  { languageOptions: { parser: hermes } },
+  {
+    plugins: { '@docusaurus': docusaurus },
+    rules: docusaurus.configs.recommended.rules,
+  },
   jest.configs['flat/recommended'],
   jsdoc.configs['flat/recommended'],
   json.configs.recommended,
   {
-    files: ['**/*.js?', '**/*.ts'],
+    files: ['**/*.jsx?', '**/*.tsx?'],
     plugins: { 'no-secrets': noSecrets },
   },
   security.configs.recommended,
@@ -41,27 +48,20 @@ module.exports = [
     extends: [
       'airbnb',
       'airbnb/hooks',
-      'plugin:@docusaurus/recommended',
+      'plugin:react/recommended',
       'plugin:react/jsx-runtime',
-    ],
-    ignorePatterns: [
-      'build/',
-      '.docusaurus/',
-    ],
-    overrides: [
-      { files: ['**/*.js?'] },
     ],
     parserOptions: {
       ecmaFeatures: { jsx: true },
       ecmaVersion: 2020,
     },
     rules: {
-      // Better React debugging.
-      'prefer-arrow-callback': 'off',
       'import/no-extraneous-dependencies': ['error', { optionalDependencies: true }],
       'import/no-named-as-default': 0,
       'import/no-named-as-default-member': 0,
       'import/no-unresolved': ['error', { ignore: ['^[@#].+$'] }],
+      // Better React debugging.
+      'prefer-arrow-callback': 'off',
       // Throwing error for no good reason.
       'react/jsx-props-no-multi-spaces': 'off',
       'react/jsx-props-no-spreading': 'off',

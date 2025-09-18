@@ -30,8 +30,7 @@ module.exports = {
       '@swc/jest',
       {
         jsc: {
-          parser: { syntax: 'typescript', tsx: true },
-          target: 'es2020',
+          parser: { jsx: true },
           transform: { react: { runtime: 'automatic' } },
         },
       },

@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -11,6 +11,8 @@ import saptaAtitabuddhaKarasaniya from './_sapta_atitabuddha_karasaniya.js';
 import sukhavatiVyuha from './_sukhavativyuha.js';
 
 export default {
+  lang: 'sa-IN',
+  path: import.meta.url,
   sanskrit: {
     children: [
       'ॐ चक्रवर्तिन् चिन्तामणि महापद्मे रु रु तिष्ठ ज्वल आकर्शाय हूँ फट् स्वाहा । ॐ पद्म चिन्तामणि ज्वल हूँ । ॐ वरद पद्मे हूँ',
@@ -24,7 +26,17 @@ export default {
       sukhavatiVyuha.core.sanskrit.children,
       'ॐ परिपूर्ण चरे । समन्त दर्शने । महा विहार गते । समन्त विधामने । महा कार्य प्रतिष्ठापने । सर्वार्थ साधने सुप्रतिपूरे । आयान धर्मता महा विकुर्विते । महा मैत्री उपसंहिते । महार्षि सुसंगृहीते । समन्तार्थ अनुपालने स्वाहा',
     ],
+    repeat: {
+      condensed: 12,
+      roll: 5,
+      wheel: 5,
+    },
     title: 'दश चूल धारणी',
+    typography: {
+      condensed: { default: 1.955, title: 1.655 },
+      roll: { default: 5.175, title: 3.175 },
+      wheel: { default: 5.175, title: 3.175 },
+    },
   },
   transliteration: {
     children: [

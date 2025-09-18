@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -19,8 +19,15 @@ const core = {
 
 export default {
   core,
+  lang: 'sa-IN',
+  path: import.meta.url,
   sanskrit: {
     children: [core.sanskrit.children, amitabha.sanskrit.children].join(' । '),
+    repeat: {
+      condensed: 54,
+      roll: 18,
+      wheel: 17,
+    },
     title: 'सुखावतीव्यूह धारणी',
   },
   translation: {

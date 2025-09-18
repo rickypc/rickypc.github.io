@@ -39,18 +39,18 @@ export default function thangka(path) {
     case 'bo-CN':
       delimiter = '་';
       font = 'Kokonor';
-      fontSizes = tibetan?.typographies?.thangka || fontSizes;
+      fontSizes = tibetan?.typography?.thangka || fontSizes;
       infix = '།';
       phrase = tibetan;
       break;
     case 'sa-IN':
       font = 'NotoSerifDevanagari';
-      fontSizes = sanskrit?.typographies?.thangka || fontSizes;
+      fontSizes = sanskrit?.typography?.thangka || fontSizes;
       infix = '।';
       phrase = sanskrit;
       break;
     default:
-      fontSizes = transliteration?.typographies?.thangka || fontSizes;
+      fontSizes = transliteration?.typography?.thangka || fontSizes;
   }
 
   const text = `${body(phrase, infix)}${infix}`;

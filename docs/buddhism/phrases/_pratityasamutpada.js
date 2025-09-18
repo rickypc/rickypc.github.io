@@ -51,7 +51,7 @@ export default {
   tibetan: {
     children: core.tibetan.children,
     repeat: {
-      condensed: 57,
+      condensed: 129,
       roll: 46,
       wheel: 44,
     },

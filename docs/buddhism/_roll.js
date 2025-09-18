@@ -24,6 +24,7 @@ export default function roll(path) {
   /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   } = require(path);
   /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
+  let fontSizes = { default: 6, title: 4 };
   let infix = '|';
   const lastRoll = total - 1;
   let lineHeight = 0.71;
@@ -39,6 +40,7 @@ export default function roll(path) {
 
   switch (lang) {
     case 'bo-CN':
+      fontSizes = tibetan?.typography?.roll || fontSizes;
       infix = '།';
       lineHeight = 0.84;
       paddingBottom = 1;
@@ -51,6 +53,7 @@ export default function roll(path) {
       text = substance(tibetan?.children);
       break;
     case 'sa-IN':
+      fontSizes = sanskrit?.typography?.roll || fontSizes;
       infix = '।';
       lineHeight = 0.81;
       paddingBottom = 0.825;
@@ -61,6 +64,7 @@ export default function roll(path) {
       text = substance(sanskrit.children);
       break;
     default:
+      fontSizes = transliteration?.typography?.roll || fontSizes;
       repeat = transliteration?.repeat?.roll || 1;
       text = substance(transliteration.children);
   }
@@ -77,7 +81,7 @@ export default function roll(path) {
             {
               text: [
                 {
-                  fontSize: 4,
+                  fontSize: fontSizes.title,
                   text: `${transliteration?.title?.toUpperCase()} ${repeat}x `,
                 },
                 body(infix, lastPhrase, prefix, repeat, suffix, text),
@@ -94,16 +98,16 @@ export default function roll(path) {
         {
           lineWidth: 0.25,
           type: 'line',
-          x1: -5,
-          x2: -0.5,
+          x1: 0,
+          x2: 4.5,
           y1: 0,
           y2: 0,
         },
         {
           lineWidth: 0.25,
           type: 'line',
-          x1: 777.5,
-          x2: 782,
+          x1: 772.5,
+          x2: 777,
           y1: 0,
           y2: 0,
         },
@@ -115,7 +119,7 @@ export default function roll(path) {
   return {
     definition: {
       content,
-      defaultStyle: { font: 'NotoSans', fontSize: 6, lineHeight },
+      defaultStyle: { font: 'NotoSans', fontSize: fontSizes.default, lineHeight },
       info: {
         keywords: [
           transliteration?.title?.toLowerCase(),

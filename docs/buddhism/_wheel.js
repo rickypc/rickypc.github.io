@@ -24,6 +24,7 @@ export default function wheel(path) {
   /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   } = require(path);
   /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
+  let fontSizes = { default: 6, title: 4 };
   // ((page height - (margins + borders)) / 6) - paddings.
   const height = 77.5;
   let infix = '|';
@@ -42,6 +43,7 @@ export default function wheel(path) {
 
   switch (lang) {
     case 'bo-CN':
+      fontSizes = tibetan?.typography?.wheel || fontSizes;
       infix = '།';
       lineHeight = 0.84;
       paddingBottom = 1;
@@ -54,6 +56,7 @@ export default function wheel(path) {
       text = substance(tibetan?.children);
       break;
     case 'sa-IN':
+      fontSizes = sanskrit?.typography?.wheel || fontSizes;
       infix = '।';
       lineHeight = 0.81;
       paddingBottom = 0.825;
@@ -64,6 +67,7 @@ export default function wheel(path) {
       text = substance(sanskrit.children);
       break;
     default:
+      fontSizes = transliteration?.typography?.wheel || fontSizes;
       repeat = transliteration?.repeat;
       text = substance(transliteration.children);
   }
@@ -78,7 +82,7 @@ export default function wheel(path) {
             rowSpan: 3,
             text: [
               {
-                fontSize: 4,
+                fontSize: fontSizes.title,
                 text: `${transliteration?.title?.toUpperCase()} ${repeat?.wheel || 1}x `,
               },
               body(infix, (repeat?.wheel || 1) - 1, prefix, repeat?.wheel || 1, suffix, text),
@@ -96,7 +100,7 @@ export default function wheel(path) {
           {
             text: [
               {
-                fontSize: 4,
+                fontSize: fontSizes.title,
                 text: `${transliteration?.title?.toUpperCase()} ${repeat?.roll || 1}x `,
               },
               body(infix, (repeat?.roll || 1) - 1, prefix, repeat?.roll || 1, suffix, text),
@@ -135,7 +139,7 @@ export default function wheel(path) {
   return {
     definition: {
       content,
-      defaultStyle: { font: 'NotoSans', fontSize: 6, lineHeight },
+      defaultStyle: { font: 'NotoSans', fontSize: fontSizes.default, lineHeight },
       info: {
         keywords: [
           transliteration?.title?.toLowerCase(),

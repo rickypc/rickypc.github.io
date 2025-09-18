@@ -22,12 +22,12 @@ export default {
       title: '𑖦𑖮𑖯𑖦𑖜𑖰𑖨𑖝𑖡𑖢𑖘𑖰𑖦𑖯𑖎𑖨',
     },
     repeat: {
-      condensed: 37,
+      condensed: 87,
       roll: 29,
       wheel: 28,
     },
     title: 'महामणिरतनपटिमाकर',
-    typographies: {
+    typography: {
       thangka: { default: 10, double: 20, single: 42.5 },
     },
   },

@@ -55,7 +55,7 @@ export default {
       wheel: 1,
     },
     title: 'ཆོས་སྐུ་རིང་བསྲེལ་དྲུག',
-    typographies: {
+    typography: {
       condensed: { default: 1.94, title: 1.7 },
     },
   },

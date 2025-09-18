@@ -24,7 +24,7 @@ export default function condensed(path) {
   /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   } = require(path);
   /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  let fontSizes = { default: 3, title: 2.5 };
+  let fontSizes = { default: 2, title: 1.75 };
   let infix = '|';
   const lastRoll = total - 1;
   let lineHeight = 0.71;
@@ -38,7 +38,7 @@ export default function condensed(path) {
 
   switch (lang) {
     case 'bo-CN':
-      fontSizes = tibetan?.typographies?.condensed || fontSizes;
+      fontSizes = tibetan?.typography?.condensed || fontSizes;
       infix = '།';
       lineHeight = 0.895;
       prefix = '༄༅། ';
@@ -49,7 +49,7 @@ export default function condensed(path) {
       text = substance(tibetan?.children);
       break;
     case 'sa-IN':
-      fontSizes = sanskrit?.typographies?.condensed || fontSizes;
+      fontSizes = sanskrit?.typography?.condensed || fontSizes;
       infix = '।';
       lineHeight = 0.86;
       repeat = sanskrit?.repeat?.condensed || 1;
@@ -58,7 +58,7 @@ export default function condensed(path) {
       text = substance(sanskrit.children);
       break;
     default:
-      fontSizes = transliteration?.typographies?.condensed || fontSizes;
+      fontSizes = transliteration?.typography?.condensed || fontSizes;
       repeat = transliteration?.repeat?.condensed || 1;
       text = substance(transliteration.children);
   }
@@ -92,16 +92,16 @@ export default function condensed(path) {
         {
           lineWidth: 0.25,
           type: 'line',
-          x1: -5,
-          x2: -0.5,
+          x1: 0,
+          x2: 4.5,
           y1: 0,
           y2: 0,
         },
         {
           lineWidth: 0.25,
           type: 'line',
-          x1: 597.5,
-          x2: 602,
+          x1: 592.5,
+          x2: 597,
           y1: 0,
           y2: 0,
         },

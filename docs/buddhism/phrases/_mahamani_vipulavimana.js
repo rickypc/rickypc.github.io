@@ -30,7 +30,7 @@ export default {
   tibetan: {
     children: [core.tibetan.children, darsanaMukta.tibetan.children].join('། '),
     repeat: {
-      condensed: 17,
+      condensed: 39,
       roll: 14,
       wheel: 13,
     },

@@ -13,12 +13,12 @@ export default {
   tibetan: {
     children: 'ཨོཾ་བཛྲ་ཀཱི་ལི་ཀཱི་ལ་ཡ་སརྦ་བིགྷྣནཱ་བཾ་ཧཱུྃ་ཕཊ། ཨོཾ་ཙྪིནྡྷ་བྷིནྡྷ་ཧ་ན་ད་ཧ་དཱིཔྟ་ཙཀྲ་ཧཱུྃ',
     repeat: {
-      condensed: 70,
+      condensed: 158,
       roll: 56,
       wheel: 55,
     },
     title: 'རྡོ་རྗེ་ཕུར་པ',
-    typographies: {
+    typography: {
       thangka: { default: 10, double: 26, single: 42.5 },
     },
   },

@@ -37,7 +37,7 @@ const templates = {
 /**
  * @description Extends sitemap items with generated PDFs.
  * @param {object} options - Configuration options.
- * @param {Function} options.defaultCreateSitemapItems - Sitemap generator.
+ * @param {(...args: object[]) => object[]} options.defaultCreateSitemapItems - Sitemap generator.
  * @returns {Array} Combined array of default items and PDF entries.
  */
 export async function createSitemapItems({ defaultCreateSitemapItems, ...rest }) {
@@ -75,6 +75,7 @@ export async function postBuild({ outDir, siteConfig }) {
     stopOnComplete: true,
   });
   bar.start(pdf.length, 0);
+
   const devanagari = new URL('./font/noto/NotoSerifDevanagari-Regular.ttf', import.meta.url).pathname;
   const devanagariBold = new URL('./font/noto/NotoSerifDevanagari-Bold.ttf', import.meta.url).pathname;
   const kokonor = new URL('./font/kokonor/Kokonor-Regular.ttf', import.meta.url).pathname;
@@ -104,6 +105,9 @@ export async function postBuild({ outDir, siteConfig }) {
   mkdirSync(join(outDir, 'pdf'), { recursive: true });
 
   await Promise.all(pdf.map(async ([template, path]) => {
+    await new Promise((settle) => {
+      setImmediate(settle);
+    });
     // eslint-disable-next-line security/detect-object-injection
     const { definition, options } = await templates[template](path);
     await new Promise((settle) => {
@@ -129,10 +133,10 @@ export async function postBuild({ outDir, siteConfig }) {
  * @description Main entry for custom Docusaurus plugin.
  * @param {object} context - Docusaurus build context (e.g. webpack, CLI).
  * @returns {{
- *   configureWebpack: Function,
- *   extendCli: Function,
+ *   configureWebpack: (object, boolean) => void,
+ *   extendCli: (object) => void,
  *   name: string,
- *   postBuild: Function
+ *   postBuild: (object) => void,
  * }} Plugin interface with lifecycle methods and name.
  */
 export default function pluginLocal(context) {

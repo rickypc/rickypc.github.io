@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -28,7 +28,7 @@ test('has greeting', async ({ page }) => {
   await band(2, async (index) => {
     const nth = index + 1;
     // After nth assignment.
-    const locator = page.locator(`main header h1 span:nth-of-type(${nth})`);
+    const locator = page.locator(`main header h1>span:nth-of-type(${nth})`);
     await expect(locator).toBeVisible();
     expect(await locator.textContent()).toMatchSnapshot(`greeting-${nth}.txt`);
   });

@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -57,7 +57,7 @@ export const timelines = [
     description: 'I accepted the Senior Software Engineer position with Experian Consumer Services to become a more well-rounded entrepreneur. I have been awarded the Experian Platinum Aspire, the EMF Hero - Above and Beyond, and the Experian Spot - Excellence in Action frequently.',
     picture: {
       avif: require('@site/src/pages/timeline/img/experian.avif').default,
-      fallback: require('@site/src/pages/timeline/img/experian.jpg'),
+      fallback: require('@site/src/pages/timeline/img/experian.jpg').default,
       webp: require('@site/src/pages/timeline/img/experian.webp').default,
     },
     title: {
@@ -75,7 +75,7 @@ export const timelines = [
     description: 'I accepted the Automation Engineer position with Experian Consumer Services to become a more well-rounded engineer. I have been promoted to Senior Automation Engineer.',
     picture: {
       avif: require('@site/src/pages/timeline/img/experian.avif').default,
-      fallback: require('@site/src/pages/timeline/img/experian.jpg'),
+      fallback: require('@site/src/pages/timeline/img/experian.jpg').default,
       webp: require('@site/src/pages/timeline/img/experian.webp').default,
     },
     title: {
@@ -93,7 +93,7 @@ export const timelines = [
     description: 'I graduated from the California State University of Fullerton with a master\'s degree in Software Engineering. I learned to deliver software- enabled systems with mission readiness, boost productivity, spur innovation, and provide a competitive edge. I was awarded the Outstanding Graduate Project for Master of Science in Software Engineering.',
     picture: {
       avif: require('@site/src/pages/timeline/img/csuf.avif').default,
-      fallback: require('@site/src/pages/timeline/img/csuf.jpg'),
+      fallback: require('@site/src/pages/timeline/img/csuf.jpg').default,
       webp: require('@site/src/pages/timeline/img/csuf.webp').default,
     },
     title: {
@@ -111,7 +111,7 @@ export const timelines = [
     description: 'I accepted the Senior Software Engineer position with Experian CheetahMail to become a more well-rounded engineer and great leader. I was awarded the Experian CheetahMail Pinnacle, and I was promoted to Software Development Lead.',
     picture: {
       avif: require('@site/src/pages/timeline/img/cheetahmail.avif').default,
-      fallback: require('@site/src/pages/timeline/img/cheetahmail.jpg'),
+      fallback: require('@site/src/pages/timeline/img/cheetahmail.jpg').default,
       webp: require('@site/src/pages/timeline/img/cheetahmail.webp').default,
     },
     title: {
@@ -129,7 +129,7 @@ export const timelines = [
     description: 'I accepted a Software Engineer position with AirIQ to become a more well-rounded engineer.',
     picture: {
       avif: require('@site/src/pages/timeline/img/airiq.avif').default,
-      fallback: require('@site/src/pages/timeline/img/airiq.jpg'),
+      fallback: require('@site/src/pages/timeline/img/airiq.jpg').default,
       webp: require('@site/src/pages/timeline/img/airiq.webp').default,
     },
     title: {
@@ -147,7 +147,7 @@ export const timelines = [
     description: 'I accepted a Web Developer position with RazorGator to become a more well-rounded web engineer.',
     picture: {
       avif: require('@site/src/pages/timeline/img/razorgator.avif').default,
-      fallback: require('@site/src/pages/timeline/img/razorgator.jpg'),
+      fallback: require('@site/src/pages/timeline/img/razorgator.jpg').default,
       webp: require('@site/src/pages/timeline/img/razorgator.webp').default,
     },
     title: {
@@ -165,7 +165,7 @@ export const timelines = [
     description: 'I graduated from Petra Christian University with a bachelor\'s degree in Architecture. I learned both the process and the product of planning, designing, and constructing physical structures. I then applied those to software development activities.',
     picture: {
       avif: require('@site/src/pages/timeline/img/petra.avif').default,
-      fallback: require('@site/src/pages/timeline/img/petra.jpg'),
+      fallback: require('@site/src/pages/timeline/img/petra.jpg').default,
       webp: require('@site/src/pages/timeline/img/petra.webp').default,
     },
     title: {
@@ -183,7 +183,7 @@ export const timelines = [
     // This is smaller size than the one in home.
     picture: {
       avif: require('@site/src/pages/timeline/img/self.avif').default,
-      fallback: require('@site/src/pages/timeline/img/self.jpg'),
+      fallback: require('@site/src/pages/timeline/img/self.jpg').default,
       webp: require('@site/src/pages/timeline/img/self.webp').default,
     },
     title: {

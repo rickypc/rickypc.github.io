@@ -127,7 +127,7 @@ export const image = {
   picture: {
     // Safari doesn't support transparent avif.
     // avif: require('@site/src/pages/img/self.avif').default,
-    fallback: require('@site/src/pages/img/self.png'),
+    fallback: require('@site/src/pages/img/self.png').default,
     webp: require('@site/src/pages/img/self.webp').default,
   },
 };

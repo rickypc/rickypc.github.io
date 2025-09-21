@@ -17,6 +17,7 @@ const config = {
   favicon: 'img/favicon.ico',
   future: {
     experimental_faster: true,
+    v4: true,
   },
   headTags: [
     /*
@@ -48,12 +49,10 @@ const config = {
         },
         sitemap: {
           createSitemapItems,
-          ignorePatterns: ['/tags/**'],
+          ignorePatterns: ['/search', '/tags/**'],
           lastmod: 'date',
         },
-        theme: {
-          customCss: './src/css/custom.css',
-        },
+        theme: { customCss: './src/css/custom.css' },
       }),
     ],
   ],
@@ -68,7 +67,7 @@ const config = {
       metadata: [
         { name: 'author', content: 'Ricky Huang' },
         { property: 'og:image', content: 'https://ricky.one/img/self.png' },
-        { property: 'og:site_name', content: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic' },
+        { property: 'og:site_name', content: 'Ricky Huang - Engineering Leadership, Full Stack Expertise & Creative Innovation' },
         { property: 'og:type', content: 'website' },
         { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:image', content: 'https://ricky.one/img/self.png' },
@@ -129,9 +128,7 @@ const config = {
         hideSearchBarWithNoSearchContext: true,
         indexBlog: false,
         indexPages: true,
-        searchContextByPaths: [
-          { label: 'Notes', path: 'docs' },
-        ],
+        searchContextByPaths: [{ label: 'Notes', path: 'docs' }],
       }),
     ],
   ],

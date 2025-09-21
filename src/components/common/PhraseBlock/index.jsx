@@ -5,7 +5,6 @@
  */
 
 import { clsx, key } from '@site/src/data/common';
-import Container from '@theme/CodeBlock/Container';
 import CopyButton from '@theme/CodeBlock/Buttons/CopyButton';
 import { Fragment, memo } from 'react';
 import PropTypes from 'prop-types';
@@ -72,7 +71,7 @@ export default memo(Object.assign(function PhraseBlock({
 
   return (
     <CodeBlockContextProvider metadata={metadata} wordWrap={wordWrap}>
-      <Container as="div" className={className}>
+      <div className={clsx(className, styles.container, 'theme-code-block')}>
         {phrase.title && <div className={styles.title} translate="no">{phrase.title}</div>}
         <div className={styles.content}>
           <pre
@@ -95,7 +94,7 @@ export default memo(Object.assign(function PhraseBlock({
             </div>
           )}
         </div>
-      </Container>
+      </div>
     </CodeBlockContextProvider>
   );
 }, {

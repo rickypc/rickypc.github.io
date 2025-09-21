@@ -5,7 +5,6 @@
  */
 
 .block {
-  --ifm-pre-background: var(--prism-background-color);
   margin: 0;
   padding: 0;
 }
@@ -20,10 +19,8 @@
 
 .buttons button {
   align-items: center;
-  background: var(--prism-background-color);
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: var(--ifm-global-radius);
-  color: var(--prism-color);
   display: flex;
   line-height: 0;
   opacity: 0;
@@ -38,6 +35,12 @@
 
 :global(.theme-code-block:hover) .buttons button {
   opacity: 0.4;
+}
+
+.container {
+  border-radius: var(--ifm-code-border-radius);
+  box-shadow: var(--ifm-global-shadow-lw);
+  margin-bottom: var(--ifm-leading);
 }
 
 .content {
@@ -95,6 +98,26 @@
 .title+.content .block {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+[data-theme='dark'] .block {
+  --ifm-pre-background: #282A36;
+}
+
+[data-theme='light'] .block {
+  --ifm-pre-background: #F6F8FA;
+}
+
+[data-theme='dark'] .buttons button,
+[data-theme='dark'] .container {
+  background: #282A36;
+  color: #F8F8F2;
+}
+
+[data-theme='light'] .buttons button,
+[data-theme='light'] .container {
+  background: #F6F8FA;
+  color: #393A34;
 }
 
 @media print {

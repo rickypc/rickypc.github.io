@@ -6,7 +6,6 @@
  * @ts-check
  */
 
-import { themes } from 'prism-react-renderer';
 // eslint-disable-next-line import/extensions
 import { createSitemapItems } from '#root/src/plugins/docusaurus-plugin-local/index.js';
 
@@ -113,10 +112,6 @@ const config = {
           width: 'auto',
         },
         title: 'Ricky Huang',
-      },
-      prism: {
-        darkTheme: themes.dracula,
-        theme: themes.github,
       },
     }),
   themes: [

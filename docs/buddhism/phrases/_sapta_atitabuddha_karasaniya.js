@@ -14,7 +14,7 @@ export default {
   sanskrit: {
     children: 'रिप रिपते कुह कुहते त्रणिते णिगलते विमरिते महागते जंलंचंते वाहा',
     repeat: {
-      condensed: 183,
+      condensed: 170,
       roll: 61,
       wheel: 59,
     },

@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -9,36 +9,31 @@ import Task from '@site/src/pages/about/img/type.task.svg';
 
 export const characteristic = {
   attributes: [
-    'I am "people" and "task" oriented.',
-    'I am outgoing and socially skilled.',
-    'I provide a clear vision and purpose, able to translate ideas into action.',
-    'I am a good coordinator. I get things done by my ability to inspire people with me.',
-    'I focused on excellence and delivery.',
-    'I get the best from people due to insight and understanding into what makes different people respond and the ability to empathize with differing needs and viewpoints.',
-    'I value individual qualities and skills.',
+    'A strong balance of people focus and task orientation',
+    'Naturally outgoing and socially intuitive',
+    'Clear vision and purpose that translate into action',
+    'A hands-on coordinator who gets things done and lifts others up',
+    'Committed to excellence and follow-through',
+    'Skilled at drawing out the best in people through insight and empathy',
+    'Attuned to different perspectives and individual needs',
+    'Deep respect for unique talents and contributions',
   ],
-  title: 'My key characteristics:',
+  title: 'Here\'s what defines my approach:',
 };
 
-export const headline = 'I am a Transformer-Transactor type and I build ultimate things.';
+export const headline = 'Leading with People, Purpose, and Results';
 
 export const layout = {
-  description: 'I am a Transformer-Transactor type and I build ultimate things | Ricky Huang',
+  description: 'Explore how Ricky Huang blends people skills, thoughtful analysis, and results-driven leadership to inspire teams and build meaningful outcomes.',
   keywords: [
-    'ricky huang',
-    'richard huang',
-    'transformer-transactor type',
-    'vision and purpose',
-    'coordinator and inspirator',
-    'qualities and skills',
-    'full stack developer',
-    'engineering leader',
-    'value proposition',
-    'technical innovation',
-    'business strategy',
-    'software engineering',
-    'smart creative',
-    'master degree',
+    'leadership',
+    'people skills',
+    'emotional intelligence',
+    'team building',
+    'strategic thinking',
+    'professional profile',
+    'personal branding',
+    'executive presence',
   ],
   /*
   metadatas: [
@@ -53,16 +48,16 @@ export const layout = {
     />,
   ],
   */
-  title: 'Type and key characteristics',
+  title: 'About - Leadership, Insight, and Results',
 };
 
 export const paragraphs = [
-  'I am a Transformer People Type, who combines interpersonal sensitivity with strong social networks, and definite leadership impact.',
-  'I am a Transactor Task Type, who combines thoughtful analysis with the driven pursuit of goals. I enjoy challenges and can be relied upon to deliver results.',
+  'On the left, you\'ll find two graphs that capture how I work: one reflects my adaptability and ability to influence, while the other shows how I balance thoughtful analysis with strong execution.',
+  'I bring together emotional intelligence, a broad network, and clear, decisive leadership. I thrive in complex environments - digging into challenges, analyzing them with care, and driving toward meaningful results. At the heart of it all, I\'m focused on connecting people, inspiring teams, and turning ideas into action.',
 ];
 
 export const preamble = {
-  description: 'I combine the focus on achieving goals with thoughtful analysis and judgment.',
+  description: 'I bring together a sharp focus on results with thoughtful analysis and sound judgment - always aiming to build meaningful outcomes through strong leadership and human connection.',
   title: 'About Ricky Huang',
 };
 

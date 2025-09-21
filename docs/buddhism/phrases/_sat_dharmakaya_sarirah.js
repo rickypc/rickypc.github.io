@@ -56,7 +56,7 @@ export default {
     },
     title: 'ཆོས་སྐུ་རིང་བསྲེལ་དྲུག',
     typography: {
-      condensed: { default: 1.94, title: 1.7 },
+      condensed: { default: 1.875, title: 1.7 },
     },
   },
   transliteration: {

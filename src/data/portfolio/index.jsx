@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -8,14 +8,14 @@
 
 export const catalog = [
   {
-    description: 'Yahoo! Tickets is a robust platform for ticket sellers to advertise their ticket offerings to potential buyers. You can find sporting events and live music in your area with premium seats, all from within Yahoo! Tickets platform. The platform is built using SOAP Web Services architecture with flexibility and scalability in mind to support millions of Yahoo! web visit traffic.',
+    description: 'A scalable platform designed for ticket sellers to showcase live event offerings - from sports to concerts - directly to Yahoo! users. Built on a SOAP Web Services architecture, the system was engineered for flexibility and high traffic volume, supporting millions of visits across Yahoo!\'s ecosystem.',
     href: null,
     images: [
       {
         alt: 'Yahoo! Tickets Landing',
         picture: {
           avif: require('@site/src/pages/portfolio/img/yahoo-tickets-landing.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/yahoo-tickets-landing.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/yahoo-tickets-landing.jpg'),
           webp: require('@site/src/pages/portfolio/img/yahoo-tickets-landing.webp').default,
         },
       },
@@ -23,7 +23,7 @@ export const catalog = [
         alt: 'Yahoo! Tickets Category',
         picture: {
           avif: require('@site/src/pages/portfolio/img/yahoo-tickets-category.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/yahoo-tickets-category.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/yahoo-tickets-category.jpg'),
           webp: require('@site/src/pages/portfolio/img/yahoo-tickets-category.webp').default,
         },
       },
@@ -31,7 +31,7 @@ export const catalog = [
         alt: 'Yahoo! Tickets Search',
         picture: {
           avif: require('@site/src/pages/portfolio/img/yahoo-tickets-search.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/yahoo-tickets-search.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/yahoo-tickets-search.jpg'),
           webp: require('@site/src/pages/portfolio/img/yahoo-tickets-search.webp').default,
         },
       },
@@ -53,14 +53,14 @@ export const catalog = [
     title: 'Yahoo! Tickets',
   },
   {
-    description: 'GigaOm is a blog media company started by Om Malik, offering news, analysis, and opinions on startups, emerging technologies, and other technology-related topics. The platform is built as a plugin on top of WordPress, a free and open-source content management system (CMS), to support multiple topic channels with millions of readers.',
+    description: 'A pioneering tech media platform founded by Om Malik, GigaOm delivers insights on startups, emerging technologies, and industry trends. The site was built as a custom WordPress plugin, enabling scalable content delivery across multiple topic channels and serving millions of engaged readers.',
     href: 'https://bit.ly/3PVADPw',
     images: [
       {
         alt: 'GigaOm Landing',
         picture: {
           avif: require('@site/src/pages/portfolio/img/gigaom-landing.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/gigaom-landing.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/gigaom-landing.jpg'),
           webp: require('@site/src/pages/portfolio/img/gigaom-landing.webp').default,
         },
       },
@@ -68,7 +68,7 @@ export const catalog = [
         alt: 'GigaOm Apple',
         picture: {
           avif: require('@site/src/pages/portfolio/img/gigaom-apple.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/gigaom-apple.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/gigaom-apple.jpg'),
           webp: require('@site/src/pages/portfolio/img/gigaom-apple.webp').default,
         },
       },
@@ -76,7 +76,7 @@ export const catalog = [
         alt: 'GigaOm Clean Tech',
         picture: {
           avif: require('@site/src/pages/portfolio/img/gigaom-cleantech.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/gigaom-cleantech.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/gigaom-cleantech.jpg'),
           webp: require('@site/src/pages/portfolio/img/gigaom-cleantech.webp').default,
         },
       },
@@ -84,7 +84,7 @@ export const catalog = [
         alt: 'GigaOm Cloud',
         picture: {
           avif: require('@site/src/pages/portfolio/img/gigaom-cloud.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/gigaom-cloud.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/gigaom-cloud.jpg'),
           webp: require('@site/src/pages/portfolio/img/gigaom-cloud.webp').default,
         },
       },
@@ -92,7 +92,7 @@ export const catalog = [
         alt: 'GigaOm Collaboration',
         picture: {
           avif: require('@site/src/pages/portfolio/img/gigaom-collaboration.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/gigaom-collaboration.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/gigaom-collaboration.jpg'),
           webp: require('@site/src/pages/portfolio/img/gigaom-collaboration.webp').default,
         },
       },
@@ -100,7 +100,7 @@ export const catalog = [
         alt: 'GigaOm Mobile',
         picture: {
           avif: require('@site/src/pages/portfolio/img/gigaom-mobile.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/gigaom-mobile.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/gigaom-mobile.jpg'),
           webp: require('@site/src/pages/portfolio/img/gigaom-mobile.webp').default,
         },
       },
@@ -108,7 +108,7 @@ export const catalog = [
         alt: 'GigaOm Video',
         picture: {
           avif: require('@site/src/pages/portfolio/img/gigaom-video.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/gigaom-video.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/gigaom-video.jpg'),
           webp: require('@site/src/pages/portfolio/img/gigaom-video.webp').default,
         },
       },
@@ -116,7 +116,7 @@ export const catalog = [
         alt: 'GigaOm Events',
         picture: {
           avif: require('@site/src/pages/portfolio/img/gigaom-events.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/gigaom-events.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/gigaom-events.jpg'),
           webp: require('@site/src/pages/portfolio/img/gigaom-events.webp').default,
         },
       },
@@ -124,7 +124,7 @@ export const catalog = [
         alt: 'GigaOm TV',
         picture: {
           avif: require('@site/src/pages/portfolio/img/gigaom-tv.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/gigaom-tv.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/gigaom-tv.jpg'),
           webp: require('@site/src/pages/portfolio/img/gigaom-tv.webp').default,
         },
       },
@@ -145,14 +145,14 @@ export const catalog = [
     title: 'GigaOm',
   },
   {
-    description: 'RazorGator is an online ticket reselling platform for sports, theater, and concert tickets, as well as vacation packages for sporting events. The platform is built on top of wide arrays of technology, to support business-to-business (B2B) and business-to-consumer (B2C) transactions.',
+    description: 'An online marketplace for reselling tickets to sports, theater, and concert events - along with curated vacation packages for major games. The platform was built using a diverse technology stack to support both B2B and B2C transactions, ensuring flexibility, reliability, and scale across multiple business models.',
     href: 'https://bit.ly/3PZ9c7B',
     images: [
       {
         alt: 'RazorGator Landing',
         picture: {
           avif: require('@site/src/pages/portfolio/img/razorgator-landing.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/razorgator-landing.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/razorgator-landing.jpg'),
           webp: require('@site/src/pages/portfolio/img/razorgator-landing.webp').default,
         },
       },
@@ -160,7 +160,7 @@ export const catalog = [
         alt: 'RazorGator FOX Sports',
         picture: {
           avif: require('@site/src/pages/portfolio/img/razorgator-foxsports.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/razorgator-foxsports.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/razorgator-foxsports.jpg'),
           webp: require('@site/src/pages/portfolio/img/razorgator-foxsports.webp').default,
         },
       },
@@ -168,7 +168,7 @@ export const catalog = [
         alt: 'RazorGator Tickets.com',
         picture: {
           avif: require('@site/src/pages/portfolio/img/razorgator-ticketscom.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/razorgator-ticketscom.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/razorgator-ticketscom.jpg'),
           webp: require('@site/src/pages/portfolio/img/razorgator-ticketscom.webp').default,
         },
       },
@@ -176,7 +176,7 @@ export const catalog = [
         alt: 'RazorGator MSN',
         picture: {
           avif: require('@site/src/pages/portfolio/img/razorgator-msn.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/razorgator-msn.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/razorgator-msn.jpg'),
           webp: require('@site/src/pages/portfolio/img/razorgator-msn.webp').default,
         },
       },
@@ -184,7 +184,7 @@ export const catalog = [
         alt: 'RazorGator Jacksonville',
         picture: {
           avif: require('@site/src/pages/portfolio/img/razorgator-jacksonville.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/razorgator-jacksonville.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/razorgator-jacksonville.jpg'),
           webp: require('@site/src/pages/portfolio/img/razorgator-jacksonville.webp').default,
         },
       },
@@ -207,14 +207,14 @@ export const catalog = [
     title: 'RazorGator',
   },
   {
-    description: 'Rainbow Guitars has been serving the needs of local and international musicians for over 33 years in Tucson, Arizona. The platform is built to share their enthusiasm for music with others, no matter where they currently reside.',
+    description: 'A long-standing music retailer based in Tucson, Arizona, Rainbow Guitars has supported local and international musicians for over 33 years. The platform was built to extend their passion for music beyond the storefront - connecting artists and enthusiasts worldwide through a rich, accessible online experience.',
     href: 'https://bit.ly/3U7hRaD',
     images: [
       {
         alt: 'Rainbow Guitars',
         picture: {
           avif: require('@site/src/pages/portfolio/img/rainbowguitars.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/rainbowguitars.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/rainbowguitars.jpg'),
           webp: require('@site/src/pages/portfolio/img/rainbowguitars.webp').default,
         },
       },
@@ -232,14 +232,14 @@ export const catalog = [
     title: 'Rainbow Guitars',
   },
   {
-    description: 'The Fortini Home Garden Design store reflects the family’s lifestyle and appreciation for authentic products made with true artisan craftsmanship. The platform is built to share their passion for craftsmanship and the delicious details of the authentic products they offer with the world.',
+    description: 'A family-run store rooted in a deep appreciation for artisan craftsmanship and authentic living. The platform was built to showcase their passion - bringing beautifully crafted products and rich, sensory details to a global audience, while reflecting the lifestyle and values behind every offering.',
     href: null,
     images: [
       {
         alt: 'Fortini Home',
         picture: {
           avif: require('@site/src/pages/portfolio/img/fortinihome.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/fortinihome.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/fortinihome.jpg'),
           webp: require('@site/src/pages/portfolio/img/fortinihome.webp').default,
         },
       },
@@ -258,14 +258,14 @@ export const catalog = [
     title: 'Fortini Home',
   },
   {
-    description: 'Exhibit Transport is an international trade show shipping service for exhibitors, exhibit houses, and show management. The platform helps them expand their services and experiences to the world.',
+    description: 'A global logistics platform tailored for the trade show industry - serving exhibitors, exhibit houses, and event organizers. Built to extend their reach and streamline operations, the system enables seamless international shipping and helps clients deliver standout experiences around the world.',
     href: null,
     images: [
       {
         alt: 'Exhibit Transport',
         picture: {
           avif: require('@site/src/pages/portfolio/img/exhibittransport.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/exhibittransport.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/exhibittransport.jpg'),
           webp: require('@site/src/pages/portfolio/img/exhibittransport.webp').default,
         },
       },
@@ -284,14 +284,14 @@ export const catalog = [
     title: 'Exhibit Transport',
   },
   {
-    description: 'S&M Bikes craft good BMX bikes and run things their way. S&M will continue to sail the seas with the help of the platform and share their BMX bikes that could handle the use and abuse the founders and their friends were dishing out.',
+    description: 'A bold and independent BMX brand known for crafting bikes that stand up to real-world punishment. The platform was built to amplify their unique voice and showcase bikes designed to handle the intensity of riders who push limits - just like the founders and their crew have done from the start.',
     href: 'https://bit.ly/3TIGjO8',
     images: [
       {
         alt: 'S&M Bikes',
         picture: {
           avif: require('@site/src/pages/portfolio/img/sandmbikes.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/sandmbikes.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/sandmbikes.jpg'),
           webp: require('@site/src/pages/portfolio/img/sandmbikes.webp').default,
         },
       },
@@ -310,14 +310,14 @@ export const catalog = [
     title: 'S&M Bikes',
   },
   {
-    description: 'Clipper Corp personalized services to drive your revenue up while cutting your costs. The platform will help them to provide innovative solutions to their prospective clients.',
+    description: 'A service-driven platform designed to help Clipper Corp deliver tailored solutions that boost revenue while reducing operational costs. Built to support innovation and client engagement, the system empowers their team to offer strategic, cost-effective services to a growing global audience.',
     href: 'https://bit.ly/49wYEU2',
     images: [
       {
         alt: 'Clipper Corp',
         picture: {
           avif: require('@site/src/pages/portfolio/img/clippercorp.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/clippercorp.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/clippercorp.jpg'),
           webp: require('@site/src/pages/portfolio/img/clippercorp.webp').default,
         },
       },
@@ -336,14 +336,14 @@ export const catalog = [
     title: 'Clipper Corp',
   },
   {
-    description: 'Aircept develops and manufactures wireless asset management products and services. The platform is to provide wireless vehicle monitoring and tracking services, Internet vehicle tracking, vehicle and asset GPS tracking, and backend and user interface applications.',
+    description: 'A wireless asset management platform designed to support real-time vehicle and asset tracking. Built to deliver GPS-based monitoring, internet-enabled tracking, and robust backend and user interface applications, the system laid the foundation for future innovations in connected mobility.',
     href: null,
     images: [
       {
         alt: 'Aircept Landing',
         picture: {
           avif: require('@site/src/pages/portfolio/img/aircept-landing.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/aircept-landing.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/aircept-landing.jpg'),
           webp: require('@site/src/pages/portfolio/img/aircept-landing.webp').default,
         },
       },
@@ -351,7 +351,7 @@ export const catalog = [
         alt: 'Aircept NationTrack',
         picture: {
           avif: require('@site/src/pages/portfolio/img/aircept-nationstrack.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/aircept-nationstrack.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/aircept-nationstrack.jpg'),
           webp: require('@site/src/pages/portfolio/img/aircept-nationstrack.webp').default,
         },
       },
@@ -359,7 +359,7 @@ export const catalog = [
         alt: 'Aircept RentalTrack',
         picture: {
           avif: require('@site/src/pages/portfolio/img/aircept-rentaltrack.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/aircept-rentaltrack.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/aircept-rentaltrack.jpg'),
           webp: require('@site/src/pages/portfolio/img/aircept-rentaltrack.webp').default,
         },
       },
@@ -376,17 +376,17 @@ export const catalog = [
       'CSS',
       'JavaScript',
     ],
-    title: 'Aircept',
+    title: 'AirIQ (formerly Aircept)',
   },
   {
-    description: 'AnchorBlue is a clothing retailer that generally sells its brand name of youth-oriented denim, graphic T-shirts, and casual clothing. The platform is to open an e-commerce site for customers to make purchases online.',
+    description: 'A youth-focused clothing retailer known for its signature denim, graphic tees, and casual wear. The platform was developed to launch their e-commerce presence—making it easy for customers to browse and purchase online, while extending the brand\'s reach beyond physical retail.',
     href: null,
     images: [
       {
         alt: 'AnchorBlue Community',
         picture: {
           avif: require('@site/src/pages/portfolio/img/anchorblue-community.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/anchorblue-community.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/anchorblue-community.jpg'),
           webp: require('@site/src/pages/portfolio/img/anchorblue-community.webp').default,
         },
       },
@@ -394,7 +394,7 @@ export const catalog = [
         alt: 'AnchorBlue Girls',
         picture: {
           avif: require('@site/src/pages/portfolio/img/anchorblue-girls.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/anchorblue-girls.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/anchorblue-girls.jpg'),
           webp: require('@site/src/pages/portfolio/img/anchorblue-girls.webp').default,
         },
       },
@@ -414,14 +414,14 @@ export const catalog = [
     title: 'AnchorBlue',
   },
   {
-    description: 'WheelBuilder is to provide extremely high-quality wheel products and services through careful quality control and parts selection. The platform will enable them to share their products and services with people worldwide.',
+    description: 'A precision-driven platform built to showcase WheelBuilder\'s commitment to high-quality wheel products and services. Through meticulous parts selection and rigorous quality control, the system enables global access to their craftsmanship - connecting riders everywhere with performance they can trust.',
     href: 'https://bit.ly/3PTBpgf',
     images: [
       {
         alt: 'WheelBuilder',
         picture: {
           avif: require('@site/src/pages/portfolio/img/wheelbuilder.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/wheelbuilder.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/wheelbuilder.jpg'),
           webp: require('@site/src/pages/portfolio/img/wheelbuilder.webp').default,
         },
       },
@@ -441,14 +441,14 @@ export const catalog = [
     title: 'WheelBuilder',
   },
   {
-    description: 'Pacifica Services is a trusted leader in engineering services with a reputation for providing quality services and loyalty to its clients. The platform will provide engineering and management-related services to an ever-changing marketplace in the most efficient, consistent, and responsive manner.',
+    description: 'A respected leader in engineering and management services, known for delivering quality and building long-term client trust. The platform was developed to extend their capabilities into a dynamic marketplace - offering efficient, consistent, and responsive solutions tailored to evolving industry demands.',
     href: 'https://bit.ly/43UD9vw',
     images: [
       {
         alt: 'Pacifica Services',
         picture: {
           avif: require('@site/src/pages/portfolio/img/pacificaservices.avif').default,
-          fallback: require('@site/src/pages/portfolio/img/pacificaservices.jpg').default,
+          fallback: require('@site/src/pages/portfolio/img/pacificaservices.jpg'),
           webp: require('@site/src/pages/portfolio/img/pacificaservices.webp').default,
         },
       },
@@ -469,20 +469,20 @@ export const catalog = [
 ];
 
 export const layout = {
-  description: 'My portfolio describes the technology stack used to make each successful | Ricky Huang',
+  description: 'Explore Ricky Huang\'s portfolio of software engineering projects, including platforms built for Yahoo! Tickets, GigaOm, RazorGator, S&M Bikes, and other innovative companies. Each project reflects deep technical expertise in scalable architecture, e-commerce, media, and logistics.',
   keywords: [
+    'software engineering portfolio',
+    'Yahoo! Tickets',
+    'GigaOm',
+    'RazorGator',
+    'S&M Bikes',
+    'e-commerce platforms',
+    'WordPress development',
+    'SOAP architecture',
+    'B2B and B2C systems',
+    'scalable web applications',
+    'engineering leadership',
     'ricky huang',
-    'richard huang',
-    'full stack developer portfolio',
-    'technology stack',
-    'successful projects',
-    'engineering leader',
-    'value proposition',
-    'technical innovation',
-    'business strategy',
-    'software engineering',
-    'smart creative',
-    'master degree',
   ],
   /*
   metadatas: [
@@ -497,11 +497,11 @@ export const layout = {
     />,
   ],
   */
-  title: 'Portfolio and successful projects',
+  title: 'Portfolio - Scalable Platforms for Yahoo!, GigaOm, RazorGator & More',
 };
 
 export const preamble = {
-  description: 'I\'m proud of each project that I have completed. The past projects below describe the technology stack used to make each successful.',
+  description: 'Each project here reflects years of hands-on experience, thoughtful problem-solving, and a commitment to quality. Alongside every build, you\'ll find the technology stack that helped bring it to life—and the impact it delivered.',
   printAdmonition: true,
   title: 'Portfolio',
 };

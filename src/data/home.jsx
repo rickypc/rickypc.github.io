@@ -36,7 +36,7 @@ function FaLinkedin(props) {
 
 export const greeting = (
   <>
-    <span>Hello, I am</span>
+    <span>Hello, I&#39;m</span>
     <span translate="no"> Ricky Huang</span>
   </>
 );
@@ -46,27 +46,27 @@ export const hats = [
     children: (
       <>
         <img alt="Pilot" src={require('@site/src/pages/img/pilot.webp').default} />
-        <Reveal coeff={0}>An Engineering Leader</Reveal>
+        <Reveal coeff={0}>Engineering Leader</Reveal>
       </>
     ),
     description: (
       <>
-        <span>I am a leader who focuses on achieving engineering team goals with </span>
-        <Link href="/about" title="thoughtful analysis and judgment">thoughtful analysis and judgment</Link>
-        <span> to thrive on ever-changing and </span>
-        <Link href="/stories" title="challenging business requirements">challenging business requirements</Link>
-        <span>.</span>
+        <span>I lead engineering teams with clarity and purpose, combining </span>
+        <Link href="/about" title="thoughtful analysis and sound judgment">thoughtful analysis and sound judgment</Link>
+        <span> to meet evolving business needs. </span>
+        <span>I thrive in dynamic environments, guiding teams </span>
+        <Link href="/stories" title="through complexity">through complexity</Link>
+        <span> and toward meaningful results</span>
       </>
     ),
-    label: 'An Engineering Leader',
+    label: 'Engineering Leader',
   },
   {
     children: (
       <>
         <img alt="Software Engineer" src={require('@site/src/pages/img/technologist.webp').default} />
-        <Reveal coeff={4}>
+        <Reveal coeff={2.5}>
           <>
-            A
             <i aria-hidden="true">Full Stack</i>
             Developer
           </>
@@ -75,50 +75,51 @@ export const hats = [
     ),
     description: (
       <>
-        <span>I am a full-stack developer who </span>
-        <Link href="/about" title="bridges the communication gap">bridges the communication gap</Link>
-        <span> between the front-end and back-end teams with the idea of</span>
-        <span> one common cause to create a </span>
-        <Link href="/portfolio" title="robust and versatile application">robust and versatile application</Link>
-        <span>.</span>
+        <span>I </span>
+        <Link href="/about" title="bridge the gap">bridge the gap</Link>
+        <span> between front-end and back-end development, building </span>
+        <Link href="/portfolio" title="scalable, high-performing applications">scalable, high-performing applications</Link>
+        <span>. My work connects disciplines and people,</span>
+        <span> always focused on delivering real-world impact.</span>
       </>
     ),
-    label: 'A Full Stack Developer',
+    label: 'Full Stack Developer',
   },
   {
     children: (
       <>
         <img alt="Unicorn" src={require('@site/src/pages/img/unicorn.webp').default} />
-        <Reveal coeff={2.5}>A Smart Creative</Reveal>
+        <Reveal coeff={2.5}>Smart Creative</Reveal>
       </>
     ),
     description: (
       <>
-        <span>I am a smart creative who </span>
-        <Link href="/about" title="combines technical innovation, business strategy, and creativity">combines technical innovation, business strategy, and creativity</Link>
-        <span> to lead and align the engineering team</span>
-        <span> with the company&#39;s business objectives.</span>
+        <span>I blend </span>
+        <Link href="/about" title="technical expertise, creative thinking, and business strategy">technical expertise, creative thinking, and business strategy</Link>
+        <span> to align engineering efforts with company goals.</span>
+        <span> I enjoy working at the intersection of innovation and execution,</span>
+        <span> where ideas become solutions.</span>
       </>
     ),
-    label: 'A Smart Creative',
+    label: 'Smart Creative',
   },
   {
     children: (
       <>
         <img alt="Rocket" src={require('@site/src/pages/img/rocket.webp').default} />
-        <Reveal coeff={4}>An Innovator</Reveal>
+        <Reveal coeff={4}>Innovator</Reveal>
       </>
     ),
     description: (
       <>
-        <span>With over 25 years of professionally </span>
-        <Link href="/timeline" title="enriched experiences and an advanced academic background">enriched experiences and an advanced academic background</Link>
-        <span> in Software Engineering, I help shape my partner&#39;s and employer&#39;s </span>
-        <Link href="/portfolio" title="technology foundation">technology foundation</Link>
-        <span> to deliver their unique value proposition.</span>
+        <span>With over 30 years of </span>
+        <Link href="/timeline" title="experience and a strong academic foundation">experience and a strong academic foundation</Link>
+        <span> in software engineering, I help organizations build resilient </span>
+        <Link href="/portfolio" title="technology platforms">technology platforms</Link>
+        <span> and deliver distinctive value through forward-thinking solutions.</span>
       </>
     ),
-    label: 'An Innovator',
+    label: 'Innovator',
   },
 ];
 
@@ -127,7 +128,7 @@ export const image = {
   picture: {
     // Safari doesn't support transparent avif.
     // avif: require('@site/src/pages/img/self.avif').default,
-    fallback: require('@site/src/pages/img/self.png').default,
+    fallback: require('@site/src/pages/img/self.png'),
     webp: require('@site/src/pages/img/self.webp').default,
   },
 };
@@ -135,19 +136,17 @@ export const image = {
 export const ipa = '/ˈɹɪki ˈhwɑːŋ/';
 
 export const layout = {
-  description: 'I put the focus on achieving team goals with thoughtful analysis and judgment | Ricky Huang',
+  description: 'Welcome to the personal site of Ricky Huang, an engineering leader, full stack developer, and innovator with over 30 years of experience in software engineering.',
   keywords: [
-    'ricky huang',
-    'richard huang',
-    'thoughtful analysis',
-    'full stack developer',
     'engineering leader',
-    'value proposition',
-    'technical innovation',
-    'business strategy',
-    'software engineering',
-    'smart creative',
-    'master degree',
+    'full stack developer',
+    'software engineer',
+    'technology strategist',
+    'creative technologist',
+    'innovation',
+    'personal website',
+    'professional portfolio',
+    'ricky huang',
   ],
   /*
   metadatas: [
@@ -169,7 +168,7 @@ export const layout = {
     />,
   ],
   */
-  title: 'Diverse expertise, roles, and responsibilities',
+  title: 'Engineering Leadership, Full Stack Development, Innovation',
 };
 
 export const socials = [

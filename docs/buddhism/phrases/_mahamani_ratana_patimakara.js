@@ -22,7 +22,7 @@ export default {
       title: '𑖦𑖮𑖯𑖦𑖜𑖰𑖨𑖝𑖡𑖢𑖘𑖰𑖦𑖯𑖎𑖨',
     },
     repeat: {
-      condensed: 87,
+      condensed: 81,
       roll: 29,
       wheel: 28,
     },

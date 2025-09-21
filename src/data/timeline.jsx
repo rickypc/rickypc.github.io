@@ -7,23 +7,23 @@
 /* eslint-disable global-require */
 
 export const layout = {
-  description: 'My experiences and education throughout the years | Ricky Huang',
+  description: 'Explore the key milestones that shaped Ricky Huang\'s journey - from architecture to software engineering, from startups to global enterprises. This timeline highlights pivotal roles, academic achievements, promotions, and recognitions that reflect my growth across disciplines and industries.',
   keywords: [
+    'career timeline',
+    'software engineering milestones',
+    'education journey',
+    'Experian awards',
+    'AirIQ',
+    'Aircept',
+    'RazorGator',
+    'Petra Christian University',
+    'California State University Fullerton',
+    'architecture to software',
+    'tech career growth',
+    'engineering promotions',
+    'independent professional',
+    'portfolio timeline',
     'ricky huang',
-    'richard huang',
-    'experiences',
-    'knowledge',
-    'education',
-    'full stack developer',
-    'technology stack',
-    'successful projects',
-    'engineering leader',
-    'value proposition',
-    'technical innovation',
-    'business strategy',
-    'software engineering',
-    'smart creative',
-    'master degree',
   ],
   /*
   metadatas: [
@@ -38,11 +38,11 @@ export const layout = {
     />,
   ],
   */
-  title: 'Experiences, knowledge, and education',
+  title: 'Timeline - Career, Education & Technical Milestones',
 };
 
 export const preamble = {
-  description: 'My experiences and education throughout the years.',
+  description: 'A curated journey through key milestones in my career, education, and technical growth. Each moment reflects a step forward - building expertise, shaping ideas, and driving impact across industries and technologies.',
   printAdmonition: true,
   title: 'Timeline',
 };
@@ -54,10 +54,10 @@ export const timelines = [
       href: 'https://bit.ly/4ar63Wq',
       translate: 'no',
     },
-    description: 'I accepted the Senior Software Engineer position with Experian Consumer Services to become a more well-rounded entrepreneur. I have been awarded the Experian Platinum Aspire, the EMF Hero - Above and Beyond, and the Experian Spot - Excellence in Action frequently.',
+    description: 'Accepted the Senior Software Engineer role at Experian Consumer Services to sharpen technical leadership and expand entrepreneurial range. Earned multiple recognitions, including the Experian Platinum Aspire, EMF Hero - Above and Beyond, and recurring Experian Spot - Excellence in Action awards.',
     picture: {
       avif: require('@site/src/pages/timeline/img/experian.avif').default,
-      fallback: require('@site/src/pages/timeline/img/experian.jpg').default,
+      fallback: require('@site/src/pages/timeline/img/experian.jpg'),
       webp: require('@site/src/pages/timeline/img/experian.webp').default,
     },
     title: {
@@ -72,10 +72,10 @@ export const timelines = [
       href: 'https://bit.ly/4ar63Wq',
       translate: 'no',
     },
-    description: 'I accepted the Automation Engineer position with Experian Consumer Services to become a more well-rounded engineer. I have been promoted to Senior Automation Engineer.',
+    description: 'Accepted the Automation Engineer position at Experian Consumer Services to deepen technical versatility and broaden engineering expertise. Later promoted to Senior Automation Engineer, continuing to drive innovation and efficiency across automated systems.',
     picture: {
       avif: require('@site/src/pages/timeline/img/experian.avif').default,
-      fallback: require('@site/src/pages/timeline/img/experian.jpg').default,
+      fallback: require('@site/src/pages/timeline/img/experian.jpg'),
       webp: require('@site/src/pages/timeline/img/experian.webp').default,
     },
     title: {
@@ -90,10 +90,10 @@ export const timelines = [
       href: 'https://bit.ly/3PR1Umk',
       translate: 'no',
     },
-    description: 'I graduated from the California State University of Fullerton with a master\'s degree in Software Engineering. I learned to deliver software- enabled systems with mission readiness, boost productivity, spur innovation, and provide a competitive edge. I was awarded the Outstanding Graduate Project for Master of Science in Software Engineering.',
+    description: 'Graduated from California State University, Fullerton with a Master\'s in Software Engineering. Gained expertise in delivering mission-ready, software-enabled systems that drive productivity, spark innovation, and create competitive advantage. Honored with the Outstanding Graduate Project award for the Master of Science in Software Engineering.',
     picture: {
       avif: require('@site/src/pages/timeline/img/csuf.avif').default,
-      fallback: require('@site/src/pages/timeline/img/csuf.jpg').default,
+      fallback: require('@site/src/pages/timeline/img/csuf.jpg'),
       webp: require('@site/src/pages/timeline/img/csuf.webp').default,
     },
     title: {
@@ -108,10 +108,10 @@ export const timelines = [
       href: 'https://bit.ly/3xAYihU',
       translate: 'no',
     },
-    description: 'I accepted the Senior Software Engineer position with Experian CheetahMail to become a more well-rounded engineer and great leader. I was awarded the Experian CheetahMail Pinnacle, and I was promoted to Software Development Lead.',
+    description: 'Accepted the Senior Software Engineer role at Experian CheetahMail to strengthen engineering depth and grow as a leader. Earned the Experian CheetahMail Pinnacle award and was later promoted to Software Development Lead, driving team performance and technical excellence.',
     picture: {
       avif: require('@site/src/pages/timeline/img/cheetahmail.avif').default,
-      fallback: require('@site/src/pages/timeline/img/cheetahmail.jpg').default,
+      fallback: require('@site/src/pages/timeline/img/cheetahmail.jpg'),
       webp: require('@site/src/pages/timeline/img/cheetahmail.webp').default,
     },
     title: {
@@ -122,14 +122,14 @@ export const timelines = [
   },
   {
     affiliation: {
-      children: 'AirIQ',
+      children: 'AirIQ (formerly Aircept)',
       href: 'https://bit.ly/4cRZaPq',
       translate: 'no',
     },
-    description: 'I accepted a Software Engineer position with AirIQ to become a more well-rounded engineer.',
+    description: 'Accepted a Software Engineer position at AirIQ, building on the wireless asset management work previously developed under the Aircept name. This role expanded my hands-on experience with GPS tracking systems and real-time data platforms.',
     picture: {
       avif: require('@site/src/pages/timeline/img/airiq.avif').default,
-      fallback: require('@site/src/pages/timeline/img/airiq.jpg').default,
+      fallback: require('@site/src/pages/timeline/img/airiq.jpg'),
       webp: require('@site/src/pages/timeline/img/airiq.webp').default,
     },
     title: {
@@ -144,10 +144,10 @@ export const timelines = [
       href: 'https://bit.ly/3PZ9c7B',
       translate: 'no',
     },
-    description: 'I accepted a Web Developer position with RazorGator to become a more well-rounded web engineer.',
+    description: 'Accepted a Web Developer position at RazorGator to strengthen front-end and back-end development skills. This role deepened my expertise in building dynamic, user-focused web applications within a fast-paced e-commerce environment.',
     picture: {
       avif: require('@site/src/pages/timeline/img/razorgator.avif').default,
-      fallback: require('@site/src/pages/timeline/img/razorgator.jpg').default,
+      fallback: require('@site/src/pages/timeline/img/razorgator.jpg'),
       webp: require('@site/src/pages/timeline/img/razorgator.webp').default,
     },
     title: {
@@ -162,10 +162,10 @@ export const timelines = [
       href: 'https://bit.ly/3VXWRnQ',
       translate: 'no',
     },
-    description: 'I graduated from Petra Christian University with a bachelor\'s degree in Architecture. I learned both the process and the product of planning, designing, and constructing physical structures. I then applied those to software development activities.',
+    description: 'Graduated from Petra Christian University with a Bachelor\'s degree in Architecture. Gained a deep understanding of planning, designing, and constructing physical structures - skills that later translated into software development, shaping how I approach system design, structure, and user experience.',
     picture: {
       avif: require('@site/src/pages/timeline/img/petra.avif').default,
-      fallback: require('@site/src/pages/timeline/img/petra.jpg').default,
+      fallback: require('@site/src/pages/timeline/img/petra.jpg'),
       webp: require('@site/src/pages/timeline/img/petra.webp').default,
     },
     title: {
@@ -179,11 +179,11 @@ export const timelines = [
       children: 'Self Employed',
       href: '/',
     },
-    description: 'As an Independent Professional, I am wearing many hats, multi-task expert, extremely organized, and can adapt to many different scenarios or challenges that arise. I bring those valuable insights, experiences, and technical competencies with me to my partners and my employers.',
+    description: 'As an independent professional, I\'ve worn many hats - balancing roles with precision, adapting seamlessly to shifting challenges, and thriving in fast-paced environments. I bring a wealth of insights, hands-on experience, and technical depth to every partnership and employer I collaborate with.',
     // This is smaller size than the one in home.
     picture: {
       avif: require('@site/src/pages/timeline/img/self.avif').default,
-      fallback: require('@site/src/pages/timeline/img/self.jpg').default,
+      fallback: require('@site/src/pages/timeline/img/self.jpg'),
       webp: require('@site/src/pages/timeline/img/self.webp').default,
     },
     title: {

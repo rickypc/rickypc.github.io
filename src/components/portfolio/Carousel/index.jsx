@@ -24,6 +24,21 @@ import PropTypes from 'prop-types';
 import useEmblaCarousel from 'embla-carousel-react';
 import styles from './styles.module.css';
 
+const debounce = (fn, delay = 200) => {
+  let timer;
+  const debouncer = (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(async () => fn(...args), delay);
+  };
+  debouncer.cancel = () => {
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+  };
+  return debouncer;
+};
+
 /**
  * @description Renders the `Angle Left` icon.
  * @param {object} props - React props passed to the icon component.
@@ -49,21 +64,6 @@ function FaAngleRight(props) {
 }
 
 const Buttons = memo(function Buttons({ api }) {
-  const debounce = useCallback((fn, delay = 200) => {
-    let timer;
-    const debouncer = (...args) => {
-      clearTimeout(timer);
-      timer = setTimeout(async () => fn(...args), delay);
-    };
-    debouncer.cancel = () => {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
-    };
-    return debouncer;
-  }, []);
-
   const onNext = debounce(() => api?.scrollNext?.());
   const onPrevious = debounce(() => api?.scrollPrev?.());
 
@@ -154,7 +154,10 @@ const LazySlide = memo(function LazySlide({
   const onSlideClick = useCallback(() => onClick(image), [image, onClick]);
 
   useEffect(() => {
-    const slideInView = () => setInView(api?.slidesInView?.()?.includes?.(index) || false);
+    const slideInView = () => setTimeout(
+      () => setInView(api?.slidesInView?.()?.includes?.(index) || false),
+      700,
+    );
     slideInView();
     api?.on('slidesInView', slideInView);
     return () => api?.off('slidesInView', slideInView);
@@ -184,7 +187,7 @@ LazySlide.propTypes = {
 };
 
 export default memo(Object.assign(function Carousel({ images, onClick, prefix }) {
-  const [setViewport, api] = useEmblaCarousel({ loop: true });
+  const [setViewport, api] = useEmblaCarousel({ inViewThreshold: 0.5, loop: true });
 
   useEffect(() => {
     const onDrag = (_, evt) => api

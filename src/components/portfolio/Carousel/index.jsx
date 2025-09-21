@@ -156,7 +156,7 @@ const LazySlide = memo(function LazySlide({
   useEffect(() => {
     const slideInView = () => setTimeout(
       () => setInView(api?.slidesInView?.()?.includes?.(index) || false),
-      700,
+      600,
     );
     slideInView();
     api?.on('slidesInView', slideInView);

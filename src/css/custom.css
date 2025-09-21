@@ -113,17 +113,15 @@ html:not(.plugin-\@easyops-cn\/docusaurus-search-local) #__docusaurus:not(.docus
   visibility: hidden;
 }
 
-#__docusaurus.docusaurus--welcome::before,
-.plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus::before {
-  content: none;
-}
-
+#__docusaurus [aria-label="Skip to main content"][role="region"],
 #__docusaurus.docusaurus--exclusive nav.navbar .navbar__inner .navbar__items>a:not(.navbar__item--translate),
 .plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus:not(.docusaurus--welcome)  nav.navbar .navbar__inner .navbar__items>a:not(.navbar__item--translate),
 #gt-nvframe~#__docusaurus nav .navbar__item.navbar__item--translate,
 #__docusaurus.docusaurus--exclusive nav.navbar .navbar-sidebar .navbar-sidebar__brand>a,
 #__docusaurus.docusaurus--exclusive nav.navbar .navbar-sidebar .menu.navbar-sidebar__item>button,
-#__docusaurus.docusaurus--exclusive nav.theme-doc-breadcrumbs ul.breadcrumbs li:first-of-type {
+#__docusaurus.docusaurus--exclusive nav.theme-doc-breadcrumbs ul.breadcrumbs li:first-of-type,
+#__docusaurus.docusaurus--welcome::before,
+.plugin-\@easyops-cn\/docusaurus-search-local #__docusaurus::before {
   display: none;
 }
 

@@ -1,16 +1,16 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 import { clsx, key } from '@site/src/data/common';
 import Container from '@theme/CodeBlock/Container';
-import CopyButton from '@theme/CodeBlock/CopyButton';
+import CopyButton from '@theme/CodeBlock/Buttons/CopyButton';
 import { Fragment, memo } from 'react';
 import PropTypes from 'prop-types';
-import { useCodeWordWrap } from '@docusaurus/theme-common/internal';
-import WordWrapButton from '@theme/CodeBlock/WordWrapButton';
+import { CodeBlockContextProvider, createCodeBlockMetadata, useCodeWordWrap } from '@docusaurus/theme-common/internal';
+import WordWrapButton from '@theme/CodeBlock/Buttons/WordWrapButton';
 import styles from './styles.module.css';
 
 const body = (phrase, prefix, infix, suffix) => {
@@ -47,6 +47,17 @@ const text = (content) => {
   return '';
 };
 
+const useMetadata = (props) => createCodeBlockMetadata({
+  className: props.className || '',
+  code: props.code || '',
+  defaultLanguage: props.defaultLanguange || 'plain',
+  language: props.language || 'plain',
+  magicComments: props.magicComments || [],
+  metastring: props.metastring || '',
+  showLineNumbers: props.showLineNumbers || false,
+  title: props.title || '',
+});
+
 export default memo(Object.assign(function PhraseBlock({
   className = '',
   infix,
@@ -56,32 +67,36 @@ export default memo(Object.assign(function PhraseBlock({
 }) {
   const content = body(phrase, prefix, infix, suffix);
   const plain = text(content);
+  const metadata = useMetadata({ className, code: plain, title: phrase.title });
   const wordWrap = useCodeWordWrap();
+
   return (
-    <Container as="div" className={className}>
-      {phrase.title && <div className={styles.title} translate="no">{phrase.title}</div>}
-      <div className={styles.content}>
-        <pre
-          className={clsx(styles.standalone, 'thin-scrollbar')}
-          ref={wordWrap.codeBlockRef}
-          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-          tabIndex={0}
-        >
-          <code className={clsx(styles.lines, phrase.className)}>{content}</code>
-        </pre>
-        {plain && (
-          <div className={styles.buttons}>
-            {(wordWrap.isEnabled || wordWrap.isCodeScrollable) && (
-              <WordWrapButton
-                isEnabled={wordWrap.isEnabled}
-                onClick={() => wordWrap.toggle()}
-              />
-            )}
-            <CopyButton code={plain} />
-          </div>
-        )}
-      </div>
-    </Container>
+    <CodeBlockContextProvider metadata={metadata} wordWrap={wordWrap}>
+      <Container as="div" className={className}>
+        {phrase.title && <div className={styles.title} translate="no">{phrase.title}</div>}
+        <div className={styles.content}>
+          <pre
+            className={clsx(styles.standalone, 'thin-scrollbar')}
+            ref={wordWrap.codeBlockRef}
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex={0}
+          >
+            <code className={clsx(styles.lines, phrase.className)}>{content}</code>
+          </pre>
+          {plain && (
+            <div className={styles.buttons}>
+              {(wordWrap.isEnabled || wordWrap.isCodeScrollable) && (
+                <WordWrapButton
+                  isEnabled={wordWrap.isEnabled}
+                  onClick={() => wordWrap.toggle()}
+                />
+              )}
+              <CopyButton code={plain} />
+            </div>
+          )}
+        </div>
+      </Container>
+    </CodeBlockContextProvider>
   );
 }, {
   propTypes: {

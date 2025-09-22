@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -95,7 +95,9 @@ export default memo(Object.assign(function MultiLingual({
 }, {
   propTypes: {
     chinese: PropTypes.shape(),
+    pali: PropTypes.shape(),
     sanskrit: PropTypes.shape(),
+    thai: PropTypes.shape(),
     tibetan: PropTypes.shape(),
     transliteration: PropTypes.shape(),
   },

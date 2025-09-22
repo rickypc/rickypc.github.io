@@ -8,7 +8,7 @@
 import { createRef } from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Button from '../../../../src/components/common/Button';
+import Button from '../../../src/components/common/Button';
 
 describe('Button', () => {
   it('renders children', () => {

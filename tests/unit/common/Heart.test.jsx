@@ -7,7 +7,7 @@
 
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Heart from '../../../../src/components/common/Heart';
+import Heart from '../../../src/components/common/Heart';
 
 describe('Heart', () => {
   it('renders a span element', () => {

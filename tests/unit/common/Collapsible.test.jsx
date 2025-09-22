@@ -7,7 +7,7 @@
 
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Collapsible from '../../../../src/components/common/Collapsible';
+import Collapsible from '../../../src/components/common/Collapsible';
 
 describe('Collapsible', () => {
   const items = ['Item 1', 'Item 2', 'Item 3'];

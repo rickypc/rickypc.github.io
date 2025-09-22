@@ -8,7 +8,7 @@
 import { act, render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useVisibility } from '@site/src/hooks/observer';
-import Image from '../../../../src/components/common/Image';
+import Image from '../../../src/components/common/Image';
 
 jest.mock('@site/src/hooks/observer', () => ({
   useVisibility: jest.fn(),

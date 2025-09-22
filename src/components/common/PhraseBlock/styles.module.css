@@ -4,42 +4,11 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-.block {
-  margin: 0;
-  padding: 0;
-}
-
-.buttons {
-  column-gap: 0.2rem;
-  display: flex;
-  position: absolute;
-  right: calc(var(--ifm-pre-padding) / 2);
-  top: calc(var(--ifm-pre-padding) / 2);
-}
-
-.buttons button {
-  align-items: center;
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: var(--ifm-global-radius);
-  display: flex;
-  line-height: 0;
-  opacity: 0;
-  padding: 0.4rem;
-  transition: opacity var(--ifm-transition-fast) ease-in-out;
-}
-
-.buttons button:focus-visible,
-.buttons button:hover {
-  opacity: 1 !important;
-}
-
-:global(.theme-code-block:hover) .buttons button {
-  opacity: 0.4;
-}
-
 .container {
+  background: var(--prism-background-color);
   border-radius: var(--ifm-code-border-radius);
   box-shadow: var(--ifm-global-shadow-lw);
+  color: var(--prism-color);
   margin-bottom: var(--ifm-leading);
 }
 
@@ -95,29 +64,14 @@
   padding: 0.75rem var(--ifm-pre-padding);
 }
 
-.title+.content .block {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-[data-theme='dark'] .block {
-  --ifm-pre-background: #282A36;
-}
-
-[data-theme='light'] .block {
-  --ifm-pre-background: #F6F8FA;
-}
-
-[data-theme='dark'] .buttons button,
 [data-theme='dark'] .container {
-  background: #282A36;
-  color: #F8F8F2;
+  --prism-background-color: #282A36;
+  --prism-color: #F8F8F2;
 }
 
-[data-theme='light'] .buttons button,
 [data-theme='light'] .container {
-  background: #F6F8FA;
-  color: #393A34;
+  --prism-background-color: #F6F8FA;
+  --prism-color: #393A34;
 }
 
 @media print {

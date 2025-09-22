@@ -4,12 +4,11 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+import Buttons from '@theme/CodeBlock/Buttons';
 import { clsx, key } from '@site/src/data/common';
-import CopyButton from '@theme/CodeBlock/Buttons/CopyButton';
 import { Fragment, memo } from 'react';
 import PropTypes from 'prop-types';
 import { CodeBlockContextProvider, createCodeBlockMetadata, useCodeWordWrap } from '@docusaurus/theme-common/internal';
-import WordWrapButton from '@theme/CodeBlock/Buttons/WordWrapButton';
 import styles from './styles.module.css';
 
 const body = (phrase, prefix, infix, suffix) => {
@@ -65,8 +64,7 @@ export default memo(Object.assign(function PhraseBlock({
   suffix,
 }) {
   const content = body(phrase, prefix, infix, suffix);
-  const plain = text(content);
-  const metadata = useMetadata({ className, code: plain, title: phrase.title });
+  const metadata = useMetadata({ className, code: text(content), title: phrase.title });
   const wordWrap = useCodeWordWrap();
 
   return (
@@ -82,17 +80,7 @@ export default memo(Object.assign(function PhraseBlock({
           >
             <code className={clsx(styles.lines, phrase.className)}>{content}</code>
           </pre>
-          {plain && (
-            <div className={styles.buttons}>
-              {(wordWrap.isEnabled || wordWrap.isCodeScrollable) && (
-                <WordWrapButton
-                  isEnabled={wordWrap.isEnabled}
-                  onClick={() => wordWrap.toggle()}
-                />
-              )}
-              <CopyButton code={plain} />
-            </div>
-          )}
+          {metadata.code && <Buttons />}
         </div>
       </div>
     </CodeBlockContextProvider>

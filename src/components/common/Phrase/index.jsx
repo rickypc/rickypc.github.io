@@ -127,6 +127,7 @@ const Repetition = memo(Object.assign(function Repetition({ value = 1 }) {
   },
 }));
 
+// istanbul ignore next
 const Support = memo(function Support({ path, repetition = 0, transliteration }) {
   const alias = `#${tail(path, '/buddhism')}`;
   const hasCondensed = pdf.some(([template, source]) => template === 'condensed' && source === alias);

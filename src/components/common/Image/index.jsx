@@ -59,7 +59,7 @@ const Picture = memo(function Picture({
   }, [onLoad]);
 
   useEffect(() => {
-    /* istanbul ignore else */
+    // istanbul ignore else
     if (ref?.current) {
       let responsive = images;
       const width = ref.current.clientWidth || ref.current.parentNode.clientWidth;
@@ -79,7 +79,7 @@ const Picture = memo(function Picture({
 
   useEffect(() => {
     if (visible) {
-      /* istanbul ignore next */
+      // istanbul ignore next
       setRender((previous) => (!previous.show ? { ...previous, show: true } : previous));
     }
   }, [visible]);

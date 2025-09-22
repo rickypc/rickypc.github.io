@@ -22,6 +22,7 @@ module.exports = {
     '@docusaurus/plugin-content-docs/client': '@docusaurus/plugin-content-docs/src/client/index.ts',
     '@site/(.*)': '<rootDir>/$1',
     '@theme/(.*)': '@docusaurus/theme-classic/src/theme/$1',
+    '@theme-original/(.*)': '@docusaurus/theme-classic/src/theme/$1',
   },
   testEnvironment: 'node',
   testRegex: 'tests/unit/.*.test.jsx?$',

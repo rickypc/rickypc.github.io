@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -59,6 +59,7 @@ const Picture = memo(function Picture({
   }, [onLoad]);
 
   useEffect(() => {
+    /* istanbul ignore else */
     if (ref?.current) {
       let responsive = images;
       const width = ref.current.clientWidth || ref.current.parentNode.clientWidth;
@@ -78,6 +79,7 @@ const Picture = memo(function Picture({
 
   useEffect(() => {
     if (visible) {
+      /* istanbul ignore next */
       setRender((previous) => (!previous.show ? { ...previous, show: true } : previous));
     }
   }, [visible]);

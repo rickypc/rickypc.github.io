@@ -13,7 +13,7 @@ import Layout from '../../../src/components/common/Layout';
 jest.mock('@docusaurus/Head', () => ({
   __esModule: true,
   // eslint-disable-next-line react/jsx-no-useless-fragment
-  default: ({ children }) => (<>{ children }</>),
+  default: ({ children }) => <>{ children }</>,
 }));
 
 jest.mock('@site/src/hooks/observer', () => ({

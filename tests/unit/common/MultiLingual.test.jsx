@@ -7,6 +7,7 @@
 
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import MultiLingual from '../../../src/components/common/MultiLingual';
 
 jest.mock('@site/src/components/common/PhraseBlock', () => ({
   __esModule: true,
@@ -26,9 +27,6 @@ jest.mock('@site/src/components/common/PhraseBlock', () => ({
     />
   ),
 }));
-
-// eslint-disable-next-line import/first
-import MultiLingual from '../../../src/components/common/MultiLingual';
 
 describe('MultiLingual', () => {
   const transliteration = { className: 'trans-class', unify: true };

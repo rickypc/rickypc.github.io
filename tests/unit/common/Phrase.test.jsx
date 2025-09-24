@@ -7,15 +7,14 @@
 
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import Phrase, { GrPrint, Instruction } from '../../../src/components/common/Phrase';
 
-// Mock react-icons GenIcon
 jest.mock('react-icons/lib', () => ({
   __esModule: true,
   // eslint-disable-next-line react/display-name,react/function-component-definition
   GenIcon: (config) => (props) => (<svg data-testid={`icon-${config.tag}`} {...props} />),
 }));
 
-// Mock Image component
 jest.mock('@site/src/components/common/Image', () => ({
   __esModule: true,
   default: ({ alt, className, picture }) => (
@@ -28,7 +27,6 @@ jest.mock('@site/src/components/common/Image', () => ({
   ),
 }));
 
-// Mock Link component
 jest.mock('@site/src/components/common/Link', () => ({
   __esModule: true,
   default: ({
@@ -44,13 +42,11 @@ jest.mock('@site/src/components/common/Link', () => ({
   ),
 }));
 
-// Mock MDXDetails
 jest.mock('@theme-original/MDXComponents/Details', () => ({
   __esModule: true,
   default: ({ children }) => <div data-testid="mdx-details">{children}</div>,
 }));
 
-// Mock PhraseBlock
 jest.mock('@site/src/components/common/PhraseBlock', () => ({
   __esModule: true,
   default: ({
@@ -70,13 +66,11 @@ jest.mock('@site/src/components/common/PhraseBlock', () => ({
   ),
 }));
 
-// Mock Speech
 jest.mock('@site/src/components/common/Speech', () => ({
   __esModule: true,
   default: ({ children }) => <div data-testid="speech">{children}</div>,
 }));
 
-// Mock PDF metadata
 jest.mock('#buddhism/_pdf.js', () => [
   ['condensed', '#foo'],
   ['roll', '#foo'],
@@ -84,7 +78,6 @@ jest.mock('#buddhism/_pdf.js', () => [
   ['wheel', '#foo'],
 ]);
 
-// Mock common utilities
 jest.mock('@site/src/data/common', () => ({
   __esModule: true,
   clsx: (...args) => args.filter(Boolean).join(' '),
@@ -93,7 +86,6 @@ jest.mock('@site/src/data/common', () => ({
   tail: (path) => path?.split('/')?.pop(),
 }));
 
-// Mock CSS modules
 jest.mock(
   '../../../src/components/common/styles.module.css',
   () => ({
@@ -105,10 +97,7 @@ jest.mock(
   }),
 );
 
-// eslint-disable-next-line import/first
-import Phrase, { GrPrint, Instruction } from '../../../src/components/common/Phrase';
-
-describe('GrPrint component', () => {
+describe('GrPrint', () => {
   it('renders a print icon with passed props', () => {
     const { getByTestId } = render((
       <GrPrint className="print-class" title="PrintTitle" />
@@ -157,7 +146,7 @@ describe('Instruction', () => {
   });
 });
 
-describe('Phrase component variations', () => {
+describe('Phrase', () => {
   const defaultTransliteration = { testId: 'trans', children: 'Hello' };
 
   it('returns null when transliteration is not provided', () => {

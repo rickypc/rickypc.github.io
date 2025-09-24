@@ -7,6 +7,7 @@
 
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import Link from '../../../src/components/common/Link';
 
 const mockCollectLink = jest.fn();
 
@@ -24,15 +25,12 @@ jest.mock('framer-motion', () => ({
   __esModule: true,
   domAnimation: {},
   // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  LazyMotion: ({ children }) => (<>{ children }</>),
+  LazyMotion: ({ children }) => <>{ children }</>,
   m: {
     // eslint-disable-next-line @docusaurus/no-html-links
     a: ({ children, ...props }) => <a {...props}>{children}</a>,
   },
 }));
-
-// eslint-disable-next-line import/first
-import Link from '../../../src/components/common/Link';
 
 describe('Link', () => {
   it('renders external link with rel and target', () => {

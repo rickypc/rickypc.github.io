@@ -35,7 +35,6 @@ describe('Image', () => {
   afterEach(() => {
     jest.runOnlyPendingTimers();
     jest.useRealTimers();
-    jest.clearAllMocks();
   });
 
   it('does not render image or sources when not visible', () => {

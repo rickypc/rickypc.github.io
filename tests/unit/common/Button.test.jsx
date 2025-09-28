@@ -8,27 +8,23 @@
 import { createRef } from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Button from '../../../src/components/common/Button';
+import Button from '@site/src/components/common/Button';
 
 describe('Button', () => {
-  it('renders children', () => {
-    const { getByText } = render(<Button>Click me</Button>);
-    expect(getByText('Click me')).toBeInTheDocument();
+  it('renders children, applies className, and spreads extra props', () => {
+    const { getByRole } = render((
+      <Button className="test-class" data-testid="my-btn">
+        Click me
+      </Button>
+    ));
+    const btn = getByRole('button', { name: 'Click me' });
+    expect(btn).toHaveClass('test-class');
+    expect(btn).toHaveAttribute('data-testid', 'my-btn');
   });
 
-  it('applies className', () => {
-    const { getByRole } = render(<Button className="test-class">Test</Button>);
-    expect(getByRole('button')).toHaveClass('test-class');
-  });
-
-  it('forwards ref', () => {
+  it('forwards ref to the underlying button element', () => {
     const ref = createRef();
     render(<Button ref={ref}>Ref Button</Button>);
     expect(ref.current).toBeInstanceOf(HTMLButtonElement);
-  });
-
-  it('spreads extra props', () => {
-    const { getByRole } = render(<Button data-testid="my-btn">Props</Button>);
-    expect(getByRole('button')).toHaveAttribute('data-testid', 'my-btn');
   });
 });

@@ -7,15 +7,15 @@
 
 import { act, render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import Image from '@site/src/components/common/Image';
 import { useVisibility } from '@site/src/hooks/observer';
-import Image from '../../../src/components/common/Image';
 
 jest.mock('@site/src/hooks/observer', () => ({
   useVisibility: jest.fn(),
 }));
 
 describe('Image', () => {
-  const picture = {
+  const basePicture = {
     avif: 'img.avif',
     webp: 'img.webp',
     fallback: {
@@ -37,223 +37,158 @@ describe('Image', () => {
     jest.useRealTimers();
   });
 
-  it('does not render image or sources when not visible', () => {
-    useVisibility.mockReturnValue({ visible: false });
-    const { container } = render(<Image alt="Alt" picture={picture} />);
-    expect(container.querySelector('source')).not.toBeInTheDocument();
-    expect(container.querySelector('img')).not.toBeInTheDocument();
-  });
-
-  it('renders picture when visible', () => {
-    const { container } = render(<Image alt="Alt" picture={picture} />);
-    expect(container.querySelector('picture')).toBeInTheDocument();
-  });
-
-  it('calls onLoad and updates alt and background after img load', () => {
-    const onLoadMock = jest.fn();
-    const { container } = render((
-      <Image alt="Alt text" picture={picture} onLoad={onLoadMock} />
-    ));
-
-    const img = container.querySelector('img');
-    expect(img).not.toHaveAttribute('alt');
-
-    fireEvent.load(img);
-    expect(onLoadMock).toHaveBeenCalledTimes(1);
-    expect(img).toHaveAttribute('alt', 'Alt text');
-
-    act(() => {
-      jest.advanceTimersByTime(450);
-    });
-    const pic = container.querySelector('picture');
-    expect(pic).not.toHaveStyle('background-image: url(preSrc.jpg)');
-  });
-
-  it('ignores load when already loaded and does not change background on second load', () => {
-    const onLoadMock = jest.fn();
-    const { container } = render((
-      <Image alt="Alt" picture={picture} onLoad={onLoadMock} />
-    ));
-
-    const img = container.querySelector('img');
-    fireEvent.load(img);
-    act(() => {
-      jest.advanceTimersByTime(450);
-    });
-    const pic = container.querySelector('picture');
-    expect(onLoadMock).toHaveBeenCalledTimes(1);
-    expect(pic).not.toHaveStyle('background-image: url(preSrc.jpg)');
-
-    fireEvent.load(img);
-    act(() => {
-      jest.advanceTimersByTime(450);
-    });
-    expect(onLoadMock).toHaveBeenCalledTimes(2);
-    expect(pic).not.toHaveStyle('background-image: url(preSrc.jpg)');
-  });
-
-  it('renders avif, webp sources and fallback image', () => {
-    const { container } = render(<Image alt="Alt" picture={picture} />);
-    const sources = container.querySelectorAll('source');
-    expect(sources).toHaveLength(2);
-    expect(sources[0]).toHaveAttribute('srcset', 'img.avif');
-    expect(sources[1]).toHaveAttribute('srcset', 'img.webp');
-
-    const img = container.querySelector('img');
-    expect(img).toHaveAttribute('src', 'fallback.jpg');
-  });
-
-  it('wraps picture in a link when link prop is provided', () => {
-    const { getByRole } = render((
-      <Image
-        alt="Alt"
-        picture={picture}
-        link={{ href: '/test', title: 'Test' }}
-      />
-    ));
-    const anchor = getByRole('link');
-    expect(anchor).toHaveAttribute('href', '/test');
-    expect(anchor).toHaveAttribute('title', 'Test');
-    expect(anchor.querySelector('picture')).toBeInTheDocument();
-  });
-
-  it('applies preSrc as background-image style', () => {
-    const { container } = render(<Image alt="Alt" picture={picture} />);
-    const pic = container.querySelector('picture');
-    expect(pic).toHaveStyle('background-image: url(preSrc.jpg)');
-  });
-
-  it('updates fit based on clientWidth in fallback.src.images', () => {
-    const originalDescriptor = Object.getOwnPropertyDescriptor(
-      HTMLElement.prototype,
-      'clientWidth',
-    );
-    Object.defineProperty(HTMLElement.prototype, 'clientWidth', {
-      configurable: true,
-      get: () => 150,
+  describe('visibility', () => {
+    it('does not render sources or img when not visible', () => {
+      useVisibility.mockReturnValue({ visible: false });
+      const { container } = render(<Image alt="Alt" picture={basePicture} />);
+      const picture = container.querySelector('picture');
+      expect(picture).toBeInTheDocument();
+      expect(picture.querySelector('source')).toBeNull();
+      expect(picture.querySelector('img')).toBeNull();
     });
 
-    const responsive = [
-      { path: 'small.jpg', width: 50 },
-      { path: 'large.jpg', width: 200 },
-    ];
-    const pictureCustom = {
-      avif: picture.avif,
-      webp: picture.webp,
-      fallback: {
-        src: { images: responsive, srcSet: 'fallbackSrcSet' },
-        preSrc: 'preSrc.jpg',
+    it('renders a picture element when visible', () => {
+      useVisibility.mockReturnValue({ visible: true });
+      const { container } = render(<Image alt="Alt" picture={basePicture} />);
+      expect(container.querySelector('picture')).toBeInTheDocument();
+    });
+  });
+
+  describe('sources and fallback', () => {
+    it('renders avif, webp sources and fallback img', () => {
+      const { container } = render(<Image alt="Alt" picture={basePicture} />);
+      const sources = container.querySelectorAll('source');
+      expect(sources).toHaveLength(2);
+      expect(sources[0]).toHaveAttribute('srcset', 'img.avif');
+      expect(sources[1]).toHaveAttribute('srcset', 'img.webp');
+
+      const img = container.querySelector('img');
+      expect(img).toHaveAttribute('src', 'fallback.jpg');
+    });
+  });
+
+  describe('link wrapper', () => {
+    it('wraps picture in an anchor when link prop is provided', () => {
+      const { getByRole } = render((
+        <Image
+          alt="Alt"
+          picture={basePicture}
+          link={{ href: '/test', title: 'Test' }}
+        />
+      ));
+      const anchor = getByRole('link');
+      expect(anchor).toHaveAttribute('href', '/test');
+      expect(anchor).toHaveAttribute('title', 'Test');
+      expect(anchor.querySelector('picture')).toBeInTheDocument();
+    });
+  });
+
+  describe('preSrc background and load behavior', () => {
+    it('applies preSrc background, sets alt on load, and clears preSrc after delay', () => {
+      const onLoad = jest.fn();
+      const { container } = render((
+        <Image alt="Alt text" picture={basePicture} onLoad={onLoad} />
+      ));
+
+      const pic = container.querySelector('picture');
+      expect(pic).toHaveStyle('background-image: url(preSrc.jpg)');
+
+      const img = container.querySelector('img');
+      expect(img).not.toHaveAttribute('alt');
+
+      fireEvent.load(img);
+      expect(onLoad).toHaveBeenCalledTimes(1);
+      expect(img).toHaveAttribute('alt', 'Alt text');
+
+      act(() => {
+        jest.advanceTimersByTime(450);
+      });
+      expect(pic).not.toHaveStyle('background-image: url(preSrc.jpg)');
+    });
+
+    it('invokes onLoad again on subsequent loads without restoring preSrc', () => {
+      const onLoad = jest.fn();
+      const { container } = render((
+        <Image alt="Alt" picture={basePicture} onLoad={onLoad} />
+      ));
+
+      const img = container.querySelector('img');
+      const pic = container.querySelector('picture');
+
+      fireEvent.load(img);
+      act(() => jest.advanceTimersByTime(450));
+      fireEvent.load(img);
+      expect(onLoad).toHaveBeenCalledTimes(2);
+      expect(pic).not.toHaveStyle('background-image: url(preSrc.jpg)');
+    });
+  });
+
+  describe('responsive fallback selection', () => {
+    const scenarios = [
+      {
+        name: 'selects first image exceeding width',
+        width: 150,
+        images: [
+          { path: 'small.jpg', width: 50 },
+          { path: 'large.jpg', width: 200 },
+        ],
+        expected: 'large.jpg',
       },
-    };
-
-    const { container } = render(<Image alt="Alt" picture={pictureCustom} />);
-    const img = container.querySelector('img');
-    expect(img).toHaveAttribute('src', 'large.jpg');
-
-    if (originalDescriptor) {
-      Object.defineProperty(
-        HTMLElement.prototype,
-        'clientWidth',
-        originalDescriptor,
-      );
-    }
-  });
-
-  it('falls back to last image when none exceed width', () => {
-    const originalDescriptor = Object.getOwnPropertyDescriptor(
-      HTMLElement.prototype,
-      'clientWidth',
-    );
-    Object.defineProperty(HTMLElement.prototype, 'clientWidth', {
-      configurable: true,
-      get: () => 150,
-    });
-
-    const responsive = [
-      { path: 'one.jpg', width: 50 },
-      { path: 'two.jpg', width: 100 },
-    ];
-    const pictureCustom = {
-      avif: picture.avif,
-      webp: picture.webp,
-      fallback: {
-        src: { images: responsive, srcSet: 'fallbackSrcSet' },
-        preSrc: 'preSrc.jpg',
+      {
+        name: 'falls back to last image when none exceed width',
+        width: 150,
+        images: [
+          { path: 'one.jpg', width: 50 },
+          { path: 'two.jpg', width: 100 },
+        ],
+        expected: 'two.jpg',
       },
-    };
-
-    const { container } = render(<Image alt="Alt" picture={pictureCustom} />);
-    const img = container.querySelector('img');
-    expect(img).toHaveAttribute('src', 'two.jpg');
-
-    if (originalDescriptor) {
-      Object.defineProperty(
-        HTMLElement.prototype,
-        'clientWidth',
-        originalDescriptor,
-      );
-    }
-  });
-
-  it('does not update fit when found path equals initial fit path', () => {
-    const originalDescriptor = Object.getOwnPropertyDescriptor(
-      HTMLElement.prototype,
-      'clientWidth',
-    );
-    Object.defineProperty(HTMLElement.prototype, 'clientWidth', {
-      configurable: true,
-      get: () => 50,
-    });
-
-    const responsive = [
-      { path: 'one.jpg', width: 50 },
-      { path: 'two.jpg', width: 100 },
-    ];
-    const pictureCustom = {
-      avif: picture.avif,
-      webp: picture.webp,
-      fallback: {
-        src: { images: responsive, srcSet: 'fallbackSrcSet' },
-        preSrc: 'preSrc.jpg',
+      {
+        name: 'does not change when initial fit equals first',
+        width: 50,
+        images: [
+          { path: 'one.jpg', width: 50 },
+          { path: 'two.jpg', width: 100 },
+        ],
+        expected: 'one.jpg',
       },
-    };
+      {
+        name: 'handles string fallback',
+        width: 80,
+        images: 'stringFallback.jpg',
+        expected: 'stringFallback.jpg',
+      },
+    ];
 
-    const { container } = render(<Image alt="Alt" picture={pictureCustom} />);
-    const img = container.querySelector('img');
-    expect(img).toHaveAttribute('src', 'one.jpg');
-
-    if (originalDescriptor) {
-      Object.defineProperty(
+    test.each(scenarios)('$name', ({ width, images, expected }) => {
+      const original = Object.getOwnPropertyDescriptor(
         HTMLElement.prototype,
         'clientWidth',
-        originalDescriptor,
       );
-    }
-  });
+      Object.defineProperty(HTMLElement.prototype, 'clientWidth', {
+        configurable: true,
+        get: () => width,
+      });
 
-  it('handles string fallback by choosing the fallback path', () => {
-    const originalDescriptor = Object.getOwnPropertyDescriptor(
-      HTMLElement.prototype,
-      'clientWidth',
-    );
-    Object.defineProperty(HTMLElement.prototype, 'clientWidth', {
-      configurable: true,
-      get: () => 80,
+      const picObj = typeof images === 'string'
+        ? { fallback: images }
+        : {
+          avif: basePicture.avif,
+          webp: basePicture.webp,
+          fallback: { src: { images, srcSet: '' }, preSrc: '' },
+        };
+
+      const { container } = render(<Image alt="Alt" picture={picObj} />);
+      const img = container.querySelector('img');
+      expect(img).toHaveAttribute('src', expected);
+
+      if (original) {
+        Object.defineProperty(
+          HTMLElement.prototype,
+          'clientWidth',
+          original,
+        );
+      }
     });
-
-    const pictureString = { fallback: 'stringFallback.jpg' };
-    const { container } = render((
-      <Image alt="Alt" picture={pictureString} />
-    ));
-    const img = container.querySelector('img');
-    expect(img).toHaveAttribute('src', 'stringFallback.jpg');
-
-    if (originalDescriptor) {
-      Object.defineProperty(
-        HTMLElement.prototype,
-        'clientWidth',
-        originalDescriptor,
-      );
-    }
   });
 });

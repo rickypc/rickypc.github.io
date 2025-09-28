@@ -7,18 +7,12 @@
 
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Pills from '../../../src/components/common/Pills';
-
-jest.mock('@site/src/data/common', () => ({
-  __esModule: true,
-  clsx: (...args) => args.filter(Boolean).join(' '),
-  key: (a, b) => `${a}-${b}`,
-}));
+import Pills from '@site/src/components/common/Pills';
 
 jest.mock('framer-motion', () => ({
   __esModule: true,
   // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  LazyMotion: ({ children }) => <>{ children }</>,
+  LazyMotion: ({ children }) => <>{children}</>,
   domMax: {},
   m: {
     dt: ({
@@ -28,10 +22,8 @@ jest.mock('framer-motion', () => ({
       whileTap,
       ...rest
     }) => (
-      /*
-        eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-        jsx-a11y/no-noninteractive-element-interactions
-      */
+      /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
+      jsx-a11y/no-noninteractive-element-interactions */
       <dt className={className} onClick={onClick} {...rest}>
         {children}
       </dt>
@@ -55,80 +47,80 @@ jest.mock('framer-motion', () => ({
 }));
 
 jest.mock(
-  '../../../src/components/common/styles.module.css',
+  '@site/src/components/common/Pills/styles.module.css',
   () => ({
-    pills: 'pills-class',
     active: 'active-class',
-    item: 'item-class',
     indicator: 'indicator-class',
+    item: 'item-class',
+    pills: 'pills-class',
   }),
 );
+
+jest.mock('@site/src/data/common', () => ({
+  __esModule: true,
+  clsx: (...args) => args.filter(Boolean).join(' '),
+  key: (a, b) => `${a}-${b}`,
+}));
 
 describe('Pills', () => {
   const items = ['apple', 'banana', 'cherry'];
   const prefix = 'fruit';
+  let handleClick;
+  let container;
+  let getByTestId;
+  let dtElements;
 
-  it('renders a <dl> with one <dt> per item and calls onClick', () => {
-    const handleClick = jest.fn();
-    const { container } = render((
+  const renderComponent = (active) => {
+    handleClick = jest.fn();
+    const utils = render((
       <Pills
-        active="banana"
+        active={active}
         items={items}
         onClick={handleClick}
         prefix={prefix}
-        data-testid="pills"
       />
     ));
+    container = utils.container;
+    getByTestId = utils.getByTestId;
+    dtElements = container.querySelectorAll('dt');
+  };
 
-    // grab the one <dl> element
-    const dl = container.querySelector('dl');
-    expect(dl.tagName).toBe('DL');
-    expect(dl).toHaveClass('pills-class');
+  describe('default behavior', () => {
+    beforeEach(() => renderComponent('banana'));
 
-    // one <dt> per item
-    const dtElements = container.querySelectorAll('dt');
-    expect(dtElements).toHaveLength(items.length);
+    it('renders a <dl> with correct items', () => {
+      const dl = container.querySelector('dl');
+      expect(dl.tagName).toBe('DL');
+      expect(dl).toHaveClass('pills-class');
+      expect(dtElements).toHaveLength(items.length);
 
-    // each dt wraps a span with the item text
-    items.forEach((item, idx) => {
-      // eslint-disable-next-line security/detect-object-injection
-      const dt = dtElements[idx];
-      const span = dt.querySelector('span:not([data-test*="indicator"])');
-      expect(span).toHaveTextContent(item);
+      items.forEach((item, idx) => {
+        // eslint-disable-next-line security/detect-object-injection
+        const dt = dtElements[idx];
+        const span = dt.querySelector('span:not([data-layoutid])');
+        expect(span).toHaveTextContent(item);
+      });
     });
 
-    // click an item
-    fireEvent.click(dtElements[0]);
-    expect(handleClick).toHaveBeenCalledWith('apple');
+    it('calls onClick with the clicked item', () => {
+      fireEvent.click(dtElements[0]);
+      expect(handleClick).toHaveBeenCalledWith('apple');
+    });
   });
 
-  it('applies active class on the active item and renders an indicator', () => {
-    const handleClick = jest.fn();
-    const { container, getByTestId } = render((
-      <Pills
-        active="cherry"
-        items={items}
-        onClick={handleClick}
-        prefix={prefix}
-      />
-    ));
+  describe('active state', () => {
+    beforeEach(() => renderComponent('cherry'));
 
-    const dtElements = container.querySelectorAll('dt');
-    const appleDt = dtElements[0];
-    const cherryDt = dtElements[2];
+    it('applies active class and renders indicator on active item', () => {
+      // eslint-disable-next-line no-unused-vars
+      const [appleDt, bananaDt, cherryDt] = dtElements;
+      expect(appleDt).not.toHaveClass('active-class');
+      expect(cherryDt).toHaveClass('active-class');
 
-    // only the active dt has the active-class
-    expect(appleDt).not.toHaveClass('active-class');
-    expect(cherryDt).toHaveClass('active-class');
-
-    // the indicator span appears only for the active item
-    const indicator = getByTestId('indicator-cherry');
-    expect(indicator).toBeInTheDocument();
-    expect(indicator).toHaveClass('indicator-class');
-    expect(indicator).toHaveAttribute(
-      'data-layoutid',
-      `pill-indicator-${prefix}`,
-    );
-    expect(indicator).toHaveTextContent('cherry');
+      const indicator = getByTestId('indicator-cherry');
+      expect(indicator).toHaveClass('indicator-class');
+      expect(indicator).toHaveAttribute('data-layoutid', `pill-indicator-${prefix}`);
+      expect(indicator).toHaveTextContent('cherry');
+    });
   });
 });

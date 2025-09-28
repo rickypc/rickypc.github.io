@@ -7,7 +7,17 @@
 
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Preamble from '../../../src/components/common/Preamble';
+import Preamble from '@site/src/components/common/Preamble';
+
+jest.mock(
+  '@site/src/components/common/Preamble/styles.module.css',
+  () => ({ preamble: 'preamble-class' }),
+);
+
+jest.mock('@site/src/components/common/PrintAdmonition', () => ({
+  __esModule: true,
+  default: () => <div data-testid="print-admonition" />,
+}));
 
 jest.mock('@site/src/data/common', () => ({
   __esModule: true,
@@ -21,54 +31,49 @@ jest.mock('@theme/Heading', () => ({
   ),
 }));
 
-jest.mock('@site/src/components/common/PrintAdmonition', () => ({
-  __esModule: true,
-  default: () => <div data-testid="print-admonition" />,
-}));
-
-jest.mock(
-  '../../../src/components/common/styles.module.css',
-  () => ({ preamble: 'preamble-class' }),
-);
-
 describe('Preamble', () => {
   const baseProps = {
     title: 'Sample Title',
     description: 'This is a sample description.',
   };
 
-  it('renders header, heading, and description without PrintAdmonition by default', () => {
-    const { queryByTestId, getByTestId, getByText } = render((
-      <Preamble {...baseProps} />
-    ));
+  describe('default rendering', () => {
+    let utils;
 
-    // PrintAdmonition should not render
-    expect(queryByTestId('print-admonition')).toBeNull();
+    beforeEach(() => {
+      utils = render(<Preamble {...baseProps} />);
+    });
 
-    // Header with class "row"
-    const header = getByText('Sample Title').closest('header');
-    expect(header).toHaveClass('row');
+    it('does not render PrintAdmonition', () => {
+      const { queryByTestId } = utils;
+      expect(queryByTestId('print-admonition')).toBeNull();
+    });
 
-    // Inner div should have combined classes
-    const innerDiv = header.querySelector('div');
-    expect(innerDiv).toHaveClass(
-      'col col--8 col--offset-2 preamble-class',
-    );
+    it('renders header, heading, and description', () => {
+      const { getByTestId, getByText } = utils;
+      const header = getByText(baseProps.title).closest('header');
+      expect(header).toHaveClass('row');
 
-    // Heading as an h1
-    const heading = getByTestId('heading');
-    expect(heading.tagName).toBe('H1');
-    expect(heading).toHaveTextContent('Sample Title');
+      const innerDiv = header.querySelector('div');
+      expect(innerDiv).toHaveClass(
+        'col col--8 col--offset-2 preamble-class',
+      );
 
-    // Paragraph with description
-    const para = getByText('This is a sample description.');
-    expect(para.tagName).toBe('P');
+      const heading = getByTestId('heading');
+      expect(heading.tagName).toBe('H1');
+      expect(heading).toHaveTextContent(baseProps.title);
+
+      const para = getByText(baseProps.description);
+      expect(para.tagName).toBe('P');
+    });
   });
 
-  it('renders PrintAdmonition when printAdmonition is true', () => {
-    const { getByTestId } = render((
-      <Preamble {...baseProps} printAdmonition />
-    ));
-    expect(getByTestId('print-admonition')).toBeInTheDocument();
+  describe('when printAdmonition is true', () => {
+    it('renders the PrintAdmonition component', () => {
+      const { getByTestId } = render((
+        <Preamble {...baseProps} printAdmonition />
+      ));
+      expect(getByTestId('print-admonition')).toBeInTheDocument();
+    });
   });
 });

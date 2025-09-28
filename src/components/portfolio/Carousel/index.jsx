@@ -31,6 +31,7 @@ const debounce = (fn, delay = 200) => {
     timer = setTimeout(async () => fn(...args), delay);
   };
   debouncer.cancel = () => {
+    // istanbul ignore else
     if (timer) {
       clearTimeout(timer);
       timer = null;

@@ -7,12 +7,19 @@
 
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Phrase, { GrPrint, Instruction } from '../../../src/components/common/Phrase';
+import Phrase, { GrPrint, Instruction } from '@site/src/components/common/Phrase';
+
+jest.mock('#buddhism/_pdf.js', () => [
+  ['condensed', '#foo'],
+  ['roll', '#foo'],
+  ['thangka', '#foo'],
+  ['wheel', '#foo'],
+]);
 
 jest.mock('react-icons/lib', () => ({
   __esModule: true,
   // eslint-disable-next-line react/display-name,react/function-component-definition
-  GenIcon: (config) => (props) => (<svg data-testid={`icon-${config.tag}`} {...props} />),
+  GenIcon: (config) => (props) => <svg data-testid={`icon-${config.tag}`} {...props} />,
 }));
 
 jest.mock('@site/src/components/common/Image', () => ({
@@ -42,10 +49,16 @@ jest.mock('@site/src/components/common/Link', () => ({
   ),
 }));
 
-jest.mock('@theme-original/MDXComponents/Details', () => ({
-  __esModule: true,
-  default: ({ children }) => <div data-testid="mdx-details">{children}</div>,
-}));
+jest.mock(
+  '@site/src/components/common/Phrase/styles.module.css',
+  () => ({
+    badge: 'badge-class',
+    icon: 'icon-class',
+    instruction: 'instr-class',
+    picture: 'pic-class',
+    support: 'support-class',
+  }),
+);
 
 jest.mock('@site/src/components/common/PhraseBlock', () => ({
   __esModule: true,
@@ -71,13 +84,6 @@ jest.mock('@site/src/components/common/Speech', () => ({
   default: ({ children }) => <div data-testid="speech">{children}</div>,
 }));
 
-jest.mock('#buddhism/_pdf.js', () => [
-  ['condensed', '#foo'],
-  ['roll', '#foo'],
-  ['thangka', '#foo'],
-  ['wheel', '#foo'],
-]);
-
 jest.mock('@site/src/data/common', () => ({
   __esModule: true,
   clsx: (...args) => args.filter(Boolean).join(' '),
@@ -86,16 +92,10 @@ jest.mock('@site/src/data/common', () => ({
   tail: (path) => path?.split('/')?.pop(),
 }));
 
-jest.mock(
-  '../../../src/components/common/styles.module.css',
-  () => ({
-    badge: 'badge-class',
-    icon: 'icon-class',
-    instruction: 'instr-class',
-    picture: 'pic-class',
-    support: 'support-class',
-  }),
-);
+jest.mock('@theme-original/MDXComponents/Details', () => ({
+  __esModule: true,
+  default: ({ children }) => <div data-testid="mdx-details">{children}</div>,
+}));
 
 describe('GrPrint', () => {
   it('renders a print icon with passed props', () => {
@@ -103,29 +103,19 @@ describe('GrPrint', () => {
       <GrPrint className="print-class" title="PrintTitle" />
     ));
     const icon = getByTestId('icon-svg');
-    expect(icon).toBeInTheDocument();
     expect(icon).toHaveAttribute('class', 'print-class');
     expect(icon).toHaveAttribute('title', 'PrintTitle');
   });
 });
 
 describe('Instruction', () => {
-  it('renders MDXDetails with a summary and Image when image prop is provided', () => {
-    const props = {
-      image: 'path/to/img.png',
-      text: null,
-      transliteration: { title: 'MyTitle' },
-    };
+  it('renders MDXDetails and Image when image prop is provided', () => {
+    const props = { image: 'path/to/img.png', text: null, transliteration: { title: 'MyTitle' } };
     const { getByTestId, getByText } = render(<Instruction {...props} />);
 
-    // wrapper from MDXDetails
-    const details = getByTestId('mdx-details');
-    expect(details).toBeInTheDocument();
-
-    // summary shows transliteration.title
+    expect(getByTestId('mdx-details')).toBeInTheDocument();
     expect(getByText('MyTitle')).toBeInTheDocument();
 
-    // Image rendered with correct src and alt
     const img = getByTestId('image-MyTitle');
     expect(img).toHaveAttribute('src', 'path/to/img.png');
     expect(img).toHaveAttribute('alt', 'MyTitle');
@@ -133,140 +123,98 @@ describe('Instruction', () => {
   });
 
   it('renders a div with instruction text when only text prop is provided', () => {
-    const props = {
-      image: undefined,
-      text: 'Please read carefully',
-      transliteration: { title: 'IgnoredTitle' },
-    };
+    const props = { image: undefined, text: 'Please read carefully', transliteration: { title: 'IgnoredTitle' } };
     const { getByText } = render(<Instruction {...props} />);
-
     const div = getByText('Please read carefully');
-    expect(div).toBeInTheDocument();
     expect(div).toHaveClass('instr-class');
   });
 });
 
 describe('Phrase', () => {
-  const defaultTransliteration = { testId: 'trans', children: 'Hello' };
+  const defaultTrans = { testId: 'trans', children: 'Hello' };
+  let utils;
 
   it('returns null when transliteration is not provided', () => {
     const { container } = render(<Phrase />);
     expect(container.firstChild).toBeNull();
   });
 
-  it('renders only PhraseBlock when only children provided', () => {
-    const transliteration = {
-      ...defaultTransliteration,
-      speech: undefined,
-      repetition: 0,
-    };
-    const { getByTestId, queryByTestId } = render((
-      <Phrase transliteration={transliteration} />
-    ));
+  describe('basic rendering without speech or repetition', () => {
+    beforeEach(() => {
+      utils = render((
+        <Phrase transliteration={{ ...defaultTrans, speech: undefined, repetition: 0 }} />
+      ));
+    });
 
-    const block = getByTestId('phrase-block-trans');
-    expect(block).toHaveAttribute('data-infix', '।');
-    expect(block).toHaveAttribute('data-prefix', '꣼ ');
-    expect(block).toHaveAttribute('data-suffix', '॥');
-    expect(block.textContent).toBe('Hello');
+    it('renders only PhraseBlock with default Sanskrit markers', () => {
+      const block = utils.getByTestId('phrase-block-trans');
+      expect(block).toHaveAttribute('data-infix', '।');
+      expect(block).toHaveAttribute('data-prefix', '꣼ ');
+      expect(block).toHaveAttribute('data-suffix', '॥');
+      expect(block.textContent).toBe('Hello');
+    });
 
-    expect(queryByTestId('mdx-details')).toBeNull();
-    expect(queryByTestId('speech')).toBeNull();
-    expect(queryByTestId(/^link-/)).toBeNull();
+    it('does not include Details, Speech, or PDF links', () => {
+      expect(utils.queryByTestId('mdx-details')).toBeNull();
+      expect(utils.queryByTestId('speech')).toBeNull();
+      expect(utils.queryByTestId(/^link-/)).toBeNull();
+    });
   });
 
   it('renders Speech and support wrapper when speech is provided', () => {
-    const transliteration = {
-      ...defaultTransliteration,
-      speech: 'SpeakUp',
-      repetition: 0,
-    };
-    const { getByTestId, container, queryByTestId } = render((
-      <Phrase transliteration={transliteration} />
-    ));
-
-    expect(getByTestId('speech').textContent).toBe('SpeakUp');
-
-    const supportWrapper = container.querySelector('.support-class');
-    expect(supportWrapper).toBeInTheDocument();
-
-    expect(queryByTestId(/^link-/)).toBeNull();
+    utils = render(<Phrase transliteration={{ ...defaultTrans, speech: 'SpeakUp', repetition: 0 }} />);
+    expect(utils.getByTestId('speech').textContent).toBe('SpeakUp');
+    expect(utils.container.querySelector('.support-class')).toBeInTheDocument();
+    expect(utils.queryByTestId(/^link-/)).toBeNull();
   });
 
-  it('does not render repetition badge when repetition prop is omitted (default 0)', () => {
-    const transliteration = { ...defaultTransliteration };
-    const { container } = render((
-      <Phrase path="/buddhism/foo" transliteration={transliteration} />
-    ));
+  describe('repetition badge', () => {
+    it('does not render badge when repetition is 0', () => {
+      const { container } = render(<Phrase path="/buddhism/foo" transliteration={defaultTrans} />);
+      expect(container.querySelector('.badge-class')).toBeNull();
+    });
 
-    // With path provided, PDF links appear but no badge since default repetition is 0
-    const badge = container.querySelector('.badge-class');
-    expect(badge).toBeNull();
+    it('renders badge when repetition > 1', () => {
+      const { container } = render(<Phrase transliteration={{ ...defaultTrans, repetition: 5 }} />);
+      const badge = container.querySelector('.badge-class');
+      expect(badge).toBeInTheDocument();
+      expect(badge.textContent).toBe('5x');
+      expect(badge).toHaveAttribute('title', 'Preferred repetition: 5 times');
+    });
   });
 
-  it('renders repetition badge when repetition > 1', () => {
-    const transliteration = {
-      ...defaultTransliteration,
-      repetition: 5,
-    };
-    const { container } = render((
-      <Phrase transliteration={transliteration} />
-    ));
+  describe('PDF links generation', () => {
+    beforeEach(() => {
+      utils = render(<Phrase path="/buddhism/foo" transliteration={{ ...defaultTrans, title: 'MyPrayer' }} />);
+    });
 
-    const badge = container.querySelector('.badge-class');
-    expect(badge).toBeInTheDocument();
-    expect(badge.textContent).toBe('5x');
-    expect(badge).toHaveAttribute(
-      'title',
-      'Preferred repetition: 5 times',
-    );
+    it('renders all four PDF links with correct hrefs and testids', () => {
+      const { getByTestId } = utils;
+      const expected = [
+        ['link-Open MyPrayer condensed prayer roll', 'file-/buddhism/foo-condensed/pdf/pdf.'],
+        ['link-Open MyPrayer prayer roll', 'file-/buddhism/foo-roll/pdf/pdf.'],
+        ['link-Open MyPrayer paubhā/thangka prayer', 'file-/buddhism/foo-thangka/pdf/pdf.'],
+        ['link-Open MyPrayer prayer wheel', 'file-/buddhism/foo-wheel/pdf/pdf.'],
+      ];
+      expected.forEach(([testId, href]) => {
+        const link = getByTestId(testId);
+        expect(link).toBeInTheDocument();
+        expect(link).toHaveAttribute('data-href', href);
+      });
+    });
   });
 
-  it('renders PDF links when path and title are provided', () => {
-    const transliteration = {
-      ...defaultTransliteration,
-      title: 'MyPrayer',
-    };
-    const { getByTestId } = render((
-      <Phrase path="/buddhism/foo" transliteration={transliteration} />
-    ));
+  describe('inline Instruction rendering', () => {
+    it('renders Instruction when image prop is provided on Phrase', () => {
+      const { getByTestId } = render(<Phrase image="img.png" path="/buddhism/foo" transliteration={{ ...defaultTrans, title: 'ImgTest' }} />);
+      expect(getByTestId('mdx-details')).toBeInTheDocument();
+      expect(getByTestId('image-ImgTest')).toHaveAttribute('src', 'img.png');
+    });
 
-    expect(getByTestId('link-Open MyPrayer prayer roll')).toHaveAttribute(
-      'data-href',
-      'file-/buddhism/foo-roll/pdf/pdf.',
-    );
-    expect(
-      getByTestId('link-Open MyPrayer condensed prayer roll'),
-    ).toBeInTheDocument();
-    expect(getByTestId('link-Open MyPrayer prayer wheel')).toBeInTheDocument();
-    expect(
-      getByTestId('link-Open MyPrayer paubhā/thangka prayer'),
-    ).toBeInTheDocument();
-  });
-
-  it('renders Instruction when image or instruction props provided', () => {
-    const transliteration = {
-      ...defaultTransliteration,
-      title: 'ImgTest',
-    };
-
-    const { getByTestId } = render((
-      <Phrase
-        image="img.png"
-        path="/buddhism/foo"
-        transliteration={transliteration}
-      />
-    ));
-    expect(getByTestId('mdx-details')).toBeInTheDocument();
-    expect(getByTestId('image-ImgTest')).toHaveAttribute('src', 'img.png');
-
-    const { getByText } = render((
-      <Phrase
-        instruction="Read this"
-        transliteration={{ ...transliteration, title: 'NoImg' }}
-      />
-    ));
-    const div = getByText('Read this');
-    expect(div).toHaveClass('instr-class');
+    it('renders Instruction when instruction prop is provided on Phrase', () => {
+      const { getByText } = render(<Phrase instruction="Read this" transliteration={{ ...defaultTrans, title: 'NoImg' }} />);
+      const div = getByText('Read this');
+      expect(div).toHaveClass('instr-class');
+    });
   });
 });

@@ -7,17 +7,13 @@
 
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import PrintAdmonition from '@site/src/components/common/PrintAdmonition';
 import { usePrint } from '@site/src/hooks/observer';
-import PrintAdmonition from '../../../src/components/common/PrintAdmonition';
 
-jest.mock('@theme/Admonition', () => ({
-  __esModule: true,
-  default: ({ type, children }) => (
-    <div data-testid="admonition" data-type={type}>
-      {children}
-    </div>
-  ),
-}));
+jest.mock(
+  '@site/src/components/common/PrintAdmonition/styles.module.css',
+  () => ({ admonition: 'admonition-class' }),
+);
 
 jest.mock('@site/src/data/common', () => ({
   __esModule: true,
@@ -35,34 +31,39 @@ jest.mock('@site/src/hooks/observer', () => ({
   usePrint: jest.fn(),
 }));
 
-jest.mock(
-  '../../../src/components/common/styles.module.css',
-  () => ({
-    admonition: 'admonition-class',
-  }),
-);
+jest.mock('@theme/Admonition', () => ({
+  __esModule: true,
+  default: ({ type, children }) => (
+    <div data-testid="admonition" data-type={type}>
+      {children}
+    </div>
+  ),
+}));
 
 describe('PrintAdmonition', () => {
-  it('renders nothing when print is ready', () => {
-    usePrint.mockReturnValue([true]);
-    const { container } = render(<PrintAdmonition />);
-    expect(container.firstChild).toBeNull();
+  beforeEach(() => {
+    usePrint.mockReturnValue([false]);
   });
 
-  it('renders an aside with Admonition when print is not ready', () => {
-    usePrint.mockReturnValue([false]);
-    const { getByTestId, getByText } = render(<PrintAdmonition />);
+  describe('when print is not ready', () => {
+    it('renders an aside with Admonition', () => {
+      const { getByTestId, getByText } = render(<PrintAdmonition />);
+      expect(getByText('Please prepare to print')).toBeInTheDocument();
 
-    // The admonition text comes from common.admonitions.print.text
-    expect(getByText('Please prepare to print')).toBeInTheDocument();
+      const admonition = getByTestId('admonition');
+      expect(admonition).toHaveAttribute('data-type', 'info');
 
-    // Admonition wrapper gets correct type
-    const admonition = getByTestId('admonition');
-    expect(admonition).toHaveAttribute('data-type', 'info');
+      const aside = admonition.closest('aside');
+      expect(aside).toHaveAttribute('aria-hidden', 'true');
+      expect(aside).toHaveClass('admonition-class row');
+    });
+  });
 
-    // Ensure it lives inside an <aside> with aria-hidden and correct classes
-    const aside = admonition.closest('aside');
-    expect(aside).toHaveAttribute('aria-hidden', 'true');
-    expect(aside).toHaveClass('admonition-class row');
+  describe('when print is ready', () => {
+    it('renders nothing', () => {
+      usePrint.mockReturnValue([true]);
+      const { container } = render(<PrintAdmonition />);
+      expect(container.firstChild).toBeNull();
+    });
   });
 });

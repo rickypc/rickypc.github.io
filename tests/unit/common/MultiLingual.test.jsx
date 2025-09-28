@@ -7,7 +7,7 @@
 
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import MultiLingual from '../../../src/components/common/MultiLingual';
+import MultiLingual from '@site/src/components/common/MultiLingual';
 
 jest.mock('@site/src/components/common/PhraseBlock', () => ({
   __esModule: true,
@@ -36,58 +36,61 @@ describe('MultiLingual', () => {
   const chinese = { children: 'ch', testId: 'ch' };
   const thai = { children: 'th', testId: 'th' };
 
-  it('renders all phrase blocks correctly', () => {
-    const { queryByTestId } = render((
-      <MultiLingual
-        sanskrit={sanskrit}
-        tibetan={tibetan}
-        pali={pali}
-        chinese={chinese}
-        thai={thai}
-        transliteration={transliteration}
-      />
-    ));
+  describe('when all language props are provided', () => {
+    let queryByTestId;
 
-    const expectations = [
-      {
+    beforeEach(() => {
+      const utils = render((
+        <MultiLingual
+          sanskrit={sanskrit}
+          tibetan={tibetan}
+          pali={pali}
+          chinese={chinese}
+          thai={thai}
+          transliteration={transliteration}
+        />
+      ));
+      queryByTestId = utils.queryByTestId;
+    });
+
+    it.each([
+      ['chinese', {
         id: 'ch',
         infix: '·',
         prefix: '꣼ ',
         suffix: '。',
-      },
-      {
+      }],
+      ['sanskrit', {
         id: 'sa',
         infix: '।',
         prefix: '꣼ ',
         suffix: '॥',
-      },
-      {
+      }],
+      ['pali', {
         id: 'si',
         infix: '.',
-        refix: '꣼ ',
+        prefix: '꣼ ',
         suffix: '෴',
-      },
-      {
+      }],
+      ['siddham', {
         id: 'sid',
         infix: '𑗂',
         prefix: '꣼ ',
         suffix: '𑗃',
-      },
-      {
+      }],
+      ['thai', {
         id: 'th',
         infix: 'ฯ',
         prefix: '꣼ ',
         suffix: '๚',
-      },
-      {
+      }],
+      ['tibetan', {
         id: 'ti',
         infix: '།',
         prefix: '༄༅། །',
         suffix: '༎',
-      },
-    ];
-
-    expectations.forEach(({
+      }],
+    ])('%s phrase block has correct markers', (_lang, {
       id,
       infix,
       prefix,
@@ -98,20 +101,21 @@ describe('MultiLingual', () => {
       expect(el).toHaveAttribute('data-infix', infix);
       expect(el).toHaveAttribute('data-prefix', prefix);
       expect(el).toHaveAttribute('data-suffix', suffix);
-      expect(el).toHaveAttribute('data-classname', 'trans-class');
+      expect(el).toHaveAttribute('data-classname', transliteration.className);
       expect(el).toHaveAttribute('data-unify', 'true');
     });
   });
 
-  it('renders nothing when no children present', () => {
+  it('renders nothing when no children props are provided', () => {
     const { container } = render(<MultiLingual transliteration={transliteration} />);
     expect(container.firstChild).toBeNull();
   });
 
-  it('uses default transliteration when not provided', () => {
+  it('falls back to default markers when transliteration not provided', () => {
     const sanskritOnly = { children: 'sa', testId: 'sa' };
     const { getByTestId } = render(<MultiLingual sanskrit={sanskritOnly} />);
     const el = getByTestId('phrase-sa');
+
     expect(el).toHaveAttribute('data-infix', '।');
     expect(el).toHaveAttribute('data-prefix', '꣼ ');
     expect(el).toHaveAttribute('data-suffix', '॥');

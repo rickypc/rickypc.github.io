@@ -8,7 +8,7 @@
 const image = require('./_image.js');
 
 /**
- * @description Generates a pdfMake object for `prayer wheel mandalas`.
+ * Generates a pdfMake object for `prayer wheel mandalas`.
  * @returns {object} A pdfMake compatible object.
  */
 export default async function prayerWheel() {

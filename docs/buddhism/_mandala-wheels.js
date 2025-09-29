@@ -8,7 +8,7 @@
 const image = require('./_image.js');
 
 /**
- * @description Generates a pdfMake object for `5 mandala wheels`.
+ * Generates a pdfMake object for `5 mandala wheels`.
  * @returns {object} A pdfMake compatible object.
  */
 export default async function mandalaWheels() {

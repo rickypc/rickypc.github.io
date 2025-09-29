@@ -8,7 +8,7 @@
 const { body, substance } = require('./_strip.js');
 
 /**
- * @description Generates a pdfMake object for `mantra roll`.
+ * Generates a pdfMake object for `mantra roll`.
  * @param {string} path - Multilingual file path.
  * @returns {object} A pdfMake compatible object.
  */

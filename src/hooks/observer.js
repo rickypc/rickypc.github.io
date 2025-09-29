@@ -18,7 +18,7 @@ import { useLocation } from '@docusaurus/router';
 const docusaurus = 'docusaurus';
 
 /**
- * @description Tracks media query change status using matchMedia and useState.
+ * Tracks media query change status using matchMedia and useState.
  * @param {string} query - CSS media query string.
  * @returns {[boolean]} React tuple: [change].
  */
@@ -37,7 +37,7 @@ export function useMedia(query) {
 }
 
 /**
- * @description Detects if page is ready for printing during initial load.
+ * Detects if page is ready for printing during initial load.
  * @returns {[boolean]} React tuple: [ready].
  */
 export function usePrint() {
@@ -117,7 +117,7 @@ export function usePrint() {
 const useSafeLayoutEffect = typeof (window) !== 'undefined' ? useLayoutEffect : useEffect;
 
 /**
- * @description Detects if speech synthesis is ready during page load.
+ * Detects if speech synthesis is ready during page load.
  * @returns {[boolean]} React tuple: [ready].
  */
 export function useSpeech() {
@@ -132,7 +132,7 @@ export function useSpeech() {
 }
 
 /**
- * @description Detects if a DOM ref is visible using IntersectionObserver.
+ * Detects if a DOM ref is visible using IntersectionObserver.
  * @param {object} [options] - Options for visibility detection.
  * @param {object} [options.ref] - React ref to observe (default: useRef()).
  * @param {number} [options.threshold] - Visibility threshold (default: 1.0).
@@ -169,7 +169,7 @@ export function useVisibility({ ref = useRef(), threshold = 1.0, ...rest } = {})
 }
 
 /**
- * @description Reveals page after validation to prevent automated abuse.
+ * Reveals page after validation to prevent automated abuse.
  * @param {object} [options] - Configuration options.
  * @param {boolean} [options.navigation] - Whether to enable navigation handling
  *   (default: true).

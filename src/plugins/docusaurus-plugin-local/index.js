@@ -35,7 +35,7 @@ const templates = {
 };
 
 /**
- * @description Extends sitemap items with generated PDFs.
+ * Extends sitemap items with generated PDFs.
  * @param {object} options - Configuration options.
  * @param {(...args: object[]) => object[]} options.defaultCreateSitemapItems - Sitemap generator.
  * @returns {Array} Combined array of default items and PDF entries.
@@ -62,7 +62,7 @@ export async function createSitemapItems({ defaultCreateSitemapItems, ...rest })
 }
 
 /**
- * @description Generates PDFs on Docusaurus postBuild, with progress bar.
+ * Generates PDFs on Docusaurus postBuild, with progress bar.
  * @param {object} options - Post-build configuration.
  * @param {string} options.outDir - Directory to output generated PDFs.
  * @param {object} options.siteConfig - Docusaurus site configuration object.
@@ -132,7 +132,7 @@ export async function postBuild({ outDir, siteConfig }) {
 }
 
 /**
- * @description Main entry for custom Docusaurus plugin.
+ * Main entry for custom Docusaurus plugin.
  * @param {object} context - Docusaurus build context (e.g. webpack, CLI).
  * @returns {{
  *   configureWebpack: (object, boolean) => void,

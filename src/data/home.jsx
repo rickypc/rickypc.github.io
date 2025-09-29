@@ -11,7 +11,7 @@ import Link from '@site/src/components/common/Link';
 import Reveal from '@site/src/components/common/Reveal';
 
 /**
- * @description Renders the `Github` icon.
+ * Renders the `Github` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
@@ -23,7 +23,7 @@ function FaGithub(props) {
 }
 
 /**
- * @description Renders the `Linkedin` icon.
+ * Renders the `Linkedin` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.

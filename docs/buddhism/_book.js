@@ -18,7 +18,7 @@ const unalomeWidth = 44.375;
 const unalomeMargin = (unalomeWidth * 2) + 5;
 
 /**
- * @description Generates a pdfMake object for `prayer book`.
+ * Generates a pdfMake object for `prayer book`.
  * @param {string} path - Multilingual file path.
  * @returns {object} A pdfMake compatible object.
  */

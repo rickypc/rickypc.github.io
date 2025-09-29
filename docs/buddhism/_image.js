@@ -12,7 +12,7 @@ const sharp = require('sharp');
 const pixels = 300 / 72;
 
 /**
- * @description Generates image object compatible with pdfMake document.
+ * Generates image object compatible with pdfMake document.
  * @param {object} img - Image metadata.
  * @param {number} img.height - Desired image height.
  * @param {string} img.path - Path to the image file.

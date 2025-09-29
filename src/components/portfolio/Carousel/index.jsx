@@ -41,7 +41,7 @@ const debounce = (fn, delay = 200) => {
 };
 
 /**
- * @description Renders the `Angle Left` icon.
+ * Renders the `Angle Left` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
@@ -53,7 +53,7 @@ function FaAngleLeft(props) {
 }
 
 /**
- * @description Renders the `Angle Right` icon.
+ * Renders the `Angle Right` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.

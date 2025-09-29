@@ -14,7 +14,7 @@ const body = (phrase, infix) => {
 };
 
 /**
- * @description Generates a pdfMake object for `thangka backside mantra`.
+ * Generates a pdfMake object for `thangka backside mantra`.
  * @param {string} path - Multilingual file path.
  * @returns {object} A pdfMake compatible object.
  */

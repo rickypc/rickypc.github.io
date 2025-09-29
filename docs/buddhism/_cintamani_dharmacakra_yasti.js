@@ -49,7 +49,7 @@ const rowHeight = height / 3;
 const suffix = '༎';
 
 /**
- * @description Generates a pdfMake object for `prayer wheel life force pillar`.
+ * Generates a pdfMake object for `prayer wheel life force pillar`.
  * @returns {object} A pdfMake compatible object.
  */
 export default async function cintamaniDharmacakraYasti() {

@@ -7,7 +7,7 @@
 import { useCallback } from 'react';
 
 /**
- * @description Custom React hook for handling transport-related operations.
+ * Custom React hook for handling transport-related operations.
  * @returns {{fetchAsJson: (...args: object[]) => Promise<object>}}
  *   Object containing transport utilities.
  */

@@ -23,7 +23,7 @@ import pdf from '#buddhism/_pdf.js';
 import styles from './styles.module.css';
 
 /**
- * @description Renders the `prayer wheel` icon.
+ * Renders the `prayer wheel` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
@@ -35,7 +35,7 @@ function GrCycle(props) {
 }
 
 /**
- * @description Renders the `thangka backside mantra` icon.
+ * Renders the `thangka backside mantra` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
@@ -47,7 +47,7 @@ function GrDocumentImage(props) {
 }
 
 /**
- * @description Renders the `condensed prayer roll` icon.
+ * Renders the `condensed prayer roll` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
@@ -59,7 +59,7 @@ function GrDocumentStore(props) {
 }
 
 /**
- * @description Renders the `prayer roll` icon.
+ * Renders the `prayer roll` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
@@ -71,7 +71,7 @@ function GrDocumentText(props) {
 }
 
 /**
- * @description Renders the `print` icon.
+ * Renders the `print` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.

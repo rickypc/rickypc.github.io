@@ -20,7 +20,7 @@ import { useSpeech } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
 /**
- * @description Renders the `Pause` icon.
+ * Renders the `Pause` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
@@ -32,7 +32,7 @@ function GrPause(props) {
 }
 
 /**
- * @description Renders the `Play` icon.
+ * Renders the `Play` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
@@ -44,7 +44,7 @@ function GrPlay(props) {
 }
 
 /**
- * @description Renders the `Resume` icon.
+ * Renders the `Resume` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
@@ -56,7 +56,7 @@ function GrResume(props) {
 }
 
 /**
- * @description Renders the `Stop` icon.
+ * Renders the `Stop` icon.
  * @param {object} props - React props passed to the icon component.
  * @param {string} [props.className] - Optional CSS class for styling.
  * @param {object} [props.style] - Optional inline styles.
@@ -85,6 +85,7 @@ function GrStop(props) {
 export default memo(Object.assign(function Speech({
   children,
   className,
+  // See comment below.
   lang = 'id-ID',
   names,
   pitch = 1,
@@ -125,6 +126,13 @@ export default memo(Object.assign(function Speech({
   }, []);
 
   useEffect(() => {
+    // Bahasa Indonesia was selected as the speech synthesis voice for
+    // its phonetic qualities, which closely resemble the clarity and cadence
+    // found in Sanskrit and Pali chants. While not a direct linguistic match,
+    // its vowel-rich structure and rhythmic consistency make it well-suited
+    // for voicing prayer-like utterances. Other available voices
+    // were considered, but this one offered the most natural alignment
+    // with the intended sound profile.
     const list = names?.length ? names : [
       'Damayanti',
       'Microsoft Gadis Online (Natural) - Indonesian (Indonesia)',
@@ -185,7 +193,8 @@ export default memo(Object.assign(function Speech({
       {ready && voice?.lang === false && (
         <Admonition type="info">
           <p>
-            {`${new Intl.DisplayNames(['en'], { type: 'language' }).of(lang)} voice is not available in this browser. Please try different browser.`}
+            {`${new Intl.DisplayNames(['en'], { type: 'language' })
+              .of(lang)} voice is not available in this browser. Please try different browser.`}
           </p>
         </Admonition>
       )}

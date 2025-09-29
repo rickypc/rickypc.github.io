@@ -65,15 +65,15 @@ jest.mock('@theme/Admonition', () => ({
 }));
 
 /**
- * @description Creates a fully controlled mock setup for speechSynthesis
- *              and SpeechSynthesisUtterance.
+ * Creates a fully controlled mock setup for speechSynthesis
+ *   and SpeechSynthesisUtterance.
  * @param {object} config - Configuration options for the mock.
  * @param {boolean} [config.initiallyPaused] - Whether the mock synth should
- *                                             start in a paused state.
+ *   start in a paused state.
  * @param {boolean} [config.initiallySpeaking] - Whether it should start as if
- *                                               it's already speaking.
+ *   it's already speaking.
  * @param {Array} [config.voices] - An optional list of voice objects to
- *                                  simulate available voices.
+ *   simulate available voices.
  * @returns {object} A set of speech-related mocks:
  *   - instances: an array of all utterance instances created
  *   - lastUtteranceRef: a function that returns the most recently spoken utterance
@@ -88,12 +88,11 @@ function createSpeechMocks({
   const instances = [];
 
   /**
+   * A mock constructor for SpeechSynthesisUtterance. Use this to simulate
+   * utterance behavior in tests without relying on the browser's native
+   * speech synthesis. Each instance tracks the provided text and can be
+   * inspected or triggered manually.
    * @class
-   * @description A mock constructor for SpeechSynthesisUtterance.
-   *              Use this to simulate utterance behavior in tests without
-   *              relying on the browser's native speech synthesis.
-   *              Each instance tracks the provided text and can be inspected
-   *              or triggered manually.
    * @param {string} text - The text content to be "spoken" by the mock utterance.
    */
   function UtteranceMock(text) {
@@ -240,8 +239,8 @@ describe('Speech', () => {
   };
 
   /**
-   * @description Create & install speech mocks.
-   * @param {Array} voices Voices config.
+   * Create & install speech mocks.
+   * @param {Array} voices - Voices config.
    * @returns {{ instances, lastUtteranceRef, synth, UtteranceMock }} The mocks.
    */
   function setupMocks(voices = []) {

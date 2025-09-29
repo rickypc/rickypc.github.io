@@ -5,7 +5,7 @@
  */
 
 /**
- * @description Generates a pdfMake object for `generic content`.
+ * Generates a pdfMake object for `generic content`.
  * @param {string} path - Multilingual file path.
  * @returns {object} A pdfMake compatible object.
  */

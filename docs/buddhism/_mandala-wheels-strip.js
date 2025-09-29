@@ -10,7 +10,7 @@ const image = require('./_image.js');
 const width = 155.4;
 
 /**
- * @description Generates a pdfMake object for `5 mandala wheels in a strip`.
+ * Generates a pdfMake object for `5 mandala wheels in a strip`.
  * @returns {object} A pdfMake compatible object.
  */
 export default async function mandalaWheelsStrip() {

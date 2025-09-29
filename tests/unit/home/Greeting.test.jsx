@@ -72,9 +72,10 @@ describe('home.Greeting', () => {
     expect(speech).toHaveAttribute(
       'data-names',
       [
-        'Victoria',
-        'Microsoft Aria Online (Natural) - English (United States)',
-        'Microsoft Zira - English (United States)',
+        'Alex',
+        'Microsoft Guy Online (Natural) - English (United States)',
+        'Microsoft David - English (United States)',
+        'Google español',
         'Google US English',
       ].join('|'),
     );

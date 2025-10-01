@@ -49,17 +49,6 @@ jest.mock('@site/src/components/common/Link', () => ({
   ),
 }));
 
-jest.mock(
-  '@site/src/components/common/Phrase/styles.module.css',
-  () => ({
-    badge: 'badge-class',
-    icon: 'icon-class',
-    instruction: 'instr-class',
-    picture: 'pic-class',
-    support: 'support-class',
-  }),
-);
-
 jest.mock('@site/src/components/common/PhraseBlock', () => ({
   __esModule: true,
   default: ({
@@ -100,10 +89,10 @@ jest.mock('@theme-original/MDXComponents/Details', () => ({
 describe('GrPrint', () => {
   it('renders a print icon with passed props', () => {
     const { getByTestId } = render((
-      <GrPrint className="print-class" title="PrintTitle" />
+      <GrPrint className="print" title="PrintTitle" />
     ));
     const icon = getByTestId('icon-svg');
-    expect(icon).toHaveAttribute('class', 'print-class');
+    expect(icon).toHaveAttribute('class', 'print');
     expect(icon).toHaveAttribute('title', 'PrintTitle');
   });
 });
@@ -119,14 +108,14 @@ describe('Instruction', () => {
     const img = getByTestId('image-MyTitle');
     expect(img).toHaveAttribute('src', 'path/to/img.png');
     expect(img).toHaveAttribute('alt', 'MyTitle');
-    expect(img).toHaveClass('pic-class');
+    expect(img).toHaveClass('picture');
   });
 
   it('renders a div with instruction text when only text prop is provided', () => {
     const props = { image: undefined, text: 'Please read carefully', transliteration: { title: 'IgnoredTitle' } };
     const { getByText } = render(<Instruction {...props} />);
     const div = getByText('Please read carefully');
-    expect(div).toHaveClass('instr-class');
+    expect(div).toHaveClass('instruction');
   });
 });
 
@@ -164,19 +153,19 @@ describe('Phrase', () => {
   it('renders Speech and support wrapper when speech is provided', () => {
     utils = render(<Phrase transliteration={{ ...defaultTrans, speech: 'SpeakUp', repetition: 0 }} />);
     expect(utils.getByTestId('speech').textContent).toBe('SpeakUp');
-    expect(utils.container.querySelector('.support-class')).toBeInTheDocument();
+    expect(utils.container.querySelector('.support')).toBeInTheDocument();
     expect(utils.queryByTestId(/^link-/)).toBeNull();
   });
 
   describe('repetition badge', () => {
     it('does not render badge when repetition is 0', () => {
       const { container } = render(<Phrase path="/buddhism/foo" transliteration={defaultTrans} />);
-      expect(container.querySelector('.badge-class')).toBeNull();
+      expect(container.querySelector('.badge')).toBeNull();
     });
 
     it('renders badge when repetition > 1', () => {
       const { container } = render(<Phrase transliteration={{ ...defaultTrans, repetition: 5 }} />);
-      const badge = container.querySelector('.badge-class');
+      const badge = container.querySelector('.badge');
       expect(badge).toBeInTheDocument();
       expect(badge.textContent).toBe('5x');
       expect(badge).toHaveAttribute('title', 'Preferred repetition: 5 times');
@@ -214,7 +203,7 @@ describe('Phrase', () => {
     it('renders Instruction when instruction prop is provided on Phrase', () => {
       const { getByText } = render(<Phrase instruction="Read this" transliteration={{ ...defaultTrans, title: 'NoImg' }} />);
       const div = getByText('Read this');
-      expect(div).toHaveClass('instr-class');
+      expect(div).toHaveClass('instruction');
     });
   });
 });

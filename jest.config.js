@@ -16,8 +16,6 @@ module.exports = {
   errorOnDeprecated: true,
   logHeapUsage: true,
   moduleNameMapper: {
-    '^.+\\.(css)$': 'identity-obj-proxy',
-    // '^.+\\.(css|jpe?g|png|svg|webp)$': '<rootDir>/__mocks__/empty.js',
     '@docusaurus/(BrowserOnly|ComponentCreator|constants|ExecutionEnvironment|Head|Interpolate|isInternalUrl|Link|Noop|renderRoutes|router|Translate|use.*)': '@docusaurus/core/lib/client/exports/$1',
     '@docusaurus/plugin-content-docs/client': '@docusaurus/plugin-content-docs/src/client/index.ts',
     '@site/(.*)': '<rootDir>/$1',
@@ -36,6 +34,7 @@ module.exports = {
         },
       },
     ],
+    '\\.(avif|css|jpe?g|png|svg|webp)$': '<rootDir>/tests/unit/transformer.js',
   },
   transformIgnorePatterns: ['node_modules/(?!@docusaurus/.*)'],
 };

@@ -9,19 +9,9 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Preamble from '@site/src/components/common/Preamble';
 
-jest.mock(
-  '@site/src/components/common/Preamble/styles.module.css',
-  () => ({ preamble: 'preamble-class' }),
-);
-
 jest.mock('@site/src/components/common/PrintAdmonition', () => ({
   __esModule: true,
   default: () => <div data-testid="print-admonition" />,
-}));
-
-jest.mock('@site/src/data/common', () => ({
-  __esModule: true,
-  clsx: (...args) => args.filter(Boolean).join(' '),
 }));
 
 jest.mock('@theme/Heading', () => ({
@@ -56,7 +46,7 @@ describe('Preamble', () => {
 
       const innerDiv = header.querySelector('div');
       expect(innerDiv).toHaveClass(
-        'col col--8 col--offset-2 preamble-class',
+        'col col--8 col--offset-2 preamble',
       );
 
       const heading = getByTestId('heading');

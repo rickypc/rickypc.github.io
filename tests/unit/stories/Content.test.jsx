@@ -16,7 +16,12 @@ jest.mock('framer-motion', () => ({
   // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
   LazyMotion: ({ children }) => <>{children}</>,
   m: {
-    article: ({ children, className, ...props }) => (
+    article: ({
+      children,
+      className,
+      whileInView,
+      ...props
+    }) => (
       <article data-testid="story-article" className={className} {...props}>
         {children}
       </article>
@@ -37,21 +42,6 @@ jest.mock('@site/src/components/common/Link', () => ({ children, className, href
     {children}
   </a>
 ));
-
-jest.mock('@site/src/components/stories/Content/styles.module.css', () => ({
-  content: 'content-class',
-  story: 'story-class',
-  endorsement: 'endorsement-class',
-  dash: 'dash-class',
-  topic: 'topic-class',
-  name: 'name-class',
-  title: 'title-class',
-  affiliation: 'affiliation-class',
-}));
-
-jest.mock('@site/src/data/common', () => ({
-  key: (value, prefix) => `${prefix}-${value}`,
-}));
 
 jest.mock('@site/src/data/stories', () => ({
   stories: [
@@ -82,7 +72,7 @@ jest.mock('@theme/Heading', () => ({ as, children }) => (
 describe('stories.Content', () => {
   it('renders a wrapper with the content class', () => {
     const { container } = render(<Content />);
-    const wrapper = container.querySelector('.content-class');
+    const wrapper = container.querySelector('.content');
     expect(wrapper).toBeInTheDocument();
   });
 
@@ -98,7 +88,7 @@ describe('stories.Content', () => {
       const story = stories[idx];
 
       // article has the story CSS class
-      expect(article).toHaveClass('story-class');
+      expect(article).toHaveClass('story');
 
       // Heading as h2 with Link (header) and Heart
       const heading = within(article).getByTestId('heading');
@@ -109,11 +99,11 @@ describe('stories.Content', () => {
       expect(headerLink).toHaveTextContent(story.header.children);
 
       const heart = within(heading).getByTestId('heart');
-      expect(heart).toHaveAttribute('id', `story-${story.header.children}`);
+      expect(heart).toHaveAttribute('id', `story-${story.header.children.toLowerCase()}`);
 
       // Endorsement paragraph
       const endorsement = within(article).getByText(story.content);
-      expect(endorsement).toHaveClass('endorsement-class');
+      expect(endorsement).toHaveClass('endorsement');
 
       // There should be four links in total: header, author, title, affiliation
       const links = within(article).getAllByTestId('link');

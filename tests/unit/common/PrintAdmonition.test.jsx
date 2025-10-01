@@ -10,52 +10,28 @@ import '@testing-library/jest-dom';
 import PrintAdmonition from '@site/src/components/common/PrintAdmonition';
 import { usePrint } from '@site/src/hooks/observer';
 
-jest.mock(
-  '@site/src/components/common/PrintAdmonition/styles.module.css',
-  () => ({ admonition: 'admonition-class' }),
-);
-
-jest.mock('@site/src/data/common', () => ({
-  __esModule: true,
-  admonitions: {
-    print: {
-      type: 'info',
-      text: 'Please prepare to print',
-    },
-  },
-  clsx: (...args) => args.filter(Boolean).join(' '),
-}));
-
-jest.mock('@site/src/hooks/observer', () => ({
-  __esModule: true,
-  usePrint: jest.fn(),
-}));
+jest.mock('@site/src/hooks/observer', () => ({ usePrint: jest.fn() }));
 
 jest.mock('@theme/Admonition', () => ({
   __esModule: true,
-  default: ({ type, children }) => (
-    <div data-testid="admonition" data-type={type}>
-      {children}
-    </div>
+  default: ({ children, type }) => (
+    <div data-testid="admonition" data-type={type}>{children}</div>
   ),
 }));
 
 describe('PrintAdmonition', () => {
-  beforeEach(() => {
-    usePrint.mockReturnValue([false]);
-  });
-
   describe('when print is not ready', () => {
     it('renders an aside with Admonition', () => {
+      usePrint.mockReturnValue([false]);
       const { getByTestId, getByText } = render(<PrintAdmonition />);
-      expect(getByText('Please prepare to print')).toBeInTheDocument();
+      expect(getByText('The print content is not ready. Please try again.')).toBeInTheDocument();
 
       const admonition = getByTestId('admonition');
-      expect(admonition).toHaveAttribute('data-type', 'info');
+      expect(admonition).toHaveAttribute('data-type', 'warning');
 
       const aside = admonition.closest('aside');
       expect(aside).toHaveAttribute('aria-hidden', 'true');
-      expect(aside).toHaveClass('admonition-class row');
+      expect(aside).toHaveClass('admonition row');
     });
   });
 

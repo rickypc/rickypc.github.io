@@ -11,29 +11,13 @@ import '@testing-library/jest-dom';
 import Oracle from '@site/src/components/about/Oracle';
 import { useVisibility } from '@site/src/hooks/observer';
 
-jest.mock(
-  '@site/src/components/common/about/Oracle/styles.module.css',
-  () => ({
-    oracle: 'oracle-class',
-    oracular1: 'oracular1-class',
-    oracular2: 'oracular2-class',
-    oracular3: 'oracular3-class',
-    oraculares: 'oraculares-class',
-    play: 'play-class',
-  }),
-);
-
-jest.mock('@site/src/data/common', () => ({
-  clsx: (...classes) => classes.filter(Boolean).join(' '),
-}));
-
 jest.mock('@site/src/hooks/observer');
 
 describe('about.Oracle', () => {
   it.each([
-    [false, 'oracle-class'],
-    [true, 'play-class oracle-class'],
-  ])('visible=%s → container.className="%s"', (visible, expectedClassName) => {
+    [false, 'oracle'],
+    [true, 'play oracle'],
+  ])('visible=%s -> container.className="%s"', (visible, expectedClassName) => {
     useVisibility.mockReturnValue({ ref: jest.fn(), visible });
     const { container } = render(<Oracle />);
     const outer = container.firstChild;
@@ -47,14 +31,14 @@ describe('about.Oracle', () => {
     useVisibility.mockReturnValue({ ref: mockRef, visible: false });
     const { container } = render(<Oracle />);
 
-    // Inner wrapper with oraculares-class
-    const wrapper = container.querySelector('.oraculares-class');
+    // Inner wrapper with oraculares
+    const wrapper = container.querySelector('.oraculares');
     expect(wrapper).toBeInstanceOf(HTMLElement);
     expect(mockRef).toHaveBeenCalledWith(wrapper);
 
     // Three oracular divs
-    expect(container.getElementsByClassName('oracular1-class')).toHaveLength(1);
-    expect(container.getElementsByClassName('oracular2-class')).toHaveLength(1);
-    expect(container.getElementsByClassName('oracular3-class')).toHaveLength(1);
+    expect(container.getElementsByClassName('oracular1')).toHaveLength(1);
+    expect(container.getElementsByClassName('oracular2')).toHaveLength(1);
+    expect(container.getElementsByClassName('oracular3')).toHaveLength(1);
   });
 });

@@ -18,11 +18,6 @@ jest.mock('framer-motion', () => ({
   },
 }));
 
-jest.mock(
-  '@site/src/components/about/Content/styles.module.css',
-  () => ({ content: 'content-class' }),
-);
-
 // eslint-disable-next-line react/display-name,react/function-component-definition,react/prop-types
 jest.mock('@site/src/components/common/Heart', () => ({ id }) => (
   <span data-testid="heart" id={id} />
@@ -35,10 +30,6 @@ jest.mock('@site/src/data/about', () => ({
   },
   headline: 'Test Headline',
   paragraphs: ['First paragraph.', 'Second paragraph.'],
-}));
-
-jest.mock('@site/src/data/common', () => ({
-  key: (value, prefix) => `${prefix}-${value}`,
 }));
 
 // eslint-disable-next-line react/display-name,react/function-component-definition,react/prop-types

@@ -24,22 +24,6 @@ jest.mock('framer-motion', () => ({
   },
 }));
 
-jest.mock(
-  '@site/../src/components/common/Reveal/styles.module.css',
-  () => ({
-    character: 'char-class',
-    phrases: 'phrases-class',
-    play: 'play-class',
-    word: 'word-class',
-  }),
-);
-
-jest.mock('@site/src/data/common', () => ({
-  __esModule: true,
-  clsx: (...args) => args.filter(Boolean).join(' '),
-  key: (a, b) => `${a}-${b}`,
-}));
-
 jest.mock('@site/src/hooks/observer', () => ({
   __esModule: true,
   useVisibility: jest.fn(),
@@ -54,14 +38,14 @@ describe('Reveal', () => {
     it('when not visible: no play class and correct split into words and characters', () => {
       const { container, getAllByTestId } = render(<Reveal>hello world</Reveal>);
       const root = container.querySelector('span[aria-hidden]');
-      expect(root).toHaveClass('phrases-class');
-      expect(root).not.toHaveClass('play-class');
+      expect(root).toHaveClass('phrases');
+      expect(root).not.toHaveClass('play');
 
       const spans = getAllByTestId('motion-span');
       expect(spans).toHaveLength(12);
 
-      const wordCount = spans.filter((s) => s.classList.contains('word-class')).length;
-      const charCount = spans.filter((s) => s.classList.contains('char-class')).length;
+      const wordCount = spans.filter((s) => s.classList.contains('word')).length;
+      const charCount = spans.filter((s) => s.classList.contains('character')).length;
       expect(wordCount).toBe(2);
       expect(charCount).toBe(10);
     });
@@ -70,7 +54,7 @@ describe('Reveal', () => {
       useVisibility.mockReturnValue({ ref: () => { }, visible: true });
       const { container } = render(<Reveal>test</Reveal>);
       const root = container.querySelector('span[aria-hidden]');
-      expect(root).toHaveClass('phrases-class play-class');
+      expect(root).toHaveClass('phrases play');
     });
   });
 
@@ -111,13 +95,13 @@ describe('Reveal', () => {
           const spans = getAllByTestId('motion-span');
           expect(spans).toHaveLength(total);
 
-          const wordCount = spans.filter((s) => s.classList.contains('word-class')).length;
-          const charCount = spans.filter((s) => s.classList.contains('char-class')).length;
+          const wordCount = spans.filter((s) => s.classList.contains('word')).length;
+          const charCount = spans.filter((s) => s.classList.contains('character')).length;
           expect(wordCount).toBe(words);
           expect(charCount).toBe(chars);
 
           const root = container.querySelector('span[aria-hidden]');
-          expect(root).toHaveClass('phrases-class');
+          expect(root).toHaveClass('phrases');
         },
       );
 

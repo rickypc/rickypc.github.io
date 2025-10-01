@@ -25,15 +25,6 @@ jest.mock('@site/src/components/common/Image', () => (props) => (
   <img data-testid="home-image" {...props} />
 ));
 
-jest.mock(
-  '@site/src/components/home/Figure/styles.module.css',
-  () => ({ figure: 'figure-class' }),
-);
-
-jest.mock('@site/src/data/common', () => ({
-  a11y: (alt) => ({ role: 'img', 'aria-label': alt }),
-}));
-
 jest.mock('@site/src/data/home', () => ({
   image: { src: 'test-src.png', alt: 'Test Alt' },
 }));
@@ -44,9 +35,9 @@ describe('home.Figure', () => {
 
     // Target the outer <figure> element directly
     const fig = container.querySelector('figure');
-    expect(fig).toHaveClass('figure-class');
-    expect(fig).toHaveAttribute('role', 'img');
+    expect(fig).toHaveClass('figure');
     expect(fig).toHaveAttribute('aria-label', 'Test Alt');
+    expect(fig).toHaveAttribute('title', 'Test Alt');
 
     // Inner Image should render with correct src and alt
     const img = screen.getByTestId('home-image');

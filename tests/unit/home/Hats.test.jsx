@@ -10,10 +10,6 @@ import { render, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Hats from '@site/src/components/home/Hats';
 
-jest.mock('@site/src/data/common', () => ({
-  key: (value, prefix) => `${prefix}-${value}`,
-}));
-
 jest.mock('@site/src/data/home', () => ({
   hats: [
     { label: 'First', description: 'Desc1', children: 'Content1' },

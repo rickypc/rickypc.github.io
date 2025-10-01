@@ -29,15 +29,6 @@ jest.mock('@site/src/components/common/Speech', () => ({ lang, names, children }
   </div>
 ));
 
-jest.mock(
-  '@site/src/components/home/Greeting/styles.module.css',
-  () => ({
-    greeting: 'greeting-class',
-    ipa: 'ipa-class',
-    reaction: 'reaction-class',
-  }),
-);
-
 jest.mock('@site/src/data/home', () => ({
   greeting: 'Hello, World!',
   ipa: 'həˈloʊ wɜːrld',
@@ -58,13 +49,13 @@ describe('home.Greeting', () => {
     // Verify Heading wrapper
     const heading = screen.getByTestId('heading');
     expect(heading).toHaveAttribute('data-as', 'h1');
-    expect(heading).toHaveAttribute('data-class', 'greeting-class');
+    expect(heading).toHaveAttribute('data-class', 'greeting');
 
     // Greeting span
     const [greetSpan, ipaSpan] = heading.querySelectorAll('span');
     expect(greetSpan).toHaveTextContent('Hello, World!');
     expect(ipaSpan).toHaveTextContent('həˈloʊ wɜːrld');
-    expect(ipaSpan).toHaveClass('ipa-class');
+    expect(ipaSpan).toHaveClass('ipa');
 
     // Speech component
     const speech = screen.getByTestId('speech');
@@ -84,6 +75,6 @@ describe('home.Greeting', () => {
     // Heart component
     const heart = screen.getByTestId('heart');
     expect(heart).toHaveAttribute('data-id', 'home-landing');
-    expect(heart).toHaveAttribute('data-class', 'reaction-class');
+    expect(heart).toHaveAttribute('data-class', 'reaction');
   });
 });

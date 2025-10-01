@@ -18,7 +18,12 @@ jest.mock('framer-motion', () => ({
   // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
   LazyMotion: ({ children }) => <>{children}</>,
   m: {
-    article: ({ children, className, ...props }) => (
+    article: ({
+      children,
+      className,
+      whileInView,
+      ...props
+    }) => (
       <article data-testid="timeline-article" className={className} {...props}>
         {children}
       </article>
@@ -37,10 +42,10 @@ jest.mock('@site/src/components/common/Image', () => ({
   default: ({ alt, link, picture }) => (
     <div
       data-alt={alt}
-      data-link-className={link.className}
+      data-link-classname={link.className}
       data-link-href={link.href}
       data-link-title={link.title}
-      data-link-whileTap={JSON.stringify(link.whileTap)}
+      data-link-whiletap={JSON.stringify(link.whileTap)}
       data-picture-avif={picture.avif}
       data-picture-webp={picture.webp}
       data-testid="image"
@@ -66,15 +71,6 @@ jest.mock('@site/src/components/common/Link', () => (props) => (
     }
   </a>
 ));
-
-jest.mock('@site/src/components/timeline/Content/styles.module.css', () => ({
-  content: 'content-class',
-  inner: 'inner-class',
-  left: 'left-class',
-  logo: 'logo-class',
-  right: 'right-class',
-  timeline: 'timeline-class',
-}));
 
 jest.mock('@site/src/data/common', () => ({
   clsx: jest.fn((...classes) => classes.filter(Boolean).join(' ')),
@@ -113,26 +109,26 @@ jest.mock('@theme/Heading', () => ({ as, children }) => (
 
 describe('timeline.Content', () => {
   it('renders wrapper and timeline items with correct layout when single = false', () => {
-    // single = false → position alternates: idx0 → right, idx1 → left
+    // single = false -> position alternates: idx0 -> right, idx1 -> left
     useMedia.mockReturnValue([false]);
 
     const { container } = render(<Content />);
 
     // Check wrapper
-    const wrapper = container.querySelector('.content-class');
+    const wrapper = container.querySelector('.content');
     expect(wrapper).toBeInTheDocument();
 
     // Find all timeline wrappers
-    const wrappers = container.querySelectorAll('.timeline-class');
+    const wrappers = container.querySelectorAll('.timeline');
     expect(wrappers).toHaveLength(timelines.length);
 
     wrappers.forEach((w, idx) => {
       // position classes
-      const expectedPosClass = idx % 2 === 0 ? 'right-class' : 'left-class';
+      const expectedPosClass = idx % 2 === 0 ? 'right' : 'left';
       expect(w).toHaveClass(expectedPosClass);
 
       // clsx called with (position, styles.timeline)
-      expect(clsx).toHaveBeenCalledWith(expectedPosClass, 'timeline-class');
+      expect(clsx).toHaveBeenCalledWith(expectedPosClass, 'timeline');
 
       // Image stub
       const img = within(w).getByTestId('image');
@@ -144,7 +140,7 @@ describe('timeline.Content', () => {
         // eslint-disable-next-line security/detect-object-injection
         timelines[idx].affiliation.href,
       );
-      expect(img).toHaveAttribute('data-link-className', 'logo-class');
+      expect(img).toHaveAttribute('data-link-className', 'logo');
       expect(img).toHaveAttribute(
         'data-picture-avif',
         // eslint-disable-next-line security/detect-object-injection
@@ -158,7 +154,7 @@ describe('timeline.Content', () => {
 
       // Article & inner class
       const article = within(w).getByTestId('timeline-article');
-      expect(article).toHaveClass('inner-class');
+      expect(article).toHaveClass('inner');
 
       // Headings
       const headings = within(article).getAllByTestId('heading');
@@ -205,8 +201,8 @@ describe('timeline.Content', () => {
     useMedia.mockReturnValue([true]);
 
     const { container } = render(<Content />);
-    const wrappers = container.querySelectorAll('.timeline-class');
+    const wrappers = container.querySelectorAll('.timeline');
 
-    wrappers.forEach((w) => expect(w).toHaveClass('right-class'));
+    wrappers.forEach((w) => expect(w).toHaveClass('right'));
   });
 });

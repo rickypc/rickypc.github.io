@@ -25,13 +25,20 @@ jest.mock('framer-motion', () => ({
   domMax: {},
   // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
   LazyMotion: ({ children }) => <>{children}</>,
-  m: { span: ({ children, ...props }) => <span {...props}>{children}</span> },
+  m: { span: ({ children, layoutId, ...props }) => <span {...props}>{children}</span> },
 }));
 
 // eslint-disable-next-line react/display-name
 jest.mock('@site/src/components/common/Button', () => forwardRef((props, ref) => {
-  // eslint-disable-next-line react/prop-types
-  const { children, onClick, ...rest } = props;
+  const {
+    // eslint-disable-next-line react/prop-types
+    children,
+    // eslint-disable-next-line react/prop-types
+    onClick,
+    // eslint-disable-next-line react/prop-types
+    whileTap,
+    ...rest
+  } = props;
   const handleRef = (node) => {
     if (node) {
       // eslint-disable-next-line no-param-reassign,no-underscore-dangle
@@ -62,29 +69,6 @@ jest.mock('@site/src/components/common/Image', () => (props) => (
   // eslint-disable-next-line jsx-a11y/alt-text
   <img data-testid="img" {...props} />
 ));
-
-jest.mock(
-  '@site/src/components/portfolio/Carousel/styles.module.css',
-  () => ({
-    active: 'active-class',
-    buttons: 'buttons-class',
-    carousel: 'carousel-class',
-    controls: 'controls-class',
-    dot: 'dot-class',
-    dots: 'dots-class',
-    dragging: 'dragging-class',
-    outline: 'outline-class',
-    slide: 'slide-class',
-    slider: 'slider-class',
-    viewport: 'viewport-class',
-  }),
-);
-
-jest.mock('@site/src/data/common', () => ({
-  a11y: (label) => ({ role: 'button', 'aria-label': label }),
-  clsx: (...classes) => classes.filter(Boolean).join(' '),
-  key: (value, prefix) => `${prefix}-${value}`,
-}));
 
 describe('portfolio.Carousel', () => {
   let api;
@@ -155,7 +139,7 @@ describe('portfolio.Carousel', () => {
     const { container, unmount } = render(<Carousel images={images} onClick={onClickMock} prefix="test" />);
 
     expect(setViewport).toHaveBeenCalled();
-    expect(container.querySelector('.controls-class')).toBeInTheDocument();
+    expect(container.querySelector('.controls')).toBeInTheDocument();
 
     const prevBtn = screen.getByRole('button', { name: 'Previous' });
     const nextBtn = screen.getByRole('button', { name: 'Next' });
@@ -169,13 +153,13 @@ describe('portfolio.Carousel', () => {
     expect(api.scrollPrev).toHaveBeenCalledTimes(1);
 
     // Dot buttons
-    const dots = container.querySelectorAll('.dot-class');
+    const dots = container.querySelectorAll('.dot');
     expect(dots).toHaveLength(2);
 
     fireEvent.click(dots[1]);
     expect(api.scrollTo).toHaveBeenCalledWith(1);
 
-    expect(container.querySelectorAll('.outline-class')).toHaveLength(1);
+    expect(container.querySelectorAll('.outline')).toHaveLength(1);
 
     // on() was called for two slidesInView, pointerDown, pointerUp
     const registrations = api.on.mock.calls.map(([evt]) => evt);
@@ -192,10 +176,10 @@ describe('portfolio.Carousel', () => {
     const onDragUp = api.on.mock.calls.find(([e]) => e === 'pointerUp')[1];
 
     act(() => onDragDown(null, 'pointerDown'));
-    expect(api.rootNode().classList.add).toHaveBeenCalledWith('dragging-class');
+    expect(api.rootNode().classList.add).toHaveBeenCalledWith('dragging');
 
     act(() => onDragUp(null, 'pointerUp'));
-    expect(api.rootNode().classList.remove).toHaveBeenCalledWith('dragging-class');
+    expect(api.rootNode().classList.remove).toHaveBeenCalledWith('dragging');
 
     // Cleanup on unmount
     unmount();
@@ -222,7 +206,7 @@ describe('portfolio.Carousel', () => {
     imgs = container.querySelectorAll('img');
     expect(imgs).toHaveLength(1);
 
-    const slides = container.querySelectorAll('.slide-class');
+    const slides = container.querySelectorAll('.slide');
     expect(slides).toHaveLength(2);
 
     fireEvent.click(slides[0]);

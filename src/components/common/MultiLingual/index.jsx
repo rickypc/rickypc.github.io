@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
  * - Thai: default script assumed.
  * - Tibetan: default script assumed.
  * - Transliteration: always available; represents phonetic spelling using Latin
- *   characters (e.g., 'ॐ' → 'oṃ').
+ *   characters (e.g., 'ॐ' -> 'oṃ').
  *
  * Each language may include multiple script variants. The default or
  * most commonly used script is defined directly under the language key,

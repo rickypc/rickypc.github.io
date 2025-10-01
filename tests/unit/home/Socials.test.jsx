@@ -28,36 +28,11 @@ jest.mock('@site/src/components/common/Link', () => ({
   </a>
 ));
 
-jest.mock('@site/src/components/home/Socials/styles.module.css', () => ({
-  social: 'social-class',
-}));
-
-jest.mock('@site/src/data/common', () => ({
-  key: (value, prefix) => `${prefix}-${value}`,
-}));
-
-jest.mock('@site/src/data/home', () => ({
-  socials: [
-    {
-      href: 'https://twitter.com/user',
-      // eslint-disable-next-line react/destructuring-assignment,react/prop-types
-      Icon: (props) => <svg data-testid={`icon-${props['aria-label']}`} {...props} />,
-      title: 'Twitter',
-    },
-    {
-      href: 'https://github.com/user',
-      // eslint-disable-next-line react/destructuring-assignment,react/prop-types
-      Icon: (props) => <svg data-testid={`icon-${props['aria-label']}`} {...props} />,
-      title: 'GitHub',
-    },
-  ],
-}));
-
 describe('home.Socials', () => {
   it('renders one link per social entry', () => {
     const { container } = render(<Socials />);
     const ul = container.querySelector('ul');
-    expect(ul).toHaveClass('social-class');
+    expect(ul).toHaveClass('social');
 
     const items = ul.querySelectorAll('li');
     expect(items).toHaveLength(socials.length);
@@ -70,7 +45,7 @@ describe('home.Socials', () => {
       const { title, href } = socials[i];
       expect(link).toHaveAttribute('href', href);
       expect(link).toHaveAttribute('title', title);
-      const icon = within(link).getByTestId(`icon-${title}`);
+      const icon = within(link).getByLabelText(title);
       expect(icon).toHaveAttribute('role', 'img');
       expect(icon).toHaveAttribute('aria-label', title);
     });

@@ -17,13 +17,23 @@ jest.mock('framer-motion', () => ({
   // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
   LazyMotion: ({ children }) => <>{children}</>,
   m: {
-    article: ({ children, className, ...props }) => (
-      <article data-testid="project-item" className={className} {...props}>
+    article: ({
+      children,
+      className,
+      layout,
+      ...props
+    }) => (
+      <article className={className} data-testid="project-item" {...props}>
         {children}
       </article>
     ),
-    div: ({ children, className, ...props }) => (
-      <div data-testid="projects-wrapper" className={className} {...props}>
+    div: ({
+      children,
+      className,
+      layout,
+      ...props
+    }) => (
+      <div className={className} data-testid="projects-wrapper" {...props}>
         {children}
       </div>
     ),
@@ -70,15 +80,6 @@ jest.mock(
   ),
 );
 
-jest.mock(
-  '@site/src/components/portfolio/Projects/styles.module.css',
-  () => ({
-    portfolio: 'portfolio-class',
-    portfolios: 'portfolios-class',
-    tags: 'tags-class',
-  }),
-);
-
 // eslint-disable-next-line react/display-name,react/function-component-definition,react/prop-types
 jest.mock('@theme/Heading', () => ({ as, children }) => (
   <div data-testid="heading" data-as={as}>
@@ -93,11 +94,11 @@ describe('portfolio.Projects', () => {
     const { container } = render(<Projects filtered={[]} onClick={onClickMock} />);
 
     // Wrapper exists with correct class
-    const wrapper = container.querySelector('.portfolios-class');
+    const wrapper = container.querySelector('.portfolios');
     expect(wrapper).toBeInTheDocument();
 
     // No child project items
-    const items = wrapper.querySelectorAll('.portfolio-class');
+    const items = wrapper.querySelectorAll('.portfolio');
     expect(items).toHaveLength(0);
   });
 
@@ -124,7 +125,7 @@ describe('portfolio.Projects', () => {
     const { container } = render(<Projects filtered={filtered} onClick={onClickMock} />);
 
     // Wrapper and items
-    const wrapper = container.querySelector('.portfolios-class');
+    const wrapper = container.querySelector('.portfolios');
     expect(wrapper).toBeInTheDocument();
 
     const items = screen.getAllByTestId('project-item');
@@ -140,7 +141,7 @@ describe('portfolio.Projects', () => {
       expect(carousel).toHaveAttribute('data-prefix', proj.prefix);
 
       // Tags list
-      const tagsList = item.querySelector('ul.tags-class');
+      const tagsList = item.querySelector('ul.tags');
       expect(tagsList).toBeInTheDocument();
       const tagItems = tagsList.querySelectorAll('li');
       expect(tagItems).toHaveLength(proj.tags.length);

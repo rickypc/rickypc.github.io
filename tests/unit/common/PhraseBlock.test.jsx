@@ -22,23 +22,6 @@ jest.mock('@docusaurus/theme-common/internal', () => ({
   useCodeWordWrap: () => ({ codeBlockRef: { current: null } }),
 }));
 
-jest.mock(
-  '@site/src/components/common/PhraseBlock/styles.module.css',
-  () => ({
-    container: 'container',
-    content: 'content',
-    lines: 'lines',
-    standalone: 'standalone',
-    title: 'title',
-  }),
-);
-
-jest.mock('@site/src/data/common', () => ({
-  __esModule: true,
-  clsx: (...args) => args.filter(Boolean).join(' '),
-  key: (a, b) => `${a}-${b}`,
-}));
-
 jest.mock('@theme/CodeBlock/Buttons', () => ({
   __esModule: true,
   default: () => <div data-testid="buttons" />,

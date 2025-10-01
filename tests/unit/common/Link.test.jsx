@@ -27,15 +27,8 @@ jest.mock('framer-motion', () => ({
   },
 }));
 
-jest.mock('@site/src/data/common', () => ({
-  __esModule: true,
-  a11y: (title) => ({ 'aria-label': title }),
-}));
-
 describe('Link', () => {
-  beforeEach(() => {
-    mockCollectLink.mockClear();
-  });
+  beforeEach(() => mockCollectLink.mockClear());
 
   describe('with href provided', () => {
     it('renders external link with rel, target, aria-label, and class', () => {
@@ -45,10 +38,11 @@ describe('Link', () => {
         </Link>
       ));
       const anchor = getByRole('link');
+      expect(anchor).toHaveAttribute('aria-label', 'external');
       expect(anchor).toHaveAttribute('href', 'https://example.com');
       expect(anchor).toHaveAttribute('rel', 'noopener noreferrer');
       expect(anchor).toHaveAttribute('target', '_blank');
-      expect(anchor).toHaveAttribute('aria-label', 'external');
+      expect(anchor).toHaveAttribute('title', 'external');
       expect(anchor).toHaveClass('ext');
     });
 
@@ -86,6 +80,7 @@ describe('Link', () => {
       expect(span.tagName).toBe('SPAN');
       expect(span).toHaveClass('no-link');
       expect(span).not.toHaveAttribute('aria-label');
+      expect(span).not.toHaveAttribute('title');
     });
 
     it('renders anchor when validate=false and href is missing', () => {
@@ -97,8 +92,9 @@ describe('Link', () => {
       ));
       const anchor = getByText('Fallback');
       expect(anchor.tagName).toBe('A');
-      expect(anchor).toHaveClass('fallback');
       expect(anchor).toHaveAttribute('aria-label', 'fallback');
+      expect(anchor).toHaveAttribute('title', 'fallback');
+      expect(anchor).toHaveClass('fallback');
       expect(anchor).not.toHaveAttribute('href');
     });
   });

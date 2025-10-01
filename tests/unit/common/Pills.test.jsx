@@ -46,22 +46,6 @@ jest.mock('framer-motion', () => ({
   },
 }));
 
-jest.mock(
-  '@site/src/components/common/Pills/styles.module.css',
-  () => ({
-    active: 'active-class',
-    indicator: 'indicator-class',
-    item: 'item-class',
-    pills: 'pills-class',
-  }),
-);
-
-jest.mock('@site/src/data/common', () => ({
-  __esModule: true,
-  clsx: (...args) => args.filter(Boolean).join(' '),
-  key: (a, b) => `${a}-${b}`,
-}));
-
 describe('Pills', () => {
   const items = ['apple', 'banana', 'cherry'];
   const prefix = 'fruit';
@@ -91,7 +75,7 @@ describe('Pills', () => {
     it('renders a <dl> with correct items', () => {
       const dl = container.querySelector('dl');
       expect(dl.tagName).toBe('DL');
-      expect(dl).toHaveClass('pills-class');
+      expect(dl).toHaveClass('pills');
       expect(dtElements).toHaveLength(items.length);
 
       items.forEach((item, idx) => {
@@ -114,11 +98,11 @@ describe('Pills', () => {
     it('applies active class and renders indicator on active item', () => {
       // eslint-disable-next-line no-unused-vars
       const [appleDt, bananaDt, cherryDt] = dtElements;
-      expect(appleDt).not.toHaveClass('active-class');
-      expect(cherryDt).toHaveClass('active-class');
+      expect(appleDt).not.toHaveClass('active');
+      expect(cherryDt).toHaveClass('active');
 
       const indicator = getByTestId('indicator-cherry');
-      expect(indicator).toHaveClass('indicator-class');
+      expect(indicator).toHaveClass('indicator');
       expect(indicator).toHaveAttribute('data-layoutid', `pill-indicator-${prefix}`);
       expect(indicator).toHaveTextContent('cherry');
     });

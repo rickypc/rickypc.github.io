@@ -7,7 +7,6 @@
 const docusaurus = require('@docusaurus/eslint-plugin');
 const { FlatCompat } = require('@eslint/eslintrc');
 const { globalIgnores } = require('eslint/config');
-const hermes = require('hermes-eslint');
 const jest = require('eslint-plugin-jest');
 const js = require('@eslint/js');
 const jsdoc = require('eslint-plugin-jsdoc');
@@ -20,7 +19,6 @@ const compat = new FlatCompat({ baseDirectory: __dirname });
 
 module.exports = [
   globalIgnores(['build/', '.docusaurus/']),
-  { files: ['**/*.js?'], languageOptions: { parser: hermes } },
   // Order Matters™!
   js.configs.recommended,
   {

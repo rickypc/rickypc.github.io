@@ -113,7 +113,7 @@ const key = (
 ) => {
   const begin = prefix ? `${prefix}${prefixSeparator}` : '';
   const end = suffix ? `${suffixSeparator}${suffix}` : '';
-  return `${begin}${value.toLowerCase().replace(/\s+/, '-').replace(/\.[^/.]+$/, '')}${end}`;
+  return `${begin}${value?.toLowerCase?.().replace(/\s+/, '-').replace(/\.[^/.]+$/, '')}${end}`;
 };
 
 const tail = (path, keyword) => (path?.substr((path?.lastIndexOf(keyword) || -1) + 1) || '');

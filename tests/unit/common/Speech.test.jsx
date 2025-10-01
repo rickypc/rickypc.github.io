@@ -18,9 +18,7 @@ import { useSpeech } from '@site/src/hooks/observer';
 jest.mock('react-icons/lib', () => ({
   __esModule: true,
   // eslint-disable-next-line react/display-name,react/function-component-definition
-  GenIcon: (config) => (props) => (
-    <svg data-testid={`icon-${config.tag}`} {...props} />
-  ),
+  GenIcon: (config) => (props) => (<svg data-testid={`icon-${config.tag}`} {...props} />),
 }));
 
 jest.mock('@site/src/components/common/Button', () => ({
@@ -38,20 +36,6 @@ jest.mock('@site/src/components/common/Button', () => ({
       {children}
     </button>
   ),
-}));
-
-jest.mock(
-  '@site/src/components/common/Speech/styles.module.css',
-  () => ({
-    control: 'control-class',
-    controls: 'controls-class',
-  }),
-);
-
-jest.mock('@site/src/data/common', () => ({
-  __esModule: true,
-  a11y: (label) => ({ 'aria-label': label }),
-  clsx: (...args) => args.filter(Boolean).join(' '),
 }));
 
 jest.mock('@site/src/hooks/observer', () => ({

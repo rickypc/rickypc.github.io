@@ -21,8 +21,16 @@ jest.mock('framer-motion', () => ({
          jsx-a11y/no-static-element-interactions */
       <div className={className} data-testid="overlay" onClick={onClick} {...props} />
     ),
-    // eslint-disable-next-line react/display-name,react/prop-types
-    figure: forwardRef(({ children, className, ...props }, ref) => (
+    // eslint-disable-next-line react/display-name
+    figure: forwardRef(({
+      // eslint-disable-next-line react/prop-types
+      children,
+      // eslint-disable-next-line react/prop-types
+      className,
+      // eslint-disable-next-line react/prop-types
+      layout,
+      ...props
+    }, ref) => (
       <figure className={className} data-testid="figure" ref={ref} {...props}>
         {children}
       </figure>
@@ -35,20 +43,6 @@ jest.mock('@site/src/components/common/Image', () => (props) => (
   // eslint-disable-next-line jsx-a11y/alt-text
   <img data-testid="zoom-img" {...props} />
 ));
-
-jest.mock(
-  '@site/src/components/portfolio/Zoom/styles.module.css',
-  () => ({
-    lens: 'lens-class',
-    overlay: 'overlay-class',
-    zoomed: 'zoomed-class',
-  }),
-);
-
-jest.mock('@site/src/data/common', () => ({
-  a11y: (label) => ({ 'aria-label': label, role: 'img' }),
-  clsx: (...classes) => classes.filter(Boolean).join(' '),
-}));
 
 describe('portfolio.Zoom', () => {
   let onClickMock;
@@ -66,13 +60,13 @@ describe('portfolio.Zoom', () => {
     expect(document.body).not.toHaveClass('no-scroll');
 
     // Overlay present, no image
-    expect(screen.getByTestId('overlay')).toHaveClass('overlay-class');
+    expect(screen.getByTestId('overlay')).toHaveClass('overlay');
     expect(screen.queryByTestId('zoom-img')).toBeNull();
 
     // Figure has a11y attributes
     const fig = screen.getByTestId('figure');
     expect(fig).toHaveAttribute('aria-label', open.alt);
-    expect(fig).toHaveAttribute('role', 'img');
+    expect(fig).toHaveAttribute('title', open.alt);
 
     // Pressing Escape when closed should NOT fire onClick
     fireEvent.keyUp(document, { key: 'Escape' });

@@ -29,32 +29,20 @@ jest.mock('@site/src/components/common/Speech', () => ({ lang, names, children }
   </div>
 ));
 
-jest.mock('@site/src/data/home', () => ({
-  greeting: 'Hello, World!',
-  ipa: 'həˈloʊ wɜːrld',
-}));
-
-/* eslint-disable-next-line react/display-name,
-   react/function-component-definition,react/prop-types */
-jest.mock('@theme/Heading', () => ({ as, className, children }) => (
-  <div data-testid="heading" data-as={as} data-class={className}>
-    {children}
-  </div>
-));
-
 describe('home.Greeting', () => {
   it('renders greeting text, IPA, Speech, and Heart inside Heading', () => {
     render(<Greeting />);
 
     // Verify Heading wrapper
     const heading = screen.getByTestId('heading');
-    expect(heading).toHaveAttribute('data-as', 'h1');
-    expect(heading).toHaveAttribute('data-class', 'greeting');
+    expect(heading.tagName).toEqual('H1');
+    expect(heading.className).toEqual('greeting');
 
     // Greeting span
-    const [greetSpan, ipaSpan] = heading.querySelectorAll('span');
-    expect(greetSpan).toHaveTextContent('Hello, World!');
-    expect(ipaSpan).toHaveTextContent('həˈloʊ wɜːrld');
+    const greetSpan = heading.querySelector(':scope>span');
+    const ipaSpan = heading.querySelector('span.ipa');
+    expect(greetSpan).toHaveTextContent('Hello, I\'m Ricky Huang');
+    expect(ipaSpan).toHaveTextContent('/ˈɹɪki ˈhwɑːŋ/');
     expect(ipaSpan).toHaveClass('ipa');
 
     // Speech component

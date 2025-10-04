@@ -13,24 +13,6 @@ import Content from '@site/src/components/timeline/Content';
 import { timelines } from '@site/src/data/timeline';
 import { useMedia } from '@site/src/hooks/observer';
 
-jest.mock('framer-motion', () => ({
-  domAnimation: {},
-  // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  LazyMotion: ({ children }) => <>{children}</>,
-  m: {
-    article: ({
-      children,
-      className,
-      whileInView,
-      ...props
-    }) => (
-      <article data-testid="timeline-article" className={className} {...props}>
-        {children}
-      </article>
-    ),
-  },
-}));
-
 // eslint-disable-next-line react/display-name,react/function-component-definition
 jest.mock('@site/src/components/common/Heart', () => (props) => (
   // eslint-disable-next-line react/destructuring-assignment,react/prop-types
@@ -100,13 +82,6 @@ jest.mock('@site/src/hooks/observer', () => ({
   useMedia: jest.fn(),
 }));
 
-// eslint-disable-next-line react/display-name,react/function-component-definition,react/prop-types
-jest.mock('@theme/Heading', () => ({ as, children }) => (
-  <div data-testid="heading" data-as={as}>
-    {children}
-  </div>
-));
-
 describe('timeline.Content', () => {
   it('renders wrapper and timeline items with correct layout when single = false', () => {
     // single = false -> position alternates: idx0 -> right, idx1 -> left
@@ -153,16 +128,16 @@ describe('timeline.Content', () => {
       );
 
       // Article & inner class
-      const article = within(w).getByTestId('timeline-article');
+      const article = within(w).getByTestId('article');
       expect(article).toHaveClass('inner');
 
       // Headings
       const headings = within(article).getAllByTestId('heading');
-      const h2 = headings.find((h) => h.getAttribute('data-as') === 'h2');
+      const h2 = headings.find((h) => h.tagName === 'H2');
       // eslint-disable-next-line security/detect-object-injection
       expect(h2).toHaveTextContent(timelines[idx].year);
 
-      const h3 = headings.find((h) => h.getAttribute('data-as') === 'h3');
+      const h3 = headings.find((h) => h.tagName === 'H3');
       // Title link
       const titleLink = within(h3).getByTestId('link');
       expect(titleLink).toHaveAttribute(
@@ -180,7 +155,7 @@ describe('timeline.Content', () => {
         `timeline-${timelines[idx].title.children}`,
       );
 
-      const h4 = headings.find((h) => h.getAttribute('data-as') === 'h4');
+      const h4 = headings.find((h) => h.tagName === 'H4');
       const affLink = within(h4).getByTestId('link');
       expect(affLink).toHaveAttribute(
         'data-href',

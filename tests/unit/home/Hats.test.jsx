@@ -17,13 +17,6 @@ jest.mock('@site/src/data/home', () => ({
   ],
 }));
 
-// eslint-disable-next-line react/display-name,react/function-component-definition,react/prop-types
-jest.mock('@theme/Heading', () => ({ as, children }) => (
-  <div data-testid="heading" data-as={as}>
-    {children}
-  </div>
-));
-
 describe('home.Hats', () => {
   it('renders all hats with proper structure and content', () => {
     const { container } = render(<Hats />);
@@ -41,7 +34,7 @@ describe('home.Hats', () => {
     // First article checks
     const [firstArticle, secondArticle] = articles;
     const firstHeading = within(firstArticle).getByTestId('heading');
-    expect(firstHeading).toHaveAttribute('data-as', 'h2');
+    expect(firstHeading.tagName).toEqual('H2');
     // Label span + text child
     expect(firstHeading).toHaveTextContent(/^First\s+Content1$/);
     // Description paragraph
@@ -49,7 +42,7 @@ describe('home.Hats', () => {
 
     // Second article checks
     const secondHeading = within(secondArticle).getByTestId('heading');
-    expect(secondHeading).toHaveAttribute('data-as', 'h2');
+    expect(secondHeading.tagName).toEqual('H2');
     // Label span + <strong> child
     expect(secondHeading).toHaveTextContent(/^Second\s+BoldText$/);
     expect(within(secondHeading).getByText('BoldText').tagName).toBe('STRONG');

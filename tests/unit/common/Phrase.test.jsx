@@ -16,12 +16,6 @@ jest.mock('#buddhism/_pdf.js', () => [
   ['wheel', '#foo'],
 ]);
 
-jest.mock('react-icons/lib', () => ({
-  __esModule: true,
-  // eslint-disable-next-line react/display-name,react/function-component-definition
-  GenIcon: (config) => (props) => <svg data-testid={`icon-${config.tag}`} {...props} />,
-}));
-
 jest.mock('@site/src/components/common/Image', () => ({
   __esModule: true,
   default: ({ alt, className, picture }) => (
@@ -79,11 +73,6 @@ jest.mock('@site/src/data/common', () => ({
   fileName: (path, template) => `file-${path}-${template}`,
   key: (...args) => args.join(''),
   tail: (path) => path?.split('/')?.pop(),
-}));
-
-jest.mock('@theme-original/MDXComponents/Details', () => ({
-  __esModule: true,
-  default: ({ children }) => <div data-testid="mdx-details">{children}</div>,
 }));
 
 describe('GrPrint', () => {

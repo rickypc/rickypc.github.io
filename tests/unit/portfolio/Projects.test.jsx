@@ -10,36 +10,6 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Projects from '@site/src/components/portfolio/Projects';
 
-jest.mock('framer-motion', () => ({
-  // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  AnimatePresence: ({ children }) => <>{children}</>,
-  domMax: {},
-  // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  LazyMotion: ({ children }) => <>{children}</>,
-  m: {
-    article: ({
-      children,
-      className,
-      layout,
-      ...props
-    }) => (
-      <article className={className} data-testid="project-item" {...props}>
-        {children}
-      </article>
-    ),
-    div: ({
-      children,
-      className,
-      layout,
-      ...props
-    }) => (
-      <div className={className} data-testid="projects-wrapper" {...props}>
-        {children}
-      </div>
-    ),
-  },
-}));
-
 // eslint-disable-next-line react/display-name,react/function-component-definition
 jest.mock('@site/src/components/common/Heart', () => (props) => (
   // eslint-disable-next-line react/destructuring-assignment,react/prop-types
@@ -79,13 +49,6 @@ jest.mock(
     </div>
   ),
 );
-
-// eslint-disable-next-line react/display-name,react/function-component-definition,react/prop-types
-jest.mock('@theme/Heading', () => ({ as, children }) => (
-  <div data-testid="heading" data-as={as}>
-    {children}
-  </div>
-));
 
 describe('portfolio.Projects', () => {
   const onClickMock = jest.fn();
@@ -128,7 +91,7 @@ describe('portfolio.Projects', () => {
     const wrapper = container.querySelector('.portfolios');
     expect(wrapper).toBeInTheDocument();
 
-    const items = screen.getAllByTestId('project-item');
+    const items = screen.getAllByTestId('article');
     expect(items).toHaveLength(filtered.length);
 
     filtered.forEach((proj, index) => {
@@ -155,7 +118,7 @@ describe('portfolio.Projects', () => {
       // Heading with Link and Heart
       // eslint-disable-next-line security/detect-object-injection
       const heading = screen.getAllByTestId('heading')[index];
-      expect(heading).toHaveAttribute('data-as', 'h2');
+      expect(heading.tagName).toEqual('H2');
 
       // eslint-disable-next-line security/detect-object-injection
       const link = screen.getAllByTestId('link')[index];

@@ -11,33 +11,6 @@ import { forwardRef } from 'react';
 import '@testing-library/jest-dom';
 import Zoom from '@site/src/components/portfolio/Zoom';
 
-jest.mock('framer-motion', () => ({
-  domMax: {},
-  // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  LazyMotion: ({ children }) => <>{children}</>,
-  m: {
-    div: ({ className, onClick, ...props }) => (
-      /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-         jsx-a11y/no-static-element-interactions */
-      <div className={className} data-testid="overlay" onClick={onClick} {...props} />
-    ),
-    // eslint-disable-next-line react/display-name
-    figure: forwardRef(({
-      // eslint-disable-next-line react/prop-types
-      children,
-      // eslint-disable-next-line react/prop-types
-      className,
-      // eslint-disable-next-line react/prop-types
-      layout,
-      ...props
-    }, ref) => (
-      <figure className={className} data-testid="figure" ref={ref} {...props}>
-        {children}
-      </figure>
-    )),
-  },
-}));
-
 // eslint-disable-next-line react/display-name,react/function-component-definition
 jest.mock('@site/src/components/common/Image', () => (props) => (
   // eslint-disable-next-line jsx-a11y/alt-text
@@ -60,7 +33,7 @@ describe('portfolio.Zoom', () => {
     expect(document.body).not.toHaveClass('no-scroll');
 
     // Overlay present, no image
-    expect(screen.getByTestId('overlay')).toHaveClass('overlay');
+    expect(screen.getByTestId('div')).toHaveClass('overlay');
     expect(screen.queryByTestId('zoom-img')).toBeNull();
 
     // Figure has a11y attributes
@@ -101,7 +74,7 @@ describe('portfolio.Zoom', () => {
     const pic = { avif: '', fallback: {}, webp: '' };
     render(<Zoom open={{ alt: 'A', picture: pic }} onClick={onClickMock} />);
 
-    fireEvent.click(screen.getByTestId('overlay'));
+    fireEvent.click(screen.getByTestId('div'));
     fireEvent.click(screen.getByTestId('figure'));
     expect(onClickMock).toHaveBeenCalledTimes(2);
   });

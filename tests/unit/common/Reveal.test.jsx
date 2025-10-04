@@ -10,20 +10,6 @@ import '@testing-library/jest-dom';
 import Reveal from '@site/src/components/common/Reveal';
 import { useVisibility } from '@site/src/hooks/observer';
 
-jest.mock('framer-motion', () => ({
-  __esModule: true,
-  // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  LazyMotion: ({ children }) => <>{children}</>,
-  domAnimation: {},
-  m: {
-    span: ({ children, className, ...rest }) => (
-      <span data-testid="motion-span" className={className} {...rest}>
-        {children}
-      </span>
-    ),
-  },
-}));
-
 jest.mock('@site/src/hooks/observer', () => ({
   __esModule: true,
   useVisibility: jest.fn(),
@@ -31,7 +17,7 @@ jest.mock('@site/src/hooks/observer', () => ({
 
 describe('Reveal', () => {
   beforeEach(() => {
-    useVisibility.mockReturnValue({ ref: () => { }, visible: false });
+    useVisibility.mockReturnValue({ ref: () => {}, visible: false });
   });
 
   describe('visibility states', () => {
@@ -41,7 +27,7 @@ describe('Reveal', () => {
       expect(root).toHaveClass('phrases');
       expect(root).not.toHaveClass('play');
 
-      const spans = getAllByTestId('motion-span');
+      const spans = getAllByTestId('span');
       expect(spans).toHaveLength(12);
 
       const wordCount = spans.filter((s) => s.classList.contains('word')).length;
@@ -66,7 +52,7 @@ describe('Reveal', () => {
         </Reveal>
       ));
 
-      const spans = getAllByTestId('motion-span');
+      const spans = getAllByTestId('span');
       expect(spans).toHaveLength(8);
       expect(spans[1]).toHaveTextContent('f');
     });
@@ -92,7 +78,7 @@ describe('Reveal', () => {
         '%s -> total spans: %i, words: %i, chars: %i',
         (_desc, children, total, words, chars) => {
           const { container, getAllByTestId } = render(<Reveal coeff={0}>{children}</Reveal>);
-          const spans = getAllByTestId('motion-span');
+          const spans = getAllByTestId('span');
           expect(spans).toHaveLength(total);
 
           const wordCount = spans.filter((s) => s.classList.contains('word')).length;
@@ -108,7 +94,7 @@ describe('Reveal', () => {
       it('processes a Fragment whose children are raw strings', () => {
         const { getAllByTestId } = render(<Reveal coeff={0}>{rawStrings}</Reveal>);
 
-        const spans = getAllByTestId('motion-span');
+        const spans = getAllByTestId('span');
         expect(spans).toHaveLength(8);
         expect(spans[0]).toHaveTextContent('foo');
         expect(spans.slice(1, 4).map((s) => s.textContent)).toEqual(['f', 'o', 'o']);

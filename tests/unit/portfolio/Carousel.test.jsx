@@ -17,17 +17,6 @@ import '@testing-library/jest-dom';
 import Carousel from '@site/src/components/portfolio/Carousel';
 import useEmblaCarousel from 'embla-carousel-react';
 
-jest.mock('embla-carousel-react', () => jest.fn());
-
-jest.mock('framer-motion', () => ({
-  // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  AnimatePresence: ({ children }) => <>{children}</>,
-  domMax: {},
-  // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  LazyMotion: ({ children }) => <>{children}</>,
-  m: { span: ({ children, layoutId, ...props }) => <span {...props}>{children}</span> },
-}));
-
 // eslint-disable-next-line react/display-name
 jest.mock('@site/src/components/common/Button', () => forwardRef((props, ref) => {
   const {

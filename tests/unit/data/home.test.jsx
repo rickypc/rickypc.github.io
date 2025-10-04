@@ -17,14 +17,6 @@ import {
   socials,
 } from '@site/src/data/home';
 
-jest.mock('react-icons/lib', () => ({
-  __esModule: true,
-  // eslint-disable-next-line react/display-name,react/function-component-definition
-  GenIcon: (config) => (props) => (
-    <svg data-config={JSON.stringify(config)} data-props={JSON.stringify(props)} data-testid="icon" />
-  ),
-}));
-
 // eslint-disable-next-line react/display-name,react/function-component-definition
 jest.mock('@site/src/components/common/Link', () => (props) => (
   /* eslint-disable-next-line @docusaurus/no-html-links,
@@ -116,7 +108,7 @@ describe('data.home', () => {
       const { container } = render((
         <Icon className="foo" style={{}} title="bar" />
       ));
-      const icon = within(container).getByTestId('icon');
+      const icon = within(container).getByTestId('icon-svg');
       expect(icon).toBeInTheDocument();
 
       // Check that GenIcon config matches expected viewBox

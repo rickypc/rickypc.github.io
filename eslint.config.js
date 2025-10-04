@@ -34,7 +34,7 @@ module.exports = [
   },
   security.configs.recommended,
   {
-    files: ['tests/unit/**/*.jsx?'],
+    files: ['__mocks__/**/*.jsx?', 'tests/unit/**/*.jsx?'],
     ...testing.configs['flat/react'],
   },
   ...compat.config({

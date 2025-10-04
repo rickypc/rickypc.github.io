@@ -100,9 +100,7 @@ describe('Image', () => {
       expect(onLoad).toHaveBeenCalledTimes(1);
       expect(img).toHaveAttribute('alt', 'Alt text');
 
-      act(() => {
-        jest.advanceTimersByTime(450);
-      });
+      act(() => jest.advanceTimersByTime(450));
       expect(pic).not.toHaveStyle('background-image: url(preSrc.jpg)');
     });
 
@@ -160,7 +158,7 @@ describe('Image', () => {
       },
     ];
 
-    test.each(scenarios)('$name', ({ width, images, expected }) => {
+    it.each(scenarios)('$name', ({ width, images, expected }) => {
       const original = Object.getOwnPropertyDescriptor(
         HTMLElement.prototype,
         'clientWidth',
@@ -183,11 +181,7 @@ describe('Image', () => {
       expect(img).toHaveAttribute('src', expected);
 
       if (original) {
-        Object.defineProperty(
-          HTMLElement.prototype,
-          'clientWidth',
-          original,
-        );
+        Object.defineProperty(HTMLElement.prototype, 'clientWidth', original);
       }
     });
   });

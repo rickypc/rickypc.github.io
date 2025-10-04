@@ -5,31 +5,12 @@
  * @jest-environment jsdom
  */
 
+import { collectLink } from '@docusaurus/useBrokenLinks';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Link from '@site/src/components/common/Link';
 
-const mockCollectLink = jest.fn();
-
-jest.mock('@docusaurus/useBrokenLinks', () => ({
-  __esModule: true,
-  default: () => ({ collectLink: mockCollectLink }),
-}));
-
-jest.mock('framer-motion', () => ({
-  __esModule: true,
-  domAnimation: {},
-  // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  LazyMotion: ({ children }) => <>{children}</>,
-  m: {
-    // eslint-disable-next-line @docusaurus/no-html-links
-    a: ({ children, ...props }) => <a {...props}>{children}</a>,
-  },
-}));
-
 describe('Link', () => {
-  beforeEach(() => mockCollectLink.mockClear());
-
   describe('with href provided', () => {
     it('renders external link with rel, target, aria-label, and class', () => {
       const { getByRole } = render((
@@ -56,7 +37,7 @@ describe('Link', () => {
       expect(anchor).toHaveAttribute('href', '/docs/intro');
       expect(anchor).not.toHaveAttribute('rel');
       expect(anchor).not.toHaveAttribute('target');
-      expect(mockCollectLink).toHaveBeenCalledWith('/docs/intro');
+      expect(collectLink).toHaveBeenCalledWith('/docs/intro');
     });
 
     it.each([
@@ -64,7 +45,7 @@ describe('Link', () => {
       ['/files/report.pdf'],
     ])('does not call collectLink for %s', (href) => {
       render(<Link href={href}>Test</Link>);
-      expect(mockCollectLink).not.toHaveBeenCalled();
+      expect(collectLink).not.toHaveBeenCalled();
     });
   });
 

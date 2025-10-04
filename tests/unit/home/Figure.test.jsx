@@ -9,39 +9,32 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Figure from '@site/src/components/home/Figure';
+import { useVisibility } from '@site/src/hooks/observer';
 
-jest.mock('framer-motion', () => ({
-  domAnimation: {},
-  // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  LazyMotion: ({ children }) => <>{children}</>,
-  m: {
-    figure: ({ children, whileInView, ...props }) => <figure {...props}>{children}</figure>,
-  },
-}));
-
-// eslint-disable-next-line react/display-name,react/function-component-definition
-jest.mock('@site/src/components/common/Image', () => (props) => (
-  // eslint-disable-next-line jsx-a11y/alt-text
-  <img data-testid="home-image" {...props} />
-));
-
-jest.mock('@site/src/data/home', () => ({
-  image: { src: 'test-src.png', alt: 'Test Alt' },
+jest.mock('@site/src/hooks/observer', () => ({
+  useVisibility: jest.fn(),
 }));
 
 describe('home.Figure', () => {
   it('renders a <figure> with correct accessibility attributes, CSS class, and nested Image', () => {
+    jest.useFakeTimers();
+    useVisibility.mockReturnValue({ visible: true });
     const { container } = render(<Figure />);
 
     // Target the outer <figure> element directly
     const fig = container.querySelector('figure');
     expect(fig).toHaveClass('figure');
-    expect(fig).toHaveAttribute('aria-label', 'Test Alt');
-    expect(fig).toHaveAttribute('title', 'Test Alt');
+    expect(fig).toHaveAttribute('aria-label', 'Ricky Huang');
+    expect(fig).toHaveAttribute('title', 'Ricky Huang');
 
     // Inner Image should render with correct src and alt
-    const img = screen.getByTestId('home-image');
-    expect(img).toHaveAttribute('src', 'test-src.png');
-    expect(img).toHaveAttribute('alt', 'Test Alt');
+    const img = fig.querySelector('picture>img');
+    expect(img).toHaveAttribute('src', 'self.png');
+
+    const source = fig.querySelector('picture>source');
+    expect(source).toHaveAttribute('srcset', 'self.webp');
+    expect(source).toHaveAttribute('type', 'image/webp');
+
+    jest.useRealTimers();
   });
 });

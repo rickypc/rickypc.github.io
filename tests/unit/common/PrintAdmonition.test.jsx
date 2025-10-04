@@ -12,13 +12,6 @@ import { usePrint } from '@site/src/hooks/observer';
 
 jest.mock('@site/src/hooks/observer', () => ({ usePrint: jest.fn() }));
 
-jest.mock('@theme/Admonition', () => ({
-  __esModule: true,
-  default: ({ children, type }) => (
-    <div data-testid="admonition" data-type={type}>{children}</div>
-  ),
-}));
-
 describe('PrintAdmonition', () => {
   describe('when print is not ready', () => {
     it('renders an aside with Admonition', () => {

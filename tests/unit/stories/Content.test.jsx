@@ -11,24 +11,6 @@ import '@testing-library/jest-dom';
 import Content from '@site/src/components/stories/Content';
 import { stories } from '@site/src/data/stories';
 
-jest.mock('framer-motion', () => ({
-  domAnimation: {},
-  // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  LazyMotion: ({ children }) => <>{children}</>,
-  m: {
-    article: ({
-      children,
-      className,
-      whileInView,
-      ...props
-    }) => (
-      <article data-testid="story-article" className={className} {...props}>
-        {children}
-      </article>
-    ),
-  },
-}));
-
 // eslint-disable-next-line react/display-name,react/function-component-definition
 jest.mock('@site/src/components/common/Heart', () => (props) => (
   // eslint-disable-next-line react/destructuring-assignment,react/prop-types
@@ -62,13 +44,6 @@ jest.mock('@site/src/data/stories', () => ({
   ],
 }));
 
-// eslint-disable-next-line react/display-name,react/function-component-definition,react/prop-types
-jest.mock('@theme/Heading', () => ({ as, children }) => (
-  <div data-testid="heading" data-as={as}>
-    {children}
-  </div>
-));
-
 describe('stories.Content', () => {
   it('renders a wrapper with the content class', () => {
     const { container } = render(<Content />);
@@ -78,7 +53,7 @@ describe('stories.Content', () => {
 
   it('renders one story per entry with heading, heart, content, and links', () => {
     render(<Content />);
-    const articles = screen.getAllByTestId('story-article');
+    const articles = screen.getAllByTestId('article');
 
     // One <article> for each story
     expect(articles).toHaveLength(stories.length);
@@ -92,7 +67,7 @@ describe('stories.Content', () => {
 
       // Heading as h2 with Link (header) and Heart
       const heading = within(article).getByTestId('heading');
-      expect(heading).toHaveAttribute('data-as', 'h2');
+      expect(heading.tagName).toEqual('H2');
 
       const headerLink = within(heading).getByTestId('link');
       expect(headerLink).toHaveAttribute('data-href', story.header.href);

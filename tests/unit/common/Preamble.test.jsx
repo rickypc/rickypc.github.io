@@ -14,17 +14,10 @@ jest.mock('@site/src/components/common/PrintAdmonition', () => ({
   default: () => <div data-testid="print-admonition" />,
 }));
 
-jest.mock('@theme/Heading', () => ({
-  __esModule: true,
-  default: ({ as: Tag = 'h2', children }) => (
-    <Tag data-testid="heading">{children}</Tag>
-  ),
-}));
-
 describe('Preamble', () => {
   const baseProps = {
-    title: 'Sample Title',
     description: 'This is a sample description.',
+    title: 'Sample Title',
   };
 
   describe('default rendering', () => {
@@ -50,7 +43,7 @@ describe('Preamble', () => {
       );
 
       const heading = getByTestId('heading');
-      expect(heading.tagName).toBe('H1');
+      expect(heading.tagName).toEqual('H1');
       expect(heading).toHaveTextContent(baseProps.title);
 
       const para = getByText(baseProps.description);

@@ -15,12 +15,6 @@ import '@testing-library/jest-dom';
 import Speech from '@site/src/components/common/Speech';
 import { useSpeech } from '@site/src/hooks/observer';
 
-jest.mock('react-icons/lib', () => ({
-  __esModule: true,
-  // eslint-disable-next-line react/display-name,react/function-component-definition
-  GenIcon: (config) => (props) => (<svg data-testid={`icon-${config.tag}`} {...props} />),
-}));
-
 jest.mock('@site/src/components/common/Button', () => ({
   __esModule: true,
   default: ({
@@ -41,11 +35,6 @@ jest.mock('@site/src/components/common/Button', () => ({
 jest.mock('@site/src/hooks/observer', () => ({
   __esModule: true,
   useSpeech: jest.fn(),
-}));
-
-jest.mock('@theme/Admonition', () => ({
-  __esModule: true,
-  default: ({ children }) => <div data-testid="admonition">{children}</div>,
 }));
 
 /**

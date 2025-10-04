@@ -13,13 +13,6 @@ import { useSpeech } from '@site/src/hooks/observer';
 
 jest.mock('@site/src/hooks/observer');
 
-// eslint-disable-next-line react/display-name,react/function-component-definition,react/prop-types
-jest.mock('@theme/Admonition', () => ({ type, children }) => (
-  <div data-testid="mock-admonition" data-type={type}>
-    {children}
-  </div>
-));
-
 describe('SpeechAdmonition', () => {
   it('does not render anything when speech is ready', () => {
     useSpeech.mockReturnValue([true]);
@@ -31,7 +24,7 @@ describe('SpeechAdmonition', () => {
     useSpeech.mockReturnValue([false]);
     render(<SpeechAdmonition />);
 
-    const admon = screen.getByTestId('mock-admonition');
+    const admon = screen.getByTestId('admonition');
     expect(admon).toHaveAttribute('data-type', admonitions.speech.type);
     expect(admon).toHaveTextContent(admonitions.speech.text);
 

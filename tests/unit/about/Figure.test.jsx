@@ -10,24 +10,6 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Figure from '@site/src/components/about/Figure';
 
-jest.mock('framer-motion', () => ({
-  domAnimation: {},
-  // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  LazyMotion: ({ children }) => <>{children}</>,
-  m: {
-    figure: ({
-      children,
-      className,
-      whileInView,
-      ...props
-    }) => (
-      <figure className={className} {...props}>
-        {children}
-      </figure>
-    ),
-  },
-}));
-
 describe('about.Figure', () => {
   it('renders a figure with shape container and img roles for each type', () => {
     const { container } = render(<Figure />);

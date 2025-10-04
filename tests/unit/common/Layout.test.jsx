@@ -10,12 +10,6 @@ import '@testing-library/jest-dom';
 import Layout from '@site/src/components/common/Layout';
 import { useWelcome } from '@site/src/hooks/observer';
 
-jest.mock('@docusaurus/Head', () => ({
-  __esModule: true,
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  default: ({ children }) => <>{children}</>,
-}));
-
 jest.mock('@site/src/data/common', () => ({
   context: jest.fn(({ description, keywords, title }) => JSON
     .stringify({ description, keywords, title })),
@@ -23,15 +17,6 @@ jest.mock('@site/src/data/common', () => ({
 
 jest.mock('@site/src/hooks/observer', () => ({
   useWelcome: jest.fn(),
-}));
-
-jest.mock('@theme/Layout', () => ({
-  __esModule: true,
-  default: ({ children, description, title }) => (
-    <div data-testid="theme-layout" data-description={description} data-title={title}>
-      {children}
-    </div>
-  ),
 }));
 
 describe('Layout', () => {
@@ -77,7 +62,7 @@ describe('Layout', () => {
     });
 
     it('sets theme layout description and title', () => {
-      const theme = screen.getByTestId('theme-layout');
+      const theme = screen.getByTestId('layout');
       expect(theme).toHaveAttribute('data-description', 'desc text');
       expect(theme).toHaveAttribute('data-title', 'Page Title');
     });

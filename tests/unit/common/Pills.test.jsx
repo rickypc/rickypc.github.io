@@ -9,43 +9,6 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Pills from '@site/src/components/common/Pills';
 
-jest.mock('framer-motion', () => ({
-  __esModule: true,
-  // eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
-  LazyMotion: ({ children }) => <>{children}</>,
-  domMax: {},
-  m: {
-    dt: ({
-      children,
-      className,
-      onClick,
-      whileTap,
-      ...rest
-    }) => (
-      /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-      jsx-a11y/no-noninteractive-element-interactions */
-      <dt className={className} onClick={onClick} {...rest}>
-        {children}
-      </dt>
-    ),
-    span: ({
-      children,
-      className,
-      layoutId,
-      ...rest
-    }) => (
-      <span
-        data-testid={`indicator-${children}`}
-        className={className}
-        data-layoutid={layoutId}
-        {...rest}
-      >
-        {children}
-      </span>
-    ),
-  },
-}));
-
 describe('Pills', () => {
   const items = ['apple', 'banana', 'cherry'];
   const prefix = 'fruit';
@@ -101,7 +64,7 @@ describe('Pills', () => {
       expect(appleDt).not.toHaveClass('active');
       expect(cherryDt).toHaveClass('active');
 
-      const indicator = getByTestId('indicator-cherry');
+      const indicator = getByTestId('span');
       expect(indicator).toHaveClass('indicator');
       expect(indicator).toHaveAttribute('data-layoutid', `pill-indicator-${prefix}`);
       expect(indicator).toHaveTextContent('cherry');

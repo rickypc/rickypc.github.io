@@ -9,24 +9,6 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PhraseBlock from '@site/src/components/common/PhraseBlock';
 
-jest.mock('@docusaurus/theme-common/internal', () => ({
-  __esModule: true,
-  // eslint-disable-next-line react/prop-types
-  CodeBlockContextProvider: ({ children }) => (
-    <div data-testid="codeblock-context">{children}</div>
-  ),
-  createCodeBlockMetadata: jest.fn((meta) => ({
-    code: meta.code,
-    title: meta.title,
-  })),
-  useCodeWordWrap: () => ({ codeBlockRef: { current: null } }),
-}));
-
-jest.mock('@theme/CodeBlock/Buttons', () => ({
-  __esModule: true,
-  default: () => <div data-testid="buttons" />,
-}));
-
 describe('PhraseBlock', () => {
   it('renders single-child phrase with structure and Buttons', () => {
     const phrase = {

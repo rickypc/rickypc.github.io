@@ -33,8 +33,12 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
   organizationName: 'rickypc',
   plugins: ['./src/plugins/docusaurus-plugin-local'],
   presets: [

@@ -448,7 +448,7 @@ describe('useWelcome', () => {
     await act(async () => renderHook(() => useWelcome()));
 
     let translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
-    expect(translateLink.href).toContain('translate.goog/missing/?_x_tr_sl=auto&_x_tr_tl=en');
+    expect(translateLink.href).toContain('https://ricky-one.translate.goog/missing/?_x_tr_sl=auto&_x_tr_tl=en');
 
     // Empty-string case.
     Object.defineProperty(window.navigator, 'language', {
@@ -463,7 +463,7 @@ describe('useWelcome', () => {
     await act(async () => renderHook(() => useWelcome()));
 
     translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
-    expect(translateLink.href).toContain('translate.goog/missing-empty/?_x_tr_sl=auto&_x_tr_tl=en');
+    expect(translateLink.href).toContain('https://ricky-one.translate.goog/missing-empty/?_x_tr_sl=auto&_x_tr_tl=en');
   });
 
   it('default object and navigation = true (en-US)', async () => {
@@ -482,7 +482,7 @@ describe('useWelcome', () => {
     const translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
     expect(translateLink).not.toBeNull();
     expect(translateLink.href).toContain('/docs/intro/');
-    expect(translateLink.href).toContain('translate.goog/docs/intro/?_x_tr_sl=auto&_x_tr_tl=en');
+    expect(translateLink.href).toContain('https://ricky-one.translate.goog/docs/intro/?_x_tr_sl=auto&_x_tr_tl=en');
 
     expect(root.className).not.toMatch(/--exclusive/);
     expect(root.className).toMatch(/--welcome/);
@@ -524,7 +524,7 @@ describe('useWelcome', () => {
 
     const translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
     expect(translateLink).not.toBeNull();
-    expect(translateLink.href).toContain('translate.goog/zh/?_x_tr_sl=en&_x_tr_tl=zh-CN');
+    expect(translateLink.href).toContain('https://ricky-one.translate.goog/zh/?_x_tr_sl=en&_x_tr_tl=zh-CN');
 
     // navigation false should add exclusive and welcome classes.
     expect(root.className).toMatch(/--exclusive/);
@@ -548,7 +548,7 @@ describe('useWelcome', () => {
     await act(async () => renderHook(() => useWelcome({ navigation: true })));
 
     const translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
-    expect(translateLink.href).toContain('translate.goog/fr/?_x_tr_sl=en&_x_tr_tl=fr');
+    expect(translateLink.href).toContain('https://ricky-one.translate.goog/fr/?_x_tr_sl=en&_x_tr_tl=fr');
 
     expect(root.className).toMatch(/--welcome/);
   });

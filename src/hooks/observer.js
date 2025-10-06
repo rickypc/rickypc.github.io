@@ -4,7 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { clsx, context } from '@site/src/data/common';
+import { clsx } from '@site/src/data/common';
 import {
   useCallback,
   useEffect,
@@ -184,7 +184,7 @@ export function useWelcome({ navigation = true } = {}) {
     // After target assignment.
     const source = target === 'en' ? 'auto' : 'en';
     document.querySelector('nav .navbar__item.navbar__item--translate')
-      .href = `${context.url}.translate.goog${path}?_x_tr_sl=${source}&_x_tr_tl=${target}`;
+      .href = `https://ricky-one.translate.goog${path}?_x_tr_sl=${source}&_x_tr_tl=${target}`;
     // return none.
   }, [location.pathname]);
 

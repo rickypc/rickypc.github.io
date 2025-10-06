@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkrickypc_github_io=self.webpackChunkrickypc_github_io||[]).push([["785"],{3432:function(i,n,c){c.d(n,{A:()=>r});var e=c(4848),t=c(6540),o=c(2250),s=c(5556),u=c.n(s),p=c(9519);let r=(0,t.memo)(Object.assign(function({navigation:i=!1,...n}){return(0,p.W4)({navigation:i}),(0,e.jsx)(o.A,{...n})},{propTypes:{navigation:u().bool}}))}}]);

@@ -1,39 +1,40 @@
-# I am [Ricky Huang](https://ricky.one)
+# [Ricky Huang](https://ricky.one)
 
-## An Engineering Leader
+## Engineering Leader
 
-I am a leader who focuses on achieving engineering team goals with thoughtful analysis and judgment to thrive on ever-changing and challenging business requirements.
+I lead engineering teams with a focus on thoughtful analysis, sound judgment, and strategic execution. My approach enables teams to thrive amid evolving business demands and complex technical challenges.
 
-## Full Stack Developer
+## Full-Stack Developer
 
-I am a full-stack developer who bridges the communication gap between the front-end and back-end teams with the idea of one common cause to create a robust and versatile application.
+As a full-stack developer, I bridge the gap between front-end and back-end disciplines, fostering collaboration and shared purpose. My goal is to build robust, scalable, and versatile applications that serve users and stakeholders alike.
 
 ## Smart Creative
 
-I am a smart creative who combines technical innovation, business strategy, and creativity to lead and align the engineering team with the company's business objectives.
+I bring together technical innovation, business strategy, and creative thinking to guide engineering efforts in alignment with organizational goals. This blend of skills helps drive meaningful impact across product and team development.
 
 ## Innovator
 
-With over 25 years of professionally enriched experiences and an advanced academic background in Software Engineering, I help shape my partner's and employer's technology foundation to deliver their unique value proposition.
+With over 30 years of professional experience and an advanced academic background in Software Engineering, I help partners and employers build strong technology foundations that support their unique value propositions.
 
 ## Transformer-Transactor
 
-I am a Transformer People Type, who combines interpersonal sensitivity with strong social networks, and definite leadership impact.
+I embody the Transformer People Type - combining interpersonal sensitivity, strong social networks, and influential leadership.
 
-I am a Transactor Task Type, who combines thoughtful analysis with the driven pursuit of goals. I enjoy challenges and can be relied upon to deliver results.
+I also reflect the Transactor Task Type - balancing analytical thinking with a results-driven mindset. I embrace challenges and consistently deliver outcomes that matter.
 
-### My key characteristics:
+### Key Characteristics
 
-- I am "people" and "task" oriented.
-- I am outgoing and socially skilled.
-- I provide a clear vision and purpose, able to translate ideas into action.
-- I am a good coordinator. I get things done by my ability to inspire people with me.
-- I focused on excellence and delivery.
-- I get the best from people due to insight and understanding into what makes different people respond and the ability to empathize with differing needs and viewpoints.
-- I value individual qualities and skills.
+- People and task oriented
+- Outgoing and socially adept
+- Visionary with the ability to translate ideas into action
+- Skilled coordinator who inspires collaboration
+- Committed to excellence and delivery
+- Empathetic and insightful in understanding diverse motivations
+- Appreciative of individual strengths and talents
 
 ## Acknowledgement
 
-[Ricky Huang](https://ricky.one)'s website is built using [open-source](https://en.wikipedia.org/wiki/Open_source) software including, but not limited to:
+This website is built using [open-source](https://en.wikipedia.org/wiki/Open_source) technologies, including but not limited to:
+
 - [Docusaurus](https://docusaurus.io)
 - [React](https://react.dev)

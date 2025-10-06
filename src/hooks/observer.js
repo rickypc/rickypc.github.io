@@ -184,7 +184,7 @@ export function useWelcome({ navigation = true } = {}) {
     // After target assignment.
     const source = target === 'en' ? 'auto' : 'en';
     document.querySelector('nav .navbar__item.navbar__item--translate')
-      .href = `https://ricky-one.translate.goog${path}?_x_tr_sl=${source}&_x_tr_tl=${target}`;
+      .href = `https://rickypc-github-io.translate.goog${path}?_x_tr_sl=${source}&_x_tr_tl=${target}`;
     // return none.
   }, [location.pathname]);
 

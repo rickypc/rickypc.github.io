@@ -78,10 +78,6 @@ jest.mock('@site/src/data/timeline', () => ({
   ],
 }));
 
-jest.mock('@site/src/hooks/observer', () => ({
-  useMedia: jest.fn(),
-}));
-
 describe('timeline.Content', () => {
   it('renders wrapper and timeline items with correct layout when single = false', () => {
     // single = false -> position alternates: idx0 -> right, idx1 -> left

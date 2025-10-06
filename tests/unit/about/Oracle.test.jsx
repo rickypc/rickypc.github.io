@@ -11,8 +11,6 @@ import '@testing-library/jest-dom';
 import Oracle from '@site/src/components/about/Oracle';
 import { useVisibility } from '@site/src/hooks/observer';
 
-jest.mock('@site/src/hooks/observer');
-
 describe('about.Oracle', () => {
   it.each([
     [false, 'oracle'],

@@ -11,13 +11,8 @@ import '@testing-library/jest-dom';
 import Figure from '@site/src/components/home/Figure';
 import { useVisibility } from '@site/src/hooks/observer';
 
-jest.mock('@site/src/hooks/observer', () => ({
-  useVisibility: jest.fn(),
-}));
-
 describe('home.Figure', () => {
   it('renders a <figure> with correct accessibility attributes, CSS class, and nested Image', () => {
-    jest.useFakeTimers();
     useVisibility.mockReturnValue({ visible: true });
     const { container } = render(<Figure />);
 
@@ -34,7 +29,5 @@ describe('home.Figure', () => {
     const source = fig.querySelector('picture>source');
     expect(source).toHaveAttribute('srcset', 'self.webp');
     expect(source).toHaveAttribute('type', 'image/webp');
-
-    jest.useRealTimers();
   });
 });

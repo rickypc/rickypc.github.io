@@ -20,10 +20,6 @@ jest.mock('@site/src/components/common/SpeechAdmonition', () => () => (
   <div data-testid="speech-admonition" />
 ));
 
-jest.mock('@site/src/hooks/observer', () => ({
-  useWelcome: jest.fn(),
-}));
-
 describe('Welcome', () => {
   it('calls useWelcome with navigation=false by default and renders both admonitions', () => {
     render(<Welcome />);

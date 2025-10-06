@@ -4,7 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { clsx } from '@site/src/data/common';
+import { clsx, context } from '@site/src/data/common';
 import {
   useCallback,
   useEffect,
@@ -184,13 +184,14 @@ export function useWelcome({ navigation = true } = {}) {
     // After target assignment.
     const source = target === 'en' ? 'auto' : 'en';
     document.querySelector('nav .navbar__item.navbar__item--translate')
-      .href = `https://ricky-one.translate.goog${path}?_x_tr_sl=${source}&_x_tr_tl=${target}`;
+      .href = `${context.url}.translate.goog${path}?_x_tr_sl=${source}&_x_tr_tl=${target}`;
     // return none.
   }, [location.pathname]);
 
   useEffect(() => {
     if (browser) {
       document.querySelector('nav .navbar__brand .navbar__title')?.setAttribute?.('translate', 'no');
+      // istanbul ignore else
       // eslint-disable-next-line no-restricted-globals
       if (top === window) {
         document.getElementById(`__${docusaurus}`).className = clsx(

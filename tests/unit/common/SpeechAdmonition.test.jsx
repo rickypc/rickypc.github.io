@@ -11,8 +11,6 @@ import { admonitions } from '@site/src/data/common';
 import SpeechAdmonition from '@site/src/components/common/SpeechAdmonition';
 import { useSpeech } from '@site/src/hooks/observer';
 
-jest.mock('@site/src/hooks/observer');
-
 describe('SpeechAdmonition', () => {
   it('does not render anything when speech is ready', () => {
     useSpeech.mockReturnValue([true]);

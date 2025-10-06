@@ -10,11 +10,6 @@ import '@testing-library/jest-dom';
 import Reveal from '@site/src/components/common/Reveal';
 import { useVisibility } from '@site/src/hooks/observer';
 
-jest.mock('@site/src/hooks/observer', () => ({
-  __esModule: true,
-  useVisibility: jest.fn(),
-}));
-
 describe('Reveal', () => {
   beforeEach(() => {
     useVisibility.mockReturnValue({ ref: () => {}, visible: false });

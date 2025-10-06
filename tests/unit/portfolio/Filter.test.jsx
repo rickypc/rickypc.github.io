@@ -91,10 +91,6 @@ jest.mock('@site/src/data/portfolio', () => ({
   ],
 }));
 
-jest.mock('@site/src/hooks/observer', () => ({
-  useMedia: jest.fn(),
-}));
-
 describe('portfolio.Filter', () => {
   const expectedTags = ['All', 'alpha', 'beta', 'gamma'];
 

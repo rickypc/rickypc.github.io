@@ -10,8 +10,6 @@ import '@testing-library/jest-dom';
 import PrintAdmonition from '@site/src/components/common/PrintAdmonition';
 import { usePrint } from '@site/src/hooks/observer';
 
-jest.mock('@site/src/hooks/observer', () => ({ usePrint: jest.fn() }));
-
 describe('PrintAdmonition', () => {
   describe('when print is not ready', () => {
     it('renders an aside with Admonition', () => {

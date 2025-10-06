@@ -15,15 +15,7 @@ jest.mock('@site/src/data/common', () => ({
     .stringify({ description, keywords, title })),
 }));
 
-jest.mock('@site/src/hooks/observer', () => ({
-  useWelcome: jest.fn(),
-}));
-
 describe('Layout', () => {
-  beforeEach(() => {
-    useWelcome.mockClear();
-  });
-
   it('calls useWelcome once on mount', () => {
     render((
       <Layout

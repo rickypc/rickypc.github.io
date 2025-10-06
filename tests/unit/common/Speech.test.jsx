@@ -32,11 +32,6 @@ jest.mock('@site/src/components/common/Button', () => ({
   ),
 }));
 
-jest.mock('@site/src/hooks/observer', () => ({
-  __esModule: true,
-  useSpeech: jest.fn(),
-}));
-
 /**
  * Creates a fully controlled mock setup for speechSynthesis
  *   and SpeechSynthesisUtterance.

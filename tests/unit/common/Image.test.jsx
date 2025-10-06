@@ -10,10 +10,6 @@ import '@testing-library/jest-dom';
 import Image from '@site/src/components/common/Image';
 import { useVisibility } from '@site/src/hooks/observer';
 
-jest.mock('@site/src/hooks/observer', () => ({
-  useVisibility: jest.fn(),
-}));
-
 describe('Image', () => {
   const basePicture = {
     avif: 'img.avif',

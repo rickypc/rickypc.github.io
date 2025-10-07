@@ -37,6 +37,50 @@ export const hasHeader = async ({ page }) => {
   expect(await page.textContent('main header p')).toMatchSnapshot('header-description.txt');
 };
 
+export const hasNavigations = async (page, testInfo) => {
+  const nav = {
+    desktop: page.locator('nav.navbar .navbar__items--right'),
+    mobile: page.locator('nav.navbar .navbar-sidebar .navbar-sidebar__items .menu'),
+  };
+  const theme = {
+    desktop: nav.desktop,
+    mobile: page.locator('nav.navbar .navbar-sidebar .navbar-sidebar__brand'),
+  };
+  if (mobile(testInfo)) {
+    await page.locator('nav .navbar__inner button.navbar__toggle').click();
+
+    await expect(nav.desktop.getByRole('link', { name: 'Github' })).toBeHidden();
+    await expect(nav.mobile.getByRole('link', { name: 'Github' })).toBeVisible();
+    expect(await nav.mobile.getByRole('link', { name: 'Github' }).getAttribute('href')).toContain('https://bit.ly/3VRIDFo');
+
+    await expect(nav.desktop.getByRole('link', { name: 'Linkedin' })).toBeHidden();
+    await expect(nav.mobile.getByRole('link', { name: 'Linkedin' })).toBeVisible();
+    expect(await nav.mobile.getByRole('link', { name: 'Linkedin' }).getAttribute('href')).toContain('https://bit.ly/3VUUrqb');
+
+    await expect(nav.desktop.getByRole('link', { name: 'Translate' })).toBeHidden();
+    await expect(nav.mobile.getByRole('link', { name: 'Translate' })).toBeVisible();
+    expect(await nav.mobile.getByRole('link', { name: 'Translate' }).getAttribute('href')).toMatch(/https:\/\/ricky[^.]+\.translate\.goog\//i);
+
+    await expect(theme.desktop.getByRole('button', { name: 'light mode' })).toBeHidden();
+    await expect(theme.mobile.getByRole('button', { name: 'light mode' })).toBeVisible();
+  } else {
+    await expect(nav.desktop.getByRole('link', { name: 'Github' })).toBeVisible();
+    expect(await nav.desktop.getByRole('link', { name: 'Github' }).getAttribute('href')).toContain('https://bit.ly/3VRIDFo');
+    await expect(nav.mobile.getByRole('link', { name: 'Github' })).toBeHidden();
+
+    await expect(nav.desktop.getByRole('link', { name: 'Linkedin' })).toBeVisible();
+    expect(await nav.desktop.getByRole('link', { name: 'Linkedin' }).getAttribute('href')).toContain('https://bit.ly/3VUUrqb');
+    await expect(nav.mobile.getByRole('link', { name: 'Linkedin' })).toBeHidden();
+
+    await expect(nav.desktop.getByRole('link', { name: 'Translate' })).toBeVisible();
+    expect(await nav.desktop.getByRole('link', { name: 'Translate' }).getAttribute('href')).toMatch(/https:\/\/ricky[^.]+\.translate\.goog\//i);
+    await expect(nav.mobile.getByRole('link', { name: 'Translate' })).toBeHidden();
+
+    await expect(theme.desktop.getByRole('button', { name: 'light mode' })).toBeVisible();
+    await expect(theme.mobile.getByRole('button', { name: 'light mode' })).toBeHidden();
+  }
+};
+
 export const hasScreenshot = async (page, testInfo, theme, url) => {
   const options = { animations: 'disabled', fullPage: true, scale: 'css' };
   const themeLower = theme.toLowerCase();

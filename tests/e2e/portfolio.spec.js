@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -10,6 +10,7 @@ const {
   expect,
   hasActiveNavigation,
   hasHeader,
+  hasNavigations,
   hasScreenshot,
   hasTitle,
   hasUrl,
@@ -24,6 +25,7 @@ test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url))
 test('has correct title', hasTitle);
 test('has correct header', hasHeader);
 test('has active navigation', async ({ page }, testInfo) => hasActiveNavigation('Portfolio', page, testInfo));
+test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo));
 
 test('has 12 portfolios', async ({ page }) => {
   await band(12, async (index) => {

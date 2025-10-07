@@ -8,6 +8,7 @@ const {
   band,
   beforeEach,
   expect,
+  hasNavigations,
   hasScreenshot,
   hasSpeech,
   hasTitle,
@@ -22,6 +23,7 @@ test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
 
 test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url));
 test('has correct title', hasTitle);
+test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo));
 
 test('has greeting', async ({ page }) => {
   await hasSpeech(page, 'main header h1 [class*="controls_"]', url);
@@ -48,6 +50,17 @@ test('has self image', async ({ page }, testInfo) => {
     await expect(page.locator('main figure picture')).toHaveCount(1);
   } else {
     await expect(page.locator('main figure picture img')).toBeVisible();
+    await page.waitForFunction(
+      (selector) => {
+        const element = document.querySelector(selector);
+        if (!element) {
+          return false;
+        }
+        const style = window.getComputedStyle(element);
+        return style.opacity === '1' && style.transform === 'none';
+      },
+      'main figure picture img',
+    );
   }
 });
 

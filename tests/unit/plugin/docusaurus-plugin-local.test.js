@@ -25,10 +25,6 @@ jest.mock('node:fs', () => {
   };
 });
 
-//
-// Helpers (declare before mocks)
-//
-
 /**
  * Create a chainable CLI mock implementing the fluent API used by the plugin.
  *
@@ -40,7 +36,7 @@ jest.mock('node:fs', () => {
  *   - actions.action: {Function} the function passed to .action(...)
  *   - actions.command: {string} the command string passed to .command(...)
  * @returns {{
- *   action: function(() => {}): this,
+ *   action: function(() => void): this,
  *   command: function(string): this,
  *   description: function(string): this,
  *   option: function(string, string|object): this,
@@ -181,7 +177,7 @@ describe('docusaurus-plugin-local', () => {
     });
 
     it('extendCli action: default args and falsy cliSiteDir fallback behave independently', async () => {
-      // default (undefined) invocation
+      // Default (undefined) invocation.
       const pluginA = localPlugin.default({ siteDir: '/ctx/siteA' });
       const actionsA = {};
       const cliA = makeCli(actionsA);
@@ -192,7 +188,7 @@ describe('docusaurus-plugin-local', () => {
       await actionsA.action(undefined, undefined);
       expect(createWriteStream.mock.calls.length - beforeA).toEqual(pdf.length);
 
-      // falsy cliSiteDir -> fallback to context.siteDir and default filenames
+      // Falsy cliSiteDir -> fallback to context.siteDir and default filenames.
       const context = { siteDir: '/fallback/context/site' };
       const pluginB = localPlugin.default(context);
       const actionsB = {};

@@ -17,8 +17,6 @@ import {
   useWelcome,
 } from '@site/src/hooks/observer';
 
-jest.mock('@docusaurus/useIsBrowser', () => jest.fn());
-jest.mock('@docusaurus/router', () => ({ useLocation: jest.fn() }));
 jest.unmock('@site/src/hooks/observer');
 
 describe('useMedia', () => {
@@ -488,7 +486,7 @@ describe('useWelcome', () => {
     expect(root.className).toMatch(/--welcome/);
 
     const title = document.querySelector('nav .navbar__brand .navbar__title');
-    expect(title.getAttribute('translate')).toBe('no');
+    expect(title.getAttribute('translate')).toEqual('no');
   });
 
   it('default object and navigation = true (en-US) - non-browser', async () => {
@@ -506,7 +504,7 @@ describe('useWelcome', () => {
 
     const title = document.querySelector('nav .navbar__brand .navbar__title');
     expect(title.getAttribute('translate')).toBeNull();
-    expect(root.className).toBe('docusaurus-root');
+    expect(root.className).toEqual('docusaurus-root');
   });
 
   it('navigation = false (zh-CN)', async () => {
@@ -531,7 +529,7 @@ describe('useWelcome', () => {
     expect(root.className).toMatch(/--welcome/);
 
     const title = document.querySelector('nav .navbar__brand .navbar__title');
-    expect(title.getAttribute('translate')).toBe('no');
+    expect(title.getAttribute('translate')).toEqual('no');
   });
 
   it('navigation = true (fr)', async () => {

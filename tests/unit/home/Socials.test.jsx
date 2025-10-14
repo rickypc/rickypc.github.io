@@ -6,38 +6,23 @@
  * @jest-environment jsdom
  */
 
-import { render, screen, within } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Socials from '@site/src/components/home/Socials';
 import { socials } from '@site/src/data/home';
 
-// eslint-disable-next-line react/display-name,react/function-component-definition
-jest.mock('@site/src/components/common/Link', () => ({
-  // eslint-disable-next-line react/prop-types
-  children,
-  // eslint-disable-next-line react/prop-types
-  href,
-  // eslint-disable-next-line react/prop-types
-  title,
-  // eslint-disable-next-line react/prop-types
-  whileTap,
-}) => (
-  // eslint-disable-next-line @docusaurus/no-html-links,react/prop-types
-  <a data-href={href} data-tap={whileTap?.scale} data-testid="link" data-title={title} href={href} title={title}>
-    {children}
-  </a>
-));
+jest.unmock('@site/src/components/home/Socials');
 
 describe('home.Socials', () => {
   it('renders one link per social entry', () => {
-    const { container } = render(<Socials />);
+    const { container, getAllByTestId } = render(<Socials />);
     const ul = container.querySelector('ul');
     expect(ul).toHaveClass('social');
 
     const items = ul.querySelectorAll('li');
     expect(items).toHaveLength(socials.length);
 
-    const links = screen.getAllByTestId('link');
+    const links = getAllByTestId(/^link-/);
     expect(links).toHaveLength(socials.length);
 
     links.forEach((link, i) => {

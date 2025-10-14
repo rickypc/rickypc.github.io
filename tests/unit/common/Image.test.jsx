@@ -5,22 +5,24 @@
  * @jest-environment jsdom
  */
 
-import { act, render, fireEvent } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Image from '@site/src/components/common/Image';
 import { useVisibility } from '@site/src/hooks/observer';
 
+jest.unmock('@site/src/components/common/Image');
+
 describe('Image', () => {
   const basePicture = {
     avif: 'img.avif',
-    webp: 'img.webp',
     fallback: {
+      preSrc: 'preSrc.jpg',
       src: {
         images: [{ path: 'fallback.jpg', width: 100 }],
         srcSet: 'fallbackSrcSet',
       },
-      preSrc: 'preSrc.jpg',
     },
+    webp: 'img.webp',
   };
 
   beforeEach(() => {
@@ -65,14 +67,14 @@ describe('Image', () => {
 
   describe('link wrapper', () => {
     it('wraps picture in an anchor when link prop is provided', () => {
-      const { getByRole } = render((
+      const { getByTestId } = render((
         <Image
           alt="Alt"
-          picture={basePicture}
           link={{ href: '/test', title: 'Test' }}
+          picture={basePicture}
         />
       ));
-      const anchor = getByRole('link');
+      const anchor = getByTestId('link-Test');
       expect(anchor).toHaveAttribute('href', '/test');
       expect(anchor).toHaveAttribute('title', 'Test');
       expect(anchor.querySelector('picture')).toBeInTheDocument();
@@ -83,7 +85,7 @@ describe('Image', () => {
     it('applies preSrc background, sets alt on load, and clears preSrc after delay', () => {
       const onLoad = jest.fn();
       const { container } = render((
-        <Image alt="Alt text" picture={basePicture} onLoad={onLoad} />
+        <Image alt="Alt text" onLoad={onLoad} picture={basePicture} />
       ));
 
       const pic = container.querySelector('picture');
@@ -103,7 +105,7 @@ describe('Image', () => {
     it('invokes onLoad again on subsequent loads without restoring preSrc', () => {
       const onLoad = jest.fn();
       const { container } = render((
-        <Image alt="Alt" picture={basePicture} onLoad={onLoad} />
+        <Image alt="Alt" onLoad={onLoad} picture={basePicture} />
       ));
 
       const img = container.querySelector('img');
@@ -120,41 +122,41 @@ describe('Image', () => {
   describe('responsive fallback selection', () => {
     const scenarios = [
       {
-        name: 'selects first image exceeding width',
-        width: 150,
+        expected: 'large.jpg',
         images: [
           { path: 'small.jpg', width: 50 },
           { path: 'large.jpg', width: 200 },
         ],
-        expected: 'large.jpg',
+        name: 'selects first image exceeding width',
+        width: 150,
       },
       {
+        expected: 'two.jpg',
+        images: [
+          { path: 'one.jpg', width: 50 },
+          { path: 'two.jpg', width: 100 },
+        ],
         name: 'falls back to last image when none exceed width',
         width: 150,
+      },
+      {
+        expected: 'one.jpg',
         images: [
           { path: 'one.jpg', width: 50 },
           { path: 'two.jpg', width: 100 },
         ],
-        expected: 'two.jpg',
-      },
-      {
         name: 'does not change when initial fit equals first',
         width: 50,
-        images: [
-          { path: 'one.jpg', width: 50 },
-          { path: 'two.jpg', width: 100 },
-        ],
-        expected: 'one.jpg',
       },
       {
+        expected: 'stringFallback.jpg',
+        images: 'stringFallback.jpg',
         name: 'handles string fallback',
         width: 80,
-        images: 'stringFallback.jpg',
-        expected: 'stringFallback.jpg',
       },
     ];
 
-    it.each(scenarios)('$name', ({ width, images, expected }) => {
+    it.each(scenarios)('$name', ({ expected, images, width }) => {
       const original = Object.getOwnPropertyDescriptor(
         HTMLElement.prototype,
         'clientWidth',
@@ -168,8 +170,8 @@ describe('Image', () => {
         ? { fallback: images }
         : {
           avif: basePicture.avif,
+          fallback: { preSrc: '', src: { images, srcSet: '' } },
           webp: basePicture.webp,
-          fallback: { src: { images, srcSet: '' }, preSrc: '' },
         };
 
       const { container } = render(<Image alt="Alt" picture={picObj} />);

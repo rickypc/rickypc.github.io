@@ -9,10 +9,7 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Preamble from '@site/src/components/common/Preamble';
 
-jest.mock('@site/src/components/common/PrintAdmonition', () => ({
-  __esModule: true,
-  default: () => <div data-testid="print-admonition" />,
-}));
+jest.unmock('@site/src/components/common/Preamble');
 
 describe('Preamble', () => {
   const baseProps = {
@@ -47,7 +44,7 @@ describe('Preamble', () => {
       expect(heading).toHaveTextContent(baseProps.title);
 
       const para = getByText(baseProps.description);
-      expect(para.tagName).toBe('P');
+      expect(para.tagName).toEqual('P');
     });
   });
 

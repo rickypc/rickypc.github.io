@@ -7,30 +7,15 @@
 
 import {
   act,
-  render,
   fireEvent,
+  render,
   waitFor,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Speech from '@site/src/components/common/Speech';
 import { useSpeech } from '@site/src/hooks/observer';
 
-jest.mock('@site/src/components/common/Button', () => ({
-  __esModule: true,
-  default: ({
-    'aria-label': ariaLabel,
-    children,
-    className,
-    onClick,
-    whileTap, // destructure so motion props are not forwarded to DOM
-    ...rest
-  }) => (
-    // eslint-disable-next-line react/button-has-type
-    <button className={className} data-testid={`button-${ariaLabel || 'btn'}`} onClick={onClick} {...rest}>
-      {children}
-    </button>
-  ),
-}));
+jest.unmock('@site/src/components/common/Speech');
 
 /**
  * Creates a fully controlled mock setup for speechSynthesis
@@ -297,8 +282,8 @@ describe('Speech', () => {
 
       await waitFor(() => expect(mocks.instances.length).toBeGreaterThan(0));
       const last = mocks.instances.pop();
-      expect(last.lang).toBe(voices[0].lang);
-      expect(last.voice.name).toBe(voices[0].name);
+      expect(last.lang).toEqual(voices[0].lang);
+      expect(last.voice.name).toEqual(voices[0].name);
     });
 
     it('respects document.dataset.volume silent override and fallback to provided volume', async () => {
@@ -315,7 +300,7 @@ describe('Speech', () => {
       mocks.synth._emitVoicesChanged();
 
       await waitFor(() => expect(mocks.instances.length).toBeGreaterThan(0));
-      expect(mocks.instances.pop().volume).toBe(0);
+      expect(mocks.instances.pop().volume).toEqual(0);
 
       // Normal case.
       delete document.documentElement.dataset.volume;
@@ -374,8 +359,8 @@ describe('Speech', () => {
 
       await waitFor(() => expect(mocks.instances.length).toBeGreaterThan(0));
       const last = mocks.instances.pop();
-      expect(last.lang).toBe('eng-US');
-      expect(last.voice.name).toBe('WeirdVoice');
+      expect(last.lang).toEqual('eng-US');
+      expect(last.voice.name).toEqual('WeirdVoice');
     });
 
     it('matches underscore-formatted lang by replacing underscores', async () => {
@@ -390,8 +375,8 @@ describe('Speech', () => {
 
       await waitFor(() => expect(mocks.instances.length).toBeGreaterThan(0));
       const last = mocks.instances.pop();
-      expect(last.lang).toBe(voices[0].lang);
-      expect(last.voice.name).toBe('UnderscoreVoice');
+      expect(last.lang).toEqual(voices[0].lang);
+      expect(last.voice.name).toEqual('UnderscoreVoice');
     });
 
     // eslint-disable-next-line jest/expect-expect

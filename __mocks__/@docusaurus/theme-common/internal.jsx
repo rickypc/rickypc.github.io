@@ -4,7 +4,6 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-// eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
 export const CodeBlockContextProvider = ({ children }) => (
   <div data-testid="codeblock-context">{children}</div>
 );

@@ -6,35 +6,18 @@
  * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Greeting from '@site/src/components/home/Greeting';
 
-/* eslint-disable-next-line react/display-name,
-   react/function-component-definition,react/prop-types */
-jest.mock('@site/src/components/common/Heart', () => ({ id, className }) => (
-  <span data-testid="heart" data-id={id} data-class={className} />
-));
-
-/* eslint-disable-next-line react/display-name,
-   react/function-component-definition,react/prop-types */
-jest.mock('@site/src/components/common/Speech', () => ({ lang, names, children }) => (
-  <div
-    data-lang={lang}
-    // eslint-disable-next-line react/prop-types
-    data-names={names.join('|')}
-    data-testid="speech"
-  >
-    {children}
-  </div>
-));
+jest.unmock('@site/src/components/home/Greeting');
 
 describe('home.Greeting', () => {
   it('renders greeting text, IPA, Speech, and Heart inside Heading', () => {
-    render(<Greeting />);
+    const { getByTestId } = render(<Greeting />);
 
     // Verify Heading wrapper
-    const heading = screen.getByTestId('heading');
+    const heading = getByTestId('heading');
     expect(heading.tagName).toEqual('H1');
     expect(heading.className).toEqual('greeting');
 
@@ -46,10 +29,10 @@ describe('home.Greeting', () => {
     expect(ipaSpan).toHaveClass('ipa');
 
     // Speech component
-    const speech = screen.getByTestId('speech');
-    expect(speech).toHaveAttribute('data-lang', 'en-US');
+    const speech = getByTestId('speech');
+    expect(speech).toHaveAttribute('lang', 'en-US');
     expect(speech).toHaveAttribute(
-      'data-names',
+      'names',
       [
         'Alex',
         'Microsoft Guy Online (Natural) - English (United States)',
@@ -61,8 +44,8 @@ describe('home.Greeting', () => {
     expect(speech).toHaveTextContent('ricky huang');
 
     // Heart component
-    const heart = screen.getByTestId('heart');
-    expect(heart).toHaveAttribute('data-id', 'home-landing');
-    expect(heart).toHaveAttribute('data-class', 'reaction');
+    const heart = getByTestId('heart');
+    expect(heart).toHaveAttribute('class', 'reaction');
+    expect(heart).toHaveAttribute('id', 'home-landing');
   });
 });

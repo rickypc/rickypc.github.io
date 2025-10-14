@@ -10,6 +10,8 @@ import '@testing-library/jest-dom';
 import Reveal from '@site/src/components/common/Reveal';
 import { useVisibility } from '@site/src/hooks/observer';
 
+jest.unmock('@site/src/components/common/Reveal');
+
 describe('Reveal', () => {
   beforeEach(() => {
     useVisibility.mockReturnValue({ ref: () => {}, visible: false });
@@ -27,8 +29,8 @@ describe('Reveal', () => {
 
       const wordCount = spans.filter((s) => s.classList.contains('word')).length;
       const charCount = spans.filter((s) => s.classList.contains('character')).length;
-      expect(wordCount).toBe(2);
-      expect(charCount).toBe(10);
+      expect(wordCount).toEqual(2);
+      expect(charCount).toEqual(10);
     });
 
     it('when visible: adds play class', () => {
@@ -78,8 +80,8 @@ describe('Reveal', () => {
 
           const wordCount = spans.filter((s) => s.classList.contains('word')).length;
           const charCount = spans.filter((s) => s.classList.contains('character')).length;
-          expect(wordCount).toBe(words);
-          expect(charCount).toBe(chars);
+          expect(wordCount).toEqual(words);
+          expect(charCount).toEqual(chars);
 
           const root = container.querySelector('span[aria-hidden]');
           expect(root).toHaveClass('phrases');

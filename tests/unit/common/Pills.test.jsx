@@ -5,9 +5,11 @@
  * @jest-environment jsdom
  */
 
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Pills from '@site/src/components/common/Pills';
+
+jest.unmock('@site/src/components/common/Pills');
 
 describe('Pills', () => {
   const items = ['apple', 'banana', 'cherry'];
@@ -37,7 +39,7 @@ describe('Pills', () => {
 
     it('renders a <dl> with correct items', () => {
       const dl = container.querySelector('dl');
-      expect(dl.tagName).toBe('DL');
+      expect(dl.tagName).toEqual('DL');
       expect(dl).toHaveClass('pills');
       expect(dtElements).toHaveLength(items.length);
 

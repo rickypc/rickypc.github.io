@@ -9,9 +9,7 @@ process.env.TZ = 'UTC';
 module.exports = {
   clearMocks: true,
   collectCoverage: true,
-  collectCoverageFrom: [
-    'src/**/*.js*',
-  ],
+  collectCoverageFrom: ['src/**/*.js*'],
   coverageDirectory: './coverage/',
   errorOnDeprecated: true,
   logHeapUsage: true,
@@ -19,7 +17,7 @@ module.exports = {
     '@docusaurus/(BrowserOnly|ComponentCreator|constants|ExecutionEnvironment|Head|Interpolate|isInternalUrl|Link|Noop|renderRoutes|router|Translate|use.*)': '@docusaurus/core/lib/client/exports/$1',
     '@docusaurus/plugin-content-docs/client': '@docusaurus/plugin-content-docs/src/client/index.ts',
     '@site/(.*)': '<rootDir>/$1',
-    '@theme/(.*)': '@docusaurus/theme-classic/src/theme/$1',
+    '@theme/(.*)': '<rootDir>/src/theme/$1',
     '@theme-original/(.*)': '@docusaurus/theme-classic/src/theme/$1',
   },
   testEnvironment: 'node',

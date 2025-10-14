@@ -4,10 +4,8 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-/* eslint-disable-next-line react/display-name,
-react/function-component-definition,react/prop-types */
-export default ({ children, description, title }) => (
+export default jest.fn(({ children, description, title }) => (
   <div data-description={description} data-testid="layout" data-title={title}>
     {children}
   </div>
-);
+));

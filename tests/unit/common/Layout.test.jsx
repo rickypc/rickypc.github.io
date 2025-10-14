@@ -5,15 +5,13 @@
  * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { context } from '@site/src/data/common';
 import Layout from '@site/src/components/common/Layout';
 import { useWelcome } from '@site/src/hooks/observer';
 
-jest.mock('@site/src/data/common', () => ({
-  context: jest.fn(({ description, keywords, title }) => JSON
-    .stringify({ description, keywords, title })),
-}));
+jest.unmock('@site/src/components/common/Layout');
 
 describe('Layout', () => {
   it('calls useWelcome once on mount', () => {
@@ -37,9 +35,10 @@ describe('Layout', () => {
       <meta key="b" name="author" content="rick" />,
     ];
     let container;
+    let getByTestId;
 
     beforeEach(() => {
-      const utils = render((
+      ({ container, getByTestId } = render((
         <Layout
           className="main-class"
           description="desc text"
@@ -49,12 +48,11 @@ describe('Layout', () => {
         >
           <span data-testid="child">Hello world</span>
         </Layout>
-      ));
-      container = utils.container;
+      )));
     });
 
     it('sets theme layout description and title', () => {
-      const theme = screen.getByTestId('layout');
+      const theme = getByTestId('layout');
       expect(theme).toHaveAttribute('data-description', 'desc text');
       expect(theme).toHaveAttribute('data-title', 'Page Title');
     });
@@ -75,17 +73,13 @@ describe('Layout', () => {
     });
 
     it('includes JSON-LD script with page metadata', () => {
-      const script = container.querySelector(
-        'script[type="application/ld+json"]',
-      );
+      const script = container.querySelector('script[type="application/ld+json"]');
       expect(script).toBeInTheDocument();
-      expect(script.textContent).toBe(
-        JSON.stringify({
-          description: 'desc text',
-          keywords: ['one', 'two'],
-          title: 'Page Title',
-        }),
-      );
+      expect(script.textContent).toEqual(context({
+        description: 'desc text',
+        keywords: ['one', 'two'],
+        title: 'Page Title',
+      }));
     });
 
     it('renders twitter metas', () => {
@@ -98,7 +92,7 @@ describe('Layout', () => {
     });
 
     it('renders children', () => {
-      expect(screen.getByTestId('child')).toBeInTheDocument();
+      expect(getByTestId('child')).toBeInTheDocument();
     });
   });
 

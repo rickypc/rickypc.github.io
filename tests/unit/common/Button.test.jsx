@@ -10,6 +10,8 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Button from '@site/src/components/common/Button';
 
+jest.unmock('@site/src/components/common/Button');
+
 describe('Button', () => {
   it('renders children, applies className, and spreads extra props', () => {
     const { getByRole } = render((

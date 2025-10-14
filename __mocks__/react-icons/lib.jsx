@@ -4,8 +4,6 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-/* eslint-disable-next-line import/prefer-default-export,
-react/display-name,react/function-component-definition */
 export const GenIcon = (config) => (props) => (
   <svg
     data-config={JSON.stringify(config)}

@@ -9,6 +9,8 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PhraseBlock from '@site/src/components/common/PhraseBlock';
 
+jest.unmock('@site/src/components/common/PhraseBlock');
+
 describe('PhraseBlock', () => {
   it('renders single-child phrase with structure and Buttons', () => {
     const phrase = {
@@ -39,7 +41,7 @@ describe('PhraseBlock', () => {
 
     const codeElem = container.querySelector('code');
     expect(codeElem).toHaveClass('lines cls');
-    expect(codeElem.textContent).toBe('ABC-');
+    expect(codeElem.textContent).toEqual('ABC-');
 
     expect(getByTestId('buttons')).toBeInTheDocument();
   });
@@ -62,7 +64,7 @@ describe('PhraseBlock', () => {
       <PhraseBlock {...opts} phrase={phrase} />
     ));
     const codeElem = getByTestId('codeblock-context').querySelector('code');
-    expect(codeElem.textContent).toBe(expected);
+    expect(codeElem.textContent).toEqual(expected);
   });
 
   it('does not render Buttons when the rendered code is empty', () => {

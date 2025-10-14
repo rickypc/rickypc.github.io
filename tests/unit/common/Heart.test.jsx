@@ -9,6 +9,8 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Heart from '@site/src/components/common/Heart';
 
+jest.unmock('@site/src/components/common/Heart');
+
 describe('Heart', () => {
   const cases = [
     ['default props', {}, ['reaction']],

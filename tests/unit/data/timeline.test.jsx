@@ -19,13 +19,13 @@ describe('data.timeline', () => {
 
   describe('layout', () => {
     it('description', () => {
-      expect(layout.description).toBe(
+      expect(layout.description).toEqual(
         'Explore the key milestones that shaped Ricky Huang\'s journey - from architecture to software engineering, from startups to global enterprises. This timeline highlights pivotal roles, academic achievements, promotions, and recognitions that reflect my growth across disciplines and industries.',
       );
     });
 
     it('title', () => {
-      expect(layout.title).toBe('Timeline - Career, Education & Technical Milestones');
+      expect(layout.title).toEqual('Timeline - Career, Education & Technical Milestones');
     });
 
     it('keywords', () => {
@@ -41,13 +41,13 @@ describe('data.timeline', () => {
 
   describe('preamble', () => {
     it('description', () => {
-      expect(preamble.description).toBe(
+      expect(preamble.description).toEqual(
         'A curated journey through key milestones in my career, education, and technical growth. Each moment reflects a step forward - building expertise, shaping ideas, and driving impact across industries and technologies.',
       );
     });
 
     it('title', () => {
-      expect(preamble.title).toBe('Timeline');
+      expect(preamble.title).toEqual('Timeline');
     });
 
     it('printAdmonition is true', () => {
@@ -70,7 +70,7 @@ describe('data.timeline', () => {
 
         if (index < timelines.length - 1) {
           it('affiliation translate is "no"', () => {
-            expect(item.affiliation.translate).toBe('no');
+            expect(item.affiliation.translate).toEqual('no');
           });
         } else {
           it('affiliation translate undefined', () => {

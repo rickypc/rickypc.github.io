@@ -6,24 +6,12 @@
  * @jest-environment jsdom
  */
 
-import { render, screen, within } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Content from '@site/src/components/stories/Content';
 import { stories } from '@site/src/data/stories';
 
-// eslint-disable-next-line react/display-name,react/function-component-definition
-jest.mock('@site/src/components/common/Heart', () => (props) => (
-  // eslint-disable-next-line react/destructuring-assignment,react/prop-types
-  <svg data-testid="heart" id={props.id} />
-));
-
-// eslint-disable-next-line react/display-name,react/function-component-definition,react/prop-types
-jest.mock('@site/src/components/common/Link', () => ({ children, className, href }) => (
-  // eslint-disable-next-line @docusaurus/no-html-links
-  <a className={className} data-href={href} data-testid="link" href={href}>
-    {children}
-  </a>
-));
+jest.unmock('@site/src/components/stories/Content');
 
 jest.mock('@site/src/data/stories', () => ({
   stories: [
@@ -52,8 +40,8 @@ describe('stories.Content', () => {
   });
 
   it('renders one story per entry with heading, heart, content, and links', () => {
-    render(<Content />);
-    const articles = screen.getAllByTestId('article');
+    const { getAllByTestId } = render(<Content />);
+    const articles = getAllByTestId('article');
 
     // One <article> for each story
     expect(articles).toHaveLength(stories.length);
@@ -69,8 +57,8 @@ describe('stories.Content', () => {
       const heading = within(article).getByTestId('heading');
       expect(heading.tagName).toEqual('H2');
 
-      const headerLink = within(heading).getByTestId('link');
-      expect(headerLink).toHaveAttribute('data-href', story.header.href);
+      const headerLink = within(heading).getByTestId(/^link-/);
+      expect(headerLink).toHaveAttribute('href', story.header.href);
       expect(headerLink).toHaveTextContent(story.header.children);
 
       const heart = within(heading).getByTestId('heart');
@@ -81,8 +69,8 @@ describe('stories.Content', () => {
       expect(endorsement).toHaveClass('endorsement');
 
       // There should be four links in total: header, author, title, affiliation
-      const links = within(article).getAllByTestId('link');
-      const hrefs = links.map((a) => a.getAttribute('data-href'));
+      const links = within(article).getAllByTestId(/^link-/);
+      const hrefs = links.map((a) => a.getAttribute('href'));
       expect(hrefs).toEqual([
         story.header.href,
         story.author.href,

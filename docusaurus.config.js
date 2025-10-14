@@ -35,10 +35,12 @@ const config = {
   },
   markdown: {
     hooks: {
-      onBrokenMarkdownLinks: 'warn',
+      onBrokenMarkdownLinks: 'throw',
     },
   },
+  onBrokenAnchors: 'throw',
   onBrokenLinks: 'throw',
+  onDuplicateRoutes: 'throw',
   organizationName: 'rickypc',
   plugins: ['./src/plugins/docusaurus-plugin-local'],
   presets: [

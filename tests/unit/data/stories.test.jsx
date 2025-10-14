@@ -19,13 +19,13 @@ describe('data.stories', () => {
 
   describe('layout', () => {
     it('description', () => {
-      expect(layout.description).toBe(
+      expect(layout.description).toEqual(
         'Stories, experiences, and lessons from Ricky Huang\'s work as a full stack developer and engineering leader - capturing how technology, leadership, and personal growth have helped teams and projects succeed. These testimonials reflect the impact, collaboration, and trust built along the way.',
       );
     });
 
     it('title', () => {
-      expect(layout.title).toBe(
+      expect(layout.title).toEqual(
         'Stories - Testimonials, Experiences & Lessons from the Journey',
       );
     });
@@ -43,13 +43,13 @@ describe('data.stories', () => {
 
   describe('preamble', () => {
     it('description', () => {
-      expect(preamble.description).toBe(
+      expect(preamble.description).toEqual(
         'Real-world experiences, lessons learned, and reflections from my journey as a full stack developer and engineering leader. These stories highlight how I\'ve helped teams and projects thrive - through technology, mentorship, and personal growth.',
       );
     });
 
     it('title', () => {
-      expect(preamble.title).toBe('Stories');
+      expect(preamble.title).toEqual('Stories');
     });
   });
 
@@ -69,13 +69,13 @@ describe('data.stories', () => {
         it('affiliation', () => {
           expect(s.affiliation.children).toEqual(expect.any(String));
           expect(s.affiliation.href).toMatch(/^https:\/\/bit\.ly\//);
-          expect(s.affiliation.translate).toBe('no');
+          expect(s.affiliation.translate).toEqual('no');
         });
 
         it('author', () => {
           expect(s.author.children).toEqual(expect.any(String));
           expect(s.author.href).toMatch(/^https:\/\/bit\.ly\//);
-          expect(s.author.translate).toBe('no');
+          expect(s.author.translate).toEqual('no');
         });
 
         if (s.header.href === null) {
@@ -110,12 +110,12 @@ describe('data.stories', () => {
 
     it('unique affiliations', () => {
       const names = stories.map((s) => s.affiliation.children);
-      expect(new Set(names).size).toBe(names.length);
+      expect(new Set(names).size).toEqual(names.length);
     });
 
     it('unique authors', () => {
       const names = stories.map((s) => s.author.children);
-      expect(new Set(names).size).toBe(names.length);
+      expect(new Set(names).size).toEqual(names.length);
     });
   });
 });

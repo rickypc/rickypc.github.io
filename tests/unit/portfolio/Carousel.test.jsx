@@ -6,61 +6,19 @@
  * @jest-environment jsdom
  */
 
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-} from '@testing-library/react';
-import { forwardRef } from 'react';
+import { act, fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Carousel from '@site/src/components/portfolio/Carousel';
 import useEmblaCarousel from 'embla-carousel-react';
 
-// eslint-disable-next-line react/display-name
-jest.mock('@site/src/components/common/Button', () => forwardRef((props, ref) => {
-  const {
-    // eslint-disable-next-line react/prop-types
-    children,
-    // eslint-disable-next-line react/prop-types
-    onClick,
-    // eslint-disable-next-line react/prop-types
-    whileTap,
-    ...rest
-  } = props;
-  const handleRef = (node) => {
-    if (node) {
-      // eslint-disable-next-line no-param-reassign,no-underscore-dangle
-      node._handler = onClick;
-    }
-    if (typeof ref === 'function') {
-      ref(node);
-    } else if (ref) {
-      // eslint-disable-next-line no-param-reassign
-      ref.current = node;
-    }
-  };
-  return (
-    // eslint-disable-next-line react/button-has-type
-    <button
-      data-testid="btn"
-      onClick={onClick}
-      ref={handleRef}
-      {...rest}
-    >
-      {children}
-    </button>
-  );
-}));
-
-// eslint-disable-next-line react/display-name,react/function-component-definition
-jest.mock('@site/src/components/common/Image', () => (props) => (
-  // eslint-disable-next-line jsx-a11y/alt-text
-  <img data-testid="img" {...props} />
-));
+jest.unmock('@site/src/components/portfolio/Carousel');
 
 describe('portfolio.Carousel', () => {
   let api;
+  const images = [
+    { alt: 'One', picture: { fallback: 'one.png' } },
+    { alt: 'Two', picture: { fallback: 'two.png' } },
+  ];
   let onClickMock;
   let setViewport;
 
@@ -91,13 +49,9 @@ describe('portfolio.Carousel', () => {
   });
 
   it('debounces rapid Next clicks and supports cancel()', () => {
-    const images = [
-      { alt: 'One', src: 'one.png' },
-      { alt: 'Two', src: 'two.png' },
-    ];
-    render(<Carousel images={images} onClick={onClickMock} prefix="test" />);
+    const { getByRole } = render(<Carousel images={images} onClick={onClickMock} prefix="test" />);
 
-    const nextBtn = screen.getByRole('button', { name: 'Next' });
+    const nextBtn = getByRole('button', { name: 'Next' });
     expect(nextBtn).toBeInTheDocument();
 
     // Click twice rapidly
@@ -107,7 +61,7 @@ describe('portfolio.Carousel', () => {
     // Grab the debounced handler
     // eslint-disable-next-line no-underscore-dangle
     const handler = nextBtn._handler;
-    expect(typeof handler).toBe('function');
+    expect(typeof handler).toEqual('function');
 
     // Cancel before timeout
     handler.cancel();
@@ -121,17 +75,13 @@ describe('portfolio.Carousel', () => {
   });
 
   it('renders controls, handles dots, drag add/remove, and cleans up', () => {
-    const images = [
-      { alt: 'One', src: 'one.png' },
-      { alt: 'Two', src: 'two.png' },
-    ];
-    const { container, unmount } = render(<Carousel images={images} onClick={onClickMock} prefix="test" />);
+    const { container, getByRole, unmount } = render(<Carousel images={images} onClick={onClickMock} prefix="test" />);
 
     expect(setViewport).toHaveBeenCalled();
     expect(container.querySelector('.controls')).toBeInTheDocument();
 
-    const prevBtn = screen.getByRole('button', { name: 'Previous' });
-    const nextBtn = screen.getByRole('button', { name: 'Next' });
+    const prevBtn = getByRole('button', { name: 'Previous' });
+    const nextBtn = getByRole('button', { name: 'Next' });
     expect(prevBtn).toBeInTheDocument();
     expect(nextBtn).toBeInTheDocument();
 
@@ -178,10 +128,6 @@ describe('portfolio.Carousel', () => {
   });
 
   it('lazy loads slides, covers loaded=true branch, and fires onClick', () => {
-    const images = [
-      { alt: 'One', src: 'one.png' },
-      { alt: 'Two', src: 'two.png' },
-    ];
     const { container } = render(<Carousel images={images} onClick={onClickMock} prefix="test" />);
 
     act(() => jest.advanceTimersByTime(600));

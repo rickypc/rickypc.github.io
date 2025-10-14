@@ -4,8 +4,6 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-/* eslint-disable-next-line react/display-name,
-react/function-component-definition,react/prop-types */
 export default ({ as: Tag = 'div', className, children }) => (
   <Tag className={className} data-testid="heading">{children}</Tag>
 );

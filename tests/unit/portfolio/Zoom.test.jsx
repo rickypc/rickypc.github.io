@@ -6,16 +6,11 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, render, screen } from '@testing-library/react';
-import { forwardRef } from 'react';
+import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Zoom from '@site/src/components/portfolio/Zoom';
 
-// eslint-disable-next-line react/display-name,react/function-component-definition
-jest.mock('@site/src/components/common/Image', () => (props) => (
-  // eslint-disable-next-line jsx-a11y/alt-text
-  <img data-testid="zoom-img" {...props} />
-));
+jest.unmock('@site/src/components/portfolio/Zoom');
 
 describe('portfolio.Zoom', () => {
   let onClickMock;
@@ -27,17 +22,17 @@ describe('portfolio.Zoom', () => {
 
   it('renders closed state when open.picture is not an object and ignores Escape key', () => {
     const open = { alt: 'Alt text', picture: undefined };
-    render(<Zoom open={open} onClick={onClickMock} />);
+    const { getByTestId, queryByTestId } = render(<Zoom open={open} onClick={onClickMock} />);
 
     // No body lock
     expect(document.body).not.toHaveClass('no-scroll');
 
     // Overlay present, no image
-    expect(screen.getByTestId('div')).toHaveClass('overlay');
-    expect(screen.queryByTestId('zoom-img')).toBeNull();
+    expect(getByTestId('div')).toHaveClass('overlay');
+    expect(queryByTestId(/^img-/)).toBeNull();
 
     // Figure has a11y attributes
-    const fig = screen.getByTestId('figure');
+    const fig = getByTestId('figure');
     expect(fig).toHaveAttribute('aria-label', open.alt);
     expect(fig).toHaveAttribute('title', open.alt);
 
@@ -51,9 +46,9 @@ describe('portfolio.Zoom', () => {
     const picture = { avif: 'x.avif', fallback: {}, webp: 'x.webp' };
 
     // Initial closed render
-    const { rerender } = render(<Zoom open={{ alt, picture: undefined }} onClick={onClickMock} />);
+    const { getByTestId, rerender } = render(<Zoom open={{ alt, picture: undefined }} onClick={onClickMock} />);
 
-    const fig = screen.getByTestId('figure');
+    const fig = getByTestId('figure');
 
     // Spy on scrollTop setter and focus()
     const scrollSetter = jest.fn();
@@ -67,15 +62,15 @@ describe('portfolio.Zoom', () => {
     expect(document.body).toHaveClass('no-scroll');
     expect(scrollSetter).toHaveBeenCalledWith(0);
     expect(focusSpy).toHaveBeenCalled();
-    expect(screen.getByTestId('zoom-img')).toBeInTheDocument();
+    expect(getByTestId(/^img-/)).toBeInTheDocument();
   });
 
   it('calls onClick when overlay or figure clicked', () => {
     const pic = { avif: '', fallback: {}, webp: '' };
-    render(<Zoom open={{ alt: 'A', picture: pic }} onClick={onClickMock} />);
+    const { getByTestId } = render(<Zoom open={{ alt: 'A', picture: pic }} onClick={onClickMock} />);
 
-    fireEvent.click(screen.getByTestId('div'));
-    fireEvent.click(screen.getByTestId('figure'));
+    fireEvent.click(getByTestId('div'));
+    fireEvent.click(getByTestId('figure'));
     expect(onClickMock).toHaveBeenCalledTimes(2);
   });
 

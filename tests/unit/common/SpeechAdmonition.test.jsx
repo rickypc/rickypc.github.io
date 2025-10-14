@@ -5,11 +5,13 @@
  * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { admonitions } from '@site/src/data/common';
 import SpeechAdmonition from '@site/src/components/common/SpeechAdmonition';
 import { useSpeech } from '@site/src/hooks/observer';
+
+jest.unmock('@site/src/components/common/SpeechAdmonition');
 
 describe('SpeechAdmonition', () => {
   it('does not render anything when speech is ready', () => {
@@ -20,9 +22,9 @@ describe('SpeechAdmonition', () => {
 
   it('renders admonition inside an <aside> when speech is not ready', () => {
     useSpeech.mockReturnValue([false]);
-    render(<SpeechAdmonition />);
+    const { getByTestId } = render(<SpeechAdmonition />);
 
-    const admon = screen.getByTestId('admonition');
+    const admon = getByTestId('admonition');
     expect(admon).toHaveAttribute('data-type', admonitions.speech.type);
     expect(admon).toHaveTextContent(admonitions.speech.text);
 

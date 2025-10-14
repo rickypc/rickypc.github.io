@@ -11,6 +11,8 @@ import '@testing-library/jest-dom';
 import Oracle from '@site/src/components/about/Oracle';
 import { useVisibility } from '@site/src/hooks/observer';
 
+jest.unmock('@site/src/components/about/Oracle');
+
 describe('about.Oracle', () => {
   it.each([
     [false, 'oracle'],
@@ -21,7 +23,7 @@ describe('about.Oracle', () => {
     const outer = container.firstChild;
     expect(outer).toHaveClass(expectedClassName);
     // Exact match (no extra classes)
-    expect(outer.className).toBe(expectedClassName);
+    expect(outer.className).toEqual(expectedClassName);
   });
 
   it('renders three oracular items and calls ref on the inner div', () => {

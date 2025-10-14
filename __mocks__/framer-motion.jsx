@@ -6,21 +6,18 @@
 
 import { forwardRef } from 'react';
 
-// eslint-disable-next-line react/jsx-no-useless-fragment,react/prop-types
 export const AnimatePresence = ({ children }) => <>{children}</>;
 
 export const domAnimation = {};
 
 export const domMax = {};
 
-/* eslint-disable-next-line react/function-component-definition,
-react/jsx-no-useless-fragment,react/prop-types */
 export const LazyMotion = ({ children }) => <>{children}</>;
 
 export const m = {
   a: ({ children, ...props }) => <a {...props}>{children}</a>,
-  article: ({ children, className, whileInView, ...props }) => (
-    <article className={className} data-testid="article" {...props}>
+  article: ({ children, className, layout, whileInView, ...props }) => (
+    <article className={className} data-testid="article" layout={String(!!layout)} {...props}>
       {children}
     </article>
   ),
@@ -31,8 +28,6 @@ export const m = {
     </div>
   ),
   dt: ({ children, className, onClick, whileTap, ...rest }) => (
-    /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-    jsx-a11y/no-noninteractive-element-interactions */
     <dt className={className} onClick={onClick} {...rest}>
       {children}
     </dt>

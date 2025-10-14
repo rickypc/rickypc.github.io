@@ -6,49 +6,11 @@
  * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Projects from '@site/src/components/portfolio/Projects';
 
-// eslint-disable-next-line react/display-name,react/function-component-definition
-jest.mock('@site/src/components/common/Heart', () => (props) => (
-  // eslint-disable-next-line react/destructuring-assignment,react/prop-types
-  <svg data-testid="heart" id={props.id} />
-));
-
-// eslint-disable-next-line react/display-name,react/function-component-definition
-jest.mock('@site/src/components/common/Link', () => ({
-  // eslint-disable-next-line react/prop-types
-  children,
-  // eslint-disable-next-line react/prop-types
-  href,
-  // eslint-disable-next-line react/prop-types
-  translate,
-  // eslint-disable-next-line react/prop-types
-  validate,
-}) => (
-  // eslint-disable-next-line @docusaurus/no-html-links
-  <a
-    data-href={href}
-    data-testid="link"
-    data-translate={translate}
-    data-validate={validate?.toString()}
-    href={href}
-  >
-    {children}
-  </a>
-));
-
-jest.mock(
-  '@site/src/components/portfolio/Carousel',
-  // eslint-disable-next-line react/display-name,react/function-component-definition
-  () => (props) => (
-    // eslint-disable-next-line react/destructuring-assignment,react/prop-types
-    <div data-testid="carousel" data-prefix={props.prefix}>
-      Carousel
-    </div>
-  ),
-);
+jest.unmock('@site/src/components/portfolio/Projects');
 
 describe('portfolio.Projects', () => {
   const onClickMock = jest.fn();
@@ -68,30 +30,30 @@ describe('portfolio.Projects', () => {
   it('renders one Project item per filtered entry with correct structure', () => {
     const filtered = [
       {
-        prefix: 'p1',
-        title: 'Title1',
         description: 'Desc1',
         href: '/link1',
-        tags: ['x', 'y'],
         images: [{ alt: 'Alt1', src: 'Src1' }],
+        prefix: 'p1',
+        tags: ['x', 'y'],
+        title: 'Title1',
       },
       {
-        prefix: 'p2',
-        title: 'Title2',
         description: 'Desc2',
         href: '/link2',
-        tags: ['a'],
         images: [{ alt: 'Alt2', src: 'Src2' }],
+        prefix: 'p2',
+        tags: ['a'],
+        title: 'Title2',
       },
     ];
 
-    const { container } = render(<Projects filtered={filtered} onClick={onClickMock} />);
+    const { container, getAllByTestId } = render(<Projects filtered={filtered} onClick={onClickMock} />);
 
     // Wrapper and items
     const wrapper = container.querySelector('.portfolios');
     expect(wrapper).toBeInTheDocument();
 
-    const items = screen.getAllByTestId('article');
+    const items = getAllByTestId('article');
     expect(items).toHaveLength(filtered.length);
 
     filtered.forEach((proj, index) => {
@@ -100,8 +62,8 @@ describe('portfolio.Projects', () => {
 
       // Carousel stub receives prefix
       // eslint-disable-next-line security/detect-object-injection
-      const carousel = screen.getAllByTestId('carousel')[index];
-      expect(carousel).toHaveAttribute('data-prefix', proj.prefix);
+      const carousel = getAllByTestId('carousel')[index];
+      expect(carousel).toHaveAttribute('prefix', proj.prefix);
 
       // Tags list
       const tagsList = item.querySelector('ul.tags');
@@ -117,18 +79,18 @@ describe('portfolio.Projects', () => {
 
       // Heading with Link and Heart
       // eslint-disable-next-line security/detect-object-injection
-      const heading = screen.getAllByTestId('heading')[index];
+      const heading = getAllByTestId('heading')[index];
       expect(heading.tagName).toEqual('H2');
 
       // eslint-disable-next-line security/detect-object-injection
-      const link = screen.getAllByTestId('link')[index];
-      expect(link).toHaveAttribute('data-href', proj.href);
-      expect(link).toHaveAttribute('data-translate', 'no');
-      expect(link).toHaveAttribute('data-validate', 'true');
+      const link = getAllByTestId(/^link-/)[index];
+      expect(link).toHaveAttribute('href', proj.href);
+      expect(link).toHaveAttribute('translate', 'no');
+      expect(link).toHaveAttribute('validate', 'true');
       expect(link).toHaveTextContent(proj.title);
 
       // eslint-disable-next-line security/detect-object-injection
-      const heart = screen.getAllByTestId('heart')[index];
+      const heart = getAllByTestId('heart')[index];
       expect(heart).toHaveAttribute('id', `portfolio-${proj.prefix}`);
 
       // Description paragraph

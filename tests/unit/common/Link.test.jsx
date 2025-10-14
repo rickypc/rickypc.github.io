@@ -10,6 +10,8 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Link from '@site/src/components/common/Link';
 
+jest.unmock('@site/src/components/common/Link');
+
 describe('Link', () => {
   describe('with href provided', () => {
     it('renders external link with rel, target, aria-label, and class', () => {
@@ -58,7 +60,7 @@ describe('Link', () => {
         </Link>
       ));
       const span = getByText('No Link');
-      expect(span.tagName).toBe('SPAN');
+      expect(span.tagName).toEqual('SPAN');
       expect(span).toHaveClass('no-link');
       expect(span).not.toHaveAttribute('aria-label');
       expect(span).not.toHaveAttribute('title');
@@ -72,7 +74,7 @@ describe('Link', () => {
         </Link>
       ));
       const anchor = getByText('Fallback');
-      expect(anchor.tagName).toBe('A');
+      expect(anchor.tagName).toEqual('A');
       expect(anchor).toHaveAttribute('aria-label', 'fallback');
       expect(anchor).toHaveAttribute('title', 'fallback');
       expect(anchor).toHaveClass('fallback');

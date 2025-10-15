@@ -74,6 +74,9 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      colorMode: {
+        respectPrefersColorScheme: true,
+      },
       footer: {
         copyright: `Copyright © 2015-${new Date().getFullYear()} Ricky Huang. All Rights Reserved.`,
         style: 'dark',

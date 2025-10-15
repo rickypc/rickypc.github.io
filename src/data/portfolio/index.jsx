@@ -469,7 +469,7 @@ export const catalog = [
 ];
 
 export const layout = {
-  description: 'Explore Ricky Huang\'s portfolio of software engineering projects, including platforms built for Yahoo! Tickets, GigaOm, RazorGator, S&M Bikes, and other innovative companies. Each project reflects deep technical expertise in scalable architecture, e-commerce, media, and logistics.',
+  description: 'Scalable platforms for Yahoo!, GigaOm, & more - Ricky Huang\'s portfolio showcases engineering, media, e-commerce & logistics expertise.',
   keywords: [
     'software engineering portfolio',
     'Yahoo! Tickets',
@@ -497,7 +497,7 @@ export const layout = {
     />,
   ],
   */
-  title: 'Portfolio - Scalable Platforms for Yahoo!, GigaOm, RazorGator & More',
+  title: 'Portfolio of Scalable Platforms for Yahoo!, GigaOm & More',
 };
 
 export const preamble = {

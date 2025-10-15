@@ -19,9 +19,7 @@ describe('data.timeline', () => {
 
   describe('layout', () => {
     it('description', () => {
-      expect(layout.description).toEqual(
-        'Explore the key milestones that shaped Ricky Huang\'s journey - from architecture to software engineering, from startups to global enterprises. This timeline highlights pivotal roles, academic achievements, promotions, and recognitions that reflect my growth across disciplines and industries.',
-      );
+      expect(layout.description).toMatch(/^Milestones in Ricky Huang's journey/);
     });
 
     it('title', () => {

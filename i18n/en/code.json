@@ -1,6 +1,6 @@
 {
   "theme.SearchPage.emptyResultsTitle": {
-    "description": "The search page title for empty query",
+    "description": "No results found - try refining your search to explore Ricky Huang's projects, insights, stories, and engineering leadership.",
     "message": "Search"
   }
 }

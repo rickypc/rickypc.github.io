@@ -71,7 +71,7 @@ describe('data.home', () => {
 
   it('exports layout with description, keywords array, and title', () => {
     expect(typeof layout.description).toEqual('string');
-    expect(layout.description).toContain('Welcome to the personal site');
+    expect(layout.description).toMatch(/^Welcome to Ricky Huang\'s site/);
 
     expect(Array.isArray(layout.keywords)).toBeTruthy();
     expect(layout.keywords.length).toBeGreaterThan(0);

@@ -7,7 +7,7 @@
 /* eslint-disable global-require */
 
 export const layout = {
-  description: 'Explore the key milestones that shaped Ricky Huang\'s journey - from architecture to software engineering, from startups to global enterprises. This timeline highlights pivotal roles, academic achievements, promotions, and recognitions that reflect my growth across disciplines and industries.',
+  description: 'Milestones in Ricky Huang\'s journey - from architecture to engineering, startups to global impact.',
   keywords: [
     'career timeline',
     'software engineering milestones',

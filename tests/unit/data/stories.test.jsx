@@ -19,15 +19,11 @@ describe('data.stories', () => {
 
   describe('layout', () => {
     it('description', () => {
-      expect(layout.description).toEqual(
-        'Stories, experiences, and lessons from Ricky Huang\'s work as a full stack developer and engineering leader - capturing how technology, leadership, and personal growth have helped teams and projects succeed. These testimonials reflect the impact, collaboration, and trust built along the way.',
-      );
+      expect(layout.description).toMatch(/^Stories and lessons from Ricky Huang's journey/);
     });
 
     it('title', () => {
-      expect(layout.title).toEqual(
-        'Stories - Testimonials, Experiences & Lessons from the Journey',
-      );
+      expect(layout.title).toEqual('Stories, Testimonials & Lessons from the Journey');
     });
 
     it('keywords', () => {

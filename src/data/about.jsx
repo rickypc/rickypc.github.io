@@ -24,7 +24,7 @@ export const characteristic = {
 export const headline = 'Leading with People, Purpose, and Results';
 
 export const layout = {
-  description: 'Explore how Ricky Huang blends people skills, thoughtful analysis, and results-driven leadership to inspire teams and build meaningful outcomes.',
+  description: 'Ricky Huang blends people skills, sharp analysis, and results-driven leadership to inspire teams and deliver impact.',
   keywords: [
     'leadership',
     'people skills',

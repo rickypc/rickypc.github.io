@@ -136,7 +136,7 @@ export const image = {
 export const ipa = '/ˈɹɪki ˈhwɑːŋ/';
 
 export const layout = {
-  description: 'Welcome to the personal site of Ricky Huang, an engineering leader, full stack developer, and innovator with over 30 years of experience in software engineering.',
+  description: 'Welcome to Ricky Huang\'s site - engineering leader, full stack developer, and innovator with decades of software expertise.',
   keywords: [
     'engineering leader',
     'full stack developer',
@@ -168,7 +168,7 @@ export const layout = {
     />,
   ],
   */
-  title: 'Engineering Leadership, Full Stack Development, Innovation',
+  title: 'Engineering Leadership & Full Stack Innovation',
 };
 
 export const socials = [

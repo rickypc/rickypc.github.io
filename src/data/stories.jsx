@@ -5,7 +5,7 @@
  */
 
 export const layout = {
-  description: 'Stories, experiences, and lessons from Ricky Huang\'s work as a full stack developer and engineering leader - capturing how technology, leadership, and personal growth have helped teams and projects succeed. These testimonials reflect the impact, collaboration, and trust built along the way.',
+  description: 'Stories and lessons from Ricky Huang\'s journey as a full stack developer and leader - highlighting impact, growth, collaboration, and trust.',
   keywords: [
     'developer testimonials',
     'engineering leadership stories',
@@ -36,7 +36,7 @@ export const layout = {
     />,
   ],
   */
-  title: 'Stories - Testimonials, Experiences & Lessons from the Journey',
+  title: 'Stories, Testimonials & Lessons from the Journey',
 };
 
 export const preamble = {

@@ -31,6 +31,15 @@ const config = {
   ],
   i18n: {
     defaultLocale: 'en',
+    localeConfigs: {
+      en: {
+        calendar: 'gregory',
+        direction: 'ltr',
+        htmlLang: 'en-US',
+        label: 'English',
+        path: 'en',
+      },
+    },
     locales: ['en'],
   },
   markdown: {
@@ -47,18 +56,18 @@ const config = {
     [
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs: {},
         gtag: {
           trackingID: ['G-5G7P214N03', 'G-657RY80FJE', 'G-JYD543XZTH'],
         },
         sitemap: {
           createSitemapItems,
-          ignorePatterns: ['/search', '/tags/**'],
+          ignorePatterns: ['/docs/tags/**', '/search/**'],
           lastmod: 'date',
         },
         theme: { customCss: './src/css/custom.css' },
-      }),
+      },
     ],
   ],
   projectName: 'rickypc.github.io',
@@ -72,7 +81,7 @@ const config = {
       metadata: [
         { name: 'author', content: 'Ricky Huang' },
         { property: 'og:image', content: 'https://ricky.one/img/self.png' },
-        { property: 'og:site_name', content: 'Ricky Huang - Engineering Leadership, Full Stack Expertise & Creative Innovation' },
+        { property: 'og:site_name', content: 'Ricky Huang - Engineering Leadership & Full Stack Innovation' },
         { property: 'og:type', content: 'website' },
         { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:image', content: 'https://ricky.one/img/self.png' },

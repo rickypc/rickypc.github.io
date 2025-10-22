@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkrickypc_github_io=self.webpackChunkrickypc_github_io||[]).push([["330"],{9045:function(s){s.exports=JSON.parse('{"tags":[{"label":"Buddhism","permalink":"/docs/tags/buddhism","count":9}]}')}}]);

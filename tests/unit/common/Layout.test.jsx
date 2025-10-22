@@ -58,7 +58,7 @@ describe('Layout', () => {
     });
 
     it('renders keyword and extra metas', () => {
-      expect(container.querySelector('meta[name="keyword"]')).toHaveAttribute(
+      expect(container.querySelector('meta[name="keywords"]')).toHaveAttribute(
         'content',
         'one,two',
       );

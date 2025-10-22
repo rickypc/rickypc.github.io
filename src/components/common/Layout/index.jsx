@@ -23,7 +23,9 @@ export default memo(Object.assign(function Layout({
   return (
     <ThemeLayout description={description} title={title}>
       <Head prioritizeSeoTags>
-        <meta name="keyword" content={keywords.join(',')} />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
+        <meta name="keywords" content={keywords.join(',')} />
         {metadatas?.map((metadata) => metadata)}
         <script type="application/ld+json">{context({ description, keywords, title })}</script>
         <meta name="twitter:description" content={description} />

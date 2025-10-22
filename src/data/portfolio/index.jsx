@@ -497,7 +497,7 @@ export const layout = {
     />,
   ],
   */
-  title: 'Portfolio of Scalable Platforms for Yahoo!, GigaOm & More',
+  title: 'Scalable Systems - Yahoo!, GigaOm & More',
 };
 
 export const preamble = {

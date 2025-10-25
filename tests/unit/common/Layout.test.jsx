@@ -51,24 +51,21 @@ describe('Layout', () => {
       )));
     });
 
-    it('sets theme layout description and title', () => {
-      const theme = getByTestId('layout');
-      expect(theme).toHaveAttribute('data-description', 'desc text');
-      expect(theme).toHaveAttribute('data-title', 'Page Title');
-    });
-
     it('renders keyword and extra metas', () => {
-      expect(container.querySelector('meta[name="keywords"]')).toHaveAttribute(
-        'content',
-        'one,two',
-      );
-      expect(container.querySelector('meta[name="robots"]')).toHaveAttribute(
-        'content',
-        'noindex',
-      );
-      expect(container.querySelector('meta[name="author"]')).toHaveAttribute(
+      const child = getByTestId('child');
+      expect(child).toHaveTextContent('Hello world');
+
+      const meta = getByTestId('metadata');
+      expect(meta).toHaveAttribute('description', 'desc text');
+      expect(meta).toHaveAttribute('keywords', 'one,two');
+      expect(meta).toHaveAttribute('title', 'Page Title');
+      expect(meta.querySelector('meta[name="author"]')).toHaveAttribute(
         'content',
         'rick',
+      );
+      expect(meta.querySelector('meta[name="robots"]')).toHaveAttribute(
+        'content',
+        'noindex',
       );
     });
 

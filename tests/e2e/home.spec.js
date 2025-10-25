@@ -8,10 +8,10 @@ const {
   band,
   beforeEach,
   expect,
+  hasMetadatas,
   hasNavigations,
   hasScreenshot,
   hasSpeech,
-  hasTitle,
   hasUrl,
   mobile,
   test,
@@ -22,7 +22,7 @@ const url = '/';
 test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
 
 test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url));
-test('has correct title', hasTitle);
+test('has correct metadatas', hasMetadatas);
 test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo));
 
 test('has greeting', async ({ page }) => {

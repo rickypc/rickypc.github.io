@@ -18,8 +18,8 @@ const config = {
     experimental_faster: true,
     v4: true,
   },
+  /*
   headTags: [
-    /*
     {
       attributes: {
         href: 'https://counterapi.com',
@@ -27,8 +27,8 @@ const config = {
       },
       tagName: 'link',
     },
-    */
   ],
+  */
   i18n: {
     defaultLocale: 'en',
     localeConfigs: {

@@ -10,9 +10,9 @@ const {
   expect,
   hasActiveNavigation,
   hasHeader,
+  hasMetadatas,
   hasNavigations,
   hasScreenshot,
-  hasTitle,
   hasUrl,
   test,
 } = require('./utils/helper');
@@ -22,7 +22,7 @@ const url = '/stories';
 test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
 
 test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url));
-test('has correct title', hasTitle);
+test('has correct metadatas', hasMetadatas);
 test('has correct header', hasHeader);
 test('has active navigation', async ({ page }, testInfo) => hasActiveNavigation('Stories', page, testInfo));
 test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo));

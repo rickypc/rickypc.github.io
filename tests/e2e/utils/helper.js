@@ -37,6 +37,24 @@ export const hasHeader = async ({ page }) => {
   expect(await page.textContent('main header p')).toMatchSnapshot('header-description.txt');
 };
 
+export const hasMetadatas = async ({ page }) => {
+  expect(await page.locator('head>meta[name="description"]').getAttribute('content'))
+    .toMatchSnapshot('meta-description.txt');
+  expect(await page.locator('head>meta[name="keywords"]').getAttribute('content'))
+    .toMatchSnapshot('meta-keywords.txt');
+  expect(await page.locator('head>meta[property="og:description"]').getAttribute('content'))
+    .toMatchSnapshot('meta-og-description.txt');
+  expect(await page.locator('head>meta[property="og:title"]').getAttribute('content'))
+    .toMatchSnapshot('meta-og-title.txt');
+  expect(await page.locator('head>meta[property="og:type"]').getAttribute('content'))
+    .toEqual('website');
+  expect(await page.locator('head>meta[name="twitter:description"]').getAttribute('content'))
+    .toMatchSnapshot('meta-twitter-description.txt');
+  expect(await page.locator('head>meta[name="twitter:title"]').getAttribute('content'))
+    .toMatchSnapshot('meta-twitter-title.txt');
+  expect(await page.textContent('head>title')).toMatchSnapshot('title.txt');
+};
+
 export const hasNavigations = async (page, testInfo) => {
   const nav = {
     desktop: page.locator('nav.navbar .navbar__items--right'),
@@ -102,10 +120,6 @@ export const hasSpeech = async (page, selector, url) => {
     await expect(page.evaluate(() => speechSynthesis.speaking)).toBeTruthy();
     await page.waitForFunction(() => !speechSynthesis.speaking);
   }
-};
-
-export const hasTitle = async ({ page }) => {
-  expect(await page.textContent('head>title')).toMatchSnapshot('title.txt');
 };
 
 export const hasUrl = async (baseURL, page, url) => {

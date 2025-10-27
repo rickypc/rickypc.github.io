@@ -14,13 +14,36 @@ const json = require('eslint-plugin-json');
 const noSecrets = require('eslint-plugin-no-secrets');
 const security = require('eslint-plugin-security');
 const testing = require('eslint-plugin-testing-library');
+const tseslint = require('typescript-eslint');
 
 const compat = new FlatCompat({ baseDirectory: __dirname });
 
 module.exports = [
   globalIgnores(['build/', '.docusaurus/']),
   // Order Matters™!
-  js.configs.recommended,
+  {
+    ...js.configs.recommended,
+    files: ['**/*.jsx?'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'commonjs',
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+  {
+    ...js.configs.recommended,
+    ...tseslint.configs.recommended,
+    files: ['**/*.tsx?'],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        project: './tsconfig.json',
+        sourceType: 'module',
+      },
+    },
+  },
   {
     plugins: { '@docusaurus': docusaurus },
     rules: docusaurus.configs.recommended.rules,
@@ -51,7 +74,7 @@ module.exports = [
     ],
     parserOptions: {
       ecmaFeatures: { jsx: true },
-      ecmaVersion: 2020,
+      ecmaVersion: 2022,
     },
     rules: {
       'import/no-extraneous-dependencies': ['error', { optionalDependencies: true }],

@@ -15,9 +15,9 @@ describe('PhraseBlock', () => {
   it('renders single-child phrase with structure and Buttons', () => {
     const phrase = {
       children: 'ABC',
+      className: 'cls',
       testId: 't1',
       title: 'MyTitle',
-      className: 'cls',
       unify: false,
     };
 

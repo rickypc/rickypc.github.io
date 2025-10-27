@@ -4,8 +4,6 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { forwardRef } from 'react';
-
 export const AnimatePresence = ({ children }) => <>{children}</>;
 
 export const domAnimation = {};
@@ -21,7 +19,7 @@ export const m = {
       {children}
     </article>
   ),
-  button: forwardRef(({ children, ...props }, ref) => <button ref={ref} {...props}>{children}</button>),
+  button: ({ children, ref, ...props }) => <button ref={ref} {...props}>{children}</button>,
   div: ({ children, className, layout, ...props }) => (
     <div className={className} data-testid="div" {...props}>
       {children}
@@ -32,11 +30,11 @@ export const m = {
       {children}
     </dt>
   ),
-  figure: forwardRef(({ children, className, layout, whileInView, ...props }, ref) => (
+  figure: ({ children, className, layout, ref, whileInView, ...props }) => (
     <figure className={className} data-testid="figure" ref={ref} {...props}>
       {children}
     </figure>
-  )),
+  ),
   img: ({ children, ...props }) => <img {...props}>{children}</img>,
   span: ({ children, className, layoutId, ...rest }) => (
     <span

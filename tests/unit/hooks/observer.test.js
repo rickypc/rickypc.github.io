@@ -178,8 +178,10 @@ describe('usePrint', () => {
     expect(window.scrollTo).toHaveBeenNthCalledWith(1, 0, 1000);
 
     // Advance the 500ms back - scroll timeout.
-    act(() => jest.advanceTimersByTime(500));
-    await act(() => Promise.resolve());
+    await act(async () => {
+      jest.advanceTimersByTime(500);
+      await Promise.resolve();
+    });
 
     // 2) Scroll back to 0.
     expect(window.scrollTo).toHaveBeenNthCalledWith(2, 0, 0);
@@ -199,12 +201,15 @@ describe('usePrint', () => {
     await act(async () => {
       window.dispatchEvent(new Event('beforeprint'));
 
-      // 1st timeout → scroll down to bottom
+      // 1st timeout -> scroll down to bottom
       jest.advanceTimersByTime(500);
       await Promise.resolve();
+    });
 
-      // 2nd timeout → scroll back to original Y
+    // 2nd timeout -> scroll back to original Y.
+    await act(async () => {
       jest.advanceTimersByTime(500);
+      await Promise.resolve();
     });
 
     // All three calls should have happened in order.

@@ -6,7 +6,11 @@
 
 /* eslint-disable global-require */
 
-export const layout = {
+import { type LayoutProps } from '@site/src/components/common/Layout';
+import { type PreambleProps } from '@site/src/components/common/Preamble';
+import { type TimelineProps } from '@site/src/components/timeline/Content';
+
+export const layout: LayoutProps = {
   description: 'Milestones in Ricky Huang\'s journey - from architecture to engineering, startups to global impact.',
   keywords: [
     'career timeline',
@@ -41,13 +45,13 @@ export const layout = {
   title: 'Timeline - Career, Education & Technical Milestones',
 };
 
-export const preamble = {
+export const preamble: PreambleProps = {
   description: 'A curated journey through key milestones in my career, education, and technical growth. Each moment reflects a step forward - building expertise, shaping ideas, and driving impact across industries and technologies.',
   printAdmonition: true,
   title: 'Timeline',
 };
 
-export const timelines = [
+export const timelines: TimelineProps[] = [
   {
     affiliation: {
       children: 'Experian Consumer Services',

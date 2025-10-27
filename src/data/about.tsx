@@ -4,7 +4,9 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+import { type LayoutProps } from '@site/src/components/common/Layout';
 import People from '@site/src/pages/about/img/type.people.svg';
+import { type PreambleProps } from '@site/src/components/common/Preamble';
 import Task from '@site/src/pages/about/img/type.task.svg';
 
 export const characteristic = {
@@ -23,7 +25,7 @@ export const characteristic = {
 
 export const headline = 'Leading with People, Purpose, and Results';
 
-export const layout = {
+export const layout: LayoutProps = {
   description: 'Ricky Huang blends people skills, sharp analysis, and results-driven leadership to inspire teams and deliver impact.',
   keywords: [
     'leadership',
@@ -56,7 +58,7 @@ export const paragraphs = [
   'I bring together emotional intelligence, a broad network, and clear, decisive leadership. I thrive in complex environments - digging into challenges, analyzing them with care, and driving toward meaningful results. At the heart of it all, I\'m focused on connecting people, inspiring teams, and turning ideas into action.',
 ];
 
-export const preamble = {
+export const preamble: PreambleProps = {
   description: 'I bring together a sharp focus on results with thoughtful analysis and sound judgment - always aiming to build meaningful outcomes through strong leadership and human connection.',
   title: 'About Ricky Huang',
 };

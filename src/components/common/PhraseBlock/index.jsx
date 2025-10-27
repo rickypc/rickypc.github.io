@@ -33,7 +33,10 @@ const body = (phrase, prefix, infix, suffix) => {
 };
 
 const text = (content) => {
-  if (content?.$$typeof === Symbol.for('react.element') && content?.props?.children) {
+  if ([
+    Symbol.for('react.transitional.element'),
+    Symbol.for('react.element'),
+  ].includes(content?.$$typeof) && content?.props?.children) {
     return text(content.props.children);
   }
   if (Array.isArray(content)) {

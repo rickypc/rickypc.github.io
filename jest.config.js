@@ -9,7 +9,7 @@ process.env.TZ = 'UTC';
 module.exports = {
   clearMocks: true,
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.js*'],
+  collectCoverageFrom: ['src/**/*.[jt]s*'],
   coverageDirectory: './coverage/',
   errorOnDeprecated: true,
   logHeapUsage: true,
@@ -21,13 +21,14 @@ module.exports = {
     '@theme-original/(.*)': '@docusaurus/theme-classic/src/theme/$1',
   },
   testEnvironment: 'node',
-  testRegex: 'tests/unit/.*.test.jsx?$',
+  testRegex: 'tests/unit/.*.test.[jt]sx?$',
   transform: {
     '^.+\\.[jt]sx?$': [
       '@swc/jest',
       {
         jsc: {
-          parser: { jsx: true },
+          parser: { decorators: true, syntax: 'typescript', tsx: true },
+          target: 'es2022',
           transform: { react: { runtime: 'automatic' } },
         },
       },

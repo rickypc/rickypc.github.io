@@ -85,12 +85,12 @@ describe('data.about', () => {
       expect(typeof first.alt).toEqual('string');
       expect(first.alt).toMatch(/Transformer People Type/);
       expect(isValidElement(<first.Image />)).toBeTruthy();
-      expect(first.Image.$$typeof).toEqual(Symbol.for('react.forward_ref'));
+      expect(first.Image).toEqual(expect.any(Function));
 
       expect(typeof second.alt).toEqual('string');
       expect(second.alt).toMatch(/Transactor Task Type/);
       expect(isValidElement(<second.Image />)).toBeTruthy();
-      expect(second.Image.$$typeof).toEqual(Symbol.for('react.forward_ref'));
+      expect(second.Image).toEqual(expect.any(Function));
     });
   });
 });

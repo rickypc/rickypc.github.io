@@ -5,25 +5,33 @@
  */
 
 import { context } from '@site/src/data/common';
-import { memo } from 'react';
+import { Children, memo, type ReactElement, type ReactNode } from 'react';
 import { PageMetadata } from '@docusaurus/theme-common';
-import PropTypes from 'prop-types';
 import ThemeLayout from '@theme/Layout';
 import { useWelcome } from '@site/src/hooks/observer';
 
-export default memo(Object.assign(function Layout({
+export type LayoutProps = {
+  children?: ReactNode;
+  className?: string;
+  description?: string;
+  keywords?: string[];
+  metadatas?: ReactNode;
+  title?: string;
+};
+
+export default memo(function Layout({
   children,
   className,
   description,
   keywords,
   metadatas,
   title,
-}) {
+}: LayoutProps): ReactElement {
   useWelcome();
   return (
     <ThemeLayout>
       <PageMetadata description={description} keywords={keywords} title={title}>
-        {metadatas?.map((metadata) => metadata)}
+        {Children.toArray(metadatas)}
         <script type="application/ld+json">{context({ description, keywords, title })}</script>
         <meta name="twitter:description" content={description} />
         <meta name="twitter:title" content={title} />
@@ -35,16 +43,4 @@ export default memo(Object.assign(function Layout({
       </main>
     </ThemeLayout>
   );
-}, {
-  propTypes: {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]).isRequired,
-    className: PropTypes.string,
-    description: PropTypes.string,
-    keywords: PropTypes.arrayOf(PropTypes.string),
-    metadatas: PropTypes.arrayOf(PropTypes.shape()),
-    title: PropTypes.string,
-  },
-}));
+});

@@ -1,23 +1,35 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 import { a11y } from '@site/src/data/common';
 import { domAnimation, LazyMotion, m } from 'framer-motion';
-import { forwardRef, memo } from 'react';
-import PropTypes from 'prop-types';
+import { memo, type ReactElement, type ReactNode, type Ref } from 'react';
 import useBrokenLinks from '@docusaurus/useBrokenLinks';
 
-const Link = forwardRef(({
+export type LinkProps = {
+  children: ReactNode;
+  className?: string;
+  href?: string;
+  ref?: Ref<HTMLAnchorElement>;
+  title?: string;
+  validate?: boolean;
+  whileTap?: {
+    scale?: number;
+  };
+};
+
+const Link = ({
   children,
   className,
   href,
+  ref,
   title,
   validate = false,
   ...rest
-}, ref) => {
+}: LinkProps): ReactElement => {
   const links = useBrokenLinks();
 
   if (href && !['https://', '.pdf'].filter((part) => href.includes(part)).length) {
@@ -31,25 +43,15 @@ const Link = forwardRef(({
         className={className}
         href={href}
         ref={ref}
-        rel={href?.includes('https://') ? 'noopener noreferrer' : null}
-        target={href?.includes('https://') ? '_blank' : null}
+        rel={href?.includes('https://') ? 'noopener noreferrer' : undefined}
+        target={href?.includes('https://') ? '_blank' : undefined}
         {...rest}
       >
         {children}
       </m.a>
     </LazyMotion>
   ) : <span className={className} {...rest}>{children}</span>;
-});
-Link.displayName = 'Link';
-Link.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  className: PropTypes.string,
-  href: PropTypes.string,
-  title: PropTypes.string,
-  validate: PropTypes.bool,
 };
+Link.displayName = 'Link';
 
 export default memo(Link);

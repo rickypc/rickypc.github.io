@@ -154,6 +154,12 @@ describe('Image', () => {
         name: 'handles string fallback',
         width: 80,
       },
+      {
+        expected: null,
+        images: [],
+        name: 'handles empty fallback',
+        width: 80,
+      },
     ];
 
     it.each(scenarios)('$name', ({ expected, images, width }) => {
@@ -176,7 +182,7 @@ describe('Image', () => {
 
       const { container } = render(<Image alt="Alt" picture={picObj} />);
       const img = container.querySelector('img');
-      expect(img).toHaveAttribute('src', expected);
+      expect(img.getAttribute('src')).toEqual(expected);
 
       if (original) {
         Object.defineProperty(HTMLElement.prototype, 'clientWidth', original);

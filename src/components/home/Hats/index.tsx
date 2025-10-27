@@ -1,17 +1,22 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 import { hats } from '@site/src/data/home';
 import Heading from '@theme/Heading';
 import { key } from '@site/src/data/common';
-import { memo } from 'react';
-import PropTypes from 'prop-types';
+import { memo, type ReactElement, type ReactNode } from 'react';
 import styles from './styles.module.css';
 
-const Hat = memo(function Hat({ children, description, label }) {
+export type HatProps = {
+  children: ReactNode;
+  description: ReactNode;
+  label: string;
+};
+
+const Hat = memo(function Hat({ children, description, label }: HatProps): ReactElement {
   return (
     <article className={styles.hat}>
       <Heading as="h2">
@@ -25,24 +30,11 @@ const Hat = memo(function Hat({ children, description, label }) {
     </article>
   );
 });
-Hat.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  description: PropTypes.oneOfType([
-    PropTypes.shape(),
-    PropTypes.string,
-  ]).isRequired,
-  label: PropTypes.string.isRequired,
-};
 
 export default memo(function Hats() {
   return (
     <div className={styles.hats}>
-      {hats.map((hat) => (
-        <Hat {...hat} key={key(hat.label, 'hat')} />
-      ))}
+      {hats.map((hat: HatProps) => <Hat {...hat} key={key(hat.label, 'hat')} />)}
     </div>
   );
 });

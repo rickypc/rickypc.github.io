@@ -22,8 +22,8 @@ import { basename, extname } from 'node:path';
  * - `.gif`, `.jpeg`, `.jpg`, `.png`: Returns the filename string directly
  *   as a CommonJS export. This supports usage like
  *   `require('./image.jpg') === 'image.jpg'`.
- * - `.svg`: Returns a mock React component using `forwardRef`,
- *   compatible with `import Icon from './icon.svg'`.
+ * - `.svg`: Returns a mock React component, compatible with
+ *   `import Icon from './icon.svg'`.
  * - Other extensions: Returns an object with a `default` key containing
  *   the filename string, similar to `.avif` and `.webp`, to support
  *   default-style imports.
@@ -52,10 +52,10 @@ export function process(_, path) {
       break;
 
     case '.svg':
-      code = `const { createElement, forwardRef } = require('react');
-      module.exports = forwardRef(function SVG(props, ref) {
+      code = `const { createElement } = require('react');
+      module.exports = function SVG({ ref, ...props }) {
         return createElement('svg', { ...props, ref });
-      });`;
+      };`;
       break;
 
     default:

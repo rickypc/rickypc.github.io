@@ -6,10 +6,10 @@
 
 import { clsx } from '@site/src/data/common';
 import { domAnimation, LazyMotion, m } from 'framer-motion';
-import { forwardRef, memo } from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 
-const Button = forwardRef(({ children, className, ...rest }, ref) => (
+const Button = ({ children, className, ref, ...rest }) => (
   <LazyMotion features={domAnimation}>
     <m.button
       className={clsx('clean-btn', className)}
@@ -20,7 +20,7 @@ const Button = forwardRef(({ children, className, ...rest }, ref) => (
       {children}
     </m.button>
   </LazyMotion>
-));
+);
 Button.displayName = 'Button';
 Button.propTypes = {
   children: PropTypes.oneOfType([

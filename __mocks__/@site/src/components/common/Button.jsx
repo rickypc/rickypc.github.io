@@ -4,9 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { forwardRef } from 'react';
-
-export default forwardRef(({ 'aria-label': ariaLabel, children, onClick, whileTap, ...rest }, ref) => {
+export default ({ 'aria-label': ariaLabel, children, onClick, ref, whileTap, ...rest }) => {
   const refHandler = (node) => {
     if (node) {
       node._handler = onClick;
@@ -18,4 +16,4 @@ export default forwardRef(({ 'aria-label': ariaLabel, children, onClick, whileTa
     }
   };
   return <button data-testid={`button-${ariaLabel || 'btn'}`} onClick={onClick} ref={refHandler} {...rest}>{children}</button>;
-});
+};

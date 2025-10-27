@@ -6,6 +6,9 @@
 
 /* eslint-disable global-require */
 
+import { type LayoutProps } from '@site/src/components/common/Layout';
+import { type PreambleProps } from '@site/src/components/common/Preamble';
+
 export const catalog = [
   {
     description: 'A scalable platform designed for ticket sellers to showcase live event offerings - from sports to concerts - directly to Yahoo! users. Built on a SOAP Web Services architecture, the system was engineered for flexibility and high traffic volume, supporting millions of visits across Yahoo!\'s ecosystem.',
@@ -468,7 +471,7 @@ export const catalog = [
   },
 ];
 
-export const layout = {
+export const layout: LayoutProps = {
   description: 'Scalable platforms for Yahoo!, GigaOm, & more - Ricky Huang\'s portfolio showcases engineering, media, e-commerce & logistics expertise.',
   keywords: [
     'software engineering portfolio',
@@ -500,7 +503,7 @@ export const layout = {
   title: 'Scalable Systems - Yahoo!, GigaOm & More',
 };
 
-export const preamble = {
+export const preamble: PreambleProps = {
   description: 'Each project here reflects years of hands-on experience, thoughtful problem-solving, and a commitment to quality. Alongside every build, you\'ll find the technology stack that helped bring it to life—and the impact it delivered.',
   printAdmonition: true,
   title: 'Portfolio',

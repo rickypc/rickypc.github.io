@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -8,14 +8,19 @@ import { clsx } from '@site/src/data/common';
 // import { GenIcon } from 'react-icons/lib';
 import {
   memo,
+  ReactElement,
   // useCallback,
   // useEffect,
   // useState,
 } from 'react';
-import PropTypes from 'prop-types';
 // import useIsBrowser from '@docusaurus/useIsBrowser';
 // import useTransport from '@site/src/hooks/transport';
 import styles from './styles.module.css';
+
+export type HeartProps = {
+  className?: string;
+  id: string;
+};
 
 // function FaHeart(props) {
 // eslint-disable-next-line max-len
@@ -39,7 +44,7 @@ const storage = (key) => {
 };
 */
 
-export default memo(Object.assign(function Heart({ className /* , id */ }) {
+export default memo(function Heart({ className /* , id */ }: HeartProps): ReactElement {
   return (
     <span className={clsx(className, styles.reaction)} />
   );
@@ -98,9 +103,4 @@ export default memo(Object.assign(function Heart({ className /* , id */ }) {
     </span>
   );
   */
-}, {
-  propTypes: {
-    className: PropTypes.string,
-    id: PropTypes.string.isRequired,
-  },
-}));
+});

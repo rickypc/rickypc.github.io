@@ -4,7 +4,10 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-export const layout = {
+import { type LayoutProps } from '@site/src/components/common/Layout';
+import { type PreambleProps } from '@site/src/components/common/Preamble';
+
+export const layout: LayoutProps = {
   description: 'Stories and lessons from Ricky Huang\'s journey as a full stack developer and leader - highlighting impact, growth, collaboration, and trust.',
   keywords: [
     'developer testimonials',
@@ -39,7 +42,7 @@ export const layout = {
   title: 'Stories, Testimonials & Lessons from the Journey',
 };
 
-export const preamble = {
+export const preamble: PreambleProps = {
   description: 'Real-world experiences, lessons learned, and reflections from my journey as a full stack developer and engineering leader. These stories highlight how I\'ve helped teams and projects thrive - through technology, mentorship, and personal growth.',
   title: 'Stories',
 };

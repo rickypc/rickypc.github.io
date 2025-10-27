@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -8,13 +8,28 @@ import { clsx, key } from '@site/src/data/common';
 import { domAnimation, LazyMotion, m } from 'framer-motion';
 import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
-import Image from '@site/src/components/common/Image';
+import Image, { type PictureInfo } from '@site/src/components/common/Image';
 import Link from '@site/src/components/common/Link';
-import { memo, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import { memo, type ReactElement, useCallback } from 'react';
 import { timelines } from '@site/src/data/timeline';
 import { useMedia } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
+
+export type TimelineProps = {
+  affiliation: {
+    children: string;
+    href?: string;
+    translate?: string;
+  };
+  className?: string;
+  description: string;
+  picture: PictureInfo;
+  title: {
+    children: string;
+    href?: string;
+  };
+  year: string;
+};
 
 const Timeline = memo(function Timeline({
   affiliation,
@@ -23,7 +38,7 @@ const Timeline = memo(function Timeline({
   picture,
   title,
   year,
-}) {
+}: TimelineProps): ReactElement {
   const alt = `${affiliation.children} Logo`;
   const id = key(title.children, 'timeline');
 
@@ -60,30 +75,12 @@ const Timeline = memo(function Timeline({
     </div>
   );
 });
-Timeline.propTypes = {
-  affiliation: PropTypes.shape({
-    children: PropTypes.string,
-    href: PropTypes.string,
-  }).isRequired,
-  className: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  picture: PropTypes.shape({
-    avif: PropTypes.string,
-    fallback: PropTypes.shape(),
-    webp: PropTypes.string,
-  }).isRequired,
-  title: PropTypes.shape({
-    children: PropTypes.string,
-    href: PropTypes.string,
-  }).isRequired,
-  year: PropTypes.string.isRequired,
-};
 
 export default memo(function Content() {
   const [single] = useMedia('screen and (max-width: 48rem)');
 
   const position = useCallback(
-    (index) => (index % 2 === 0 || single ? styles.right : styles.left),
+    (index: number) => (index % 2 === 0 || single ? styles.right : styles.left),
     [single],
   );
 

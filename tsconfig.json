@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "checkJs": false,
+    "noEmit": true,
+    "strict": true
+  },
+  "extends": "@docusaurus/tsconfig",
+  "include": [
+    "docs",
+    "docusaurus.config.js",
+    "sidebars.js",
+    "src"
+  ]
+}

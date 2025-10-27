@@ -4,6 +4,6 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-export const PageMetadata = jest.fn(({ children, ...rest }) => (
-  <div data-testid="metadata" {...rest}>{children}</div>
-));
+export const PageMetadata = jest.fn(({ children, ...rest }) => {
+  return <div data-testid="metadata" {...rest}>{children}</div>;
+});

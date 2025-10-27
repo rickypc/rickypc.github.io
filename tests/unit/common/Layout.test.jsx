@@ -34,11 +34,10 @@ describe('Layout', () => {
       <meta key="a" name="robots" content="noindex" />,
       <meta key="b" name="author" content="rick" />,
     ];
-    let container;
     let getByTestId;
 
     beforeEach(() => {
-      ({ container, getByTestId } = render((
+      ({ getByTestId } = render((
         <Layout
           className="main-class"
           description="desc text"
@@ -59,18 +58,17 @@ describe('Layout', () => {
       expect(meta).toHaveAttribute('description', 'desc text');
       expect(meta).toHaveAttribute('keywords', 'one,two');
       expect(meta).toHaveAttribute('title', 'Page Title');
-      expect(meta.querySelector('meta[name="author"]')).toHaveAttribute(
-        'content',
-        'rick',
-      );
-      expect(meta.querySelector('meta[name="robots"]')).toHaveAttribute(
-        'content',
-        'noindex',
-      );
+
+      const head = document.head;
+      expect(head.querySelector('meta[name="author"]'))
+        .toHaveAttribute('content', 'rick');
+      expect(head.querySelector('meta[name="robots"]'))
+        .toHaveAttribute('content', 'noindex');
     });
 
     it('includes JSON-LD script with page metadata', () => {
-      const script = container.querySelector('script[type="application/ld+json"]');
+      const script = getByTestId('metadata')
+        .querySelector('script[type="application/ld+json"]');
       expect(script).toBeInTheDocument();
       expect(script.textContent).toEqual(context({
         description: 'desc text',
@@ -80,12 +78,11 @@ describe('Layout', () => {
     });
 
     it('renders twitter metas', () => {
-      expect(
-        container.querySelector('meta[name="twitter:description"]'),
-      ).toHaveAttribute('content', 'desc text');
-      expect(
-        container.querySelector('meta[name="twitter:title"]'),
-      ).toHaveAttribute('content', 'Page Title');
+      const head = document.head;
+      expect(head.querySelector('meta[name="twitter:description"]'))
+        .toHaveAttribute('content', 'desc text');
+      expect(head.querySelector('meta[name="twitter:title"]'))
+        .toHaveAttribute('content', 'Page Title');
     });
 
     it('renders children', () => {
@@ -94,7 +91,7 @@ describe('Layout', () => {
   });
 
   it('omits extra metas when metadatas is undefined', () => {
-    const { container } = render((
+    render((
       <Layout
         className="c"
         description="d"
@@ -104,7 +101,8 @@ describe('Layout', () => {
         <p />
       </Layout>
     ));
-    expect(container.querySelector('meta[name="robots"]')).toBeNull();
-    expect(container.querySelector('meta[name="author"]')).toBeNull();
+    const head = document.head;
+    expect(head.querySelector('meta[name="robots"]')).toBeNull();
+    expect(head.querySelector('meta[name="author"]')).toBeNull();
   });
 });

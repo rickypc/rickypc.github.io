@@ -61,15 +61,15 @@
     "lighthouse": "13.0.1",
     "typescript-eslint": "^8.46.2"
   },
+  "overrides": {
+    "sharp": "*"
+  },
   "peerDependenciesMeta": {
     "sharp": {
       "optional": true
     }
   },
   "private": true,
-  "resolutions": {
-    "sharp": "*"
-  },
   "scripts": {
     "build": "docusaurus build",
     "clear": "docusaurus clear",

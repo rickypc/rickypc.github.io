@@ -23,32 +23,31 @@ module.exports = [
   // Order Matters™!
   {
     ...js.configs.recommended,
-    files: ['**/*.jsx?'],
     languageOptions: {
       ...js.configs.recommended.languageOptions,
       ecmaVersion: 2022,
       sourceType: 'commonjs',
     },
+    plugins: { 'no-secrets': noSecrets },
     rules: {
       ...js.configs.recommended.rules,
       '@typescript-eslint/no-require-imports': 'off',
     },
   },
   {
-    ...js.configs.recommended,
     ...ts.configs.recommended,
     files: ['**/*.tsx?'],
     languageOptions: {
-      ...js.configs.recommended.languageOptions,
       ...ts.configs.recommended.languageOptions,
       parser: ts.parser,
       parserOptions: {
-        ...js.configs.recommended.languageOptions?.parserOptions || {},
         ...ts.configs.recommended.languageOptions?.parserOptions || {},
         project: './tsconfig.json',
         sourceType: 'module',
+        tsconfigRootDir: __dirname,
       },
     },
+    plugins: { 'no-secrets': noSecrets },
   },
   {
     plugins: { '@docusaurus': docusaurus },
@@ -57,13 +56,9 @@ module.exports = [
   jest.configs['flat/recommended'],
   jsdoc.configs['flat/recommended'],
   json.configs.recommended,
-  {
-    files: ['**/*.jsx?', '**/*.tsx?'],
-    plugins: { 'no-secrets': noSecrets },
-  },
   security.configs.recommended,
   {
-    files: ['__mocks__/**/*.jsx?', 'tests/unit/**/*.jsx?'],
+    files: ['__mocks__/**/*.[jt]sx?', 'tests/unit/**/*.[jt]sx?'],
     ...testing.configs['flat/react'],
   },
   ...compat.config({

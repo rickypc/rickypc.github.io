@@ -6,7 +6,6 @@
 
 const docusaurus = require('@docusaurus/eslint-plugin');
 const { FlatCompat } = require('@eslint/eslintrc');
-const { globalIgnores } = require('eslint/config');
 const globals = require('globals');
 const jest = require('eslint-plugin-jest');
 const js = require('@eslint/js');
@@ -21,8 +20,8 @@ const ts = require('typescript-eslint');
 const compat = new FlatCompat({ baseDirectory: __dirname });
 
 module.exports = [
-  globalIgnores(['build/', '.docusaurus/']),
   // Order Matters™!
+  { ignores: ['build/', '.docusaurus/'] },
   ...compat.config({ extends: ['airbnb', 'airbnb/hooks'] }),
   js.configs.recommended,
   react.configs.flat.recommended,

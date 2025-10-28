@@ -23,18 +23,7 @@ const compat = new FlatCompat({ baseDirectory: __dirname });
 module.exports = [
   globalIgnores(['build/', '.docusaurus/']),
   // Order Matters™!
-  ...compat.config({
-    extends: ['airbnb', 'airbnb/hooks'],
-    rules: {
-      'import/no-extraneous-dependencies': ['error', { optionalDependencies: true }],
-      'import/no-named-as-default': 0,
-      'import/no-named-as-default-member': 0,
-      'import/no-unresolved': ['error', { ignore: ['^[@#].+$'] }],
-      // Better React debugging.
-      'prefer-arrow-callback': 'off',
-    },
-    settings: { 'import/core-modules': ['@docusaurus/theme-common', '@docusaurus/utils'] },
-  }),
+  ...compat.config({ extends: ['airbnb', 'airbnb/hooks'] }),
   js.configs.recommended,
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
@@ -56,13 +45,22 @@ module.exports = [
     },
     plugins: { 'no-secrets': noSecrets },
     rules: {
+      'import/no-extraneous-dependencies': ['error', { optionalDependencies: true }],
+      'import/no-named-as-default': 0,
+      'import/no-named-as-default-member': 0,
+      'import/no-unresolved': ['error', { ignore: ['^[@#].+$'] }],
+      // Better React debugging.
+      'prefer-arrow-callback': 'off',
       'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
       // Throwing error for no good reason.
       'react/jsx-props-no-multi-spaces': 'off',
       'react/jsx-props-no-spreading': 'off',
       'react/require-default-props': 'off',
     },
-    settings: { react: { version: 'detect' } },
+    settings: {
+      'import/core-modules': ['@docusaurus/theme-common', '@docusaurus/utils'],
+      react: { version: 'detect' },
+    },
   },
   {
     files: ['**/*.{ts,tsx}'],

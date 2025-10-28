@@ -5,7 +5,12 @@
  */
 
 import { context } from '@site/src/data/common';
-import { Children, memo, type ReactElement, type ReactNode } from 'react';
+import {
+  Children,
+  memo,
+  type ReactElement,
+  type ReactNode,
+} from 'react';
 import { PageMetadata } from '@docusaurus/theme-common';
 import ThemeLayout from '@theme/Layout';
 import { useWelcome } from '@site/src/hooks/observer';

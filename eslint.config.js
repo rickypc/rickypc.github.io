@@ -35,19 +35,23 @@ module.exports = [
     },
   },
   {
-    ...ts.configs.recommended,
-    files: ['**/*.tsx?'],
+    ...ts.configs.recommended[0],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ...ts.configs.recommended.languageOptions,
+      ...ts.configs.recommended[0].languageOptions,
       parser: ts.parser,
       parserOptions: {
-        ...ts.configs.recommended.languageOptions?.parserOptions || {},
+        ...ts.configs.recommended[0].languageOptions?.parserOptions || {},
         project: './tsconfig.json',
         sourceType: 'module',
         tsconfigRootDir: __dirname,
       },
     },
     plugins: { 'no-secrets': noSecrets },
+    rules: {
+      ...ts.configs.recommended[0].rules,
+      '@typescript-eslint/no-require-imports': 'off',
+    },
   },
   {
     plugins: { '@docusaurus': docusaurus },
@@ -58,7 +62,7 @@ module.exports = [
   json.configs.recommended,
   security.configs.recommended,
   {
-    files: ['__mocks__/**/*.[jt]sx?', 'tests/unit/**/*.[jt]sx?'],
+    files: ['__mocks__/**/*.{js,jsx,ts,tsx}', 'tests/unit/**/*.{js,jsx,ts,tsx}'],
     ...testing.configs['flat/react'],
   },
   ...compat.config({
@@ -84,6 +88,7 @@ module.exports = [
       'import/no-unresolved': ['error', { ignore: ['^[@#].+$'] }],
       // Better React debugging.
       'prefer-arrow-callback': 'off',
+      'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
       // Throwing error for no good reason.
       'react/jsx-props-no-multi-spaces': 'off',
       'react/jsx-props-no-spreading': 'off',

@@ -19,7 +19,7 @@ import styles from './styles.module.css';
 
 export type HeartProps = {
   className?: string;
-  id: string;
+  // id: string;
 };
 
 // function FaHeart(props) {

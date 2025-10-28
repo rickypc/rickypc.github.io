@@ -94,6 +94,7 @@ const Picture = memo(function Picture({
     loaded: false,
     show: false,
   });
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const pictureRef = ref || useRef<HTMLPictureElement | null>(null);
   const { visible } = useVisibility({ ref: pictureRef, threshold: 0.1 });
 
@@ -110,7 +111,8 @@ const Picture = memo(function Picture({
     // istanbul ignore else
     if (pictureRef?.current) {
       let responsive = images;
-      const width = pictureRef.current.clientWidth || pictureRef.current.parentElement?.clientWidth || 0;
+      const width = pictureRef.current.clientWidth
+        || pictureRef.current.parentElement?.clientWidth || 0;
       if (!Array.isArray(responsive) && typeof (picture?.fallback) === 'string') {
         responsive = [{ path: picture.fallback, width }];
       }
@@ -175,8 +177,6 @@ const Picture = memo(function Picture({
   );
 });
 
-const Image = ({ link, ...rest }: ImageProps): ReactElement => (link
-  ? <Link {...link}><Picture {...rest} /></Link> : <Picture {...rest} />);
-Image.displayName = 'Image';
-
-export default memo(Image);
+export default memo(function Image({ link, ...rest }: ImageProps): ReactElement {
+  return link ? <Link {...link}><Picture {...rest} /></Link> : <Picture {...rest} />;
+});

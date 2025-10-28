@@ -16,7 +16,11 @@ export type PreambleProps = {
   title: string;
 };
 
-export default memo(function Preamble({ description, printAdmonition, title }: PreambleProps): ReactElement {
+export default memo(function Preamble({
+  description,
+  printAdmonition,
+  title,
+}: PreambleProps): ReactElement {
   return (
     <>
       {printAdmonition && <PrintAdmonition />}

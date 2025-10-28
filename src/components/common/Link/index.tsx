@@ -6,7 +6,12 @@
 
 import { a11y } from '@site/src/data/common';
 import { domAnimation, LazyMotion, m } from 'framer-motion';
-import { memo, type ReactElement, type ReactNode, type Ref } from 'react';
+import {
+  memo,
+  type ReactElement,
+  type ReactNode,
+  type Ref,
+} from 'react';
 import useBrokenLinks from '@docusaurus/useBrokenLinks';
 
 export type LinkProps = {
@@ -21,7 +26,7 @@ export type LinkProps = {
   };
 };
 
-const Link = ({
+export default memo(function Link({
   children,
   className,
   href,
@@ -29,7 +34,7 @@ const Link = ({
   title,
   validate = false,
   ...rest
-}: LinkProps): ReactElement => {
+}: LinkProps): ReactElement {
   const links = useBrokenLinks();
 
   if (href && !['https://', '.pdf'].filter((part) => href.includes(part)).length) {
@@ -51,7 +56,4 @@ const Link = ({
       </m.a>
     </LazyMotion>
   ) : <span className={className} {...rest}>{children}</span>;
-};
-Link.displayName = 'Link';
-
-export default memo(Link);
+});

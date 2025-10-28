@@ -32,6 +32,19 @@ export type ImageInfo = {
   width: number;
 };
 
+export type ImageProps = PictureProps & {
+  link?: {
+    alt?: string;
+    className?: string;
+    href?: string;
+    ref?: RefObject<HTMLAnchorElement>;
+    title?: string;
+    whileTap?: {
+      scale?: number;
+    };
+  };
+};
+
 export type PictureInfo = {
   avif?: string;
   fallback?: {
@@ -57,20 +70,6 @@ export type PictureRender = {
   fit: ImageInfo;
   loaded: boolean;
   show: boolean;
-};
-
-// After PictureProps assignment.
-export type ImageProps = PictureProps & {
-  link?: {
-    alt?: string;
-    className?: string;
-    href?: string;
-    ref?: RefObject<HTMLAnchorElement>;
-    title?: string;
-    whileTap?: {
-      scale?: number;
-    };
-  };
 };
 
 const Picture = memo(function Picture({

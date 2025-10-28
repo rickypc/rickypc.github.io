@@ -19,7 +19,7 @@ import styles from './styles.module.css';
 
 export type HeartProps = {
   className?: string;
-  // id: string;
+  id: string;
 };
 
 // function FaHeart(props) {
@@ -44,9 +44,10 @@ const storage = (key) => {
 };
 */
 
-export default memo(function Heart({ className /* , id */ }: HeartProps): ReactElement {
+export default memo(function Heart({ className, id }: HeartProps): ReactElement {
+  const key = `heart-${id}`;
   return (
-    <span className={clsx(className, styles.reaction)} />
+    <span className={clsx(className, styles.reaction)} key={key} />
   );
   /*
   const browser = useIsBrowser();

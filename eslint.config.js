@@ -34,14 +34,8 @@ module.exports = [
   {
     languageOptions: {
       ecmaVersion: 2022,
-      globals: {
-        ...globals.browser,
-        ...globals.jest,
-        ...globals.node,
-      },
-      parserOptions: {
-        ecmaFeatures: { jsx: true },
-      },
+      globals: { ...globals.browser, ...globals.jest, ...globals.node },
+      parserOptions: { ecmaFeatures: { jsx: true } },
     },
     plugins: { 'no-secrets': noSecrets },
     rules: {

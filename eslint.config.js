@@ -25,10 +25,12 @@ module.exports = [
     ...js.configs.recommended,
     files: ['**/*.jsx?'],
     languageOptions: {
+      ...js.configs.recommended.languageOptions,
       ecmaVersion: 2022,
       sourceType: 'commonjs',
     },
     rules: {
+      ...js.configs.recommended.rules,
       '@typescript-eslint/no-require-imports': 'off',
     },
   },
@@ -37,8 +39,12 @@ module.exports = [
     ...tseslint.configs.recommended,
     files: ['**/*.tsx?'],
     languageOptions: {
+      ...js.configs.recommended.languageOptions,
+      ...tseslint.configs.recommended.languageOptions,
       parser: tseslint.parser,
       parserOptions: {
+        ...js.configs.recommended.languageOptions?.parserOptions || {},
+        ...tseslint.configs.recommended.languageOptions?.parserOptions || {},
         project: './tsconfig.json',
         sourceType: 'module',
       },

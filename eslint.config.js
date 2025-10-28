@@ -14,7 +14,7 @@ const json = require('eslint-plugin-json');
 const noSecrets = require('eslint-plugin-no-secrets');
 const security = require('eslint-plugin-security');
 const testing = require('eslint-plugin-testing-library');
-const tseslint = require('typescript-eslint');
+const ts = require('typescript-eslint');
 
 const compat = new FlatCompat({ baseDirectory: __dirname });
 
@@ -36,15 +36,15 @@ module.exports = [
   },
   {
     ...js.configs.recommended,
-    ...tseslint.configs.recommended,
+    ...ts.configs.recommended,
     files: ['**/*.tsx?'],
     languageOptions: {
       ...js.configs.recommended.languageOptions,
-      ...tseslint.configs.recommended.languageOptions,
-      parser: tseslint.parser,
+      ...ts.configs.recommended.languageOptions,
+      parser: ts.parser,
       parserOptions: {
         ...js.configs.recommended.languageOptions?.parserOptions || {},
-        ...tseslint.configs.recommended.languageOptions?.parserOptions || {},
+        ...ts.configs.recommended.languageOptions?.parserOptions || {},
         project: './tsconfig.json',
         sourceType: 'module',
       },

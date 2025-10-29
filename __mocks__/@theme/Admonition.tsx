@@ -6,13 +6,20 @@
 
 import { type PropsWithChildren, type ReactElement } from 'react';
 
+type AdmonitionProps = {
+  type?: string;
+};
+
 /**
- * Minimal mock \@docusaurus/theme-common/Head component that renders children.
+ * Minimal mock \@theme/Admonition component that renders children.
  * @param {PropsWithChildren} props
  *   The component props.
  * @returns {ReactElement}
- *   The \@docusaurus/theme-common/Head component.
+ *   The \@theme/Admonition component.
  */
-export default function Head({ children }: PropsWithChildren): ReactElement {
-  return <>{children}</>;
+export default function Admonition({
+  children,
+  type,
+}: PropsWithChildren<AdmonitionProps>): ReactElement {
+  return <div data-testid="admonition" data-type={type}>{children}</div>;
 }

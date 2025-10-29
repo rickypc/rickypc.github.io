@@ -39,23 +39,23 @@ describe('pages.portfolio', () => {
 
   it('initial state: Filter current All, Projects full catalog, Zoom closed', () => {
     const { getByTestId } = render(<Portfolio />);
-    expect(getByTestId('filter').getAttribute('current')).toEqual('All');
-    expect(getByTestId('projects').getAttribute('count')).toEqual(String(catalog.length));
+    expect(getByTestId('filter').getAttribute('data-current')).toEqual('All');
+    expect(getByTestId('projects').getAttribute('data-count')).toEqual(String(catalog.length));
     expect(getByTestId('zoom').getAttribute('data-open')).toEqual('false');
   });
 
   it('clicking filter-all invokes default "All" branch and keeps full catalog', () => {
     const { getByTestId } = render(<Portfolio />);
     fireEvent.click(getByTestId('filter-all'));
-    expect(getByTestId('filter').getAttribute('current')).toEqual('All');
-    expect(getByTestId('projects').getAttribute('count')).toEqual(String(catalog.length));
+    expect(getByTestId('filter').getAttribute('data-current')).toEqual('All');
+    expect(getByTestId('projects').getAttribute('data-count')).toEqual(String(catalog.length));
   });
 
   it('clicking filter-tag invokes filtering branch and reduces Projects', () => {
     const { getByTestId } = render(<Portfolio />);
     fireEvent.click(getByTestId('filter-tag1'));
-    expect(getByTestId('filter').getAttribute('current')).toEqual('Tag1');
-    expect(getByTestId('projects').getAttribute('count')).toEqual('1');
+    expect(getByTestId('filter').getAttribute('data-current')).toEqual('Tag1');
+    expect(getByTestId('projects').getAttribute('data-count')).toEqual('1');
   });
 
   it('clicking a project opens Zoom; clicking Zoom closes it', () => {

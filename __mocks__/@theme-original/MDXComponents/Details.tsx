@@ -7,12 +7,12 @@
 import { type PropsWithChildren, type ReactElement } from 'react';
 
 /**
- * Minimal mock \@docusaurus/theme-common/Head component that renders children.
+ * Minimal mock \@theme-original/MDXComponents/Details component that renders children.
  * @param {PropsWithChildren} props
  *   The component props.
  * @returns {ReactElement}
- *   The \@docusaurus/theme-common/Head component.
+ *   The \@theme-original/MDXComponents/Details component.
  */
-export default function Head({ children }: PropsWithChildren): ReactElement {
-  return <>{children}</>;
+export default function Details({ children }: PropsWithChildren): ReactElement {
+  return <div data-testid="mdx-details">{children}</div>;
 }

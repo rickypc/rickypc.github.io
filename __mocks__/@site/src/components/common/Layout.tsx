@@ -7,12 +7,12 @@
 import { type PropsWithChildren, type ReactElement } from 'react';
 
 /**
- * Minimal mock \@docusaurus/theme-common/Head component that renders children.
+ * Minimal mock common/Layout component that renders children.
  * @param {PropsWithChildren} props
  *   The component props.
  * @returns {ReactElement}
- *   The \@docusaurus/theme-common/Head component.
+ *   The common/Layout component.
  */
-export default function Head({ children }: PropsWithChildren): ReactElement {
-  return <>{children}</>;
+export default function Layout({ children, ...rest }: PropsWithChildren<{}>): ReactElement {
+  return <div data-testid="layout" {...rest}>{children}</div>;
 }

@@ -7,16 +7,24 @@
 import { hats } from '@site/src/data/home';
 import Heading from '@theme/Heading';
 import { key } from '@site/src/data/common';
-import { memo, type ReactElement, type ReactNode } from 'react';
+import {
+  memo,
+  type PropsWithChildren,
+  type ReactElement,
+  type ReactNode,
+} from 'react';
 import styles from './styles.module.css';
 
 export type HatProps = {
-  children: ReactNode;
   description: ReactNode;
   label: string;
 };
 
-const Hat = memo(function Hat({ children, description, label }: HatProps): ReactElement {
+const Hat = memo(function Hat({
+  children,
+  description,
+  label,
+}: PropsWithChildren<HatProps>): ReactElement {
   return (
     <article className={styles.hat}>
       <Heading as="h2">
@@ -34,7 +42,7 @@ const Hat = memo(function Hat({ children, description, label }: HatProps): React
 export default memo(function Hats() {
   return (
     <div className={styles.hats}>
-      {hats.map((hat: HatProps) => <Hat {...hat} key={key(hat.label, 'hat')} />)}
+      {hats.map((hat: PropsWithChildren<HatProps>) => <Hat {...hat} key={key(hat.label, 'hat')} />)}
     </div>
   );
 });

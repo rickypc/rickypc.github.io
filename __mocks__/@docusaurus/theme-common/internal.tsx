@@ -11,11 +11,16 @@ type MetadataProps = {
   title: string;
 };
 
-export const CodeBlockContextProvider = function Provider({
-  children,
-}: PropsWithChildren<{}>): ReactElement {
+/**
+ * Minimal mock \@docusaurus/theme-common/CodeBlockContextProvider component that renders children.
+ * @param {PropsWithChildren} props
+ *   The component props.
+ * @returns {ReactElement}
+ *   The \@docusaurus/theme-common/CodeBlockContextProvider component.
+ */
+export function CodeBlockContextProvider({ children }: PropsWithChildren): ReactElement {
   return <div data-testid="codeblock-context">{children}</div>;
-};
+}
 
 export const createCodeBlockMetadata = jest.fn((meta: MetadataProps) => ({
   code: meta.code,

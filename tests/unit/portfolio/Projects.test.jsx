@@ -84,9 +84,9 @@ describe('portfolio.Projects', () => {
 
       // eslint-disable-next-line security/detect-object-injection
       const link = getAllByTestId(/^link-/)[index];
+      expect(link).toHaveAttribute('data-validate', 'true');
       expect(link).toHaveAttribute('href', proj.href);
       expect(link).toHaveAttribute('translate', 'no');
-      expect(link).toHaveAttribute('validate', 'true');
       expect(link).toHaveTextContent(proj.title);
 
       // eslint-disable-next-line security/detect-object-injection

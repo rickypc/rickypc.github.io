@@ -8,14 +8,13 @@ import { a11y } from '@site/src/data/common';
 import { domAnimation, LazyMotion, m } from 'framer-motion';
 import {
   memo,
+  type PropsWithChildren,
   type ReactElement,
-  type ReactNode,
   type Ref,
 } from 'react';
 import useBrokenLinks from '@docusaurus/useBrokenLinks';
 
 export type LinkProps = {
-  children: ReactNode;
   className?: string;
   href?: string;
   ref?: Ref<HTMLAnchorElement>;
@@ -34,7 +33,7 @@ export default memo(function Link({
   title,
   validate = false,
   ...rest
-}: LinkProps): ReactElement {
+}: PropsWithChildren<LinkProps>): ReactElement {
   const links = useBrokenLinks();
 
   if (href && !['https://', '.pdf'].filter((part) => href.includes(part)).length) {

@@ -7,12 +7,15 @@
 import { type PropsWithChildren, type ReactElement } from 'react';
 
 /**
- * Minimal mock \@docusaurus/theme-common/Head component that renders children.
+ * Minimal mock common/SpeechAdmonition component that renders children.
  * @param {PropsWithChildren} props
  *   The component props.
  * @returns {ReactElement}
- *   The \@docusaurus/theme-common/Head component.
+ *   The common/SpeechAdmonition component.
  */
-export default function Head({ children }: PropsWithChildren): ReactElement {
-  return <>{children}</>;
+export default function SpeechAdmonition({
+  children,
+  ...rest
+}: PropsWithChildren<{}>): ReactElement {
+  return <div data-testid="speech-admonition" {...rest}>{children}</div>;
 }

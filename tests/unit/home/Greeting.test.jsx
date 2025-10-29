@@ -30,9 +30,8 @@ describe('home.Greeting', () => {
 
     // Speech component
     const speech = getByTestId('speech');
-    expect(speech).toHaveAttribute('lang', 'en-US');
     expect(speech).toHaveAttribute(
-      'names',
+      'data-names',
       [
         'Alex',
         'Microsoft Guy Online (Natural) - English (United States)',
@@ -41,6 +40,7 @@ describe('home.Greeting', () => {
         'Google US English',
       ].join('|'),
     );
+    expect(speech).toHaveAttribute('lang', 'en-US');
     expect(speech).toHaveTextContent('ricky huang');
 
     // Heart component

@@ -8,6 +8,7 @@ import { context } from '@site/src/data/common';
 import {
   Children,
   memo,
+  type PropsWithChildren,
   type ReactElement,
   type ReactNode,
 } from 'react';
@@ -16,7 +17,6 @@ import ThemeLayout from '@theme/Layout';
 import { useWelcome } from '@site/src/hooks/observer';
 
 export type LayoutProps = {
-  children?: ReactNode;
   className?: string;
   description?: string;
   keywords?: string[];
@@ -31,7 +31,7 @@ export default memo(function Layout({
   keywords,
   metadatas,
   title,
-}: LayoutProps): ReactElement {
+}: PropsWithChildren<LayoutProps>): ReactElement {
   useWelcome();
   return (
     <ThemeLayout>

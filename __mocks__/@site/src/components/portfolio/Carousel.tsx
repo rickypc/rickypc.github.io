@@ -7,12 +7,15 @@
 import { type PropsWithChildren, type ReactElement } from 'react';
 
 /**
- * Minimal mock \@docusaurus/theme-common/Head component that renders children.
+ * Minimal mock portfolio/Carousel component that renders children.
  * @param {PropsWithChildren} props
  *   The component props.
  * @returns {ReactElement}
- *   The \@docusaurus/theme-common/Head component.
+ *   The portfolio/Carousel component.
  */
-export default function Head({ children }: PropsWithChildren): ReactElement {
-  return <>{children}</>;
+export default function PortfolioCarousel({
+  children,
+  ...rest
+}: PropsWithChildren<{}>): ReactElement {
+  return <div data-testid="carousel" {...rest}>{children}</div>;
 }

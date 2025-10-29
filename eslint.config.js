@@ -45,6 +45,7 @@ module.exports = [
       // Better React debugging.
       'prefer-arrow-callback': 'off',
       'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
+      'react/jsx-no-useless-fragment': ['error', { allowExpressions: true }],
       // Throwing error for no good reason.
       'react/jsx-props-no-multi-spaces': 'off',
       'react/jsx-props-no-spreading': 'off',

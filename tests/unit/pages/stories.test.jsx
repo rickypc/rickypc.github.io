@@ -5,16 +5,16 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { layout, preamble } from '@site/src/data/stories';
 import Stories from '@site/src/pages/stories';
 
 describe('pages.stories', () => {
   test('renders Layout with className and layout props', () => {
-    const { getByTestId } = render(<Stories />);
+    render(<Stories />);
 
-    const layoutEl = getByTestId('layout');
+    const layoutEl = screen.getByTestId('layout');
     expect(layoutEl).toBeInTheDocument();
     expect(layoutEl).toHaveAttribute('class', 'stories');
     expect(layoutEl.getAttribute('description')).toContain(layout.description);
@@ -22,21 +22,22 @@ describe('pages.stories', () => {
   });
 
   test('renders Preamble with correct props and text', () => {
-    const { getByTestId } = render(<Stories />);
+    render(<Stories />);
 
-    const preambleEl = getByTestId('preamble');
+    const preambleEl = screen.getByTestId('preamble');
     expect(preambleEl).toBeInTheDocument();
     expect(preambleEl.getAttribute('description')).toContain(preamble.description);
     expect(preambleEl.getAttribute('title')).toContain(preamble.title);
   });
 
   test('renders a section with combined classes and includes Content inside it', () => {
-    const { getByTestId } = render(<Stories />);
+    render(<Stories />);
 
-    const content = getByTestId('content');
+    const content = screen.getByTestId('content');
     expect(content).toBeInTheDocument();
     expect(content).toHaveTextContent('stories.content');
 
+    // eslint-disable-next-line testing-library/no-node-access
     const section = content.closest('section');
     expect(section).toBeTruthy();
     expect(section.getAttribute('class')).toContain('row');

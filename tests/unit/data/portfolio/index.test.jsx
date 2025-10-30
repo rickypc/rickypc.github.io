@@ -55,11 +55,12 @@ describe('portfolio.index', () => {
       expect(img.alt.length).toBeGreaterThan(0);
 
       expect(typeof img.picture).toEqual('object');
-      const picture = img.picture;
+      const { picture } = img;
       const expectedPicKeys = ['avif', 'fallback', 'webp'];
       expect(Object.keys(picture)).toEqual(expect.arrayContaining(expectedPicKeys));
 
       expectedPicKeys.forEach((k) => {
+        // eslint-disable-next-line security/detect-object-injection
         const entry = picture[k];
         const isModuleLike = entry && typeof entry === 'object' && 'default' in entry;
         const isPrimitiveLike = typeof entry === 'string' || typeof entry === 'number';

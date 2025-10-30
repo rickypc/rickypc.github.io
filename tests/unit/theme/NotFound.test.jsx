@@ -5,17 +5,16 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Layout from '@theme/Layout';
 import NotFound from '@theme/NotFound';
 import NotFoundContent from '@theme/NotFound/Content';
-import { PageMetadata } from '@docusaurus/theme-common';
 import { translate } from '@docusaurus/Translate';
 
 describe('theme.NotFound', () => {
   it('calls translate with the correct id and message and passes result to PageMetadata', () => {
-    const { getByTestId } = render(<NotFound />);
+    render(<NotFound />);
 
     expect(translate).toHaveBeenCalledTimes(1);
     expect(translate).toHaveBeenCalledWith({
@@ -23,18 +22,18 @@ describe('theme.NotFound', () => {
       message: 'Page Not Found',
     });
 
-    const meta = getByTestId('metadata');
+    const meta = screen.getByTestId('metadata');
     expect(meta).toBeInTheDocument();
-    expect(meta).toHaveAttribute('title', `translated:theme.NotFound.title:Page Not Found`);
+    expect(meta).toHaveAttribute('title', 'translated:theme.NotFound.title:Page Not Found');
   });
 
   it('renders Layout and renders NotFoundContent inside it with navigation prop set to "true"', () => {
-    const { getByTestId } = render(<NotFound />);
+    render(<NotFound />);
 
-    const layout = getByTestId('layout');
+    const layout = screen.getByTestId('layout');
     expect(layout).toBeInTheDocument();
 
-    const content = getByTestId('content');
+    const content = screen.getByTestId('content');
     expect(content).toBeInTheDocument();
     expect(content.getAttribute('navigation')).toEqual('true');
 

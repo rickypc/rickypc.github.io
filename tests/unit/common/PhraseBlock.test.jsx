@@ -5,7 +5,7 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PhraseBlock from '@site/src/components/common/PhraseBlock';
 
@@ -21,7 +21,7 @@ describe('PhraseBlock', () => {
       unify: false,
     };
 
-    const { getByTestId } = render((
+    render((
       <PhraseBlock
         className="extra"
         infix="*"
@@ -31,19 +31,22 @@ describe('PhraseBlock', () => {
       />
     ));
 
-    const context = getByTestId('codeblock-context');
+    const context = screen.getByTestId('codeblock-context');
+    // eslint-disable-next-line testing-library/no-node-access
     const container = context.querySelector('.container');
     expect(container).toHaveClass('extra container theme-code-block');
 
+    // eslint-disable-next-line testing-library/no-node-access
     const titleDiv = container.querySelector('.title');
     expect(titleDiv).toHaveTextContent('MyTitle');
     expect(titleDiv).toHaveAttribute('translate', 'no');
 
+    // eslint-disable-next-line testing-library/no-node-access
     const codeElem = container.querySelector('code');
     expect(codeElem).toHaveClass('lines cls');
     expect(codeElem.textContent).toEqual('ABC-');
 
-    expect(getByTestId('buttons')).toBeInTheDocument();
+    expect(screen.getByTestId('buttons')).toBeInTheDocument();
   });
 
   it.each([
@@ -60,18 +63,15 @@ describe('PhraseBlock', () => {
       '+foo-\n+bar-\n',
     ],
   ])('renders code for %s', (_desc, phrase, opts, expected) => {
-    const { getByTestId } = render((
-      <PhraseBlock {...opts} phrase={phrase} />
-    ));
-    const codeElem = getByTestId('codeblock-context').querySelector('code');
+    render(<PhraseBlock {...opts} phrase={phrase} />);
+    // eslint-disable-next-line testing-library/no-node-access
+    const codeElem = screen.getByTestId('codeblock-context').querySelector('code');
     expect(codeElem.textContent).toEqual(expected);
   });
 
   it('does not render Buttons when the rendered code is empty', () => {
     const phrase = { children: null, testId: 'empty', unify: false };
-    const { queryByTestId } = render((
-      <PhraseBlock infix="*" prefix="P" suffix="S" phrase={phrase} />
-    ));
-    expect(queryByTestId('buttons')).toBeNull();
+    render(<PhraseBlock infix="*" prefix="P" suffix="S" phrase={phrase} />);
+    expect(screen.queryByTestId('buttons')).toBeNull();
   });
 });

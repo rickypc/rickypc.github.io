@@ -5,7 +5,7 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { context } from '@site/src/data/common';
 import Layout from '@site/src/components/common/Layout';
@@ -30,44 +30,43 @@ describe('Layout', () => {
   });
 
   describe('with extra metadatas', () => {
-    const extraMetas = [
-      <meta key="a" name="robots" content="noindex" />,
-      <meta key="b" name="author" content="rick" />,
-    ];
-    let getByTestId;
-
-    beforeEach(() => {
-      ({ getByTestId } = render((
-        <Layout
-          className="main-class"
-          description="desc text"
-          keywords={['one', 'two']}
-          metadatas={extraMetas}
-          title="Page Title"
-        >
-          <span data-testid="child">Hello world</span>
-        </Layout>
-      )));
-    });
+    const props = {
+      children: <span data-testid="child">Hello world</span>,
+      className: 'main-class',
+      description: 'desc text',
+      keywords: ['one', 'two'],
+      metadatas: [
+        <meta key="a" name="robots" content="noindex" />,
+        <meta key="b" name="author" content="rick" />,
+      ],
+      title: 'Page Title',
+    };
 
     it('renders keyword and extra metas', () => {
-      const child = getByTestId('child');
+      render(<Layout {...props} />);
+
+      const child = screen.getByTestId('child');
       expect(child).toHaveTextContent('Hello world');
 
-      const meta = getByTestId('metadata');
+      const meta = screen.getByTestId('metadata');
       expect(meta).toHaveAttribute('description', 'desc text');
       expect(meta).toHaveAttribute('keywords', 'one,two');
       expect(meta).toHaveAttribute('title', 'Page Title');
 
-      const head = document.head;
+      const { head } = document;
+      // eslint-disable-next-line testing-library/no-node-access
       expect(head.querySelector('meta[name="author"]'))
         .toHaveAttribute('content', 'rick');
+      // eslint-disable-next-line testing-library/no-node-access
       expect(head.querySelector('meta[name="robots"]'))
         .toHaveAttribute('content', 'noindex');
     });
 
     it('includes JSON-LD script with page metadata', () => {
-      const script = getByTestId('metadata')
+      render(<Layout {...props} />);
+
+      const script = screen.getByTestId('metadata')
+        // eslint-disable-next-line testing-library/no-node-access
         .querySelector('script[type="application/ld+json"]');
       expect(script).toBeInTheDocument();
       expect(script.textContent).toEqual(context({
@@ -78,15 +77,21 @@ describe('Layout', () => {
     });
 
     it('renders twitter metas', () => {
-      const head = document.head;
+      render(<Layout {...props} />);
+
+      const { head } = document;
+      // eslint-disable-next-line testing-library/no-node-access
       expect(head.querySelector('meta[name="twitter:description"]'))
         .toHaveAttribute('content', 'desc text');
+      // eslint-disable-next-line testing-library/no-node-access
       expect(head.querySelector('meta[name="twitter:title"]'))
         .toHaveAttribute('content', 'Page Title');
     });
 
     it('renders children', () => {
-      expect(getByTestId('child')).toBeInTheDocument();
+      render(<Layout {...props} />);
+
+      expect(screen.getByTestId('child')).toBeInTheDocument();
     });
   });
 
@@ -101,8 +106,10 @@ describe('Layout', () => {
         <p />
       </Layout>
     ));
-    const head = document.head;
+    const { head } = document;
+    // eslint-disable-next-line testing-library/no-node-access
     expect(head.querySelector('meta[name="robots"]')).toBeNull();
+    // eslint-disable-next-line testing-library/no-node-access
     expect(head.querySelector('meta[name="author"]')).toBeNull();
   });
 });

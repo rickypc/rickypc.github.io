@@ -9,6 +9,7 @@ import {
   act,
   fireEvent,
   render,
+  screen,
   waitFor,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -186,7 +187,7 @@ describe('Speech', () => {
     }
     await pairs.reduce(async (prev, [btn, expected]) => {
       await prev;
-      await act(async () => fireEvent.click(btn));
+      fireEvent.click(btn);
       expect(expected).toHaveBeenCalled();
     }, Promise.resolve());
   };
@@ -218,36 +219,36 @@ describe('Speech', () => {
         { name: 'Damayanti', lang: 'id-ID' },
       ];
       mocks = setupMocks(voices);
-      const ui = render(<Speech names={[voices[0].name]}>play test</Speech>);
+      render(<Speech names={[voices[0].name]}>play test</Speech>);
       // eslint-disable-next-line no-underscore-dangle
       mocks.synth._emitVoicesChanged();
 
-      await clickButtons([await ui.findByTestId('button-Play'), mocks.synth.speak]);
+      await clickButtons([await screen.findByTestId('button-Play'), mocks.synth.speak]);
       await startUtterance(mocks);
       await clickButtons([
-        [await ui.findByTestId('button-Pause'), mocks.synth.pause],
-        [await ui.findByTestId('button-Stop'), mocks.synth.cancel],
+        [await screen.findByTestId('button-Pause'), mocks.synth.pause],
+        [await screen.findByTestId('button-Stop'), mocks.synth.cancel],
       ]);
-      await expectButtonsRemoved(ui.queryByTestId('button-Pause'), ui.queryByTestId('button-Stop'));
+      await expectButtonsRemoved(screen.queryByTestId('button-Pause'), screen.queryByTestId('button-Stop'));
     });
 
     // eslint-disable-next-line jest/expect-expect
     it('creates paused state deterministically by driving UI and resumes correctly', async () => {
       const voices = [{ name: 'Damayanti', lang: 'id-ID' }];
       mocks = setupMocks(voices);
-      const ui = render(<Speech names={[voices[0].name]}>resume creation test</Speech>);
+      render(<Speech names={[voices[0].name]}>resume creation test</Speech>);
       // eslint-disable-next-line no-underscore-dangle
       mocks.synth._emitVoicesChanged();
 
-      await clickButtons([await ui.findByTestId('button-Play'), mocks.synth.speak]);
+      await clickButtons([await screen.findByTestId('button-Play'), mocks.synth.speak]);
       await startUtterance(mocks);
-      await clickButtons([await ui.findByTestId('button-Pause'), mocks.synth.pause]);
-      await clickButtons([await ui.findByTestId('button-Resume'), mocks.synth.resume]);
+      await clickButtons([await screen.findByTestId('button-Pause'), mocks.synth.pause]);
+      await clickButtons([await screen.findByTestId('button-Resume'), mocks.synth.resume]);
       await clickButtons([
-        [await ui.findByTestId('button-Pause'), mocks.synth.pause],
-        [await ui.findByTestId('button-Stop'), mocks.synth.cancel],
+        [await screen.findByTestId('button-Pause'), mocks.synth.pause],
+        [await screen.findByTestId('button-Stop'), mocks.synth.cancel],
       ]);
-      await expectButtonsRemoved(ui.queryByTestId('button-Pause'), ui.queryByTestId('button-Stop'));
+      await expectButtonsRemoved(screen.queryByTestId('button-Pause'), screen.queryByTestId('button-Stop'));
     });
   });
 
@@ -263,11 +264,11 @@ describe('Speech', () => {
 
     it('shows Admonition when no usable voice', async () => {
       mocks = setupMocks([]);
-      const ui = render(<Speech>no voice</Speech>);
+      render(<Speech>no voice</Speech>);
       // eslint-disable-next-line no-underscore-dangle
       mocks.synth._emitVoicesChanged();
 
-      expect(await ui.findByTestId('admonition')).toHaveTextContent('voice is not available');
+      expect(await screen.findByTestId('admonition')).toHaveTextContent('voice is not available');
     });
 
     it('assigns utterance.lang and utterance.voice when matching voice found', async () => {
@@ -320,7 +321,7 @@ describe('Speech', () => {
     it('registers end/error listeners and cleans up on unmount', async () => {
       const voices = [{ name: 'Google Bahasa Indonesia', lang: 'id-ID' }];
       mocks = setupMocks(voices);
-      const ui = render(<Speech names={[voices[0].name]}>end event test</Speech>);
+      const { unmount } = render(<Speech names={[voices[0].name]}>end event test</Speech>);
       // eslint-disable-next-line no-underscore-dangle
       mocks.synth._emitVoicesChanged();
 
@@ -332,13 +333,13 @@ describe('Speech', () => {
         expect(added).toEqual(expect.arrayContaining(['end', 'error']));
       });
 
-      await clickButtons([await ui.findByTestId('button-Play'), mocks.synth.speak]);
+      await clickButtons([await screen.findByTestId('button-Play'), mocks.synth.speak]);
 
       // eslint-disable-next-line no-underscore-dangle
       await act(async () => last._emit('end'));
       await waitFor(() => expect(mocks.synth.cancel).toHaveBeenCalled());
 
-      ui.unmount();
+      unmount();
       await waitFor(() => {
         const removed = last.removeEventListener.mock.calls.map((c) => c[0]);
         expect(removed).toEqual(expect.arrayContaining(['end', 'error']));
@@ -386,9 +387,9 @@ describe('Speech', () => {
         { name: 'Indo Underscore', lang: 'id_ID' },
       ];
       mocks = setupMocks(voices);
-      const ui = render(<Speech lang="id-ID" names={['UnmatchedName']}>fallback</Speech>);
+      render(<Speech lang="id-ID" names={['UnmatchedName']}>fallback</Speech>);
 
-      await clickButtons([await ui.findByTestId('button-Play'), mocks.synth.speak]);
+      await clickButtons([await screen.findByTestId('button-Play'), mocks.synth.speak]);
     });
   });
 
@@ -398,12 +399,12 @@ describe('Speech', () => {
       jest.useFakeTimers();
       const voices = [{ name: 'CoverageVoice', lang: 'en-US' }];
       mocks = setupMocks(voices);
-      const ui = render(<Speech names={[voices[0].name]}>branch coverage</Speech>);
+      render(<Speech names={[voices[0].name]}>branch coverage</Speech>);
       // eslint-disable-next-line no-underscore-dangle
       mocks.synth._emitVoicesChanged();
       mocks.synth.speaking = true;
 
-      await clickButtons([await ui.findByTestId('button-Play'), mocks.synth.cancel]);
+      await clickButtons([await screen.findByTestId('button-Play'), mocks.synth.cancel]);
       jest.useRealTimers();
     });
   });
@@ -413,7 +414,7 @@ describe('Speech', () => {
     it('renders element child text via children.props.children', async () => {
       const voices = [{ name: 'AnyVoice', lang: 'en-US' }];
       mocks = setupMocks([]);
-      const ui = render(<Speech lang="en-US"><span>element text</span></Speech>);
+      render(<Speech lang="en-US"><span>element text</span></Speech>);
       await act(async () => {
         // eslint-disable-next-line no-underscore-dangle
         mocks.synth._voices = voices;
@@ -421,7 +422,7 @@ describe('Speech', () => {
         mocks.synth._emitVoicesChanged();
       });
 
-      await clickButtons([await ui.findByTestId('button-Play'), mocks.synth.speak]);
+      await clickButtons([await screen.findByTestId('button-Play'), mocks.synth.speak]);
     });
   });
 });

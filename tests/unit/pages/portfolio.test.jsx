@@ -5,7 +5,7 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { catalog, layout, preamble } from '@site/src/data/portfolio';
 import Portfolio from '@site/src/pages/portfolio';
 
@@ -22,49 +22,49 @@ jest.mock('@site/src/data/portfolio', () => ({
 
 describe('pages.portfolio', () => {
   it('passes layout props and className token to Layout', () => {
-    const { getByTestId } = render(<Portfolio />);
-    const layoutEl = getByTestId('layout');
+    render(<Portfolio />);
+    const layoutEl = screen.getByTestId('layout');
     expect(layoutEl.getAttribute('class')).toContain('portfolio');
     expect(layoutEl.getAttribute('description')).toEqual(layout.description);
     expect(layoutEl.getAttribute('title')).toEqual(layout.title);
   });
 
   it('renders Preamble with expected props', () => {
-    const { getByTestId } = render(<Portfolio />);
-    const pre = getByTestId('preamble');
+    render(<Portfolio />);
+    const pre = screen.getByTestId('preamble');
     expect(pre.getAttribute('data-print-admonition')).toEqual(String(!!preamble.printAdmonition));
     expect(pre.getAttribute('description')).toEqual(preamble.description);
     expect(pre.getAttribute('title')).toEqual(preamble.title);
   });
 
   it('initial state: Filter current All, Projects full catalog, Zoom closed', () => {
-    const { getByTestId } = render(<Portfolio />);
-    expect(getByTestId('filter').getAttribute('data-current')).toEqual('All');
-    expect(getByTestId('projects').getAttribute('data-count')).toEqual(String(catalog.length));
-    expect(getByTestId('zoom').getAttribute('data-open')).toEqual('false');
+    render(<Portfolio />);
+    expect(screen.getByTestId('filter').getAttribute('data-current')).toEqual('All');
+    expect(screen.getByTestId('projects').getAttribute('data-count')).toEqual(String(catalog.length));
+    expect(screen.getByTestId('zoom').getAttribute('data-open')).toEqual('false');
   });
 
   it('clicking filter-all invokes default "All" branch and keeps full catalog', () => {
-    const { getByTestId } = render(<Portfolio />);
-    fireEvent.click(getByTestId('filter-all'));
-    expect(getByTestId('filter').getAttribute('data-current')).toEqual('All');
-    expect(getByTestId('projects').getAttribute('data-count')).toEqual(String(catalog.length));
+    render(<Portfolio />);
+    fireEvent.click(screen.getByTestId('filter-all'));
+    expect(screen.getByTestId('filter').getAttribute('data-current')).toEqual('All');
+    expect(screen.getByTestId('projects').getAttribute('data-count')).toEqual(String(catalog.length));
   });
 
   it('clicking filter-tag invokes filtering branch and reduces Projects', () => {
-    const { getByTestId } = render(<Portfolio />);
-    fireEvent.click(getByTestId('filter-tag1'));
-    expect(getByTestId('filter').getAttribute('data-current')).toEqual('Tag1');
-    expect(getByTestId('projects').getAttribute('data-count')).toEqual('1');
+    render(<Portfolio />);
+    fireEvent.click(screen.getByTestId('filter-tag1'));
+    expect(screen.getByTestId('filter').getAttribute('data-current')).toEqual('Tag1');
+    expect(screen.getByTestId('projects').getAttribute('data-count')).toEqual('1');
   });
 
   it('clicking a project opens Zoom; clicking Zoom closes it', () => {
-    const { getByTestId } = render(<Portfolio />);
+    render(<Portfolio />);
     // Open.
-    fireEvent.click(getByTestId('projects'));
-    expect(getByTestId('zoom').getAttribute('data-open')).toEqual('true');
+    fireEvent.click(screen.getByTestId('projects'));
+    expect(screen.getByTestId('zoom').getAttribute('data-open')).toEqual('true');
     // Close.
-    fireEvent.click(getByTestId('zoom'));
-    expect(getByTestId('zoom').getAttribute('data-open')).toEqual('false');
+    fireEvent.click(screen.getByTestId('zoom'));
+    expect(screen.getByTestId('zoom').getAttribute('data-open')).toEqual('false');
   });
 });

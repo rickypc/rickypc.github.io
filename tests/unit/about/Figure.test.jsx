@@ -14,17 +14,18 @@ jest.unmock('@site/src/components/about/Figure');
 
 describe('about.Figure', () => {
   it('renders a figure with shape container and img roles for each type', () => {
-    const { container } = render(<Figure />);
+    render(<Figure />);
 
-    // The outer <figure> should have the CSS class
-    const figure = container.querySelector('figure');
+    // The outer <figure> should have the CSS class.
+    const figure = screen.getByTestId('figure');
     expect(figure).toHaveClass('figure');
 
-    // The inner shape <div> should have its CSS class
+    // The inner shape <div> should have its CSS class.
+    // eslint-disable-next-line testing-library/no-node-access
     const shape = figure.querySelector('div');
     expect(shape).toHaveClass('shape');
 
-    // Each mock Image should render an element with role="img" and the correct aria-label
+    // Each mock Image should render an element with role="img" and the correct aria-label.
     const firstImg = screen.getByRole('img', { name: 'Transformer People Type' });
     expect(firstImg).toBeInTheDocument();
 

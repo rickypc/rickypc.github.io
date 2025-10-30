@@ -6,7 +6,7 @@
  * @jest-environment jsdom
  */
 
-import { render, within } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Content from '@site/src/components/stories/Content';
 import { stories } from '@site/src/data/stories';
@@ -35,40 +35,43 @@ jest.mock('@site/src/data/stories', () => ({
 describe('stories.Content', () => {
   it('renders a wrapper with the content class', () => {
     const { container } = render(<Content />);
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const wrapper = container.querySelector('.content');
     expect(wrapper).toBeInTheDocument();
   });
 
   it('renders one story per entry with heading, heart, content, and links', () => {
-    const { getAllByTestId } = render(<Content />);
-    const articles = getAllByTestId('article');
+    render(<Content />);
+    const articles = screen.getAllByTestId('article');
 
-    // One <article> for each story
+    // One <article> for each story.
     expect(articles).toHaveLength(stories.length);
 
     articles.forEach((article, idx) => {
       // eslint-disable-next-line security/detect-object-injection
       const story = stories[idx];
 
-      // article has the story CSS class
+      // article has the story CSS class.
       expect(article).toHaveClass('story');
 
-      // Heading as h2 with Link (header) and Heart
+      // Heading as h2 with Link (header) and Heart.
       const heading = within(article).getByTestId('heading');
       expect(heading.tagName).toEqual('H2');
 
       const headerLink = within(heading).getByTestId(/^link-/);
       expect(headerLink).toHaveAttribute('href', story.header.href);
+      // eslint-disable-next-line testing-library/no-node-access
       expect(headerLink).toHaveTextContent(story.header.children);
 
       const heart = within(heading).getByTestId('heart');
+      // eslint-disable-next-line testing-library/no-node-access
       expect(heart).toHaveAttribute('id', `story-${story.header.children.toLowerCase()}`);
 
-      // Endorsement paragraph
+      // Endorsement paragraph.
       const endorsement = within(article).getByText(story.content);
       expect(endorsement).toHaveClass('endorsement');
 
-      // There should be four links in total: header, author, title, affiliation
+      // There should be four links in total: header, author, title, affiliation.
       const links = within(article).getAllByTestId(/^link-/);
       const hrefs = links.map((a) => a.getAttribute('href'));
       expect(hrefs).toEqual([

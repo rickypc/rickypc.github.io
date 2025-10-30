@@ -20,6 +20,7 @@ import {
 describe('data.home', () => {
   it('renders greeting fragment with two spans', () => {
     const { container } = render(<div>{greeting}</div>);
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const spans = container.querySelectorAll('span');
     expect(spans).toHaveLength(2);
     expect(spans[0]).toHaveTextContent("Hello, I'm");
@@ -34,12 +35,14 @@ describe('data.home', () => {
     const expectedAlts = ['Pilot', 'Software Engineer', 'Unicorn', 'Rocket'];
 
     hats.forEach((hat, i) => {
-      // label exists
+      // Label exists.
       expect(typeof hat.label).toEqual('string');
       expect(hat.label.length).toBeGreaterThan(0);
 
-      // children -> <img>
+      // children -> <img>.
+      // eslint-disable-next-line testing-library/no-node-access
       const { container } = render(<div>{hat.children}</div>);
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const img = container.querySelector('img');
       expect(img).toBeInTheDocument();
       // eslint-disable-next-line security/detect-object-injection
@@ -71,7 +74,7 @@ describe('data.home', () => {
 
   it('exports layout with description, keywords array, and title', () => {
     expect(typeof layout.description).toEqual('string');
-    expect(layout.description).toMatch(/^Welcome to Ricky Huang\'s site/);
+    expect(layout.description).toMatch(/^Welcome to Ricky Huang's site/);
 
     expect(Array.isArray(layout.keywords)).toBeTruthy();
     expect(layout.keywords.length).toBeGreaterThan(0);
@@ -86,22 +89,22 @@ describe('data.home', () => {
 
     socials.forEach(({ href, title, Icon }) => {
       expect(typeof href).toEqual('string');
-      // Icon is the internal FaGithub or FaLinkedin
+      // Icon is the internal FaGithub or FaLinkedin.
       expect(typeof Icon).toEqual('function');
       expect(typeof title).toEqual('string');
 
-      // Render and scope the <svg data-testid="icon"> to this icon’s own container
+      // Render and scope the <svg data-testid="icon"> to this icon’s own container.
       const { container } = render((
         <Icon className="foo" style={{}} title="bar" />
       ));
       const icon = within(container).getByTestId('icon-svg');
       expect(icon).toBeInTheDocument();
 
-      // Check that GenIcon config matches expected viewBox
+      // Check that GenIcon config matches expected viewBox.
       const config = JSON.parse(icon.getAttribute('data-config'));
       expect(config.attr.viewBox).toEqual(title === 'Github' ? '0 0 496 512' : '0 0 448 512');
 
-      // Props round-trip
+      // Props round-trip.
       const props = JSON.parse(icon.getAttribute('data-props'));
       expect(props).toMatchObject({ className: 'foo', title: 'bar' });
     });

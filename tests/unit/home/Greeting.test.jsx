@@ -6,7 +6,7 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Greeting from '@site/src/components/home/Greeting';
 
@@ -14,22 +14,24 @@ jest.unmock('@site/src/components/home/Greeting');
 
 describe('home.Greeting', () => {
   it('renders greeting text, IPA, Speech, and Heart inside Heading', () => {
-    const { getByTestId } = render(<Greeting />);
+    render(<Greeting />);
 
-    // Verify Heading wrapper
-    const heading = getByTestId('heading');
+    // Verify Heading wrapper.
+    const heading = screen.getByTestId('heading');
     expect(heading.tagName).toEqual('H1');
     expect(heading.className).toEqual('greeting');
 
-    // Greeting span
+    // Greeting span.
+    // eslint-disable-next-line testing-library/no-node-access
     const greetSpan = heading.querySelector(':scope>span');
+    // eslint-disable-next-line testing-library/no-node-access
     const ipaSpan = heading.querySelector('span.ipa');
     expect(greetSpan).toHaveTextContent('Hello, I\'m Ricky Huang');
     expect(ipaSpan).toHaveTextContent('/ˈɹɪki ˈhwɑːŋ/');
     expect(ipaSpan).toHaveClass('ipa');
 
-    // Speech component
-    const speech = getByTestId('speech');
+    // Speech component.
+    const speech = screen.getByTestId('speech');
     expect(speech).toHaveAttribute(
       'data-names',
       [
@@ -43,8 +45,8 @@ describe('home.Greeting', () => {
     expect(speech).toHaveAttribute('lang', 'en-US');
     expect(speech).toHaveTextContent('ricky huang');
 
-    // Heart component
-    const heart = getByTestId('heart');
+    // Heart component.
+    const heart = screen.getByTestId('heart');
     expect(heart).toHaveAttribute('class', 'reaction');
     expect(heart).toHaveAttribute('id', 'home-landing');
   });

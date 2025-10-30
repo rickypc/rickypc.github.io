@@ -5,17 +5,17 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Welcome from '@site/src/components/common/Welcome';
 import { useWelcome } from '@site/src/hooks/observer';
 
 describe('Welcome', () => {
   it('calls useWelcome with navigation=false by default and renders both admonitions', () => {
-    const { getByTestId } = render(<Welcome />);
+    render(<Welcome />);
     expect(useWelcome).toHaveBeenCalledWith({ navigation: false });
-    expect(getByTestId('print-admonition')).toBeInTheDocument();
-    expect(getByTestId('speech-admonition')).toBeInTheDocument();
+    expect(screen.getByTestId('print-admonition')).toBeInTheDocument();
+    expect(screen.getByTestId('speech-admonition')).toBeInTheDocument();
   });
 
   it('calls useWelcome with navigation=true when prop is true', () => {

@@ -104,7 +104,7 @@ describe('useMedia', () => {
     const mql1 = mqlInstances[0];
 
     // Change the query.
-    act(() => rerender({ q: q2 }));
+    rerender({ q: q2 });
 
     // Now the old listener cleanup + new subscription + state update should all fire.
     await waitFor(() => {
@@ -437,7 +437,7 @@ describe('useWelcome', () => {
     `;
   });
 
-  it('default object and navigation = true (undefined)', async () => {
+  it('default object and navigation = true (undefined)', () => {
     Object.defineProperty(window.navigator, 'language', {
       configurable: true,
       value: undefined,
@@ -445,11 +445,13 @@ describe('useWelcome', () => {
     useIsBrowser.mockReturnValue(true);
     useLocation.mockReturnValue({ pathname: '/missing' });
 
+    // eslint-disable-next-line testing-library/no-node-access
     let root = document.getElementById('__docusaurus');
     root.className = 'docusaurus-root';
 
-    await act(async () => renderHook(() => useWelcome()));
+    renderHook(() => useWelcome());
 
+    // eslint-disable-next-line testing-library/no-node-access
     let translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
     expect(translateLink.href).toContain('https://rickypc-github-io.translate.goog/missing/?_x_tr_sl=auto&_x_tr_tl=en');
 
@@ -460,16 +462,18 @@ describe('useWelcome', () => {
     });
     useLocation.mockReturnValue({ pathname: '/missing-empty' });
 
+    // eslint-disable-next-line testing-library/no-node-access
     root = document.getElementById('__docusaurus');
     root.className = 'docusaurus-root';
 
-    await act(async () => renderHook(() => useWelcome()));
+    renderHook(() => useWelcome());
 
+    // eslint-disable-next-line testing-library/no-node-access
     translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
     expect(translateLink.href).toContain('https://rickypc-github-io.translate.goog/missing-empty/?_x_tr_sl=auto&_x_tr_tl=en');
   });
 
-  it('default object and navigation = true (en-US)', async () => {
+  it('default object and navigation = true (en-US)', () => {
     Object.defineProperty(window.navigator, 'language', {
       configurable: true,
       value: 'en-US',
@@ -477,11 +481,13 @@ describe('useWelcome', () => {
     useIsBrowser.mockReturnValue(true);
     useLocation.mockReturnValue({ pathname: '/docs/intro' });
 
+    // eslint-disable-next-line testing-library/no-node-access
     const root = document.getElementById('__docusaurus');
     root.className = 'docusaurus-root';
 
-    await act(async () => renderHook(() => useWelcome()));
+    renderHook(() => useWelcome());
 
+    // eslint-disable-next-line testing-library/no-node-access
     const translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
     expect(translateLink).not.toBeNull();
     expect(translateLink.href).toContain('/docs/intro/');
@@ -490,11 +496,12 @@ describe('useWelcome', () => {
     expect(root.className).not.toMatch(/--exclusive/);
     expect(root.className).toMatch(/--welcome/);
 
+    // eslint-disable-next-line testing-library/no-node-access
     const title = document.querySelector('nav .navbar__brand .navbar__title');
     expect(title.getAttribute('translate')).toEqual('no');
   });
 
-  it('default object and navigation = true (en-US) - non-browser', async () => {
+  it('default object and navigation = true (en-US) - non-browser', () => {
     Object.defineProperty(window.navigator, 'language', {
       configurable: true,
       value: 'en-US',
@@ -502,17 +509,19 @@ describe('useWelcome', () => {
     useIsBrowser.mockReturnValue(false);
     useLocation.mockReturnValue({ pathname: '/no-browser' });
 
+    // eslint-disable-next-line testing-library/no-node-access
     const root = document.getElementById('__docusaurus');
     root.className = 'docusaurus-root';
 
-    await act(async () => renderHook(() => useWelcome()));
+    renderHook(() => useWelcome());
 
+    // eslint-disable-next-line testing-library/no-node-access
     const title = document.querySelector('nav .navbar__brand .navbar__title');
     expect(title.getAttribute('translate')).toBeNull();
     expect(root.className).toEqual('docusaurus-root');
   });
 
-  it('navigation = false (zh-CN)', async () => {
+  it('navigation = false (zh-CN)', () => {
     Object.defineProperty(window.navigator, 'language', {
       configurable: true,
       value: 'zh-CN',
@@ -520,24 +529,27 @@ describe('useWelcome', () => {
     useIsBrowser.mockReturnValue(true);
     useLocation.mockReturnValue({ pathname: '/zh' });
 
+    // eslint-disable-next-line testing-library/no-node-access
     const root = document.getElementById('__docusaurus');
     root.className = 'docusaurus-root';
 
-    await act(async () => renderHook(() => useWelcome({ navigation: false })));
+    renderHook(() => useWelcome({ navigation: false }));
 
+    // eslint-disable-next-line testing-library/no-node-access
     const translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
     expect(translateLink).not.toBeNull();
     expect(translateLink.href).toContain('https://rickypc-github-io.translate.goog/zh/?_x_tr_sl=en&_x_tr_tl=zh-CN');
 
-    // navigation false should add exclusive and welcome classes.
+    // Navigation false should add exclusive and welcome classes.
     expect(root.className).toMatch(/--exclusive/);
     expect(root.className).toMatch(/--welcome/);
 
+    // eslint-disable-next-line testing-library/no-node-access
     const title = document.querySelector('nav .navbar__brand .navbar__title');
     expect(title.getAttribute('translate')).toEqual('no');
   });
 
-  it('navigation = true (fr)', async () => {
+  it('navigation = true (fr)', () => {
     Object.defineProperty(window.navigator, 'language', {
       configurable: true,
       value: 'fr',
@@ -545,11 +557,13 @@ describe('useWelcome', () => {
     useIsBrowser.mockReturnValue(true);
     useLocation.mockReturnValue({ pathname: '/fr' });
 
+    // eslint-disable-next-line testing-library/no-node-access
     const root = document.getElementById('__docusaurus');
     root.className = 'docusaurus-root';
 
-    await act(async () => renderHook(() => useWelcome({ navigation: true })));
+    renderHook(() => useWelcome({ navigation: true }));
 
+    // eslint-disable-next-line testing-library/no-node-access
     const translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
     expect(translateLink.href).toContain('https://rickypc-github-io.translate.goog/fr/?_x_tr_sl=en&_x_tr_tl=fr');
 

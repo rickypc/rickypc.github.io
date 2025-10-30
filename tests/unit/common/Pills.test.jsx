@@ -5,39 +5,39 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Pills from '@site/src/components/common/Pills';
 
 jest.unmock('@site/src/components/common/Pills');
 
 describe('Pills', () => {
+  let container;
+  let dtElements;
+  let onClick;
   const items = ['apple', 'banana', 'cherry'];
   const prefix = 'fruit';
-  let handleClick;
-  let container;
-  let getByTestId;
-  let dtElements;
 
   const renderComponent = (active) => {
-    handleClick = jest.fn();
-    const utils = render((
+    onClick = jest.fn();
+    ({ container } = render((
       <Pills
         active={active}
         items={items}
-        onClick={handleClick}
+        onClick={onClick}
         prefix={prefix}
       />
-    ));
-    container = utils.container;
-    getByTestId = utils.getByTestId;
+    )));
+    // eslint-disable-next-line testing-library/no-node-access
     dtElements = container.querySelectorAll('dt');
   };
 
   describe('default behavior', () => {
+    // eslint-disable-next-line testing-library/no-render-in-lifecycle
     beforeEach(() => renderComponent('banana'));
 
     it('renders a <dl> with correct items', () => {
+      // eslint-disable-next-line testing-library/no-node-access
       const dl = container.querySelector('dl');
       expect(dl.tagName).toEqual('DL');
       expect(dl).toHaveClass('pills');
@@ -46,6 +46,7 @@ describe('Pills', () => {
       items.forEach((item, idx) => {
         // eslint-disable-next-line security/detect-object-injection
         const dt = dtElements[idx];
+        // eslint-disable-next-line testing-library/no-node-access
         const span = dt.querySelector('span:not([data-layoutid])');
         expect(span).toHaveTextContent(item);
       });
@@ -53,11 +54,12 @@ describe('Pills', () => {
 
     it('calls onClick with the clicked item', () => {
       fireEvent.click(dtElements[0]);
-      expect(handleClick).toHaveBeenCalledWith('apple');
+      expect(onClick).toHaveBeenCalledWith('apple');
     });
   });
 
   describe('active state', () => {
+    // eslint-disable-next-line testing-library/no-render-in-lifecycle
     beforeEach(() => renderComponent('cherry'));
 
     it('applies active class and renders indicator on active item', () => {
@@ -66,7 +68,7 @@ describe('Pills', () => {
       expect(appleDt).not.toHaveClass('active');
       expect(cherryDt).toHaveClass('active');
 
-      const indicator = getByTestId('span');
+      const indicator = screen.getByTestId('span');
       expect(indicator).toHaveClass('indicator');
       expect(indicator).toHaveAttribute('data-layoutid', `pill-indicator-${prefix}`);
       expect(indicator).toHaveTextContent('cherry');

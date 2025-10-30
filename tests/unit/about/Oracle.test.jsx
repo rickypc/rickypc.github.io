@@ -20,9 +20,10 @@ describe('about.Oracle', () => {
   ])('visible=%s -> container.className="%s"', (visible, expectedClassName) => {
     useVisibility.mockReturnValue({ ref: jest.fn(), visible });
     const { container } = render(<Oracle />);
+    // eslint-disable-next-line testing-library/no-node-access
     const outer = container.firstChild;
     expect(outer).toHaveClass(expectedClassName);
-    // Exact match (no extra classes)
+    // Exact match (no extra classes).
     expect(outer.className).toEqual(expectedClassName);
   });
 
@@ -31,14 +32,18 @@ describe('about.Oracle', () => {
     useVisibility.mockReturnValue({ ref: mockRef, visible: false });
     const { container } = render(<Oracle />);
 
-    // Inner wrapper with oraculares
+    // Inner wrapper with oraculares.
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const wrapper = container.querySelector('.oraculares');
     expect(wrapper).toBeInstanceOf(HTMLElement);
     expect(mockRef).toHaveBeenCalledWith(wrapper);
 
-    // Three oracular divs
+    // Three oracular divs.
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     expect(container.getElementsByClassName('oracular1')).toHaveLength(1);
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     expect(container.getElementsByClassName('oracular2')).toHaveLength(1);
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     expect(container.getElementsByClassName('oracular3')).toHaveLength(1);
   });
 });

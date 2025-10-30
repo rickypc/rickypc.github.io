@@ -34,23 +34,30 @@ describe('home.Hats', () => {
       },
     ];
 
+    // eslint-disable-next-line testing-library/no-node-access
     const root = container.firstChild;
     expect(root).toBeInstanceOf(HTMLElement);
     expect(root.tagName).toEqual('DIV');
+    // eslint-disable-next-line testing-library/no-node-access
     expect(root.childElementCount).toEqual(4);
 
+    // eslint-disable-next-line testing-library/no-node-access
     const articles = root.querySelectorAll('article');
     expect(articles).toHaveLength(4);
 
     for (let i = 0, j = articles.length; i < j; i += 1) {
+      // eslint-disable-next-line security/detect-object-injection
       const article = articles[i];
+      // eslint-disable-next-line security/detect-object-injection
+      const expected = expecteds[i];
 
+      // eslint-disable-next-line testing-library/no-node-access
       const description = article.querySelector('p');
-      expect(description).toHaveTextContent(expecteds[i].description);
+      expect(description).toHaveTextContent(expected.description);
 
       const heading = within(article).getByTestId('heading');
       expect(heading.tagName).toEqual('H2');
-      expect(heading).toHaveTextContent(expecteds[i].heading);
+      expect(heading).toHaveTextContent(expected.heading);
     }
   });
 });

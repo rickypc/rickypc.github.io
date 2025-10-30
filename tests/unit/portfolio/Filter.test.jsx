@@ -6,7 +6,12 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, render, within } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  screen,
+  within,
+} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Filter from '@site/src/components/portfolio/Filter';
 import { useMedia } from '@site/src/hooks/observer';
@@ -27,21 +32,21 @@ describe('portfolio.Filter', () => {
     const onClickMock = jest.fn();
     useMedia.mockReturnValue([true]);
 
-    const { getAllByRole, getByTestId, getByText } = render(<Filter current="All" onClick={onClickMock} />);
+    render(<Filter current="All" onClick={onClickMock} />);
 
     // Collapsible branch.
-    const coll = getByTestId('collapsible');
+    const coll = screen.getByTestId('collapsible');
     expect(coll).toHaveAttribute('data-active', 'All');
     expect(coll).toHaveAttribute('data-translate', 'no');
 
     // Items in sorted order, with unique tags.
-    const buttons = getAllByRole('button');
+    const buttons = screen.getAllByRole('button');
     expect(buttons).toHaveLength(expectedTags.length);
     // eslint-disable-next-line security/detect-object-injection
     buttons.forEach((btn, i) => expect(btn).toHaveTextContent(expectedTags[i]));
 
     // Clicking a tag invokes onClick with that tag.
-    fireEvent.click(getByText('beta'));
+    fireEvent.click(screen.getByText('beta'));
     expect(onClickMock).toHaveBeenCalledWith('beta');
   });
 
@@ -49,10 +54,10 @@ describe('portfolio.Filter', () => {
     const onClickMock = jest.fn();
     useMedia.mockReturnValue([false]);
 
-    const { getByTestId, getByText } = render(<Filter current="alpha" onClick={onClickMock} />);
+    render(<Filter current="alpha" onClick={onClickMock} />);
 
     // Pills branch.
-    const pills = getByTestId('pills');
+    const pills = screen.getByTestId('pills');
     expect(pills).toHaveAttribute('data-active', 'alpha');
     expect(pills).toHaveAttribute('data-prefix', 'portfolio');
     expect(pills).toHaveAttribute('data-translate', 'no');
@@ -61,10 +66,10 @@ describe('portfolio.Filter', () => {
     // Items rendered in same sorted order.
     const buttons = within(pills).getAllByRole('button');
     expect(buttons).toHaveLength(expectedTags.length);
-    expectedTags.forEach((tag) => expect(getByText(tag)).toBeInTheDocument());
+    expectedTags.forEach((tag) => expect(screen.getByText(tag)).toBeInTheDocument());
 
     // Clicking the 'gamma' pill invokes onClick.
-    fireEvent.click(getByText('gamma'));
+    fireEvent.click(screen.getByText('gamma'));
     expect(onClickMock).toHaveBeenCalledWith('gamma');
   });
 });

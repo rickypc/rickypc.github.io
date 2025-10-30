@@ -5,7 +5,7 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import MultiLingual from '@site/src/components/common/MultiLingual';
 
@@ -18,21 +18,6 @@ describe('MultiLingual', () => {
   const transliteration = { className: 'trans-class', unify: true };
 
   describe('when all language props are provided', () => {
-    let queryByTestId;
-
-    beforeEach(() => {
-      ({ queryByTestId } = render((
-        <MultiLingual
-          chinese={chinese}
-          pali={pali}
-          sanskrit={sanskrit}
-          thai={thai}
-          tibetan={tibetan}
-          transliteration={transliteration}
-        />
-      )));
-    });
-
     it.each([
       ['chinese', {
         id: 'ch',
@@ -76,7 +61,17 @@ describe('MultiLingual', () => {
       prefix,
       suffix,
     }) => {
-      const el = queryByTestId(`phrase-block-${id}`);
+      render((
+        <MultiLingual
+          chinese={chinese}
+          pali={pali}
+          sanskrit={sanskrit}
+          thai={thai}
+          tibetan={tibetan}
+          transliteration={transliteration}
+        />
+      ));
+      const el = screen.queryByTestId(`phrase-block-${id}`);
       expect(el).toBeInTheDocument();
       expect(el).toHaveAttribute('class', transliteration.className);
       expect(el).toHaveAttribute('data-infix', infix);
@@ -88,13 +83,14 @@ describe('MultiLingual', () => {
 
   it('renders nothing when no children props are provided', () => {
     const { container } = render(<MultiLingual transliteration={transliteration} />);
+    // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toBeNull();
   });
 
   it('falls back to default markers when transliteration not provided', () => {
     const sanskritOnly = { children: 'sa', testId: 'sa' };
-    const { getByTestId } = render(<MultiLingual sanskrit={sanskritOnly} />);
-    const el = getByTestId('phrase-block-sa');
+    render(<MultiLingual sanskrit={sanskritOnly} />);
+    const el = screen.getByTestId('phrase-block-sa');
 
     expect(el).not.toHaveAttribute('class');
     expect(el).toHaveAttribute('data-infix', '।');

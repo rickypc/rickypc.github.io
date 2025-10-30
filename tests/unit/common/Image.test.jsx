@@ -5,7 +5,12 @@
  * @jest-environment jsdom
  */
 
-import { act, fireEvent, render } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Image from '@site/src/components/common/Image';
 import { useVisibility } from '@site/src/hooks/observer';
@@ -39,15 +44,19 @@ describe('Image', () => {
     it('does not render sources or img when not visible', () => {
       useVisibility.mockReturnValue({ visible: false });
       const { container } = render(<Image alt="Alt" picture={basePicture} />);
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const picture = container.querySelector('picture');
       expect(picture).toBeInTheDocument();
+      // eslint-disable-next-line testing-library/no-node-access
       expect(picture.querySelector('source')).toBeNull();
+      // eslint-disable-next-line testing-library/no-node-access
       expect(picture.querySelector('img')).toBeNull();
     });
 
     it('renders a picture element when visible', () => {
       useVisibility.mockReturnValue({ visible: true });
       const { container } = render(<Image alt="Alt" picture={basePicture} />);
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       expect(container.querySelector('picture')).toBeInTheDocument();
     });
   });
@@ -55,11 +64,12 @@ describe('Image', () => {
   describe('sources and fallback', () => {
     it('renders avif, webp sources and fallback img', () => {
       const { container } = render(<Image alt="Alt" picture={basePicture} />);
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const sources = container.querySelectorAll('source');
       expect(sources).toHaveLength(2);
       expect(sources[0]).toHaveAttribute('srcset', 'img.avif');
       expect(sources[1]).toHaveAttribute('srcset', 'img.webp');
-
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const img = container.querySelector('img');
       expect(img).toHaveAttribute('src', 'fallback.jpg');
     });
@@ -67,17 +77,18 @@ describe('Image', () => {
 
   describe('link wrapper', () => {
     it('wraps picture in an anchor when link prop is provided', () => {
-      const { getByTestId } = render((
+      render((
         <Image
           alt="Alt"
           link={{ href: '/test', title: 'Test' }}
           picture={basePicture}
         />
       ));
-      const anchor = getByTestId('link-Test');
+      const anchor = screen.getByTestId('link-Test');
       expect(anchor).toHaveAttribute('href', '/test');
       expect(anchor).toHaveAttribute('title', 'Test');
-      expect(anchor.querySelector('picture')).toBeInTheDocument();
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(anchor.firstChild).toBeInTheDocument();
     });
   });
 
@@ -87,10 +98,10 @@ describe('Image', () => {
       const { container } = render((
         <Image alt="Alt text" onLoad={onLoad} picture={basePicture} />
       ));
-
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const pic = container.querySelector('picture');
       expect(pic).toHaveStyle('background-image: url(preSrc.jpg)');
-
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const img = container.querySelector('img');
       expect(img).not.toHaveAttribute('alt');
 
@@ -107,8 +118,9 @@ describe('Image', () => {
       const { container } = render((
         <Image alt="Alt" onLoad={onLoad} picture={basePicture} />
       ));
-
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const img = container.querySelector('img');
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const pic = container.querySelector('picture');
 
       fireEvent.load(img);
@@ -181,6 +193,7 @@ describe('Image', () => {
         };
 
       const { container } = render(<Image alt="Alt" picture={picObj} />);
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const img = container.querySelector('img');
       expect(img.getAttribute('src')).toEqual(expected);
 

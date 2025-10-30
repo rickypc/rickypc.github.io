@@ -5,7 +5,7 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Preamble from '@site/src/components/common/Preamble';
 
@@ -18,42 +18,37 @@ describe('Preamble', () => {
   };
 
   describe('default rendering', () => {
-    let utils;
-
-    beforeEach(() => {
-      utils = render(<Preamble {...baseProps} />);
-    });
-
     it('does not render PrintAdmonition', () => {
-      const { queryByTestId } = utils;
-      expect(queryByTestId('print-admonition')).toBeNull();
+      render(<Preamble {...baseProps} />);
+      expect(screen.queryByTestId('print-admonition')).toBeNull();
     });
 
     it('renders header, heading, and description', () => {
-      const { getByTestId, getByText } = utils;
-      const header = getByText(baseProps.title).closest('header');
+      render(<Preamble {...baseProps} />);
+
+      // eslint-disable-next-line testing-library/no-node-access
+      const header = screen.getByText(baseProps.title).closest('header');
       expect(header).toHaveClass('row');
 
+      // eslint-disable-next-line testing-library/no-node-access
       const innerDiv = header.querySelector('div');
       expect(innerDiv).toHaveClass(
         'col col--8 col--offset-2 preamble',
       );
 
-      const heading = getByTestId('heading');
+      const heading = screen.getByTestId('heading');
       expect(heading.tagName).toEqual('H1');
       expect(heading).toHaveTextContent(baseProps.title);
 
-      const para = getByText(baseProps.description);
+      const para = screen.getByText(baseProps.description);
       expect(para.tagName).toEqual('P');
     });
   });
 
   describe('when printAdmonition is true', () => {
     it('renders the PrintAdmonition component', () => {
-      const { getByTestId } = render((
-        <Preamble {...baseProps} printAdmonition />
-      ));
-      expect(getByTestId('print-admonition')).toBeInTheDocument();
+      render(<Preamble {...baseProps} printAdmonition />);
+      expect(screen.getByTestId('print-admonition')).toBeInTheDocument();
     });
   });
 });

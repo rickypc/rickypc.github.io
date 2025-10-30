@@ -6,7 +6,7 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Projects from '@site/src/components/portfolio/Projects';
 
@@ -18,11 +18,13 @@ describe('portfolio.Projects', () => {
   it('renders wrapper and no items when filtered is empty', () => {
     const { container } = render(<Projects filtered={[]} onClick={onClickMock} />);
 
-    // Wrapper exists with correct class
+    // Wrapper exists with correct class.
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const wrapper = container.querySelector('.portfolios');
     expect(wrapper).toBeInTheDocument();
 
-    // No child project items
+    // No child project items.
+    // eslint-disable-next-line testing-library/no-node-access
     const items = wrapper.querySelectorAll('.portfolio');
     expect(items).toHaveLength(0);
   });
@@ -47,27 +49,30 @@ describe('portfolio.Projects', () => {
       },
     ];
 
-    const { container, getAllByTestId } = render(<Projects filtered={filtered} onClick={onClickMock} />);
+    const { container } = render(<Projects filtered={filtered} onClick={onClickMock} />);
 
-    // Wrapper and items
+    // Wrapper and items.
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const wrapper = container.querySelector('.portfolios');
     expect(wrapper).toBeInTheDocument();
 
-    const items = getAllByTestId('article');
+    const items = screen.getAllByTestId('article');
     expect(items).toHaveLength(filtered.length);
 
     filtered.forEach((proj, index) => {
       // eslint-disable-next-line security/detect-object-injection
       const item = items[index];
 
-      // Carousel stub receives prefix
+      // Carousel stub receives prefix.
       // eslint-disable-next-line security/detect-object-injection
-      const carousel = getAllByTestId('carousel')[index];
+      const carousel = screen.getAllByTestId('carousel')[index];
       expect(carousel).toHaveAttribute('prefix', proj.prefix);
 
-      // Tags list
+      // Tags list.
+      // eslint-disable-next-line testing-library/no-node-access
       const tagsList = item.querySelector('ul.tags');
       expect(tagsList).toBeInTheDocument();
+      // eslint-disable-next-line testing-library/no-node-access
       const tagItems = tagsList.querySelectorAll('li');
       expect(tagItems).toHaveLength(proj.tags.length);
       proj.tags.forEach((tag, i) => {
@@ -77,23 +82,24 @@ describe('portfolio.Projects', () => {
         expect(tagItems[i]).toHaveTextContent(tag);
       });
 
-      // Heading with Link and Heart
+      // Heading with Link and Heart.
       // eslint-disable-next-line security/detect-object-injection
-      const heading = getAllByTestId('heading')[index];
+      const heading = screen.getAllByTestId('heading')[index];
       expect(heading.tagName).toEqual('H2');
 
       // eslint-disable-next-line security/detect-object-injection
-      const link = getAllByTestId(/^link-/)[index];
+      const link = screen.getAllByTestId(/^link-/)[index];
       expect(link).toHaveAttribute('data-validate', 'true');
       expect(link).toHaveAttribute('href', proj.href);
       expect(link).toHaveAttribute('translate', 'no');
       expect(link).toHaveTextContent(proj.title);
 
       // eslint-disable-next-line security/detect-object-injection
-      const heart = getAllByTestId('heart')[index];
+      const heart = screen.getAllByTestId('heart')[index];
       expect(heart).toHaveAttribute('id', `portfolio-${proj.prefix}`);
 
-      // Description paragraph
+      // Description paragraph.
+      // eslint-disable-next-line testing-library/no-node-access
       const desc = item.querySelector('p');
       expect(desc).toHaveTextContent(proj.description);
     });

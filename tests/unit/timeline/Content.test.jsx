@@ -47,16 +47,19 @@ describe('timeline.Content', () => {
     const { container } = render(<Content />);
 
     // Check wrapper.
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const wrapper = container.querySelector('.content');
     expect(wrapper).toBeInTheDocument();
 
     // Find all timeline wrappers.
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const wrappers = container.querySelectorAll('.timeline');
     expect(wrappers).toHaveLength(timelines.length);
 
     wrappers.forEach((w, idx) => {
       // Position classes.
       const expectedPosClass = idx % 2 === 0 ? 'right' : 'left';
+      // eslint-disable-next-line security/detect-object-injection
       const timeline = timelines[idx];
       expect(w).toHaveClass(expectedPosClass);
 
@@ -65,13 +68,16 @@ describe('timeline.Content', () => {
 
       // Image stub.
       const img = within(w).getByTestId(/^img-/);
+      // eslint-disable-next-line testing-library/no-node-access
       expect(img).toHaveAttribute('alt', `${timeline.affiliation.children} Logo`);
       const imgLink = within(w).getByTestId('link');
       expect(imgLink).toHaveAttribute('class', 'logo');
       expect(imgLink).toHaveAttribute('href', timeline.affiliation.href);
       const picture = within(w).getByTestId('picture');
+      // eslint-disable-next-line testing-library/no-node-access
       expect(picture.querySelector('source[type="image/avif"]'))
         .toHaveAttribute('srcSet', timeline.picture.avif);
+      // eslint-disable-next-line testing-library/no-node-access
       expect(picture.querySelector('source[type="image/webp"]'))
         .toHaveAttribute('srcSet', timeline.picture.webp);
 
@@ -88,14 +94,17 @@ describe('timeline.Content', () => {
       // Title link.
       const titleLink = within(h3).getByTestId(/^link-/);
       expect(titleLink).toHaveAttribute('href', timeline.title.href);
+      // eslint-disable-next-line testing-library/no-node-access
       expect(titleLink).toHaveTextContent(timeline.title.children);
       // Heart icon
       const heart = within(h3).getByTestId('heart');
+      // eslint-disable-next-line testing-library/no-node-access
       expect(heart).toHaveAttribute('id', `timeline-${timeline.title.children}`);
 
       const h4 = headings.find((h) => h.tagName === 'H4');
       const affLink = within(h4).getByTestId(/^link-/);
       expect(affLink).toHaveAttribute('href', timeline.affiliation.href);
+      // eslint-disable-next-line testing-library/no-node-access
       expect(affLink).toHaveTextContent(timeline.affiliation.children);
 
       // Description.
@@ -108,6 +117,7 @@ describe('timeline.Content', () => {
     useMedia.mockReturnValue([true]);
 
     const { container } = render(<Content />);
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const wrappers = container.querySelectorAll('.timeline');
 
     wrappers.forEach((w) => expect(w).toHaveClass('right'));

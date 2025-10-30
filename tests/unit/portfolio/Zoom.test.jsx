@@ -6,7 +6,7 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Zoom from '@site/src/components/portfolio/Zoom';
 
@@ -22,17 +22,17 @@ describe('portfolio.Zoom', () => {
 
   it('renders closed state when open.picture is not an object and ignores Escape key', () => {
     const open = { alt: 'Alt text', picture: undefined };
-    const { getByTestId, queryByTestId } = render(<Zoom open={open} onClick={onClickMock} />);
+    render(<Zoom open={open} onClick={onClickMock} />);
 
     // No body lock
     expect(document.body).not.toHaveClass('no-scroll');
 
     // Overlay present, no image
-    expect(getByTestId('div')).toHaveClass('overlay');
-    expect(queryByTestId(/^img-/)).toBeNull();
+    expect(screen.getByTestId('div')).toHaveClass('overlay');
+    expect(screen.queryByTestId(/^img-/)).toBeNull();
 
     // Figure has a11y attributes
-    const fig = getByTestId('figure');
+    const fig = screen.getByTestId('figure');
     expect(fig).toHaveAttribute('aria-label', open.alt);
     expect(fig).toHaveAttribute('title', open.alt);
 
@@ -46,9 +46,9 @@ describe('portfolio.Zoom', () => {
     const picture = { avif: 'x.avif', fallback: {}, webp: 'x.webp' };
 
     // Initial closed render
-    const { getByTestId, rerender } = render(<Zoom open={{ alt, picture: undefined }} onClick={onClickMock} />);
+    const { rerender } = render(<Zoom open={{ alt, picture: undefined }} onClick={onClickMock} />);
 
-    const fig = getByTestId('figure');
+    const fig = screen.getByTestId('figure');
 
     // Spy on scrollTop setter and focus()
     const scrollSetter = jest.fn();
@@ -62,15 +62,15 @@ describe('portfolio.Zoom', () => {
     expect(document.body).toHaveClass('no-scroll');
     expect(scrollSetter).toHaveBeenCalledWith(0);
     expect(focusSpy).toHaveBeenCalled();
-    expect(getByTestId(/^img-/)).toBeInTheDocument();
+    expect(screen.getByTestId(/^img-/)).toBeInTheDocument();
   });
 
   it('calls onClick when overlay or figure clicked', () => {
     const pic = { avif: '', fallback: {}, webp: '' };
-    const { getByTestId } = render(<Zoom open={{ alt: 'A', picture: pic }} onClick={onClickMock} />);
+    render(<Zoom open={{ alt: 'A', picture: pic }} onClick={onClickMock} />);
 
-    fireEvent.click(getByTestId('div'));
-    fireEvent.click(getByTestId('figure'));
+    fireEvent.click(screen.getByTestId('div'));
+    fireEvent.click(screen.getByTestId('figure'));
     expect(onClickMock).toHaveBeenCalledTimes(2);
   });
 

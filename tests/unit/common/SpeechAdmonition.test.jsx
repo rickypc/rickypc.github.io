@@ -5,7 +5,7 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { admonitions } from '@site/src/data/common';
 import SpeechAdmonition from '@site/src/components/common/SpeechAdmonition';
@@ -17,17 +17,19 @@ describe('SpeechAdmonition', () => {
   it('does not render anything when speech is ready', () => {
     useSpeech.mockReturnValue([true]);
     const { container } = render(<SpeechAdmonition />);
+    // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toBeNull();
   });
 
   it('renders admonition inside an <aside> when speech is not ready', () => {
     useSpeech.mockReturnValue([false]);
-    const { getByTestId } = render(<SpeechAdmonition />);
+    render(<SpeechAdmonition />);
 
-    const admon = getByTestId('admonition');
+    const admon = screen.getByTestId('admonition');
     expect(admon).toHaveAttribute('data-type', admonitions.speech.type);
     expect(admon).toHaveTextContent(admonitions.speech.text);
 
+    // eslint-disable-next-line testing-library/no-node-access
     const aside = admon.closest('aside');
     expect(aside).toHaveAttribute('aria-hidden', 'true');
     expect(aside).toHaveClass('row');

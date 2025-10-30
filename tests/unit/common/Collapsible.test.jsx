@@ -5,7 +5,7 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Collapsible from '@site/src/components/common/Collapsible';
 
@@ -14,12 +14,10 @@ jest.unmock('@site/src/components/common/Collapsible');
 describe('Collapsible', () => {
   const items = ['Item 1', 'Item 2', 'Item 3'];
   let onClick;
-  let utils;
-  let container;
 
   const renderComponent = (active, extraProps = {}) => {
     onClick = jest.fn();
-    utils = render((
+    render((
       <Collapsible
         active={active}
         items={items}
@@ -27,19 +25,17 @@ describe('Collapsible', () => {
         {...extraProps}
       />
     ));
-    container = utils.container;
-    return utils;
   };
 
   describe('rendering', () => {
     it('displays the active item label on the button', () => {
-      const { getByRole } = renderComponent('Item 2');
-      expect(getByRole('button')).toHaveTextContent('Item 2');
+      renderComponent('Item 2');
+      expect(screen.getByRole('button')).toHaveTextContent('Item 2');
     });
 
     it('applies active class to the corresponding menuitem', () => {
-      const { getByRole } = renderComponent('Item 3');
-      const span = getByRole('menuitem', { name: 'Item 3' });
+      renderComponent('Item 3');
+      const span = screen.getByRole('menuitem', { name: 'Item 3' });
       expect(span).toHaveClass('table-of-contents__link--active');
     });
   });
@@ -47,9 +43,10 @@ describe('Collapsible', () => {
   describe('interaction', () => {
     it('toggles expanded class on the root when button is clicked', () => {
       renderComponent('Item 1');
-      const button = container.querySelector('button');
+      const button = screen.getByTestId('button-btn');
       fireEvent.click(button);
-      expect(container.firstChild).toHaveClass('expanded');
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(button.parentNode).toHaveClass('expanded');
     });
 
     it.each([
@@ -60,8 +57,8 @@ describe('Collapsible', () => {
         key: 'Enter',
       })],
     ])('calls onClick when %s', (_desc, action) => {
-      const { getByRole } = renderComponent('Item 1');
-      const span = getByRole('menuitem', { name: 'Item 2' });
+      renderComponent('Item 1');
+      const span = screen.getByRole('menuitem', { name: 'Item 2' });
       action(span);
       expect(onClick).toHaveBeenCalledWith('Item 2');
     });
@@ -69,14 +66,12 @@ describe('Collapsible', () => {
 
   describe('prop spreading', () => {
     it('spreads extra props to the button and each menuitem', () => {
-      const { getByRole, getAllByRole } = renderComponent('Item 1', {
-        'data-testid': 'collapsible',
-      });
+      renderComponent('Item 1', { 'data-testid': 'collapsible' });
 
-      const button = getByRole('button');
+      const button = screen.getByRole('button');
       expect(button).toHaveAttribute('data-testid', 'collapsible');
 
-      const spans = getAllByRole('menuitem');
+      const spans = screen.getAllByRole('menuitem');
       spans.forEach((span) => expect(span).toHaveAttribute('data-testid', 'collapsible'));
     });
   });

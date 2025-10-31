@@ -12,22 +12,55 @@ import {
 } from 'framer-motion';
 import Button from '@site/src/components/common/Button';
 import { a11y, clsx, key } from '@site/src/data/common';
+import { type EmblaCarouselType, type EmblaEventType } from 'embla-carousel';
 import { GenIcon } from 'react-icons/lib';
-import Image from '@site/src/components/common/Image';
+import { type IconBaseProps } from 'react-icons';
+import Image, { type ImageProps } from '@site/src/components/common/Image';
 import {
   memo,
+  type ReactElement,
   useCallback,
   useEffect,
   useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import useEmblaCarousel from 'embla-carousel-react';
 import styles from './styles.module.css';
 
-const debounce = (fn, delay = 200) => {
-  let timer;
-  const debouncer = (...args) => {
-    clearTimeout(timer);
+// eslint-disable-next-line no-unused-vars
+type AnyFunction = (..._: any[]) => any;
+
+type ButtonsProps = {
+  api?: EmblaCarouselType;
+};
+
+export type CarouselProps = {
+  images: ImageProps[];
+  // eslint-disable-next-line no-unused-vars
+  onClick: (_: ImageProps) => void;
+  prefix: string;
+};
+
+type DotGroupProps = {
+  api?: EmblaCarouselType;
+  images: ImageProps[];
+  prefix: string;
+};
+
+export type LazySlideProps = {
+  api?: EmblaCarouselType;
+  image: ImageProps;
+  index: number;
+  // eslint-disable-next-line no-unused-vars
+  onClick: (_: ImageProps) => void;
+};
+
+const debounce = <F extends AnyFunction>(fn: F, delay = 200) => {
+  let timer: ReturnType<typeof setTimeout> | null = null;
+  const debouncer = (...args: Parameters<F>) => {
+    // istanbul ignore else
+    if (timer) {
+      clearTimeout(timer);
+    }
     timer = setTimeout(async () => fn(...args), delay);
   };
   debouncer.cancel = () => {
@@ -48,7 +81,7 @@ const debounce = (fn, delay = 200) => {
  * @param {string} [props.title] - Optional title for accessibility.
  * @returns {object} The icon.
  */
-function FaAngleLeft(props) {
+function FaAngleLeft(props: IconBaseProps): ReactElement {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 320 512' }, child: [{ tag: 'path', attr: { d: 'M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z' }, child: [] }] })(props);
 }
 
@@ -60,11 +93,11 @@ function FaAngleLeft(props) {
  * @param {string} [props.title] - Optional title for accessibility.
  * @returns {object} The icon.
  */
-function FaAngleRight(props) {
+function FaAngleRight(props: IconBaseProps): ReactElement {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 320 512' }, child: [{ tag: 'path', attr: { d: 'M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z' }, child: [] }] })(props);
 }
 
-const Buttons = memo(function Buttons({ api }) {
+const Buttons = memo(function Buttons({ api }: ButtonsProps): ReactElement {
   const onNext = debounce(() => api?.scrollNext?.());
   const onPrevious = debounce(() => api?.scrollPrev?.());
 
@@ -87,18 +120,15 @@ const Buttons = memo(function Buttons({ api }) {
     </div>
   );
 });
-Buttons.propTypes = {
-  api: PropTypes.shape({
-    scrollNext: PropTypes.func,
-    scrollPrev: PropTypes.func,
-  }),
-};
 
-const DotGroup = memo(function DotGroup({ api, images, prefix }) {
+const DotGroup = memo(function DotGroup({ api, images, prefix }: DotGroupProps): ReactElement {
   const [active, setActive] = useState(0);
 
-  const onDot = useCallback((index) => api?.scrollTo?.(index), [api]);
-  const onSelect = useCallback((arg) => setActive(arg?.selectedScrollSnap?.() || 0), []);
+  const onDot = useCallback((index: number) => api?.scrollTo?.(index), [api]);
+  const onSelect = useCallback(
+    (arg?: EmblaCarouselType) => setActive(arg?.selectedScrollSnap?.() || 0),
+    [],
+  );
 
   useEffect(() => {
     onSelect(api);
@@ -115,8 +145,8 @@ const DotGroup = memo(function DotGroup({ api, images, prefix }) {
               {...a11y(index + 1)}
               className={clsx(current && styles.active, styles.dot)}
               key={`dot-${prefix}-${alt}`}
-              onClick={current ? null : () => onDot(index)}
-              whileTap={current ? null : { scale: 0.85 }}
+              onClick={current ? undefined : () => onDot(index)}
+              whileTap={current ? undefined : { scale: 0.85 }}
             >
               <LazyMotion features={domMax}>
                 {current && (
@@ -133,22 +163,13 @@ const DotGroup = memo(function DotGroup({ api, images, prefix }) {
     </div>
   );
 });
-DotGroup.propTypes = {
-  api: PropTypes.shape({
-    on: PropTypes.func,
-    scrollTo: PropTypes.func,
-    selectedScrollSnap: PropTypes.func,
-  }),
-  images: PropTypes.arrayOf(PropTypes.shape()),
-  prefix: PropTypes.string.isRequired,
-};
 
 const LazySlide = memo(function LazySlide({
   api,
   image,
   index,
   onClick,
-}) {
+}: LazySlideProps): ReactElement {
   const [inView, setInView] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
@@ -161,14 +182,16 @@ const LazySlide = memo(function LazySlide({
     );
     slideInView();
     api?.on('slidesInView', slideInView);
-    return () => api?.off('slidesInView', slideInView);
+    return () => {
+      api?.off('slidesInView', slideInView);
+    };
   }, [api, index]);
 
   return (
     <div
       className={styles.slide}
       onClick={onSlideClick}
-      onKeyPress={onSlideClick}
+      onKeyDown={onSlideClick}
       role="button"
       tabIndex={0}
     >
@@ -176,26 +199,17 @@ const LazySlide = memo(function LazySlide({
     </div>
   );
 });
-LazySlide.propTypes = {
-  api: PropTypes.shape({
-    off: PropTypes.func,
-    on: PropTypes.func,
-    slidesInView: PropTypes.func,
-  }),
-  image: PropTypes.shape(),
-  index: PropTypes.number.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
 
-export default memo(Object.assign(function Carousel({ images, onClick, prefix }) {
+export default memo(function Carousel({ images, onClick, prefix }: CarouselProps): ReactElement {
   const [setViewport, api] = useEmblaCarousel({ inViewThreshold: 0.5, loop: true });
 
   useEffect(() => {
-    const onDrag = (_, evt) => api
+    const onDrag = (_: EmblaCarouselType, evt: EmblaEventType) => api
       ?.rootNode()
       ?.classList?.[evt === 'pointerDown' ? 'add' : 'remove']?.(styles.dragging);
-    ['pointerDown', 'pointerUp'].forEach((evt) => api?.on(evt, onDrag));
-    return () => ['pointerDown', 'pointerUp'].forEach((evt) => api?.off(evt, onDrag));
+    const pointers: EmblaEventType[] = ['pointerDown', 'pointerUp'];
+    pointers.forEach((evt) => api?.on(evt, onDrag));
+    return () => pointers.forEach((evt) => api?.off(evt, onDrag));
   }, [api]);
 
   return (
@@ -221,10 +235,4 @@ export default memo(Object.assign(function Carousel({ images, onClick, prefix })
       )}
     </div>
   );
-}, {
-  propTypes: {
-    images: PropTypes.arrayOf(PropTypes.shape()),
-    onClick: PropTypes.func.isRequired,
-    prefix: PropTypes.string.isRequired,
-  },
-}));
+});

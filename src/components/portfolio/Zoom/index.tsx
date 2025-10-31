@@ -6,22 +6,27 @@
 
 import { a11y, clsx } from '@site/src/data/common';
 import { domMax, LazyMotion, m } from 'framer-motion';
-import Image from '@site/src/components/common/Image';
+import Image, { type ImageProps } from '@site/src/components/common/Image';
 import {
   memo,
+  type ReactElement,
   useCallback,
   useEffect,
   useRef,
 } from 'react';
-import PropTypes from 'prop-types';
 import transition from '@site/src/data/portfolio/common';
 import styles from './styles.module.css';
 
-export default memo(Object.assign(function Zoom({ onClick, open }) {
-  const opened = typeof (open?.picture) === 'object';
-  const ref = useRef(null);
+export type ZoomProps = {
+  onClick: () => void;
+  open: ImageProps;
+};
 
-  const onEsc = useCallback((evt) => {
+export default memo(function Zoom({ onClick, open }: ZoomProps): ReactElement {
+  const opened = typeof (open?.picture) === 'object';
+  const ref = useRef<HTMLElement | null>(null);
+
+  const onEsc = useCallback((evt: KeyboardEvent) => {
     if (evt.key === 'Escape' && opened) {
       onClick();
     }
@@ -69,16 +74,4 @@ export default memo(Object.assign(function Zoom({ onClick, open }) {
       </LazyMotion>
     </div>
   );
-}, {
-  propTypes: {
-    onClick: PropTypes.func.isRequired,
-    open: PropTypes.shape({
-      alt: PropTypes.string,
-      picture: PropTypes.shape({
-        avif: PropTypes.string,
-        fallback: PropTypes.shape(),
-        webp: PropTypes.string,
-      }),
-    }).isRequired,
-  },
-}));
+});

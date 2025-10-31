@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -8,6 +8,7 @@ import { clsx } from '@site/src/data/common';
 import { domAnimation, LazyMotion, m } from 'framer-motion';
 import {
   memo,
+  type MouseEventHandler,
   type PropsWithChildren,
   type ReactElement,
   type Ref,
@@ -15,7 +16,11 @@ import {
 
 export type ButtonProps = {
   className?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   ref?: Ref<HTMLButtonElement>;
+  whileTap?: {
+    scale?: number;
+  };
 };
 
 export default memo(function Button({

@@ -387,9 +387,10 @@ describe('useVisibility (Browser)', () => {
 
   it('observes when ref.current is set and toggles visible on intersections', () => {
     const addSpy = jest.spyOn(document, 'addEventListener');
-    const fakeEl = {};
     const options = { rootMargin: '10px', threshold: 0.25 };
-    const ref = { current: fakeEl };
+    const span = document.createElement('span');
+    // After span assignment.
+    const ref = { current: span };
     const removeSpy = jest.spyOn(document, 'removeEventListener');
 
     const { result, unmount } = renderHook(() => useVisibility({ ref, ...options }));
@@ -398,7 +399,7 @@ describe('useVisibility (Browser)', () => {
     expect(global.IntersectionObserver).toHaveBeenCalledWith(expect.any(Function), options);
 
     // And it starts observing our element.
-    expect(observeMock).toHaveBeenCalledWith(fakeEl);
+    expect(observeMock).toHaveBeenCalledWith(span);
     expect(result.current.visible).toBeFalsy();
 
     // Fire an intersection entry = true.
@@ -419,7 +420,7 @@ describe('useVisibility (Browser)', () => {
     act(() => unmount());
 
     expect(removeSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
-    expect(unobserveMock).toHaveBeenCalledWith(fakeEl);
+    expect(unobserveMock).toHaveBeenCalledWith(span);
   });
 });
 

@@ -6,6 +6,7 @@
 
 import { type LayoutProps } from '@site/src/components/common/Layout';
 import { type PreambleProps } from '@site/src/components/common/Preamble';
+import { type StoryProps } from '@site/src/components/stories/Content';
 
 export const layout: LayoutProps = {
   description: 'Stories and lessons from Ricky Huang\'s journey as a full stack developer and leader - highlighting impact, growth, collaboration, and trust.',
@@ -47,7 +48,7 @@ export const preamble: PreambleProps = {
   title: 'Stories',
 };
 
-export const stories = [
+export const stories: StoryProps[] = [
   {
     affiliation: {
       children: 'Headhigh Creative',
@@ -62,7 +63,7 @@ export const stories = [
     content: 'Ricky was a godsend on our projects! He delivered clean, functional, expertly crafted code for multiple development projects for my company. He always approached his projects as an invested partner rather than just a contractor. He is an excellent problem solver with a proficient work ethic and a pleasurable attitude. Thank you Ricky for everything that you helped us with!',
     header: {
       children: 'The Invested Partner',
-      href: null,
+      href: undefined,
     },
     title: {
       children: 'Creative Director, Chief Strategist',
@@ -83,11 +84,11 @@ export const stories = [
     content: 'The consummate programmer, Ricky knows just about everything there is to know about development. Although his expertise is broad, he proves that one can really be the master of all trades. I worked with Ricky on several projects, and he surpassed my gradually increased expectations each time. Whether it\'s client- side, server - side, or every - side, he really can accomplish it all. Most importantly, Ricky is one of the nicest and most kind - hearted people you will meet in your lifetime. To any prospective employers for Ricky: it will truly be your loss if you don\'t hire him!',
     header: {
       children: 'The Master of Many Trades',
-      href: null,
+      href: undefined,
     },
     title: {
       children: 'Director, Technical Services',
-      href: null,
+      href: undefined,
     },
   },
   {

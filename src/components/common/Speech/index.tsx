@@ -8,16 +8,27 @@ import Admonition from '@theme/Admonition';
 import Button from '@site/src/components/common/Button';
 import { a11y, clsx } from '@site/src/data/common';
 import { GenIcon } from 'react-icons/lib';
+import { type IconBaseProps } from 'react-icons';
 import {
   memo,
+  type ReactElement,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import { useSpeech } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
+
+export type SpeechProps = {
+  children?: { props?: { children?: string } } | string;
+  className?: string;
+  lang?: string;
+  names?: string[];
+  pitch?: number;
+  rate?: number;
+  volume?: number;
+};
 
 /**
  * Renders the `Pause` icon.
@@ -27,7 +38,7 @@ import styles from './styles.module.css';
  * @param {string} [props.title] - Optional title for accessibility.
  * @returns {object} The icon.
  */
-function GrPause(props) {
+function GrPause(props: IconBaseProps): ReactElement {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'path', attr: { fill: 'none', strokeWidth: '2', d: 'M3,21 L9,21 L9,3 L3,3 L3,21 Z M15,21 L21,21 L21,3 L15,3 L15,21 Z' }, child: [] }] })(props);
 }
 
@@ -39,7 +50,7 @@ function GrPause(props) {
  * @param {string} [props.title] - Optional title for accessibility.
  * @returns {object} The icon.
  */
-function GrPlay(props) {
+function GrPlay(props: IconBaseProps): ReactElement {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'polygon', attr: { fill: 'none', strokeWidth: '2', points: '3 22 21 12 3 2' }, child: [] }] })(props);
 }
 
@@ -51,7 +62,7 @@ function GrPlay(props) {
  * @param {string} [props.title] - Optional title for accessibility.
  * @returns {object} The icon.
  */
-function GrResume(props) {
+function GrResume(props: IconBaseProps): ReactElement {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'path', attr: { fill: 'none', strokeWidth: '2', d: 'M1,20 L6,20 L6,4 L1,4 L1,20 Z M11,19.0000002 L22,12 L11,5 L11,19.0000002 Z' }, child: [] }] })(props);
 }
 
@@ -63,7 +74,7 @@ function GrResume(props) {
  * @param {string} [props.title] - Optional title for accessibility.
  * @returns {object} The icon.
  */
-function GrStop(props) {
+function GrStop(props: IconBaseProps): ReactElement {
   return GenIcon({
     tag: 'svg',
     attr: { viewBox: '0 0 24 24' },
@@ -82,7 +93,7 @@ function GrStop(props) {
   })(props);
 }
 
-export default memo(Object.assign(function Speech({
+export default memo(function Speech({
   children,
   className,
   // See comment below.
@@ -91,13 +102,14 @@ export default memo(Object.assign(function Speech({
   pitch = 1,
   rate = 0.9,
   volume = 1,
-}) {
+}: SpeechProps): ReactElement {
+  const [hasVoice, setHasVoice] = useState<boolean | null>(null);
   const [{ paused, playing }, setControl] = useState({ paused: false, playing: false });
   const [ready] = useSpeech();
-  const synth = useRef();
+  const synth = useRef<SpeechSynthesis | null>(null);
   const text = typeof (children) === 'string' ? children : children?.props?.children;
-  const utterance = useRef();
-  const [voice, setVoice] = useState({ lang: null });
+  const utterance = useRef<SpeechSynthesisUtterance | null>(null);
+  const [voice, setVoice] = useState<SpeechSynthesisVoice | null>(null);
 
   const onPause = useCallback(() => {
     synth.current?.pause();
@@ -111,7 +123,10 @@ export default memo(Object.assign(function Speech({
         setTimeout(resolve, 250);
       });
     }
-    synth.current?.speak(utterance.current);
+    // istanbul ignore else
+    if (utterance.current) {
+      synth.current?.speak(utterance.current);
+    }
     setControl({ paused: false, playing: true });
   }, []);
 
@@ -156,11 +171,13 @@ export default memo(Object.assign(function Speech({
           accent = voices.find((voi) => voi.lang?.replace(/_/g, '-') === lang);
         }
       }
-      // Set default value.
-      if (typeof (accent?.lang) !== 'string') {
-        accent = { lang: false };
+      // Set the values.
+      if (typeof (accent?.lang) === 'string') {
+        setHasVoice(true);
+        setVoice(accent);
+      } else {
+        setHasVoice(false);
       }
-      setVoice(accent);
     })();
     // return none.
   }, [lang, names]);
@@ -190,7 +207,7 @@ export default memo(Object.assign(function Speech({
 
   return (
     <>
-      {ready && voice?.lang === false && (
+      {hasVoice === false && ready && (
         <Admonition type="info">
           <p>
             {`${new Intl.DisplayNames(['en'], { type: 'language' })
@@ -219,7 +236,7 @@ export default memo(Object.assign(function Speech({
             </Button>
           </>
         )}
-        {!playing && !!text?.length && typeof (voice?.lang) === 'string' && (
+        {hasVoice && !playing && !!text?.length && (
           <Button
             {...a11y(paused ? 'Resume' : 'Play')}
             className={clsx(className, styles.control)}
@@ -232,17 +249,4 @@ export default memo(Object.assign(function Speech({
       </div>
     </>
   );
-}, {
-  propTypes: {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    className: PropTypes.string,
-    lang: PropTypes.string,
-    names: PropTypes.arrayOf(PropTypes.string),
-    pitch: PropTypes.number,
-    rate: PropTypes.number,
-    volume: PropTypes.number,
-  },
-}));
+});

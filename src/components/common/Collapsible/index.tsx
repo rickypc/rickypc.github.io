@@ -1,27 +1,46 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 import Button from '@site/src/components/common/Button';
 import { clsx, key } from '@site/src/data/common';
-import { memo, useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
+import {
+  memo,
+  type ReactElement,
+  useCallback,
+  useState,
+} from 'react';
 import styles from './styles.module.css';
+
+export type CollapsibleProps = {
+  active?: string;
+  items: string[];
+  // eslint-disable-next-line no-unused-vars
+  onClick: (_: string) => void;
+  translate?: 'no' | 'yes';
+};
+
+type ItemProps = {
+  current?: boolean;
+  item: string;
+  // eslint-disable-next-line no-unused-vars
+  onClick: (_: string) => void;
+};
 
 const Item = memo(function Item({
   current,
   item,
   onClick,
   ...rest
-}) {
+}: ItemProps): ReactElement {
   return (
     <dt>
       <span
         className={clsx('table-of-contents__link', current && `${styles.active} table-of-contents__link--active`)}
         onClick={() => onClick(item)}
-        onKeyPress={() => onClick(item)}
+        onKeyDown={() => onClick(item)}
         role="menuitem"
         tabIndex={0}
         {...rest}
@@ -31,21 +50,16 @@ const Item = memo(function Item({
     </dt>
   );
 });
-Item.propTypes = {
-  current: PropTypes.bool,
-  item: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
-};
 
-export default memo(Object.assign(function Collapsible({
+export default memo(function Collapsible({
   active,
   items,
   onClick,
   ...rest
-}) {
+}: CollapsibleProps): ReactElement {
   const [expanded, setExpanded] = useState(false);
 
-  const onItemClick = useCallback((value) => {
+  const onItemClick = useCallback((value: string) => {
     setExpanded(false);
     onClick(value);
   }, [onClick]);
@@ -73,10 +87,4 @@ export default memo(Object.assign(function Collapsible({
       </div>
     </div>
   );
-}, {
-  propTypes: {
-    active: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.string.isRequired),
-    onClick: PropTypes.func,
-  },
-}));
+});

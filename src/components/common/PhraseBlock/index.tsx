@@ -6,12 +6,58 @@
 
 import Buttons from '@theme/CodeBlock/Buttons';
 import { clsx, key } from '@site/src/data/common';
-import { Fragment, memo } from 'react';
-import PropTypes from 'prop-types';
+import {
+  Fragment,
+  isValidElement,
+  memo,
+  type PropsWithChildren,
+  type ReactElement,
+} from 'react';
 import { CodeBlockContextProvider, createCodeBlockMetadata, useCodeWordWrap } from '@docusaurus/theme-common/internal';
 import styles from './styles.module.css';
 
-const body = (phrase, prefix, infix, suffix) => {
+type Content = ReactElement & { props?: { children?: Content } };
+
+type MagicCommentConfig = {
+  block?: {
+    end: string;
+    start: string;
+  };
+  className: string;
+  line?: string;
+};
+
+type MetadataProps = {
+  className?: string;
+  code?: string;
+  defaultLanguage?: string;
+  language?: string;
+  magicComments?: MagicCommentConfig[];
+  metastring?: string;
+  showLineNumbers?: boolean;
+  title?: string;
+};
+
+type Phrase = {
+  className?: string;
+  title?: string;
+  unify?: boolean;
+};
+
+export type PhraseBlockProps = {
+  className?: string;
+  infix?: string;
+  phrase: PropsWithChildren<Phrase>;
+  prefix?: string;
+  suffix?: string;
+};
+
+const body = (
+  phrase: PropsWithChildren<Phrase>,
+  prefix?: string,
+  infix?: string,
+  suffix?: string,
+): Content => {
   const group = Array.isArray(phrase.children) ? phrase.children : [phrase.children];
   const last = group.length - 1;
   const multi = group.length > 1;
@@ -32,11 +78,8 @@ const body = (phrase, prefix, infix, suffix) => {
   );
 };
 
-const text = (content) => {
-  if ([
-    Symbol.for('react.transitional.element'),
-    Symbol.for('react.element'),
-  ].includes(content?.$$typeof) && content?.props?.children) {
+const text = (content: Content): string => {
+  if (isValidElement(content) && content?.props?.children) {
     return text(content.props.children);
   }
   if (Array.isArray(content)) {
@@ -48,10 +91,10 @@ const text = (content) => {
   return '';
 };
 
-const useMetadata = (props) => createCodeBlockMetadata({
+const useMetadata = (props: MetadataProps) => createCodeBlockMetadata({
   className: props.className || '',
   code: props.code || '',
-  defaultLanguage: props.defaultLanguange || 'plain',
+  defaultLanguage: props.defaultLanguage || 'plain',
   language: props.language || 'plain',
   magicComments: props.magicComments || [],
   metastring: props.metastring || '',
@@ -59,13 +102,13 @@ const useMetadata = (props) => createCodeBlockMetadata({
   title: props.title || '',
 });
 
-export default memo(Object.assign(function PhraseBlock({
+export default memo(function PhraseBlock({
   className = '',
   infix,
   phrase,
   prefix,
   suffix,
-}) {
+}: PhraseBlockProps): ReactElement {
   const content = body(phrase, prefix, infix, suffix);
   const metadata = useMetadata({ className, code: text(content), title: phrase.title });
   const wordWrap = useCodeWordWrap();
@@ -88,12 +131,4 @@ export default memo(Object.assign(function PhraseBlock({
       </div>
     </CodeBlockContextProvider>
   );
-}, {
-  propTypes: {
-    className: PropTypes.string,
-    infix: PropTypes.string,
-    phrase: PropTypes.shape(),
-    prefix: PropTypes.string,
-    suffix: PropTypes.string,
-  },
-}));
+});

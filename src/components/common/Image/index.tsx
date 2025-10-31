@@ -26,7 +26,7 @@ import Link from '@site/src/components/common/Link';
 import { useVisibility } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
-export type ImageInfo = {
+type ImageInfo = {
   height?: number;
   path?: string;
   width: number;
@@ -45,19 +45,21 @@ export type ImageProps = PictureProps & {
   };
 };
 
+export type ImageSource = {
+  preSrc: string;
+  src: {
+    images: ImageInfo[];
+    srcSet?: string;
+  };
+};
+
 export type PictureInfo = {
   avif?: string;
-  fallback?: {
-    preSrc: string;
-    src: {
-      images: ImageInfo[];
-      srcSet?: string;
-    };
-  };
+  fallback?: ImageSource;
   webp?: string;
 };
 
-export type PictureProps = {
+type PictureProps = {
   alt?: string;
   className?: string;
   onLoad?: ReactEventHandler<HTMLImageElement>;
@@ -65,7 +67,7 @@ export type PictureProps = {
   ref?: RefObject<HTMLPictureElement>;
 };
 
-export type PictureRender = {
+type PictureRender = {
   background: boolean;
   fit: ImageInfo;
   loaded: boolean;
@@ -87,7 +89,7 @@ const Picture = memo(function Picture({
     fit,
     loaded,
     show,
-  }, setRender] = useState({
+  }, setRender] = useState<PictureRender>({
     background: true,
     fit: images?.[0] || { width: 0 },
     loaded: false,
@@ -115,7 +117,7 @@ const Picture = memo(function Picture({
       if (!Array.isArray(responsive) && typeof (picture?.fallback) === 'string') {
         responsive = [{ path: picture.fallback, width }];
       }
-      setRender((previous: PictureRender) => {
+      setRender((previous) => {
         const found = responsive?.find((image) => image.width >= width)
           || responsive?.slice(-1)?.[0] || { width: 0 };
         return found.path === previous.fit?.path ? previous : {

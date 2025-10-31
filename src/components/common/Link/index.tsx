@@ -18,7 +18,10 @@ export type LinkProps = {
   className?: string;
   href?: string;
   ref?: Ref<HTMLAnchorElement>;
+  rel?: string;
+  target?: string;
   title?: string;
+  translate?: 'no' | 'yes';
   validate?: boolean;
   whileTap?: {
     scale?: number;

@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -13,14 +13,39 @@ import {
 import Carousel from '@site/src/components/portfolio/Carousel';
 import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
+import { type ImageProps } from '@site/src/components/common/Image';
 import { key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
-import { memo } from 'react';
-import PropTypes from 'prop-types';
+import { memo, type ReactElement } from 'react';
 import transition from '@site/src/data/portfolio/common';
 import styles from './styles.module.css';
 
-const Tags = memo(function Tags({ prefix, tags }) {
+type Filtered = {
+  description: string;
+  href?: string;
+  images: ImageProps[];
+  prefix: string;
+  tags: string[];
+  title: string;
+};
+
+type ProjectProps = Filtered & {
+  // eslint-disable-next-line no-unused-vars
+  onClick: (_: ImageProps) => void;
+};
+
+type TagsProps = {
+  prefix: string;
+  tags: string[];
+};
+
+export type ProjectsProps = {
+  filtered: Filtered[];
+  // eslint-disable-next-line no-unused-vars
+  onClick: (_: ImageProps) => void;
+};
+
+const Tags = memo(function Tags({ prefix, tags }: TagsProps): ReactElement {
   return (
     <ul className={styles.tags} translate="no">
       {tags.map((tag) => (
@@ -29,10 +54,6 @@ const Tags = memo(function Tags({ prefix, tags }) {
     </ul>
   );
 });
-Tags.propTypes = {
-  prefix: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
 
 // After Tags assignment.
 const Project = memo(function Project({
@@ -43,7 +64,7 @@ const Project = memo(function Project({
   prefix,
   tags,
   title,
-}) {
+}: ProjectProps): ReactElement {
   return (
     <LazyMotion features={domMax}>
       <m.article className={styles.portfolio} layout transition={transition}>
@@ -62,24 +83,8 @@ const Project = memo(function Project({
     </LazyMotion>
   );
 });
-Project.propTypes = {
-  description: PropTypes.string.isRequired,
-  href: PropTypes.string,
-  images: PropTypes.arrayOf(PropTypes.shape({
-    alt: PropTypes.string,
-    picture: PropTypes.shape({
-      avif: PropTypes.string,
-      fallback: PropTypes.shape(),
-      webp: PropTypes.string,
-    }),
-  })).isRequired,
-  onClick: PropTypes.func.isRequired,
-  prefix: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  title: PropTypes.string.isRequired,
-};
 
-export default memo(Object.assign(function Projects({ filtered, onClick }) {
+export default memo(function Projects({ filtered, onClick }: ProjectsProps): ReactElement {
   return (
     <LazyMotion features={domMax}>
       <m.div className={styles.portfolios} layout>
@@ -93,9 +98,4 @@ export default memo(Object.assign(function Projects({ filtered, onClick }) {
       </m.div>
     </LazyMotion>
   );
-}, {
-  propTypes: {
-    filtered: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-    onClick: PropTypes.func.isRequired,
-  },
-}));
+});

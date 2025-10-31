@@ -19,7 +19,7 @@ export type TimelineProps = {
   affiliation: {
     children: string;
     href?: string;
-    translate?: string;
+    translate?: 'no' | 'yes';
   };
   className?: string;
   description: string;

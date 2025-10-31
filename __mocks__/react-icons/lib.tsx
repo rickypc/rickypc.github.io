@@ -4,12 +4,12 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-type GetIconConfig = {
+type GenIconConfig = {
   tag?: string;
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export const GenIcon = (config: GetIconConfig) => function GetIcon(props: {}) {
+export const GenIcon = (config: GenIconConfig) => function GetIcon(props: {}) {
   return (
     <svg
       data-config={JSON.stringify(config)}

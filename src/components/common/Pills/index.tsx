@@ -1,14 +1,30 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 import { clsx, key } from '@site/src/data/common';
 import { domMax, LazyMotion, m } from 'framer-motion';
-import { memo } from 'react';
-import PropTypes from 'prop-types';
+import { memo, type ReactElement } from 'react';
 import styles from './styles.module.css';
+
+type ItemProps = {
+  active?: string;
+  item: string;
+  // eslint-disable-next-line no-unused-vars
+  onClick: (_: string) => void;
+  prefix: string;
+};
+
+export type PillsProps = {
+  active?: string;
+  items: string[];
+  // eslint-disable-next-line no-unused-vars
+  onClick: (_: string) => void;
+  prefix: string;
+  translate?: 'no' | 'yes';
+};
 
 const Item = memo(function Item({
   active,
@@ -16,7 +32,7 @@ const Item = memo(function Item({
   onClick,
   prefix,
   ...rest
-}) {
+}: ItemProps): ReactElement {
   const current = active === item;
   return (
     <LazyMotion features={domMax}>
@@ -40,20 +56,14 @@ const Item = memo(function Item({
     </LazyMotion>
   );
 });
-Item.propTypes = {
-  active: PropTypes.string,
-  item: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  prefix: PropTypes.string.isRequired,
-};
 
-export default memo(Object.assign(function Pills({
+export default memo(function Pills({
   active,
   items,
   onClick,
   prefix,
   ...rest
-}) {
+}: PillsProps): ReactElement {
   return (
     <dl className={styles.pills} {...rest}>
       {items.map((item) => (
@@ -68,11 +78,4 @@ export default memo(Object.assign(function Pills({
       ))}
     </dl>
   );
-}, {
-  propTypes: {
-    active: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.string).isRequired,
-    onClick: PropTypes.func.isRequired,
-    prefix: PropTypes.string.isRequired,
-  },
-}));
+});

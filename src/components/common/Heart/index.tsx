@@ -96,7 +96,7 @@ export default memo(function Heart({ className, id }: HeartProps): ReactElement 
         aria-hidden
         className={clsx(addedInBrowser && styles.added, styles.heart)}
         onClick={onClick}
-        onKeyPress={onClick}
+        onKeyDown={onClick}
       >
         <Icon {...{ 'aria-label': title, role: 'img' }} />
       </span>

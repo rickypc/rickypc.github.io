@@ -51,10 +51,11 @@ describe('Collapsible', () => {
 
     it.each([
       ['clicking an item', (span) => fireEvent.click(span)],
-      ['pressing Enter on an item', (span) => fireEvent.keyPress(span, {
+      ['pressing Enter on an item', (span) => fireEvent.keyDown(span, {
         charCode: 13,
         code: 'Enter',
         key: 'Enter',
+        keyCode: 13,
       })],
     ])('calls onClick when %s', (_desc, action) => {
       renderComponent('Item 1');

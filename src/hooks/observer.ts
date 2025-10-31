@@ -22,13 +22,13 @@ const docusaurus = 'docusaurus';
  * @param {string} query - CSS media query string.
  * @returns {[boolean]} React tuple: [change].
  */
-export function useMedia(query) {
+export function useMedia(query: string) {
   const [change, setChange] = useState(false);
 
   useEffect(() => {
     const media = window.matchMedia(query);
-    const onChange = (evt) => setChange(evt.matches);
-    onChange(media);
+    setChange(media.matches);
+    const onChange = (evt: MediaQueryListEvent) => setChange(evt.matches);
     media.addEventListener('change', onChange);
     return () => media.removeEventListener('change', onChange);
   }, [query]);
@@ -55,7 +55,7 @@ export function usePrint() {
       scrollHeight: document.body.scrollHeight,
     };
 
-    const onBeforePrint = async (evt) => {
+    const onBeforePrint = async (evt: Event) => {
       if (print.once) {
         return;
       }
@@ -66,7 +66,7 @@ export function usePrint() {
       // Scroll all the way up.
       if (scrollY !== 0 && !print.scroll.top) {
         print.scroll.back = true;
-        evt.target.scrollTo(0, 0);
+        (evt.target as HTMLElement).scrollTo(0, 0);
       }
       // Scroll all the way down.
       if (clientHeight !== print.scrollHeight && !print.scroll.bottom) {
@@ -76,14 +76,14 @@ export function usePrint() {
           });
         }
         print.scroll.back = true;
-        evt.target.scrollTo(0, print.scrollHeight);
+        (evt.target as HTMLElement).scrollTo(0, print.scrollHeight);
       }
       // Scroll back to where it was.
       if (print.scroll.back) {
         await new Promise((resolve) => {
           setTimeout(resolve, 500);
         });
-        evt.target.scrollTo(0, scrollY);
+        (evt.target as HTMLElement).scrollTo(0, scrollY);
       }
       setReady(true);
     };
@@ -121,7 +121,7 @@ const useSafeLayoutEffect = typeof (window) !== 'undefined' ? useLayoutEffect : 
  * @returns {[boolean]} React tuple: [ready].
  */
 export function useSpeech() {
-  const [ready, setReady] = useState();
+  const [ready, setReady] = useState<boolean>();
 
   useEffect(() => {
     setReady(typeof (speechSynthesis) !== 'undefined' && typeof (SpeechSynthesisUtterance) !== 'undefined');
@@ -139,7 +139,7 @@ export function useSpeech() {
  * @returns {{ref: object, visible: boolean}} Object with ref and visibility state.
  */
 // eslint-disable-next-line react-hooks/rules-of-hooks
-export function useVisibility({ ref = useRef(), threshold = 1.0, ...rest } = {}) {
+export function useVisibility<T, >({ ref = useRef<T>(null), threshold = 1.0, ...rest } = {}) {
   const [visible, setVisible] = useState(false);
 
   const onVisibilityChange = useCallback(
@@ -149,14 +149,18 @@ export function useVisibility({ ref = useRef(), threshold = 1.0, ...rest } = {})
 
   useEffect(() => {
     const { current } = ref;
-    let observer;
-    if (current) {
+    let observer: IntersectionObserver | undefined;
+    if (current instanceof Element) {
       observer = new IntersectionObserver(([entry]) => {
         setVisible(entry.isIntersecting);
       }, { threshold, ...rest });
       observer.observe(current);
     }
-    return () => observer?.unobserve(current);
+    return () => {
+      if (current instanceof Element) {
+        observer?.unobserve(current);
+      }
+    };
   }, [ref, rest, threshold]);
 
   // Listen once.
@@ -179,12 +183,16 @@ export function useWelcome({ navigation = true } = {}) {
   const location = useLocation();
 
   useEffect(() => {
-    const path = `${location.pathname}/`.replace(/\/\//g, '/');
-    const target = (['mni-Mtei', 'zh-CN', 'zh-TW'].includes(navigator.language) ? navigator.language : navigator.language?.split?.('-')?.[0]) || 'en';
-    // After target assignment.
-    const source = target === 'en' ? 'auto' : 'en';
-    document.querySelector('nav .navbar__item.navbar__item--translate')
-      .href = `https://rickypc-github-io.translate.goog${path}?_x_tr_sl=${source}&_x_tr_tl=${target}`;
+    const anchor = document.querySelector<HTMLAnchorElement>('nav .navbar__item.navbar__item--translate');
+    // istanbul ignore else
+    if (anchor) {
+      const path = `${location.pathname}/`.replace(/\/\//g, '/');
+      const target = (['mni-Mtei', 'zh-CN', 'zh-TW'].includes(navigator.language)
+        ? navigator.language : navigator.language?.split?.('-')?.[0]) || 'en';
+      // After target assignment.
+      const source = target === 'en' ? 'auto' : 'en';
+      anchor.href = `https://rickypc-github-io.translate.goog${path}?_x_tr_sl=${source}&_x_tr_tl=${target}`;
+    }
     // return none.
   }, [location.pathname]);
 
@@ -194,10 +202,14 @@ export function useWelcome({ navigation = true } = {}) {
       // istanbul ignore else
       // eslint-disable-next-line no-restricted-globals
       if (top === window) {
-        document.getElementById(`__${docusaurus}`).className = clsx(
-          !navigation && `${docusaurus}--exclusive`,
-          `${docusaurus}--welcome`,
-        );
+        const root = document.getElementById(`__${docusaurus}`);
+        // istanbul ignore else
+        if (root) {
+          root.className = clsx(
+            !navigation && `${docusaurus}--exclusive`,
+            `${docusaurus}--welcome`,
+          );
+        }
       }
     }
     // return none.

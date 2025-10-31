@@ -49,6 +49,7 @@ module.exports = [
       // Throwing error for no good reason.
       'react/jsx-props-no-multi-spaces': 'off',
       'react/jsx-props-no-spreading': 'off',
+      'react/prop-types': 'off',
       'react/require-default-props': 'off',
     },
     settings: {

@@ -1,16 +1,19 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { memo } from 'react';
+import { memo, type ReactElement } from 'react';
 import PrintAdmonition from '@site/src/components/common/PrintAdmonition';
-import PropTypes from 'prop-types';
 import SpeechAdmonition from '@site/src/components/common/SpeechAdmonition';
 import { useWelcome } from '@site/src/hooks/observer';
 
-export default memo(Object.assign(function Welcome({ navigation = false }) {
+export type WelcomeProps = {
+  navigation?: boolean;
+};
+
+export default memo(function Welcome({ navigation = false }: WelcomeProps): ReactElement {
   useWelcome({ navigation });
   return (
     <>
@@ -18,8 +21,4 @@ export default memo(Object.assign(function Welcome({ navigation = false }) {
       <SpeechAdmonition />
     </>
   );
-}, {
-  propTypes: {
-    navigation: PropTypes.bool,
-  },
-}));
+});

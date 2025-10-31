@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -9,10 +9,31 @@ import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
 import { key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
-import { memo } from 'react';
-import PropTypes from 'prop-types';
+import { memo, type ReactElement } from 'react';
 import { stories } from '@site/src/data/stories';
 import styles from './styles.module.css';
+
+export type StoryProps = {
+  affiliation: {
+    children: string;
+    href: string;
+    translate?: 'no' | 'yes';
+  };
+  author: {
+    children: string;
+    href: string;
+    translate?: 'no' | 'yes';
+  };
+  content: string;
+  header: {
+    children: string;
+    href?: string;
+  };
+  title: {
+    children: string;
+    href?: string;
+  };
+};
 
 const Story = memo(function Story({
   affiliation,
@@ -20,7 +41,7 @@ const Story = memo(function Story({
   content,
   header,
   title,
-}) {
+}: StoryProps): ReactElement {
   return (
     <LazyMotion features={domAnimation}>
       <m.article
@@ -49,25 +70,6 @@ const Story = memo(function Story({
     </LazyMotion>
   );
 });
-Story.propTypes = {
-  affiliation: PropTypes.shape({
-    children: PropTypes.string,
-    href: PropTypes.string,
-  }).isRequired,
-  author: PropTypes.shape({
-    children: PropTypes.string,
-    href: PropTypes.string,
-  }).isRequired,
-  content: PropTypes.string.isRequired,
-  header: PropTypes.shape({
-    children: PropTypes.string,
-    href: PropTypes.string,
-  }).isRequired,
-  title: PropTypes.shape({
-    children: PropTypes.string,
-    href: PropTypes.string,
-  }).isRequired,
-};
 
 export default memo(function Content() {
   return (

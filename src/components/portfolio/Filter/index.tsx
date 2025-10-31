@@ -1,21 +1,26 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
 import { catalog } from '@site/src/data/portfolio';
 import Collapsible from '@site/src/components/common/Collapsible';
-import { memo, useMemo } from 'react';
+import { memo, type ReactElement, useMemo } from 'react';
 import Pills from '@site/src/components/common/Pills';
-import PropTypes from 'prop-types';
 import { useMedia } from '@site/src/hooks/observer';
 
-export default memo(Object.assign(function Filter({ current, onClick }) {
+export type FilterProps = {
+  current: string;
+  // eslint-disable-next-line no-unused-vars
+  onClick: (_: string) => void;
+};
+
+export default memo(function Filter({ current, onClick }: FilterProps): ReactElement {
   const [collapsible] = useMedia('screen and (max-width: 62rem)');
 
   const tags = useMemo(() => {
-    const combine = [...new Set(catalog.reduce(
+    const combine = [...new Set(catalog.reduce<string[]>(
       (accumulator, project) => accumulator.concat(project.tags),
       [],
     ))];
@@ -34,9 +39,4 @@ export default memo(Object.assign(function Filter({ current, onClick }) {
         translate="no"
       />
     );
-}, {
-  propTypes: {
-    current: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-  },
-}));
+});

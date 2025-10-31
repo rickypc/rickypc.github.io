@@ -74,9 +74,9 @@ describe('data.stories', () => {
           expect(s.author.translate).toEqual('no');
         });
 
-        if (s.header.href === null) {
-          it('header href null', () => {
-            expect(s.header.href).toBeNull();
+        if (s.header.href === undefined) {
+          it('header href undefined', () => {
+            expect(s.header.href).toBeUndefined();
           });
         } else {
           it('header href URL', () => {
@@ -88,9 +88,9 @@ describe('data.stories', () => {
           expect(s.header.children).toEqual(expect.any(String));
         });
 
-        if (s.title.href === null) {
-          it('title href null', () => {
-            expect(s.title.href).toBeNull();
+        if (s.title.href === undefined) {
+          it('title href undefined', () => {
+            expect(s.title.href).toBeUndefined();
           });
         } else {
           it('title href URL', () => {

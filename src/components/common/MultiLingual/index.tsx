@@ -4,9 +4,29 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { memo } from 'react';
+import { memo, type PropsWithChildren, type ReactElement } from 'react';
 import PhraseBlock from '@site/src/components/common/PhraseBlock';
-import PropTypes from 'prop-types';
+
+export type MultiLingualProps = {
+  chinese?: PropsWithChildren<{}>;
+  pali?: PropsWithChildren<{
+    sinhala?: PropsWithChildren<{}>;
+  }>;
+  sanskrit?: PropsWithChildren<{
+    siddham?: PropsWithChildren<{}>;
+  }>;
+  thai?: PropsWithChildren<{}>;
+  tibetan?: PropsWithChildren<{}>;
+  transliteration?: Transliteration;
+};
+
+export type Transliteration = {
+  className?: string;
+  repetition?: number;
+  speech?: string;
+  title?: string;
+  unify?: boolean;
+};
 
 /**
  * MultiLingual component for managing written representations of
@@ -50,7 +70,10 @@ import PropTypes from 'prop-types';
  *   transliteration: { ... }
  * }
  */
-export default memo(Object.assign(function MultiLingual({ transliteration = {}, ...languages }) {
+export default memo(function MultiLingual({
+  transliteration = {},
+  ...languages
+}: MultiLingualProps): ReactElement {
   return (
     <>
       {languages?.sanskrit?.children && (
@@ -127,8 +150,4 @@ export default memo(Object.assign(function MultiLingual({ transliteration = {}, 
       )}
     </>
   );
-}, {
-  propTypes: {
-    transliteration: PropTypes.shape(),
-  },
-}));
+});

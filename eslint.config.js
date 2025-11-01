@@ -40,11 +40,7 @@ module.exports = [
     ...testing.configs['flat/react'],
   },
   {
-    languageOptions: {
-      ecmaVersion: 2022,
-      globals: { ...globals.browser },
-      parserOptions: { ecmaFeatures: { jsx: true } },
-    },
+    languageOptions: { ecmaVersion: 2024, globals: { ...globals.browser } },
     plugins: { 'no-secrets': noSecrets },
     rules: {
       'import/no-extraneous-dependencies': ['error', { optionalDependencies: true }],
@@ -65,13 +61,5 @@ module.exports = [
     files: ['**/*.{ts,tsx}'],
     ...ts.configs.recommended[0],
     ...ts.configs.recommendedTypeChecked[0],
-    languageOptions: {
-      parser: ts.parser,
-      parserOptions: {
-        project: './tsconfig.json',
-        sourceType: 'module',
-        tsconfigRootDir: __dirname,
-      },
-    },
   },
 ];

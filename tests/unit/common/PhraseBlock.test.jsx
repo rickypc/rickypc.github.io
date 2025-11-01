@@ -44,7 +44,7 @@ describe('PhraseBlock', () => {
     // eslint-disable-next-line testing-library/no-node-access
     const codeElem = container.querySelector('code');
     expect(codeElem).toHaveClass('lines cls');
-    expect(codeElem.textContent).toEqual('ABC-');
+    expect(codeElem.textContent).toBe('ABC-');
 
     expect(screen.getByTestId('buttons')).toBeInTheDocument();
   });

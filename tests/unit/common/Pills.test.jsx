@@ -39,7 +39,7 @@ describe('Pills', () => {
     it('renders a <dl> with correct items', () => {
       // eslint-disable-next-line testing-library/no-node-access
       const dl = container.querySelector('dl');
-      expect(dl.tagName).toEqual('DL');
+      expect(dl.tagName).toBe('DL');
       expect(dl).toHaveClass('pills');
       expect(dtElements).toHaveLength(items.length);
 

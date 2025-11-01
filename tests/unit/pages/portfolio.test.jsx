@@ -39,32 +39,32 @@ describe('pages.portfolio', () => {
 
   it('initial state: Filter current All, Projects full catalog, Zoom closed', () => {
     render(<Portfolio />);
-    expect(screen.getByTestId('filter').getAttribute('data-current')).toEqual('All');
+    expect(screen.getByTestId('filter').getAttribute('data-current')).toBe('All');
     expect(screen.getByTestId('projects').getAttribute('data-count')).toEqual(String(catalog.length));
-    expect(screen.getByTestId('zoom').getAttribute('data-open')).toEqual('false');
+    expect(screen.getByTestId('zoom').getAttribute('data-open')).toBe('false');
   });
 
   it('clicking filter-all invokes default "All" branch and keeps full catalog', () => {
     render(<Portfolio />);
     fireEvent.click(screen.getByTestId('filter-all'));
-    expect(screen.getByTestId('filter').getAttribute('data-current')).toEqual('All');
+    expect(screen.getByTestId('filter').getAttribute('data-current')).toBe('All');
     expect(screen.getByTestId('projects').getAttribute('data-count')).toEqual(String(catalog.length));
   });
 
   it('clicking filter-tag invokes filtering branch and reduces Projects', () => {
     render(<Portfolio />);
     fireEvent.click(screen.getByTestId('filter-tag1'));
-    expect(screen.getByTestId('filter').getAttribute('data-current')).toEqual('Tag1');
-    expect(screen.getByTestId('projects').getAttribute('data-count')).toEqual('1');
+    expect(screen.getByTestId('filter').getAttribute('data-current')).toBe('Tag1');
+    expect(screen.getByTestId('projects').getAttribute('data-count')).toBe('1');
   });
 
   it('clicking a project opens Zoom; clicking Zoom closes it', () => {
     render(<Portfolio />);
     // Open.
     fireEvent.click(screen.getByTestId('projects'));
-    expect(screen.getByTestId('zoom').getAttribute('data-open')).toEqual('true');
+    expect(screen.getByTestId('zoom').getAttribute('data-open')).toBe('true');
     // Close.
     fireEvent.click(screen.getByTestId('zoom'));
-    expect(screen.getByTestId('zoom').getAttribute('data-open')).toEqual('false');
+    expect(screen.getByTestId('zoom').getAttribute('data-open')).toBe('false');
   });
 });

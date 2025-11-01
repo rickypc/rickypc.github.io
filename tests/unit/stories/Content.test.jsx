@@ -56,7 +56,7 @@ describe('stories.Content', () => {
 
       // Heading as h2 with Link (header) and Heart.
       const heading = within(article).getByTestId('heading');
-      expect(heading.tagName).toEqual('H2');
+      expect(heading.tagName).toBe('H2');
 
       const headerLink = within(heading).getByTestId(/^link-/);
       expect(headerLink).toHaveAttribute('href', story.header.href);

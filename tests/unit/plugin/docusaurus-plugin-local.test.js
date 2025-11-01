@@ -106,7 +106,7 @@ describe('docusaurus-plugin-local', () => {
         const normalized = p.url.replace(/^(https?:)\/+/, '$1//');
         expect(normalized.startsWith('https://mysite.test/pdf/')).toBeTruthy();
         expect(normalized.endsWith('.pdf')).toBeTruthy();
-        expect(p.lastmod).toEqual('2025-10-01');
+        expect(p.lastmod).toBe('2025-10-01');
         expect(p).toMatchObject({ changefreq: 'weekly', priority: 0.5 });
       });
     });
@@ -143,11 +143,11 @@ describe('docusaurus-plugin-local', () => {
     it('configureWebpack returns expected shape and includes Fontaine transform', () => {
       const plugin = localPlugin.default({});
       const cw = plugin.configureWebpack({}, false);
-      expect(cw.devServer.static[0].publicPath).toEqual('/pdf');
+      expect(cw.devServer.static[0].publicPath).toBe('/pdf');
       expect(cw.plugins).toEqual(expect.arrayContaining([expect.objectContaining({
         __fontaine_opts: expect.any(Object),
       })]));
-      expect(plugin.name).toEqual('docusaurus-plugin-local');
+      expect(plugin.name).toBe('docusaurus-plugin-local');
     });
 
     it('extendCli action: explicit args resolve config path and invoke postBuild side-effects', async () => {

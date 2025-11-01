@@ -36,7 +36,7 @@ describe('data.home', () => {
 
     hats.forEach((hat, i) => {
       // Label exists.
-      expect(typeof hat.label).toEqual('string');
+      expect(typeof hat.label).toBe('string');
       expect(hat.label.length).toBeGreaterThan(0);
 
       // children -> <img>.
@@ -63,23 +63,23 @@ describe('data.home', () => {
   });
 
   it('exports image with correct alt and picture props', () => {
-    expect(image.alt).toEqual('Ricky Huang');
-    expect(image.picture.fallback).toEqual('self.png');
-    expect(image.picture.webp).toEqual('self.webp');
+    expect(image.alt).toBe('Ricky Huang');
+    expect(image.picture.fallback).toBe('self.png');
+    expect(image.picture.webp).toBe('self.webp');
   });
 
   it('exports ipa string correctly', () => {
-    expect(ipa).toEqual('/ˈɹɪki ˈhwɑːŋ/');
+    expect(ipa).toBe('/ˈɹɪki ˈhwɑːŋ/');
   });
 
   it('exports layout with description, keywords array, and title', () => {
-    expect(typeof layout.description).toEqual('string');
+    expect(typeof layout.description).toBe('string');
     expect(layout.description).toMatch(/^Welcome to Ricky Huang's site/);
 
     expect(Array.isArray(layout.keywords)).toBeTruthy();
     expect(layout.keywords.length).toBeGreaterThan(0);
 
-    expect(typeof layout.title).toEqual('string');
+    expect(typeof layout.title).toBe('string');
     expect(layout.title).toContain('Engineering Leadership');
   });
 
@@ -88,10 +88,10 @@ describe('data.home', () => {
     expect(socials).toHaveLength(2);
 
     socials.forEach(({ href, title, Icon }) => {
-      expect(typeof href).toEqual('string');
+      expect(typeof href).toBe('string');
       // Icon is the internal FaGithub or FaLinkedin.
-      expect(typeof Icon).toEqual('function');
-      expect(typeof title).toEqual('string');
+      expect(typeof Icon).toBe('function');
+      expect(typeof title).toBe('string');
 
       // Render and scope the <svg data-testid="icon"> to this icon’s own container.
       const { container } = render((

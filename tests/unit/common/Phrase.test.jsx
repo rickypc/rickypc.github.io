@@ -58,7 +58,7 @@ describe('Phrase', () => {
       expect(block).toHaveAttribute('data-infix', '।');
       expect(block).toHaveAttribute('data-prefix', '꣼ ');
       expect(block).toHaveAttribute('data-suffix', '॥');
-      expect(block.textContent).toEqual('Hello');
+      expect(block.textContent).toBe('Hello');
     });
 
     it('does not include Details, Speech, or PDF links', () => {
@@ -76,7 +76,7 @@ describe('Phrase', () => {
       <Phrase transliteration={{ ...transliteration, speech: 'SpeakUp', repetition: 0 }} />
     ));
     expect(screen.queryByTestId(/^link-/)).toBeNull();
-    expect(screen.getByTestId('speech').textContent).toEqual('SpeakUp');
+    expect(screen.getByTestId('speech').textContent).toBe('SpeakUp');
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     expect(container.querySelector('.support')).toBeInTheDocument();
   });
@@ -97,7 +97,7 @@ describe('Phrase', () => {
       // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const badge = container.querySelector('.badge');
       expect(badge).toBeInTheDocument();
-      expect(badge.textContent).toEqual('5x');
+      expect(badge.textContent).toBe('5x');
       expect(badge).toHaveAttribute('title', 'Preferred repetition: 5 times');
     });
   });

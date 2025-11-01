@@ -18,8 +18,8 @@ describe('home.Greeting', () => {
 
     // Verify Heading wrapper.
     const heading = screen.getByTestId('heading');
-    expect(heading.tagName).toEqual('H1');
-    expect(heading.className).toEqual('greeting');
+    expect(heading.tagName).toBe('H1');
+    expect(heading.className).toBe('greeting');
 
     // Greeting span.
     // eslint-disable-next-line testing-library/no-node-access

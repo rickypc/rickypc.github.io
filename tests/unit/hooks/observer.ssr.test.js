@@ -10,6 +10,6 @@ jest.unmock('@site/src/hooks/observer');
 
 describe('useVisibility (Node.js)', () => {
   it('can be required under Node and exports useVisibility', () => {
-    expect(typeof useVisibility).toEqual('function');
+    expect(typeof useVisibility).toBe('function');
   });
 });

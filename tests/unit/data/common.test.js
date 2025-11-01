@@ -53,24 +53,24 @@ describe('data.common', () => {
 
   describe('clsx()', () => {
     it('concatenates valid string class names', () => {
-      expect(clsx('a', 'b', 'c')).toEqual('a b c');
+      expect(clsx('a', 'b', 'c')).toBe('a b c');
     });
 
     it('ignores falsey and non-string values', () => {
-      expect(clsx('foo', null, undefined, 0, '', 'bar')).toEqual('foo bar');
+      expect(clsx('foo', null, undefined, 0, '', 'bar')).toBe('foo bar');
     });
   });
 
   describe('context()', () => {
     it('returns a JSON string containing default schema.org ProfilePage', () => {
       const json = JSON.parse(context());
-      expect(json['@context']).toEqual('https://schema.org/');
-      expect(json['@type']).toEqual('ProfilePage');
+      expect(json['@context']).toBe('https://schema.org/');
+      expect(json['@type']).toBe('ProfilePage');
       expect(json.description).toContain('Engineering Leader');
-      expect(typeof json.keywords).toEqual('string');
-      expect(json.mainEntity['@type']).toEqual('Person');
+      expect(typeof json.keywords).toBe('string');
+      expect(json.mainEntity['@type']).toBe('Person');
       expect(Array.isArray(json.mainEntity.alumniOf)).toBeTruthy();
-      expect(json.url).toEqual('https://ricky.one');
+      expect(json.url).toBe('https://ricky.one');
     });
 
     it('accepts overrides for description, keywords, and title', () => {
@@ -80,71 +80,71 @@ describe('data.common', () => {
         title: 'MyTitle',
       };
       const parsed = JSON.parse(context(overrides));
-      expect(parsed.description).toEqual('CustomDesc');
-      expect(parsed.keywords).toEqual('x,y,z');
-      expect(parsed.name).toEqual('MyTitle');
+      expect(parsed.description).toBe('CustomDesc');
+      expect(parsed.keywords).toBe('x,y,z');
+      expect(parsed.name).toBe('MyTitle');
     });
   });
 
   describe('fileName()', () => {
     it('derives base name from path, hyphenating underscores and removing extensions', () => {
-      expect(fileName('/path/to_file.txt')).toEqual('to-file');
-      expect(fileName('folder/name.ext', '')).toEqual('name');
+      expect(fileName('/path/to_file.txt')).toBe('to-file');
+      expect(fileName('folder/name.ext', '')).toBe('name');
     });
 
     it('appends valid template suffixes when provided', () => {
-      expect(fileName('dir/name', 'condensed')).toEqual('name-condensed');
-      expect(fileName('dir/name', 'thangka')).toEqual('name-thangka');
-      expect(fileName('dir/name', 'wheel')).toEqual('name-wheel');
+      expect(fileName('dir/name', 'condensed')).toBe('name-condensed');
+      expect(fileName('dir/name', 'thangka')).toBe('name-thangka');
+      expect(fileName('dir/name', 'wheel')).toBe('name-wheel');
     });
 
     it('ignores unknown template values', () => {
-      expect(fileName('dir/name', 'unknown')).toEqual('name');
+      expect(fileName('dir/name', 'unknown')).toBe('name');
     });
 
     it('removes leading hyphens after replacement', () => {
-      expect(fileName('_hello_world', 'condensed')).toEqual('hello-world-condensed');
+      expect(fileName('_hello_world', 'condensed')).toBe('hello-world-condensed');
     });
   });
 
   describe('key()', () => {
     it('lowercases and hyphenates spaces, strips file extensions', () => {
-      expect(key('Hello World')).toEqual('hello-world');
-      expect(key('File.Name.TXT')).toEqual('file.name');
+      expect(key('Hello World')).toBe('hello-world');
+      expect(key('File.Name.TXT')).toBe('file.name');
     });
 
     it('applies default prefix and suffix separators', () => {
-      expect(key('Value', 'pre')).toEqual('pre-value');
-      expect(key('Value', '', '-', 'end')).toEqual('valueend');
+      expect(key('Value', 'pre')).toBe('pre-value');
+      expect(key('Value', '', '-', 'end')).toBe('valueend');
     });
 
     it('respects custom prefix and suffix separators', () => {
-      expect(key('Test Me', 'P', '_', 'S', '_')).toEqual('P_test-me_S');
+      expect(key('Test Me', 'P', '_', 'S', '_')).toBe('P_test-me_S');
     });
 
     it('handles empty prefix or suffix correctly', () => {
-      expect(key('Solo', '', '', 'end', '_')).toEqual('solo_end');
+      expect(key('Solo', '', '', 'end', '_')).toBe('solo_end');
     });
   });
 
   describe('tail()', () => {
     it('returns substring after the last occurrence of keyword', () => {
-      expect(tail('/a/b/c', '/')).toEqual('c');
-      expect(tail('one#two#three', '#')).toEqual('three');
+      expect(tail('/a/b/c', '/')).toBe('c');
+      expect(tail('one#two#three', '#')).toBe('three');
     });
 
     it('returns the full string if keyword not found', () => {
-      expect(tail('abcdef', '?')).toEqual('abcdef');
+      expect(tail('abcdef', '?')).toBe('abcdef');
     });
 
     it('returns empty string when path is undefined or null', () => {
-      expect(tail(undefined, '/')).toEqual('');
-      expect(tail(null, '/')).toEqual('');
+      expect(tail(undefined, '/')).toBe('');
+      expect(tail(null, '/')).toBe('');
     });
 
     it('returns the entire path when keyword is at index 0', () => {
-      expect(tail('/hello', '/')).toEqual('/hello');
-      expect(tail('abc', 'a')).toEqual('abc');
+      expect(tail('/hello', '/')).toBe('/hello');
+      expect(tail('abc', 'a')).toBe('abc');
     });
   });
 });

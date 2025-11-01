@@ -8,11 +8,11 @@ import { transition, variants, within } from '@site/src/data/portfolio/carousel'
 
 describe('portfolio.carousel', () => {
   it('transition shape and values', () => {
-    expect(typeof transition).toEqual('object');
+    expect(typeof transition).toBe('object');
     expect(transition).toHaveProperty('opacity');
     expect(transition).toHaveProperty('x');
-    expect(typeof transition.opacity).toEqual('object');
-    expect(typeof transition.x).toEqual('object');
+    expect(typeof transition.opacity).toBe('object');
+    expect(typeof transition.x).toBe('object');
 
     expect(transition.opacity.duration).toBeCloseTo(0.2, 5);
 
@@ -27,7 +27,7 @@ describe('portfolio.carousel', () => {
 
   it('variants.animate and factories produce expected values for positive, zero, negative directions', () => {
     // Animate.
-    expect(typeof variants.animate).toEqual('object');
+    expect(typeof variants.animate).toBe('object');
     expect(variants.animate).toEqual({ opacity: 1, scale: 1, x: 0 });
 
     // Exit: direction > 0 => -100%, direction <= 0 => 100%.
@@ -47,37 +47,37 @@ describe('portfolio.carousel', () => {
     expect(initNeg).toEqual({ opacity: 0, scale: 1.5, x: '-100%' });
 
     // Small non-integer direction values.
-    expect(variants.exit(0.0001).x).toEqual('-100%');
-    expect(variants.exit(-0.0001).x).toEqual('100%');
-    expect(variants.initial(0.5).x).toEqual('100%');
-    expect(variants.initial(-0.5).x).toEqual('-100%');
+    expect(variants.exit(0.0001).x).toBe('-100%');
+    expect(variants.exit(-0.0001).x).toBe('100%');
+    expect(variants.initial(0.5).x).toBe('100%');
+    expect(variants.initial(-0.5).x).toBe('-100%');
   });
 
   it('within wraps and preserves precision across representative edge cases', () => {
     // Basic wrap forward and backward.
-    expect(within(370, 0, 360)).toEqual(10);
-    expect(within(-10, 0, 360)).toEqual(350);
+    expect(within(370, 0, 360)).toBe(10);
+    expect(within(-10, 0, 360)).toBe(350);
 
     // Equality cases.
-    expect(within(5, 5, 10)).toEqual(5);
-    expect(within(10, 0, 10)).toEqual(0);
+    expect(within(5, 5, 10)).toBe(5);
+    expect(within(10, 0, 10)).toBe(0);
 
     // Non-zero min and typical wrap.
-    expect(within(250, 100, 200)).toEqual(150);
+    expect(within(250, 100, 200)).toBe(150);
 
     // Floating point precision preserved.
     expect(within(3.14159 + 360, 0, 360)).toBeCloseTo(3.14159, 5);
 
     // Very large numbers.
-    expect(within(1e9 + 5, 0, 100)).toEqual(5);
-    expect(within(-1e9 + 7, 0, 100)).toEqual(7);
+    expect(within(1e9 + 5, 0, 100)).toBe(5);
+    expect(within(-1e9 + 7, 0, 100)).toBe(7);
 
     // Negative min and results outside range.
-    expect(within(15, -10, 20)).toEqual(15);
-    expect(within(25, -10, 20)).toEqual(-5);
+    expect(within(15, -10, 20)).toBe(15);
+    expect(within(25, -10, 20)).toBe(-5);
 
     // Delta = 1 edge cases.
     expect(within(0.9999, 0, 1)).toBeCloseTo(0.9999, 5);
-    expect(within(1, 0, 1)).toEqual(0);
+    expect(within(1, 0, 1)).toBe(0);
   });
 });

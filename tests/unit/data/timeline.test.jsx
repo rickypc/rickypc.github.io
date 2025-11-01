@@ -23,7 +23,7 @@ describe('data.timeline', () => {
     });
 
     it('title', () => {
-      expect(layout.title).toEqual('Timeline - Career, Education & Technical Milestones');
+      expect(layout.title).toBe('Timeline - Career, Education & Technical Milestones');
     });
 
     it('keywords', () => {
@@ -39,13 +39,13 @@ describe('data.timeline', () => {
 
   describe('preamble', () => {
     it('description', () => {
-      expect(preamble.description).toEqual(
+      expect(preamble.description).toBe(
         'A curated journey through key milestones in my career, education, and technical growth. Each moment reflects a step forward - building expertise, shaping ideas, and driving impact across industries and technologies.',
       );
     });
 
     it('title', () => {
-      expect(preamble.title).toEqual('Timeline');
+      expect(preamble.title).toBe('Timeline');
     });
 
     it('printAdmonition is true', () => {
@@ -68,7 +68,7 @@ describe('data.timeline', () => {
 
         if (index < timelines.length - 1) {
           it('affiliation translate is "no"', () => {
-            expect(item.affiliation.translate).toEqual('no');
+            expect(item.affiliation.translate).toBe('no');
           });
         } else {
           it('affiliation translate undefined', () => {

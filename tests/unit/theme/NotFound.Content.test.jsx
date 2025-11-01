@@ -21,7 +21,7 @@ describe('theme.NotFound.Content', () => {
 
     const el = screen.getByTestId('content');
     expect(el).toBeInTheDocument();
-    expect(el.getAttribute('some')).toEqual('prop');
+    expect(el.getAttribute('some')).toBe('prop');
   });
 
   it('when navigation prop true, useWelcome is called with navigation true and navigation is not forwarded', () => {
@@ -32,7 +32,7 @@ describe('theme.NotFound.Content', () => {
 
     const el = screen.getByTestId('content');
     expect(el).toBeInTheDocument();
-    expect(el.getAttribute('other')).toEqual('x');
+    expect(el.getAttribute('other')).toBe('x');
   });
 
   it('preserves arbitrary props and rerender calls hook again and updates forwarded props', () => {
@@ -51,6 +51,6 @@ describe('theme.NotFound.Content', () => {
 
     el = screen.getByTestId('content');
     expect(el.getAttribute('a')).toEqual(props.a.toString());
-    expect(el.getAttribute('b')).toEqual('changed');
+    expect(el.getAttribute('b')).toBe('changed');
   });
 });

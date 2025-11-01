@@ -85,7 +85,7 @@ describe('portfolio.Projects', () => {
       // Heading with Link and Heart.
       // eslint-disable-next-line security/detect-object-injection
       const heading = screen.getAllByTestId('heading')[index];
-      expect(heading.tagName).toEqual('H2');
+      expect(heading.tagName).toBe('H2');
 
       // eslint-disable-next-line security/detect-object-injection
       const link = screen.getAllByTestId(/^link-/)[index];

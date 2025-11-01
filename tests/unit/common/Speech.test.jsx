@@ -301,7 +301,7 @@ describe('Speech', () => {
       mocks.synth._emitVoicesChanged();
 
       await waitFor(() => expect(mocks.instances.length).toBeGreaterThan(0));
-      expect(mocks.instances.pop().volume).toEqual(0);
+      expect(mocks.instances.pop().volume).toBe(0);
 
       // Normal case.
       delete document.documentElement.dataset.volume;
@@ -360,8 +360,8 @@ describe('Speech', () => {
 
       await waitFor(() => expect(mocks.instances.length).toBeGreaterThan(0));
       const last = mocks.instances.pop();
-      expect(last.lang).toEqual('eng-US');
-      expect(last.voice.name).toEqual('WeirdVoice');
+      expect(last.lang).toBe('eng-US');
+      expect(last.voice.name).toBe('WeirdVoice');
     });
 
     it('matches underscore-formatted lang by replacing underscores', async () => {
@@ -377,7 +377,7 @@ describe('Speech', () => {
       await waitFor(() => expect(mocks.instances.length).toBeGreaterThan(0));
       const last = mocks.instances.pop();
       expect(last.lang).toEqual(voices[0].lang);
-      expect(last.voice.name).toEqual('UnderscoreVoice');
+      expect(last.voice.name).toBe('UnderscoreVoice');
     });
 
     // eslint-disable-next-line jest/expect-expect

@@ -23,31 +23,35 @@ module.exports = [
   // Order Matters™!
   { ignores: ['build/', '.docusaurus/'] },
   ...compat.config({ extends: ['airbnb', 'airbnb/hooks'] }),
-  js.configs.recommended,
-  react.configs.flat.recommended,
-  react.configs.flat['jsx-runtime'],
   {
     plugins: { '@docusaurus': docusaurus },
     rules: docusaurus.configs.recommended.rules,
   },
+  js.configs.recommended,
+  jest.configs['flat/recommended'],
+  jest.configs['flat/style'],
+  jsdoc.configs['flat/recommended'],
+  json.configs.recommended,
+  react.configs.flat.recommended,
+  react.configs.flat['jsx-runtime'],
+  security.configs.recommended,
+  {
+    files: ['__mocks__/**/*.{js,jsx,ts,tsx}', 'tests/unit/**/*.{js,jsx,ts,tsx}'],
+    ...testing.configs['flat/react'],
+  },
   {
     languageOptions: {
       ecmaVersion: 2022,
-      globals: { ...globals.browser, ...globals.jest, ...globals.node },
+      globals: { ...globals.browser },
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
     plugins: { 'no-secrets': noSecrets },
     rules: {
       'import/no-extraneous-dependencies': ['error', { optionalDependencies: true }],
-      'import/no-named-as-default': 0,
-      'import/no-named-as-default-member': 0,
       'import/no-unresolved': ['error', { ignore: ['^[@#].+$'] }],
-      // Better React debugging.
-      'prefer-arrow-callback': 'off',
+      'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
       'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
       'react/jsx-no-useless-fragment': ['error', { allowExpressions: true }],
-      // Throwing error for no good reason.
-      'react/jsx-props-no-multi-spaces': 'off',
       'react/jsx-props-no-spreading': 'off',
       'react/prop-types': 'off',
       'react/require-default-props': 'off',
@@ -69,13 +73,5 @@ module.exports = [
         tsconfigRootDir: __dirname,
       },
     },
-  },
-  jest.configs['flat/recommended'],
-  jsdoc.configs['flat/recommended'],
-  json.configs.recommended,
-  security.configs.recommended,
-  {
-    files: ['__mocks__/**/*.{js,jsx,ts,tsx}', 'tests/unit/**/*.{js,jsx,ts,tsx}'],
-    ...testing.configs['flat/react'],
   },
 ];

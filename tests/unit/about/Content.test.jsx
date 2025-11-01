@@ -30,12 +30,12 @@ describe('about.Content', () => {
 
     const [h2, h3] = headings;
     // h2: headline + heart.
-    expect(h2.tagName).toEqual('H2');
+    expect(h2.tagName).toBe('H2');
     expect(h2).toHaveTextContent('Test Headline');
     expect(screen.getByTestId('heart')).toHaveAttribute('id', 'about-landing');
 
     // h3: characteristic title.
-    expect(h3.tagName).toEqual('H3');
+    expect(h3.tagName).toBe('H3');
     expect(h3).toHaveTextContent('Key Traits');
 
     // Paragraphs.

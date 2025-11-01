@@ -30,8 +30,8 @@ describe('Reveal', () => {
 
       const wordCount = spans.filter((s) => s.classList.contains('word')).length;
       const charCount = spans.filter((s) => s.classList.contains('character')).length;
-      expect(wordCount).toEqual(2);
-      expect(charCount).toEqual(10);
+      expect(wordCount).toBe(2);
+      expect(charCount).toBe(10);
     });
 
     it('when visible: adds play class', () => {

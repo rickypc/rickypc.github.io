@@ -37,11 +37,11 @@ describe('Preamble', () => {
       );
 
       const heading = screen.getByTestId('heading');
-      expect(heading.tagName).toEqual('H1');
+      expect(heading.tagName).toBe('H1');
       expect(heading).toHaveTextContent(baseProps.title);
 
       const para = screen.getByText(baseProps.description);
-      expect(para.tagName).toEqual('P');
+      expect(para.tagName).toBe('P');
     });
   });
 

@@ -66,7 +66,7 @@ describe('portfolio.Carousel', () => {
     // Grab the debounced handler.
     // eslint-disable-next-line no-underscore-dangle
     const handler = nextBtn._handler;
-    expect(typeof handler).toEqual('function');
+    expect(typeof handler).toBe('function');
 
     // Cancel before timeout.
     handler.cancel();

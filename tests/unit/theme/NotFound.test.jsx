@@ -35,7 +35,7 @@ describe('theme.NotFound', () => {
 
     const content = screen.getByTestId('content');
     expect(content).toBeInTheDocument();
-    expect(content.getAttribute('navigation')).toEqual('true');
+    expect(content.getAttribute('navigation')).toBe('true');
 
     expect(layout).toContainElement(content);
   });

@@ -499,7 +499,7 @@ describe('useWelcome', () => {
 
     // eslint-disable-next-line testing-library/no-node-access
     const title = document.querySelector('nav .navbar__brand .navbar__title');
-    expect(title.getAttribute('translate')).toEqual('no');
+    expect(title.getAttribute('translate')).toBe('no');
   });
 
   it('default object and navigation = true (en-US) - non-browser', () => {
@@ -519,7 +519,7 @@ describe('useWelcome', () => {
     // eslint-disable-next-line testing-library/no-node-access
     const title = document.querySelector('nav .navbar__brand .navbar__title');
     expect(title.getAttribute('translate')).toBeNull();
-    expect(root.className).toEqual('docusaurus-root');
+    expect(root.className).toBe('docusaurus-root');
   });
 
   it('navigation = false (zh-CN)', () => {
@@ -547,7 +547,7 @@ describe('useWelcome', () => {
 
     // eslint-disable-next-line testing-library/no-node-access
     const title = document.querySelector('nav .navbar__brand .navbar__title');
-    expect(title.getAttribute('translate')).toEqual('no');
+    expect(title.getAttribute('translate')).toBe('no');
   });
 
   it('navigation = true (fr)', () => {

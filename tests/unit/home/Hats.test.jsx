@@ -37,9 +37,9 @@ describe('home.Hats', () => {
     // eslint-disable-next-line testing-library/no-node-access
     const root = container.firstChild;
     expect(root).toBeInstanceOf(HTMLElement);
-    expect(root.tagName).toEqual('DIV');
+    expect(root.tagName).toBe('DIV');
     // eslint-disable-next-line testing-library/no-node-access
-    expect(root.childElementCount).toEqual(4);
+    expect(root.childElementCount).toBe(4);
 
     // eslint-disable-next-line testing-library/no-node-access
     const articles = root.querySelectorAll('article');
@@ -56,7 +56,7 @@ describe('home.Hats', () => {
       expect(description).toHaveTextContent(expected.description);
 
       const heading = within(article).getByTestId('heading');
-      expect(heading.tagName).toEqual('H2');
+      expect(heading.tagName).toBe('H2');
       expect(heading).toHaveTextContent(expected.heading);
     }
   });

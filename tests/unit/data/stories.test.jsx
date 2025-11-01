@@ -23,7 +23,7 @@ describe('data.stories', () => {
     });
 
     it('title', () => {
-      expect(layout.title).toEqual('Stories, Testimonials & Lessons from the Journey');
+      expect(layout.title).toBe('Stories, Testimonials & Lessons from the Journey');
     });
 
     it('keywords', () => {
@@ -39,13 +39,13 @@ describe('data.stories', () => {
 
   describe('preamble', () => {
     it('description', () => {
-      expect(preamble.description).toEqual(
+      expect(preamble.description).toBe(
         'Real-world experiences, lessons learned, and reflections from my journey as a full stack developer and engineering leader. These stories highlight how I\'ve helped teams and projects thrive - through technology, mentorship, and personal growth.',
       );
     });
 
     it('title', () => {
-      expect(preamble.title).toEqual('Stories');
+      expect(preamble.title).toBe('Stories');
     });
   });
 
@@ -65,13 +65,13 @@ describe('data.stories', () => {
         it('affiliation', () => {
           expect(s.affiliation.children).toEqual(expect.any(String));
           expect(s.affiliation.href).toMatch(/^https:\/\/bit\.ly\//);
-          expect(s.affiliation.translate).toEqual('no');
+          expect(s.affiliation.translate).toBe('no');
         });
 
         it('author', () => {
           expect(s.author.children).toEqual(expect.any(String));
           expect(s.author.href).toMatch(/^https:\/\/bit\.ly\//);
-          expect(s.author.translate).toEqual('no');
+          expect(s.author.translate).toBe('no');
         });
 
         if (s.header.href === undefined) {

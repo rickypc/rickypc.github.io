@@ -60,7 +60,7 @@ describe('Link', () => {
         </Link>
       ));
       const span = screen.getByText('No Link');
-      expect(span.tagName).toEqual('SPAN');
+      expect(span.tagName).toBe('SPAN');
       expect(span).toHaveClass('no-link');
       expect(span).not.toHaveAttribute('aria-label');
       expect(span).not.toHaveAttribute('title');
@@ -74,7 +74,7 @@ describe('Link', () => {
         </Link>
       ));
       const anchor = screen.getByText('Fallback');
-      expect(anchor.tagName).toEqual('A');
+      expect(anchor.tagName).toBe('A');
       expect(anchor).toHaveAttribute('aria-label', 'fallback');
       expect(anchor).toHaveAttribute('title', 'fallback');
       expect(anchor).toHaveClass('fallback');

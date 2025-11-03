@@ -56,27 +56,43 @@ export const context = ({
     },
     alumniOf: [
       {
-        '@type': 'OrganizationRole',
-        alumniOf: {
-          '@type': 'CollegeOrUniversity',
-          name: 'California State University, Fullerton',
-          sameAs: 'https://en.wikipedia.org/wiki/California_State_University,_Fullerton',
-        },
-        startDate: '2007',
+        '@type': 'CollegeOrUniversity',
+        name: 'California State University, Fullerton',
+        sameAs: 'https://en.wikipedia.org/wiki/California_State_University,_Fullerton',
       },
       {
-        '@type': 'OrganizationRole',
-        alumniOf: {
-          '@type': 'CollegeOrUniversity',
-          name: 'Petra Christian University',
-          sameAs: 'https://en.wikipedia.org/wiki/Petra_Christian_University',
-        },
-        startDate: '1997',
+        '@type': 'CollegeOrUniversity',
+        name: 'Petra Christian University',
+        sameAs: 'https://en.wikipedia.org/wiki/Petra_Christian_University',
       },
     ],
     familyName: 'Huang',
     gender: 'Male',
     givenName: 'Richard',
+    hasOccupation: [
+      {
+        '@type': 'OrganizationRole',
+        awardDate: '2007',
+        educationalCredentialAwarded: 'Master of Science in Software Engineering',
+        memberOf: {
+          '@type': 'CollegeOrUniversity',
+          name: 'California State University, Fullerton',
+          sameAs: 'https://en.wikipedia.org/wiki/California_State_University,_Fullerton',
+        },
+        roleName: 'Student',
+      },
+      {
+        '@type': 'OrganizationRole',
+        awardDate: '1997',
+        educationalCredentialAwarded: 'Bachelor of Engineering in Architecture',
+        memberOf: {
+          '@type': 'CollegeOrUniversity',
+          name: 'Petra Christian University',
+          sameAs: 'https://en.wikipedia.org/wiki/Petra_Christian_University',
+        },
+        roleName: 'Student',
+      },
+    ],
     honorificSuffix: 'MSE',
     image: 'https://ricky.one/img/self.png',
     jobTitle: 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',

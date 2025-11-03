@@ -4,8 +4,13 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-export default jest.fn(({ children, description, title }) => (
-  <div data-description={description} data-testid="layout" data-title={title}>
+export default jest.fn(({
+  children,
+  description,
+  keywords,
+  title,
+}) => (
+  <div data-description={description} data-keywords={keywords?.join(',')} data-testid="layout" data-title={title}>
     {children}
   </div>
 ));

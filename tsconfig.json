@@ -12,6 +12,7 @@
     "docusaurus.config.js",
     "__mocks__",
     "sidebars.js",
-    "src"
+    "src",
+    "tests"
   ]
 }

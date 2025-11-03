@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -12,9 +12,9 @@ import Phrase, { Instruction } from '@site/src/components/common/Phrase';
 import Welcome from '@site/src/components/common/Welcome';
 
 export default {
-  // Re-use the default mapping.
+  // Use the default mapping.
   ...MDXComponents,
-  // Map majority of the custom components.
+  // Register all other necessary custom component.
   Image,
   Instruction,
   Link,

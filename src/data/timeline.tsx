@@ -11,7 +11,7 @@ import { type PreambleProps } from '@site/src/components/common/Preamble';
 import { type TimelineProps } from '@site/src/components/timeline/Content';
 
 export const layout: LayoutProps = {
-  description: 'Milestones in Ricky Huang\'s journey - from architecture to engineering, startups to global impact.',
+  description: 'Milestones in Ricky Huang\'s journey - from architecture to engineering, startups to global impact, and everything in between.',
   keywords: [
     'career timeline',
     'software engineering milestones',

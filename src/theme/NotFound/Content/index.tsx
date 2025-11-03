@@ -4,18 +4,14 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+import Content, { type ContentType } from '@theme-original/NotFound/Content';
 import { memo, type ReactElement } from 'react';
-import NotFoundContent from '@theme-original/NotFound/Content';
 import { useWelcome } from '@site/src/hooks/observer';
+import { type WrapperProps } from '@docusaurus/types';
 
-export type NotFoundContentProps = {
-  navigation?: boolean;
-};
+type Props = WrapperProps<typeof ContentType>;
 
-export default memo(function NotFoundContentWrapper({
-  navigation = false,
-  ...props
-}: NotFoundContentProps): ReactElement {
+export default memo(function ContentWrapper({ navigation = false, ...props }: Props): ReactElement {
   useWelcome({ navigation });
-  return <NotFoundContent {...props} />;
+  return <Content {...props} />;
 });

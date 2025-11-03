@@ -13,7 +13,7 @@ import NotFoundContent from '@theme/NotFound/Content';
 import { translate } from '@docusaurus/Translate';
 
 describe('theme.NotFound', () => {
-  it('calls translate with the correct id and message and passes result to PageMetadata', () => {
+  it('calls translate, passes result to Layout, and renders NotFoundContent', () => {
     render(<NotFound />);
 
     expect(translate).toHaveBeenCalledTimes(1);
@@ -22,16 +22,9 @@ describe('theme.NotFound', () => {
       message: 'Page Not Found',
     });
 
-    const meta = screen.getByTestId('metadata');
-    expect(meta).toBeInTheDocument();
-    expect(meta).toHaveAttribute('title', 'translated:theme.NotFound.title:Page Not Found');
-  });
-
-  it('renders Layout and renders NotFoundContent inside it with navigation prop set to "true"', () => {
-    render(<NotFound />);
-
     const layout = screen.getByTestId('layout');
     expect(layout).toBeInTheDocument();
+    expect(layout).toHaveAttribute('data-title', 'translated:theme.NotFound.title:Page Not Found');
 
     const content = screen.getByTestId('content');
     expect(content).toBeInTheDocument();

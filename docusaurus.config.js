@@ -40,11 +40,7 @@ const config = {
     },
     locales: ['en'],
   },
-  markdown: {
-    hooks: {
-      onBrokenMarkdownLinks: 'throw',
-    },
-  },
+  markdown: { hooks: { onBrokenMarkdownLinks: 'throw' } },
   onBrokenAnchors: 'throw',
   onBrokenLinks: 'throw',
   onDuplicateRoutes: 'throw',
@@ -61,7 +57,7 @@ const config = {
         },
         sitemap: {
           createSitemapItems,
-          ignorePatterns: ['/docs/tags/**', '/search/**'],
+          ignorePatterns: ['/search/**'],
           lastmod: 'date',
         },
         theme: { customCss: './src/css/custom.css' },
@@ -72,9 +68,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      colorMode: {
-        respectPrefersColorScheme: true,
-      },
+      colorMode: { respectPrefersColorScheme: true },
       footer: {
         copyright: `Copyright © 2015-${new Date().getFullYear()} Ricky Huang. All Rights Reserved.`,
         style: 'dark',

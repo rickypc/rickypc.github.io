@@ -39,6 +39,7 @@ describe('theme.DocTagDocListPage', () => {
     expect(context).toHaveBeenCalledTimes(1);
     expect(context).toHaveBeenNthCalledWith(1, expect.objectContaining({
       description: expect.stringContaining(props.tag.label),
+      keywords: expect.arrayContaining(['mindfulness']),
       title: 'translated:theme.docs.tagDocListPageTitle:{nDocsTagged} with "{tagName}"',
     }));
 
@@ -50,6 +51,7 @@ describe('theme.DocTagDocListPage', () => {
       ld: 'test',
       meta: expect.objectContaining({
         description: expect.stringContaining(props.tag.label),
+        keywords: expect.arrayContaining(['mindfulness']),
         title: 'translated:theme.docs.tagDocListPageTitle:{nDocsTagged} with "{tagName}"',
       }),
     });

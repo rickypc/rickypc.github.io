@@ -24,6 +24,8 @@ describe('theme.NotFound', () => {
 
     const layout = screen.getByTestId('layout');
     expect(layout).toBeInTheDocument();
+    expect(layout).toHaveAttribute('data-description', expect.stringContaining('Page not found'));
+    expect(layout).toHaveAttribute('data-keywords', expect.stringContaining('404'));
     expect(layout).toHaveAttribute('data-title', 'translated:theme.NotFound.title:Page Not Found');
 
     const content = screen.getByTestId('content');

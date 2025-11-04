@@ -31,6 +31,7 @@ describe('theme.DocTagsListPage', () => {
     expect(context).toHaveBeenCalledTimes(1);
     expect(context).toHaveBeenNthCalledWith(1, expect.objectContaining({
       description: expect.stringContaining('Explore practical wisdom'),
+      keywords: expect.arrayContaining(['mindfulness']),
       title: 'Tags',
     }));
 
@@ -42,6 +43,7 @@ describe('theme.DocTagsListPage', () => {
       ld: 'test',
       meta: expect.objectContaining({
         description: expect.stringContaining('Explore practical wisdom'),
+        keywords: expect.arrayContaining(['mindfulness']),
         title: 'Tags',
       }),
     });

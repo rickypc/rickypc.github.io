@@ -7,11 +7,11 @@
 import Layout from '@theme/Layout';
 import { memo, type ReactElement } from 'react';
 import NotFoundContent from '@theme/NotFound/Content';
-import { type NotFoundType } from '@theme-original/NotFound';
+import NotFound from '@theme-original/NotFound';
 import { translate } from '@docusaurus/Translate';
 import { type WrapperProps } from '@docusaurus/types';
 
-type Props = WrapperProps<typeof NotFoundType>;
+type Props = WrapperProps<typeof NotFound>;
 
 export default memo(function NotFoundWrapper(props: Props): ReactElement {
   const layout = {

@@ -5,13 +5,13 @@
  */
 
 import { context } from '@site/src/data/common';
-import DocTagsListPage, { type DocTagsListPageType } from '@theme-original/DocTagsListPage';
+import DocTagsListPage from '@theme-original/DocTagsListPage';
 import { memo, type ReactElement } from 'react';
 import { PageMetadata, translateTagsPageTitle } from '@docusaurus/theme-common';
 import { useWelcome } from '@site/src/hooks/observer';
 import { type WrapperProps } from '@docusaurus/types';
 
-type Props = WrapperProps<typeof DocTagsListPageType>;
+type Props = WrapperProps<typeof DocTagsListPage>;
 
 export default memo(function DocTagsListPageWrapper(props: Props): ReactElement {
   const metadata = {

@@ -19,7 +19,7 @@ import { simpleGit } from 'simple-git';
 import base from '#buddhism/_base.js';
 import book from '#buddhism/_book.js';
 import condensed from '#buddhism/_condensed.js';
-import { fileName } from '#root/src/data/common.js';
+import { fileName } from '#root/src/data/common';
 import pdf from '#buddhism/_pdf.js';
 import roll from '#buddhism/_roll.js';
 import thangka from '#buddhism/_thangka.js';

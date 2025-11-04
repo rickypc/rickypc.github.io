@@ -46,8 +46,8 @@ export type ImageProps = PictureProps & {
 };
 
 export type ImageSource = {
-  preSrc: string;
-  src: {
+  preSrc?: string;
+  src?: {
     images: ImageInfo[];
     srcSet?: string;
   };
@@ -63,7 +63,7 @@ type PictureProps = {
   alt?: string;
   className?: string;
   onLoad?: ReactEventHandler<HTMLImageElement>;
-  picture: PictureInfo;
+  picture?: PictureInfo;
   ref?: RefObject<HTMLPictureElement>;
 };
 
@@ -141,11 +141,11 @@ const Picture = memo(function Picture({
       className={clsx(
         className,
         styles.picture,
-        (background && !picture.fallback?.preSrc) && styles.shimmer,
+        (background && !picture?.fallback?.preSrc) && styles.shimmer,
       )}
       ref={pictureRef}
-      style={background && picture.fallback?.preSrc ? {
-        backgroundImage: `url(${picture.fallback?.preSrc})`,
+      style={background && picture?.fallback?.preSrc ? {
+        backgroundImage: `url(${picture?.fallback?.preSrc})`,
       } : {}}
     >
       <LazyMotion features={domAnimation}>

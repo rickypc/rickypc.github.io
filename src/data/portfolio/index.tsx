@@ -12,7 +12,7 @@ import { type PreambleProps } from '@site/src/components/common/Preamble';
 export const catalog = [
   {
     description: 'A scalable platform designed for ticket sellers to showcase live event offerings - from sports to concerts - directly to Yahoo! users. Built on a SOAP Web Services architecture, the system was engineered for flexibility and high traffic volume, supporting millions of visits across Yahoo!\'s ecosystem.',
-    href: null,
+    href: undefined,
     images: [
       {
         alt: 'Yahoo! Tickets Landing',
@@ -236,7 +236,7 @@ export const catalog = [
   },
   {
     description: 'A family-run store rooted in a deep appreciation for artisan craftsmanship and authentic living. The platform was built to showcase their passion - bringing beautifully crafted products and rich, sensory details to a global audience, while reflecting the lifestyle and values behind every offering.',
-    href: null,
+    href: undefined,
     images: [
       {
         alt: 'Fortini Home',
@@ -262,7 +262,7 @@ export const catalog = [
   },
   {
     description: 'A global logistics platform tailored for the trade show industry - serving exhibitors, exhibit houses, and event organizers. Built to extend their reach and streamline operations, the system enables seamless international shipping and helps clients deliver standout experiences around the world.',
-    href: null,
+    href: undefined,
     images: [
       {
         alt: 'Exhibit Transport',
@@ -340,7 +340,7 @@ export const catalog = [
   },
   {
     description: 'A wireless asset management platform designed to support real-time vehicle and asset tracking. Built to deliver GPS-based monitoring, internet-enabled tracking, and robust backend and user interface applications, the system laid the foundation for future innovations in connected mobility.',
-    href: null,
+    href: undefined,
     images: [
       {
         alt: 'Aircept Landing',
@@ -383,7 +383,7 @@ export const catalog = [
   },
   {
     description: 'A youth-focused clothing retailer known for its signature denim, graphic tees, and casual wear. The platform was developed to launch their e-commerce presence—making it easy for customers to browse and purchase online, while extending the brand\'s reach beyond physical retail.',
-    href: null,
+    href: undefined,
     images: [
       {
         alt: 'AnchorBlue Community',

@@ -1,0 +1,39 @@
+/*!
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ * ----------------------------------------------------------------------------
+ * @jest-environment jsdom
+ */
+
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { admonitions } from '@site/src/data/common';
+import SpeechAdmonition from '@site/src/components/common/SpeechAdmonition';
+import { useSpeech } from '@site/src/hooks/observer';
+
+const useSpeechMock = useSpeech as jest.MockedFunction<typeof useSpeech>;
+
+jest.unmock('@site/src/components/common/SpeechAdmonition');
+
+describe('SpeechAdmonition', () => {
+  it('does not render anything when speech is ready', () => {
+    useSpeechMock.mockReturnValue([true]);
+    const { container } = render(<SpeechAdmonition />);
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.firstChild).toBeNull();
+  });
+
+  it('renders admonition inside an <aside> when speech is not ready', () => {
+    useSpeechMock.mockReturnValue([false]);
+    render(<SpeechAdmonition />);
+
+    const admon = screen.getByTestId('admonition');
+    expect(admon).toHaveAttribute('data-type', admonitions.speech.type);
+    expect(admon).toHaveTextContent(admonitions.speech.text);
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const aside = admon.closest('aside');
+    expect(aside).toHaveAttribute('aria-hidden', 'true');
+    expect(aside).toHaveClass('row');
+  });
+});

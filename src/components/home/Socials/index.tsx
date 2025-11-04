@@ -4,6 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+import { type IconBaseProps } from 'react-icons';
 import { key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
 import { type ComponentType, memo, type ReactElement } from 'react';
@@ -12,7 +13,7 @@ import styles from './styles.module.css';
 
 export type SocialProps = {
   href?: string;
-  Icon: ComponentType;
+  Icon: ComponentType<IconBaseProps & { className?: string }>;
   title: string;
 };
 

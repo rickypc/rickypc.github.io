@@ -28,7 +28,7 @@ module.exports = {
       {
         jsc: {
           parser: { decorators: true, syntax: 'typescript', tsx: true },
-          target: 'es2022',
+          target: 'es2024',
           transform: { react: { runtime: 'automatic' } },
         },
       },

@@ -83,7 +83,7 @@ jest.mock('#buddhism/_pdf.js', () => [['base', '#/path/one.md'], ['book', '#/pat
 jest.mock('#buddhism/_roll.js', () => makeTemplate('roll'));
 jest.mock('#buddhism/_thangka.js', () => makeTemplate('thangka'));
 jest.mock('#buddhism/_wheel.js', () => makeTemplate('wheel'));
-jest.mock('#root/src/data/common.js', () => ({ fileName: (p, t) => `${t}-${p.replace(/[^a-z0-9]/gi, '')}` }));
+jest.mock('#root/src/data/common', () => ({ fileName: (p, t) => `${t}-${p.replace(/[^a-z0-9]/gi, '')}` }));
 
 // eslint-disable-next-line import/extensions
 const pdf = require('#buddhism/_pdf.js');

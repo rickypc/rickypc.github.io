@@ -33,7 +33,7 @@ export type PhraseProps = {
   image?: ImageSource;
   instruction?: ReactNode;
   repetition?: number;
-  path?: string;
+  path: string;
   transliteration?: Transliteration;
 };
 
@@ -42,7 +42,7 @@ type RepetitionProps = {
 };
 
 type SupportProps = {
-  path?: string;
+  path: string;
   repetition?: number;
   transliteration: Transliteration;
 };

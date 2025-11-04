@@ -142,7 +142,7 @@ const DotGroup = memo(function DotGroup({ api, images, prefix }: DotGroupProps):
           const current = active === index;
           return (
             <Button
-              {...a11y(index + 1)}
+              {...a11y(String(index + 1))}
               className={clsx(current && styles.active, styles.dot)}
               key={`dot-${prefix}-${alt}`}
               onClick={current ? undefined : () => onDot(index)}

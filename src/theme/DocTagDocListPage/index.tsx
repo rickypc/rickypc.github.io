@@ -5,14 +5,14 @@
  */
 
 import { context } from '@site/src/data/common';
-import DocTagDocListPage, { type DocTagDocListPageType } from '@theme-original/DocTagDocListPage';
+import DocTagDocListPage from '@theme-original/DocTagDocListPage';
 import { memo, type ReactElement } from 'react';
 import { PageMetadata, usePluralForm } from '@docusaurus/theme-common';
 import { translate } from '@docusaurus/Translate';
 import { useWelcome } from '@site/src/hooks/observer';
 import { type WrapperProps } from '@docusaurus/types';
 
-type Props = WrapperProps<typeof DocTagDocListPageType>;
+type Props = WrapperProps<typeof DocTagDocListPage>;
 
 const useNDocsTaggedPlural = () => {
   const { selectMessage } = usePluralForm();

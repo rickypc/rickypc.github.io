@@ -71,28 +71,28 @@ export const context = ({
     familyName: 'Huang',
     gender: 'Male',
     givenName: 'Richard',
-    hasOccupation: [
+    hasCredential: [
       {
-        '@type': 'OrganizationRole',
-        awardDate: '2007',
-        educationalCredentialAwarded: 'Master of Science in Software Engineering',
-        memberOf: {
-          '@type': 'CollegeOrUniversity',
-          name: 'California State University, Fullerton',
-          sameAs: 'https://en.wikipedia.org/wiki/California_State_University,_Fullerton',
-        },
-        roleName: 'Student',
-      },
-      {
-        '@type': 'OrganizationRole',
-        awardDate: '1997',
-        educationalCredentialAwarded: 'Bachelor of Engineering in Architecture',
-        memberOf: {
-          '@type': 'CollegeOrUniversity',
+        '@type': 'EducationalOccupationalCredential',
+        credentialCategory: 'degree',
+        dateCreated: '1997',
+        name: 'Bachelor of Engineering in Architecture',
+        recognizedBy: {
+          '@type': 'Organization',
           name: 'Petra Christian University',
           sameAs: 'https://en.wikipedia.org/wiki/Petra_Christian_University',
         },
-        roleName: 'Student',
+      },
+      {
+        '@type': 'EducationalOccupationalCredential',
+        credentialCategory: 'degree',
+        dateCreated: '2007',
+        name: 'Master of Science in Software Engineering',
+        recognizedBy: {
+          '@type': 'Organization',
+          name: 'California State University, Fullerton',
+          sameAs: 'https://en.wikipedia.org/wiki/California_State_University,_Fullerton',
+        },
       },
     ],
     honorificSuffix: 'MSE',

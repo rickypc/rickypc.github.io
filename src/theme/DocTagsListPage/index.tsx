@@ -15,7 +15,7 @@ type Props = WrapperProps<typeof DocTagsListPage>;
 
 export default memo(function DocTagsListPageWrapper(props: Props): ReactElement {
   const metadata = {
-    description: 'Explore practical wisdom and personal notes on Buddhism, mindfulness, meditation, and mindful living, alongside tech insights and innovation-focused reflections.',
+    description: 'Practical notes on Buddhism, mindfulness, meditation, and mindful living, plus concise tech insights and innovation reflections for curious readers.',
     keywords: [
       'buddhism',
       'mindfulness',

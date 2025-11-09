@@ -4,7 +4,9 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const body = (phrase, infix) => {
+import { type PropsWithChildren } from 'react';
+
+const body = (phrase: PropsWithChildren, infix: string) => {
   const group = Array.isArray(phrase.children) ? phrase.children : [phrase.children];
   const last = group.length - 1;
   return group.flatMap((words, index) => {
@@ -18,7 +20,7 @@ const body = (phrase, infix) => {
  * @param {string} path - Multilingual file path.
  * @returns {object} A pdfMake compatible object.
  */
-export default function thangka(path) {
+export default function thangka(path: string) {
   const {
     default: {
       lang = 'bo-CN',

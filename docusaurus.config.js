@@ -5,7 +5,7 @@
  */
 
 // eslint-disable-next-line import/extensions
-import { createSitemapItems } from '#root/src/plugins/docusaurus-plugin-local/index.js';
+import { createSitemapItems } from '#root/src/plugins/docusaurus-plugin-kit/index.js';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -45,7 +45,7 @@ const config = {
   onBrokenLinks: 'throw',
   onDuplicateRoutes: 'throw',
   organizationName: 'rickypc',
-  plugins: ['./src/plugins/docusaurus-plugin-local'],
+  plugins: [require.resolve('#root/src/plugins/docusaurus-plugin-kit/index.js')],
   presets: [
     [
       'classic',
@@ -60,7 +60,7 @@ const config = {
           ignorePatterns: ['/search/**'],
           lastmod: 'date',
         },
-        theme: { customCss: './src/css/custom.css' },
+        theme: { customCss: require.resolve('#root/src/css/custom.css') },
       },
     ],
   ],

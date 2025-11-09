@@ -3,7 +3,8 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { createWriteStream, mkdirSync } from 'node:fs';
+import { access, mkdir, stat } from 'node:fs/promises';
+import { createWriteStream } from 'node:fs';
 import { DEFAULT_CONFIG_FILE_NAME, loadFreshModule, siteConfig } from '@docusaurus/utils';
 import { increment, start, stop } from 'cli-progress';
 import { join } from 'node:path';
@@ -11,7 +12,6 @@ import { log } from 'simple-git';
 import { tmpdir } from 'node:os';
 import { Writable } from 'node:stream';
 
-// You can't create __mocks__/node:fs.js, because : is invalid filename.
 jest.mock('node:fs', () => {
   const original = jest.requireActual('node:fs');
   return {
@@ -21,9 +21,26 @@ jest.mock('node:fs', () => {
       w.pipe = () => w;
       return w;
     }),
-    mkdirSync: jest.fn(),
   };
 });
+
+jest.mock('node:fs/promises', () => {
+  const original = jest.requireActual('node:fs/promises');
+  return {
+    ...original,
+    access: jest.fn(() => Promise.resolve()),
+    mkdir: jest.fn(() => Promise.resolve()),
+    stat: jest.fn(() => Promise.resolve()),
+  };
+});
+
+jest.mock('#root/package.json', () => ({
+  imports: {
+    '@alias/*': 'src/aliased/*',
+    '@alias/utils/*': 'src/aliased/utils/*',
+    '#lib/*': 'lib/*',
+  },
+}));
 
 /**
  * Create a chainable CLI mock implementing the fluent API used by the plugin.
@@ -47,7 +64,7 @@ jest.mock('node:fs', () => {
  * const cli = makeCli(actions);
  * // plugin.extendCli(cli) will call cli.command(...).description(...).option(...).action(...)
  * // After registration:
- * // actions.command === 'local:pdf [siteDir]'
+ * // actions.command === 'kit:pdf [siteDir]'
  * // typeof actions.action === 'function'
  */
 function makeCli(actions) {
@@ -76,28 +93,26 @@ const makeTemplate = (title) => jest.fn(async (path) => ({
   options: { compress: false },
 }));
 
-jest.mock('#buddhism/_base.js', () => makeTemplate('base'));
-jest.mock('#buddhism/_book.js', () => makeTemplate('book'));
-jest.mock('#buddhism/_condensed.js', () => makeTemplate('condensed'));
-jest.mock('#buddhism/_pdf.js', () => [['base', '#/path/one.md'], ['book', '#/path/two.md']]);
-jest.mock('#buddhism/_roll.js', () => makeTemplate('roll'));
-jest.mock('#buddhism/_thangka.js', () => makeTemplate('thangka'));
-jest.mock('#buddhism/_wheel.js', () => makeTemplate('wheel'));
+const name = 'docusaurus-plugin-kit';
+
+['base', 'book', 'condensed', 'roll', 'thangka', 'wheel']
+  .forEach((template) => jest.mock(`#buddhism/_${template}`, () => makeTemplate(template)));
+jest.mock('#buddhism/_pdf', () => [['base', '#lib/path/one.md'], ['book', '#lib/path/two.md']]);
 jest.mock('#root/src/data/common', () => ({ fileName: (p, t) => `${t}-${p.replace(/[^a-z0-9]/gi, '')}` }));
 
-// eslint-disable-next-line import/extensions
-const pdf = require('#buddhism/_pdf.js');
-// eslint-disable-next-line import/order
-const localPlugin = require('@site/src/plugins/docusaurus-plugin-local');
+// Sync.
+const pdf = require('#buddhism/_pdf');
+// eslint-disable-next-line import/no-dynamic-require
+const Plugin = require(`@site/src/plugins/${name}`);
 
-describe('docusaurus-plugin-local', () => {
+describe(`plugins.${name}`, () => {
   describe('createSitemapItems', () => {
     it('appends pdf entries using git lastmod when available', async () => {
       const defaultItems = [{ url: '/a' }];
       const defaultCreateSitemapItems = jest.fn(async () => defaultItems);
       log.mockResolvedValue({ latest: { date: '2025-10-01' } });
 
-      const result = await localPlugin.createSitemapItems({ defaultCreateSitemapItems, siteConfig: { url: 'https://mysite.test' } });
+      const result = await Plugin.createSitemapItems({ defaultCreateSitemapItems, siteConfig: { url: 'https://mysite.test' } });
 
       expect(defaultCreateSitemapItems).toHaveBeenCalledTimes(1);
       const appended = result.slice(defaultItems.length);
@@ -114,52 +129,134 @@ describe('docusaurus-plugin-local', () => {
     it('falls back to today when git has no latest', async () => {
       log.mockResolvedValue({});
       const defaultCreateSitemapItems = jest.fn(async () => []);
-      const out = await localPlugin.createSitemapItems({ defaultCreateSitemapItems, siteConfig: { url: 'https://x.y' } });
+      const out = await Plugin.createSitemapItems({ defaultCreateSitemapItems, siteConfig: { url: 'https://x.y' } });
       const today = new Date().toISOString().split('T')[0];
       expect(out.length).toBeGreaterThan(0);
       out.forEach((p) => expect(p.lastmod).toEqual(today));
     });
   });
 
-  describe('postBuild', () => {
-    it('writes pdf files and updates progress bar once per pdf', async () => {
-      const beforeIncrements = increment.mock.calls.length;
-      const beforeWrites = createWriteStream.mock.calls.length;
-      const outDir = join(tmpdir(), 'docusaurus-test-out');
-
-      await localPlugin.postBuild({ outDir, siteConfig });
-
-      const pdfCount = pdf.length;
-      expect(mkdirSync).toHaveBeenCalledWith(join(outDir, 'pdf'), { recursive: true });
-
-      expect(start).toHaveBeenCalledWith(pdfCount, 0);
-      expect(createWriteStream.mock.calls.length - beforeWrites).toEqual(pdfCount);
-      expect(increment.mock.calls.length - beforeIncrements).toEqual(pdfCount);
-      expect(stop).toHaveBeenCalledTimes(1);
+  describe('fileResolve', () => {
+    const siteDir = '/root';
+    it.each([
+      ['plain/path/file.txt', `${siteDir}/plain/path/file.txt`],
+      ['@alias/utils/helper.js', `${siteDir}/src/aliased/utils/helper.js`],
+      ['#lib/math/add.ts', `${siteDir}/lib/math/add.ts`],
+      ['@alias/utils/helper.js', `${siteDir}/src/aliased/utils/helper.js`],
+    ])('path=%s -> resolved=%s', (path, expected) => {
+      expect(Plugin.fileResolve(path, siteDir)).toBe(expected);
     });
   });
 
-  describe('pluginLocal API', () => {
+  describe('lastModified', () => {
+    it.each([
+      ['file-success', { mtimeMs: 123456789 }, 123456789],
+      ['file-failure', new Error('ENOENT'), 0],
+    ])('path=%s -> expected=%s', async (path, statReturn, expected) => {
+      stat[`mock${statReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](statReturn);
+
+      await expect(Plugin.lastModified(path)).resolves.toBe(expected);
+    });
+  });
+
+  describe('postBuild', () => {
+    const { length } = pdf;
+    const out = `${name}-test-out`;
+    const siteDir = tmpdir();
+    // After siteDir assignment.
+    const outDir = join(siteDir, out);
+
+    it('writes pdf files and updates progress bar once per pdf', async () => {
+      const beforeIncrements = increment.mock.calls.length;
+      const beforeWrites = createWriteStream.mock.calls.length;
+
+      await Plugin.postBuild({ outDir, siteConfig, siteDir });
+
+      expect(mkdir).toHaveBeenCalledWith(join(outDir, 'pdf'), { recursive: true });
+      expect(start).toHaveBeenCalledWith(length, 0);
+      expect(createWriteStream.mock.calls.length - beforeWrites).toBe(length);
+      expect(increment.mock.calls.length - beforeIncrements).toBe(length);
+      expect(stop).toHaveBeenCalledTimes(1);
+    });
+
+    it('skip recent pdf files, but updates progress bar once per pdf', async () => {
+      const beforeIncrements = increment.mock.calls.length;
+      const beforeWrites = createWriteStream.mock.calls.length;
+      const now = Date.now();
+      access.mockResolvedValueOnce(undefined);
+      stat.mockImplementation((path) => Promise.resolve({
+        mtimeMs: path.includes('/pdf/') ? now : 50,
+      }));
+
+      await Plugin.postBuild({ outDir, siteConfig, siteDir });
+
+      expect(mkdir).toHaveBeenCalledWith(join(outDir, 'pdf'), { recursive: true });
+      expect(start).toHaveBeenCalledWith(length, 0);
+      expect(createWriteStream.mock.calls.length - beforeWrites).toBe(0);
+      expect(increment.mock.calls.length - beforeIncrements).toBe(length);
+      expect(stop).toHaveBeenCalledTimes(1);
+
+      stat.mockImplementation(() => Promise.resolve());
+    });
+  });
+
+  describe('stale', () => {
+    const siteDir = '/root';
+
+    it.each([
+      // Target does not exist -> stale.
+      ['non-existent target', new Error('ENOENT'), [], true],
+      // Data newer than target -> stale.
+      ['data newer than target', undefined, [200, 100, 50], true],
+      // Template newer than target -> stale.
+      ['template newer than target', undefined, [50, 100, 200], true],
+      // Target older than cutoff -> stale.
+      ['target older than cutoff', undefined, [50, Date.now() - 8 * Plugin.MS_PER_DAY, 50], true],
+      // Target fresh -> not stale.
+      ['target fresh', undefined, [50, Date.now(), 50], false],
+    ])('%s -> expected=%s', async (scenario, accessReturn, stats, expected) => {
+      access[`mock${accessReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](accessReturn);
+      // Mock stat results in order: data, target, template.
+      stat.mockImplementation(() => {
+        const mtimeMs = stats.shift();
+        if (!mtimeMs) {
+          throw new Error('ENOENT');
+        }
+        return Promise.resolve({ mtimeMs });
+      });
+
+      await expect(Plugin.stale({
+        data: '@data/file.txt',
+        siteDir,
+        template: 'templateName',
+        target: 'target.pdf',
+      })).resolves.toBe(expected);
+
+      stat.mockImplementation(() => Promise.resolve());
+    });
+  });
+
+  describe('plugin API (default export)', () => {
     it('configureWebpack returns expected shape and includes Fontaine transform', () => {
-      const plugin = localPlugin.default({});
+      const plugin = Plugin.default({ outDir: 'out' });
       const cw = plugin.configureWebpack({}, false);
       expect(cw.devServer.static[0].publicPath).toBe('/pdf');
       expect(cw.plugins).toEqual(expect.arrayContaining([expect.objectContaining({
         __fontaine_opts: expect.any(Object),
       })]));
-      expect(plugin.name).toBe('docusaurus-plugin-local');
+      expect(plugin.name).toBe(name);
     });
 
     it('extendCli action: explicit args resolve config path and invoke postBuild side-effects', async () => {
-      const plugin = localPlugin.default({ siteDir: '/ctx/site' });
+      const plugin = Plugin.default({ siteDir: '/ctx/site' });
       const actions = {};
       const cli = {
         action: jest.fn().mockImplementation(function action(fn) {
           actions.action = fn;
           return this;
         }),
-        command: jest.fn().mockImplementation(function command(name) {
-          actions.command = name;
+        command: jest.fn().mockImplementation(function command(cmd) {
+          actions.command = cmd;
           return this;
         }),
         description: jest.fn().mockReturnThis(),
@@ -178,7 +275,7 @@ describe('docusaurus-plugin-local', () => {
 
     it('extendCli action: default args and falsy cliSiteDir fallback behave independently', async () => {
       // Default (undefined) invocation.
-      const pluginA = localPlugin.default({ siteDir: '/ctx/siteA' });
+      const pluginA = Plugin.default({ siteDir: '/ctx/siteA' });
       const actionsA = {};
       const cliA = makeCli(actionsA);
       loadFreshModule.mockResolvedValue(siteConfig);
@@ -190,7 +287,7 @@ describe('docusaurus-plugin-local', () => {
 
       // Falsy cliSiteDir -> fallback to context.siteDir and default filenames.
       const context = { siteDir: '/fallback/context/site' };
-      const pluginB = localPlugin.default(context);
+      const pluginB = Plugin.default(context);
       const actionsB = {};
       const cliB = makeCli(actionsB);
       pluginB.extendCli(cliB);

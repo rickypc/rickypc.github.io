@@ -5,14 +5,14 @@
  */
 
 // eslint-disable-next-line import/extensions
-const { body, substance } = require('./_strip.js');
+import { body, substance } from './_strip.js';
 
 /**
  * Generates a pdfMake object for `condensed mantra roll`.
  * @param {string} path - Multilingual file path.
  * @returns {object} A pdfMake compatible object.
  */
-export default function condensed(path) {
+export default function condensed(path: string) {
   const {
     default: {
       lang = 'bo-CN',

@@ -43,6 +43,7 @@ module.exports = [
     languageOptions: { ecmaVersion: 2024, globals: { ...globals.browser } },
     plugins: { 'no-secrets': noSecrets },
     rules: {
+      'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
       'import/no-extraneous-dependencies': ['error', { optionalDependencies: true }],
       'import/no-unresolved': ['error', { ignore: ['^[@#].+$'] }],
       'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
@@ -54,6 +55,8 @@ module.exports = [
     },
     settings: {
       'import/core-modules': ['@docusaurus/theme-common', '@docusaurus/utils'],
+      // This applies to js, jsx, ts, tsx.
+      'import/resolver': { typescript: true },
       react: { version: 'detect' },
     },
   },

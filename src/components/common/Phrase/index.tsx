@@ -19,8 +19,7 @@ import { memo, type ReactElement, type ReactNode } from 'react';
 import PhraseBlock from '@site/src/components/common/PhraseBlock';
 import Speech from '@site/src/components/common/Speech';
 import { type Transliteration } from '@site/src/components/common/MultiLingual';
-// eslint-disable-next-line import/extensions
-import pdf from '#buddhism/_pdf.js';
+import pdf from '#buddhism/_pdf';
 import styles from './styles.module.css';
 
 type InstructionProps = {

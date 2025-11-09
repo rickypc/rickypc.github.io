@@ -5,14 +5,14 @@
  */
 
 // eslint-disable-next-line import/extensions
-const { body, substance } = require('./_strip.js');
+import { body, substance } from './_strip.js';
 
 /**
- * Generates a pdfMake object for `prayer wheel mantra roll`.
+ * Generates a pdfMake object for `mantra roll`.
  * @param {string} path - Multilingual file path.
  * @returns {object} A pdfMake compatible object.
  */
-export default function wheel(path) {
+export default function roll(path: string) {
   const {
     default: {
       lang = 'bo-CN',
@@ -25,8 +25,6 @@ export default function wheel(path) {
   } = require(path);
   /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   let fontSizes = { default: 6, title: 4 };
-  // ((page height - (margins + borders)) / 6) - paddings.
-  const height = 77.5;
   let infix = '|';
   const lastRoll = total - 1;
   let lineHeight = 0.71;
@@ -35,107 +33,89 @@ export default function wheel(path) {
   // Siddhaṃ sign.
   let prefix = '꣼ ';
   let prefixFont = 'NotoSerifDevanagari';
-  let repeat = {};
+  let repeat = 1;
   let rollFont = 'NotoSans';
-  const rowHeight = height / 3;
   let suffix = '||';
   let text = '';
 
   switch (lang) {
     case 'bo-CN':
-      fontSizes = tibetan?.typography?.wheel || fontSizes;
+      fontSizes = tibetan?.typography?.roll || fontSizes;
       infix = '།';
       lineHeight = 0.84;
       paddingBottom = 1;
       paddingTop = 0.25;
       prefix = '༄༅། ';
       prefixFont = 'Kokonor';
-      repeat = tibetan?.repeat;
+      repeat = tibetan?.repeat?.roll || 1;
       rollFont = 'Kokonor';
       suffix = '༎';
       text = substance(tibetan?.children);
       break;
     case 'sa-IN':
-      fontSizes = sanskrit?.typography?.wheel || fontSizes;
+      fontSizes = sanskrit?.typography?.roll || fontSizes;
       infix = '।';
       lineHeight = 0.81;
       paddingBottom = 0.825;
       paddingTop = 1;
-      repeat = sanskrit?.repeat;
+      repeat = sanskrit?.repeat?.roll || 1;
       rollFont = 'NotoSerifDevanagari';
       suffix = '॥';
       text = substance(sanskrit.children);
       break;
     default:
-      fontSizes = transliteration?.typography?.wheel || fontSizes;
-      repeat = transliteration?.repeat;
+      fontSizes = transliteration?.typography?.roll || fontSizes;
+      repeat = transliteration?.repeat?.roll || 1;
       text = substance(transliteration.children);
   }
 
-  const content = Array.from({ length: total }, (_total, index) => {
-    const table = {};
-    if (index === 0) {
-      table.body = [
-        [
-          { margin: [0, 5, 0, -5], style: 'intro', text: 'ༀ' },
-          {
-            rowSpan: 3,
-            text: [
-              {
-                fontSize: fontSizes.title,
-                text: `${transliteration?.title?.toUpperCase()} ${repeat?.wheel || 1}x `,
-              },
-              body(infix, (repeat?.wheel || 1) - 1, prefix, repeat?.wheel || 1, suffix, text),
-            ],
-          },
+  const lastPhrase = repeat - 1;
+  // After lastPhrase assignment.
+  const content = Array.from({ length: total }, (_total, index) => ([
+    {
+      layout: 'roll',
+      margin: [0, 0, 0, index === lastRoll ? 0 : 7.5],
+      table: {
+        body: [
+          [
+            {
+              text: [
+                {
+                  fontSize: fontSizes.title,
+                  text: `${transliteration?.title?.toUpperCase()} ${repeat}x `,
+                },
+                body(infix, lastPhrase, prefix, repeat, suffix, text),
+              ],
+            },
+          ],
         ],
-        [{ margin: [0, 0, 0, 0], style: 'intro', text: 'ཨཱཿ' }],
-        [{ margin: [0, 1, 0, -1], style: 'intro', text: 'ཧཱུྃ' }],
-      ];
-      table.heights = [rowHeight, rowHeight, rowHeight];
-      table.widths = [18, '*'];
-    } else {
-      table.body = [
-        [
-          {
-            text: [
-              {
-                fontSize: fontSizes.title,
-                text: `${transliteration?.title?.toUpperCase()} ${repeat?.roll || 1}x `,
-              },
-              body(infix, (repeat?.roll || 1) - 1, prefix, repeat?.roll || 1, suffix, text),
-            ],
-          },
-        ],
-      ];
-      table.dontBreakRows = true;
-      table.heights = [82.5];
-    }
-    return [
-      { layout: 'roll', margin: [0, 0, 0, index === lastRoll ? 0 : 7.5], table },
-      index === lastRoll ? null : {
-        canvas: [
-          {
-            lineWidth: 0.25,
-            type: 'line',
-            x1: -5,
-            x2: -0.5,
-            y1: 0,
-            y2: 0,
-          },
-          {
-            lineWidth: 0.25,
-            type: 'line',
-            x1: 777.5,
-            x2: 782,
-            y1: 0,
-            y2: 0,
-          },
-        ],
-        margin: [0, 0, 0, 7.5],
+        dontBreakRows: true,
+        // (page height - (margins + borders)) / 6.
+        heights: [82.5],
       },
-    ];
-  });
+    },
+    index === lastRoll ? null : {
+      canvas: [
+        {
+          lineWidth: 0.25,
+          type: 'line',
+          x1: 0,
+          x2: 4.5,
+          y1: 0,
+          y2: 0,
+        },
+        {
+          lineWidth: 0.25,
+          type: 'line',
+          x1: 772.5,
+          x2: 777,
+          y1: 0,
+          y2: 0,
+        },
+      ],
+      margin: [0, 0, 0, 7.5],
+    },
+  ]));
 
   return {
     definition: {
@@ -167,7 +147,6 @@ export default function wheel(path) {
       pageOrientation: 'landscape',
       pageSize: 'LETTER',
       styles: {
-        intro: { alignment: 'center', font: 'Kokonor', fontSize: 16 },
         prefix: { font: prefixFont },
         roll: { font: rollFont },
       },

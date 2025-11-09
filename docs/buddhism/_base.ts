@@ -9,7 +9,7 @@
  * @param {string} path - Multilingual file path.
  * @returns {object} A pdfMake compatible object.
  */
-export default async function base(path) {
+export default async function base(path: string) {
   /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   const { definition = {}, options = {} } = await (require(path))();
   /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */

@@ -4,6 +4,14 @@
     "baseUrl": ".",
     "checkJs": false,
     "noEmit": true,
+    "paths": {
+      "#buddhism/*": [
+        "./docs/buddhism/*"
+      ],
+      "@site/*": [
+        "./*"
+      ]
+    },
     "strict": true
   },
   "extends": "@docusaurus/tsconfig",

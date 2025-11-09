@@ -5,7 +5,24 @@
  */
 
 // eslint-disable-next-line import/extensions
-const image = require('./_image.js');
+import image from './_image.js';
+
+type Image = {
+  path: string;
+  width: number;
+};
+
+type Page = {
+  chapters?: string[];
+  contents?: any[];
+  images: {
+    left: Image;
+    middle: Image;
+    right: Image;
+  };
+  number: number;
+  title?: string;
+};
 
 const chapterWidth = 12;
 const coverHeight = 70;
@@ -22,7 +39,7 @@ const unalomeMargin = (unalomeWidth * 2) + 5;
  * @param {string} path - Multilingual file path.
  * @returns {object} A pdfMake compatible object.
  */
-export default async function book(path) {
+export default async function book(path: string) {
   /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   const { default: { pages = [], title } } = require(path);
   /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
@@ -30,7 +47,7 @@ export default async function book(path) {
   // After length assignment.
   const lastPage = length - 1;
 
-  const content = await Promise.all(pages.map(async (page, index) => ([
+  const content = await Promise.all(pages.map(async (page: Page, index: number) => ([
     {
       layout: (page?.contents?.length || page?.title) ? 'page' : 'empty',
       margin: [0, 0, 0, index === lastPage ? 0 : 7.5],

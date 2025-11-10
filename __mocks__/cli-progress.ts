@@ -11,4 +11,9 @@ export const start = jest.fn();
 export const stop = jest.fn();
 
 // After the above assignments.
-export const Bar = jest.fn(() => ({ increment, start, stop }));
+export const Bar = jest.fn(() => ({
+  increment,
+  options: {},
+  start,
+  stop,
+}));

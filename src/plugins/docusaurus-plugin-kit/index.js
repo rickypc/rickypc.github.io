@@ -164,7 +164,7 @@ export async function postBuild({ outDir, siteConfig, siteDir }) {
   const bar = new Bar({}, {
     barCompleteChar: '█',
     barIncompleteChar: '░',
-    format: '\x1B[34m● Pdf {bar}\x1B[0m {percentage}% | ETA: {eta}s | {value}/{total}',
+    format: '\x1B[34m● PDF {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m',
     // It doesn't support pdf.length === 0.
     // stopOnComplete: true,
   });
@@ -227,6 +227,7 @@ export async function postBuild({ outDir, siteConfig, siteDir }) {
     }
     bar.increment();
   }));
+  bar.options.format = '\x1B[34m● PDF {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bar.stop();
 }
 

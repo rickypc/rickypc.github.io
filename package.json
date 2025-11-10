@@ -81,7 +81,7 @@
     "kit:pdf": "docusaurus kit:pdf",
     "lint": "eslint .",
     "serve": "docusaurus serve",
-    "start": "docusaurus start",
+    "start": "docusaurus kit:pdf; docusaurus start",
     "swizzle": "docusaurus swizzle",
     "write-heading-ids": "docusaurus write-heading-ids",
     "write-translations": "docusaurus write-translations"

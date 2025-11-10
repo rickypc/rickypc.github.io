@@ -4,7 +4,6 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-// eslint-disable-next-line import/extensions
 import { createSitemapItems } from '#root/src/plugins/docusaurus-plugin-kit/index.js';
 
 /** @type {import('@docusaurus/types').Config} */

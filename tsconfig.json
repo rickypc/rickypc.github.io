@@ -8,6 +8,9 @@
       "#buddhism/*": [
         "./docs/buddhism/*"
       ],
+      "#root/*": [
+        "./*"
+      ],
       "@site/*": [
         "./*"
       ]
@@ -19,7 +22,6 @@
     "docs",
     "docusaurus.config.js",
     "__mocks__",
-    "sidebars.js",
     "src",
     "tests"
   ]

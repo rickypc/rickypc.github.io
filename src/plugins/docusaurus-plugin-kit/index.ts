@@ -16,6 +16,7 @@ import { FontaineTransform } from 'fontaine';
 import { imports } from '#root/package.json';
 import { basename, join, resolve } from 'node:path';
 import PdfMake from 'pdfmake';
+import { type LoadContext, type Plugin } from '@docusaurus/types';
 import sharpAdapter from '@docusaurus/responsive-loader/sharp';
 import { simpleGit } from 'simple-git';
 // Templates & definitions.
@@ -28,9 +29,61 @@ import roll from '#buddhism/_roll';
 import thangka from '#buddhism/_thangka';
 import wheel from '#buddhism/_wheel';
 
+type Command = {
+  // eslint-disable-next-line no-unused-vars
+  action(_: (..._: any[]) => void, __?: { hidden?: boolean }): Command;
+  // eslint-disable-next-line no-unused-vars
+  command(_: string): Command;
+  // eslint-disable-next-line no-unused-vars
+  description(_: string): Command;
+  // eslint-disable-next-line no-unused-vars
+  option(_: string, __?: string): Command;
+};
+
+type CreateSitemapItemsProps = {
+  // eslint-disable-next-line no-unused-vars
+  defaultCreateSitemapItems: (_: {}) => SiteMapItem[];
+  siteConfig: SiteConfig;
+};
+
+type PostBuildProps = {
+  outDir: string;
+  siteConfig: SiteConfig;
+  siteDir: string;
+};
+
+type SiteConfig = {
+  title?: string;
+  url: string;
+};
+
+type SiteMapItem = {
+  changefreq: string;
+  lastmod: string;
+  priority: number;
+  url: string;
+};
+
+type StaleProps = {
+  data: string;
+  maxAgeDays?: number;
+  siteDir: string;
+  template: string;
+  target: string;
+};
+
+type Templates = {
+  base: typeof base;
+  book: typeof book;
+  condensed: typeof condensed;
+  roll: typeof roll;
+  thangka: typeof thangka;
+  wheel: typeof wheel;
+};
+
 // 24 * 60 * 60 * 1000.
 export const MS_PER_DAY = 86400000;
-const templates = {
+const templates: Templates = {
   base,
   book,
   condensed,
@@ -45,7 +98,10 @@ const templates = {
  * @param {(...args: object[]) => object[]} options.defaultCreateSitemapItems - Sitemap generator.
  * @returns {Array} Combined array of default items and PDF entries.
  */
-export async function createSitemapItems({ defaultCreateSitemapItems, ...rest }) {
+export async function createSitemapItems({
+  defaultCreateSitemapItems,
+  ...rest
+}: CreateSitemapItemsProps): Promise<SiteMapItem[]> {
   const git = simpleGit();
   const items = await defaultCreateSitemapItems(rest);
   const today = new Date().toISOString().split('T')[0];
@@ -77,7 +133,7 @@ export async function createSitemapItems({ defaultCreateSitemapItems, ...rest })
  * // fileResolve('alias/utils.js', '/root')
  * // -> '/root/src/utils.js'
  */
-export function fileResolve(path, siteDir) {
+export function fileResolve(path: string, siteDir: string): string {
   let response = path;
   Object.entries(imports).some(([key, value]) => {
     const prefix = key.replace('*', '');
@@ -97,7 +153,7 @@ export function fileResolve(path, siteDir) {
  * time in milliseconds since the UNIX epoch. If the file does not exist or an
  * error occurs, the promise resolves to `0`.
  */
-export async function lastModified(path) {
+export async function lastModified(path: string): Promise<number> {
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   return stat(path).then((sts) => sts.mtimeMs).catch(() => 0);
 }
@@ -129,7 +185,7 @@ export async function stale({
   siteDir,
   template,
   target,
-}) {
+}: StaleProps): Promise<boolean> {
   // Target does not exist.
   if (await access(target).then(() => false).catch(() => true)) {
     return true;
@@ -160,7 +216,7 @@ export async function stale({
  * @param {object} options.siteConfig - Docusaurus site configuration object.
  * @param {string} options.siteDir - Docusaurus site directory.
  */
-export async function postBuild({ outDir, siteConfig, siteDir }) {
+export async function postBuild({ outDir, siteConfig, siteDir }: PostBuildProps): Promise<void> {
   const bar = new Bar({}, {
     barCompleteChar: '█',
     barIncompleteChar: '░',
@@ -207,8 +263,7 @@ export async function postBuild({ outDir, siteConfig, siteDir }) {
       template,
       target,
     })) {
-      // eslint-disable-next-line security/detect-object-injection
-      const { definition, options } = await templates[template](path);
+      const { definition, options } = await templates[template as keyof Templates](path);
       await new Promise((settle) => {
         const document = printer.createPdfKitDocument({
           ...definition,
@@ -241,9 +296,9 @@ export async function postBuild({ outDir, siteConfig, siteDir }) {
  *   postBuild: (object) => void,
  * }} Plugin interface with lifecycle methods and name.
  */
-export default function plugin(context) {
+export default function plugin(context: LoadContext): Plugin {
   return {
-    configureWebpack(_, isServer) {
+    configureWebpack(_: any, isServer: boolean) {
       return {
         devServer: {
           compress: true,
@@ -290,7 +345,7 @@ export default function plugin(context) {
         ],
       };
     },
-    extendCli(cli) {
+    extendCli(cli: Command) {
       cli
         .command('kit:pdf [siteDir]')
         .description('Generate PDF files.')
@@ -308,7 +363,7 @@ export default function plugin(context) {
           const outDir = join(siteDir, options.outDir || DEFAULT_BUILD_DIR_NAME);
           const siteConfigPath = join(siteDir, options.config || DEFAULT_CONFIG_FILE_NAME);
           // After siteConfigPath assignment.
-          const siteConfig = await loadFreshModule(siteConfigPath);
+          const siteConfig = await loadFreshModule(siteConfigPath) as SiteConfig;
           await postBuild({ outDir, siteConfig, siteDir });
         }, { hidden: false });
     },

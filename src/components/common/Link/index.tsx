@@ -13,6 +13,7 @@ import {
   type Ref,
 } from 'react';
 import useBrokenLinks from '@docusaurus/useBrokenLinks';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 export type LinkProps = {
   className?: string;
@@ -38,9 +39,21 @@ export default memo(function Link({
   ...rest
 }: PropsWithChildren<LinkProps>): ReactElement {
   const links = useBrokenLinks();
+  let rel;
+  let renderHref = href;
+  const { siteConfig } = useDocusaurusContext();
+  let target;
 
-  if (href && !['https://', '.pdf'].filter((part) => href.includes(part)).length) {
-    links.collectLink(href);
+  if (href) {
+    if (href.includes('https://')) {
+      rel = 'noopener noreferrer';
+      target = '_blank';
+    } else if (!href.includes('.pdf')) {
+      links.collectLink(href);
+      if (siteConfig.trailingSlash && !href.endsWith('/')) {
+        renderHref = `${href}/`;
+      }
+    }
   }
 
   return !validate || (validate && href) ? (
@@ -48,10 +61,10 @@ export default memo(function Link({
       <m.a
         {...a11y(title)}
         className={className}
-        href={href}
+        href={renderHref}
         ref={ref}
-        rel={href?.includes('https://') ? 'noopener noreferrer' : undefined}
-        target={href?.includes('https://') ? '_blank' : undefined}
+        rel={rel}
+        target={target}
         {...rest}
       >
         {children}

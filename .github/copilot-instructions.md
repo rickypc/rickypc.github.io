@@ -18,11 +18,11 @@
 - Components by feature: `src/components/feature/`
 - Shared: `src/components/common/`
 - CSS modules: `src/css/custom.css`
-- a11y: `a11y` from `src/data/common.js`
+- a11y: `a11y` from `src/data/common.ts`
 - Class names: `clsx` from `src/data/common.ts`
 - PropTypes for all React components
 - Named exports for utils, default for components
-- Playwright helpers: `tests/utils/helper.js`
+- Playwright helpers: `tests/e2e/utils/helper.js`
 
 ## Data & Integration
 - Static data: `src/data/`
@@ -35,12 +35,12 @@
 - Lint: ESLint (AirBnB, React, Docusaurus)
 
 ## Examples
-- Component: `src/components/common/Button/index.jsx`
-- Unit test: `tests/unit/common/Button/index.test.js`
-- Plugin: `src/plugins/docusaurus-plugin-kit/index.js`
-- Test helper: `tests/utils/helper.js`
+- Component: `src/components/common/Button/index.tsx`
+- Unit test: `tests/unit/common/Button.test.tsx`
+- Plugin: `src/plugins/docusaurus-plugin-kit/index.ts`
+- E2E Test helper: `tests/e2e/utils/helper.js`
 
 ## Notes
-- Node.js >= 22 required
+- Node.js >= 24 required
 - Path aliases: see `package.json` "imports"
 - All code © Richard Huang

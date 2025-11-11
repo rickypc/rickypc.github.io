@@ -4,7 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { createSitemapItems } from '#root/src/plugins/docusaurus-plugin-kit/index.js';
+import { createSitemapItems } from '#root/src/plugins/docusaurus-plugin-kit/index';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -44,7 +44,7 @@ const config = {
   onBrokenLinks: 'throw',
   onDuplicateRoutes: 'throw',
   organizationName: 'rickypc',
-  plugins: [require.resolve('#root/src/plugins/docusaurus-plugin-kit/index.js')],
+  plugins: [require.resolve('#root/src/plugins/docusaurus-plugin-kit/index.ts')],
   presets: [
     [
       'classic',

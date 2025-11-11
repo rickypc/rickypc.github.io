@@ -9,6 +9,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Link from '@site/src/components/common/Link';
 import * as useBrokenLinks from '@docusaurus/useBrokenLinks';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 const collectLink = (useBrokenLinks as any).collectLink as jest.Mock;
 
@@ -31,7 +32,22 @@ describe('Link', () => {
       expect(anchor).toHaveClass('ext');
     });
 
-    it('renders internal link without rel/target and calls collectLink', () => {
+    it('renders trailing slashed internal link without rel/target and calls collectLink', () => {
+      (useDocusaurusContext as jest.Mock).mockReturnValue({ siteConfig: { trailingSlash: true } });
+      render((
+        <Link className="int" href="/docs/intro" title="internal">
+          Internal
+        </Link>
+      ));
+      const anchor = screen.getByRole('link');
+      expect(anchor).toHaveAttribute('href', '/docs/intro/');
+      expect(anchor).not.toHaveAttribute('rel');
+      expect(anchor).not.toHaveAttribute('target');
+      expect(collectLink).toHaveBeenCalledWith('/docs/intro');
+    });
+
+    it('renders non-trailing slashed internal link without rel/target and calls collectLink', () => {
+      (useDocusaurusContext as jest.Mock).mockReturnValue({ siteConfig: { trailingSlash: false } });
       render((
         <Link className="int" href="/docs/intro" title="internal">
           Internal

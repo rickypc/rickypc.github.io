@@ -1,5 +1,6 @@
 user-agent: *
 disallow: /assets/
 disallow: /img/
+disallow: /*?ref=
 
 sitemap: https://ricky.one/sitemap.xml

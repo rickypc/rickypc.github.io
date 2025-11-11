@@ -11,17 +11,11 @@ const config = {
   baseUrl: '/',
   deploymentBranch: 'gh-pages',
   favicon: 'img/favicon.ico',
-  future: {
-    experimental_faster: true,
-    v4: true,
-  },
+  future: { experimental_faster: true, v4: true },
   /*
   headTags: [
     {
-      attributes: {
-        href: 'https://counterapi.com',
-        rel: 'preconnect',
-      },
+      attributes: { href: 'https://counterapi.com', rel: 'preconnect' },
       tagName: 'link',
     },
   ],
@@ -51,14 +45,8 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       {
         docs: {},
-        gtag: {
-          trackingID: ['G-5G7P214N03', 'G-657RY80FJE', 'G-JYD543XZTH'],
-        },
-        sitemap: {
-          createSitemapItems,
-          ignorePatterns: ['/search/**'],
-          lastmod: 'date',
-        },
+        gtag: { trackingID: ['G-5G7P214N03', 'G-657RY80FJE', 'G-JYD543XZTH'] },
+        sitemap: { createSitemapItems, ignorePatterns: ['/search/**'], lastmod: 'date' },
         theme: { customCss: require.resolve('#root/src/css/custom.css') },
       },
     ],

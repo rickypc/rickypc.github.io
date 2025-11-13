@@ -44,7 +44,7 @@ module.exports = [
     plugins: { 'no-secrets': noSecrets },
     rules: {
       'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
-      'import/no-extraneous-dependencies': ['error', { optionalDependencies: true }],
+      'import/no-extraneous-dependencies': ['error', { devDependencies: true, optionalDependencies: true }],
       'import/no-unresolved': ['error', { ignore: ['^[@#].+$'] }],
       'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
       'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],

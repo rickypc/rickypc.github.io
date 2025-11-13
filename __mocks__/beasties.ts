@@ -4,6 +4,6 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-export const log = jest.fn();
+export const process = jest.fn((html) => Promise.resolve(html.replace('<html', '<html data-beasties-container')));
 
-export const simpleGit = jest.fn(() => ({ log }));
+export default jest.fn(() => ({ process }));

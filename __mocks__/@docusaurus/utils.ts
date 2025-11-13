@@ -8,6 +8,8 @@ export const DEFAULT_BUILD_DIR_NAME = 'build';
 
 export const DEFAULT_CONFIG_FILE_NAME = 'docusaurus.config.js';
 
+export const getFileCommitDate = jest.fn();
+
 export const siteConfig = { title: 'site-title', url: 'https://example.com' };
 
 // After siteConfig assignment.

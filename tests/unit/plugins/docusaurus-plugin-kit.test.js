@@ -3,12 +3,29 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { access, mkdir, stat } from 'node:fs/promises';
+import {
+  access,
+  mkdir,
+  readdir,
+  readFile,
+  stat,
+  writeFile,
+} from 'node:fs/promises';
+import {
+  increment,
+  SingleBar,
+  start,
+  stop,
+} from 'cli-progress';
 import { createWriteStream } from 'node:fs';
-import { DEFAULT_CONFIG_FILE_NAME, loadFreshModule, siteConfig } from '@docusaurus/utils';
-import { increment, start, stop } from 'cli-progress';
+import {
+  DEFAULT_CONFIG_FILE_NAME,
+  getFileCommitDate,
+  loadFreshModule,
+  siteConfig,
+} from '@docusaurus/utils';
 import { join } from 'node:path';
-import { log } from 'simple-git';
+import { process } from 'beasties';
 import { tmpdir } from 'node:os';
 import { Writable } from 'node:stream';
 
@@ -30,7 +47,10 @@ jest.mock('node:fs/promises', () => {
     ...original,
     access: jest.fn(() => Promise.resolve()),
     mkdir: jest.fn(() => Promise.resolve()),
+    readdir: jest.fn(() => Promise.resolve()),
+    readFile: jest.fn((path) => Promise.resolve(`<html ${path.includes('2') ? 'data-beasties-container ' : ''}/>`)),
     stat: jest.fn(() => Promise.resolve()),
+    writeFile: jest.fn(() => Promise.resolve()),
   };
 });
 
@@ -110,7 +130,7 @@ describe(`plugins.${name}`, () => {
     it('appends pdf entries using git lastmod when available', async () => {
       const defaultItems = [{ url: '/a' }];
       const defaultCreateSitemapItems = jest.fn(async () => defaultItems);
-      log.mockResolvedValue({ latest: { date: '2025-10-01' } });
+      getFileCommitDate.mockResolvedValue({ date: new Date('2025-10-01T07:00:00.000Z') });
 
       const result = await Plugin.createSitemapItems({ defaultCreateSitemapItems, siteConfig: { url: 'https://mysite.test' } });
 
@@ -127,7 +147,7 @@ describe(`plugins.${name}`, () => {
     });
 
     it('falls back to today when git has no latest', async () => {
-      log.mockResolvedValue({});
+      getFileCommitDate.mockResolvedValue({});
       const defaultCreateSitemapItems = jest.fn(async () => []);
       const out = await Plugin.createSitemapItems({ defaultCreateSitemapItems, siteConfig: { url: 'https://x.y' } });
       const today = new Date().toISOString().split('T')[0];
@@ -148,18 +168,7 @@ describe(`plugins.${name}`, () => {
     });
   });
 
-  describe('lastModified', () => {
-    it.each([
-      ['file-success', { mtimeMs: 123456789 }, 123456789],
-      ['file-failure', new Error('ENOENT'), 0],
-    ])('path=%s -> expected=%s', async (path, statReturn, expected) => {
-      stat[`mock${statReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](statReturn);
-
-      await expect(Plugin.lastModified(path)).resolves.toBe(expected);
-    });
-  });
-
-  describe('postBuild', () => {
+  describe('generatePdf', () => {
     const { length } = pdf;
     const out = `${name}-test-out`;
     const siteDir = tmpdir();
@@ -170,10 +179,10 @@ describe(`plugins.${name}`, () => {
       const beforeIncrements = increment.mock.calls.length;
       const beforeWrites = createWriteStream.mock.calls.length;
 
-      await Plugin.postBuild({ outDir, siteConfig, siteDir });
+      await Plugin.generatePdf({ outDir, siteConfig, siteDir });
 
       expect(mkdir).toHaveBeenCalledWith(join(outDir, 'pdf'), { recursive: true });
-      expect(start).toHaveBeenCalledWith(length, 0);
+      expect(start).toHaveBeenCalledWith(length, 0, { color: '\x1B[34m', task: 'Create PDF' });
       expect(createWriteStream.mock.calls.length - beforeWrites).toBe(length);
       expect(increment.mock.calls.length - beforeIncrements).toBe(length);
       expect(stop).toHaveBeenCalledTimes(1);
@@ -188,15 +197,125 @@ describe(`plugins.${name}`, () => {
         mtimeMs: path.includes('/pdf/') ? now : 50,
       }));
 
-      await Plugin.postBuild({ outDir, siteConfig, siteDir });
+      await Plugin.generatePdf({ outDir, siteConfig, siteDir });
 
       expect(mkdir).toHaveBeenCalledWith(join(outDir, 'pdf'), { recursive: true });
-      expect(start).toHaveBeenCalledWith(length, 0);
+      expect(start).toHaveBeenCalledWith(length, 0, { color: '\x1B[34m', task: 'Create PDF' });
       expect(createWriteStream.mock.calls.length - beforeWrites).toBe(0);
       expect(increment.mock.calls.length - beforeIncrements).toBe(length);
       expect(stop).toHaveBeenCalledTimes(1);
 
       stat.mockImplementation(() => Promise.resolve());
+    });
+  });
+
+  describe('inlineAboveFold', () => {
+    it('processes HTML files and updates progress bar', async () => {
+      readdir.mockResolvedValue(['file1.html', 'file2.html']);
+
+      await Plugin.inlineAboveFold('./out');
+
+      // Assert bar was created with correct total.
+      expect(start).toHaveBeenCalledWith(2, 0, expect.objectContaining({ task: 'Inline CSS' }));
+      // Assert increment called twice (once per file).
+      expect(increment).toHaveBeenCalledTimes(2);
+      expect(process).toHaveBeenCalledTimes(1);
+      expect(readFile).toHaveBeenCalledTimes(2);
+      // Assert writeFile called only for file1 (file2 already had beasties marker).
+      expect(writeFile).toHaveBeenCalledTimes(1);
+      expect(writeFile).toHaveBeenCalledWith('out/file1.html', expect.stringContaining('data-beasties-container'), 'utf8');
+      // Assert bar.stop called.
+      expect(stop).toHaveBeenCalled();
+    });
+  });
+
+  describe('lastModified', () => {
+    it.each([
+      ['file-success', { mtimeMs: 123456789 }, 123456789],
+      ['file-failure', new Error('ENOENT'), 0],
+    ])('path=%s -> expected=%s', async (path, statReturn, expected) => {
+      stat[`mock${statReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](statReturn);
+
+      await expect(Plugin.lastModified(path)).resolves.toBe(expected);
+    });
+  });
+
+  describe('outputPaths', () => {
+    it.each([
+      {
+        expected: ['/fakeDir/file1.md', '/fakeDir/nested/file3.md'],
+        files: ['file1.md', 'file2.txt', 'nested/file3.md'],
+        name: 'matches markdown files with *.md pattern',
+        pattern: '*.md',
+      },
+      {
+        expected: ['/fakeDir/file2.txt'],
+        files: ['file1.md', 'file2.txt'],
+        name: 'matches txt files with *.txt pattern',
+        pattern: '*.txt',
+      },
+      {
+        expected: [],
+        files: ['file1.md', 'file2.txt'],
+        name: 'returns empty array if no match',
+        pattern: '*.json',
+      },
+    ])('$name', async ({ files, pattern, expected }) => {
+      readdir.mockResolvedValue(files);
+
+      const result = await Plugin.outputPaths('/fakeDir', pattern);
+
+      expect(result).toEqual(expected.map((file) => join('/fakeDir', file.replace('/fakeDir/', ''))));
+    });
+  });
+
+  describe('postBuild', () => {
+    const base = { outDir: './out', siteConfig: { trailingSlash: false }, siteDir: './site' };
+
+    it('runs generatePdf and inlineAboveFold concurrently when trailingSlash is true', async () => {
+      const ctx = { ...base, siteConfig: { trailingSlash: true } };
+      readdir.mockResolvedValue(['file1.html', 'file2.html']);
+
+      await Plugin.postBuild(ctx);
+
+      // generatePdf.
+      expect(mkdir).toHaveBeenCalledWith(join(ctx.outDir, 'pdf'), { recursive: true });
+      expect(createWriteStream.mock.calls).toHaveLength(pdf.length);
+
+      // inlineAboveFold.
+      expect(process).toHaveBeenCalledTimes(1);
+      expect(readFile).toHaveBeenCalledTimes(2);
+      // Assert writeFile called only for file1 (file2 already had beasties marker).
+      expect(writeFile).toHaveBeenCalledTimes(1);
+      expect(writeFile).toHaveBeenCalledWith('out/file1.html', expect.stringContaining('data-beasties-container'), 'utf8');
+    });
+
+    it('skips inlineAboveFold when trailingSlash is false', async () => {
+      await Plugin.postBuild(base);
+
+      // generatePdf.
+      expect(mkdir).toHaveBeenCalledWith(join(base.outDir, 'pdf'), { recursive: true });
+      expect(createWriteStream.mock.calls).toHaveLength(pdf.length);
+
+      // inlineAboveFold.
+      expect(process).not.toHaveBeenCalled();
+      expect(readFile).not.toHaveBeenCalled();
+      expect(writeFile).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('progress', () => {
+    it('should call SingleBar constructor with correct options', () => {
+      Plugin.progress();
+
+      expect(SingleBar).toHaveBeenCalledTimes(1);
+      expect(SingleBar).toHaveBeenNthCalledWith(1, expect.objectContaining({
+        barCompleteChar: '█',
+        barIncompleteChar: '░',
+        clearOnComplete: false,
+        hideCursor: true,
+        format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m',
+      }));
     });
   });
 

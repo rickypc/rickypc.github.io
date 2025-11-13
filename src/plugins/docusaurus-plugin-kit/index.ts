@@ -4,21 +4,31 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { access, mkdir, stat } from 'node:fs/promises';
-import { Bar } from 'cli-progress';
+import {
+  access,
+  mkdir,
+  readdir,
+  readFile,
+  stat,
+  writeFile,
+} from 'node:fs/promises';
+import { basename, join, resolve } from 'node:path';
+import Beasties from 'beasties';
 import { createWriteStream } from 'node:fs';
 import {
   DEFAULT_BUILD_DIR_NAME,
   DEFAULT_CONFIG_FILE_NAME,
+  getFileCommitDate,
   loadFreshModule,
 } from '@docusaurus/utils';
+import { type DocusaurusConfig, type LoadContext, type Plugin } from '@docusaurus/types';
 import { FontaineTransform } from 'fontaine';
 import { imports } from '#root/package.json';
-import { basename, join, resolve } from 'node:path';
+import { minimatch } from 'minimatch';
+import { SingleBar } from 'cli-progress';
 import PdfMake from 'pdfmake';
-import { type LoadContext, type Plugin } from '@docusaurus/types';
+import { type PluginOptions } from '@docusaurus/plugin-sitemap';
 import sharpAdapter from '@docusaurus/responsive-loader/sharp';
-import { simpleGit } from 'simple-git';
 // Templates & definitions.
 import base from '#buddhism/_base';
 import book from '#buddhism/_book';
@@ -29,40 +39,11 @@ import roll from '#buddhism/_roll';
 import thangka from '#buddhism/_thangka';
 import wheel from '#buddhism/_wheel';
 
-type Command = {
-  // eslint-disable-next-line no-unused-vars
-  action(_: (..._: any[]) => void, __?: { hidden?: boolean }): Command;
-  // eslint-disable-next-line no-unused-vars
-  command(_: string): Command;
-  // eslint-disable-next-line no-unused-vars
-  description(_: string): Command;
-  // eslint-disable-next-line no-unused-vars
-  option(_: string, __?: string): Command;
-};
-
-type CreateSitemapItemsProps = {
-  // eslint-disable-next-line no-unused-vars
-  defaultCreateSitemapItems: (_: {}) => SiteMapItem[];
-  siteConfig: SiteConfig;
-};
-
-type PostBuildProps = {
-  outDir: string;
-  siteConfig: SiteConfig;
-  siteDir: string;
-};
-
-type SiteConfig = {
-  title?: string;
-  url: string;
-};
-
-type SiteMapItem = {
-  changefreq: string;
-  lastmod: string;
-  priority: number;
-  url: string;
-};
+type CreateSitemapItemsFn = NonNullable<PluginOptions['createSitemapItems']>;
+type CreateSitemapItemsParams = Parameters<CreateSitemapItemsFn>[0];
+type SitemapItems = Awaited<ReturnType<CreateSitemapItemsFn>>;
+// After SitemapItems assignment.
+type SitemapItem = SitemapItems[number];
 
 type StaleProps = {
   data: string;
@@ -92,6 +73,10 @@ const templates: Templates = {
   wheel,
 };
 
+// ----------------------------------------------------------------------------
+// Generic supporting methods.
+// ----------------------------------------------------------------------------
+
 /**
  * Extends sitemap items with generated PDFs.
  * @param {object} options - Configuration options.
@@ -101,23 +86,21 @@ const templates: Templates = {
 export async function createSitemapItems({
   defaultCreateSitemapItems,
   ...rest
-}: CreateSitemapItemsProps): Promise<SiteMapItem[]> {
-  const git = simpleGit();
+}: CreateSitemapItemsParams): Promise<SitemapItems> {
   const items = await defaultCreateSitemapItems(rest);
   const today = new Date().toISOString().split('T')[0];
   const pdfs = await Promise.all(pdf.map(async ([template, path]) => {
-    const lastmod = (await git.log({
-      '--date': 'format:%Y-%m-%d',
-      file: path.replace(/^#/, 'docs/'),
-      format: { date: '%cd' },
-      maxCount: 1,
-    }))?.latest?.date || today;
+    const commit = await getFileCommitDate(
+      path.replace(/^#/, 'docs/'),
+      { age: 'newest', includeAuthor: false },
+    );
     return {
       changefreq: 'weekly',
-      lastmod,
+      // YYYY-MM-DD via en-CA.
+      lastmod: commit?.date ? commit.date.toLocaleDateString('en-CA') : today,
       priority: 0.5,
       url: join(rest.siteConfig.url, 'pdf', `${fileName(path, template)}.pdf`),
-    };
+    } as SitemapItem;
   }));
   return [...items, ...pdfs];
 }
@@ -156,6 +139,35 @@ export function fileResolve(path: string, siteDir: string): string {
 export async function lastModified(path: string): Promise<number> {
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   return stat(path).then((sts) => sts.mtimeMs).catch(() => 0);
+}
+
+/**
+ * Recursively collects file paths from a given output directory and filters them
+ * using a glob pattern.
+ * @param {string} outDir - The root output directory to search within.
+ * @param {string} pattern - A glob pattern used to filter files.
+ * @returns { Promise<string[]>} An array of matching file paths.
+ */
+export async function outputPaths(outDir: string, pattern: string): Promise<string[]> {
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  return minimatch.match(await readdir(outDir, { recursive: true }), pattern, { matchBase: true })
+    .map((file) => join(outDir, file));
+}
+
+/**
+ * Create and return a new progress bar instance.
+ * @returns {SingleBar} A new cli-progress SingleBar instance.
+ */
+export function progress(): SingleBar {
+  return new SingleBar({
+    barCompleteChar: '█',
+    barIncompleteChar: '░',
+    clearOnComplete: false,
+    format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m',
+    hideCursor: true,
+    // It doesn't support length === 0.
+    // stopOnComplete: true,
+  });
 }
 
 /**
@@ -209,23 +221,21 @@ export async function stale({
   return false;
 }
 
-/**
- * Generates PDFs on Docusaurus postBuild, with progress bar.
- * @param {object} options - Post-build configuration.
- * @param {string} options.outDir - Directory to output generated PDFs.
- * @param {object} options.siteConfig - Docusaurus site configuration object.
- * @param {string} options.siteDir - Docusaurus site directory.
- */
-export async function postBuild({ outDir, siteConfig, siteDir }: PostBuildProps): Promise<void> {
-  const bar = new Bar({}, {
-    barCompleteChar: '█',
-    barIncompleteChar: '░',
-    format: '\x1B[34m● PDF {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m',
-    // It doesn't support pdf.length === 0.
-    // stopOnComplete: true,
-  });
-  bar.start(pdf.length, 0);
+// ----------------------------------------------------------------------------
+// postBuild supporting methods.
+// ----------------------------------------------------------------------------
 
+/**
+ * Generate PDF files.
+ * @param {object} context - The Docusaurus load context.
+ * @param {string} context.outDir - The output directory where generated files are located.
+ * @param {object} context.siteConfig - The site configuration object.
+ * @param {string} context.siteDir - The root directory of the site.
+ * @returns {Promise<void>} Resolves when all PDFs have been generated.
+ */
+export async function generatePdf({ outDir, siteConfig, siteDir }: LoadContext): Promise<void> {
+  const bar = progress();
+  bar.start(pdf.length, 0, { color: '\x1B[34m', task: 'Create PDF' });
   const devanagari = join(__dirname, 'font', 'noto', 'NotoSerifDevanagari-Regular.ttf');
   const devanagariBold = join(__dirname, 'font', 'noto', 'NotoSerifDevanagari-Bold.ttf');
   const kokonor = join(__dirname, 'font', 'kokonor', 'Kokonor-Regular.ttf');
@@ -264,7 +274,7 @@ export async function postBuild({ outDir, siteConfig, siteDir }: PostBuildProps)
       target,
     })) {
       const { definition, options } = await templates[template as keyof Templates](path);
-      await new Promise((settle) => {
+      await new Promise<void>((settle, reject) => {
         const document = printer.createPdfKitDocument({
           ...definition,
           info: {
@@ -274,16 +284,56 @@ export async function postBuild({ outDir, siteConfig, siteDir }: PostBuildProps)
             producer: siteConfig.url,
           },
         }, options);
-        document.on('end', settle);
         // eslint-disable-next-line security/detect-non-literal-fs-filename
-        document.pipe(createWriteStream(target));
+        const stream = createWriteStream(target);
+        document.on('end', settle);
+        document.on('error', reject);
+        stream.on('error', reject);
+        document.pipe(stream);
         document.end();
       });
     }
     bar.increment();
   }));
-  bar.options.format = '\x1B[34m● PDF {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
+  (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bar.stop();
+}
+
+/**
+ * Inline above-the-fold CSS into generated HTML files.
+ * @param {string} outDir - The output directory containing built HTML files.
+ * @returns {Promise<void>} Resolves when all HTML files have been processed.
+ */
+export async function inlineAboveFold(outDir: string): Promise<void> {
+  const bar = progress();
+  const beasties = new Beasties({ logLevel: 'warn', path: outDir, preload: 'swap' });
+  const paths = await outputPaths(outDir, '*.html');
+  bar.start(paths.length, 0, { color: '\x1B[35m', task: 'Inline CSS' });
+  await Promise.all(paths.map(async (path) => {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    const html = await readFile(path, 'utf8');
+    if (!html.includes('data-beasties-container')) {
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
+      await writeFile(path, await beasties.process(html), 'utf8');
+    }
+    bar.increment();
+  }));
+  (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
+  bar.stop();
+}
+
+/**
+ * Generates PDFs and inline above-the-fold CSS, with progress bar.
+ * @param {object} options - Post-build configuration.
+ * @param {string} options.outDir - Directory to output generated PDFs.
+ * @param {object} options.siteConfig - Docusaurus site configuration object.
+ * @param {string} options.siteDir - Docusaurus site directory.
+ */
+export async function postBuild({ outDir, siteConfig, siteDir }: LoadContext): Promise<void> {
+  await Promise.all([
+    generatePdf({ outDir, siteConfig, siteDir } as LoadContext),
+    siteConfig.trailingSlash ? inlineAboveFold(outDir) : Promise.resolve(),
+  ]);
 }
 
 /**
@@ -308,7 +358,7 @@ export default function plugin(context: LoadContext): Plugin {
         module: {
           rules: [
             {
-              test: /\.(?:png|jpe?g)$/i,
+              test: /\.(?:jpe?g|png)$/i,
               use: [
                 require.resolve('@docusaurus/lqip-loader'),
                 {
@@ -345,7 +395,7 @@ export default function plugin(context: LoadContext): Plugin {
         ],
       };
     },
-    extendCli(cli: Command) {
+    extendCli(cli) {
       cli
         .command('kit:pdf [siteDir]')
         .description('Generate PDF files.')
@@ -363,9 +413,9 @@ export default function plugin(context: LoadContext): Plugin {
           const outDir = join(siteDir, options.outDir || DEFAULT_BUILD_DIR_NAME);
           const siteConfigPath = join(siteDir, options.config || DEFAULT_CONFIG_FILE_NAME);
           // After siteConfigPath assignment.
-          const siteConfig = await loadFreshModule(siteConfigPath) as SiteConfig;
-          await postBuild({ outDir, siteConfig, siteDir });
-        }, { hidden: false });
+          const siteConfig = await loadFreshModule(siteConfigPath) as DocusaurusConfig;
+          await postBuild({ outDir, siteConfig, siteDir } as LoadContext);
+        });
     },
     name: basename(__dirname),
     postBuild,

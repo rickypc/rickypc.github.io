@@ -30,6 +30,7 @@ import { MultiBar } from 'cli-progress';
 import PdfMake from 'pdfmake';
 import { type PluginOptions } from '@docusaurus/plugin-sitemap';
 import sharpAdapter from '@docusaurus/responsive-loader/sharp';
+import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
 // Templates & definitions.
 import base from '#buddhism/_base';
 import book from '#buddhism/_book';
@@ -301,7 +302,6 @@ export async function generatePdf(
   (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bars.update();
   bar.stop();
-//  bars.update();
 }
 
 /**
@@ -311,13 +311,19 @@ export async function generatePdf(
  * @returns {Promise<void>} Resolves when all HTML files have been processed.
  */
 export async function inlineAboveFold(outDir: string, bars:MultiBar): Promise<void> {
-  const bar = bars.create(1, 0, { color: '\x1B[36m', task: 'Find HTML ' });
+  const bar = bars.create(
+    1,
+    0,
+    { color: '\x1B[36m', task: 'Find HTML ' },
+    { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
+  );
   bars.update();
   const beasties = new Beasties({ logLevel: 'warn', path: outDir, preload: 'swap' });
   const paths = await outputPaths(outDir, '*.html');
   bar.increment();
   bars.update();
   bar.setTotal(paths.length);
+  (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m';
   bar.update(0, { task: 'Inline CSS' });
   await concurrent(paths, async (batch, index) => {
     // Tiny stagger to smooth progress bar display.
@@ -420,6 +426,7 @@ export default function plugin(context: LoadContext): Plugin {
               'sans-serif',
             ],
           }),
+          new TsCheckerRspackPlugin() as any,
         ],
       };
     },

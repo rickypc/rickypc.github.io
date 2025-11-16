@@ -228,7 +228,12 @@ describe(`plugins.${name}`, () => {
       expect(barUpdate).toHaveBeenCalledWith(0, expect.objectContaining({ task: 'Inline CSS' }));
       expect(barsUpdate).toHaveBeenCalledTimes(5);
       // Assert bar was created with single initial scan.
-      expect(create).toHaveBeenCalledWith(1, 0, expect.objectContaining({ task: 'Find HTML ' }));
+      expect(create).toHaveBeenCalledWith(
+        1,
+        0,
+        expect.objectContaining({ task: 'Find HTML ' }),
+        expect.objectContaining({ format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' }),
+      );
       // Assert increment called thrice (initial scan + once per file).
       expect(increment).toHaveBeenCalledTimes(3);
       expect(process).toHaveBeenCalledTimes(1);

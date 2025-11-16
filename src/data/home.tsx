@@ -152,8 +152,8 @@ export const layout: LayoutProps = {
     'professional portfolio',
     'ricky huang',
   ],
-  /*
   metadatas: [
+    /*
     <link
       as="font"
       fetchPriority="high"
@@ -162,6 +162,7 @@ export const layout: LayoutProps = {
       rel="preload"
       type="font/woff2"
     />,
+    */
     <link
       as="image"
       fetchPriority="high"
@@ -171,7 +172,6 @@ export const layout: LayoutProps = {
       type="image/webp"
     />,
   ],
-  */
   title: 'Engineering Leadership & Full Stack Innovation',
 };
 

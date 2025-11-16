@@ -22,7 +22,7 @@ export default memo(function Figure() {
         viewport={{ once: true }}
         whileInView={{ opacity: 1, scale: 1 }}
       >
-        <Image {...image} />
+        <Image fetchPriority="high" {...image} />
       </m.figure>
     </LazyMotion>
   );

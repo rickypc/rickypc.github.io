@@ -14,6 +14,7 @@ import {
 } from 'node:fs/promises';
 import { basename, join, resolve } from 'node:path';
 import Beasties from 'beasties';
+import { concurrent } from 'timeable-promise';
 import { createWriteStream } from 'node:fs';
 import {
   DEFAULT_BUILD_DIR_NAME,
@@ -25,7 +26,7 @@ import { type DocusaurusConfig, type LoadContext, type Plugin } from '@docusauru
 import { FontaineTransform } from 'fontaine';
 import { imports } from '#root/package.json';
 import { minimatch } from 'minimatch';
-import { SingleBar } from 'cli-progress';
+import { MultiBar } from 'cli-progress';
 import PdfMake from 'pdfmake';
 import { type PluginOptions } from '@docusaurus/plugin-sitemap';
 import sharpAdapter from '@docusaurus/responsive-loader/sharp';
@@ -155,22 +156,6 @@ export async function outputPaths(outDir: string, pattern: string): Promise<stri
 }
 
 /**
- * Create and return a new progress bar instance.
- * @returns {SingleBar} A new cli-progress SingleBar instance.
- */
-export function progress(): SingleBar {
-  return new SingleBar({
-    barCompleteChar: '█',
-    barIncompleteChar: '░',
-    clearOnComplete: false,
-    format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m',
-    hideCursor: true,
-    // It doesn't support length === 0.
-    // stopOnComplete: true,
-  });
-}
-
-/**
  * Determine whether a target file is considered stale based on its existence,
  * modification times of related files, and a maximum age threshold.
  * @param {object} options - Options for staleness check.
@@ -231,11 +216,15 @@ export async function stale({
  * @param {string} context.outDir - The output directory where generated files are located.
  * @param {object} context.siteConfig - The site configuration object.
  * @param {string} context.siteDir - The root directory of the site.
+ * @param {MultiBar} bars - A MultiBar instance used to render progress bars.
  * @returns {Promise<void>} Resolves when all PDFs have been generated.
  */
-export async function generatePdf({ outDir, siteConfig, siteDir }: LoadContext): Promise<void> {
-  const bar = progress();
-  bar.start(pdf.length, 0, { color: '\x1B[34m', task: 'Create PDF' });
+export async function generatePdf(
+  { outDir, siteConfig, siteDir }: LoadContext,
+  bars: MultiBar,
+): Promise<void> {
+  const bar = bars.create(pdf.length, 0, { color: '\x1B[34m', task: 'Create PDF' });
+  bars.update();
   const devanagari = join(__dirname, 'font', 'noto', 'NotoSerifDevanagari-Regular.ttf');
   const devanagariBold = join(__dirname, 'font', 'noto', 'NotoSerifDevanagari-Bold.ttf');
   const kokonor = join(__dirname, 'font', 'kokonor', 'Kokonor-Regular.ttf');
@@ -265,60 +254,89 @@ export async function generatePdf({ outDir, siteConfig, siteDir }: LoadContext):
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   await mkdir(pdfDir, { recursive: true });
 
-  await Promise.all(pdf.map(async ([template, path]) => {
-    const target = join(pdfDir, `${fileName(path, template)}.pdf`);
-    if (await stale({
-      data: path,
-      siteDir,
-      template,
-      target,
-    })) {
-      const { definition, options } = await templates[template as keyof Templates](path);
-      await new Promise<void>((settle, reject) => {
-        const document = printer.createPdfKitDocument({
-          ...definition,
-          info: {
-            ...definition.info,
-            author: siteConfig.title,
-            creator: siteConfig.url,
-            producer: siteConfig.url,
-          },
-        }, options);
-        // eslint-disable-next-line security/detect-non-literal-fs-filename
-        const stream = createWriteStream(target);
-        document.on('end', settle);
-        document.on('error', reject);
-        stream.on('error', reject);
-        document.pipe(stream);
-        document.end();
-      });
-    }
-    bar.increment();
-  }));
+  await concurrent(pdf, async (batch, index) => {
+    // Workload arbritary weight numbers.
+    const weight = index * 75;
+    // Tiny stagger to smooth progress bar display.
+    await new Promise((settle) => {
+      setTimeout(settle, weight);
+    });
+    await Promise.all(batch.map(async ([template, path]) => {
+      const target = join(pdfDir, `${fileName(path, template)}.pdf`);
+      if (await stale({
+        data: path,
+        siteDir,
+        template,
+        target,
+      })) {
+        const { definition, options } = await templates[template as keyof Templates](path);
+        await new Promise<void>((settle, reject) => {
+          const document = printer.createPdfKitDocument({
+            ...definition,
+            info: {
+              ...definition.info,
+              author: siteConfig.title,
+              creator: siteConfig.url,
+              producer: siteConfig.url,
+            },
+          }, options);
+          // eslint-disable-next-line security/detect-non-literal-fs-filename
+          const stream = createWriteStream(target);
+          document.on('end', settle);
+          document.on('error', reject);
+          stream.on('error', reject);
+          document.pipe(stream);
+          document.end();
+        });
+        // Tiny stagger to unblock progress bar display.
+        await new Promise((settle) => {
+          // Scaled by workload weight.
+          setTimeout(settle, weight);
+        });
+      }
+      bar.increment();
+      bars.update();
+    }));
+  }, 5);
   (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
+  bars.update();
   bar.stop();
+//  bars.update();
 }
 
 /**
  * Inline above-the-fold CSS into generated HTML files.
  * @param {string} outDir - The output directory containing built HTML files.
+ * @param {MultiBar} bars - A MultiBar instance used to render progress bars.
  * @returns {Promise<void>} Resolves when all HTML files have been processed.
  */
-export async function inlineAboveFold(outDir: string): Promise<void> {
-  const bar = progress();
+export async function inlineAboveFold(outDir: string, bars:MultiBar): Promise<void> {
+  const bar = bars.create(1, 0, { color: '\x1B[36m', task: 'Find HTML ' });
+  bars.update();
   const beasties = new Beasties({ logLevel: 'warn', path: outDir, preload: 'swap' });
   const paths = await outputPaths(outDir, '*.html');
-  bar.start(paths.length, 0, { color: '\x1B[35m', task: 'Inline CSS' });
-  await Promise.all(paths.map(async (path) => {
-    // eslint-disable-next-line security/detect-non-literal-fs-filename
-    const html = await readFile(path, 'utf8');
-    if (!html.includes('data-beasties-container')) {
+  bar.increment();
+  bars.update();
+  bar.setTotal(paths.length);
+  bar.update(0, { task: 'Inline CSS' });
+  await concurrent(paths, async (batch, index) => {
+    // Tiny stagger to smooth progress bar display.
+    await new Promise((settle) => {
+      setTimeout(settle, index);
+    });
+    await Promise.all(batch.map(async (path) => {
       // eslint-disable-next-line security/detect-non-literal-fs-filename
-      await writeFile(path, await beasties.process(html), 'utf8');
-    }
-    bar.increment();
-  }));
+      const html = await readFile(path, 'utf8');
+      if (!html.includes('data-beasties-container')) {
+        // eslint-disable-next-line security/detect-non-literal-fs-filename
+        await writeFile(path, await beasties.process(html), 'utf8');
+      }
+      bar.increment();
+      bars.update();
+    }));
+  }, 5);
   (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
+  bars.update();
   bar.stop();
 }
 
@@ -330,10 +348,20 @@ export async function inlineAboveFold(outDir: string): Promise<void> {
  * @param {string} options.siteDir - Docusaurus site directory.
  */
 export async function postBuild({ outDir, siteConfig, siteDir }: LoadContext): Promise<void> {
+  const bars = new MultiBar({
+    barCompleteChar: '█',
+    barIncompleteChar: '░',
+    emptyOnZero: true,
+    format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m',
+    hideCursor: true,
+    // It doesn't support length === 0.
+    stopOnComplete: true,
+  });
   await Promise.all([
-    generatePdf({ outDir, siteConfig, siteDir } as LoadContext),
-    siteConfig.trailingSlash ? inlineAboveFold(outDir) : Promise.resolve(),
+    generatePdf({ outDir, siteConfig, siteDir } as LoadContext, bars),
+    siteConfig.trailingSlash ? inlineAboveFold(outDir, bars) : Promise.resolve(),
   ]);
+  bars.stop();
 }
 
 /**

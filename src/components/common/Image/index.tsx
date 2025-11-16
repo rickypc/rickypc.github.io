@@ -62,6 +62,7 @@ export type PictureInfo = {
 type PictureProps = {
   alt?: string;
   className?: string;
+  fetchPriority?: 'auto' | 'high' | 'low';
   onLoad?: ReactEventHandler<HTMLImageElement>;
   picture?: PictureInfo;
   ref?: RefObject<HTMLPictureElement>;

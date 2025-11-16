@@ -12,9 +12,12 @@ import {
   writeFile,
 } from 'node:fs/promises';
 import {
+  barUpdate,
+  barsUpdate,
+  create,
   increment,
-  SingleBar,
-  start,
+  MultiBar,
+  setTotal,
   stop,
 } from 'cli-progress';
 import { createWriteStream } from 'node:fs';
@@ -179,12 +182,15 @@ describe(`plugins.${name}`, () => {
       const beforeIncrements = increment.mock.calls.length;
       const beforeWrites = createWriteStream.mock.calls.length;
 
-      await Plugin.generatePdf({ outDir, siteConfig, siteDir });
+      await Plugin.generatePdf({ outDir, siteConfig, siteDir }, MultiBar());
 
+      expect(barUpdate).not.toHaveBeenCalled();
+      expect(barsUpdate).toHaveBeenCalledTimes(4);
       expect(mkdir).toHaveBeenCalledWith(join(outDir, 'pdf'), { recursive: true });
-      expect(start).toHaveBeenCalledWith(length, 0, { color: '\x1B[34m', task: 'Create PDF' });
+      expect(create).toHaveBeenCalledWith(length, 0, { color: '\x1B[34m', task: 'Create PDF' });
       expect(createWriteStream.mock.calls.length - beforeWrites).toBe(length);
       expect(increment.mock.calls.length - beforeIncrements).toBe(length);
+      expect(setTotal).not.toHaveBeenCalled();
       expect(stop).toHaveBeenCalledTimes(1);
     });
 
@@ -197,12 +203,15 @@ describe(`plugins.${name}`, () => {
         mtimeMs: path.includes('/pdf/') ? now : 50,
       }));
 
-      await Plugin.generatePdf({ outDir, siteConfig, siteDir });
+      await Plugin.generatePdf({ outDir, siteConfig, siteDir }, MultiBar());
 
+      expect(barUpdate).not.toHaveBeenCalled();
+      expect(barsUpdate).toHaveBeenCalledTimes(4);
       expect(mkdir).toHaveBeenCalledWith(join(outDir, 'pdf'), { recursive: true });
-      expect(start).toHaveBeenCalledWith(length, 0, { color: '\x1B[34m', task: 'Create PDF' });
+      expect(create).toHaveBeenCalledWith(length, 0, { color: '\x1B[34m', task: 'Create PDF' });
       expect(createWriteStream.mock.calls.length - beforeWrites).toBe(0);
       expect(increment.mock.calls.length - beforeIncrements).toBe(length);
+      expect(setTotal).not.toHaveBeenCalled();
       expect(stop).toHaveBeenCalledTimes(1);
 
       stat.mockImplementation(() => Promise.resolve());
@@ -213,19 +222,23 @@ describe(`plugins.${name}`, () => {
     it('processes HTML files and updates progress bar', async () => {
       readdir.mockResolvedValue(['file1.html', 'file2.html']);
 
-      await Plugin.inlineAboveFold('./out');
+      await Plugin.inlineAboveFold('./out', MultiBar());
 
-      // Assert bar was created with correct total.
-      expect(start).toHaveBeenCalledWith(2, 0, expect.objectContaining({ task: 'Inline CSS' }));
-      // Assert increment called twice (once per file).
-      expect(increment).toHaveBeenCalledTimes(2);
+      expect(barUpdate).toHaveBeenCalledTimes(1);
+      expect(barUpdate).toHaveBeenCalledWith(0, expect.objectContaining({ task: 'Inline CSS' }));
+      expect(barsUpdate).toHaveBeenCalledTimes(5);
+      // Assert bar was created with single initial scan.
+      expect(create).toHaveBeenCalledWith(1, 0, expect.objectContaining({ task: 'Find HTML ' }));
+      // Assert increment called thrice (initial scan + once per file).
+      expect(increment).toHaveBeenCalledTimes(3);
       expect(process).toHaveBeenCalledTimes(1);
       expect(readFile).toHaveBeenCalledTimes(2);
       // Assert writeFile called only for file1 (file2 already had beasties marker).
       expect(writeFile).toHaveBeenCalledTimes(1);
       expect(writeFile).toHaveBeenCalledWith('out/file1.html', expect.stringContaining('data-beasties-container'), 'utf8');
+      expect(setTotal).toHaveBeenCalledTimes(1);
       // Assert bar.stop called.
-      expect(stop).toHaveBeenCalled();
+      expect(stop).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -301,21 +314,6 @@ describe(`plugins.${name}`, () => {
       expect(process).not.toHaveBeenCalled();
       expect(readFile).not.toHaveBeenCalled();
       expect(writeFile).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('progress', () => {
-    it('should call SingleBar constructor with correct options', () => {
-      Plugin.progress();
-
-      expect(SingleBar).toHaveBeenCalledTimes(1);
-      expect(SingleBar).toHaveBeenNthCalledWith(1, expect.objectContaining({
-        barCompleteChar: '█',
-        barIncompleteChar: '░',
-        clearOnComplete: false,
-        hideCursor: true,
-        format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m',
-      }));
     });
   });
 

@@ -498,6 +498,7 @@ export const layout: LayoutProps = {
       rel="preload"
       type="font/woff2"
     />,
+    // Image preload won't match the actual loaded image due to screen size.
   ],
   */
   title: 'Scalable Systems - Yahoo!, GigaOm & More',

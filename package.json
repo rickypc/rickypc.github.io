@@ -23,7 +23,6 @@
     "@docusaurus/tsconfig": "3.9.2",
     "@docusaurus/types": "3.9.2",
     "@types/cli-progress": "3.11.6",
-    "@types/minimatch": "6.0.0",
     "@types/pdfmake": "0.2.12",
     "@types/react": "19.2.5",
     "@types/react-dom": "19.2.3",

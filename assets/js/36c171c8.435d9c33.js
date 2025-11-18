@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkrickypc_github_io=self.webpackChunkrickypc_github_io||[]).push([["330"],{9045:function(i){i.exports=JSON.parse('{"tags":[{"label":"Buddhism","permalink":"/docs/tags/buddhism","description":"Key Buddhist concepts that shape how I think, live, and grow - insights into mindfulness, compassion, and impermanence.","count":9}]}')}}]);

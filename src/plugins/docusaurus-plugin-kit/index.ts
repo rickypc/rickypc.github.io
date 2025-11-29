@@ -14,7 +14,7 @@ import {
 } from 'node:fs/promises';
 import { basename, join, resolve } from 'node:path';
 import Beasties from 'beasties';
-import { concurrent } from 'timeable-promise';
+import concurrent from 'timeable-promise/concurrent';
 import { createWriteStream } from 'node:fs';
 import {
   DEFAULT_BUILD_DIR_NAME,
@@ -432,7 +432,7 @@ export default function plugin(context: LoadContext): Plugin {
     },
     extendCli(cli) {
       cli
-        .command('kit:pdf [siteDir]')
+        .command('build:pdf [siteDir]')
         .description('Generate PDF files.')
         .option(
           '--config <config>',

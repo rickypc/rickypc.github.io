@@ -8,14 +8,3 @@ declare module '@docusaurus/responsive-loader/sharp' {
   const content: any;
   export default content;
 }
-
-declare module 'timeable-promise' {
-  export function concurrent<T>(
-    // eslint-disable-next-line no-unused-vars
-    array: T[],
-    // eslint-disable-next-line no-unused-vars
-    executor: (item: T[], index: number, array: T[][]) => Promise<void>,
-    // eslint-disable-next-line no-unused-vars
-    concurrency: number,
-  ): Promise<void>;
-}

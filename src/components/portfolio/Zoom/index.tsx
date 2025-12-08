@@ -5,7 +5,7 @@
  */
 
 import { a11y, clsx } from '@site/src/data/common';
-import { domMax, LazyMotion, m } from 'framer-motion';
+import { domMax, LazyMotion, motion } from 'motion/react';
 import Image, { type ImageProps } from '@site/src/components/common/Image';
 import {
   memo,
@@ -56,13 +56,13 @@ export default memo(function Zoom({ onClick, open }: ZoomProps): ReactElement {
   return (
     <div className={clsx(styles.lens, opened && styles.zoomed)}>
       <LazyMotion features={domMax}>
-        <m.div
+        <motion.div
           animate={{ opacity: opened ? 1 : 0 }}
           className={styles.overlay}
           onClick={onClick}
           transition={transition}
         />
-        <m.figure
+        <motion.figure
           {...a11y(open.alt)}
           layout
           onClick={onClick}
@@ -70,7 +70,7 @@ export default memo(function Zoom({ onClick, open }: ZoomProps): ReactElement {
           transition={transition}
         >
           {opened && <Image {...open} />}
-        </m.figure>
+        </motion.figure>
       </LazyMotion>
     </div>
   );

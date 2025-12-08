@@ -14,6 +14,8 @@ import {
 type ArticleProps = {
   className?: string;
   layout?: boolean;
+  onLayoutAnimationComplete?: () => void;
+  onLayoutAnimationStart?: () => void;
   whileInView?: {
     opacity?: number | number[];
     scale?: number | number[];
@@ -26,7 +28,11 @@ type ButtonProps = {
 
 type DivProps = {
   className?: string;
+  dragElastic?: number;
+  dragMomentum?: boolean;
   layout?: boolean;
+  onDragEnd?: MouseEventHandler<HTMLElement>;
+  onDragStart?: MouseEventHandler<HTMLElement>;
 };
 
 type DtProps = {
@@ -52,12 +58,14 @@ type SpanProps = {
   layoutId?: string;
 };
 
+export const animate = jest.fn();
+
 /**
- * Minimal mock framer-motion/AnimatePresence component that renders children.
+ * Minimal mock motion/react/AnimatePresence component that renders children.
  * @param {PropsWithChildren} props
  *   The component props.
  * @returns {ReactElement}
- *   The framer-motion/AnimatePresence component.
+ *   The motion/react/AnimatePresence component.
  */
 export function AnimatePresence({ children }: PropsWithChildren): ReactElement {
   return <>{children}</>;
@@ -68,30 +76,42 @@ export const domAnimation = {};
 export const domMax = {};
 
 /**
- * Minimal mock framer-motion/LazyMotion component that renders children.
+ * Minimal mock motion/react/LazyMotion component that renders children.
  * @param {PropsWithChildren} props
  *   The component props.
  * @returns {ReactElement}
- *   The framer-motion/LazyMotion component.
+ *   The motion/react/LazyMotion component.
  */
 export function LazyMotion({ children }: PropsWithChildren): ReactElement {
   return <>{children}</>;
 }
 
-export const m = {
+export const listeners: { [key: string]: unknown } = {};
+
+export const motion = {
   // eslint-disable-next-line @docusaurus/no-html-links
   a: ({ children, ...props }: PropsWithChildren<{}>) => <a {...props}>{children}</a>,
   article: ({
     children,
     className,
     layout,
+    onLayoutAnimationComplete,
+    onLayoutAnimationStart,
     whileInView,
     ...props
-  }: PropsWithChildren<ArticleProps>) => (
-    <article className={className} data-layout={String(!!layout)} data-testid="article" {...props}>
-      {children}
-    </article>
-  ),
+  }: PropsWithChildren<ArticleProps>) => {
+    if (onLayoutAnimationStart) {
+      onLayoutAnimationStart();
+    }
+    if (onLayoutAnimationComplete) {
+      onLayoutAnimationComplete();
+    }
+    return (
+      <article className={className} data-layout={String(!!layout)} data-testid="article" {...props}>
+        {children}
+      </article>
+    );
+  },
   button: ({
     children,
     ref,
@@ -100,13 +120,27 @@ export const m = {
   div: ({
     children,
     className,
+    dragElastic,
+    dragMomentum,
     layout,
+    onDragEnd,
+    onDragStart,
     ...props
-  }: PropsWithChildren<DivProps>) => (
-    <div className={className} data-testid="div" {...props}>
-      {children}
-    </div>
-  ),
+  }: PropsWithChildren<DivProps>) => {
+    listeners[`${className}-onDragEnd`] = onDragEnd;
+    listeners[`${className}-onDragStart`] = onDragStart;
+    return (
+      <div
+        className={className}
+        data-drag-elastic={dragElastic}
+        data-drag-momentum={dragMomentum}
+        data-testid="div"
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  },
   dt: ({
     children,
     className,
@@ -153,3 +187,5 @@ export const m = {
     </span>
   ),
 };
+
+export const useMotionValue = jest.fn((value) => value);

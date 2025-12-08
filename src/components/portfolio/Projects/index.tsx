@@ -8,15 +8,15 @@ import {
   AnimatePresence,
   domMax,
   LazyMotion,
-  m,
-} from 'framer-motion';
-import Carousel from '@site/src/components/portfolio/Carousel';
+  motion,
+} from 'motion/react';
+import Carousel, { type CarouselHandles } from '@site/src/components/portfolio/Carousel';
 import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
 import { type ImageProps } from '@site/src/components/common/Image';
 import { key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
-import { memo, type ReactElement } from 'react';
+import { memo, type ReactElement, useRef } from 'react';
 import transition from '@site/src/data/portfolio/common';
 import styles from './styles.module.css';
 
@@ -32,6 +32,7 @@ type Filtered = {
 type ProjectProps = Filtered & {
   // eslint-disable-next-line no-unused-vars
   onClick: (_: ImageProps) => void;
+  open?: ImageProps;
 };
 
 type TagsProps = {
@@ -43,6 +44,7 @@ export type ProjectsProps = {
   filtered: Filtered[];
   // eslint-disable-next-line no-unused-vars
   onClick: (_: ImageProps) => void;
+  open?: ImageProps;
 };
 
 const Tags = memo(function Tags({ prefix, tags }: TagsProps): ReactElement {
@@ -61,41 +63,53 @@ const Project = memo(function Project({
   href,
   images,
   onClick,
+  open,
   prefix,
   tags,
   title,
 }: ProjectProps): ReactElement {
+  const carousel = useRef<CarouselHandles>(null);
   return (
-    <LazyMotion features={domMax}>
-      <m.article className={styles.portfolio} layout transition={transition}>
-        <figure>
-          <Carousel images={images} onClick={onClick} prefix={prefix} />
-          <figcaption>
-            <Tags prefix={prefix} tags={tags} />
-            <Heading as="h2">
-              <Link href={href} translate="no" validate>{title}</Link>
-              <Heart id={`portfolio-${prefix}`} />
-            </Heading>
-            <p>{description}</p>
-          </figcaption>
-        </figure>
-      </m.article>
-    </LazyMotion>
+    <motion.article
+      className={styles.portfolio}
+      layout
+      onLayoutAnimationComplete={() => carousel.current?.setPaused(false)}
+      onLayoutAnimationStart={() => carousel.current?.setPaused(true)}
+      transition={transition}
+    >
+      <figure>
+        <Carousel
+          {...{
+            images,
+            onClick,
+            open,
+            prefix,
+            ref: carousel,
+          }}
+        />
+        <figcaption>
+          <Heading as="h2">
+            <Link href={href} translate="no" validate>{title}</Link>
+            <Heart id={`portfolio-${prefix}`} />
+          </Heading>
+          <p>{description}</p>
+          <Tags {...{ prefix, tags }} />
+        </figcaption>
+      </figure>
+    </motion.article>
   );
 });
 
-export default memo(function Projects({ filtered, onClick }: ProjectsProps): ReactElement {
+export default memo(function Projects({ filtered, onClick, open }: ProjectsProps): ReactElement {
   return (
     <LazyMotion features={domMax}>
-      <m.div className={styles.portfolios} layout>
-        {filtered.length && (
-          <AnimatePresence>
-            {filtered.map(({ prefix, ...rest }) => (
-              <Project key={`project-${prefix}`} onClick={onClick} prefix={prefix} {...rest} />
-            ))}
-          </AnimatePresence>
-        )}
-      </m.div>
+      <motion.div className={styles.portfolios}>
+        <AnimatePresence>
+          {filtered.map(({ prefix, ...rest }) => (
+            <Project key={`project-${prefix}`} {...{ onClick, open, prefix }} {...rest} />
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </LazyMotion>
   );
 });

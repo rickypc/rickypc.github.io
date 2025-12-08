@@ -4,8 +4,8 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { clsx } from '@site/src/data/common';
 import { catalog, layout, preamble } from '@site/src/data/portfolio';
+import { clsx } from '@site/src/data/common';
 import Filter from '@site/src/components/portfolio/Filter';
 import { type ImageProps } from '@site/src/components/common/Image';
 import Layout from '@site/src/components/common/Layout';
@@ -37,7 +37,7 @@ export default memo(function Portfolio() {
         </div>
       </section>
       <section className={clsx(styles.projects, 'row', styles.row)}>
-        <Projects filtered={filtered} onClick={onProjectClick} />
+        <Projects filtered={filtered} onClick={onProjectClick} open={open} />
       </section>
       <Zoom onClick={onZoomClick} open={open} />
     </Layout>

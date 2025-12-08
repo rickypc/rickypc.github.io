@@ -6,6 +6,7 @@
 
 import Buttons from '@theme/CodeBlock/Buttons';
 import { clsx, key } from '@site/src/data/common';
+import { CodeBlockContextProvider, createCodeBlockMetadata, useCodeWordWrap } from '@docusaurus/theme-common/internal';
 import {
   Fragment,
   isValidElement,
@@ -13,7 +14,6 @@ import {
   type PropsWithChildren,
   type ReactElement,
 } from 'react';
-import { CodeBlockContextProvider, createCodeBlockMetadata, useCodeWordWrap } from '@docusaurus/theme-common/internal';
 import styles from './styles.module.css';
 
 type Content = ReactElement & { props?: { children?: Content } };

@@ -5,7 +5,7 @@
  */
 
 import { clsx, key } from '@site/src/data/common';
-import { domAnimation, LazyMotion, m } from 'framer-motion';
+import { domAnimation, LazyMotion, motion } from 'motion/react';
 import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
 import Image, { type PictureInfo } from '@site/src/components/common/Image';
@@ -55,7 +55,7 @@ const Timeline = memo(function Timeline({
         picture={picture}
       />
       <LazyMotion features={domAnimation}>
-        <m.article
+        <motion.article
           className={styles.inner}
           initial={{ opacity: [0, 1], scale: [0.85, 1] }}
           transition={{ duration: 0.5 }}
@@ -70,7 +70,7 @@ const Timeline = memo(function Timeline({
           </Heading>
           <Heading as="h4"><Link {...affiliation} /></Heading>
           <p>{description}</p>
-        </m.article>
+        </motion.article>
       </LazyMotion>
     </div>
   );

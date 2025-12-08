@@ -16,10 +16,10 @@ import {
 import Link from '@site/src/components/common/Link';
 import MDXDetails from '@theme-original/MDXComponents/Details';
 import { memo, type ReactElement, type ReactNode } from 'react';
+import pdf from '#buddhism/_pdf';
 import PhraseBlock from '@site/src/components/common/PhraseBlock';
 import Speech from '@site/src/components/common/Speech';
 import { type Transliteration } from '@site/src/components/common/MultiLingual';
-import pdf from '#buddhism/_pdf';
 import styles from './styles.module.css';
 
 type InstructionProps = {

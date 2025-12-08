@@ -4,7 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { domAnimation, LazyMotion, m } from 'framer-motion';
+import { domAnimation, LazyMotion, motion } from 'motion/react';
 import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
 import { key } from '@site/src/data/common';
@@ -44,7 +44,7 @@ const Story = memo(function Story({
 }: StoryProps): ReactElement {
   return (
     <LazyMotion features={domAnimation}>
-      <m.article
+      <motion.article
         className={styles.story}
         initial={{ opacity: [0, 1], scale: [0.85, 1] }}
         transition={{ duration: 0.5 }}
@@ -66,7 +66,7 @@ const Story = memo(function Story({
           &nbsp;|&nbsp;
           <Link className={styles.affiliation} validate {...affiliation} />
         </address>
-      </m.article>
+      </motion.article>
     </LazyMotion>
   );
 });

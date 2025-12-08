@@ -139,7 +139,7 @@ export function useSpeech() {
  * @returns {{ref: object, visible: boolean}} Object with ref and visibility state.
  */
 // eslint-disable-next-line react-hooks/rules-of-hooks
-export function useVisibility<T, >({ ref = useRef<T>(null), threshold = 1.0, ...rest } = {}) {
+export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...rest } = {}) {
   const [visible, setVisible] = useState(false);
 
   const onVisibilityChange = useCallback(

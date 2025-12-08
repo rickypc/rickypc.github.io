@@ -32,7 +32,6 @@ export default memo(function Filter({ current, onClick }: FilterProps): ReactEle
     : (
       <Pills
         active={current}
-        aria-hidden
         items={tags}
         onClick={onClick}
         prefix="portfolio"

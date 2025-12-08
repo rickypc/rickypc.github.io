@@ -4,7 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { type Transition } from 'framer-motion';
+import { type Transition } from 'motion/react';
 
 const transition: Transition = {
   damping: 25,

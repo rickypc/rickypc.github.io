@@ -4,10 +4,10 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+import { type ComponentType, memo, type ReactElement } from 'react';
 import { type IconBaseProps } from 'react-icons';
 import { key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
-import { type ComponentType, memo, type ReactElement } from 'react';
 import { socials } from '@site/src/data/home';
 import styles from './styles.module.css';
 

@@ -63,7 +63,7 @@ describe('portfolio.Filter', () => {
     expect(pills).toHaveAttribute('data-active', 'alpha');
     expect(pills).toHaveAttribute('data-prefix', 'portfolio');
     expect(pills).toHaveAttribute('data-translate', 'no');
-    expect(pills).toHaveAttribute('data-aria-hidden', 'true');
+    expect(pills).toHaveAttribute('data-aria-hidden', 'false');
 
     // Items rendered in same sorted order.
     const buttons = within(pills).getAllByRole('button');

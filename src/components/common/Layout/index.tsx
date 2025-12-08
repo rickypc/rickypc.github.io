@@ -4,7 +4,6 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { context } from '@site/src/data/common';
 import {
   Children,
   memo,
@@ -12,6 +11,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from 'react';
+import { context } from '@site/src/data/common';
 import { PageMetadata } from '@docusaurus/theme-common';
 import ThemeLayout from '@theme/Layout';
 import { useWelcome } from '@site/src/hooks/observer';

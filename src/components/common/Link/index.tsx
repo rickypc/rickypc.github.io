@@ -5,7 +5,7 @@
  */
 
 import { a11y } from '@site/src/data/common';
-import { domAnimation, LazyMotion, m } from 'framer-motion';
+import { domAnimation, LazyMotion, motion } from 'motion/react';
 import {
   memo,
   type PropsWithChildren,
@@ -58,7 +58,7 @@ export default memo(function Link({
 
   return !validate || (validate && href) ? (
     <LazyMotion features={domAnimation}>
-      <m.a
+      <motion.a
         {...a11y(title)}
         className={className}
         href={renderHref}
@@ -68,7 +68,7 @@ export default memo(function Link({
         {...rest}
       >
         {children}
-      </m.a>
+      </motion.a>
     </LazyMotion>
   ) : <span className={className} {...rest}>{children}</span>;
 });

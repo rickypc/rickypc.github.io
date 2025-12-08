@@ -5,7 +5,7 @@
  */
 
 import { clsx } from '@site/src/data/common';
-import { domAnimation, LazyMotion, m } from 'framer-motion';
+import { domAnimation, LazyMotion, motion } from 'motion/react';
 import {
   memo,
   type MouseEventHandler,
@@ -16,6 +16,7 @@ import {
 
 export type ButtonProps = {
   className?: string;
+  disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   ref?: Ref<HTMLButtonElement>;
   whileTap?: {
@@ -31,14 +32,14 @@ export default memo(function Button({
 }: PropsWithChildren<ButtonProps>): ReactElement {
   return (
     <LazyMotion features={domAnimation}>
-      <m.button
+      <motion.button
         className={clsx('clean-btn', className)}
         ref={ref}
         type="button"
         {...rest}
       >
         {children}
-      </m.button>
+      </motion.button>
     </LazyMotion>
   );
 });

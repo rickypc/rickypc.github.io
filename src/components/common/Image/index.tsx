@@ -8,9 +8,10 @@ import {
   AnimatePresence,
   domAnimation,
   LazyMotion,
-  m,
-} from 'framer-motion';
+  motion,
+} from 'motion/react';
 import { clsx, key } from '@site/src/data/common';
+import Link from '@site/src/components/common/Link';
 import {
   memo,
   type ReactElement,
@@ -22,7 +23,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import Link from '@site/src/components/common/Link';
 import { useVisibility } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
@@ -156,7 +156,7 @@ const Picture = memo(function Picture({
               {picture?.avif && <source srcSet={picture.avif} type="image/avif" />}
               {picture?.webp && <source srcSet={picture.webp} type="image/webp" />}
               {picture?.fallback && (
-                <m.img
+                <motion.img
                   {...rest}
                   alt={loaded ? alt : undefined}
                   animate={{ opacity: loaded ? 1 : 0 }}

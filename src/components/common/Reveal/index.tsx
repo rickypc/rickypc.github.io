@@ -4,8 +4,6 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { clsx, key } from '@site/src/data/common';
-import { domAnimation, LazyMotion, m } from 'framer-motion';
 import {
   Children,
   cloneElement,
@@ -17,6 +15,8 @@ import {
   type ReactElement,
   type ReactNode,
 } from 'react';
+import { clsx, key } from '@site/src/data/common';
+import { domAnimation, LazyMotion, motion } from 'motion/react';
 import { useVisibility } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
@@ -39,7 +39,7 @@ type WordProps = {
 const Character = memo(function Character({ children }: PropsWithChildren): ReactElement {
   return (
     <LazyMotion features={domAnimation}>
-      <m.span
+      <motion.span
         aria-hidden
         className={styles.character}
         variants={{
@@ -48,7 +48,7 @@ const Character = memo(function Character({ children }: PropsWithChildren): Reac
         }}
       >
         {children}
-      </m.span>
+      </motion.span>
     </LazyMotion>
   );
 });
@@ -56,7 +56,7 @@ const Character = memo(function Character({ children }: PropsWithChildren): Reac
 const Word = memo(function Word({ children, delay }: WordProps): ReactElement {
   return (
     <LazyMotion features={domAnimation}>
-      <m.span
+      <motion.span
         animate="show"
         aria-hidden
         className={styles.word}
@@ -75,7 +75,7 @@ const Word = memo(function Word({ children, delay }: WordProps): ReactElement {
         {children.split('').map((character, pos) => (
           <Character key={key(`${children}-${character}-${pos}`)}>{character}</Character>
         ))}
-      </m.span>
+      </motion.span>
     </LazyMotion>
   );
 });

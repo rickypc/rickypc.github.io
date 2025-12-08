@@ -4,9 +4,9 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
+import { a11y, clsx } from '@site/src/data/common';
 import Admonition from '@theme/Admonition';
 import Button from '@site/src/components/common/Button';
-import { a11y, clsx } from '@site/src/data/common';
 import { GenIcon } from 'react-icons/lib';
 import { type IconBaseProps } from 'react-icons';
 import {
@@ -161,7 +161,11 @@ export default memo(function Speech({
         });
         voices = speechSynthesis?.getVoices();
       }
-      let accent = voices.find((voi) => list.includes(voi.name));
+      let accent: SpeechSynthesisVoice | undefined;
+      list.some((name) => {
+        accent = voices.find((voi) => voi.name === name);
+        return !!accent;
+      });
       if (lang && typeof (accent?.lang) !== 'string') {
         // Handle browser inconsistency.
         if ((voices[0]?.lang?.split(/-_/g)?.[0]?.length || 0) > 2) {

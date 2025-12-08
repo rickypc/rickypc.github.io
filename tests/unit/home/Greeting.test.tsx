@@ -36,9 +36,13 @@ describe('home.Greeting', () => {
       'data-names',
       [
         'Alex',
+        'Reed (Spanish (Spain))',
+        'Eddy (Spanish (Spain))',
         'Microsoft Guy Online (Natural) - English (United States)',
         'Microsoft David - English (United States)',
         'Google español',
+        'Damayanti',
+        'Kanya',
         'Google US English',
       ].join('|'),
     );

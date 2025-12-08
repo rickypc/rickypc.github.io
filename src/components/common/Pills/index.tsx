@@ -5,7 +5,7 @@
  */
 
 import { clsx, key } from '@site/src/data/common';
-import { domMax, LazyMotion, m } from 'framer-motion';
+import { domMax, LazyMotion, motion } from 'motion/react';
 import { memo, type ReactElement } from 'react';
 import styles from './styles.module.css';
 
@@ -36,7 +36,7 @@ const Item = memo(function Item({
   const current = active === item;
   return (
     <LazyMotion features={domMax}>
-      <m.dt
+      <motion.dt
         className={clsx(current && styles.active, styles.item)}
         onClick={() => onClick(item)}
         whileTap={{ scale: 0.85 }}
@@ -44,15 +44,15 @@ const Item = memo(function Item({
       >
         <span {...rest}>{item}</span>
         {current && (
-          <m.span
+          <motion.span
             className={styles.indicator}
             layoutId={`pill-indicator-${prefix}`}
             {...rest}
           >
             {item}
-          </m.span>
+          </motion.span>
         )}
-      </m.dt>
+      </motion.dt>
     </LazyMotion>
   );
 });

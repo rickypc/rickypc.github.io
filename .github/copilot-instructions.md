@@ -30,7 +30,7 @@
 - PDF: custom plugin, see `src/plugins/docusaurus-plugin-kit/`
 
 ## Dependencies
-- Core: Docusaurus, React, framer-motion, embla-carousel-react, pdfmake, simple-git
+- Core: Docusaurus, React, motion/react (formerly framer-motion), pdfmake, simple-git
 - Test: Playwright, React Testing Library
 - Lint: ESLint (AirBnB, React, Docusaurus)
 

@@ -9,7 +9,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 2rem auto 0 auto;
+  margin: 1rem auto 0 auto;
   padding: 0;
 }
 
@@ -21,14 +21,14 @@
 .pills .active.item .indicator {
   background: #f8f8f8;
   border: 1px solid #c1dff9;
-  border-radius: 1.5rem;
+  border-radius: 2rem;
   font-family: Poppins, sans-serif;
   font-size: 0.95rem;
   font-weight: 400;
   line-height: normal;
   margin-bottom: 0.25rem;
   min-width: 3.125rem;
-  opacity: 0.5;
+  opacity: 0.6;
   padding: 0.3rem 1rem;
   user-select: none;
   white-space: nowrap;
@@ -50,10 +50,14 @@
 }
 
 [data-theme='dark'] .pills .item {
-  color: #5a758c;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #a5b9c9;
 }
 
 [data-theme='light'] .pills .item {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   color: #3b566e;
 }
 

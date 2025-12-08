@@ -4,18 +4,18 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { domAnimation, LazyMotion, m } from 'framer-motion';
+import { characteristic, headline, paragraphs } from '@site/src/data/about';
+import { domAnimation, LazyMotion, motion } from 'motion/react';
 import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
 import { key } from '@site/src/data/common';
 import { memo } from 'react';
-import { characteristic, headline, paragraphs } from '@site/src/data/about';
 import styles from './styles.module.css';
 
 export default memo(function Content() {
   return (
     <LazyMotion features={domAnimation}>
-      <m.article
+      <motion.article
         className={styles.content}
         initial={{ opacity: [0, 1], scale: [0.85, 1] }}
         transition={{ delay: 0.25, duration: 0.5 }}
@@ -39,7 +39,7 @@ export default memo(function Content() {
             </li>
           ))}
         </ul>
-      </m.article>
+      </motion.article>
     </LazyMotion>
   );
 });

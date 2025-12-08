@@ -20,20 +20,20 @@
 }
 
 .portfolio figure {
-  margin: 1rem;
+  margin: 0 2rem 1.15rem 2rem;
 }
 
 .portfolio figcaption {
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding-top: 0.75rem;
+  padding-top: 1.5rem;
 }
 
 .portfolio figcaption .tags {
   font-size: 0.75rem;
   list-style: none;
-  margin: 0.75rem 0 0 0;
+  margin: 1.5rem 0 0 0;
   padding: 0;
   text-align: center;
 }
@@ -95,7 +95,7 @@
   font-family: 'Yeseva One', cursize;
   font-size: 1.5rem;
   font-weight: 400;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 

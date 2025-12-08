@@ -13,6 +13,7 @@ import {
 import { clsx, key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
 import {
+  Fragment,
   memo,
   type ReactElement,
   type ReactEventHandler,
@@ -138,21 +139,21 @@ const Picture = memo(function Picture({
 
   // a11y() doesn't provide `alt` by design.
   return (
-    <picture
-      className={clsx(
-        className,
-        styles.picture,
-        (background && !picture?.fallback?.preSrc) && styles.shimmer,
-      )}
-      ref={pictureRef}
-      style={background && picture?.fallback?.preSrc ? {
-        backgroundImage: `url(${picture?.fallback?.preSrc})`,
-      } : {}}
-    >
-      <LazyMotion features={domAnimation}>
+    <LazyMotion features={domAnimation}>
+      <picture
+        className={clsx(
+          className,
+          styles.picture,
+          (background && !picture?.fallback?.preSrc) && styles.shimmer,
+        )}
+        ref={pictureRef}
+        style={background && picture?.fallback?.preSrc ? {
+          backgroundImage: `url(${picture?.fallback?.preSrc})`,
+        } : {}}
+      >
         <AnimatePresence>
           {show && (
-            <>
+            <Fragment key={key(alt, 'fragment')}>
               {picture?.avif && <source srcSet={picture.avif} type="image/avif" />}
               {picture?.webp && <source srcSet={picture.webp} type="image/webp" />}
               {picture?.fallback && (
@@ -171,11 +172,11 @@ const Picture = memo(function Picture({
                   width={fit.width}
                 />
               )}
-            </>
+            </Fragment>
           )}
         </AnimatePresence>
-      </LazyMotion>
-    </picture>
+      </picture>
+    </LazyMotion>
   );
 });
 

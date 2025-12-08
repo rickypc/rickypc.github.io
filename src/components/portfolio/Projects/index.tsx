@@ -7,6 +7,7 @@
 import {
   AnimatePresence,
   domMax,
+  LayoutGroup,
   LazyMotion,
   motion,
 } from 'motion/react';
@@ -103,13 +104,15 @@ const Project = memo(function Project({
 export default memo(function Projects({ filtered, onClick, open }: ProjectsProps): ReactElement {
   return (
     <LazyMotion features={domMax}>
-      <motion.div className={styles.portfolios}>
-        <AnimatePresence>
-          {filtered.map(({ prefix, ...rest }) => (
-            <Project key={`project-${prefix}`} {...{ onClick, open, prefix }} {...rest} />
-          ))}
-        </AnimatePresence>
-      </motion.div>
+      <LayoutGroup>
+        <motion.div className={styles.portfolios}>
+          <AnimatePresence>
+            {filtered.map(({ prefix, ...rest }) => (
+              <Project key={`project-${prefix}`} {...{ onClick, open, prefix }} {...rest} />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      </LayoutGroup>
     </LazyMotion>
   );
 });

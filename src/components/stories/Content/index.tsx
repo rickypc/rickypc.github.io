@@ -58,13 +58,19 @@ const Story = memo(function Story({
         <p className={styles.endorsement}>{content}</p>
         <address>
           <i aria-hidden="true" className={styles.dash} />
-          <Link className={styles.name} validate {...author} />
-          {/* Reader view support. */}
-          &nbsp;|&nbsp;
-          <Link className={styles.title} validate {...title} />
-          {/* Reader view support. */}
-          &nbsp;|&nbsp;
-          <Link className={styles.affiliation} validate {...affiliation} />
+          <p className={styles.title}>
+            <Link validate {...title} />
+          </p>
+          <p className={styles.name}>
+            <Link validate {...author} />
+          </p>
+          <div className={styles.affiliation}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="16" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="16">
+              <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+              <path d="M16 12v1.5a2.5 2.5 0 0 0 5 0v-1.5a9 9 0 1 0 -5.5 8.28" />
+            </svg>
+            <p><Link validate {...affiliation} /></p>
+          </div>
         </address>
       </motion.article>
     </LazyMotion>

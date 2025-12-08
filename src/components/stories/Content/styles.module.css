@@ -23,24 +23,25 @@
 [data-theme='dark'] .content .story {
   border: 1px solid #c6c6cc;
 }
+
 [data-theme='light'] .content .story {
   border: 1px solid #7e7e8a;
 }
 
-.content .story h2 {
+.content h2 {
   font-family: 'Yeseva One', cursive;
   font-size: 2.15rem;
   font-weight: 400;
   margin: 0.5rem 0;
 }
 
-.content .story h2 span[class*='reaction_'] span[class*='heart_'] {
+.content h2 span[class*='reaction_'] span[class*='heart_'] {
   font-size: 1.75rem;
   line-height: 1.75rem;
   margin-left: 1.25rem;
 }
 
-.content .story address,
+.content address,
 .content .story p {
   font-family: Poppins, sans-serif;
   font-weight: 400;
@@ -50,50 +51,22 @@
   font-size: 1rem;
 }
 
-.content .story address {
-  font-size: 0.95rem;
-}
-
 .content .story:last-of-type {
   margin-bottom: 0;
 }
 
-.content .story h2 a.topic,
-.content .story address a.affiliation,
-.content .story address a.name,
-.content .story address a.title {
+.content h2 a.topic,
+.content address .affiliation a,
+.content address .name a,
+.content address .title a {
   transition: color var(--ifm-transition-fast) ease-in;
 }
 
-[data-theme='dark'] .content .story address .affiliation,
-[data-theme='dark'] .content .story address .title {
-  color: #c6c6cc;
-}
-
-[data-theme='dark'] .content .story h2 a.topic:hover,
-[data-theme='dark'] .content .story address a.affiliation:hover,
-[data-theme='dark'] .content .story address a.name:hover,
-[data-theme='dark'] .content .story address a.title:hover {
-  color: #45b5d8;
-}
-
-[data-theme='light'] .content .story address .affiliation,
-[data-theme='light'] .content .story address .title {
-  color: #7e7e8a;
-}
-
-[data-theme='light'] .content .story h2 a.topic:hover,
-[data-theme='light'] .content .story address a.affiliation:hover,
-[data-theme='light'] .content .story address a.name:hover,
-[data-theme='light'] .content .story address a.title:hover {
-  color: #248aaa;
-}
-
-.content .story address .dash {
+.content address .dash {
   position: relative;
 }
 
-.content .story address .dash::before {
+.content address .dash::before {
   content: '';
   height: 0.125rem;
   position: absolute;
@@ -102,26 +75,77 @@
   width: 1.25rem;
 }
 
-[data-theme='dark'] .content .story address .dash::before {
+[data-theme='dark'] .content address .dash::before {
   background: #d3d3d3;
 }
 
-[data-theme='light'] .content .story address .dash::before {
+[data-theme='light'] .content address .dash::before {
   background: #282f49;
 }
 
-.content .story address .name {
+.content address p {
+  font-style: normal;
+  margin: 0;
+}
+
+.content address .affiliation {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+}
+
+.content address .affiliation p {
+  font-size: 0.75rem;
+  line-height: 0.95rem;
+  padding-left: 0.15rem;
+}
+
+.content address .name {
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  padding: 0;
+}
+
+.content address .title {
+  font-size: 0.75rem;
   font-weight: 700;
-  margin-right: 0.3rem;
-  padding-left: 2rem;
+  line-height: 0.75rem;
+  padding: 0.6rem 0 0 0;
+  text-transform: uppercase;
 }
 
-.content .story address .title {
-  margin: 0 0.3rem;
+[data-theme='dark'] .content address .affiliation p,
+[data-theme='dark'] .content address .affiliation svg,
+[data-theme='dark'] .content address .title {
+  color: #b8b8b8;
 }
 
-.content .story address .affiliation {
-  margin-left: 0.3rem;
+[data-theme='dark'] .content h2 a.topic,
+[data-theme='dark'] .content address .affiliation p a,
+[data-theme='dark'] .content address .name a,
+[data-theme='dark'] .content address .title a {
+  color: #a5d8ff;
+}
+
+[data-theme='dark'] .content h2 a.topic:hover,
+[data-theme='dark'] .content address .affiliation a:hover,
+[data-theme='dark'] .content address .name a:hover,
+[data-theme='dark'] .content address .title a:hover {
+  color: #d0ebff;
+}
+
+[data-theme='light'] .content address .affiliation p,
+[data-theme='light'] .content address .affiliation svg,
+[data-theme='light'] .content address .title {
+  color: #868e96;
+}
+
+[data-theme='light'] .content h2 a.topic:hover,
+[data-theme='light'] .content address .affiliation a:hover,
+[data-theme='light'] .content address .name a:hover,
+[data-theme='light'] .content address .title a:hover {
+  color: #1864ab;
 }
 
 @media screen and (max-width: 48rem) {

@@ -76,6 +76,17 @@ export const domAnimation = {};
 export const domMax = {};
 
 /**
+ * Minimal mock motion/react/LayoutGroup component that renders children.
+ * @param {PropsWithChildren} props
+ *   The component props.
+ * @returns {ReactElement}
+ *   The motion/react/LayoutGroup component.
+ */
+export function LayoutGroup({ children }: PropsWithChildren): ReactElement {
+  return <>{children}</>;
+}
+
+/**
  * Minimal mock motion/react/LazyMotion component that renders children.
  * @param {PropsWithChildren} props
  *   The component props.

@@ -76,8 +76,8 @@ describe('stories.Content', () => {
       const hrefs = links.map((a) => a.getAttribute('href'));
       expect(hrefs).toEqual([
         story.header.href,
-        story.author.href,
         story.title.href,
+        story.author.href,
         story.affiliation.href,
       ]);
     });

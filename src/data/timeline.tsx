@@ -55,7 +55,7 @@ export const timelines: TimelineProps[] = [
   {
     affiliation: {
       children: 'Experian Consumer Services',
-      href: 'https://bit.ly/4ar63Wq',
+      href: 'https://www.experian.com/corporate/experian-interactive',
       translate: 'no',
     },
     description: 'Accepted the Senior Software Engineer role at Experian Consumer Services to sharpen technical leadership and expand entrepreneurial range. Earned multiple recognitions, including the Experian Platinum Aspire, EMF Hero - Above and Beyond, and recurring Experian Spot - Excellence in Action awards.',
@@ -66,14 +66,14 @@ export const timelines: TimelineProps[] = [
     },
     title: {
       children: 'Senior Software Engineer',
-      href: 'https://bit.ly/4aJbvUg',
+      href: 'https://en.wikipedia.org/wiki/Software_engineering',
     },
     year: '2017 - Current',
   },
   {
     affiliation: {
       children: 'Experian Consumer Services',
-      href: 'https://bit.ly/4ar63Wq',
+      href: 'https://www.experian.com/corporate/experian-interactive',
       translate: 'no',
     },
     description: 'Accepted the Automation Engineer position at Experian Consumer Services to deepen technical versatility and broaden engineering expertise. Later promoted to Senior Automation Engineer, continuing to drive innovation and efficiency across automated systems.',
@@ -84,14 +84,14 @@ export const timelines: TimelineProps[] = [
     },
     title: {
       children: 'Senior Automation Engineer',
-      href: 'https://bit.ly/3TPyeay',
+      href: 'https://en.wikipedia.org/wiki/Automation_engineering',
     },
     year: '2013 - 2017',
   },
   {
     affiliation: {
       children: 'California State University, Fullerton',
-      href: 'https://bit.ly/3PR1Umk',
+      href: 'https://www.fullerton.edu',
       translate: 'no',
     },
     description: 'Graduated from California State University, Fullerton with a Master\'s in Software Engineering. Gained expertise in delivering mission-ready, software-enabled systems that drive productivity, spark innovation, and create competitive advantage. Honored with the Outstanding Graduate Project award for the Master of Science in Software Engineering.',
@@ -102,14 +102,14 @@ export const timelines: TimelineProps[] = [
     },
     title: {
       children: 'Master of Science, Software Engineering',
-      href: 'https://bit.ly/3vNFc7R',
+      href: 'https://www.fullerton.edu/ecs/mse/about/',
     },
     year: '2005 - 2007',
   },
   {
     affiliation: {
       children: 'Experian CheetahMail',
-      href: 'https://bit.ly/3xAYihU',
+      href: 'https://www.experian.com/marketing/',
       translate: 'no',
     },
     description: 'Accepted the Senior Software Engineer role at Experian CheetahMail to strengthen engineering depth and grow as a leader. Earned the Experian CheetahMail Pinnacle award and was later promoted to Software Development Lead, driving team performance and technical excellence.',
@@ -120,14 +120,14 @@ export const timelines: TimelineProps[] = [
     },
     title: {
       children: 'Software Development Lead',
-      href: 'https://bit.ly/4aJvsKI',
+      href: 'https://en.wikipedia.org/wiki/Software_development',
     },
     year: '2005 - 2013',
   },
   {
     affiliation: {
       children: 'AirIQ (formerly Aircept)',
-      href: 'https://bit.ly/4cRZaPq',
+      href: 'https://www.airiq.com',
       translate: 'no',
     },
     description: 'Accepted a Software Engineer position at AirIQ, building on the wireless asset management work previously developed under the Aircept name. This role expanded my hands-on experience with GPS tracking systems and real-time data platforms.',
@@ -138,14 +138,14 @@ export const timelines: TimelineProps[] = [
     },
     title: {
       children: 'Software Engineer',
-      href: 'https://bit.ly/4aJbvUg',
+      href: 'https://en.wikipedia.org/wiki/Software_engineering',
     },
     year: '2005',
   },
   {
     affiliation: {
       children: 'RazorGator',
-      href: 'https://bit.ly/3PZ9c7B',
+      href: 'https://www.tickpick.com',
       translate: 'no',
     },
     description: 'Accepted a Web Developer position at RazorGator to strengthen front-end and back-end development skills. This role deepened my expertise in building dynamic, user-focused web applications within a fast-paced e-commerce environment.',
@@ -156,14 +156,14 @@ export const timelines: TimelineProps[] = [
     },
     title: {
       children: 'Web Developer',
-      href: 'https://bit.ly/3J9kPFl',
+      href: 'https://en.wikipedia.org/wiki/Web_developer',
     },
     year: '2003 - 2005',
   },
   {
     affiliation: {
       children: 'Petra Christian University',
-      href: 'https://bit.ly/3VXWRnQ',
+      href: 'https://petra.ac.id/?lang=en',
       translate: 'no',
     },
     description: 'Graduated from Petra Christian University with a Bachelor\'s degree in Architecture. Gained a deep understanding of planning, designing, and constructing physical structures - skills that later translated into software development, shaping how I approach system design, structure, and user experience.',
@@ -174,7 +174,7 @@ export const timelines: TimelineProps[] = [
     },
     title: {
       children: 'Bachelor of Engineering, Architecture',
-      href: 'https://bit.ly/3TOvoSZ',
+      href: 'https://architecture.petra.ac.id/?lang=en',
     },
     year: '1993 - 1997',
   },
@@ -192,7 +192,7 @@ export const timelines: TimelineProps[] = [
     },
     title: {
       children: 'Independent Professional',
-      href: 'https://bit.ly/4aO63PU',
+      href: 'https://en.wikipedia.org/wiki/Entrepreneurship',
     },
     year: '1995 - Current',
   },

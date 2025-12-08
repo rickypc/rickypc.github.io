@@ -64,13 +64,13 @@ describe('data.stories', () => {
 
         it('affiliation', () => {
           expect(s.affiliation.children).toEqual(expect.any(String));
-          expect(s.affiliation.href).toMatch(/^https:\/\/bit\.ly\//);
+          expect(s.affiliation.href).toMatch(/^https:\/\/.+\.com.*$/);
           expect(s.affiliation.translate).toBe('no');
         });
 
         it('author', () => {
           expect(s.author.children).toEqual(expect.any(String));
-          expect(s.author.href).toMatch(/^https:\/\/bit\.ly\//);
+          expect(s.author.href).toMatch(/^https:\/\/.+\.com.+$/);
           expect(s.author.translate).toBe('no');
         });
 

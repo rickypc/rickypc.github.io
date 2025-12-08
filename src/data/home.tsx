@@ -177,12 +177,12 @@ export const layout: LayoutProps = {
 
 export const socials: SocialProps[] = [
   {
-    href: 'https://bit.ly/3VRIDFo',
+    href: 'https://github.com/rickypc',
     Icon: FaGithub,
     title: 'Github',
   },
   {
-    href: 'https://bit.ly/3VUUrqb',
+    href: 'https://www.linkedin.com/in/rihuang',
     Icon: FaLinkedin,
     title: 'Linkedin',
   },

@@ -93,7 +93,7 @@ const config = {
             label: ' ',
             position: 'right',
             title: 'Github',
-            to: 'https://bit.ly/3VRIDFo',
+            to: 'https://github.com/rickypc',
           },
           {
             'aria-label': 'Linkedin',
@@ -101,7 +101,7 @@ const config = {
             label: ' ',
             position: 'right',
             title: 'Linkedin',
-            to: 'https://bit.ly/3VUUrqb',
+            to: 'https://www.linkedin.com/in/rihuang',
           },
         ],
         logo: {

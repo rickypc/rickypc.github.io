@@ -1,5 +1,9 @@
 # [Ricky Huang](https://ricky.one)
 
+![Dependencies](https://img.shields.io/librariesio/github/rickypc/rickypc.github.io?logo=librariesdotio)
+[![Style](https://img.shields.io/badge/style-Airbnb-red?logo=eslint)](https://github.com/airbnb/javascript)
+![TypeScript](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/rickypc/rickypc.github.io/main/package.json&query=$.optionalDependencies.typescript&label=typescript&logo=typescript&logoColor=fff&color=3178C6)
+
 ## Engineering Leader
 
 I lead engineering teams with a focus on thoughtful analysis, sound judgment, and strategic execution. My approach enables teams to thrive amid evolving business demands and complex technical challenges.

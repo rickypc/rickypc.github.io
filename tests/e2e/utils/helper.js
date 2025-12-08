@@ -69,11 +69,11 @@ export const hasNavigations = async (page, testInfo) => {
 
     await expect(nav.desktop.getByRole('link', { name: 'Github' })).toBeHidden();
     await expect(nav.mobile.getByRole('link', { name: 'Github' })).toBeVisible();
-    expect(await nav.mobile.getByRole('link', { name: 'Github' }).getAttribute('href')).toContain('https://bit.ly/3VRIDFo');
+    expect(await nav.mobile.getByRole('link', { name: 'Github' }).getAttribute('href')).toContain('https://github.com/rickypc');
 
     await expect(nav.desktop.getByRole('link', { name: 'Linkedin' })).toBeHidden();
     await expect(nav.mobile.getByRole('link', { name: 'Linkedin' })).toBeVisible();
-    expect(await nav.mobile.getByRole('link', { name: 'Linkedin' }).getAttribute('href')).toContain('https://bit.ly/3VUUrqb');
+    expect(await nav.mobile.getByRole('link', { name: 'Linkedin' }).getAttribute('href')).toContain('https://www.linkedin.com/in/rihuang');
 
     await expect(nav.desktop.getByRole('link', { name: 'Translate' })).toBeHidden();
     await expect(nav.mobile.getByRole('link', { name: 'Translate' })).toBeVisible();
@@ -83,11 +83,11 @@ export const hasNavigations = async (page, testInfo) => {
     await expect(theme.mobile.getByRole('button', { name: 'light mode' })).toBeVisible();
   } else {
     await expect(nav.desktop.getByRole('link', { name: 'Github' })).toBeVisible();
-    expect(await nav.desktop.getByRole('link', { name: 'Github' }).getAttribute('href')).toContain('https://bit.ly/3VRIDFo');
+    expect(await nav.desktop.getByRole('link', { name: 'Github' }).getAttribute('href')).toContain('https://github.com/rickypc');
     await expect(nav.mobile.getByRole('link', { name: 'Github' })).toBeHidden();
 
     await expect(nav.desktop.getByRole('link', { name: 'Linkedin' })).toBeVisible();
-    expect(await nav.desktop.getByRole('link', { name: 'Linkedin' }).getAttribute('href')).toContain('https://bit.ly/3VUUrqb');
+    expect(await nav.desktop.getByRole('link', { name: 'Linkedin' }).getAttribute('href')).toContain('https://www.linkedin.com/in/rihuang');
     await expect(nav.mobile.getByRole('link', { name: 'Linkedin' })).toBeHidden();
 
     await expect(nav.desktop.getByRole('link', { name: 'Translate' })).toBeVisible();

@@ -57,7 +57,7 @@ export const catalog = [
   },
   {
     description: 'A pioneering tech media platform founded by Om Malik, GigaOm delivers insights on startups, emerging technologies, and industry trends. The site was built as a custom WordPress plugin, enabling scalable content delivery across multiple topic channels and serving millions of engaged readers.',
-    href: 'https://bit.ly/3PVADPw',
+    href: 'https://gigaom.com',
     images: [
       {
         alt: 'GigaOm Landing',
@@ -149,7 +149,7 @@ export const catalog = [
   },
   {
     description: 'An online marketplace for reselling tickets to sports, theater, and concert events - along with curated vacation packages for major games. The platform was built using a diverse technology stack to support both B2B and B2C transactions, ensuring flexibility, reliability, and scale across multiple business models.',
-    href: 'https://bit.ly/3PZ9c7B',
+    href: 'https://www.tickpick.com',
     images: [
       {
         alt: 'RazorGator Landing',
@@ -211,7 +211,7 @@ export const catalog = [
   },
   {
     description: 'A long-standing music retailer based in Tucson, Arizona, Rainbow Guitars has supported local and international musicians for over 33 years. The platform was built to extend their passion for music beyond the storefront - connecting artists and enthusiasts worldwide through a rich, accessible online experience.',
-    href: 'https://bit.ly/3U7hRaD',
+    href: 'https://www.rainbowguitars.com',
     images: [
       {
         alt: 'Rainbow Guitars',
@@ -288,7 +288,7 @@ export const catalog = [
   },
   {
     description: 'A bold and independent BMX brand known for crafting bikes that stand up to real-world punishment. The platform was built to amplify their unique voice and showcase bikes designed to handle the intensity of riders who push limits - just like the founders and their crew have done from the start.',
-    href: 'https://bit.ly/3TIGjO8',
+    href: 'https://www.sandmbikes.com',
     images: [
       {
         alt: 'S&M Bikes',
@@ -314,7 +314,7 @@ export const catalog = [
   },
   {
     description: 'A service-driven platform designed to help Clipper Corp deliver tailored solutions that boost revenue while reducing operational costs. Built to support innovation and client engagement, the system empowers their team to offer strategic, cost-effective services to a growing global audience.',
-    href: 'https://bit.ly/49wYEU2',
+    href: 'https://www.clippercorp.com',
     images: [
       {
         alt: 'Clipper Corp',
@@ -418,7 +418,7 @@ export const catalog = [
   },
   {
     description: 'A precision-driven platform built to showcase WheelBuilder\'s commitment to high-quality wheel products and services. Through meticulous parts selection and rigorous quality control, the system enables global access to their craftsmanship - connecting riders everywhere with performance they can trust.',
-    href: 'https://bit.ly/3PTBpgf',
+    href: 'https://wheelbuilder.com',
     images: [
       {
         alt: 'WheelBuilder',
@@ -445,7 +445,7 @@ export const catalog = [
   },
   {
     description: 'A respected leader in engineering and management services, known for delivering quality and building long-term client trust. The platform was developed to extend their capabilities into a dynamic marketplace - offering efficient, consistent, and responsive solutions tailored to evolving industry demands.',
-    href: 'https://bit.ly/43UD9vw',
+    href: 'https://www.pacificaservices.com',
     images: [
       {
         alt: 'Pacifica Services',

@@ -11,7 +11,7 @@
 }
 
 .content .story {
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   break-inside: avoid;
   margin-bottom: 2rem;
   max-width: 100%;
@@ -32,7 +32,6 @@
   font-family: 'Yeseva One', cursive;
   font-size: 2.15rem;
   font-weight: 400;
-  margin: 0.5rem 0;
 }
 
 .content h2 span[class*='reaction_'] span[class*='heart_'] {

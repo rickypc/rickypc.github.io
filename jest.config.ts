@@ -33,7 +33,7 @@ module.exports = {
         },
       },
     ],
-    '\\.(avif|css|jpe?g|png|svg|webp)$': '<rootDir>/tests/unit/transformer.js',
+    '\\.(avif|css|jpe?g|png|svg|webp)$': '<rootDir>/tests/unit/transformer.ts',
   },
   transformIgnorePatterns: ['node_modules/(?!@docusaurus/.*)'],
 };

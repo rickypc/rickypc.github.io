@@ -4,7 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const {
+import {
   beforeEach,
   expect,
   hasActiveNavigation,
@@ -14,13 +14,13 @@ const {
   hasScreenshot,
   hasUrl,
   test,
-} = require('./utils/helper');
+} from './utils/helper';
 
 const url = '/about';
 
 test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
 
-test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url));
+test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL as string, page, url));
 test('has correct metadatas', hasMetadatas);
 test('has correct header', hasHeader);
 test('has active navigation', async ({ page }, testInfo) => hasActiveNavigation('About Me', page, testInfo));

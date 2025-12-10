@@ -4,26 +4,39 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const { expect, test } = require('@playwright/test');
+import {
+  expect,
+  type Page,
+  type PageScreenshotOptions,
+  type PlaywrightTestArgs,
+  test,
+  type TestInfo,
+} from '@playwright/test';
+import { URLSearchParams } from 'node:url';
 
-const mobile = (testInfo) => /^mobile/i.test(testInfo?.project?.name);
+// eslint-disable-next-line no-unused-vars
+export type BandCallback<T, U = T> = (value: T, index?: number, array?: T[]) => U | Promise<U>;
 
-export const band = async (count, callback) => Promise.all([...Array(count).keys()].map(callback));
+const mobile = (testInfo: TestInfo) => /^mobile/i.test(testInfo?.project?.name);
 
-export const beforeEach = async (page, testInfo, url) => {
+export const band = async <T>(count: number, callback: BandCallback<number, T>) => Promise.all(
+  [...Array(count).keys()].map(callback),
+);
+
+export const beforeEach = async (page: Page, testInfo: TestInfo, url: string) => {
   if (![
     'has correct dark theme screenshot',
     'has correct light theme screenshot',
     'has greeting',
   ].includes(testInfo.title)) {
     await page.goto(url, { waitUntil: 'networkidle' });
-    await page.waitForSelector('#__docusaurus .main-wrapper', { visible: true });
+    await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
   }
 };
 
 export { expect };
 
-export const hasActiveNavigation = async (name, page, testInfo) => {
+export const hasActiveNavigation = async (name: string, page: Page, testInfo: TestInfo) => {
   if (mobile(testInfo)) {
     await page.locator('nav .navbar__inner button.navbar__toggle').click();
     await expect(page.getByRole('link', { name })).toHaveClass(/menu__link--active/);
@@ -32,12 +45,12 @@ export const hasActiveNavigation = async (name, page, testInfo) => {
   }
 };
 
-export const hasHeader = async ({ page }) => {
+export const hasHeader = async ({ page }: PlaywrightTestArgs) => {
   expect(await page.textContent('main header h1')).toMatchSnapshot('header-headline.txt');
   expect(await page.textContent('main header p')).toMatchSnapshot('header-description.txt');
 };
 
-export const hasMetadatas = async ({ page }) => {
+export const hasMetadatas = async ({ page }: PlaywrightTestArgs) => {
   expect(await page.locator('head>meta[name="description"]').getAttribute('content'))
     .toMatchSnapshot('meta-description.txt');
   expect(await page.locator('head>meta[name="keywords"]').getAttribute('content'))
@@ -55,7 +68,7 @@ export const hasMetadatas = async ({ page }) => {
   expect(await page.textContent('head>title')).toMatchSnapshot('title.txt');
 };
 
-export const hasNavigations = async (page, testInfo) => {
+export const hasNavigations = async (page: Page, testInfo: TestInfo) => {
   const nav = {
     desktop: page.locator('nav.navbar .navbar__items--right'),
     mobile: page.locator('nav.navbar .navbar-sidebar .navbar-sidebar__items .menu'),
@@ -99,11 +112,16 @@ export const hasNavigations = async (page, testInfo) => {
   }
 };
 
-export const hasScreenshot = async (page, testInfo, theme, url) => {
-  const options = { animations: 'disabled', fullPage: true, scale: 'css' };
+export const hasScreenshot = async (page: Page, testInfo: TestInfo, theme: string, url: string) => {
+  const options: PageScreenshotOptions = { animations: 'disabled', fullPage: true, scale: 'css' };
   const themeLower = theme.toLowerCase();
-  await page.goto(`${url}?docusaurus-theme=${themeLower}`, { waitUntil: 'networkidle' });
-  await page.waitForSelector('#__docusaurus .main-wrapper', { visible: true });
+  // After themeLower assignment.
+  const params: Record<string, string> = { 'docusaurus-theme': themeLower };
+  if (url.includes('portfolio')) {
+    params['docusaurus-data-carousel-play'] = 'manual';
+  }
+  await page.goto(`${url}?${new URLSearchParams(params).toString()}`, { waitUntil: 'networkidle' });
+  await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
   await expect(page).toHaveScreenshot(`${themeLower}.png`, options);
   await testInfo.attach(`${theme} Theme`, {
     body: await page.screenshot(options),
@@ -111,9 +129,10 @@ export const hasScreenshot = async (page, testInfo, theme, url) => {
   });
 };
 
-export const hasSpeech = async (page, selector, url) => {
-  await page.goto(`${url}?docusaurus-data-volume=silent`, { waitUntil: 'networkidle' });
-  await page.waitForSelector('#__docusaurus .main-wrapper', { visible: true });
+export const hasSpeech = async (page: Page, selector: string, url: string) => {
+  const params = { 'docusaurus-data-volume': 'silent' };
+  await page.goto(`${url}?${new URLSearchParams(params).toString()}`, { waitUntil: 'networkidle' });
+  await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
   const locator = page.locator(selector);
   if (await locator.isVisible()) {
     await locator.click();
@@ -122,7 +141,7 @@ export const hasSpeech = async (page, selector, url) => {
   }
 };
 
-export const hasUrl = async (baseURL, page, url) => {
+export const hasUrl = async (baseURL: string, page: Page, url: string) => {
   await expect(page.url()).toContain(`${baseURL}${url}`);
 };
 

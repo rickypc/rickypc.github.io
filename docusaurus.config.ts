@@ -2,14 +2,14 @@
  * All the code that follow is
  * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
- * ----------------------------------------------------------------------------
- * @ts-check
  */
 
+import { type Config } from '@docusaurus/types';
 import { createSitemapItems } from '#root/src/plugins/docusaurus-plugin-kit/index';
+import { type Options, type ThemeConfig } from '@docusaurus/preset-classic';
+import { type PluginOptions } from '@easyops-cn/docusaurus-search-local';
 
-/** @type {import('@docusaurus/types').Config} */
-const config = {
+const config: Config = {
   baseUrl: '/',
   deploymentBranch: 'gh-pages',
   favicon: 'img/favicon.ico',
@@ -44,19 +44,17 @@ const config = {
   presets: [
     [
       'classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
       {
         docs: {},
         gtag: { trackingID: ['G-5G7P214N03', 'G-657RY80FJE', 'G-JYD543XZTH'] },
         sitemap: { createSitemapItems, ignorePatterns: ['/search/**'], lastmod: 'date' },
         theme: { customCss: require.resolve('#root/src/css/custom.css') },
-      },
+      } satisfies Options,
     ],
   ],
   projectName: 'rickypc.github.io',
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
+    {
       colorMode: { respectPrefersColorScheme: true },
       footer: {
         copyright: `Copyright © 2015-${new Date().getFullYear()} Ricky Huang. All Rights Reserved.`,
@@ -112,18 +110,17 @@ const config = {
         },
         title: 'Ricky Huang',
       },
-    }),
+    } satisfies ThemeConfig,
   themes: [
     [
       require.resolve('@easyops-cn/docusaurus-search-local'),
-      /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
-      ({
+      {
         hashed: true,
         hideSearchBarWithNoSearchContext: true,
         indexBlog: false,
         indexPages: true,
         searchContextByPaths: [{ label: 'Notes', path: 'docs' }],
-      }),
+      } satisfies PluginOptions,
     ],
   ],
   title: 'Ricky Huang',

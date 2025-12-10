@@ -4,7 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const {
+import {
   band,
   beforeEach,
   expect,
@@ -15,24 +15,22 @@ const {
   hasScreenshot,
   hasUrl,
   test,
-} = require('./utils/helper');
+} from './utils/helper';
 
-const url = '/stories';
+const url = '/timeline';
 
 test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
 
-test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url));
+test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL as string, page, url));
 test('has correct metadatas', hasMetadatas);
 test('has correct header', hasHeader);
-test('has active navigation', async ({ page }, testInfo) => hasActiveNavigation('Stories', page, testInfo));
+test('has active navigation', async ({ page }, testInfo) => hasActiveNavigation('Timeline', page, testInfo));
 test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo));
 
-test('has 4 stories', async ({ page }) => {
-  await band(4, async (index) => {
+test('has 8 events', async ({ page }) => {
+  await band(8, async (index) => {
     const nth = index + 1;
-    expect(await page.textContent(`main section article:nth-of-type(${nth}) h2`)).toMatchSnapshot(`story-header-${nth}.txt`);
-    expect(await page.textContent(`main section article:nth-of-type(${nth}) p`)).toMatchSnapshot(`story-content-${nth}.txt`);
-    expect(await page.textContent(`main section article:nth-of-type(${nth}) address`)).toMatchSnapshot(`story-author-${nth}.txt`);
+    expect(await page.textContent(`main section [class*='timeline_']:nth-of-type(${nth}) article`)).toMatchSnapshot(`event-${nth}.txt`);
   });
 });
 

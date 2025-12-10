@@ -33,7 +33,7 @@ import { basename, extname } from 'node:path';
  *   the mocked asset.
  */
 // eslint-disable-next-line import/prefer-default-export
-export function process(_, path) {
+export function process(_: string, path: string) {
   let code = '';
   switch (extname(path).toLowerCase()) {
     case '.css':

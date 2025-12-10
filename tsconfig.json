@@ -19,8 +19,8 @@
   },
   "extends": "@docusaurus/tsconfig",
   "include": [
+    "*.config.ts",
     "docs",
-    "docusaurus.config.js",
     "__mocks__",
     "src",
     "tests"

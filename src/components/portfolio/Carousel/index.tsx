@@ -244,7 +244,8 @@ export default memo(function Carousel({
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
-    if (images.length && !paused && !opened && visible) {
+    if (document.documentElement.dataset.carouselPlay !== 'manual'
+      && images.length && !paused && !opened && visible) {
       interval = setInterval(() => {
         setActive((current) => (current + 1) % images.length);
       }, duration);

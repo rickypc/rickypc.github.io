@@ -4,7 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const {
+import {
   band,
   beforeEach,
   expect,
@@ -15,22 +15,22 @@ const {
   hasScreenshot,
   hasUrl,
   test,
-} = require('./utils/helper');
+} from './utils/helper';
 
-const url = '/timeline';
+const url = '/portfolio';
 
 test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
 
-test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL, page, url));
+test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL as string, page, url));
 test('has correct metadatas', hasMetadatas);
 test('has correct header', hasHeader);
-test('has active navigation', async ({ page }, testInfo) => hasActiveNavigation('Timeline', page, testInfo));
+test('has active navigation', async ({ page }, testInfo) => hasActiveNavigation('Portfolio', page, testInfo));
 test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo));
 
-test('has 8 events', async ({ page }) => {
-  await band(8, async (index) => {
+test('has 12 portfolios', async ({ page }) => {
+  await band(12, async (index) => {
     const nth = index + 1;
-    expect(await page.textContent(`main section [class*='timeline_']:nth-of-type(${nth}) article`)).toMatchSnapshot(`event-${nth}.txt`);
+    expect(await page.textContent(`main section article:nth-of-type(${nth}) figure figcaption`)).toMatchSnapshot(`portfolio-${nth}.txt`);
   });
 });
 

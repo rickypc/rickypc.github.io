@@ -4,29 +4,33 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const docusaurus = require('@docusaurus/eslint-plugin');
-const { FlatCompat } = require('@eslint/eslintrc');
-const globals = require('globals');
-const jest = require('eslint-plugin-jest');
-const js = require('@eslint/js');
-const jsdoc = require('eslint-plugin-jsdoc');
-const json = require('eslint-plugin-json');
-const noSecrets = require('eslint-plugin-no-secrets');
-const react = require('eslint-plugin-react');
-const security = require('eslint-plugin-security');
-const testing = require('eslint-plugin-testing-library');
-const ts = require('typescript-eslint');
+import css from '@eslint/css';
+import { dirname } from 'node:path';
+import docusaurus from '@docusaurus/eslint-plugin';
+import { fileURLToPath } from 'node:url';
+import { FlatCompat } from '@eslint/eslintrc';
+import globals from 'globals';
+import jest from 'eslint-plugin-jest';
+import js from '@eslint/js';
+import jsdoc from 'eslint-plugin-jsdoc';
+import json from '@eslint/json';
+import { type Linter } from 'eslint';
+import noSecrets from 'eslint-plugin-no-secrets';
+import react from 'eslint-plugin-react';
+import security from 'eslint-plugin-security';
+import testing from 'eslint-plugin-testing-library';
+import ts from 'typescript-eslint';
 
-const compat = new FlatCompat({ baseDirectory: __dirname });
-
-module.exports = [
+const compat = new FlatCompat({ baseDirectory: dirname(fileURLToPath(import.meta.url)) });
+const config: Linter.Config[] = [
   // Order Matters™!
   { ignores: ['build/', '.docusaurus/'] },
   ...compat.config({ extends: ['airbnb', 'airbnb/hooks'] }),
   {
-    plugins: { '@docusaurus': docusaurus },
-    rules: docusaurus.configs.recommended.rules,
+    plugins: { '@docusaurus': docusaurus as any },
+    rules: docusaurus.configs.recommended.rules as any,
   },
+  css.configs.recommended,
   js.configs.recommended,
   jest.configs['flat/recommended'],
   jest.configs['flat/style'],
@@ -55,7 +59,7 @@ module.exports = [
     },
     settings: {
       'import/core-modules': ['@docusaurus/theme-common', '@docusaurus/utils'],
-      // This applies to js, jsx, ts, tsx.
+      // This applies to all.
       'import/resolver': { typescript: true },
       react: { version: 'detect' },
     },
@@ -66,3 +70,5 @@ module.exports = [
     ...ts.configs.recommendedTypeChecked[0],
   },
 ];
+
+export default config;

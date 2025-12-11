@@ -35,14 +35,17 @@ describe('home.Greeting', () => {
     expect(speech).toHaveAttribute(
       'data-names',
       [
-        'Alex',
-        'Reed (Spanish (Spain))',
-        'Eddy (Spanish (Spain))',
         'Microsoft Guy Online (Natural) - English (United States)',
         'Microsoft David - English (United States)',
-        'Google español',
+        'Reed (English (United States))',
+        'Eddy (English (United States))',
+        'Reed (English (US))',
+        'Eddy (English (US))',
+        'Microsoft Aria Online (Natural) - English (United States)',
+        'Microsoft Zira - English (United States)',
         'Damayanti',
         'Kanya',
+        'Google español',
         'Google US English',
       ].join('|'),
     );

@@ -39,13 +39,13 @@ describe('data.common', () => {
     it('defines print and speech warnings with text and type', () => {
       expect(admonitions).toHaveProperty('print');
       expect(admonitions.print).toEqual({
-        text: 'The print content is not ready. Please try again.',
+        text: 'The print content is not ready. Scroll to the bottom to load all images, then try again.',
         type: 'warning',
       });
 
       expect(admonitions).toHaveProperty('speech');
       expect(admonitions.speech).toEqual({
-        text: 'Change or update your browser for a better experience.',
+        text: 'Speech synthesis may not work properly. Change or update your browser for a better experience.',
         type: 'warning',
       });
     });

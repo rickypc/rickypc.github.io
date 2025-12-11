@@ -5,6 +5,7 @@
  * @jest-environment jsdom
  */
 
+import { admonitions } from '@site/src/data/common';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PrintAdmonition from '@site/src/components/common/PrintAdmonition';
@@ -19,7 +20,7 @@ describe('PrintAdmonition', () => {
     it('renders an aside with Admonition', () => {
       usePrintMock.mockReturnValue([false]);
       render(<PrintAdmonition />);
-      expect(screen.getByText('The print content is not ready. Please try again.')).toBeInTheDocument();
+      expect(screen.getByText(admonitions.print.text)).toBeInTheDocument();
 
       const admonition = screen.getByTestId('admonition');
       expect(admonition).toHaveAttribute('data-type', 'warning');

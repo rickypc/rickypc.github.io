@@ -23,6 +23,6 @@
 @media print {
   .figure {
     margin: 0 auto;
-    max-width: 22.5rem;
+    max-width: 12.5%;
   }
 }

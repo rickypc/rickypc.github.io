@@ -12,7 +12,6 @@ import styles from './styles.module.css';
 
 export default memo(function PrintAdmonition() {
   const [ready] = usePrint();
-
   return !ready && (
     <aside aria-hidden="true" className={clsx(styles.admonition, 'row')}>
       <div className="col">

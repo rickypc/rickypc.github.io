@@ -10,11 +10,11 @@ export const a11y = (value?: string, rest = {}) => ({ 'aria-label': value, title
 
 export const admonitions = {
   print: {
-    text: 'The print content is not ready. Please try again.',
+    text: 'The print content is not ready. Scroll to the bottom to load all images, then try again.',
     type: 'warning',
   },
   speech: {
-    text: 'Change or update your browser for a better experience.',
+    text: 'Speech synthesis may not work properly. Change or update your browser for a better experience.',
     type: 'warning',
   },
 };

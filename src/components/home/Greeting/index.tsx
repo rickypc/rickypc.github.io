@@ -20,40 +20,49 @@ import styles from './styles.module.css';
  * with lower entries serving as fallbacks.
  *
  * Male voices (priority order):
- * - 'Alex' — Apple macOS voice, natural and expressive.
  * - 'Microsoft Guy Online (Natural) - English (United States)' — Azure Neural TTS.
  * - 'Microsoft David - English (United States)' — Windows built-in voice.
+ * - 'Reed (English (US))' — Apple macOS voice.
+ * - 'Eddy (English (US))' — Apple macOS voice (higher pitch, faster).
  * - 'Google español' — Spanish male voice from Google TTS.
- * - 'Google US English' — American female voice from Google TTS.
  *
  * Female voices (priority order):
- * - 'Victoria' — Apple macOS voice, clear and engaging.
  * - 'Microsoft Aria Online (Natural) - English (United States)' — Azure Neural TTS.
  * - 'Microsoft Zira - English (United States)' — Windows built-in voice.
+ * - 'Damayanti' — Apple macOS voice.
+ * - 'Kanya' — Apple macOS voice.
  * - 'Google US English' — American female voice from Google TTS.
  */
 export default memo(function Greeting() {
   return (
     <Heading as="h1" className={styles.greeting}>
       <span>{greeting}</span>
-      <span className={styles.ipa}>{ipa}</span>
-      <Speech
-        lang="en-US"
-        names={[
-          'Alex',
-          'Reed (Spanish (Spain))',
-          'Eddy (Spanish (Spain))',
-          'Microsoft Guy Online (Natural) - English (United States)',
-          'Microsoft David - English (United States)',
-          'Google español',
-          'Damayanti',
-          'Kanya',
-          'Google US English',
-        ]}
-      >
-        ricky huang
-      </Speech>
-      <Heart className={styles.reaction} id="home-landing" />
+      <div className={styles.pronunciation}>
+        <span className={styles.ipa}>{ipa}</span>
+        <Speech
+          lang="en-US"
+          names={[
+            'Microsoft Guy Online (Natural) - English (United States)',
+            'Microsoft David - English (United States)',
+            // Opera.
+            'Reed (English (United States))',
+            'Eddy (English (United States))',
+            // Firefox.
+            'Reed (English (US))',
+            'Eddy (English (US))',
+            // We skipped Reed and Eddy in Safari.
+            'Microsoft Aria Online (Natural) - English (United States)',
+            'Microsoft Zira - English (United States)',
+            'Damayanti',
+            'Kanya',
+            'Google español',
+            'Google US English',
+          ]}
+        >
+          , ricky huang
+        </Speech>
+        <Heart className={styles.reaction} id="home-landing" />
+      </div>
     </Heading>
   );
 });

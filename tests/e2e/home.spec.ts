@@ -27,10 +27,11 @@ test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testI
 
 test('has greeting', async ({ page }) => {
   await hasSpeech(page, 'main header h1 [class*="controls_"]', url);
-  await band(2, async (index) => {
+  await band(1, async (index) => {
+    // 1-based.
     const nth = index + 1;
     // After nth assignment.
-    const locator = page.locator(`main header h1>span:nth-of-type(${nth})`);
+    const locator = page.locator(`main header h1>[class*="pronunciation_"]>span:nth-of-type(${nth})`);
     await expect(locator).toBeVisible();
     expect(await locator.textContent()).toMatchSnapshot(`greeting-${nth}.txt`);
   });

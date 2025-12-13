@@ -188,19 +188,17 @@ export default memo(function Speech({
 
   useEffect(() => {
     if (ready) {
-      (async () => {
-        synth.current = speechSynthesis;
-        utterance.current = new SpeechSynthesisUtterance(text);
-        utterance.current.addEventListener('end', onStop);
-        utterance.current.addEventListener('error', onStop);
-        utterance.current.pitch = pitch;
-        utterance.current.rate = rate;
-        if (typeof (voice?.lang) === 'string') {
-          utterance.current.lang = voice.lang;
-          utterance.current.voice = voice;
-        }
-        utterance.current.volume = document.documentElement.dataset.volume === 'silent' ? 0 : volume;
-      })();
+      synth.current = speechSynthesis;
+      utterance.current = new SpeechSynthesisUtterance(text);
+      utterance.current.addEventListener('end', onStop);
+      utterance.current.addEventListener('error', onStop);
+      utterance.current.pitch = pitch;
+      utterance.current.rate = rate;
+      if (typeof (voice?.lang) === 'string') {
+        utterance.current.lang = voice.lang;
+        utterance.current.voice = voice;
+      }
+      utterance.current.volume = document.documentElement.dataset.volume === 'silent' ? 0 : volume;
     }
     return () => {
       synth.current?.cancel();
@@ -210,7 +208,7 @@ export default memo(function Speech({
   }, [onStop, pitch, rate, ready, text, voice, volume]);
 
   return (
-    <>
+    <div className={styles.controls}>
       {hasVoice === false && ready && (
         <Admonition type="info">
           <p>
@@ -219,38 +217,36 @@ export default memo(function Speech({
           </p>
         </Admonition>
       )}
-      <div className={styles.controls}>
-        {playing && (
-          <>
-            <Button
-              {...a11y('Stop')}
-              className={clsx(className, styles.control)}
-              onClick={onStop}
-              whileTap={{ scale: 0.85 }}
-            >
-              <GrStop />
-            </Button>
-            <Button
-              {...a11y('Pause')}
-              className={clsx(className, styles.control)}
-              onClick={onPause}
-              whileTap={{ scale: 0.85 }}
-            >
-              <GrPause />
-            </Button>
-          </>
-        )}
-        {hasVoice && !playing && !!text?.length && (
+      {playing && (
+        <>
           <Button
-            {...a11y(paused ? 'Resume' : 'Play')}
+            {...a11y('Stop')}
             className={clsx(className, styles.control)}
-            onClick={paused ? onResume : onPlay}
+            onClick={onStop}
             whileTap={{ scale: 0.85 }}
           >
-            {paused ? <GrResume /> : <GrPlay />}
+            <GrStop />
           </Button>
-        )}
-      </div>
-    </>
+          <Button
+            {...a11y('Pause')}
+            className={clsx(className, styles.control)}
+            onClick={onPause}
+            whileTap={{ scale: 0.85 }}
+          >
+            <GrPause />
+          </Button>
+        </>
+      )}
+      {hasVoice && !playing && !!text?.length && (
+        <Button
+          {...a11y(paused ? 'Resume' : 'Play')}
+          className={clsx(className, styles.control)}
+          onClick={paused ? onResume : onPlay}
+          whileTap={{ scale: 0.85 }}
+        >
+          {paused ? <GrResume /> : <GrPlay />}
+        </Button>
+      )}
+    </div>
   );
 });

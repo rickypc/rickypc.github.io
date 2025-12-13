@@ -17,7 +17,7 @@ jest.mock('@site/src/data/portfolio', () => ({
     { id: 2, title: 'NoTag1', tags: ['Other', 'Common'] },
   ],
   layout: { title: 'Portfolio Title', description: 'Portfolio Desc' },
-  preamble: { title: 'Preamble Title', description: 'Preamble Desc', printAdmonition: false },
+  preamble: { title: 'Preamble Title', description: 'Preamble Desc' },
 }));
 
 describe('pages.portfolio', () => {
@@ -32,7 +32,6 @@ describe('pages.portfolio', () => {
   it('renders Preamble with expected props', () => {
     render(<Portfolio />);
     const pre = screen.getByTestId('preamble');
-    expect(pre.getAttribute('data-print-admonition')).toEqual(String(!!preamble.printAdmonition));
     expect(pre.getAttribute('description')).toEqual(preamble.description);
     expect(pre.getAttribute('title')).toEqual(preamble.title);
   });

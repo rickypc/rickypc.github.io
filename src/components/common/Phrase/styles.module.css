@@ -31,14 +31,26 @@
 }
 
 .support .icon {
+  border-radius: 50%;
   font-size: 1.25rem;
-  line-height: 1.25rem;
-  margin: 0 0.5rem 0 0.25rem;
+  height: 2rem;
+  line-height: 1.75rem;
+  margin: 0;
+  text-align: center;
+  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+  width: 2rem;
 }
 
-.support .icon:hover {
+[data-theme='dark'] .support .icon:hover {
+  background: rgba(0, 100, 255, 0.5);
+  color: #a8d8e8;
   filter: drop-shadow(0.075rem 0.075rem 0.075rem rgba(0, 0, 0, 0.4));
-  transition: filter var(--ifm-transition-fast) ease-in-out;
+}
+
+[data-theme='light'] .support .icon:hover {
+  background: rgba(200, 220, 250, 0.5);
+  color: #1a73e8;
+  filter: drop-shadow(0.075rem 0.075rem 0.075rem rgba(0, 0, 0, 0.4));
 }
 
 .support .icon svg {

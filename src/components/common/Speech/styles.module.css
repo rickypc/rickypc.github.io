@@ -5,20 +5,42 @@
  */
 
 .controls {
+  align-items: center;
   display: inline-flex;
   margin-right: 0.25rem;
 }
 
+.controls div[class*='theme-admonition'] {
+  font-size: 0.85rem;
+  line-height: 1rem;
+  margin: 0;
+  padding: 0.5rem;
+}
+
 .controls .control {
-  filter: drop-shadow(0.075rem 0.075rem 0.075rem rgba(0, 0, 0, 0.4));
+  border-radius: 50%;
+  color: var(--ifm-link-color);
   font-size: 1.25rem;
-  line-height: 1.25rem;
-  margin: 0 0.25rem;
-  transition: color var(--ifm-transition-fast) ease-in-out;
+  height: 2rem;
+  line-height: 1rem;
+  transform: translateZ(0);
+  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+  width: 2rem;
+  will-change: filter;
 }
 
 .controls .control:hover {
-  color: #248aaa;
+  filter: drop-shadow(0.075rem 0.075rem 0.075rem rgba(0, 0, 0, 0.4));
+}
+
+[data-theme='dark'] .controls .control:hover {
+  background: rgba(0, 100, 255, 0.5);
+  color: #a8d8e8;
+}
+
+[data-theme='light'] .controls .control:hover {
+  background: rgba(200, 220, 250, 0.5);
+  color: #1a73e8;
 }
 
 .controls .control svg {

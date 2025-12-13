@@ -112,6 +112,18 @@ export default memo(function MultiLingual({
           suffix="༎"
         />
       )}
+      {languages?.pali?.children && (
+        <PhraseBlock
+          infix="."
+          phrase={{
+            ...languages.pali,
+            className: transliteration.className,
+            unify: transliteration.unify,
+          }}
+          prefix="꣼ "
+          suffix="෴"
+        />
+      )}
       {languages?.pali?.sinhala?.children && (
         <PhraseBlock
           infix="."

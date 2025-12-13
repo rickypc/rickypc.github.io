@@ -47,7 +47,6 @@ export const layout: LayoutProps = {
 
 export const preamble: PreambleProps = {
   description: 'A curated journey through key milestones in my career, education, and technical growth. Each moment reflects a step forward - building expertise, shaping ideas, and driving impact across industries and technologies.',
-  printAdmonition: true,
   title: 'Timeline',
 };
 

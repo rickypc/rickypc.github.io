@@ -47,10 +47,6 @@ describe('data.timeline', () => {
     it('title', () => {
       expect(preamble.title).toBe('Timeline');
     });
-
-    it('printAdmonition is true', () => {
-      expect(preamble.printAdmonition).toBeTruthy();
-    });
   });
 
   describe('timelines', () => {

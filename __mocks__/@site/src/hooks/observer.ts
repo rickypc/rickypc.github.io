@@ -6,8 +6,6 @@
 
 export const useMedia = jest.fn();
 
-export const usePrint = jest.fn();
-
 export const useSpeech = jest.fn();
 
 export const useVisibility = jest.fn();

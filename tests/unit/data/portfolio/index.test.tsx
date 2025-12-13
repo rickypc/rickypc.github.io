@@ -15,7 +15,7 @@ describe('portfolio.index', () => {
     expect(typeof catalog[0]).toBe('object');
   });
 
-  // Validate first item's primitive/top-level fields (single responsibility).
+  // Validate first item's primitive/top-level fields.
   it('first catalog item has required primitive fields with sensible values', () => {
     const first = catalog[0];
 
@@ -41,7 +41,7 @@ describe('portfolio.index', () => {
     });
   });
 
-  // Validate images structure only (keeps concerns separated from primitives).
+  // Validate images structure only.
   it('first catalog item images array contains objects with alt and picture keys of expected shape', () => {
     const first = catalog[0];
 
@@ -69,7 +69,6 @@ describe('portfolio.index', () => {
     });
   });
 
-  // Validate layout once, focused checks.
   it('layout export has title, description, and non-empty keywords array', () => {
     expect(typeof layout).toBe('object');
 
@@ -87,8 +86,7 @@ describe('portfolio.index', () => {
     });
   });
 
-  // Validate preamble once, focused checks.
-  it('preamble export has title, description, and boolean printAdmonition', () => {
+  it('preamble export has description and title', () => {
     expect(typeof preamble).toBe('object');
 
     expect(typeof preamble.title).toBe('string');
@@ -96,7 +94,5 @@ describe('portfolio.index', () => {
 
     expect(typeof preamble.description).toBe('string');
     expect(preamble.description.length).toBeGreaterThan(0);
-
-    expect(typeof preamble.printAdmonition).toBe('boolean');
   });
 });

@@ -5,7 +5,6 @@
  */
 
 import { memo, type ReactElement } from 'react';
-import PrintAdmonition from '@site/src/components/common/PrintAdmonition';
 import SpeechAdmonition from '@site/src/components/common/SpeechAdmonition';
 import { useWelcome } from '@site/src/hooks/observer';
 
@@ -15,10 +14,5 @@ export type WelcomeProps = {
 
 export default memo(function Welcome({ navigation = false }: WelcomeProps): ReactElement {
   useWelcome({ navigation });
-  return (
-    <>
-      <PrintAdmonition />
-      <SpeechAdmonition />
-    </>
-  );
+  return <SpeechAdmonition />;
 });

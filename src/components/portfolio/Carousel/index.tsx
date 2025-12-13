@@ -240,6 +240,9 @@ export default memo(function Carousel({
   const viewport = useRef<HTMLDivElement>(null);
   const { visible } = useVisibility({ ref: viewport, threshold: 0.1 });
 
+  const onMouseEnter = useCallback(() => setPaused(true), []);
+  const onMouseLeave = useCallback(() => setPaused(false), []);
+
   useImperativeHandle(ref, () => ({ setPaused }), []);
 
   useEffect(() => {
@@ -258,13 +261,24 @@ export default memo(function Carousel({
     };
   }, [duration, images.length, opened, paused, visible]);
 
+  useEffect(() => {
+    window.addEventListener('afterprint', onMouseLeave);
+    window.addEventListener('beforeprint', onMouseEnter);
+    return () => {
+      window.removeEventListener('afterprint', onMouseLeave);
+      window.removeEventListener('beforeprint', onMouseEnter);
+    };
+  }, [onMouseEnter, onMouseLeave]);
+
   return (
     <div className={styles.carousel}>
       <div
-        className={styles.viewport}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        ref={viewport}
+        {...{
+          className: styles.viewport,
+          onMouseEnter,
+          onMouseLeave,
+          ref: viewport,
+        }}
       >
         <Slider
           {...{

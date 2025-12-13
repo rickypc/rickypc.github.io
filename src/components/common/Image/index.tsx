@@ -99,6 +99,7 @@ const Picture = memo(function Picture({
   });
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const pictureRef = ref || useRef<HTMLPictureElement | null>(null);
+  const [print, setPrint] = useState(false);
   const { visible } = useVisibility({ ref: pictureRef, threshold: 0.1 });
 
   const onFallbackLoad = useCallback((evt: SyntheticEvent<HTMLImageElement, Event>) => {
@@ -109,6 +110,12 @@ const Picture = memo(function Picture({
       background: false,
     } : previous)), 450);
   }, [onLoad]);
+
+  const onShow = useCallback(
+    // istanbul ignore next
+    () => setRender((previous) => (previous.show ? previous : { ...previous, show: true })),
+    [],
+  );
 
   useEffect(() => {
     // istanbul ignore else
@@ -132,10 +139,23 @@ const Picture = memo(function Picture({
 
   useEffect(() => {
     if (visible) {
-      // istanbul ignore next
-      setRender((previous) => (!previous.show ? { ...previous, show: true } : previous));
+      onShow();
     }
-  }, [visible]);
+  }, [onShow, visible]);
+
+  useEffect(() => {
+    const onAfterPrint = () => setPrint(false);
+    const onBeforePrint = () => {
+      setPrint(true);
+      onShow();
+    };
+    window.addEventListener('afterprint', onAfterPrint);
+    window.addEventListener('beforeprint', onBeforePrint);
+    return () => {
+      window.removeEventListener('afterprint', onAfterPrint);
+      window.removeEventListener('beforeprint', onBeforePrint);
+    };
+  }, [onShow]);
 
   // a11y() doesn't provide `alt` by design.
   return (
@@ -160,10 +180,10 @@ const Picture = memo(function Picture({
                 <motion.img
                   {...rest}
                   alt={loaded ? alt : undefined}
-                  animate={{ opacity: loaded ? 1 : 0 }}
+                  animate={{ opacity: loaded || print ? 1 : 0 }}
                   draggable={false}
                   height={fit.height}
-                  initial={{ opacity: 0 }}
+                  initial={{ opacity: print ? 1 : 0 }}
                   key={key(alt, 'picture')}
                   onLoad={onFallbackLoad}
                   src={fit.path}

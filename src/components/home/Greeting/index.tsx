@@ -44,7 +44,7 @@ export default memo(function Greeting() {
           names={[
             'Microsoft Guy Online (Natural) - English (United States)',
             'Microsoft David - English (United States)',
-            // Opera.
+            // OSX Blink (Chrome, Opera).
             'Reed (English (United States))',
             'Eddy (English (United States))',
             // Firefox.
@@ -53,8 +53,10 @@ export default memo(function Greeting() {
             // We skipped Reed and Eddy in Safari.
             'Microsoft Aria Online (Natural) - English (United States)',
             'Microsoft Zira - English (United States)',
+            // Safari.
             'Damayanti',
             'Kanya',
+            // Android.
             'Google español',
             'Google US English',
           ]}

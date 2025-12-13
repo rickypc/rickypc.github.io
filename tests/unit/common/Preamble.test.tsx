@@ -18,11 +18,6 @@ describe('Preamble', () => {
   };
 
   describe('default rendering', () => {
-    it('does not render PrintAdmonition', () => {
-      render(<Preamble {...baseProps} />);
-      expect(screen.queryByTestId('print-admonition')).toBeNull();
-    });
-
     it('renders header, heading, and description', () => {
       render(<Preamble {...baseProps} />);
 
@@ -42,13 +37,6 @@ describe('Preamble', () => {
 
       const para = screen.getByText(baseProps.description);
       expect(para.tagName).toBe('P');
-    });
-  });
-
-  describe('when printAdmonition is true', () => {
-    it('renders the PrintAdmonition component', () => {
-      render(<Preamble {...baseProps} printAdmonition />);
-      expect(screen.getByTestId('print-admonition')).toBeInTheDocument();
     });
   });
 });

@@ -6,28 +6,16 @@
 
 import { type PropsWithChildren, type ReactElement } from 'react';
 
-type PreambleProps = {
-  printAdmonition: boolean;
-};
-
 /**
- * Minimal mock common/Heart component that renders children.
+ * Minimal mock common/Preamble component that renders children.
  * @param {PropsWithChildren} props
  *   The component props.
  * @returns {ReactElement}
- *   The common/Heart component.
+ *   The common/Preamble component.
  */
-export default function Preamble({
-  children,
-  printAdmonition,
-  ...rest
-}: PropsWithChildren<PreambleProps>): ReactElement {
+export default function Preamble({ children, ...rest }: PropsWithChildren<{}>): ReactElement {
   return (
-    <div
-      data-print-admonition={String(!!printAdmonition)}
-      data-testid="preamble"
-      {...rest}
-    >
+    <div data-testid="preamble" {...rest}>
       {children}
     </div>
   );

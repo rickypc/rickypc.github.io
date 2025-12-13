@@ -25,7 +25,6 @@ describe('pages.about', () => {
     const preambleEl = screen.queryByTestId('preamble');
 
     if (!preambleEl) throw new Error('Preamble not rendered');
-    expect(preambleEl.getAttribute('data-print-admonition')).toEqual(String(!!preamble.printAdmonition));
     expect(preambleEl.getAttribute('description')).toEqual(preamble.description);
     expect(preambleEl.getAttribute('title')).toEqual(preamble.title);
     expect(layoutEl?.contains(preambleEl)).toBeTruthy();

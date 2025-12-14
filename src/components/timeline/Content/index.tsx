@@ -12,7 +12,7 @@ import Image, { type PictureInfo } from '@site/src/components/common/Image';
 import Link from '@site/src/components/common/Link';
 import { memo, type ReactElement, useCallback } from 'react';
 import { timelines } from '@site/src/data/timeline';
-import { useMedia } from '@site/src/hooks/observer';
+import { useMedia, usePrint } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
 export type TimelineProps = {
@@ -41,6 +41,7 @@ const Timeline = memo(function Timeline({
 }: TimelineProps): ReactElement {
   const alt = `${affiliation.children} Logo`;
   const id = key(title.children, 'timeline');
+  const [printing] = usePrint();
 
   return (
     <div className={clsx(className, styles.timeline)}>
@@ -52,6 +53,7 @@ const Timeline = memo(function Timeline({
           title: alt,
           whileTap: { scale: 0.85 },
         }}
+        live={printing}
         picture={picture}
       />
       <LazyMotion features={domAnimation}>

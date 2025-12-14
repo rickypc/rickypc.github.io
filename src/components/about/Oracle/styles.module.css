@@ -113,3 +113,21 @@
     transform: perspective(75rem) rotate(360deg);
   }
 }
+
+@media print {
+  .oracle {
+    display: none;
+  }
+
+  .oracle.play .oracular1,
+  .oracle.play .oracular2,
+  .oracle.play .oracular3 {
+    animation: none;
+  }
+
+  .oracle.play .oracular1::before,
+  .oracle.play .oracular2::before,
+  .oracle.play .oracular3::before {
+    animation: none;
+  }
+}

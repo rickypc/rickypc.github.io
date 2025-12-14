@@ -15,8 +15,9 @@ import {
 import '@testing-library/jest-dom';
 import Image from '@site/src/components/common/Image';
 import { useRef } from 'react';
-import { useVisibility } from '@site/src/hooks/observer';
+import { usePrint, useVisibility } from '@site/src/hooks/observer';
 
+const usePrintMock = usePrint as jest.MockedFunction<typeof usePrint>;
 const useVisibilityMock = useVisibility as jest.MockedFunction<typeof useVisibility>;
 
 jest.unmock('@site/src/components/common/Image');
@@ -34,12 +35,13 @@ describe('Image', () => {
     webp: 'img.webp',
   };
 
-  beforeEach(() => jest.useFakeTimers());
-
   afterEach(() => {
     jest.runOnlyPendingTimers();
     jest.useRealTimers();
   });
+  beforeEach(() => jest.useFakeTimers());
+
+  usePrintMock.mockReturnValue([false]);
 
   describe('visibility', () => {
     it('does not render sources or img when not visible', () => {
@@ -116,7 +118,7 @@ describe('Image', () => {
       expect(pic).not.toHaveStyle('background-image: url(preSrc.jpg)');
     });
 
-    it('invokes onLoad again on subsequent loads without restoring preSrc', () => {
+    it('invokes onLoad again on subsequent loads without restoring preSrc', async () => {
       const onLoad = jest.fn();
       const { container } = render((
         <Image alt="Alt" onLoad={onLoad} picture={basePicture} />
@@ -130,6 +132,34 @@ describe('Image', () => {
       act(() => jest.advanceTimersByTime(450));
       fireEvent.load(img!);
       expect(onLoad).toHaveBeenCalledTimes(2);
+      expect(pic).not.toHaveStyle('background-image: url(preSrc.jpg)');
+
+      await act(async () => {
+        usePrintMock.mockReturnValue([true]);
+        jest.advanceTimersByTime(100);
+        usePrintMock.mockReturnValue([false]);
+      });
+      expect(onLoad).toHaveBeenCalledTimes(2);
+      expect(pic).not.toHaveStyle('background-image: url(preSrc.jpg)');
+    });
+
+    it('invokes onLoad after before print event', async () => {
+      const onLoad = jest.fn();
+      const { container } = render((
+        <Image alt="Alt" onLoad={onLoad} picture={basePicture} />
+      ));
+      await act(() => usePrintMock.mockReturnValue([true]));
+
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
+      const img = container.querySelector('img');
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
+      const pic = container.querySelector('picture');
+
+      fireEvent.load(img!);
+      act(() => jest.advanceTimersByTime(450));
+
+      await act(() => usePrintMock.mockReturnValue([false]));
+      expect(onLoad).toHaveBeenCalledTimes(1);
       expect(pic).not.toHaveStyle('background-image: url(preSrc.jpg)');
     });
   });

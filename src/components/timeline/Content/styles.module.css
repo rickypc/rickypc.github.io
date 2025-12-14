@@ -172,6 +172,7 @@
   }
 
   .timeline {
+    break-inside: avoid;
     width: 100%;
   }
 
@@ -185,10 +186,22 @@
 
   .timeline .inner {
     opacity: 1 !important;
-    transform: translate(0) !important;
+    scale: 1 !important;
+    transform: none !important;
   }
 
   .timeline .inner p {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+  }
+
+  [data-theme] .timeline .logo {
+    background: none;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    box-shadow: none;
+  }
+
+  [data-theme] .timeline .logo::before {
+    box-shadow: none;
+    opacity: 0;
   }
 }

@@ -11,10 +11,9 @@ import Welcome from '@site/src/components/common/Welcome';
 import { useWelcome } from '@site/src/hooks/observer';
 
 describe('Welcome', () => {
-  it('calls useWelcome with navigation=false by default and renders both admonitions', () => {
+  it('calls useWelcome with navigation=false by default and renders speech admonition', () => {
     render(<Welcome />);
     expect(useWelcome).toHaveBeenCalledWith({ navigation: false });
-    expect(screen.getByTestId('print-admonition')).toBeInTheDocument();
     expect(screen.getByTestId('speech-admonition')).toBeInTheDocument();
   });
 

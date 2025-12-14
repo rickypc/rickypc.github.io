@@ -24,5 +24,11 @@
   .figure {
     margin: 0 auto;
     max-width: 12.5%;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .figure picture img {
+    filter: none;
   }
 }

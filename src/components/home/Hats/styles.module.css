@@ -90,17 +90,23 @@
     padding: 0.3rem 1.5rem;
   }
 
+  .hats .hat h2 {
+    margin-bottom: 0;
+    text-shadow: none;
+  }
+
   [data-theme] .hats .hat h2 i {
+    background: none;
     color: #000;
+  }
+
+  .hats .hat h2 [class*='phrases_'][class*='play_'] i {
+    animation: none;
   }
 
   [data-theme] .hats .hat p {
     font-size: 0.85rem;
     margin-bottom: 1rem;
-  }
-
-  .hats .hat h2 {
-    margin-bottom: 0;
   }
 
   .hats .hat h2 [class*='word_'] {

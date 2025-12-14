@@ -65,6 +65,7 @@
 @media print {
   [data-theme] .figure {
     filter: none;
+    max-width: 65%;
   }
 
   .figure .shape {

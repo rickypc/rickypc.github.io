@@ -10,6 +10,7 @@ import {
   expect,
   hasMetadatas,
   hasNavigations,
+  hasPrint,
   hasScreenshot,
   hasSpeech,
   hasUrl,
@@ -70,6 +71,11 @@ test('has social links', async ({ page }) => {
     await expect(page.locator(`main ul[class*='social_'] li:nth-of-type(${index + 1}) a`)).toBeVisible();
   });
 });
+
+test(
+  'has correct print screenshot',
+  async ({ browserName, page }, testInfo) => hasPrint(browserName, page, testInfo, url),
+);
 
 ['Dark', 'Light'].forEach((theme) => {
   test(

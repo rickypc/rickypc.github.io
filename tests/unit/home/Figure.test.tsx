@@ -10,8 +10,9 @@ import { render, renderHook } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Figure from '@site/src/components/home/Figure';
 import { useRef } from 'react';
-import { useVisibility } from '@site/src/hooks/observer';
+import { usePrint, useVisibility } from '@site/src/hooks/observer';
 
+const usePrintMock = usePrint as jest.MockedFunction<typeof usePrint>;
 const useVisibilityMock = useVisibility as jest.MockedFunction<typeof useVisibility>;
 
 jest.unmock('@site/src/components/common/Image');
@@ -20,6 +21,7 @@ jest.unmock('@site/src/components/home/Figure');
 describe('home.Figure', () => {
   it('renders a <figure> with correct accessibility attributes, CSS class, and nested Image', () => {
     const { result } = renderHook(() => useRef(null));
+    usePrintMock.mockReturnValue([false]);
     useVisibilityMock.mockReturnValue({ ref: result.current, visible: true });
     const { container } = render(<Figure />);
 

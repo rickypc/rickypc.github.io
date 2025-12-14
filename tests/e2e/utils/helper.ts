@@ -12,6 +12,7 @@ import {
   test,
   type TestInfo,
 } from '@playwright/test';
+import { pdfToPng } from 'pdf-to-png-converter';
 import { URLSearchParams } from 'node:url';
 
 // eslint-disable-next-line no-unused-vars
@@ -110,6 +111,33 @@ export const hasNavigations = async (page: Page, testInfo: TestInfo) => {
     await expect(theme.desktop.getByRole('button', { name: 'light mode' })).toBeVisible();
     await expect(theme.mobile.getByRole('button', { name: 'light mode' })).toBeHidden();
   }
+};
+
+export const hasPrint = async (
+  browserName: string,
+  page: Page,
+  testInfo: TestInfo,
+  url: string,
+) => {
+  test.skip(browserName !== 'chromium', 'PDF only works in Chromium');
+  const params: Record<string, string> = {};
+  if (url.includes('portfolio')) {
+    params['docusaurus-data-carousel-play'] = 'manual';
+  }
+  await page.goto(`${url}?${new URLSearchParams(params).toString()}`, { waitUntil: 'networkidle' });
+  await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
+  const pdf = await page.pdf({ format: 'Letter', printBackground: true });
+  const images = await pdfToPng(pdf.buffer.slice(
+    pdf.byteOffset,
+    pdf.byteOffset + pdf.byteLength,
+  ));
+  await Promise.all(images.map(async (img, i) => {
+    expect(img.content).toMatchSnapshot(`print-page-${i}.png`);
+    await testInfo.attach(`Print page ${i + 1}`, {
+      body: img.content,
+      contentType: 'image/png',
+    });
+  }));
 };
 
 export const hasScreenshot = async (page: Page, testInfo: TestInfo, theme: string, url: string) => {

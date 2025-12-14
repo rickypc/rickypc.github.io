@@ -6,6 +6,7 @@
 
 .content {
   column-count: 2;
+  column-fill: balance;
   column-gap: 2rem;
   margin: 2rem auto;
 }
@@ -155,19 +156,20 @@
 
 @media print {
   .content {
-    column-count: 1;
+    column-count: auto;
+    column-gap: 0;
   }
 
-  [data-theme] .content .story {
-    opacity: 1;
-    transform: rotate(0) translate(0);
+  .content .story {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
-  [data-theme] .content .story h2 {
+  .content .story h2 {
     font-size: 1.25rem;
   }
 
-  [data-theme] .content .story p {
+  .content .story p {
     font-size: 0.85rem;
   }
 

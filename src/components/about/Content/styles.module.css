@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -82,7 +82,7 @@
 
 @media print {
   .content {
-    margin: 0 4.5rem;
+    margin: 0 1.75rem;
     padding: 0;
   }
 
@@ -93,7 +93,7 @@
 
   .content h2 {
     font-size: 1.25rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
   }
 
   .content h3 {
@@ -102,10 +102,10 @@
 
   .content p,
   .content ul li {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
 
   .content p {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 }

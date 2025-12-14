@@ -16,8 +16,9 @@ import '@testing-library/jest-dom';
 import Carousel from '@site/src/components/portfolio/Carousel';
 import { createRef } from 'react';
 import { listeners } from 'motion/react';
-import { useVisibility } from '@site/src/hooks/observer';
+import { usePrint, useVisibility } from '@site/src/hooks/observer';
 
+const usePrintMock = usePrint as jest.MockedFunction<typeof usePrint>;
 const useVisibilityMock = useVisibility as jest.MockedFunction<typeof useVisibility>;
 
 jest.unmock('@site/src/components/portfolio/Carousel');
@@ -29,6 +30,7 @@ describe('portfolio.Carousel', () => {
     {},
     {},
   ];
+  usePrintMock.mockReturnValue([false]);
   useVisibilityMock.mockReturnValue({ ref: { current: null }, visible: true });
 
   describe('Indicators', () => {
@@ -96,12 +98,14 @@ describe('portfolio.Carousel', () => {
   describe('Slider drag logic', () => {
     it('suppresses click when dragging', () => {
       const onClick = jest.fn();
+      usePrintMock.mockReturnValue([true]);
       const { container } = render(
         <Carousel images={images} onClick={onClick} prefix="p" />,
       );
       act(() => listeners['slider-onDragStart']());
       // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       fireEvent.click(container.querySelector('div.slide:first-of-type') as Element);
+      usePrintMock.mockReturnValue([false]);
       expect(onClick).not.toHaveBeenCalled();
     });
 

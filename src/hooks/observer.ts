@@ -36,6 +36,27 @@ export function useMedia(query: string) {
   return [change];
 }
 
+/**
+ * Detects when the page is being printed.
+ * @returns {[boolean]} React tuple: [printing].
+ */
+export function usePrint() {
+  const [printing, setPrinting] = useState(false);
+
+  useEffect(() => {
+    const onAfterPrint = () => setPrinting(false);
+    const onBeforePrint = () => setPrinting(true);
+    window.addEventListener('afterprint', onAfterPrint);
+    window.addEventListener('beforeprint', onBeforePrint);
+    return () => {
+      window.removeEventListener('afterprint', onAfterPrint);
+      window.removeEventListener('beforeprint', onBeforePrint);
+    };
+  }, []);
+
+  return [printing];
+}
+
 const useSafeLayoutEffect = typeof (window) !== 'undefined' ? useLayoutEffect : useEffect;
 
 /**

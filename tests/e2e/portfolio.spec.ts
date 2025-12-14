@@ -12,6 +12,7 @@ import {
   hasHeader,
   hasMetadatas,
   hasNavigations,
+  hasPrint,
   hasScreenshot,
   hasUrl,
   test,
@@ -33,6 +34,11 @@ test('has 12 portfolios', async ({ page }) => {
     expect(await page.textContent(`main section article:nth-of-type(${nth}) figure figcaption`)).toMatchSnapshot(`portfolio-${nth}.txt`);
   });
 });
+
+test(
+  'has correct print screenshot',
+  async ({ browserName, page }, testInfo) => hasPrint(browserName, page, testInfo, url),
+);
 
 ['Dark', 'Light'].forEach((theme) => {
   test(

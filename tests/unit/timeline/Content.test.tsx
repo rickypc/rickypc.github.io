@@ -11,9 +11,10 @@ import '@testing-library/jest-dom';
 import { clsx } from '@site/src/data/common';
 import Content from '@site/src/components/timeline/Content';
 import { timelines } from '@site/src/data/timeline';
-import { useMedia } from '@site/src/hooks/observer';
+import { useMedia, usePrint } from '@site/src/hooks/observer';
 
 const useMediaMock = useMedia as jest.MockedFunction<typeof useMedia>;
+const usePrintMock = usePrint as jest.MockedFunction<typeof usePrint>;
 
 jest.unmock('@site/src/components/timeline/Content');
 
@@ -42,6 +43,8 @@ jest.mock('@site/src/data/timeline', () => ({
 }));
 
 describe('timeline.Content', () => {
+  usePrintMock.mockReturnValue([false]);
+
   it('renders wrapper and timeline items with correct layout when single = false', () => {
     // Single = false -> position alternates: idx0 -> right, idx1 -> left.
     useMediaMock.mockReturnValue([false]);

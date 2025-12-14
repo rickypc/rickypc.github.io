@@ -24,7 +24,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useVisibility } from '@site/src/hooks/observer';
+import { usePrint, useVisibility } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
 type ImageInfo = {
@@ -64,58 +64,37 @@ type PictureProps = {
   alt?: string;
   className?: string;
   fetchPriority?: 'auto' | 'high' | 'low';
+  live?: boolean;
   onLoad?: ReactEventHandler<HTMLImageElement>;
   picture?: PictureInfo;
   ref?: RefObject<HTMLPictureElement>;
 };
 
-type PictureRender = {
-  background: boolean;
-  fit: ImageInfo;
-  loaded: boolean;
-  show: boolean;
-};
-
 const Picture = memo(function Picture({
   alt,
   className,
+  live,
   onLoad,
   picture,
   ref,
   ...rest
 }: PictureProps): ReactElement {
+  const [background, setBackground] = useState(true);
   const { images } = picture?.fallback?.src || {};
   // After images assignment.
-  const [{
-    background,
-    fit,
-    loaded,
-    show,
-  }, setRender] = useState<PictureRender>({
-    background: true,
-    fit: images?.[0] || { width: 0 },
-    loaded: false,
-    show: false,
-  });
+  const [fit, setFit] = useState<ImageInfo>(images?.[0] || { width: 0 });
+  const [loaded, setLoaded] = useState(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const pictureRef = ref || useRef<HTMLPictureElement | null>(null);
-  const [print, setPrint] = useState(false);
+  const [printing] = usePrint();
+  const [show, setShow] = useState(false);
   const { visible } = useVisibility({ ref: pictureRef, threshold: 0.1 });
 
   const onFallbackLoad = useCallback((evt: SyntheticEvent<HTMLImageElement, Event>) => {
-    setRender((previous) => (!previous.loaded ? { ...previous, loaded: true } : previous));
+    setLoaded(true);
     onLoad?.(evt);
-    setTimeout(() => setRender((previous) => (previous.background ? {
-      ...previous,
-      background: false,
-    } : previous)), 450);
+    setTimeout(() => setBackground(false), 450);
   }, [onLoad]);
-
-  const onShow = useCallback(
-    // istanbul ignore next
-    () => setRender((previous) => (previous.show ? previous : { ...previous, show: true })),
-    [],
-  );
 
   useEffect(() => {
     // istanbul ignore else
@@ -126,36 +105,20 @@ const Picture = memo(function Picture({
       if (!Array.isArray(responsive) && typeof (picture?.fallback) === 'string') {
         responsive = [{ path: picture.fallback, width }];
       }
-      setRender((previous) => {
-        const found = responsive?.find((image) => image.width >= width)
-          || responsive?.slice(-1)?.[0] || { width: 0 };
-        return found.path === previous.fit?.path ? previous : {
-          ...previous,
-          fit: found,
-        };
-      });
+      const found = responsive?.find((image) => image.width >= width)
+        || responsive?.slice(-1)?.[0] || { width: 0 };
+      if (fit?.path !== found.path) {
+        setFit(found);
+      }
     }
-  }, [images, picture, pictureRef]);
+  }, [fit, images, picture, pictureRef]);
 
   useEffect(() => {
-    if (visible) {
-      onShow();
+    // istanbul ignore else
+    if (live || visible) {
+      setShow(true);
     }
-  }, [onShow, visible]);
-
-  useEffect(() => {
-    const onAfterPrint = () => setPrint(false);
-    const onBeforePrint = () => {
-      setPrint(true);
-      onShow();
-    };
-    window.addEventListener('afterprint', onAfterPrint);
-    window.addEventListener('beforeprint', onBeforePrint);
-    return () => {
-      window.removeEventListener('afterprint', onAfterPrint);
-      window.removeEventListener('beforeprint', onBeforePrint);
-    };
-  }, [onShow]);
+  }, [live, visible]);
 
   // a11y() doesn't provide `alt` by design.
   return (
@@ -180,10 +143,10 @@ const Picture = memo(function Picture({
                 <motion.img
                   {...rest}
                   alt={loaded ? alt : undefined}
-                  animate={{ opacity: loaded || print ? 1 : 0 }}
+                  animate={{ opacity: loaded || printing ? 1 : 0 }}
                   draggable={false}
                   height={fit.height}
-                  initial={{ opacity: print ? 1 : 0 }}
+                  initial={{ opacity: printing ? 1 : 0 }}
                   key={key(alt, 'picture')}
                   onLoad={onFallbackLoad}
                   src={fit.path}

@@ -11,6 +11,7 @@ import useIsBrowser from '@docusaurus/useIsBrowser';
 import { useLocation } from '@docusaurus/router';
 import {
   useMedia,
+  usePrint,
   useSpeech,
   useVisibility,
   useWelcome,
@@ -120,6 +121,25 @@ describe('useMedia', () => {
       // New state reflects matches for max-width -> false.
       expect(result.current[0]).toBeFalsy();
     });
+  });
+});
+
+describe('usePrint', () => {
+  it('should return false initially', () => {
+    const { result } = renderHook(() => usePrint());
+    expect(result.current[0]).toBeFalsy();
+  });
+
+  it('should set printing to false on afterprint event', () => {
+    const { result } = renderHook(() => usePrint());
+
+    // First simulate beforeprint.
+    act(() => window.dispatchEvent(new Event('beforeprint')));
+    expect(result.current[0]).toBeTruthy();
+
+    // Then simulate afterprint.
+    act(() => window.dispatchEvent(new Event('afterprint')));
+    expect(result.current[0]).toBeFalsy();
   });
 });
 

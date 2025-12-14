@@ -11,6 +11,7 @@ import {
   hasHeader,
   hasMetadatas,
   hasNavigations,
+  hasPrint,
   hasScreenshot,
   hasUrl,
   test,
@@ -46,6 +47,11 @@ test('has correct content', async ({ page }) => {
     expect(await page.textContent(`main section article ${tag}`)).toMatchSnapshot(`${name}.txt`);
   }));
 });
+
+test(
+  'has correct print screenshot',
+  async ({ browserName, page }, testInfo) => hasPrint(browserName, page, testInfo, url),
+);
 
 ['Dark', 'Light'].forEach((theme) => {
   test(

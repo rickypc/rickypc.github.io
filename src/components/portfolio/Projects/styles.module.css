@@ -128,8 +128,34 @@
 }
 
 @media print {
+  .portfolio figcaption {
+    padding-top: 1rem;
+  }
+
+  .portfolio figcaption h2,
+  .portfolio figure {
+    margin-bottom: 0.5rem;
+  }
+
+  .portfolio figcaption h2 {
+    font-size: 1.25rem;
+  }
+
+  .portfolio figcaption p {
+    font-size: 0.85rem;
+  }
+
+  .portfolio figcaption .tags,
   .portfolios {
+    margin-top: 0.5rem;
+  }
+
+  .portfolios {
+    align-items: center;
     grid-template-columns: repeat(2, 1fr);
-    margin-top: 2rem;
+  }
+
+  .portfolios>article {
+    break-inside: avoid;
   }
 }

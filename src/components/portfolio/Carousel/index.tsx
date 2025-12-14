@@ -19,7 +19,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useVisibility } from '@site/src/hooks/observer';
+import { usePrint, useVisibility } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
 export type CarouselHandles = {
@@ -54,7 +54,7 @@ type NavigationProps = {
 
 type SlideProps = {
   image: ImageProps;
-  index: number;
+  live: boolean;
   onClick: () => void;
 };
 
@@ -64,6 +64,7 @@ type SliderProps = {
   // eslint-disable-next-line no-unused-vars
   onClick: (_: ImageProps) => void;
   prefix: string;
+  printing: boolean;
   // eslint-disable-next-line no-unused-vars
   setActive: (_: number) => void;
   viewport: RefObject<HTMLDivElement | null>;
@@ -154,7 +155,7 @@ const Previous = memo(function Previous({
   );
 });
 
-const Slide = memo(function Slide({ image, onClick }: SlideProps): ReactElement {
+const Slide = memo(function Slide({ image, live, onClick }: SlideProps): ReactElement {
   return (
     <div
       className={styles.slide}
@@ -163,7 +164,7 @@ const Slide = memo(function Slide({ image, onClick }: SlideProps): ReactElement 
       role="button"
       tabIndex={0}
     >
-      <Image {...image} />
+      <Image live={live} {...image} />
     </div>
   );
 });
@@ -173,6 +174,7 @@ const Slider = memo(function Slider({
   images,
   onClick,
   prefix,
+  printing,
   setActive,
   viewport,
 }: SliderProps): ReactElement {
@@ -219,7 +221,11 @@ const Slider = memo(function Slider({
       {images.map((image, index) => (
         <Slide
           key={key(`${prefix}-${image.alt || index}`, 'slide')}
-          {...{ image, index, onClick: onSlideClick(() => onClick(image)) }}
+          {...{
+            image,
+            live: printing && active === index,
+            onClick: onSlideClick(() => onClick(image)),
+          }}
         />
       ))}
     </motion.div>
@@ -237,6 +243,7 @@ export default memo(function Carousel({
   const [active, setActive] = useState(0);
   const opened = typeof (open?.picture) === 'object';
   const [paused, setPaused] = useState(false);
+  const [printing] = usePrint();
   const viewport = useRef<HTMLDivElement>(null);
   const { visible } = useVisibility({ ref: viewport, threshold: 0.1 });
 
@@ -261,14 +268,7 @@ export default memo(function Carousel({
     };
   }, [duration, images.length, opened, paused, visible]);
 
-  useEffect(() => {
-    window.addEventListener('afterprint', onMouseLeave);
-    window.addEventListener('beforeprint', onMouseEnter);
-    return () => {
-      window.removeEventListener('afterprint', onMouseLeave);
-      window.removeEventListener('beforeprint', onMouseEnter);
-    };
-  }, [onMouseEnter, onMouseLeave]);
+  useEffect(() => setPaused(printing), [printing]);
 
   return (
     <div className={styles.carousel}>
@@ -286,6 +286,7 @@ export default memo(function Carousel({
             images,
             onClick,
             prefix,
+            printing,
             setActive,
             viewport,
           }}

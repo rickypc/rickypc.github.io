@@ -126,6 +126,20 @@ export const hasPrint = async (
   }
   await page.goto(`${url}?${new URLSearchParams(params).toString()}`, { waitUntil: 'networkidle' });
   await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
+  await page.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
+  await page.waitForLoadState('networkidle');
+  const last = page.locator('picture > img').last();
+  if (await last.count() > 0) {
+    await last.scrollIntoViewIfNeeded();
+    await page.evaluate(async (el) => {
+      await (el as HTMLImageElement)?.decode?.();
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          requestAnimationFrame(() => requestAnimationFrame(resolve));
+        }, 1000);
+      });
+    }, await last.elementHandle());
+  }
   const pdf = await page.pdf({ format: 'Letter', printBackground: true });
   const images = await pdfToPng(pdf.buffer.slice(
     pdf.byteOffset,

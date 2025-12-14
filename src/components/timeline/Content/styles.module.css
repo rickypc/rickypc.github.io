@@ -186,7 +186,6 @@
 
   .timeline .inner {
     opacity: 1 !important;
-    scale: 1 !important;
     transform: none !important;
   }
 
@@ -198,6 +197,7 @@
     background: none;
     border: 2px solid rgba(0, 0, 0, 0.15);
     box-shadow: none;
+    transform: none !important;
   }
 
   [data-theme] .timeline .logo::before {

@@ -47,3 +47,12 @@
     transform: translateX(-125%);
   }
 }
+
+@media print {
+  .picture {
+    opacity: 1 !important;
+  }
+  .picture.shimmer::before {
+    animation: none;
+  }
+}

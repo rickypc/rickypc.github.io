@@ -83,7 +83,9 @@
 @media print {
   .content {
     margin: 0 1.75rem;
+    opacity: 1 !important;
     padding: 0;
+    transform: none !important;
   }
 
   [data-theme] .content {

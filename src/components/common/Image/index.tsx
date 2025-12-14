@@ -24,7 +24,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { usePrint, useVisibility } from '@site/src/hooks/observer';
+import { useVisibility } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
 type ImageInfo = {
@@ -86,7 +86,6 @@ const Picture = memo(function Picture({
   const [loaded, setLoaded] = useState(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const pictureRef = ref || useRef<HTMLPictureElement | null>(null);
-  const [printing] = usePrint();
   const [show, setShow] = useState(false);
   const { visible } = useVisibility({ ref: pictureRef, threshold: 0.1 });
 
@@ -143,10 +142,10 @@ const Picture = memo(function Picture({
                 <motion.img
                   {...rest}
                   alt={loaded ? alt : undefined}
-                  animate={{ opacity: loaded || printing ? 1 : 0 }}
+                  animate={{ opacity: loaded ? 1 : 0 }}
                   draggable={false}
                   height={fit.height}
-                  initial={{ opacity: printing ? 1 : 0 }}
+                  initial={{ opacity: 0 }}
                   key={key(alt, 'picture')}
                   onLoad={onFallbackLoad}
                   src={fit.path}

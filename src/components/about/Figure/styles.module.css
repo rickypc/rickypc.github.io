@@ -66,6 +66,8 @@
   [data-theme] .figure {
     filter: none;
     max-width: 65%;
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .figure .shape {

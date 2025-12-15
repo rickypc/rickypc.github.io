@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -20,13 +20,13 @@ export default {
         <span style={{ color: '#ffd814' }}>लं</span>
         <span>हो शुद्धेशुद्धे । </span>
         <span style={{ color: 'blue' }}>ए</span>
-        <span> </span>
+        <span>&nbsp;</span>
         <span style={{ color: 'green' }}>यं</span>
-        <span> </span>
+        <span>&nbsp;</span>
         <span style={{ color: 'red' }}>रं</span>
-        <span> </span>
+        <span>&nbsp;</span>
         <span style={{ color: 'gray' }}>बं</span>
-        <span> </span>
+        <span>&nbsp;</span>
         <span style={{ color: '#ffd814' }}>लं</span>
         <span> शुद्धे शोधनये स्वाहा</span>
       </>
@@ -48,13 +48,13 @@ export default {
         <span style={{ color: '#ffd814' }}>laṃ</span>
         <span> ho śuddhe śuddhe । </span>
         <span style={{ color: 'blue' }}>e</span>
-        <span> </span>
+        <span>&nbsp;</span>
         <span style={{ color: 'green' }}>yaṃ</span>
-        <span> </span>
+        <span>&nbsp;</span>
         <span style={{ color: 'red' }}>raṃ</span>
-        <span> </span>
+        <span>&nbsp;</span>
         <span style={{ color: 'gray' }}>vaṃ</span>
-        <span> </span>
+        <span>&nbsp;</span>
         <span style={{ color: '#ffd814' }}>laṃ</span>
         <span> śuddhe śodhanaye svāhā</span>
       </>

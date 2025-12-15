@@ -25,6 +25,7 @@ type PictureInfo = {
 
 type PictureProps = {
   alt?: string;
+  live?: boolean;
   picture: PictureInfo;
 };
 
@@ -35,9 +36,14 @@ type PictureProps = {
  * @returns {ReactElement}
  *   The common/Picture component.
  */
-function Picture({ alt, picture, ...rest }: PictureProps): ReactElement {
+function Picture({
+  alt,
+  live,
+  picture,
+  ...rest
+}: PictureProps): ReactElement {
   return (
-    <picture data-testid="picture" style={{ backgroundImage: `url(${picture?.fallback})` }}>
+    <picture data-live={String(live)} data-testid="picture" style={{ backgroundImage: `url(${picture?.fallback})` }}>
       {picture?.avif && <source srcSet={picture.avif} type="image/avif" />}
       {picture?.webp && <source srcSet={picture.webp} type="image/webp" />}
       {picture?.fallback && (

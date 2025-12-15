@@ -223,14 +223,14 @@ export default memo(function Phrase({
   }
   return (
     <>
-      <Instruction image={image} text={instruction} transliteration={transliteration} />
+      <Instruction {...{ image, text: instruction, transliteration }} />
       <PhraseBlock
         infix="।"
         phrase={{ ...transliteration, title: '' }}
         prefix="꣼ "
         suffix="॥"
       />
-      <Support path={path} repetition={repetition} transliteration={transliteration} />
+      <Support {...{ path, repetition, transliteration }} />
     </>
   );
 });

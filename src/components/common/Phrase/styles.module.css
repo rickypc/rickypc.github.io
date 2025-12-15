@@ -56,3 +56,47 @@
 .support .icon svg {
   vertical-align: middle;
 }
+
+@media print {
+  .instruction,
+  .support+details [class^="collapsibleContent_"]>div p,
+  .support+details summary li,
+  .support+details summary p {
+    font-size: 0.85rem;
+    line-height: 1.25rem;
+  }
+
+  .instruction {
+    margin-bottom: 0.5rem;
+  }
+
+  .support+details {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem 0 0.75rem;
+  }
+
+  .support+details blockquote {
+    padding-left: 0.3rem;
+  }
+
+  .support+details blockquote>ol,
+  .support+details blockquote>ul {
+    padding-left: 1rem;
+  }
+
+  .support+details [class^="collapsibleContent_"] {
+    margin-top: 0.1rem;
+    padding-top: 0.5rem;
+  }
+
+  .support+details [class^="collapsibleContent_"]>div>blockquote,
+  .support+details [class^="collapsibleContent_"]>div>p,
+  .support+details summary blockquote,
+  .support+details summary p {
+    margin-bottom: 0.3rem;
+  }
+
+  .support .icon {
+    display: none;
+  }
+}

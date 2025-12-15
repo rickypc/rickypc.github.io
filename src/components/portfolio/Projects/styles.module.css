@@ -99,7 +99,7 @@
   text-align: center;
 }
 
-.portfolio figcaption h2 span[class*='reaction_'] span[class*='heart_'] {
+.portfolio figcaption h2 span[class^='reaction_'] span[class^='heart_'] {
   font-size: 1.2rem;
   line-height: 1.2rem;
   margin-left: 1rem;

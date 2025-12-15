@@ -52,6 +52,12 @@
   .picture {
     opacity: 1 !important;
   }
+
+  .picture img {
+    max-height: 95vh;
+    object-fit: scale-down;
+  }
+
   .picture.shimmer::before {
     animation: none;
   }

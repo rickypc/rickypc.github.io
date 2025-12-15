@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -9,9 +9,9 @@ export default {
     children: (
       <>
         <span style={{ color: 'gray' }}>ॐ</span>
-        <span> </span>
+        <span>&nbsp;</span>
         <span style={{ color: 'red' }}>आः</span>
-        <span> </span>
+        <span>&nbsp;</span>
         <span style={{ color: 'blue' }}>हूँ</span>
       </>
     ),
@@ -21,9 +21,9 @@ export default {
     children: (
       <>
         <span style={{ color: 'gray' }}>oṃ</span>
-        <span> </span>
+        <span>&nbsp;</span>
         <span style={{ color: 'red' }}>āḥ</span>
-        <span> </span>
+        <span>&nbsp;</span>
         <span style={{ color: 'blue' }}>hūṃ</span>
       </>
     ),

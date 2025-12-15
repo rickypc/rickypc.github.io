@@ -15,7 +15,7 @@ import {
   hasScreenshot,
   hasUrl,
   test,
-} from './utils/helper';
+} from './helper';
 
 const url = '/about';
 
@@ -29,7 +29,7 @@ test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testI
 
 test('has types', async ({ page }) => {
   await Promise.all(['Transformer People Type', 'Transactor Task Type'].map(async (label, index) => {
-    const locator = page.locator(`figure[class*='figure_'] div[class*='shape_'] svg:nth-of-type(${index + 1})`);
+    const locator = page.locator(`figure[class^='figure_'] div[class^='shape_'] svg:nth-of-type(${index + 1})`);
     await expect(locator).toBeVisible();
     expect(await locator.getAttribute('aria-label')).toEqual(label);
   }));

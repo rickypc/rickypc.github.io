@@ -136,7 +136,7 @@ export const hasPrint = async (
       await new Promise((resolve) => {
         setTimeout(() => {
           requestAnimationFrame(() => requestAnimationFrame(resolve));
-        }, 1000);
+        }, 500);
       });
     }, await last.elementHandle());
   }

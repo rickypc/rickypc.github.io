@@ -124,7 +124,7 @@ export default memo(function PhraseBlock({
             // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
           >
-            <code className={clsx(styles.lines, phrase.className)}>{content}</code>
+            <code className={clsx(styles.lines, phrase.className)} translate="no">{content}</code>
           </pre>
           {metadata.code && <Buttons />}
         </div>

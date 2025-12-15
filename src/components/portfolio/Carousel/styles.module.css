@@ -149,6 +149,12 @@
   .carousel .indicators {
     display: none;
   }
+
+  .carousel .slide img {
+    max-height: inherit;
+    object-fit: inherit;
+  }
+
   .carousel .slider {
     transform: none !important;
   }

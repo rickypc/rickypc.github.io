@@ -70,7 +70,7 @@
   text-shadow: 0 0625rem 0.0625rem rgba(40, 47, 73, 0.25);
 }
 
-.greeting div[class*='controls_'] {
+.greeting div[class^='controls_'] {
   margin: auto 0 auto 0.3rem;
 }
 
@@ -80,7 +80,7 @@
   white-space: nowrap;
 }
 
-.greeting span[class*='reaction_'] span[class*='heart_'] {
+.greeting span[class^='reaction_'] span[class^='heart_'] {
   font-size: 1.6rem;
   line-height: 1.6rem;
   margin-left: 0.3rem;
@@ -99,7 +99,7 @@
     print-color-adjust: exact;
   }
 
-  .greeting span[class*='reaction_'] span[class*='heart_'] {
+  .greeting span[class^='reaction_'] span[class^='heart_'] {
     font-size: 1rem;
     line-height: 1rem;
     margin-left: 0.75rem;

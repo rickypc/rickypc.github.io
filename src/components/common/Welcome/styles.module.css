@@ -1,0 +1,50 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+@media print {
+  :global(.markdown) h1,
+  :global(.markdown) h2 {
+    margin: 0.5rem 0;
+  }
+
+  :global(.markdown) header h1 {
+    margin-top: 0;
+  }
+
+  :global(.markdown) h1 {
+    font-size: 1.65rem;
+  }
+
+  :global(.markdown) h2 {
+    font-size: 1.2rem;
+  }
+
+  :global(.markdown) h3 {
+    font-size: 1rem;
+    margin: 0.5rem 0 0.35rem 0;
+  }
+
+  :global(.markdown) h4 {
+    font-size: 0.85rem;
+    margin: 0.5rem 0 0.25rem 0;
+  }
+
+  :global(.markdown) p,
+  :global(.markdown) li {
+    font-size: 0.85rem;
+    line-height: 1.25rem;
+  }
+
+  :global(.markdown) p,
+  :global(.markdown) ol,
+  :global(.markdown) ul {
+    margin-bottom: 0.5rem;
+  }
+
+  :global(.markdown) li>p {
+    margin-top: 0;
+  }
+}

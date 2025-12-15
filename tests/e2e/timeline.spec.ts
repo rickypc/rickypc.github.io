@@ -16,7 +16,7 @@ import {
   hasScreenshot,
   hasUrl,
   test,
-} from './utils/helper';
+} from './helper';
 
 const url = '/timeline';
 
@@ -31,7 +31,7 @@ test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testI
 test('has 8 events', async ({ page }) => {
   await band(8, async (index) => {
     const nth = index + 1;
-    expect(await page.textContent(`main section [class*='timeline_']:nth-of-type(${nth}) article`)).toMatchSnapshot(`event-${nth}.txt`);
+    expect(await page.textContent(`main section [class^='timeline_']:nth-of-type(${nth}) article`)).toMatchSnapshot(`event-${nth}.txt`);
   });
 });
 

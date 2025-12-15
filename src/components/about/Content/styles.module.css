@@ -31,7 +31,7 @@
   margin-bottom: 1rem;
 }
 
-.content h2 span[class*='reaction_'] span[class*='heart_'] {
+.content h2 span[class^='reaction_'] span[class^='heart_'] {
   font-size: 1.6rem;
   line-height: 1.6rem;
   margin-left: 0.75rem;

@@ -75,7 +75,31 @@
 }
 
 @media print {
+  .container {
+    break-inside: avoid;
+    margin-bottom: 0.5rem;
+  }
+
+  .lines,
+  .title {
+    font-size: 0.85rem;
+    line-height: 1.25rem;
+  }
+
   .lines {
+    padding: 0.75rem 0.5rem 0.4rem 0.5rem;
     white-space: pre-wrap;
+  }
+
+  .lines span {
+    display: contents;
+  }
+
+  .standalone {
+    margin-bottom: 0;
+  }
+
+  .title {
+    padding: 0.15rem 0.5rem;
   }
 }

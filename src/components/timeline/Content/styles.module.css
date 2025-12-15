@@ -116,24 +116,24 @@
   margin: 0.3rem 0;
 }
 
-.timeline .inner h3 span[class*='reaction_'] span[class*='heart_'] {
+.timeline .inner h3 span[class^='reaction_'] span[class^='heart_'] {
   font-size: 1.2rem;
   line-height: 1.2rem;
 }
 
-.left.timeline .inner h3 span[class*='reaction_'] {
+.left.timeline .inner h3 span[class^='reaction_'] {
   flex-direction: row-reverse;
 }
 
-.left.timeline .inner h3 span[class*='reaction_'] span[class*='heart_'] {
+.left.timeline .inner h3 span[class^='reaction_'] span[class^='heart_'] {
   margin-right: 1rem;
 }
 
-.left.timeline .inner h3 span[class*='reaction_'] span[class*='count_'] {
+.left.timeline .inner h3 span[class^='reaction_'] span[class^='count_'] {
   padding-right: 0.5rem;
 }
 
-.right.timeline .inner h3 span[class*='reaction_'] span[class*='heart_'] {
+.right.timeline .inner h3 span[class^='reaction_'] span[class^='heart_'] {
   margin-left: 1rem;
 }
 

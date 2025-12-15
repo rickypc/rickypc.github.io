@@ -16,7 +16,7 @@ import {
   hasScreenshot,
   hasUrl,
   test,
-} from './utils/helper';
+} from './helper';
 
 const url = '/stories';
 

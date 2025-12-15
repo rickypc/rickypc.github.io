@@ -35,7 +35,7 @@
   font-weight: 400;
 }
 
-.content h2 span[class^='reaction_'] span[class^='heart_'] {
+.content h2 span[class*='reaction_'] span[class*='heart_'] {
   font-size: 1.75rem;
   line-height: 1.75rem;
   margin-left: 1.25rem;

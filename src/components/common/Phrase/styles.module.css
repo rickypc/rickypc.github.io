@@ -59,7 +59,7 @@
 
 @media print {
   .instruction,
-  .support+details [class^="collapsibleContent_"]>div p,
+  .support+details [class*="collapsibleContent_"]>div p,
   .support+details summary li,
   .support+details summary p {
     font-size: 0.85rem;
@@ -84,13 +84,13 @@
     padding-left: 1rem;
   }
 
-  .support+details [class^="collapsibleContent_"] {
+  .support+details [class*="collapsibleContent_"] {
     margin-top: 0.1rem;
     padding-top: 0.5rem;
   }
 
-  .support+details [class^="collapsibleContent_"]>div>blockquote,
-  .support+details [class^="collapsibleContent_"]>div>p,
+  .support+details [class*="collapsibleContent_"]>div>blockquote,
+  .support+details [class*="collapsibleContent_"]>div>p,
   .support+details summary blockquote,
   .support+details summary p {
     margin-bottom: 0.3rem;

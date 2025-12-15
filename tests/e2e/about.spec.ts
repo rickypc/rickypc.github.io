@@ -29,7 +29,8 @@ test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testI
 
 test('has types', async ({ page }) => {
   await Promise.all(['Transformer People Type', 'Transactor Task Type'].map(async (label, index) => {
-    const locator = page.locator(`figure[class^='figure_'] div[class^='shape_'] svg:nth-of-type(${index + 1})`);
+    // [class] can contain multiple classes, figure_ or shape_ may not be the first.
+    const locator = page.locator(`figure[class*='figure_'] div[class*='shape_'] svg:nth-of-type(${index + 1})`);
     await expect(locator).toBeVisible();
     expect(await locator.getAttribute('aria-label')).toEqual(label);
   }));

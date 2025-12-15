@@ -68,25 +68,25 @@
 }
 
 [data-theme='dark'] .portfolio figcaption h2,
-[data-theme='dark'] .portfolio figcaption h2>a[class^="link_"],
-[data-theme='dark'] .portfolio figcaption span>span[class^="heart_"],
-[data-theme='dark'] .portfolio figcaption span>span[class^="count_"],
+[data-theme='dark'] .portfolio figcaption h2>a[class*="link_"],
+[data-theme='dark'] .portfolio figcaption span>span[class*="heart_"],
+[data-theme='dark'] .portfolio figcaption span>span[class*="count_"],
 [data-theme='dark'] .portfolio figcaption p {
   color: #c9c9c9;
 }
 
-[data-theme='dark'] .portfolio figcaption h2>a[class^="link_"]:hover {
+[data-theme='dark'] .portfolio figcaption h2>a[class*="link_"]:hover {
   color: #248aaa;
 }
 
-[data-theme='dark'] .portfolio figcaption span>span[class^="heart_"]:hover {
+[data-theme='dark'] .portfolio figcaption span>span[class*="heart_"]:hover {
   color: #ff3040;
 }
 
 [data-theme='light'] .portfolio figcaption h2,
-[data-theme='light'] .portfolio figcaption h2>a[class^="link_"],
-[data-theme='light'] .portfolio figcaption span>span[class^="heart_"],
-[data-theme='light'] .portfolio figcaption span>span[class^="count_"],
+[data-theme='light'] .portfolio figcaption h2>a[class*="link_"],
+[data-theme='light'] .portfolio figcaption span>span[class*="heart_"],
+[data-theme='light'] .portfolio figcaption span>span[class*="count_"],
 [data-theme='light'] .portfolio figcaption p {
   color: #000;
 }
@@ -99,7 +99,7 @@
   text-align: center;
 }
 
-.portfolio figcaption h2 span[class^='reaction_'] span[class^='heart_'] {
+.portfolio figcaption h2 span[class*='reaction_'] span[class*='heart_'] {
   font-size: 1.2rem;
   line-height: 1.2rem;
   margin-left: 1rem;

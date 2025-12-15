@@ -144,7 +144,7 @@ html:not(.plugin-\@easyops-cn\/docusaurus-search-local) #__docusaurus:not(.docus
   padding: 0.25rem 0.35rem 0.25rem 0.35rem;
 }
 
-.navbar__items [class^="navbarSearchContainer_"] {
+.navbar__items [class*="navbarSearchContainer_"] {
   padding-left: 0;
 }
 

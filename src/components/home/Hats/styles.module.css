@@ -64,12 +64,12 @@
   will-change: background-position;
 }
 
-.hats .hat h2 [class^='phrases_'][class^='play_'] i {
+.hats .hat h2 [class*='phrases_'][class*='play_'] i {
   animation: rainbow 6s ease-in-out;
 }
 
 .hats .hat h2,
-.hats .hat h2 [class^='word_'] [class^='character_'] {
+.hats .hat h2 [class*='word_'] [class*='character_'] {
   font-family: Poppins, sans-serif;
   font-size: 2rem;
   font-weight: 500;
@@ -100,7 +100,7 @@
     color: #000;
   }
 
-  .hats .hat h2 [class^='phrases_'][class^='play_'] i {
+  .hats .hat h2 [class*='phrases_'][class*='play_'] i {
     animation: none;
   }
 
@@ -109,12 +109,12 @@
     margin-bottom: 1rem;
   }
 
-  .hats .hat h2 [class^='word_'] {
+  .hats .hat h2 [class*='word_'] {
     margin-right: 0.3rem;
   }
 
   .hats .hat h2,
-  .hats .hat h2 [class^='word_'] [class^='character_'] {
+  .hats .hat h2 [class*='word_'] [class*='character_'] {
     font-size: 1.25rem;
   }
 }

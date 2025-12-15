@@ -27,12 +27,13 @@ test('has correct metadatas', hasMetadatas);
 test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo));
 
 test('has greeting', async ({ page }) => {
-  await hasSpeech(page, 'main header h1 [class^="controls_"]', url);
+  // [class] can contain multiple classes, controls_ may not be the first.
+  await hasSpeech(page, 'main header h1 [class*="controls_"]', url);
   await band(1, async (index) => {
     // 1-based.
     const nth = index + 1;
     // After nth assignment.
-    const locator = page.locator(`main header h1>[class^="pronunciation_"]>span:nth-of-type(${nth})`);
+    const locator = page.locator(`main header h1>[class*="pronunciation_"]>span:nth-of-type(${nth})`);
     await expect(locator).toBeVisible();
     expect(await locator.textContent()).toMatchSnapshot(`greeting-${nth}.txt`);
   });
@@ -41,7 +42,7 @@ test('has greeting', async ({ page }) => {
 test('has 4 paragraphs', async ({ page }) => {
   await band(4, async (index) => {
     const nth = index + 1;
-    await Promise.all((await page.locator(`main article:nth-of-type(${nth}) h2 span[class^='phrases_'] span[class^='word_']`).all())
+    await Promise.all((await page.locator(`main article:nth-of-type(${nth}) h2 span[class*='phrases_'] span[class*='word_']`).all())
       .map(async (word) => expect(word).toBeVisible()));
     expect(await page.textContent(`main article:nth-of-type(${nth}) p`)).toMatchSnapshot(`paragraph-${nth}.txt`);
   });
@@ -68,7 +69,7 @@ test('has self image', async ({ page }, testInfo) => {
 
 test('has social links', async ({ page }) => {
   await band(2, async (index) => {
-    await expect(page.locator(`main ul[class^='social_'] li:nth-of-type(${index + 1}) a`)).toBeVisible();
+    await expect(page.locator(`main ul[class*='social_'] li:nth-of-type(${index + 1}) a`)).toBeVisible();
   });
 });
 

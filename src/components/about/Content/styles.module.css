@@ -31,7 +31,8 @@
   margin-bottom: 1rem;
 }
 
-.content h2 span[class^='reaction_'] span[class^='heart_'] {
+/* [class] can contain multiple classes, reaction_ or heart_ may not be the first. */
+.content h2 span[class*='reaction_'] span[class*='heart_'] {
   font-size: 1.6rem;
   line-height: 1.6rem;
   margin-left: 0.75rem;

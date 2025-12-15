@@ -10,7 +10,7 @@
   margin-right: 0.25rem;
 }
 
-.controls div[class^='theme-admonition'] {
+.controls div[class*='theme-admonition'] {
   font-size: 0.85rem;
   line-height: 1rem;
   margin: 0;

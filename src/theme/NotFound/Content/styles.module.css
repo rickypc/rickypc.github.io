@@ -1,0 +1,86 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.row {
+  position: relative;
+}
+
+.row svg {
+  inset: 0;
+  margin: 0 10rem;
+  position: absolute;
+  opacity: 0.75;
+}
+
+[data-theme='dark'] .row svg {
+  color: #2e2e2e;
+}
+
+[data-theme='light'] .row svg {
+  color: #f3f4f6;
+}
+
+.content {
+  padding-top: 16.5rem;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+.content a {
+  border: 0.0625rem solid transparent;
+  border-radius: 0.25rem;
+  color: #fff;
+  display: inline-block;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  user-select: none;
+}
+
+[data-theme='dark'] .content a {
+  background: #1971c2;
+}
+
+[data-theme='light'] .content a {
+  background: #228be6;
+}
+
+[data-theme='dark'] .content a:hover {
+  background: #1864ab;
+}
+
+[data-theme='light'] .content a:hover {
+  background: #1c7ed6;
+}
+
+.content h1 {
+  font-size: 2.25rem;
+  margin: 0;
+}
+
+[data-theme='dark'] .content h1 {
+  color: #c9c9c9;
+}
+
+.content p {
+  font-size: 1.15rem;
+  margin: 2.25rem 2.25rem 2.75rem 2.25rem;
+}
+
+[data-theme='dark'] .content p {
+  color: #828282;
+}
+
+[data-theme='light'] .content p {
+  color: #868e96;
+}
+
+@media print {
+  .content a {
+    display: none;
+  }
+}

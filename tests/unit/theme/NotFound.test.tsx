@@ -13,7 +13,7 @@ import NotFoundContent from '@theme/NotFound/Content';
 import { translate } from '@docusaurus/Translate';
 
 describe('theme.NotFound', () => {
-  it('calls translate, passes result to Layout, and renders NotFoundContent', () => {
+  it('calls translate, passes result to Layout, and renders content', () => {
     render(<NotFound />);
 
     expect(translate).toHaveBeenCalledTimes(1);

@@ -33,14 +33,15 @@ describe('theme.NotFound.Content', () => {
     expect(main).toHaveClass('container');
     expect(main).toHaveClass('margin-vert--xl');
     expect(
-      screen.getByRole('heading', { name: /You have found a secret place./i })
+      screen.getByRole('heading', { name: /You have found a secret place./i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/this is only a 404 page/i)
+      screen.getByText(/this is only a 404 page/i),
     ).toBeInTheDocument();
     const link = screen.getByRole('link', { name: /Take me back to home page/i });
     expect(link).toHaveAttribute('href', '/');
     expect(link).toHaveAttribute('title', 'Back to home page');
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const svg = container.querySelector('svg');
     expect(svg).toBeInTheDocument();
   });
@@ -55,14 +56,15 @@ describe('theme.NotFound.Content', () => {
     expect(main).toHaveClass('container');
     expect(main).toHaveClass('margin-vert--xl');
     expect(
-      screen.getByRole('heading', { name: /You have found a secret place./i })
+      screen.getByRole('heading', { name: /You have found a secret place./i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/this is only a 404 page/i)
+      screen.getByText(/this is only a 404 page/i),
     ).toBeInTheDocument();
     const link = screen.getByRole('link', { name: /Take me back to home page/i });
     expect(link).toHaveAttribute('href', '/');
     expect(link).toHaveAttribute('title', 'Back to home page');
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const svg = container.querySelector('svg');
     expect(svg).toBeInTheDocument();
   });

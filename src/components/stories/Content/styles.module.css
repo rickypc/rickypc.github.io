@@ -63,6 +63,7 @@
 }
 
 .content address .dash {
+  display: block;
   position: relative;
 }
 

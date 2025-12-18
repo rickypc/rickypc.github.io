@@ -5,10 +5,11 @@
  */
 
 import {
+  type Browser,
+  type BrowserContext,
   expect,
   type Page,
   type PageScreenshotOptions,
-  type PlaywrightTestArgs,
   test,
   type TestInfo,
 } from '@playwright/test';
@@ -18,24 +19,38 @@ import { URLSearchParams } from 'node:url';
 // eslint-disable-next-line no-unused-vars
 export type BandCallback<T, U = T> = (value: T, index?: number, array?: T[]) => U | Promise<U>;
 
-const mobile = (testInfo: TestInfo) => /^mobile/i.test(testInfo?.project?.name);
+export const afterAll = async (context: BrowserContext) => {
+  await context.close();
+};
 
 export const band = async <T>(count: number, callback: BandCallback<number, T>) => Promise.all(
   [...Array(count).keys()].map(callback),
 );
 
+export const beforeAll = async (browser: Browser, url: string) => {
+  const context: BrowserContext = await browser.newContext();
+  const page: Page = await context.newPage();
+  await page.goto(url, { waitUntil: 'networkidle' });
+  await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
+  return { context, page };
+};
+
 export const beforeEach = async (page: Page, testInfo: TestInfo, url: string) => {
   if (![
     'has correct dark theme screenshot',
     'has correct light theme screenshot',
+    'has correct print screenshot',
     'has greeting',
+    'has navigations',
   ].includes(testInfo.title)) {
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
   }
 };
 
-export { expect };
+export { type BrowserContext, expect, type Page };
+
+const mobile = (testInfo: TestInfo) => /^mobile/i.test(testInfo?.project?.name);
 
 export const hasActiveNavigation = async (name: string, page: Page, testInfo: TestInfo) => {
   if (mobile(testInfo)) {
@@ -46,12 +61,12 @@ export const hasActiveNavigation = async (name: string, page: Page, testInfo: Te
   }
 };
 
-export const hasHeader = async ({ page }: PlaywrightTestArgs) => {
+export const hasHeader = async (page: Page) => {
   expect(await page.textContent('main header h1')).toMatchSnapshot('header-headline.txt');
   expect(await page.textContent('main header p')).toMatchSnapshot('header-description.txt');
 };
 
-export const hasMetadatas = async ({ page }: PlaywrightTestArgs) => {
+export const hasMetadatas = async (page: Page) => {
   expect(await page.locator('head>meta[name="description"]').getAttribute('content'))
     .toMatchSnapshot('meta-description.txt');
   expect(await page.locator('head>meta[name="keywords"]').getAttribute('content'))
@@ -69,7 +84,10 @@ export const hasMetadatas = async ({ page }: PlaywrightTestArgs) => {
   expect(await page.textContent('head>title')).toMatchSnapshot('title.txt');
 };
 
-export const hasNavigations = async (page: Page, testInfo: TestInfo) => {
+export const hasNavigations = async (page: Page, testInfo: TestInfo, url: string) => {
+  await page.goto(url, { waitUntil: 'networkidle' });
+  await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
+
   const nav = {
     desktop: page.locator('nav.navbar .navbar__items--right'),
     mobile: page.locator('nav.navbar .navbar-sidebar .navbar-sidebar__items .menu'),
@@ -78,6 +96,7 @@ export const hasNavigations = async (page: Page, testInfo: TestInfo) => {
     desktop: nav.desktop,
     mobile: page.locator('nav.navbar .navbar-sidebar .navbar-sidebar__brand'),
   };
+
   if (mobile(testInfo)) {
     await page.locator('nav .navbar__inner button.navbar__toggle').click();
 
@@ -95,6 +114,8 @@ export const hasNavigations = async (page: Page, testInfo: TestInfo) => {
 
     await expect(theme.desktop.getByRole('button', { name: 'light mode' })).toBeHidden();
     await expect(theme.mobile.getByRole('button', { name: 'light mode' })).toBeVisible();
+
+    await page.locator('nav .navbar-sidebar button.navbar-sidebar__close').click();
   } else {
     await expect(nav.desktop.getByRole('link', { name: 'Github' })).toBeVisible();
     expect(await nav.desktop.getByRole('link', { name: 'Github' }).getAttribute('href')).toContain('https://github.com/rickypc');
@@ -154,7 +175,13 @@ export const hasPrint = async (
   }));
 };
 
-export const hasScreenshot = async (page: Page, testInfo: TestInfo, theme: string, url: string) => {
+export const hasScreenshot = async (
+  page: Page,
+  testInfo: TestInfo,
+  theme: string,
+  url: string,
+  readySelector?: string,
+) => {
   const options: PageScreenshotOptions = { animations: 'disabled', fullPage: true, scale: 'css' };
   const themeLower = theme.toLowerCase();
   // After themeLower assignment.
@@ -164,6 +191,9 @@ export const hasScreenshot = async (page: Page, testInfo: TestInfo, theme: strin
   }
   await page.goto(`${url}?${new URLSearchParams(params).toString()}`, { waitUntil: 'networkidle' });
   await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
+  if (readySelector) {
+    await page.waitForSelector(readySelector, { timeout: 250 }).catch(() => {});
+  }
   await expect(page).toHaveScreenshot(`${themeLower}.png`, options);
   await testInfo.attach(`${theme} Theme`, {
     body: await page.screenshot(options),

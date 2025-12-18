@@ -5,8 +5,10 @@
  */
 
 import {
+  afterAll,
   band,
-  beforeEach,
+  beforeAll,
+  type BrowserContext,
   expect,
   hasActiveNavigation,
   hasHeader,
@@ -15,35 +17,48 @@ import {
   hasPrint,
   hasScreenshot,
   hasUrl,
+  type Page,
   test,
 } from './helper';
 
 const url = '/timeline';
 
-test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
+test.describe.serial('shared page tests', () => {
+  let context: BrowserContext;
+  let page: Page;
 
-test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL as string, page, url));
-test('has correct metadatas', hasMetadatas);
-test('has correct header', hasHeader);
-test('has active navigation', async ({ page }, testInfo) => hasActiveNavigation('Timeline', page, testInfo));
-test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo));
+  test.afterAll(async () => afterAll(context));
+  test.beforeAll(async ({ browser }) => {
+    ({ context, page } = await beforeAll(browser, url));
+  });
 
-test('has 8 events', async ({ page }) => {
-  await band(8, async (index) => {
-    const nth = index + 1;
-    // [class] can contain multiple classes, timeline_ may not be the first.
-    expect(await page.textContent(`main section [class*='timeline_']:nth-of-type(${nth}) article`)).toMatchSnapshot(`event-${nth}.txt`);
+  test('has correct URL', async ({ baseURL }) => hasUrl(baseURL as string, page, url));
+  test('has correct metadatas', async () => hasMetadatas(page));
+  test('has correct header', async () => hasHeader(page));
+  // eslint-disable-next-line no-empty-pattern
+  test('has active navigation', async ({}, testInfo) => hasActiveNavigation('Timeline', page, testInfo));
+
+  test('has 8 events', async () => {
+    await band(8, async (index) => {
+      const nth = index + 1;
+      // [class] can contain multiple classes, timeline_ may not be the first.
+      expect(await page.textContent(`main section [class*='timeline_']:nth-of-type(${nth}) article`)).toMatchSnapshot(`event-${nth}.txt`);
+    });
   });
 });
 
-test(
-  'has correct print screenshot',
-  async ({ browserName, page }, testInfo) => hasPrint(browserName, page, testInfo, url),
-);
+test.describe('isolated tests', () => {
+  test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo, url));
 
-['Dark', 'Light'].forEach((theme) => {
   test(
-    `has correct ${theme.toLowerCase()} theme screenshot`,
-    async ({ page }, testInfo) => hasScreenshot(page, testInfo, theme, url),
+    'has correct print screenshot',
+    async ({ browserName, page }, testInfo) => hasPrint(browserName, page, testInfo, url),
   );
+
+  ['Dark', 'Light'].forEach((theme) => {
+    test(
+      `has correct ${theme.toLowerCase()} theme screenshot`,
+      async ({ page }, testInfo) => hasScreenshot(page, testInfo, theme, url),
+    );
+  });
 });

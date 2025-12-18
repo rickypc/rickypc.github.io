@@ -5,8 +5,10 @@
  */
 
 import {
+  afterAll,
   band,
-  beforeEach,
+  beforeAll,
+  type BrowserContext,
   expect,
   hasMetadatas,
   hasNavigations,
@@ -15,72 +17,85 @@ import {
   hasSpeech,
   hasUrl,
   mobile,
+  type Page,
   test,
 } from './helper';
 
 const url = '/';
 
-test.beforeEach(async ({ page }, testInfo) => beforeEach(page, testInfo, url));
+test.describe.serial('shared page tests', () => {
+  let context: BrowserContext;
+  let page: Page;
 
-test('has correct URL', async ({ baseURL, page }) => hasUrl(baseURL as string, page, url));
-test('has correct metadatas', hasMetadatas);
-test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo));
+  test.afterAll(async () => afterAll(context));
+  test.beforeAll(async ({ browser }) => {
+    ({ context, page } = await beforeAll(browser, url));
+  });
 
-test('has greeting', async ({ page }) => {
-  // [class] can contain multiple classes, controls_ may not be the first.
-  await hasSpeech(page, 'main header h1 [class*="controls_"]', url);
-  await band(1, async (index) => {
-    // 1-based.
-    const nth = index + 1;
-    // After nth assignment.
-    const locator = page.locator(`main header h1>[class*="pronunciation_"]>span:nth-of-type(${nth})`);
-    await expect(locator).toBeVisible();
-    expect(await locator.textContent()).toMatchSnapshot(`greeting-${nth}.txt`);
+  test('has correct URL', async ({ baseURL }) => hasUrl(baseURL as string, page, url));
+  test('has correct metadatas', async () => hasMetadatas(page));
+
+  test('has 4 paragraphs', async () => {
+    await band(4, async (index) => {
+      const nth = index + 1;
+      await Promise.all((await page.locator(`main article:nth-of-type(${nth}) h2 span[class*='phrases_'] span[class*='word_']`).all())
+        .map(async (word) => expect(word).toBeVisible()));
+      expect(await page.textContent(`main article:nth-of-type(${nth}) p`)).toMatchSnapshot(`paragraph-${nth}.txt`);
+    });
+  });
+
+  // eslint-disable-next-line no-empty-pattern
+  test('has self image', async ({}, testInfo) => {
+    if (mobile(testInfo)) {
+      await expect(page.locator('main figure picture')).toHaveCount(1);
+    } else {
+      await expect(page.locator('main figure picture img')).toBeVisible();
+      await page.waitForFunction(
+        (selector) => {
+          const element = document.querySelector(selector);
+          if (!element) {
+            return false;
+          }
+          const style = window.getComputedStyle(element);
+          return style.opacity === '1' && style.transform === 'none';
+        },
+        'main figure picture img',
+      );
+    }
+  });
+
+  test('has social links', async () => {
+    await band(2, async (index) => {
+      await expect(page.locator(`main ul[class*='social_'] li:nth-of-type(${index + 1}) a`)).toBeVisible();
+    });
   });
 });
 
-test('has 4 paragraphs', async ({ page }) => {
-  await band(4, async (index) => {
-    const nth = index + 1;
-    await Promise.all((await page.locator(`main article:nth-of-type(${nth}) h2 span[class*='phrases_'] span[class*='word_']`).all())
-      .map(async (word) => expect(word).toBeVisible()));
-    expect(await page.textContent(`main article:nth-of-type(${nth}) p`)).toMatchSnapshot(`paragraph-${nth}.txt`);
+test.describe('isolated tests', () => {
+  test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo, url));
+
+  test('has greeting', async ({ page }) => {
+    // [class] can contain multiple classes, controls_ may not be the first.
+    await hasSpeech(page, 'main header h1 [class*="controls_"]', url);
+    await band(1, async (index) => {
+      // 1-based.
+      const nth = index + 1;
+      // After nth assignment.
+      const locator = page.locator(`main header h1>[class*="pronunciation_"]>span:nth-of-type(${nth})`);
+      await expect(locator).toBeVisible();
+      expect(await locator.textContent()).toMatchSnapshot(`greeting-${nth}.txt`);
+    });
   });
-});
 
-test('has self image', async ({ page }, testInfo) => {
-  if (mobile(testInfo)) {
-    await expect(page.locator('main figure picture')).toHaveCount(1);
-  } else {
-    await expect(page.locator('main figure picture img')).toBeVisible();
-    await page.waitForFunction(
-      (selector) => {
-        const element = document.querySelector(selector);
-        if (!element) {
-          return false;
-        }
-        const style = window.getComputedStyle(element);
-        return style.opacity === '1' && style.transform === 'none';
-      },
-      'main figure picture img',
-    );
-  }
-});
-
-test('has social links', async ({ page }) => {
-  await band(2, async (index) => {
-    await expect(page.locator(`main ul[class*='social_'] li:nth-of-type(${index + 1}) a`)).toBeVisible();
-  });
-});
-
-test(
-  'has correct print screenshot',
-  async ({ browserName, page }, testInfo) => hasPrint(browserName, page, testInfo, url),
-);
-
-['Dark', 'Light'].forEach((theme) => {
   test(
-    `has correct ${theme.toLowerCase()} theme screenshot`,
-    async ({ page }, testInfo) => hasScreenshot(page, testInfo, theme, url),
+    'has correct print screenshot',
+    async ({ browserName, page }, testInfo) => hasPrint(browserName, page, testInfo, url),
   );
+
+  ['Dark', 'Light'].forEach((theme) => {
+    test(
+      `has correct ${theme.toLowerCase()} theme screenshot`,
+      async ({ page }, testInfo) => hasScreenshot(page, testInfo, theme, url, 'figure[style*="transform: none"]'),
+    );
+  });
 });

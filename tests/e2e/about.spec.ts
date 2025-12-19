@@ -28,14 +28,14 @@ test.describe.serial('shared page tests', () => {
 
   test.afterAll(async () => afterAll(context));
   test.beforeAll(async ({ browser }) => {
-    ({ context, page } = await beforeAll(browser, url));
+    ({ context, page } = await beforeAll({ browser, url }));
   });
 
-  test('has correct URL', async ({ baseURL }) => hasUrl(baseURL as string, page, url));
-  test('has correct metadatas', async () => hasMetadatas(page));
-  test('has correct header', async () => hasHeader(page));
+  test('has correct URL', async ({ baseURL }) => hasUrl({ baseURL, page, url }));
+  test('has correct metadatas', async () => hasMetadatas({ page }));
+  test('has correct header', async () => hasHeader({ page }));
   // eslint-disable-next-line no-empty-pattern
-  test('has active navigation', async ({}, testInfo) => hasActiveNavigation('About Me', page, testInfo));
+  test('has active navigation', async ({}, testInfo) => hasActiveNavigation({ name: 'About Me', page, testInfo }));
 
   test('has types', async () => {
     await Promise.all(['Transformer People Type', 'Transactor Task Type'].map(async (label, index) => {
@@ -55,23 +55,25 @@ test.describe.serial('shared page tests', () => {
       ul: 'content-list',
     };
     await Promise.all(Object.entries(content).map(async ([tag, name]) => {
-      expect(await page.textContent(`main section article ${tag}`)).toMatchSnapshot(`${name}.txt`);
+      expect(await page.textContent(`main section article ${tag}`))
+        .toMatchSnapshot(`${name}.txt`);
     }));
   });
 });
 
 test.describe('isolated tests', () => {
-  test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo, url));
+  test('has navigations', async ({ page }, testInfo) => hasNavigations({ page, testInfo, url }));
 
-  test(
-    'has correct print screenshot',
-    async ({ browserName, page }, testInfo) => hasPrint(browserName, page, testInfo, url),
-  );
+  test('has correct print screenshot', async ({ browserName, page }, testInfo) => hasPrint({
+    browserName, page, testInfo, url,
+  }));
 
   ['Dark', 'Light'].forEach((theme) => {
     test(
       `has correct ${theme.toLowerCase()} theme screenshot`,
-      async ({ page }, testInfo) => hasScreenshot(page, testInfo, theme, url),
+      async ({ page }, testInfo) => hasScreenshot({
+        page, testInfo, theme, url,
+      }),
     );
   });
 });

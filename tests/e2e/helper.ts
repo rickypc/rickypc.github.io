@@ -10,123 +10,133 @@ import {
   expect,
   type Page,
   type PageScreenshotOptions,
+  type PlaywrightTestArgs,
+  type PlaywrightTestOptions,
   test,
   type TestInfo,
 } from '@playwright/test';
 import { pdfToPng } from 'pdf-to-png-converter';
-import { URLSearchParams } from 'node:url';
 
 // eslint-disable-next-line no-unused-vars
 export type BandCallback<T, U = T> = (value: T, index?: number, array?: T[]) => U | Promise<U>;
 
-export const afterAll = async (context: BrowserContext) => {
-  await context.close();
-};
+export type Options = Partial<PlaywrightTestArgs>
+  & Partial<PlaywrightTestOptions>
+  & {
+    browser?: Browser;
+    browserName?: string;
+    name?: string;
+    page?: Page;
+    selector?: string,
+    testInfo?: TestInfo;
+    theme?: string,
+    url?: string;
+  };
+
+export const afterAll = async (context: BrowserContext) => context.close();
 
 export const band = async <T>(count: number, callback: BandCallback<number, T>) => Promise.all(
   [...Array(count).keys()].map(callback),
 );
 
-export const beforeAll = async (browser: Browser, url: string) => {
-  const context: BrowserContext = await browser.newContext();
+export const beforeAll = async (options: Options) => {
+  const context = await options.browser!.newContext();
   const page: Page = await context.newPage();
-  await page.goto(url, { waitUntil: 'networkidle' });
-  await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
+  await page.goto(options.url!, { waitUntil: 'load' });
   return { context, page };
-};
-
-export const beforeEach = async (page: Page, testInfo: TestInfo, url: string) => {
-  if (![
-    'has correct dark theme screenshot',
-    'has correct light theme screenshot',
-    'has correct print screenshot',
-    'has greeting',
-    'has navigations',
-  ].includes(testInfo.title)) {
-    await page.goto(url, { waitUntil: 'networkidle' });
-    await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
-  }
 };
 
 export { type BrowserContext, expect, type Page };
 
-const mobile = (testInfo: TestInfo) => /^mobile/i.test(testInfo?.project?.name);
+const mobile = (testInfo: Options['testInfo']) => /^mobile/i
+  .test(testInfo?.project?.name as string);
 
-export const hasActiveNavigation = async (name: string, page: Page, testInfo: TestInfo) => {
-  if (mobile(testInfo)) {
-    await page.locator('nav .navbar__inner button.navbar__toggle').click();
-    await expect(page.getByRole('link', { name })).toHaveClass(/menu__link--active/);
+export const hasActiveNavigation = async (options: Options) => {
+  if (mobile(options.testInfo)) {
+    await options.page!.locator('nav .navbar__inner button.navbar__toggle')
+      .click();
+    await expect(options.page!.getByRole('link', options))
+      .toHaveClass(/menu__link--active/);
   } else {
-    await expect(page.getByRole('link', { name })).toHaveClass(/navbar__link--active/);
+    await expect(options.page!.getByRole('link', options))
+      .toHaveClass(/navbar__link--active/);
   }
 };
 
-export const hasHeader = async (page: Page) => {
-  expect(await page.textContent('main header h1')).toMatchSnapshot('header-headline.txt');
-  expect(await page.textContent('main header p')).toMatchSnapshot('header-description.txt');
+export const hasHeader = async (options: Options) => {
+  expect(await options.page!.textContent('main header h1'))
+    .toMatchSnapshot('header-headline.txt');
+  expect(await options.page!.textContent('main header p'))
+    .toMatchSnapshot('header-description.txt');
 };
 
-export const hasMetadatas = async (page: Page) => {
-  expect(await page.locator('head>meta[name="description"]').getAttribute('content'))
-    .toMatchSnapshot('meta-description.txt');
-  expect(await page.locator('head>meta[name="keywords"]').getAttribute('content'))
-    .toMatchSnapshot('meta-keywords.txt');
-  expect(await page.locator('head>meta[property="og:description"]').getAttribute('content'))
-    .toMatchSnapshot('meta-og-description.txt');
-  expect(await page.locator('head>meta[property="og:title"]').getAttribute('content'))
-    .toMatchSnapshot('meta-og-title.txt');
-  expect(await page.locator('head>meta[property="og:type"]').getAttribute('content'))
-    .toEqual('website');
-  expect(await page.locator('head>meta[name="twitter:description"]').getAttribute('content'))
-    .toMatchSnapshot('meta-twitter-description.txt');
-  expect(await page.locator('head>meta[name="twitter:title"]').getAttribute('content'))
-    .toMatchSnapshot('meta-twitter-title.txt');
-  expect(await page.textContent('head>title')).toMatchSnapshot('title.txt');
+export const hasMetadatas = async (options: Options) => {
+  expect(await options.page!.locator('head>meta[name="description"]')
+    .getAttribute('content')).toMatchSnapshot('meta-description.txt');
+  expect(await options.page!.locator('head>meta[name="keywords"]')
+    .getAttribute('content')).toMatchSnapshot('meta-keywords.txt');
+  expect(await options.page!.locator('head>meta[property="og:description"]')
+    .getAttribute('content')).toMatchSnapshot('meta-og-description.txt');
+  expect(await options.page!.locator('head>meta[property="og:title"]')
+    .getAttribute('content')).toMatchSnapshot('meta-og-title.txt');
+  expect(await options.page!.locator('head>meta[property="og:type"]')
+    .getAttribute('content')).toEqual('website');
+  expect(await options.page!.locator('head>meta[name="twitter:description"]')
+    .getAttribute('content')).toMatchSnapshot('meta-twitter-description.txt');
+  expect(await options.page!.locator('head>meta[name="twitter:title"]')
+    .getAttribute('content')).toMatchSnapshot('meta-twitter-title.txt');
+  expect(await options.page!.textContent('head>title'))
+    .toMatchSnapshot('title.txt');
 };
 
-export const hasNavigations = async (page: Page, testInfo: TestInfo, url: string) => {
-  await page.goto(url, { waitUntil: 'networkidle' });
-  await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
+export const hasNavigations = async (options: Options) => {
+  await options.page!.goto(options.url!, { waitUntil: 'domcontentloaded' });
 
   const nav = {
-    desktop: page.locator('nav.navbar .navbar__items--right'),
-    mobile: page.locator('nav.navbar .navbar-sidebar .navbar-sidebar__items .menu'),
+    desktop: options.page!.locator('nav.navbar .navbar__items--right'),
+    mobile: options.page!.locator('nav.navbar .navbar-sidebar .navbar-sidebar__items .menu'),
   };
   const theme = {
     desktop: nav.desktop,
-    mobile: page.locator('nav.navbar .navbar-sidebar .navbar-sidebar__brand'),
+    mobile: options.page!.locator('nav.navbar .navbar-sidebar .navbar-sidebar__brand'),
   };
 
-  if (mobile(testInfo)) {
-    await page.locator('nav .navbar__inner button.navbar__toggle').click();
+  if (mobile(options.testInfo)) {
+    await options.page!.locator('nav .navbar__inner button.navbar__toggle').click();
 
     await expect(nav.desktop.getByRole('link', { name: 'Github' })).toBeHidden();
     await expect(nav.mobile.getByRole('link', { name: 'Github' })).toBeVisible();
-    expect(await nav.mobile.getByRole('link', { name: 'Github' }).getAttribute('href')).toContain('https://github.com/rickypc');
+    expect(await nav.mobile.getByRole('link', { name: 'Github' })
+      .getAttribute('href')).toContain('https://github.com/rickypc');
 
     await expect(nav.desktop.getByRole('link', { name: 'Linkedin' })).toBeHidden();
     await expect(nav.mobile.getByRole('link', { name: 'Linkedin' })).toBeVisible();
-    expect(await nav.mobile.getByRole('link', { name: 'Linkedin' }).getAttribute('href')).toContain('https://www.linkedin.com/in/rihuang');
+    expect(await nav.mobile.getByRole('link', { name: 'Linkedin' })
+      .getAttribute('href')).toContain('https://www.linkedin.com/in/rihuang');
 
     await expect(nav.desktop.getByRole('link', { name: 'Translate' })).toBeHidden();
     await expect(nav.mobile.getByRole('link', { name: 'Translate' })).toBeVisible();
-    expect(await nav.mobile.getByRole('link', { name: 'Translate' }).getAttribute('href')).toMatch(/https:\/\/ricky[^.]+\.translate\.goog\//i);
+    expect(await nav.mobile.getByRole('link', { name: 'Translate' })
+      .getAttribute('href')).toMatch(/https:\/\/ricky[^.]+\.translate\.goog\//i);
 
     await expect(theme.desktop.getByRole('button', { name: 'light mode' })).toBeHidden();
     await expect(theme.mobile.getByRole('button', { name: 'light mode' })).toBeVisible();
 
-    await page.locator('nav .navbar-sidebar button.navbar-sidebar__close').click();
+    await options.page!.locator('nav .navbar-sidebar button.navbar-sidebar__close').click();
   } else {
     await expect(nav.desktop.getByRole('link', { name: 'Github' })).toBeVisible();
-    expect(await nav.desktop.getByRole('link', { name: 'Github' }).getAttribute('href')).toContain('https://github.com/rickypc');
+    expect(await nav.desktop.getByRole('link', { name: 'Github' })
+      .getAttribute('href')).toContain('https://github.com/rickypc');
     await expect(nav.mobile.getByRole('link', { name: 'Github' })).toBeHidden();
 
     await expect(nav.desktop.getByRole('link', { name: 'Linkedin' })).toBeVisible();
-    expect(await nav.desktop.getByRole('link', { name: 'Linkedin' }).getAttribute('href')).toContain('https://www.linkedin.com/in/rihuang');
+    expect(await nav.desktop.getByRole('link', { name: 'Linkedin' })
+      .getAttribute('href')).toContain('https://www.linkedin.com/in/rihuang');
     await expect(nav.mobile.getByRole('link', { name: 'Linkedin' })).toBeHidden();
 
     await expect(nav.desktop.getByRole('link', { name: 'Translate' })).toBeVisible();
-    expect(await nav.desktop.getByRole('link', { name: 'Translate' }).getAttribute('href')).toMatch(/https:\/\/ricky[^.]+\.translate\.goog\//i);
+    expect(await nav.desktop.getByRole('link', { name: 'Translate' })
+      .getAttribute('href')).toMatch(/https:\/\/ricky[^.]+\.translate\.goog\//i);
     await expect(nav.mobile.getByRole('link', { name: 'Translate' })).toBeHidden();
 
     await expect(theme.desktop.getByRole('button', { name: 'light mode' })).toBeVisible();
@@ -134,87 +144,62 @@ export const hasNavigations = async (page: Page, testInfo: TestInfo, url: string
   }
 };
 
-export const hasPrint = async (
-  browserName: string,
-  page: Page,
-  testInfo: TestInfo,
-  url: string,
-) => {
-  test.skip(browserName !== 'chromium', 'PDF only works in Chromium');
-  const params: Record<string, string> = {};
-  if (url.includes('portfolio')) {
-    params['docusaurus-data-carousel-play'] = 'manual';
-  }
-  await page.goto(`${url}?${new URLSearchParams(params).toString()}`, { waitUntil: 'networkidle' });
-  await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
-  await page.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
-  await page.waitForLoadState('networkidle');
-  const last = page.locator('picture > img').last();
+export const hasPrint = async (options: Options) => {
+  test.skip(options.browserName !== 'chromium', 'PDF only works in Chromium');
+  const search = options.url!.includes('portfolio') ? '?docusaurus-data-carousel-play=manual' : '';
+  await options.page!.goto(`${options.url}${search}`, { waitUntil: 'load' });
+  await options.page!.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
+  const last = options.page!.locator('picture > img').last();
   if (await last.count() > 0) {
     await last.scrollIntoViewIfNeeded();
-    await page.evaluate(async (el) => {
-      await (el as HTMLImageElement)?.decode?.();
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          requestAnimationFrame(() => requestAnimationFrame(resolve));
-        }, 500);
-      });
-    }, await last.elementHandle());
+    await options.page!.evaluate(async () => new Promise((resolve) => {
+      setTimeout(() => requestAnimationFrame(resolve), 450);
+    }));
   }
-  const pdf = await page.pdf({ format: 'Letter', printBackground: true });
+  const pdf = await options.page!.pdf({ format: 'Letter', printBackground: true });
   const images = await pdfToPng(pdf.buffer.slice(
     pdf.byteOffset,
     pdf.byteOffset + pdf.byteLength,
   ));
   await Promise.all(images.map(async (img, i) => {
     expect(img.content).toMatchSnapshot(`print-page-${i}.png`);
-    await testInfo.attach(`Print page ${i + 1}`, {
+    await options.testInfo!.attach(`Print page ${i + 1}`, {
       body: img.content,
       contentType: 'image/png',
     });
   }));
 };
 
-export const hasScreenshot = async (
-  page: Page,
-  testInfo: TestInfo,
-  theme: string,
-  url: string,
-  readySelector?: string,
-) => {
-  const options: PageScreenshotOptions = { animations: 'disabled', fullPage: true, scale: 'css' };
-  const themeLower = theme.toLowerCase();
+export const hasScreenshot = async (options: Options) => {
+  const screenshotOptions: PageScreenshotOptions = { animations: 'disabled', fullPage: true, scale: 'css' };
+  const themeLower = options.theme!.toLowerCase();
   // After themeLower assignment.
-  const params: Record<string, string> = { 'docusaurus-theme': themeLower };
-  if (url.includes('portfolio')) {
-    params['docusaurus-data-carousel-play'] = 'manual';
+  let search = `?docusaurus-theme=${themeLower}`;
+  if (options.url!.includes('portfolio')) {
+    search += '&docusaurus-data-carousel-play=manual';
   }
-  await page.goto(`${url}?${new URLSearchParams(params).toString()}`, { waitUntil: 'networkidle' });
-  await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
-  if (readySelector) {
-    await page.waitForSelector(readySelector, { timeout: 250 }).catch(() => {});
+  await options.page!.goto(`${options.url}${search}`, { waitUntil: 'networkidle' });
+  if (options.selector) {
+    await options.page!.waitForSelector(options.selector, { timeout: 250 }).catch(() => {});
   }
-  await expect(page).toHaveScreenshot(`${themeLower}.png`, options);
-  await testInfo.attach(`${theme} Theme`, {
-    body: await page.screenshot(options),
+  await expect(options.page!).toHaveScreenshot(`${themeLower}.png`, screenshotOptions);
+  await options.testInfo!.attach(`${options.theme} Theme`, {
+    body: await options.page!.screenshot(screenshotOptions),
     contentType: 'image/png',
   });
 };
 
-export const hasSpeech = async (page: Page, selector: string, url: string) => {
-  const params = { 'docusaurus-data-volume': 'silent' };
-  await page.goto(`${url}?${new URLSearchParams(params).toString()}`, { waitUntil: 'networkidle' });
-  await page.waitForSelector('#__docusaurus .main-wrapper', { state: 'visible' });
-  const locator = page.locator(selector);
+export const hasSpeech = async (options: Options) => {
+  await options.page!.goto(`${options.url}?docusaurus-data-volume=silent`, { waitUntil: 'domcontentloaded' });
+  const locator = options.page!.locator(options.selector!);
   if (await locator.isVisible()) {
     await locator.click();
-    await expect(page.evaluate(() => speechSynthesis.speaking)).toBeTruthy();
-    await page.waitForFunction(() => !speechSynthesis.speaking);
+    await expect(options.page!.evaluate(() => speechSynthesis.speaking)).toBeTruthy();
+    await options.page!.waitForFunction(() => !speechSynthesis.speaking);
   }
 };
 
-export const hasUrl = async (baseURL: string, page: Page, url: string) => {
-  await expect(page.url()).toContain(`${baseURL}${url}`);
-};
+export const hasUrl = async (options: Options) => expect(options.page!)
+  .toHaveURL(`${options.baseURL}${options.url}`);
 
 export { mobile, test };

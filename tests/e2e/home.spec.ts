@@ -29,18 +29,19 @@ test.describe.serial('shared page tests', () => {
 
   test.afterAll(async () => afterAll(context));
   test.beforeAll(async ({ browser }) => {
-    ({ context, page } = await beforeAll(browser, url));
+    ({ context, page } = await beforeAll({ browser, url }));
   });
 
-  test('has correct URL', async ({ baseURL }) => hasUrl(baseURL as string, page, url));
-  test('has correct metadatas', async () => hasMetadatas(page));
+  test('has correct URL', async ({ baseURL }) => hasUrl({ baseURL, page, url }));
+  test('has correct metadatas', async () => hasMetadatas({ page }));
 
   test('has 4 paragraphs', async () => {
     await band(4, async (index) => {
       const nth = index + 1;
       await Promise.all((await page.locator(`main article:nth-of-type(${nth}) h2 span[class*='phrases_'] span[class*='word_']`).all())
         .map(async (word) => expect(word).toBeVisible()));
-      expect(await page.textContent(`main article:nth-of-type(${nth}) p`)).toMatchSnapshot(`paragraph-${nth}.txt`);
+      expect(await page.textContent(`main article:nth-of-type(${nth}) p`))
+        .toMatchSnapshot(`paragraph-${nth}.txt`);
     });
   });
 
@@ -66,17 +67,18 @@ test.describe.serial('shared page tests', () => {
 
   test('has social links', async () => {
     await band(2, async (index) => {
-      await expect(page.locator(`main ul[class*='social_'] li:nth-of-type(${index + 1}) a`)).toBeVisible();
+      await expect(page.locator(`main ul[class*='social_'] li:nth-of-type(${index + 1}) a`))
+        .toBeVisible();
     });
   });
 });
 
 test.describe('isolated tests', () => {
-  test('has navigations', async ({ page }, testInfo) => hasNavigations(page, testInfo, url));
+  test('has navigations', async ({ page }, testInfo) => hasNavigations({ page, testInfo, url }));
 
   test('has greeting', async ({ page }) => {
     // [class] can contain multiple classes, controls_ may not be the first.
-    await hasSpeech(page, 'main header h1 [class*="controls_"]', url);
+    await hasSpeech({ page, selector: 'main header h1 [class*="controls_"]', url });
     await band(1, async (index) => {
       // 1-based.
       const nth = index + 1;
@@ -87,15 +89,16 @@ test.describe('isolated tests', () => {
     });
   });
 
-  test(
-    'has correct print screenshot',
-    async ({ browserName, page }, testInfo) => hasPrint(browserName, page, testInfo, url),
-  );
+  test('has correct print screenshot', async ({ browserName, page }, testInfo) => hasPrint({
+    browserName, page, testInfo, url,
+  }));
 
   ['Dark', 'Light'].forEach((theme) => {
     test(
       `has correct ${theme.toLowerCase()} theme screenshot`,
-      async ({ page }, testInfo) => hasScreenshot(page, testInfo, theme, url, 'figure[style*="transform: none"]'),
+      async ({ page }, testInfo) => hasScreenshot({
+        page, selector: 'figure[style*="transform: none"]', testInfo, theme, url,
+      }),
     );
   });
 });

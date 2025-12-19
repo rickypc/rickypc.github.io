@@ -27,7 +27,7 @@
     "@types/react-dom": "19.2.3",
     "beasties": "0.3.5",
     "minimatch": "10.1.1",
-    "ts-checker-rspack-plugin": "1.2.2"
+    "ts-checker-rspack-plugin": "1.2.3"
   },
   "engines": {
     "node": ">=24.0"

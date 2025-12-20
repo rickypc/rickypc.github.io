@@ -35,9 +35,10 @@ export type Options = Partial<PlaywrightTestArgs>
 
 export const afterAll = async (context: BrowserContext) => context.close();
 
-export const band = async <T>(count: number, callback: BandCallback<number, T>) => Promise.all(
-  [...Array(count).keys()].map(callback),
-);
+export const band = async <T>(
+  count: number,
+  callback: BandCallback<number, T>,
+) => Promise.all([...Array(count).keys()].map(callback));
 
 export const beforeAll = async (options: Options) => {
   const context = await options.browser!.newContext();
@@ -94,61 +95,83 @@ export const hasNavigations = async (options: Options) => {
 
   const nav = {
     desktop: options.page!.locator('nav.navbar .navbar__items--right'),
-    mobile: options.page!.locator('nav.navbar .navbar-sidebar .navbar-sidebar__items .menu'),
+    mobile: options.page!
+      .locator('nav.navbar .navbar-sidebar .navbar-sidebar__items .menu'),
   };
   const theme = {
     desktop: nav.desktop,
-    mobile: options.page!.locator('nav.navbar .navbar-sidebar .navbar-sidebar__brand'),
+    mobile: options.page!
+      .locator('nav.navbar .navbar-sidebar .navbar-sidebar__brand'),
   };
 
   if (mobile(options.testInfo)) {
-    await options.page!.locator('nav .navbar__inner button.navbar__toggle').click();
+    await options.page!.locator('nav .navbar__inner button.navbar__toggle')
+      .click();
 
-    await expect(nav.desktop.getByRole('link', { name: 'Github' })).toBeHidden();
-    await expect(nav.mobile.getByRole('link', { name: 'Github' })).toBeVisible();
+    await expect(nav.desktop.getByRole('link', { name: 'Github' }))
+      .toBeHidden();
+    await expect(nav.mobile.getByRole('link', { name: 'Github' }))
+      .toBeVisible();
     expect(await nav.mobile.getByRole('link', { name: 'Github' })
       .getAttribute('href')).toContain('https://github.com/rickypc');
 
-    await expect(nav.desktop.getByRole('link', { name: 'Linkedin' })).toBeHidden();
-    await expect(nav.mobile.getByRole('link', { name: 'Linkedin' })).toBeVisible();
+    await expect(nav.desktop.getByRole('link', { name: 'Linkedin' }))
+      .toBeHidden();
+    await expect(nav.mobile.getByRole('link', { name: 'Linkedin' }))
+      .toBeVisible();
     expect(await nav.mobile.getByRole('link', { name: 'Linkedin' })
       .getAttribute('href')).toContain('https://www.linkedin.com/in/rihuang');
 
-    await expect(nav.desktop.getByRole('link', { name: 'Translate' })).toBeHidden();
-    await expect(nav.mobile.getByRole('link', { name: 'Translate' })).toBeVisible();
+    await expect(nav.desktop.getByRole('link', { name: 'Translate' }))
+      .toBeHidden();
+    await expect(nav.mobile.getByRole('link', { name: 'Translate' }))
+      .toBeVisible();
     expect(await nav.mobile.getByRole('link', { name: 'Translate' })
       .getAttribute('href')).toMatch(/https:\/\/ricky[^.]+\.translate\.goog\//i);
 
-    await expect(theme.desktop.getByRole('button', { name: 'light mode' })).toBeHidden();
-    await expect(theme.mobile.getByRole('button', { name: 'light mode' })).toBeVisible();
+    await expect(theme.desktop.getByRole('button', { name: 'light mode' }))
+      .toBeHidden();
+    await expect(theme.mobile.getByRole('button', { name: 'light mode' }))
+      .toBeVisible();
 
-    await options.page!.locator('nav .navbar-sidebar button.navbar-sidebar__close').click();
+    await options.page!.locator('nav .navbar-sidebar button.navbar-sidebar__close')
+      .click();
   } else {
-    await expect(nav.desktop.getByRole('link', { name: 'Github' })).toBeVisible();
+    await expect(nav.desktop.getByRole('link', { name: 'Github' }))
+      .toBeVisible();
     expect(await nav.desktop.getByRole('link', { name: 'Github' })
       .getAttribute('href')).toContain('https://github.com/rickypc');
-    await expect(nav.mobile.getByRole('link', { name: 'Github' })).toBeHidden();
+    await expect(nav.mobile.getByRole('link', { name: 'Github' }))
+      .toBeHidden();
 
-    await expect(nav.desktop.getByRole('link', { name: 'Linkedin' })).toBeVisible();
+    await expect(nav.desktop.getByRole('link', { name: 'Linkedin' }))
+      .toBeVisible();
     expect(await nav.desktop.getByRole('link', { name: 'Linkedin' })
       .getAttribute('href')).toContain('https://www.linkedin.com/in/rihuang');
-    await expect(nav.mobile.getByRole('link', { name: 'Linkedin' })).toBeHidden();
+    await expect(nav.mobile.getByRole('link', { name: 'Linkedin' }))
+      .toBeHidden();
 
-    await expect(nav.desktop.getByRole('link', { name: 'Translate' })).toBeVisible();
+    await expect(nav.desktop.getByRole('link', { name: 'Translate' }))
+      .toBeVisible();
     expect(await nav.desktop.getByRole('link', { name: 'Translate' })
       .getAttribute('href')).toMatch(/https:\/\/ricky[^.]+\.translate\.goog\//i);
-    await expect(nav.mobile.getByRole('link', { name: 'Translate' })).toBeHidden();
+    await expect(nav.mobile.getByRole('link', { name: 'Translate' }))
+      .toBeHidden();
 
-    await expect(theme.desktop.getByRole('button', { name: 'light mode' })).toBeVisible();
-    await expect(theme.mobile.getByRole('button', { name: 'light mode' })).toBeHidden();
+    await expect(theme.desktop.getByRole('button', { name: 'light mode' }))
+      .toBeVisible();
+    await expect(theme.mobile.getByRole('button', { name: 'light mode' }))
+      .toBeHidden();
   }
 };
 
 export const hasPrint = async (options: Options) => {
   test.skip(options.browserName !== 'chromium', 'PDF only works in Chromium');
-  const search = options.url!.includes('portfolio') ? '?docusaurus-data-carousel-play=manual' : '';
+  const search = options.url!.includes('portfolio')
+    ? '?docusaurus-data-carousel-play=manual' : '';
   await options.page!.goto(`${options.url}${search}`, { waitUntil: 'load' });
-  await options.page!.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
+  await options.page!.evaluate(() => window
+    .dispatchEvent(new Event('beforeprint')));
   const last = options.page!.locator('picture > img').last();
   if (await last.count() > 0) {
     await last.scrollIntoViewIfNeeded();
@@ -156,7 +179,10 @@ export const hasPrint = async (options: Options) => {
       setTimeout(() => requestAnimationFrame(resolve), 450);
     }));
   }
-  const pdf = await options.page!.pdf({ format: 'Letter', printBackground: true });
+  const pdf = await options.page!.pdf({
+    format: 'Letter',
+    printBackground: true,
+  });
   const images = await pdfToPng(pdf.buffer.slice(
     pdf.byteOffset,
     pdf.byteOffset + pdf.byteLength,
@@ -171,18 +197,27 @@ export const hasPrint = async (options: Options) => {
 };
 
 export const hasScreenshot = async (options: Options) => {
-  const screenshotOptions: PageScreenshotOptions = { animations: 'disabled', fullPage: true, scale: 'css' };
+  const screenshotOptions: PageScreenshotOptions = {
+    animations: 'disabled',
+    fullPage: true,
+    scale: 'css',
+  };
   const themeLower = options.theme!.toLowerCase();
   // After themeLower assignment.
   let search = `?docusaurus-theme=${themeLower}`;
   if (options.url!.includes('portfolio')) {
     search += '&docusaurus-data-carousel-play=manual';
   }
-  await options.page!.goto(`${options.url}${search}`, { waitUntil: 'networkidle' });
+  await options.page!.goto(
+    `${options.url}${search}`,
+    { waitUntil: 'networkidle' },
+  );
   if (options.selector) {
-    await options.page!.waitForSelector(options.selector, { timeout: 250 }).catch(() => {});
+    await options.page!.waitForSelector(options.selector, { timeout: 250 })
+      .catch(() => {});
   }
-  await expect(options.page!).toHaveScreenshot(`${themeLower}.png`, screenshotOptions);
+  await expect(options.page!)
+    .toHaveScreenshot(`${themeLower}.png`, screenshotOptions);
   await options.testInfo!.attach(`${options.theme} Theme`, {
     body: await options.page!.screenshot(screenshotOptions),
     contentType: 'image/png',
@@ -190,12 +225,18 @@ export const hasScreenshot = async (options: Options) => {
 };
 
 export const hasSpeech = async (options: Options) => {
-  await options.page!.goto(`${options.url}?docusaurus-data-volume=silent`, { waitUntil: 'domcontentloaded' });
+  await options.page!.goto(
+    `${options.url}?docusaurus-data-volume=silent`,
+    { waitUntil: 'domcontentloaded' },
+  );
   const locator = options.page!.locator(options.selector!);
   if (await locator.isVisible()) {
     await locator.click();
-    await expect(options.page!.evaluate(() => speechSynthesis.speaking)).toBeTruthy();
+    await expect(options.page!.evaluate(() => speechSynthesis.speaking))
+      .toBeTruthy();
     await options.page!.waitForFunction(() => !speechSynthesis.speaking);
+    await expect(options.page!.evaluate(() => speechSynthesis.speaking))
+      .toBeFalsy();
   }
 };
 

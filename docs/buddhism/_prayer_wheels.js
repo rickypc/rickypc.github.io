@@ -19,16 +19,15 @@ export default async function prayerWheel() {
         await image({ alt: 'Earth (Bottom) Wheel', path: '#buddhism/img/earth-wheel.webp', width: 612 }),
       ],
       info: {
-        keywords: [
-          'prayer wheels',
-          'sacred',
-          'purify',
-          'wisdom',
-          'compassion',
-          'buddhahood',
-        ],
-        subject: 'Turning prayer wheel will purify defilement and obscuration, increase wisdom, and attain Buddhahood in this lifetime',
-        title: 'Prayer Wheels',
+        keywords: `This document is about the prayer wheels and its sacred role
+          in traditional rituals where prayer rolls or zung are placed inside
+          prayer wheels to serve as relics in support of purification and the
+          removal of obscuration while nurturing wisdom and compassion so that
+          practitioners may advance toward Buddhahood`.replace(/\n\s*/g, ' '),
+        subject: `Turning prayer wheels helps purify defilement and
+          obscuration, fosters wisdom and compassion, and supports the
+          attainment of Buddhahood in this very lifetime`.replace(/\n\s*/g, ' '),
+        title: 'Prayer wheels',
       },
     },
   };

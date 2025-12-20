@@ -15,6 +15,7 @@ import {
 import { basename, join, resolve } from 'node:path';
 import Beasties from 'beasties';
 import concurrent from 'timeable-promise/concurrent';
+import { createHash } from 'node:crypto';
 import { createWriteStream } from 'node:fs';
 import {
   DEFAULT_BUILD_DIR_NAME,
@@ -24,7 +25,7 @@ import {
 } from '@docusaurus/utils';
 import { type DocusaurusConfig, type LoadContext, type Plugin } from '@docusaurus/types';
 import { FontaineTransform } from 'fontaine';
-import { imports } from '#root/package.json';
+import { dependencies, imports } from '#root/package.json';
 import { minimatch } from 'minimatch';
 import { MultiBar } from 'cli-progress';
 import PdfMake from 'pdfmake';
@@ -224,10 +225,12 @@ export async function generatePdf(
   { outDir, siteConfig, siteDir }: LoadContext,
   bars: MultiBar,
 ): Promise<void> {
+  const algorithm = 'sha256';
   const bar = bars.create(pdf.length, 0, { color: '\x1B[34m', task: 'Create PDF' });
   bars.update();
   const devanagari = join(__dirname, 'font', 'noto', 'NotoSerifDevanagari-Regular.ttf');
   const devanagariBold = join(__dirname, 'font', 'noto', 'NotoSerifDevanagari-Bold.ttf');
+  const generator = `pdfmake:${dependencies.pdfmake}`;
   const kokonor = join(__dirname, 'font', 'kokonor', 'Kokonor-Regular.ttf');
   const printer = new PdfMake({
     Kokonor: {
@@ -272,13 +275,28 @@ export async function generatePdf(
       })) {
         const { definition, options } = await templates[template as keyof Templates](path);
         await new Promise<void>((settle, reject) => {
+          const date = new Date();
           const document = printer.createPdfKitDocument({
             ...definition,
+            displayTitle: true,
             info: {
               ...definition.info,
               author: siteConfig.title,
+              creationDate: date,
               creator: siteConfig.url,
+              modDate: date,
               producer: siteConfig.url,
+              stamp: `${algorithm}:${createHash(algorithm).update(JSON.stringify({
+                date, definition, generator, options,
+              })).digest('hex')}`,
+            },
+            watermark: {
+              bold: true,
+              color: 'red',
+              font: 'NotoSans',
+              fontSize: 90,
+              opacity: 0,
+              text: siteConfig.url,
             },
           }, options);
           // eslint-disable-next-line security/detect-non-literal-fs-filename

@@ -52,11 +52,12 @@ export default {
     repeat: {
       condensed: 6,
       roll: 2,
-      wheel: 1,
+      wheel: 2,
     },
     title: 'ཆོས་སྐུ་རིང་བསྲེལ་དྲུག',
     typography: {
       condensed: { default: 1.875, title: 1.7 },
+      wheel: { default: 5.8, title: 4 },
     },
   },
   transliteration: {

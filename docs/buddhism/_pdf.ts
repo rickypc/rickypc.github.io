@@ -43,7 +43,7 @@ export default [
   ['condensed', `${phrases}/_bodhi_garbhalamkara_laksa.js`],
   ['roll', `${phrases}/_bodhi_garbhalamkara_laksa.js`],
   ['wheel', `${phrases}/_bodhi_garbhalamkara_laksa.js`],
-  ['base', '#buddhism/_cintamani_dharmacakra_yasti.js'],
+  ['base', '#buddhism/_cintamani_dharmacakra_yasti.ts'],
   ['book', '#buddhism/_consecration_statue_stupa.js'],
   ['book', '#buddhism/_consecration_statue_stupa_cover.js'],
   ['book', '#buddhism/_consecration_supplies.js'],

@@ -24,7 +24,7 @@ export default {
   sanskrit: {
     children: [core.sanskrit.children, amitabha.sanskrit.children].join(' । '),
     repeat: {
-      condensed: 54,
+      condensed: 51,
       roll: 18,
       wheel: 17,
     },

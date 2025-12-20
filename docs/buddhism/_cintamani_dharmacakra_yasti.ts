@@ -69,7 +69,7 @@ export default async function cintamaniDharmacakraYasti() {
                 {
                   text: [
                     { fontSize: 4, text: `${repeat}x ` },
-                    body(infix, repeat - 1, prefix, repeat, suffix, text),
+                    body(infix, repeat! - 1, prefix, repeat, suffix, text),
                   ],
                 },
               ];
@@ -103,23 +103,16 @@ export default async function cintamaniDharmacakraYasti() {
       ],
       defaultStyle: { font: 'NotoSans', fontSize: 6, lineHeight: 0.84 },
       info: {
-        keywords: [
-          'cintāmaṇi dharmacakra yaṣṭi',
-          'prayer wheel',
-          'life force pillar',
-          'mantra roll',
-          'prayer roll',
-          'prayer scroll',
-          'sacred',
-          'purify',
-          'wisdom',
-          'compassion',
-          'buddhahood',
-          'dhāraṇī',
-          'zung',
-        ],
-        subject: 'Turning prayer wheel will purify defilement and obscuration, increase wisdom, and attain Buddhahood in this lifetime',
-        title: 'Prayer Wheel Life Force Pillar',
+        keywords: `This document is about the cintāmaṇi dharmacakra yaṣṭi or
+          prayer wheel life force pillar and its sacred role in traditional
+          rituals where prayer rolls or zung are placed inside prayer wheels to
+          serve as relics in support of purification and the removal of
+          obscuration while nurturing wisdom and compassion so that
+          practitioners may advance toward Buddhahood`.replace(/\n\s*/g, ' '),
+        subject: `Turning prayer wheels helps purify defilement and
+          obscuration, fosters wisdom and compassion, and supports the
+          attainment of Buddhahood in this very lifetime`.replace(/\n\s*/g, ' '),
+        title: 'Prayer wheel life force pillar',
       },
       pageOrientation: 'landscape',
       styles: {

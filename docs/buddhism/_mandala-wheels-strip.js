@@ -67,21 +67,17 @@ export default async function mandalaWheelsStrip() {
         },
       ],
       info: {
-        keywords: [
-          'mandala wheels',
-          'Jambhala',
-          'Vasudhārā',
-          'Ganapati',
-          'Aṣṭamaṅgala',
-          'Viśvavajra',
-          'sacred',
-          'purify',
-          'wisdom',
-          'compassion',
-          'buddhahood',
-        ],
-        subject: 'Maṇḍala wheels will purify defilement and obscuration, increase wisdom, and attain Buddhahood in this lifetime',
-        title: 'Maṇḍala Wheels',
+        keywords: `This document is about the maṇḍala wheels and its
+          sacred role in traditional consecration rituals where jambhala -
+          vasudhārā - ganapati - aṣṭamaṅgala and viśvavajra wheels are placed
+          inside Buddha statues or stupas or prayer wheels to serve as relics
+          in support of purification and the removal of obscuration while
+          nurturing wisdom and compassion so that practitioners may advance
+          toward Buddhahood`.replace(/\n\s*/g, ' '),
+        subject: `Placing maṇḍala wheels inside a Buddha statue helps purify
+          defilement and obscuration, fosters wisdom and compassion, and
+          supports the attainment of Buddhahood in this very lifetime`.replace(/\n\s*/g, ' '),
+        title: 'Maṇḍala wheels',
       },
       pageOrientation: 'landscape',
     },

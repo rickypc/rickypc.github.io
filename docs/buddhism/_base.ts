@@ -22,7 +22,7 @@ export default async function base(path: string) {
       ...definition,
       info: {
         ...(definition.info || {}),
-        keywords: definition.info?.keywords?.join?.(';'),
+        keywords: definition.info?.keywords,
       },
     },
     options,

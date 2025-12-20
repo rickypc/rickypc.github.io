@@ -174,20 +174,15 @@ export default async function book(path: string) {
       content,
       defaultStyle: { font: 'NotoSans', fontSize: 10 },
       info: {
-        keywords: [
-          title?.toLowerCase(),
-          'mantra book',
-          'prayer book',
-          'sacred',
-          'purify',
-          'wisdom',
-          'compassion',
-          'buddhahood',
-          'pustaka',
-          'pecha',
-        ].join(';'),
-        subject: 'Reciting prayer will purify defilement and obscuration, increase wisdom, and attain Buddhahood in this lifetime',
-        title: `${title} prayer book`,
+        keywords: `This document is about the ${title?.toLowerCase()} prayer
+          book also known as pustaka or pecha and its sacred role in
+          traditional prayer rituals where it supports purification and the
+          removal of obscuration while nurturing wisdom and compassion so that
+          practitioners may advance toward Buddhahood`.replace(/\n\s*/g, ' '),
+        subject: `Reciting prayer purifies defilement and obscuration,
+          fosters wisdom and compassion, and supports the attainment of
+          Buddhahood in this very lifetime`.replace(/\n\s*/g, ' '),
+        title: `${title?.[0]}${title?.slice(1)?.toLowerCase()} prayer book`,
       },
       pageMargins: [7.5, 7.5, 7.5, 7.5],
       pageOrientation: 'landscape',

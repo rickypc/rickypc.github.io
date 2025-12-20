@@ -84,21 +84,16 @@ export default function thangka(path: string) {
         lineHeight: 0.85,
       },
       info: {
-        keywords: [
-          transliteration?.title?.toLowerCase(),
-          'paubhā',
-          'thangka',
-          'paubhā mantra',
-          'thangka mantra',
-          'paubhā prayer',
-          'thangka prayer',
-          'sacred',
-          'relic',
-          'dhāraṇī',
-          'zung',
-        ].join(';'),
-        subject: 'Placing prayer on the back of paubhā/thangka will purify defilement and obscuration, increase wisdom, and attain Buddhahood in this lifetime',
-        title: `${transliteration?.title} paubhā/thangka prayer`,
+        keywords: `This document is about the
+          ${transliteration?.title?.toLowerCase()} and its sacred role in
+          traditional rituals where prayers are placed on the back of a paubhā
+          or thangka to serve as relics in support of purification and the
+          removal of obscuration while nurturing wisdom and compassion so that
+          practitioners may advance toward Buddhahood`.replace(/\n\s*/g, ' '),
+        subject: `Placing prayers on the back of a paubhā or thangka helps
+          purify defilement and obscuration, fosters wisdom and compassion, and
+          supports the attainment of Buddhahood in this very lifetime`.replace(/\n\s*/g, ' '),
+        title: `${transliteration?.title?.[0]}${transliteration?.title?.slice(1)?.toLowerCase()} paubhā/thangka prayer`,
       },
       pageMargins: [7.5, 0, 7.5, 0],
       pageOrientation: 'portrait',

@@ -58,6 +58,9 @@ jest.mock('node:fs/promises', () => {
 });
 
 jest.mock('#root/package.json', () => ({
+  dependencies: {
+    pdfmake: '0.0.0',
+  },
   imports: {
     '@alias/*': 'src/aliased/*',
     '@alias/utils/*': 'src/aliased/utils/*',

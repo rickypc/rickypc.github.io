@@ -22,6 +22,7 @@ export const layout: LayoutProps = {
     'RazorGator',
     'Petra Christian University',
     'California State University Fullerton',
+    'Stanford University',
     'architecture to software',
     'tech career growth',
     'engineering promotions',
@@ -68,6 +69,24 @@ export const timelines: TimelineProps[] = [
       href: 'https://en.wikipedia.org/wiki/Software_engineering',
     },
     year: '2017 - Current',
+  },
+  {
+    affiliation: {
+      children: 'Stanford University',
+      href: 'https://www.stanford.edu',
+      translate: 'no',
+    },
+    description: 'Completed advanced computer science coursework from Stanford University, including Automata, Machine Learning, and Mining Massive Datasets. Strengthened theoretical foundations in computation, gained practical experience with modern ML techniques, and developed proficiency in large-scale data processing. Earned a Certificate of Completion with Distinction in Mining Massive Datasets for exceptional performance.',
+    picture: {
+      avif: require('@site/src/pages/timeline/img/stanford.avif').default,
+      fallback: require('@site/src/pages/timeline/img/stanford.jpg'),
+      webp: require('@site/src/pages/timeline/img/stanford.webp').default,
+    },
+    title: {
+      children: 'Advanced Studies, Data Science',
+      href: 'https://online.stanford.edu/explore',
+    },
+    year: '2015',
   },
   {
     affiliation: {

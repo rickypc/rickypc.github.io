@@ -232,10 +232,10 @@ export const hasSpeech = async (options: Options) => {
   const locator = options.page!.locator(options.selector!);
   if (await locator.isVisible()) {
     await locator.click();
-    await expect(options.page!.evaluate(() => speechSynthesis.speaking))
+    expect(await options.page!.evaluate(() => speechSynthesis.speaking))
       .toBeTruthy();
     await options.page!.waitForFunction(() => !speechSynthesis.speaking);
-    await expect(options.page!.evaluate(() => speechSynthesis.speaking))
+    expect(await options.page!.evaluate(() => speechSynthesis.speaking))
       .toBeFalsy();
   }
 };

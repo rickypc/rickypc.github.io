@@ -28,7 +28,7 @@ describe('data.timeline', () => {
 
     it('keywords', () => {
       expect(Array.isArray(layout.keywords)).toBeTruthy();
-      expect(layout.keywords).toHaveLength(15);
+      expect(layout.keywords).toHaveLength(16);
       expect(layout.keywords).toContain('ricky huang');
     });
 
@@ -50,9 +50,9 @@ describe('data.timeline', () => {
   });
 
   describe('timelines', () => {
-    it('is array of 8 items', () => {
+    it('is array of 9 items', () => {
       expect(Array.isArray(timelines)).toBeTruthy();
-      expect(timelines).toHaveLength(8);
+      expect(timelines).toHaveLength(9);
     });
 
     timelines.forEach((item, index) => {

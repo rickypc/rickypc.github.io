@@ -15,7 +15,7 @@ import {
 import { basename, join, resolve } from 'node:path';
 import Beasties from 'beasties';
 import concurrent from 'timeable-promise/concurrent';
-import { createHash } from 'node:crypto';
+import { createHash, createHmac } from 'node:crypto';
 import { createWriteStream } from 'node:fs';
 import {
   DEFAULT_BUILD_DIR_NAME,
@@ -232,6 +232,10 @@ export async function generatePdf(
   const devanagariBold = join(__dirname, 'font', 'noto', 'NotoSerifDevanagari-Bold.ttf');
   const generator = `pdfmake:${dependencies.pdfmake}`;
   const kokonor = join(__dirname, 'font', 'kokonor', 'Kokonor-Regular.ttf');
+  // Ensure the folder exist.
+  const pdfDir = join(outDir, 'pdf');
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  await mkdir(pdfDir, { recursive: true });
   const printer = new PdfMake({
     Kokonor: {
       bold: kokonor,
@@ -252,11 +256,10 @@ export async function generatePdf(
       normal: devanagari,
     },
   });
-
-  // Ensure the folder exist.
-  const pdfDir = join(outDir, 'pdf');
-  // eslint-disable-next-line security/detect-non-literal-fs-filename
-  await mkdir(pdfDir, { recursive: true });
+  const provenance = Buffer.from(
+    (await readFile('.provenance', 'utf8')).trim(),
+    'base64',
+  );
 
   await concurrent(pdf, async (batch, index) => {
     // Workload arbritary weight numbers.
@@ -276,6 +279,9 @@ export async function generatePdf(
         const { definition, options } = await templates[template as keyof Templates](path);
         await new Promise<void>((settle, reject) => {
           const date = new Date();
+          const stamp = createHash(algorithm).update(JSON.stringify({
+            date, definition, generator, options,
+          })).digest('hex');
           const document = printer.createPdfKitDocument({
             ...definition,
             displayTitle: true,
@@ -284,11 +290,13 @@ export async function generatePdf(
               author: siteConfig.title,
               creationDate: date,
               creator: siteConfig.url,
+              custom: {
+                provenance: createHmac(algorithm, provenance)
+                  .update(stamp).digest('base64'),
+              },
               modDate: date,
               producer: siteConfig.url,
-              stamp: `${algorithm}:${createHash(algorithm).update(JSON.stringify({
-                date, definition, generator, options,
-              })).digest('hex')}`,
+              stamp: `${algorithm}:${stamp}`,
             },
             watermark: {
               bold: true,

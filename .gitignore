@@ -14,5 +14,6 @@
 /playwright/report/
 /playwright/results/
 /playwright/snapshots/
+.provenance
 *.report.html
 .searchignore

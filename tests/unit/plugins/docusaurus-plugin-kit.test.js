@@ -305,7 +305,7 @@ describe(`plugins.${name}`, () => {
 
       // inlineAboveFold.
       expect(process).toHaveBeenCalledTimes(1);
-      expect(readFile).toHaveBeenCalledTimes(2);
+      expect(readFile).toHaveBeenCalledTimes(3);
       // Assert writeFile called only for file1 (file2 already had beasties marker).
       expect(writeFile).toHaveBeenCalledTimes(1);
       expect(writeFile).toHaveBeenCalledWith('out/file1.html', expect.stringContaining('data-beasties-container'), 'utf8');
@@ -320,7 +320,7 @@ describe(`plugins.${name}`, () => {
 
       // inlineAboveFold.
       expect(process).not.toHaveBeenCalled();
-      expect(readFile).not.toHaveBeenCalled();
+      expect(readFile).toHaveBeenCalledTimes(1);
       expect(writeFile).not.toHaveBeenCalled();
     });
   });

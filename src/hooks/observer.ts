@@ -83,10 +83,18 @@ export function useSpeech() {
  */
 // eslint-disable-next-line react-hooks/rules-of-hooks
 export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...rest } = {}) {
+  // Page is active.
+  const [active, setActive] = useState(!document.hidden);
+  // Window has focus.
+  const [focused, setFocused] = useState(document.hasFocus());
+  // Geometry is visible.
   const [visible, setVisible] = useState(false);
 
   const onVisibilityChange = useCallback(
-    () => setVisible(document.visibilityState === 'visible'),
+    () => {
+      setActive(!document.hidden);
+      setVisible(document.visibilityState === 'visible');
+    },
     [],
   );
 
@@ -108,11 +116,18 @@ export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...re
 
   // Listen once.
   useSafeLayoutEffect(() => {
+    const onFocusChange = (evt: FocusEvent) => setFocused(evt.type === 'focus');
     document.addEventListener('visibilitychange', onVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', onVisibilityChange);
+    window.addEventListener('blur', onFocusChange);
+    window.addEventListener('focus', onFocusChange);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      window.removeEventListener('blur', onFocusChange);
+      window.removeEventListener('focus', onFocusChange);
+    };
   }, []);
 
-  return { ref, visible };
+  return { ref, visible: active && focused && visible };
 }
 
 /**

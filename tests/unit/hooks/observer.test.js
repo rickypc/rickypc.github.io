@@ -211,18 +211,28 @@ describe('useVisibility (Browser)', () => {
   });
 
   it('does nothing if ref.current is falsy, but reacts to visibilitychange', () => {
-    const addSpy = jest.spyOn(document, 'addEventListener');
-    const removeSpy = jest.spyOn(document, 'removeEventListener');
+    const docAddSpy = jest.spyOn(document, 'addEventListener');
+    const docRemoveSpy = jest.spyOn(document, 'removeEventListener');
+    let focusHandler;
+    const winAddSpy = jest.spyOn(window, 'addEventListener').mockImplementation((event, cb) => {
+      if (event === 'focus') {
+        focusHandler = cb;
+      }
+    });
+    const winRemoveSpy = jest.spyOn(window, 'addEventListener');
 
     // Render without passing a ref -> ref.current is undefined.
     const { result, unmount } = renderHook(() => useVisibility());
+    focusHandler(new Event('focus'));
 
     // IntersectionObserver never constructed.
     expect(global.IntersectionObserver).not.toHaveBeenCalled();
     expect(result.current.visible).toBeFalsy();
 
     // visibilitychange listener was added.
-    expect(addSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
+    expect(docAddSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
+    expect(winAddSpy).toHaveBeenCalledWith('blur', expect.any(Function));
+    expect(winAddSpy).toHaveBeenCalledWith('focus', expect.any(Function));
 
     // Simulate page becoming visible.
     spyVisibility.mockReturnValue('visible');
@@ -231,21 +241,34 @@ describe('useVisibility (Browser)', () => {
 
     // On unmount, we remove that listener.
     act(() => unmount());
-    expect(removeSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
+    expect(docRemoveSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
+    expect(winRemoveSpy).toHaveBeenCalledWith('blur', expect.any(Function));
+    expect(winRemoveSpy).toHaveBeenCalledWith('focus', expect.any(Function));
   });
 
   it('observes when ref.current is set and toggles visible on intersections', () => {
-    const addSpy = jest.spyOn(document, 'addEventListener');
+    const docAddSpy = jest.spyOn(document, 'addEventListener');
+    const docRemoveSpy = jest.spyOn(document, 'removeEventListener');
+    let focusHandler;
     const options = { rootMargin: '10px', threshold: 0.25 };
     const span = document.createElement('span');
     // After span assignment.
     const ref = { current: span };
-    const removeSpy = jest.spyOn(document, 'removeEventListener');
+    const winAddSpy = jest.spyOn(window, 'addEventListener').mockImplementation((event, cb) => {
+      if (event === 'focus') {
+        focusHandler = cb;
+      }
+    });
+    const winRemoveSpy = jest.spyOn(window, 'addEventListener');
 
     const { result, unmount } = renderHook(() => useVisibility({ ref, ...options }));
+    focusHandler(new Event('focus'));
 
     // Observer constructed with the same options we passed.
     expect(global.IntersectionObserver).toHaveBeenCalledWith(expect.any(Function), options);
+
+    expect(winAddSpy).toHaveBeenCalledWith('blur', expect.any(Function));
+    expect(winAddSpy).toHaveBeenCalledWith('focus', expect.any(Function));
 
     // And it starts observing our element.
     expect(observeMock).toHaveBeenCalledWith(span);
@@ -260,7 +283,7 @@ describe('useVisibility (Browser)', () => {
     expect(result.current.visible).toBeFalsy();
 
     // Also listens to visibilitychange.
-    expect(addSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
+    expect(docAddSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
     spyVisibility.mockReturnValue('visible');
     act(() => document.dispatchEvent(new Event('visibilitychange')));
     expect(result.current.visible).toBeTruthy();
@@ -268,8 +291,10 @@ describe('useVisibility (Browser)', () => {
     // Cleanup: both removeEventListener and unobserve.
     act(() => unmount());
 
-    expect(removeSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
+    expect(docRemoveSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
     expect(unobserveMock).toHaveBeenCalledWith(span);
+    expect(winRemoveSpy).toHaveBeenCalledWith('blur', expect.any(Function));
+    expect(winRemoveSpy).toHaveBeenCalledWith('focus', expect.any(Function));
   });
 });
 

@@ -49,6 +49,7 @@
 
 .content .story p {
   font-size: 1rem;
+  text-align: justify;
 }
 
 .content .story:last-of-type {

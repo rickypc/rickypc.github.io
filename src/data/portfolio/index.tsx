@@ -464,7 +464,7 @@ export const catalog = [
         },
       },
     ],
-    prefix: 'aircept',
+    prefix: 'airiq',
     tags: [
       'C#',
       'TypeScript',

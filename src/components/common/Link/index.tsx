@@ -49,9 +49,10 @@ export default memo(function Link({
       rel = 'noopener noreferrer';
       target = '_blank';
     } else if (!href.includes('.pdf')) {
-      links.collectLink(href);
-      if (siteConfig.trailingSlash && !href.endsWith('/')) {
-        renderHref = `${href}/`;
+      const { hash, pathname } = new URL(href, siteConfig.url);
+      links.collectLink(pathname);
+      if (siteConfig.trailingSlash && !pathname.endsWith('/')) {
+        renderHref = `${pathname}/${hash}`;
       }
     }
   }

@@ -8,34 +8,19 @@ import { clsx, key } from '@site/src/data/common';
 import { domAnimation, LazyMotion, motion } from 'motion/react';
 import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
-import Image, { type PictureInfo } from '@site/src/components/common/Image';
+import Image from '@site/src/components/common/Image';
 import Link from '@site/src/components/common/Link';
 import { memo, type ReactElement, useCallback } from 'react';
-import { timelines } from '@site/src/data/timeline';
+import { type TimelineProps, timelines } from '@site/src/data/timeline';
 import { useMedia, usePrint } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
-
-export type TimelineProps = {
-  affiliation: {
-    children: string;
-    href?: string;
-    translate?: 'no' | 'yes';
-  };
-  className?: string;
-  description: string;
-  picture: PictureInfo;
-  title: {
-    children: string;
-    href?: string;
-  };
-  year: string;
-};
 
 const Timeline = memo(function Timeline({
   affiliation,
   className,
   description,
   picture,
+  prefix,
   title,
   year,
 }: TimelineProps): ReactElement {
@@ -59,6 +44,7 @@ const Timeline = memo(function Timeline({
       <LazyMotion features={domAnimation}>
         <motion.article
           className={styles.inner}
+          id={prefix}
           initial={{ opacity: [0, 1], scale: [0.85, 1] }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}

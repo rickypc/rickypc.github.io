@@ -4,18 +4,11 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { type ComponentType, memo, type ReactElement } from 'react';
-import { type IconBaseProps } from 'react-icons';
+import { memo, type ReactElement } from 'react';
 import { key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
-import { socials } from '@site/src/data/home';
+import { type SocialProps, socials } from '@site/src/data/home';
 import styles from './styles.module.css';
-
-export type SocialProps = {
-  href?: string;
-  Icon: ComponentType<IconBaseProps & { className?: string }>;
-  title: string;
-};
 
 const Social = memo(function Social({ href, Icon, title }: SocialProps): ReactElement {
   // We can't use a11y here because it will create SEO problem.

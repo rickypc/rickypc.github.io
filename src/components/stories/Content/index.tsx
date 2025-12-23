@@ -10,42 +10,22 @@ import Heart from '@site/src/components/common/Heart';
 import { key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
 import { memo, type ReactElement } from 'react';
-import { stories } from '@site/src/data/stories';
+import { stories, type StoryProps } from '@site/src/data/stories';
 import styles from './styles.module.css';
-
-export type StoryProps = {
-  affiliation: {
-    children: string;
-    href: string;
-    translate?: 'no' | 'yes';
-  };
-  author: {
-    children: string;
-    href: string;
-    translate?: 'no' | 'yes';
-  };
-  content: string;
-  header: {
-    children: string;
-    href?: string;
-  };
-  title: {
-    children: string;
-    href?: string;
-  };
-};
 
 const Story = memo(function Story({
   affiliation,
   author,
   content,
   header,
+  prefix,
   title,
 }: StoryProps): ReactElement {
   return (
     <LazyMotion features={domAnimation}>
       <motion.article
         className={styles.story}
+        id={prefix}
         initial={{ opacity: [0, 1], scale: [0.85, 1] }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}

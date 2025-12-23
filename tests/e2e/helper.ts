@@ -169,14 +169,14 @@ export const hasPrint = async (options: Options) => {
   test.skip(options.browserName !== 'chromium', 'PDF only works in Chromium');
   const search = options.url!.includes('portfolio')
     ? '?docusaurus-data-carousel-play=manual' : '';
-  await options.page!.goto(`${options.url}${search}`, { waitUntil: 'load' });
+  await options.page!.goto(`${options.url}${search}`, { waitUntil: 'networkidle' });
   await options.page!.evaluate(() => window
     .dispatchEvent(new Event('beforeprint')));
   const last = options.page!.locator('picture > img').last();
   if (await last.count() > 0) {
     await last.scrollIntoViewIfNeeded();
     await options.page!.evaluate(async () => new Promise((resolve) => {
-      setTimeout(() => requestAnimationFrame(resolve), 450);
+      setTimeout(() => requestAnimationFrame(resolve), 500);
     }));
   }
   const pdf = await options.page!.pdf({

@@ -7,8 +7,25 @@
 /* eslint-disable global-require */
 
 import { type LayoutProps } from '@site/src/components/common/Layout';
+import { type PictureInfo } from '@site/src/components/common/Image';
 import { type PreambleProps } from '@site/src/components/common/Preamble';
-import { type TimelineProps } from '@site/src/components/timeline/Content';
+
+export type TimelineProps = {
+  affiliation: {
+    children: string;
+    href?: string;
+    translate?: 'no' | 'yes';
+  };
+  className?: string;
+  description: string;
+  picture: PictureInfo;
+  prefix: string;
+  title: {
+    children: string;
+    href?: string;
+  };
+  year: string;
+};
 
 export const layout: LayoutProps = {
   description: 'Milestones in Ricky Huang\'s journey - from architecture to engineering, startups to global impact, and everything in between.',
@@ -64,11 +81,12 @@ export const timelines: TimelineProps[] = [
       fallback: require('@site/src/pages/timeline/img/experian.jpg'),
       webp: require('@site/src/pages/timeline/img/experian.webp').default,
     },
+    prefix: 'experian',
     title: {
-      children: 'Senior Software Engineer',
+      children: 'Principal-Level Senior Software Engineer',
       href: 'https://en.wikipedia.org/wiki/Software_engineering',
     },
-    year: '2017 - Current',
+    year: '2017 - Present',
   },
   {
     affiliation: {
@@ -82,6 +100,7 @@ export const timelines: TimelineProps[] = [
       fallback: require('@site/src/pages/timeline/img/stanford.jpg'),
       webp: require('@site/src/pages/timeline/img/stanford.webp').default,
     },
+    prefix: 'stanford',
     title: {
       children: 'Advanced Studies, Data Science',
       href: 'https://online.stanford.edu/explore',
@@ -100,6 +119,7 @@ export const timelines: TimelineProps[] = [
       fallback: require('@site/src/pages/timeline/img/experian.jpg'),
       webp: require('@site/src/pages/timeline/img/experian.webp').default,
     },
+    prefix: 'experian-automation',
     title: {
       children: 'Senior Automation Engineer',
       href: 'https://en.wikipedia.org/wiki/Automation_engineering',
@@ -118,6 +138,7 @@ export const timelines: TimelineProps[] = [
       fallback: require('@site/src/pages/timeline/img/csuf.jpg'),
       webp: require('@site/src/pages/timeline/img/csuf.webp').default,
     },
+    prefix: 'calstate-fullerton',
     title: {
       children: 'Master of Science, Software Engineering',
       href: 'https://www.fullerton.edu/ecs/mse/about/',
@@ -136,6 +157,7 @@ export const timelines: TimelineProps[] = [
       fallback: require('@site/src/pages/timeline/img/cheetahmail.jpg'),
       webp: require('@site/src/pages/timeline/img/cheetahmail.webp').default,
     },
+    prefix: 'cheetahmail',
     title: {
       children: 'Software Development Lead',
       href: 'https://en.wikipedia.org/wiki/Software_development',
@@ -154,6 +176,7 @@ export const timelines: TimelineProps[] = [
       fallback: require('@site/src/pages/timeline/img/airiq.jpg'),
       webp: require('@site/src/pages/timeline/img/airiq.webp').default,
     },
+    prefix: 'airiq',
     title: {
       children: 'Software Engineer',
       href: 'https://en.wikipedia.org/wiki/Software_engineering',
@@ -172,6 +195,7 @@ export const timelines: TimelineProps[] = [
       fallback: require('@site/src/pages/timeline/img/razorgator.jpg'),
       webp: require('@site/src/pages/timeline/img/razorgator.webp').default,
     },
+    prefix: 'razorgator',
     title: {
       children: 'Web Developer',
       href: 'https://en.wikipedia.org/wiki/Web_developer',
@@ -190,6 +214,7 @@ export const timelines: TimelineProps[] = [
       fallback: require('@site/src/pages/timeline/img/petra.jpg'),
       webp: require('@site/src/pages/timeline/img/petra.webp').default,
     },
+    prefix: 'petra',
     title: {
       children: 'Bachelor of Engineering, Architecture',
       href: 'https://architecture.petra.ac.id/?lang=en',
@@ -208,6 +233,7 @@ export const timelines: TimelineProps[] = [
       fallback: require('@site/src/pages/timeline/img/self.jpg'),
       webp: require('@site/src/pages/timeline/img/self.webp').default,
     },
+    prefix: 'self-employed',
     title: {
       children: 'Independent Professional',
       href: 'https://en.wikipedia.org/wiki/Entrepreneurship',

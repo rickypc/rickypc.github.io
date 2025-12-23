@@ -6,7 +6,30 @@
 
 import { type LayoutProps } from '@site/src/components/common/Layout';
 import { type PreambleProps } from '@site/src/components/common/Preamble';
-import { type StoryProps } from '@site/src/components/stories/Content';
+
+export type StoryProps = {
+  affiliation: {
+    children: string;
+    href: string;
+    translate?: 'no' | 'yes';
+  };
+  author: {
+    children: string;
+    href: string;
+    translate?: 'no' | 'yes';
+  };
+  content: string;
+  header: {
+    children: string;
+    href?: string;
+  };
+  overview: string;
+  prefix: string;
+  title: {
+    children: string;
+    href?: string;
+  };
+};
 
 export const layout: LayoutProps = {
   description: 'Stories and lessons from Ricky Huang\'s journey as a full stack developer and leader - highlighting impact, growth, collaboration, and trust.',
@@ -65,6 +88,8 @@ export const stories: StoryProps[] = [
       children: 'The Invested Partner',
       href: undefined,
     },
+    overview: 'An invested partner - delivers clean, expertly crafted solutions.',
+    prefix: 'invested-partner',
     title: {
       children: 'Creative Director, Chief Strategist',
       href: 'https://en.wikipedia.org/wiki/Strategist',
@@ -86,6 +111,8 @@ export const stories: StoryProps[] = [
       children: 'The Master of Many Trades',
       href: undefined,
     },
+    overview: 'A master of many trades - client-side, server-side, every-side - and one of the kindest people you\'ll meet.',
+    prefix: 'master-of-many-trades',
     title: {
       children: 'Director, Technical Services',
       href: undefined,
@@ -107,6 +134,8 @@ export const stories: StoryProps[] = [
       children: 'The Problem-Solving Savior',
       href: 'https://en.wikipedia.org/wiki/Savior',
     },
+    overview: 'A problem-solving savior who rescues complex projects with clean, flexible, timely implementations.',
+    prefix: 'problem-solving-savior',
     title: {
       children: 'Senior Data Engineer',
       href: 'https://en.wikipedia.org/wiki/Data_engineering',
@@ -128,6 +157,8 @@ export const stories: StoryProps[] = [
       children: 'The Versatile Polymath',
       href: 'https://en.wikipedia.org/wiki/Polymath',
     },
+    overview: 'A versatile polymath with deep knowledge, attention to detail, and unwavering dedication.',
+    prefix: 'versatile-polymath',
     title: {
       children: 'Senior Developer',
       href: 'https://en.wikipedia.org/wiki/Software_development',

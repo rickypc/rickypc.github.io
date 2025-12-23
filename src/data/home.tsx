@@ -10,9 +10,14 @@ import { GenIcon } from 'react-icons/lib';
 import { type IconBaseProps } from 'react-icons';
 import { type LayoutProps } from '@site/src/components/common/Layout';
 import Link from '@site/src/components/common/Link';
-import { type ReactElement } from 'react';
+import { type ComponentType, type ReactElement } from 'react';
 import Reveal from '@site/src/components/common/Reveal';
-import { type SocialProps } from '@site/src/components/home/Socials';
+
+export type SocialProps = {
+  href?: string;
+  Icon: ComponentType<IconBaseProps & { className?: string }>;
+  title: string;
+};
 
 /**
  * Renders the `Github` icon.

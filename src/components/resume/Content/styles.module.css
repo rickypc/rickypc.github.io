@@ -1,0 +1,114 @@
+/*!
+ * All the code that follow is
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
+ * All Rights Reserved. Not for reuse without permission.
+ */
+
+.block:last-of-type {
+  margin-bottom: 3rem;
+}
+
+.block .col {
+  line-height: 1.5;
+  padding: 0 6rem;
+}
+
+.block .col h1,
+.block .col h2,
+.block .col h3 {
+  font-weight: 700;
+  margin: 2rem 0 0.5rem 0;
+}
+
+.block .col h1 {
+  font-size: 2rem;
+}
+
+.block .col h2 {
+  font-size: 1.4rem;
+}
+
+.block .col h3 {
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+}
+
+.block .col p {
+  margin: 0;
+  text-align: justify;
+}
+
+.block .col ul {
+  margin: 0;
+  padding: 0 0 0 1.5rem;
+}
+
+.block.header .col p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.block.experiences .col article {
+  margin: 0 0 0.5rem 1.25rem;
+  text-align: justify;
+}
+
+.block.experiences .col ul {
+  margin-left: 1.25rem;
+}
+
+@media print {
+  .block,
+  .block.header {
+    margin-top: 0;
+  }
+
+  .block:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .block .col {
+    line-height: 1;
+    padding: 0;
+  }
+
+  .block .col a,
+  .block .col article,
+  .block .col article em,
+  .block .col li,
+  .block .col li strong,
+  .block .col p {
+    font-size: 0.85rem;
+    opacity: 1;
+  }
+
+  .block .col a {
+    color: #000;
+  }
+
+  .block.header .col h1 {
+    margin: 0rem 0 0.15rem 0;
+  }
+
+  .block.header .col h1 a {
+    font-size: 1.25rem;
+  }
+
+  .block .col h2 {
+    font-size: 1rem;
+    margin: 0.5rem 0 0.15rem 0;
+  }
+
+  .block .col h3 {
+    font-size: 0.9rem;
+    margin: 0.35rem 0 0.15rem 0;
+  }
+
+  .block.experiences .col article {
+    margin: 0 0 0.25rem 0.75rem;
+  }
+
+  .block.experiences .col ul {
+    margin-left: 0.5rem;
+  }
+}

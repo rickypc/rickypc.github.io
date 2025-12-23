@@ -38,8 +38,8 @@ test.describe.serial('shared page tests', () => {
   // eslint-disable-next-line no-empty-pattern
   test('has active navigation', async ({}, testInfo) => hasActiveNavigation({ name: 'Timeline', page, testInfo }));
 
-  test('has 8 events', async () => {
-    await band(8, async (index) => {
+  test('has 9 events', async () => {
+    await band(9, async (index) => {
       const nth = index + 1;
       // [class] can contain multiple classes, timeline_ may not be the first.
       expect(await page.textContent(`main section [class*='timeline_']:nth-of-type(${nth}) article`))

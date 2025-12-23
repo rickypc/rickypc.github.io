@@ -73,6 +73,7 @@ const Project = memo(function Project({
   return (
     <motion.article
       className={styles.portfolio}
+      id={prefix}
       layout
       onLayoutAnimationComplete={() => carousel.current?.setPaused(false)}
       onLayoutAnimationStart={() => carousel.current?.setPaused(true)}

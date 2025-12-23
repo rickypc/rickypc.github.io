@@ -10,9 +10,7 @@ const { defineConfig, devices } = require('@playwright/test');
 const viewport = { height: 1080, width: 1920 };
 
 module.exports = defineConfig({
-  expect: {
-    timeout: 25000,
-  },
+  expect: { timeout: 5000 },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   fullyParallel: true,

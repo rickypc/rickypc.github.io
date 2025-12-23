@@ -76,6 +76,7 @@ const config: Config = {
           { label: 'Portfolio', position: 'left', to: 'portfolio' },
           { label: 'Timeline', position: 'left', to: 'timeline' },
           { label: 'Stories', position: 'left', to: 'stories' },
+          { label: 'Resume', position: 'left', to: 'resume' },
           // Right.
           {
             'aria-label': 'Translate',

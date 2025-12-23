@@ -33,7 +33,12 @@ describe('Link', () => {
     });
 
     it('renders trailing slashed internal link without rel/target and calls collectLink', () => {
-      (useDocusaurusContext as jest.Mock).mockReturnValue({ siteConfig: { trailingSlash: true } });
+      (useDocusaurusContext as jest.Mock).mockReturnValue({
+        siteConfig: {
+          trailingSlash: true,
+          url: 'https://domain.test',
+        },
+      });
       render((
         <Link className="int" href="/docs/intro" title="internal">
           Internal
@@ -47,7 +52,12 @@ describe('Link', () => {
     });
 
     it('renders non-trailing slashed internal link without rel/target and calls collectLink', () => {
-      (useDocusaurusContext as jest.Mock).mockReturnValue({ siteConfig: { trailingSlash: false } });
+      (useDocusaurusContext as jest.Mock).mockReturnValue({
+        siteConfig: {
+          trailingSlash: false,
+          url: 'https://domain.test',
+        },
+      });
       render((
         <Link className="int" href="/docs/intro" title="internal">
           Internal

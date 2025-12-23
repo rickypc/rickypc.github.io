@@ -84,9 +84,9 @@ export function useSpeech() {
 // eslint-disable-next-line react-hooks/rules-of-hooks
 export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...rest } = {}) {
   // Page is active.
-  const [active, setActive] = useState(!document.hidden);
+  const [active, setActive] = useState(true);
   // Window has focus.
-  const [focused, setFocused] = useState(document.hasFocus());
+  const [focused, setFocused] = useState(false);
   // Geometry is visible.
   const [visible, setVisible] = useState(false);
 
@@ -116,6 +116,9 @@ export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...re
 
   // Listen once.
   useSafeLayoutEffect(() => {
+    // Initial.
+    setActive(!document.hidden);
+    setFocused(document.hasFocus());
     const onFocusChange = (evt: FocusEvent) => setFocused(evt.type === 'focus');
     document.addEventListener('visibilitychange', onVisibilityChange);
     window.addEventListener('blur', onFocusChange);

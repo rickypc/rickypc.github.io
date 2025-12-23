@@ -223,7 +223,7 @@ describe('useVisibility (Browser)', () => {
 
     // Render without passing a ref -> ref.current is undefined.
     const { result, unmount } = renderHook(() => useVisibility());
-    focusHandler(new Event('focus'));
+    act(() => focusHandler(new Event('focus')));
 
     // IntersectionObserver never constructed.
     expect(global.IntersectionObserver).not.toHaveBeenCalled();
@@ -262,7 +262,7 @@ describe('useVisibility (Browser)', () => {
     const winRemoveSpy = jest.spyOn(window, 'addEventListener');
 
     const { result, unmount } = renderHook(() => useVisibility({ ref, ...options }));
-    focusHandler(new Event('focus'));
+    act(() => focusHandler(new Event('focus')));
 
     // Observer constructed with the same options we passed.
     expect(global.IntersectionObserver).toHaveBeenCalledWith(expect.any(Function), options);

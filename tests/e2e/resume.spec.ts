@@ -11,7 +11,6 @@ import {
   type BrowserContext,
   expect,
   hasActiveNavigation,
-  hasHeader,
   hasMetadatas,
   hasNavigations,
   hasPrint,
@@ -21,7 +20,7 @@ import {
   test,
 } from './helper';
 
-const url = '/portfolio';
+const url = '/resume';
 
 test.describe.serial('shared page tests', () => {
   let context: BrowserContext;
@@ -34,15 +33,15 @@ test.describe.serial('shared page tests', () => {
 
   test('has correct URL', async ({ baseURL }) => hasUrl({ baseURL, page, url }));
   test('has correct metadatas', async () => hasMetadatas({ page }));
-  test('has correct header', async () => hasHeader({ page }));
   // eslint-disable-next-line no-empty-pattern
-  test('has active navigation', async ({}, testInfo) => hasActiveNavigation({ name: 'Portfolio', page, testInfo }));
+  test('has active navigation', async ({}, testInfo) => hasActiveNavigation({ name: 'Resume', page, testInfo }));
 
-  test('has 14 portfolios', async () => {
-    await band(14, async (index) => {
+  test('has 9 sections', async () => {
+    await band(9, async (index) => {
       const nth = index + 1;
-      expect(await page.textContent(`main section article:nth-of-type(${nth}) figure figcaption`))
-        .toMatchSnapshot(`portfolio-${nth}.txt`);
+      // [class] can contain multiple classes, timeline_ may not be the first.
+      expect(await page.textContent(`main section[class*='block_']:nth-of-type(${nth})`))
+        .toMatchSnapshot(`section-${nth}.txt`);
     });
   });
 });
@@ -58,7 +57,7 @@ test.describe('isolated tests', () => {
     test(
       `has correct ${theme.toLowerCase()} theme screenshot`,
       async ({ page }, testInfo) => hasScreenshot({
-        page, selector: 'article[class^="portfolio_"]:nth-of-type(12) div[class^="indicators_"]', testInfo, theme, url,
+        page, testInfo, theme, url,
       }),
     );
   });

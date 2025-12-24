@@ -16,7 +16,7 @@ import styles from './index.module.css';
 export default memo(function Home() {
   return (
     <Layout className={styles.home} {...layout}>
-      <header className="row row--no-gutters">
+      <header className="row row--no-gutters" role="banner">
         <div className="col">
           <Greeting />
         </div>

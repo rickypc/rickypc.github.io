@@ -4,7 +4,12 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { type ReactNode } from 'react';
+import {
+  isValidElement,
+  type PropsWithChildren,
+  type ReactElement,
+  type ReactNode,
+} from 'react';
 
 export const a11y = (value?: string, rest = {}) => ({ 'aria-label': value, title: value, ...rest });
 
@@ -146,3 +151,28 @@ const fileName = (path: string, template?: string) => {
 };
 
 export { fileName, key, tail };
+
+/**
+ * Recursively extracts all textual content from a ReactNode.
+ *
+ * This walks through:
+ * - strings and numbers (returned directly)
+ * - arrays of nodes (flattened and concatenated)
+ * - React elements (recursing into their children)
+ * @param {ReactNode} node - Any React node, including elements, arrays,
+ *   fragments, or primitives.
+ * @returns {string} A concatenated string containing all leaf text found
+ *   within the node.
+ */
+export function textContent(node: ReactNode): string {
+  if (['number', 'string'].includes(typeof (node))) {
+    return String(node);
+  }
+  if (Array.isArray(node)) {
+    return node.map(textContent).join(' ');
+  }
+  if (isValidElement(node)) {
+    return textContent((node as ReactElement<PropsWithChildren<{}>>).props.children);
+  }
+  return '';
+}

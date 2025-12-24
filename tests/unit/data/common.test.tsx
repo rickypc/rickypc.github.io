@@ -12,6 +12,7 @@ import {
   fileName,
   key,
   tail,
+  textContent,
 } from '@site/src/data/common';
 
 describe('data.common', () => {
@@ -145,6 +146,79 @@ describe('data.common', () => {
     it('returns the entire path when keyword is at index 0', () => {
       expect(tail('/hello', '/')).toBe('/hello');
       expect(tail('abc', 'a')).toBe('abc');
+    });
+  });
+
+  describe('textContent()', () => {
+    it('returns empty string for null/undefined/boolean', () => {
+      expect(textContent(null)).toBe('');
+      expect(textContent(undefined)).toBe('');
+      expect(textContent(false)).toBe('');
+      expect(textContent(true)).toBe('');
+    });
+
+    it('returns string for primitive text nodes', () => {
+      expect(textContent('hello')).toBe('hello');
+      expect(textContent(123)).toBe('123');
+    });
+
+    it('extracts text from a simple React element', () => {
+      const node = <span>Hello</span>;
+      expect(textContent(node)).toBe('Hello');
+    });
+
+    it('extracts text from nested React elements', () => {
+      const node = (
+        <div>
+          Hello
+          <span>world</span>
+        </div>
+      );
+      expect(textContent(node)).toBe('Hello world');
+    });
+
+    it('extracts text from deeply nested structures', () => {
+      const node = (
+        <>
+          Hello
+          <span>world</span>
+          huh?
+          <div>
+            <span>can</span>
+            <p>confused</p>
+            <ul><li>people</li></ul>
+          </div>
+        </>
+      );
+      expect(textContent(node)).toBe('Hello world huh? can confused people');
+    });
+
+    it('extracts text from arrays of nodes', () => {
+      const node = ['one', <span key="a">two</span>, 'three'];
+      expect(textContent(node)).toBe('one two three');
+    });
+
+    it('ignores non-text nodes gracefully', () => {
+      const node = (
+        <div>
+          {null}
+          {false}
+          <span>ok</span>
+          {undefined}
+        </div>
+      );
+      expect(textContent(node)).toBe('  ok ');
+    });
+
+    it('handles fragments correctly', () => {
+      const node = (
+        <>
+          A
+          <span>B</span>
+          C
+        </>
+      );
+      expect(textContent(node)).toBe('A B C');
     });
   });
 });

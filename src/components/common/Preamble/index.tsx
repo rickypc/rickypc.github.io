@@ -16,7 +16,7 @@ export type PreambleProps = {
 
 export default memo(function Preamble({ description, title }: PreambleProps): ReactElement {
   return (
-    <header className="row">
+    <header aria-label={title} className="row" role="banner">
       <div className={clsx('col', 'col--8', 'col--offset-2', styles.preamble)}>
         <Heading as="h1">{title}</Heading>
         <p>{description}</p>

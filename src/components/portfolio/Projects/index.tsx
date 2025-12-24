@@ -50,9 +50,9 @@ export type ProjectsProps = {
 
 const Tags = memo(function Tags({ prefix, tags }: TagsProps): ReactElement {
   return (
-    <ul className={styles.tags} translate="no">
+    <ul aria-label="Technology Stack" className={styles.tags} translate="no">
       {tags.map((tag) => (
-        <li aria-hidden="true" key={key(`${prefix}-${tag}`, 'tag')}>{tag}</li>
+        <li key={key(`${prefix}-${tag}`, 'tag')}>{tag}</li>
       ))}
     </ul>
   );
@@ -72,6 +72,7 @@ const Project = memo(function Project({
   const carousel = useRef<CarouselHandles>(null);
   return (
     <motion.article
+      aria-label={title}
       className={styles.portfolio}
       id={prefix}
       layout
@@ -87,6 +88,7 @@ const Project = memo(function Project({
             open,
             prefix,
             ref: carousel,
+            title,
           }}
         />
         <figcaption>

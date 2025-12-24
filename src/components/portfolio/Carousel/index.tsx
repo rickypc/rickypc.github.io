@@ -35,6 +35,7 @@ export type CarouselProps = {
   open?: ImageProps;
   prefix: string;
   ref?: Ref<CarouselHandles>;
+  title?: string;
 };
 
 type IndicatorsProps = {
@@ -158,6 +159,7 @@ const Previous = memo(function Previous({
 const Slide = memo(function Slide({ image, live, onClick }: SlideProps): ReactElement {
   return (
     <div
+      aria-label={image.alt}
       className={styles.slide}
       onClick={onClick}
       onKeyDown={onClick}
@@ -239,6 +241,7 @@ export default memo(function Carousel({
   open,
   prefix,
   ref,
+  title,
 }: CarouselProps) {
   const [active, setActive] = useState(0);
   const opened = typeof (open?.picture) === 'object';
@@ -274,6 +277,7 @@ export default memo(function Carousel({
     <div className={styles.carousel}>
       <div
         {...{
+          'aria-label': title,
           className: styles.viewport,
           onMouseEnter,
           onMouseLeave,

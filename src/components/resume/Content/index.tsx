@@ -4,7 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { clsx } from '@site/src/data/common';
+import { clsx, textContent } from '@site/src/data/common';
 import {
   catalogMap,
   certifications,
@@ -33,6 +33,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './styles.module.css';
 
 type BlockProps = {
+  as?: 'header' | 'section';
   className?: string;
   heading: HeadingProps;
 };
@@ -45,17 +46,19 @@ type ExperienceProps = {
 };
 
 const Block = memo(function Block({
+  as: As = 'section',
   children,
   className,
   heading,
 }: PropsWithChildren<BlockProps>): ReactElement {
+  const role = As === 'header' ? 'banner' : undefined;
   return (
-    <section className={clsx(className, 'row', styles.block)}>
+    <As aria-label={textContent(heading.children)} className={clsx(className, 'row', styles.block)} role={role}>
       <div className={clsx('col', styles.col, 'col--10', 'col--offset-1')}>
         <Heading {...heading}>{heading.children}</Heading>
         {children}
       </div>
-    </section>
+    </As>
   );
 });
 
@@ -95,7 +98,7 @@ const Educations = memo(function Educations() {
 
 const Experience = memo(function Experience({ summary }: ExperienceProps) {
   return (
-    <article>
+    <article aria-label={catalogMap[summary.key].title}>
       <strong>
         <Link href={`/portfolio#${summary.key}`} title={`Visit ${catalogMap[summary.key].title} portfolio`}>
           {catalogMap[summary.key].title}
@@ -136,7 +139,7 @@ const Experiences = memo(function Experiences() {
 const Header = memo(function Header({ siteConfig }: HeaderProps) {
   const props = header({ siteConfig });
   return (
-    <Block className={styles.header} heading={props.heading}>
+    <Block as="header" className={styles.header} heading={props.heading}>
       <p>{props.roles}</p>
       <p>{props.contacts}</p>
     </Block>

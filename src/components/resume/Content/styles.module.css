@@ -4,7 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-.block:last-of-type {
+section.block:last-of-type {
   margin-bottom: 3rem;
 }
 

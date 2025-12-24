@@ -24,6 +24,7 @@ const Story = memo(function Story({
   return (
     <LazyMotion features={domAnimation}>
       <motion.article
+        aria-label={header.children}
         className={styles.story}
         id={prefix}
         initial={{ opacity: [0, 1], scale: [0.85, 1] }}

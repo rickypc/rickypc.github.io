@@ -43,6 +43,7 @@ const Timeline = memo(function Timeline({
       />
       <LazyMotion features={domAnimation}>
         <motion.article
+          aria-label={`${title.children} - ${affiliation.children} (${year.replace(/\s+/g, '')})`}
           className={styles.inner}
           id={prefix}
           initial={{ opacity: [0, 1], scale: [0.85, 1] }}

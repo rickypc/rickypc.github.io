@@ -77,7 +77,7 @@ describe('portfolio.Projects', () => {
       expect(tagItems).toHaveLength(proj.tags.length);
       proj.tags.forEach((tag, i) => {
         // eslint-disable-next-line security/detect-object-injection
-        expect(tagItems?.[i]).toHaveAttribute('aria-hidden', 'true');
+        expect(tagItems?.[i]).not.toHaveAttribute('aria-hidden');
         // eslint-disable-next-line security/detect-object-injection
         expect(tagItems?.[i]).toHaveTextContent(tag);
       });

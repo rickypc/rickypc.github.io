@@ -26,7 +26,7 @@ const Hat = memo(function Hat({
   label,
 }: PropsWithChildren<HatProps>): ReactElement {
   return (
-    <article className={styles.hat}>
+    <article aria-label={label} className={styles.hat}>
       <Heading as="h2">
         <span className={styles.reader}>
           {label}

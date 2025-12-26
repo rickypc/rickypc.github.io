@@ -13,6 +13,6 @@ import { type PropsWithChildren, type ReactElement } from 'react';
  * @returns {ReactElement}
  *   The about/Oracle component.
  */
-export default function AboutOracle({ children, ...rest }: PropsWithChildren<{}>): ReactElement {
+export default function AboutOracle({ children, ...rest }: PropsWithChildren): ReactElement {
   return <div data-testid="oracle" {...rest}>{children}</div>;
 }

@@ -13,6 +13,6 @@ import { type PropsWithChildren, type ReactElement } from 'react';
  * @returns {ReactElement}
  *   The about/Figure component.
  */
-export default function AboutFigure({ children, ...rest }: PropsWithChildren<{}>): ReactElement {
+export default function AboutFigure({ children, ...rest }: PropsWithChildren): ReactElement {
   return <div data-testid="figure" {...rest}>{children}</div>;
 }

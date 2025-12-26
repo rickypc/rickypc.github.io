@@ -8,15 +8,15 @@ import { memo, type PropsWithChildren, type ReactElement } from 'react';
 import PhraseBlock from '@site/src/components/common/PhraseBlock';
 
 export type MultiLingualProps = {
-  chinese?: PropsWithChildren<{}>;
+  chinese?: PropsWithChildren;
   pali?: PropsWithChildren<{
-    sinhala?: PropsWithChildren<{}>;
+    sinhala?: PropsWithChildren;
   }>;
   sanskrit?: PropsWithChildren<{
-    siddham?: PropsWithChildren<{}>;
+    siddham?: PropsWithChildren;
   }>;
-  thai?: PropsWithChildren<{}>;
-  tibetan?: PropsWithChildren<{}>;
+  thai?: PropsWithChildren;
+  tibetan?: PropsWithChildren;
   transliteration?: Transliteration;
 };
 

@@ -16,6 +16,6 @@ import { type PropsWithChildren, type ReactElement } from 'react';
 export default function PortfolioCarousel({
   children,
   ...rest
-}: PropsWithChildren<{}>): ReactElement {
+}: PropsWithChildren): ReactElement {
   return <div data-testid="carousel" {...rest}>{children}</div>;
 }

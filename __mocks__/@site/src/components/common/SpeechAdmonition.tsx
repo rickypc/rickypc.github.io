@@ -16,6 +16,6 @@ import { type PropsWithChildren, type ReactElement } from 'react';
 export default function SpeechAdmonition({
   children,
   ...rest
-}: PropsWithChildren<{}>): ReactElement {
+}: PropsWithChildren): ReactElement {
   return <div data-testid="speech-admonition" {...rest}>{children}</div>;
 }

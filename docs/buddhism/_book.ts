@@ -4,13 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-// eslint-disable-next-line import/extensions
-import image from './_image.js';
-
-type Image = {
-  path: string;
-  width: number;
-};
+import image, { type Image } from './_image';
 
 type Page = {
   chapters?: string[];
@@ -27,9 +21,25 @@ type Page = {
 const chapterWidth = 12;
 const coverHeight = 70;
 const coverMargin = (coverHeight / 2) - 5;
-// ((8.5" * 72pt) - (margins + borders)) / 3.
-const height = 187.75;
+
+// Geometric box height:
+//   H_geom = (612                 // page height (8.5" * 72pt)
+//     - (7.5 + 0)                 // page margins (top + bottom)
+//     - (3 * (0.5 + 0.5))         // box borders (3 boxes, top + bottom)
+//     - (2 * (7.5 + 0.25 + 7.5))  // gaps between boxes: margin + guide line + margin
+//   ) / 3                         // 3 boxes
+// Actual box height used (pdfmake page overhead):
+//   H = H_geom - offset           // offset ≈ 2.3333pt
+const height = 188;
 const imageWidth = (height * 0.75) - 18;
+const pageLayout = {
+  hLineWidth: () => 0.5,
+  paddingBottom: () => 0,
+  paddingLeft: () => 5,
+  paddingRight: () => 5,
+  paddingTop: () => 0,
+  vLineWidth: () => 0.5,
+};
 const unalomeWidth = 44.375;
 // After unalomeWidth assignment.
 const unalomeMargin = (unalomeWidth * 2) + 5;
@@ -146,7 +156,7 @@ export default async function book(path: string) {
         ].filter(Boolean),
       },
     },
-    (index % 3 === 2 || index === lastPage) ? null : {
+    (index % 3 === 2 || index === lastPage) ? { canvas: [] } : {
       canvas: [
         {
           lineWidth: 0.25,
@@ -201,23 +211,11 @@ export default async function book(path: string) {
     options: {
       tableLayouts: {
         empty: {
+          ...pageLayout,
           hLineColor: () => '#ffffff',
-          hLineWidth: () => 0.5,
-          paddingBottom: () => 0,
-          paddingLeft: () => 5,
-          paddingRight: () => 5,
-          paddingTop: () => 0,
           vLineColor: () => '#ffffff',
-          vLineWidth: () => 0.5,
         },
-        page: {
-          hLineWidth: () => 0.5,
-          paddingBottom: () => 0,
-          paddingLeft: () => 5,
-          paddingRight: () => 5,
-          paddingTop: () => 0,
-          vLineWidth: () => 0.5,
-        },
+        page: pageLayout,
       },
     },
   };

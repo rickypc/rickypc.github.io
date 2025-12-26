@@ -35,7 +35,7 @@ export default {
     typography: {
       condensed: { default: 1.955, title: 1.655 },
       roll: { default: 5.175, title: 3.175 },
-      wheel: { default: 5.175, title: 3.175 },
+      wheel: { default: 5.079, title: 3.175 },
     },
   },
   transliteration: {

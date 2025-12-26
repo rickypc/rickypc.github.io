@@ -4,16 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { type PropsWithChildren } from 'react';
-
-const body = (phrase: PropsWithChildren, infix: string) => {
-  const group = Array.isArray(phrase.children) ? phrase.children : [phrase.children];
-  const last = group.length - 1;
-  return group.flatMap((words, index) => {
-    const text = `${words?.props?.children ? words.props.children : words}`;
-    return `${text ? `${text}${index !== last ? infix : ''}` : ''}`;
-  }).join('\n');
-};
+import { body } from './_common';
 
 /**
  * Generates a pdfMake object for `thangka backside mantra`.

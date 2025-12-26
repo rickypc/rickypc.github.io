@@ -4,8 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-// eslint-disable-next-line import/extensions
-const image = require('./_image.js');
+import image from './_image';
 
 const width = 155.4;
 

@@ -101,7 +101,7 @@ export const listeners: { [key: string]: unknown } = {};
 
 export const motion = {
   // eslint-disable-next-line @docusaurus/no-html-links
-  a: ({ children, ...props }: PropsWithChildren<{}>) => <a {...props}>{children}</a>,
+  a: ({ children, ...props }: PropsWithChildren) => <a {...props}>{children}</a>,
   article: ({
     children,
     className,

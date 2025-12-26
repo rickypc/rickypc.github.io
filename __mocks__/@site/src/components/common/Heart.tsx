@@ -13,6 +13,6 @@ import { type PropsWithChildren, type ReactElement } from 'react';
  * @returns {ReactElement}
  *   The common/Heart component.
  */
-export default function Heart({ children, ...rest }: PropsWithChildren<{}>): ReactElement {
+export default function Heart({ children, ...rest }: PropsWithChildren): ReactElement {
   return <div data-testid="heart" {...rest}>{children}</div>;
 }

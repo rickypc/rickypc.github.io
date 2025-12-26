@@ -13,6 +13,6 @@ import { type PropsWithChildren, type ReactElement } from 'react';
  * @returns {ReactElement}
  *   The common/Layout component.
  */
-export default function Layout({ children, ...rest }: PropsWithChildren<{}>): ReactElement {
+export default function Layout({ children, ...rest }: PropsWithChildren): ReactElement {
   return <div data-testid="layout" {...rest}>{children}</div>;
 }

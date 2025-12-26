@@ -4,48 +4,12 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const body = (phrase) => {
-  const group = Array.isArray(phrase.children) ? phrase.children : [phrase.children];
-  const last = group.length - 1;
-  return group.flatMap((words, index) => {
-    const text = `${words?.props?.children ? words.props.children : words}`;
-    return `${text ? `${text}${index !== last ? '।' : ''}` : ''}`;
-  }).join('\n');
-};
-
-const instruction = (direction) => ({
-  text: [
-    ...((Array.isArray(direction) ? direction : [direction])
-      .map((text) => (typeof (text) === 'string' ? { style: 'instruction', text } : text))),
-  ],
-});
-
-// After instruction assignment.
-const header = (title, direction = '') => (direction?.length ? {
-  style: 'section-set',
-  text: [{ style: 'section', text: title }, instruction(direction)],
-} : { style: ['section', 'section-set'], text: title });
-
-const main = (sanskrit, transliteration, repetition = 0) => ([
-  { style: 'sanskrit', text: sanskrit },
-  repetition ? {
-    style: 'phrase-set',
-    text: [
-      { style: 'phrase', text: transliteration },
-      { style: 'repetition', text: ` [${repetition}x]` },
-    ],
-  } : { style: ['phrase', 'phrase-set'], text: transliteration },
-]);
-
-const phrase = (path, direction = '', repetition = 0, title = '') => {
-  /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  const { default: { sanskrit, translation, transliteration } } = require(path);
-  /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  return [
-    header(title || `${transliteration.title}${translation?.title ? ` [${translation.title}]` : ''}`, direction),
-    ...main(`${body(sanskrit)}॥`, `${body(transliteration)}॥`, repetition || transliteration.repetition),
-  ];
-};
+import {
+  header,
+  instruction,
+  main,
+  phrase,
+} from './_common';
 
 export default {
   pages: [

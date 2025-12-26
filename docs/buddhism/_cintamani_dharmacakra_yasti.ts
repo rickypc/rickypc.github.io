@@ -4,8 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-// eslint-disable-next-line import/extensions
-const { body } = require('./_strip.js');
+import { body } from './_strip';
 
 // ((page height - (margins + borders)) / 6) - paddings.
 const height = 79.25;
@@ -69,7 +68,7 @@ export default async function cintamaniDharmacakraYasti() {
                 {
                   text: [
                     { fontSize: 4, text: `${repeat}x ` },
-                    body(infix, repeat! - 1, prefix, repeat, suffix, text),
+                    body(infix, repeat! - 1, prefix, repeat!, suffix, text),
                   ],
                 },
               ];

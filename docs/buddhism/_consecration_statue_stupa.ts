@@ -4,71 +4,12 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-const body = (phrase) => {
-  const group = Array.isArray(phrase.children) ? phrase.children : [phrase.children];
-  const last = group.length - 1;
-  return group.flatMap((words, index) => {
-    const text = `${words?.props?.children ? words.props.children : words}`;
-    return `${text ? `${text}${index !== last ? '।' : ''}` : ''}`;
-  }).join('\n');
-};
-
-const instruction = (direction) => ({
-  text: [
-    ...((Array.isArray(direction) ? direction : [direction])
-      .map((text) => (typeof (text) === 'string' ? { style: 'instruction', text } : text))),
-  ],
-});
-
-// After instruction assignment.
-const header = (title, direction = '') => (direction?.length ? {
-  style: 'section-set',
-  text: [{ style: 'section', text: title }, instruction(direction)],
-} : { style: ['section', 'section-set'], text: title });
-
-const main = (sanskrit, transliteration, repetition = 0) => ([
-  { style: 'sanskrit', text: sanskrit },
-  repetition ? {
-    style: 'phrase-set',
-    text: [
-      { style: 'phrase', text: transliteration },
-      { style: 'repetition', text: ` [${repetition}x]` },
-    ],
-  } : { style: ['phrase', 'phrase-set'], text: transliteration },
-]);
-
-const phrase = (path, direction = '', repetition = 0, title = '') => {
-  /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  const { default: { sanskrit, translation, transliteration } } = require(path);
-  /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  return [
-    header(title || `${transliteration.title}${translation?.title ? ` [${translation.title}]` : ''}`, direction),
-    ...main(`${body(sanskrit)}॥`, `${body(transliteration)}॥`, repetition || transliteration.repetition),
-  ];
-};
-
-const phrases = (path, direction = '', repetition = 0, title = '') => {
-  /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  const { default: { sanskrit, translation, transliteration } } = require(path);
-  /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  return [
-    [
-      header(title || `${transliteration.title}${translation?.title ? ` [${translation.title}]` : ''}`, direction),
-      ...main(
-        `${body({ children: sanskrit.children.slice(0, sanskrit.children.indexOf('')) })}।`,
-        `${body({ children: transliteration.children.slice(0, transliteration.children.indexOf('')) })}।`,
-      ),
-    ],
-    [
-      header(title || `${transliteration.title}${translation?.title ? ` [${translation.title}]` : ''}`, ' (continued)'),
-      ...main(
-        `${body({ children: sanskrit.children.slice(sanskrit.children.indexOf('') + 1) })}॥`,
-        `${body({ children: transliteration.children.slice(transliteration.children.indexOf('') + 1) })}॥`,
-        repetition || transliteration.repetition,
-      ),
-    ],
-  ];
-};
+import {
+  header,
+  main,
+  phrase,
+  phrases,
+} from './_common';
 
 const pratityasamutpadaSamudayaNirodha = phrases('#buddhism/phrases/_pratityasamutpada_samudaya_nirodha.js');
 

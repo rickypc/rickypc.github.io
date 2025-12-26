@@ -13,6 +13,6 @@ import { type PropsWithChildren, type ReactElement } from 'react';
  * @returns {ReactElement}
  *   The common/Reveal component.
  */
-export default function Reveal({ children, ...rest }: PropsWithChildren<{}>): ReactElement {
+export default function Reveal({ children, ...rest }: PropsWithChildren): ReactElement {
   return <div data-testid="reveal" {...rest}>{children}</div>;
 }

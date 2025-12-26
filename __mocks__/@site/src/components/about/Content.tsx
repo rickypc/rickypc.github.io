@@ -13,6 +13,6 @@ import { type PropsWithChildren, type ReactElement } from 'react';
  * @returns {ReactElement}
  *   The about/Content component.
  */
-export default function AboutContent({ children, ...rest }: PropsWithChildren<{}>): ReactElement {
+export default function AboutContent({ children, ...rest }: PropsWithChildren): ReactElement {
   return <div data-testid="content" {...rest}>{children}</div>;
 }

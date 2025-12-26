@@ -4,7 +4,18 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-export const body = (infix, lastPhrase, prefix, repeat, suffix, text) => ({
+import { type PropsWithChildren, type ReactElement } from 'react';
+
+export type Substance = string | string[];
+
+export const body = (
+  infix: string,
+  lastPhrase: number,
+  prefix: string,
+  repeat: number,
+  suffix: string,
+  text: Substance,
+) => ({
   text: (Array.isArray(text) ? text : [text]).flatMap((phrase, index) => [
     { style: 'prefix', text: index === 0 ? prefix : ` ${prefix}` },
     {
@@ -20,5 +31,7 @@ export const body = (infix, lastPhrase, prefix, repeat, suffix, text) => ({
   ]),
 });
 
-export const substance = (children) => (Array.isArray(children) || typeof (children) === 'string'
-  ? children : children?.props?.children);
+export const substance = ({ children }: PropsWithChildren): Substance => (
+  Array.isArray(children) || typeof (children) === 'string'
+    ? children : (children as ReactElement<{ children: Substance }>)?.props?.children
+);

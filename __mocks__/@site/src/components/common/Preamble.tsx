@@ -13,7 +13,7 @@ import { type PropsWithChildren, type ReactElement } from 'react';
  * @returns {ReactElement}
  *   The common/Preamble component.
  */
-export default function Preamble({ children, ...rest }: PropsWithChildren<{}>): ReactElement {
+export default function Preamble({ children, ...rest }: PropsWithChildren): ReactElement {
   return (
     <div data-testid="preamble" {...rest}>
       {children}

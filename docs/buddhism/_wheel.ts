@@ -5,8 +5,7 @@
  */
 
 import { type PropsWithChildren } from 'react';
-// eslint-disable-next-line import/extensions
-import { body, substance } from './_strip.js';
+import { body, type Substance, substance } from './_strip';
 
 type Language = {
   repeat: Repeat;
@@ -62,8 +61,15 @@ export default function wheel(path: string) {
   }: Languages = require(path);
   /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   let fontSizes = { default: 6, title: 4 };
-  // ((page height - (margins + borders)) / 6) - paddings.
-  const height = 77.5;
+  // Geometric box height:
+  //   H_geom = (612                 // page height (8.5" * 72pt)
+  //     - (7.5 + 0)                 // page margins (top + bottom)
+  //     - (6 * (1 + 1))             // box borders (6 boxes, top + bottom)
+  //     - (5 * (7.5 + 0.25 + 7.5))  // gaps between boxes: margin + guide line + margin
+  //   ) / 6                         // 6 boxes
+  // Actual box height used (pdfmake page overhead):
+  //   H = H_geom - offset           // offset ≈ 2.2916pt
+  let height = 83.75;
   let infix = '|';
   const lastRoll = total - 1;
   let lineHeight = 0.71;
@@ -74,9 +80,8 @@ export default function wheel(path: string) {
   let prefixFont = 'NotoSerifDevanagari';
   let repeat: Repeat = {};
   let rollFont = 'NotoSans';
-  const rowHeight = height / 3;
   let suffix = '||';
-  let text = '';
+  let text: Substance = '';
 
   switch (lang) {
     case 'bo-CN':
@@ -90,10 +95,12 @@ export default function wheel(path: string) {
       repeat = tibetan?.repeat;
       rollFont = 'Kokonor';
       suffix = '༎';
-      text = substance(tibetan?.children);
+      text = substance(tibetan);
       break;
     case 'sa-IN':
       fontSizes = sanskrit?.typography?.wheel || fontSizes;
+      // height - padding delta.
+      height = 83.175;
       infix = '।';
       lineHeight = 0.81;
       paddingBottom = 0.825;
@@ -101,13 +108,16 @@ export default function wheel(path: string) {
       repeat = sanskrit?.repeat;
       rollFont = 'NotoSerifDevanagari';
       suffix = '॥';
-      text = substance(sanskrit.children);
+      text = substance(sanskrit);
       break;
     default:
       fontSizes = transliteration?.typography?.wheel || fontSizes;
       repeat = transliteration?.repeat;
-      text = substance(transliteration.children);
+      text = substance(transliteration);
   }
+  // After height & paddings re-assignment.
+  // paddings + border + offset (0.0125).
+  const rowHeight = ((height - ((paddingBottom + paddingTop + 1 + 0.0125) * 2)) / 3);
 
   const content = Array.from({ length: total }, (_total, index) => {
     const table: Table = {};
@@ -146,11 +156,11 @@ export default function wheel(path: string) {
         ],
       ];
       table.dontBreakRows = true;
-      table.heights = [82.5];
+      table.heights = [height];
     }
     return [
       { layout: 'roll', margin: [0, 0, 0, index === lastRoll ? 0 : 7.5], table },
-      index === lastRoll ? null : {
+      index === lastRoll ? { canvas: [] } : {
         canvas: [
           {
             lineWidth: 0.25,

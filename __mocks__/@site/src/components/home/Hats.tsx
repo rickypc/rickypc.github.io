@@ -13,6 +13,6 @@ import { type PropsWithChildren, type ReactElement } from 'react';
  * @returns {ReactElement}
  *   The home/Hats component.
  */
-export default function HomeHats({ children, ...rest }: PropsWithChildren<{}>): ReactElement {
+export default function HomeHats({ children, ...rest }: PropsWithChildren): ReactElement {
   return <div data-testid="hats" {...rest}>{children}</div>;
 }

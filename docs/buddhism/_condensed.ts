@@ -4,8 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-// eslint-disable-next-line import/extensions
-import { body, substance } from './_strip.js';
+import { body, type Substance, substance } from './_strip';
 
 /**
  * Generates a pdfMake object for `condensed mantra roll`.
@@ -34,7 +33,7 @@ export default function condensed(path: string) {
   let repeat = 1;
   let rollFont = 'NotoSans';
   let suffix = '||';
-  let text = '';
+  let text: Substance = '';
 
   switch (lang) {
     case 'bo-CN':
@@ -46,7 +45,7 @@ export default function condensed(path: string) {
       repeat = tibetan?.repeat?.condensed || 1;
       rollFont = 'Kokonor';
       suffix = '༎';
-      text = substance(tibetan?.children);
+      text = substance(tibetan);
       break;
     case 'sa-IN':
       fontSizes = sanskrit?.typography?.condensed || fontSizes;
@@ -55,12 +54,12 @@ export default function condensed(path: string) {
       repeat = sanskrit?.repeat?.condensed || 1;
       rollFont = 'NotoSerifDevanagari';
       suffix = '॥';
-      text = substance(sanskrit.children);
+      text = substance(sanskrit);
       break;
     default:
       fontSizes = transliteration?.typography?.condensed || fontSizes;
       repeat = transliteration?.repeat?.condensed || 1;
-      text = substance(transliteration.children);
+      text = substance(transliteration);
   }
 
   const lastPhrase = repeat - 1;
@@ -84,11 +83,18 @@ export default function condensed(path: string) {
           ],
         ],
         dontBreakRows: true,
-        // (page height - (margins + borders)) / 18.
-        heights: [36.7],
+        // Geometric box height:
+        //   H_geom = (792                  // page height (11" * 72pt)
+        //     - (7.5 + 0)                  // page margins (top + bottom)
+        //     - (18 * (0.25 + 0.25))       // box borders (18 boxes, top + bottom)
+        //     - (17 * (2.5 + 0.25 + 2.5))  // gaps between boxes: margin + guide line + margin
+        //   ) / 18                         // 18 boxes
+        // Actual box height used (pdfmake page overhead):
+        //   H = H_geom - offset            // offset ≈ 1.3325pt
+        heights: [36.7925],
       },
     },
-    index === lastRoll ? null : {
+    index === lastRoll ? { canvas: [] } : {
       canvas: [
         {
           lineWidth: 0.25,

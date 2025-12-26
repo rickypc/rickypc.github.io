@@ -10,7 +10,7 @@
     "cli-progress": "3.12.0",
     "fontaine": "0.7.0",
     "motion": "12.23.26",
-    "pdfmake": "0.2.20",
+    "pdfmake": "0.2.21",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-icons": "5.5.0",

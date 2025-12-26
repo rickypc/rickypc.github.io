@@ -172,7 +172,7 @@ export function textContent(node: ReactNode): string {
     return node.map(textContent).join(' ');
   }
   if (isValidElement(node)) {
-    return textContent((node as ReactElement<PropsWithChildren<{}>>).props.children);
+    return textContent((node as ReactElement<PropsWithChildren>).props.children);
   }
   return '';
 }

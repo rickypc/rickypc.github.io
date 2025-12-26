@@ -166,9 +166,9 @@ describe(`plugins.${name}`, () => {
     const siteDir = '/root';
     it.each([
       ['plain/path/file.txt', `${siteDir}/plain/path/file.txt`],
-      ['@alias/utils/helper.js', `${siteDir}/src/aliased/utils/helper.js`],
+      ['@alias/utils/helper.ts', `${siteDir}/src/aliased/utils/helper.ts`],
       ['#lib/math/add.ts', `${siteDir}/lib/math/add.ts`],
-      ['@alias/utils/helper.js', `${siteDir}/src/aliased/utils/helper.js`],
+      ['@alias/utils/helper.ts', `${siteDir}/src/aliased/utils/helper.ts`],
     ])('path=%s -> resolved=%s', (path, expected) => {
       expect(Plugin.fileResolve(path, siteDir)).toBe(expected);
     });
@@ -392,7 +392,7 @@ describe(`plugins.${name}`, () => {
       plugin.extendCli(cli);
       const beforeWrites = createWriteStream.mock.calls.length;
 
-      await actions.action('./some/dir', { config: 'myconf.js', outDir: 'custom-build' });
+      await actions.action('./some/dir', { config: 'myconf.ts', outDir: 'custom-build' });
 
       expect(loadFreshModule).toHaveBeenCalled();
       expect(createWriteStream.mock.calls.length - beforeWrites).toEqual(pdf.length);

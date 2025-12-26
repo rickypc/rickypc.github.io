@@ -10,7 +10,7 @@
 - Build: `yarn build` / `npm run build`
 - Dev: `yarn start` / `npm run start`
 - Lint: `yarn lint` / `npm run lint`
-- E2E: `npx playwright test` / `yarn playwright test` (see `playwright.config.js`)
+- E2E: `npx playwright test` / `yarn playwright test` (see `playwright.config.ts`)
 - Unit: `tests/unit/` (Jest + React Testing Library)
 - PDF: `yarn kit:pdf` (custom plugin)
 
@@ -22,11 +22,11 @@
 - Class names: `clsx` from `src/data/common.ts`
 - PropTypes for all React components
 - Named exports for utils, default for components
-- Playwright helpers: `tests/e2e/utils/helper.js`
+- Playwright helpers: `tests/e2e/utils/helper.ts`
 
 ## Data & Integration
 - Static data: `src/data/`
-- Routing: Docusaurus, see `docusaurus.config.js`
+- Routing: Docusaurus, see `docusaurus.config.ts`
 - PDF: custom plugin, see `src/plugins/docusaurus-plugin-kit/`
 
 ## Dependencies
@@ -38,7 +38,7 @@
 - Component: `src/components/common/Button/index.tsx`
 - Unit test: `tests/unit/common/Button.test.tsx`
 - Plugin: `src/plugins/docusaurus-plugin-kit/index.ts`
-- E2E Test helper: `tests/e2e/utils/helper.js`
+- E2E Test helper: `tests/e2e/utils/helper.ts`
 
 ## Notes
 - Node.js >= 24 required

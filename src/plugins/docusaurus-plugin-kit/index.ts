@@ -116,8 +116,8 @@ export async function createSitemapItems({
  * @returns {string} The resolved absolute file path.
  * @example
  * // Given imports = { 'alias/*': 'src/*' }
- * // fileResolve('alias/utils.js', '/root')
- * // -> '/root/src/utils.js'
+ * // fileResolve('alias/utils.ts', '/root')
+ * // -> '/root/src/utils.ts'
  */
 export function fileResolve(path: string, siteDir: string): string {
   let response = path;
@@ -462,7 +462,7 @@ export default function plugin(context: LoadContext): Plugin {
         .description('Generate PDF files.')
         .option(
           '--config <config>',
-          'The path to docusaurus config file (default: `[siteDir]/docusaurus.config.js`)',
+          'The path to docusaurus config file (default: `[siteDir]/docusaurus.config.ts`)',
         )
         .option(
           '--out-dir <dir>',

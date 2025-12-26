@@ -6,7 +6,7 @@
 
 export const DEFAULT_BUILD_DIR_NAME = 'build';
 
-export const DEFAULT_CONFIG_FILE_NAME = 'docusaurus.config.js';
+export const DEFAULT_CONFIG_FILE_NAME = 'docusaurus.config.ts';
 
 export const getFileCommitDate = jest.fn();
 

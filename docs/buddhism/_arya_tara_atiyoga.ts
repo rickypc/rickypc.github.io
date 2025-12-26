@@ -33,10 +33,10 @@ export default {
       chapters: ['Maṅgala', 'Viśuddhi'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_mala.js', ' (recite the prayer, then blow and rub the mālā gently)'),
-          ...phrase('#buddhism/phrases/_japa.js'),
-          ...phrase('#buddhism/phrases/_dharma.js'),
-          ...phrase('#buddhism/phrases/_namaskara.js'),
+          ...phrase('#buddhism/phrases/_mala.ts', ' (recite the prayer, then blow and rub the mālā gently)'),
+          ...phrase('#buddhism/phrases/_japa.ts'),
+          ...phrase('#buddhism/phrases/_dharma.ts'),
+          ...phrase('#buddhism/phrases/_namaskara.ts'),
         ],
         [
           { style: ['section', 'section-set'], text: 'Prāṇāyāma [Breathing]' },
@@ -109,11 +109,11 @@ export default {
       chapters: ['Trimūla Śaraṇa', 'Mettā-Bhāvanā'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_trimula_sarana.js'),
+          ...phrase('#buddhism/phrases/_trimula_sarana.ts'),
         ],
         [
-          ...phrase('#buddhism/phrases/_surangama.js'),
-          ...phrase('#buddhism/phrases/_maha_cakra_vajra.js'),
+          ...phrase('#buddhism/phrases/_surangama.ts'),
+          ...phrase('#buddhism/phrases/_maha_cakra_vajra.ts'),
         ],
       ],
       images: {
@@ -126,11 +126,11 @@ export default {
       chapters: ['Mettā-Bhāvanā', 'Āhvāna'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_amoghapasa_mani_puja.js'),
-          ...phrase('#buddhism/phrases/_sapta_atitabuddha_karasaniya.js'),
+          ...phrase('#buddhism/phrases/_amoghapasa_mani_puja.ts'),
+          ...phrase('#buddhism/phrases/_sapta_atitabuddha_karasaniya.ts'),
         ],
         [
-          ...phrase('#buddhism/phrases/_ahvana.js'),
+          ...phrase('#buddhism/phrases/_ahvana.ts'),
         ],
       ],
       images: {
@@ -261,12 +261,12 @@ export default {
       chapters: ['Āryatārā'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_arya_tara.js', [
+          ...phrase('#buddhism/phrases/_arya_tara.ts', [
             ' (receive their light, wisdom, and empowerment, which dissolves into Noble Tārā above our ',
             { color: '#ee82ee', style: 'instruction', text: 'sahasrāra' },
             ')',
           ], 108, 'Āryatārā Hṛdaya Japa [Noble Tārā Primary Recitation]'),
-          ...phrase('#buddhism/phrases/_arya_tara_astaghora_tarani_sutra.js'),
+          ...phrase('#buddhism/phrases/_arya_tara_astaghora_tarani_sutra.ts'),
         ],
         [
           header('Āryatārā Āghoṣa [Invocation]', ' (communicating and invoking Noble Tārā directly)'),
@@ -291,14 +291,14 @@ export default {
       chapters: ['Āryatārā', 'Sitātārā'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_arya_tara.js', [
+          ...phrase('#buddhism/phrases/_arya_tara.ts', [
             ' (bindu at our heart radiates infinite Noble Tārā\'s ',
             { color: 'green', style: 'instruction', text: 'green' },
             ' lights and communicates with all enlightened beings to activate and receive their wisdom)',
           ]),
         ],
         [
-          ...phrase('#buddhism/phrases/_sita_tara.js', [
+          ...phrase('#buddhism/phrases/_sita_tara.ts', [
             ' (bindu at our heart radiates infinite White Tārā\'s ',
             { color: 'gray', style: 'instruction', text: 'white' },
             ' lights and communicates with all enlightened beings to activate and receive their wisdom)',
@@ -315,10 +315,10 @@ export default {
       chapters: ['Sukhāvatīvyūha', 'Ekādaśamukhalokeśvara'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_sukhavativyuha.js'),
+          ...phrase('#buddhism/phrases/_sukhavativyuha.ts'),
         ],
         [
-          ...phrase('#buddhism/phrases/_ekadasamukhalokesvara.js'),
+          ...phrase('#buddhism/phrases/_ekadasamukhalokesvara.ts'),
         ],
       ],
       images: {
@@ -331,7 +331,7 @@ export default {
       chapters: ['Mahāmaṇi Vipulavimāna'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_mahamani_vipulavimana.js'),
+          ...phrase('#buddhism/phrases/_mahamani_vipulavimana.ts'),
         ],
       ],
       images: {
@@ -344,7 +344,7 @@ export default {
       chapters: ['Vajragītā'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_vajra_gita.js', ' (remain within the all-pervasive expanse of the mind\'s nature)'),
+          ...phrase('#buddhism/phrases/_vajra_gita.ts', ' (remain within the all-pervasive expanse of the mind\'s nature)'),
         ],
       ],
       images: {
@@ -374,10 +374,10 @@ export default {
             { color: 'red', text: 'āḥ' }, ' ',
             { color: 'blue', text: 'hūṃ' }, '॥',
           ], 3),
-          ...phrase('#buddhism/phrases/_mandala_puja.js', ' (maṇḍala arpaṇa mudrā with the sun behind our back and the moon in front of us. Offering self-generated and pure land to all enlightened beings)'),
+          ...phrase('#buddhism/phrases/_mandala_puja.ts', ' (maṇḍala arpaṇa mudrā with the sun behind our back and the moon in front of us. Offering self-generated and pure land to all enlightened beings)'),
         ],
         [
-          ...phrase('#buddhism/phrases/_rakta_tara.js', [
+          ...phrase('#buddhism/phrases/_rakta_tara.ts', [
             ' (bindu at our heart radiates infinite Red Tārā\'s ',
             { color: 'red', style: 'instruction', text: 'red' },
             ' lights and communicates with all enlightened beings to activate and receive their wisdom)',
@@ -395,10 +395,10 @@ export default {
       chapters: ['Dhanadatārā', 'Prajñāpāramitā Hṛdaya'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_dhanadatara.js'),
+          ...phrase('#buddhism/phrases/_dhanadatara.ts'),
         ],
         [
-          ...phrase('#buddhism/phrases/_prajna_paramita.js'),
+          ...phrase('#buddhism/phrases/_prajna_paramita.ts'),
         ],
       ],
       images: {
@@ -499,11 +499,11 @@ export default {
         [
           header('Puṇya Pariṇāmanā [Merit Dedication]', ' (in our own words)'),
           { margin: [0, 7.5, 0, 7.5], text: '' },
-          ...phrase('#buddhism/phrases/_arya_tara_svapratijna_nama.js'),
+          ...phrase('#buddhism/phrases/_arya_tara_svapratijna_nama.ts'),
         ],
         [
-          ...phrase('#buddhism/phrases/_parinamana.js'),
-          ...phrase('#buddhism/phrases/_arya_tara_sataksara.js'),
+          ...phrase('#buddhism/phrases/_parinamana.ts'),
+          ...phrase('#buddhism/phrases/_arya_tara_sataksara.ts'),
         ],
       ],
       number: '14',

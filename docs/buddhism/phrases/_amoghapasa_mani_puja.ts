@@ -4,8 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-/* eslint-disable import/extensions */
-import amoghapasaPadmaUsnisa from './_amoghapasa_padma_usnisa.js';
+import amoghapasaPadmaUsnisa from './_amoghapasa_padma_usnisa';
 
 const core = {
   sanskrit: {

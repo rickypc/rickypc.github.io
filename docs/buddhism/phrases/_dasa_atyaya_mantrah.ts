@@ -4,18 +4,17 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-/* eslint-disable import/extensions */
-import aksobhya from './_aksobhya.js';
-import amoghapasaPadmaUsnisa from './_amoghapasa_padma_usnisa.js';
-import avalokitesvara from './_avalokitesvara.js';
-import bhaisajyaguru from './_bhaisajyaguru.js';
-import ekadasaMukhaLokesvara from './_ekadasamukhalokesvara.js';
-import mahavairocanaSarvadurgatiParisodhana from './_mahavairocana_sarvadurgati_parisodhana.js';
-import milarepa from './_milarepa.js';
-import rasmiVimalaDharani from './_rasmi_vimala_dharani.js';
-import rasmiVimalaHrdaya from './_rasmi_vimala_hrdaya.js';
-import usnisaVijaya from './_usnisa_vijaya.js';
-import vimalaUsnisa from './_vimala_usnisa.js';
+import aksobhya from './_aksobhya';
+import amoghapasaPadmaUsnisa from './_amoghapasa_padma_usnisa';
+import avalokitesvara from './_avalokitesvara';
+import bhaisajyaguru from './_bhaisajyaguru';
+import ekadasaMukhaLokesvara from './_ekadasamukhalokesvara';
+import mahavairocanaSarvadurgatiParisodhana from './_mahavairocana_sarvadurgati_parisodhana';
+import milarepa from './_milarepa';
+import rasmiVimalaDharani from './_rasmi_vimala_dharani';
+import rasmiVimalaHrdaya from './_rasmi_vimala_hrdaya';
+import usnisaVijaya from './_usnisa_vijaya';
+import vimalaUsnisa from './_vimala_usnisa';
 
 export default {
   sanskrit: {

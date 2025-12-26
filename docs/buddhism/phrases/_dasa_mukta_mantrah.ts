@@ -4,17 +4,16 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-/* eslint-disable import/extensions */
-import aksobhya from './_aksobhya.js';
-import amitabha from './_amitabha.js';
-import amoghapasaPadmaUsnisa from './_amoghapasa_padma_usnisa.js';
-import avalokitesvara from './_avalokitesvara.js';
-import bhaisajyaguru from './_bhaisajyaguru.js';
-import darsanaMukta from './_darsana_mukta.js';
-import mahamaniVipulavimana from './_mahamani_vipulavimana.js';
-import ratnasikhin from './_ratnasikhin.js';
-import sadjaMukta from './_sadja_mukta.js';
-import usnisaVijaya from './_usnisa_vijaya.js';
+import aksobhya from './_aksobhya';
+import amitabha from './_amitabha';
+import amoghapasaPadmaUsnisa from './_amoghapasa_padma_usnisa';
+import avalokitesvara from './_avalokitesvara';
+import bhaisajyaguru from './_bhaisajyaguru';
+import darsanaMukta from './_darsana_mukta';
+import mahamaniVipulavimana from './_mahamani_vipulavimana';
+import ratnasikhin from './_ratnasikhin';
+import sadjaMukta from './_sadja_mukta';
+import usnisaVijaya from './_usnisa_vijaya';
 
 export default {
   path: import.meta.url,

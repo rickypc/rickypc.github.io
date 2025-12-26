@@ -4,11 +4,10 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-/* eslint-disable import/extensions */
-import bhaisajyaguru from './_bhaisajyaguru.js';
-import mahaCundiDurga from './_maha_cundi_durga.js';
-import saptaAtitabuddhaKarasaniya from './_sapta_atitabuddha_karasaniya.js';
-import sukhavatiVyuha from './_sukhavativyuha.js';
+import bhaisajyaguru from './_bhaisajyaguru';
+import mahaCundiDurga from './_maha_cundi_durga';
+import saptaAtitabuddhaKarasaniya from './_sapta_atitabuddha_karasaniya';
+import sukhavatiVyuha from './_sukhavativyuha';
 
 export default {
   lang: 'sa-IN',

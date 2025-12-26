@@ -4,8 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-/* eslint-disable import/extensions */
-import sadjaMukta from './_sadja_mukta.js';
+import sadjaMukta from './_sadja_mukta';
 
 export default {
   sanskrit: {

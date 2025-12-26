@@ -4,14 +4,13 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-/* eslint-disable import/extensions */
-import bodhiGarbhalamkaraLaksa from './_bodhi_garbhalamkara_laksa.js';
-import guhyadhatuKaranda from './_guhyadhatu_karanda.js';
-import pratityasamutpada from './_pratityasamutpada.js';
-import rasmiVimalaDharani from './_rasmi_vimala_dharani.js';
-import rasmiVimalaHrdaya from './_rasmi_vimala_hrdaya.js';
-import usnisaVijaya from './_usnisa_vijaya.js';
-import vimalaUsnisa from './_vimala_usnisa.js';
+import bodhiGarbhalamkaraLaksa from './_bodhi_garbhalamkara_laksa';
+import guhyadhatuKaranda from './_guhyadhatu_karanda';
+import pratityasamutpada from './_pratityasamutpada';
+import rasmiVimalaDharani from './_rasmi_vimala_dharani';
+import rasmiVimalaHrdaya from './_rasmi_vimala_hrdaya';
+import usnisaVijaya from './_usnisa_vijaya';
+import vimalaUsnisa from './_vimala_usnisa';
 
 export default {
   chinese: {

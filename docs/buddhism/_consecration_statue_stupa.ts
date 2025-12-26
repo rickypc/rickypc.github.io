@@ -11,7 +11,7 @@ import {
   phrases,
 } from './_common';
 
-const pratityasamutpadaSamudayaNirodha = phrases('#buddhism/phrases/_pratityasamutpada_samudaya_nirodha.js');
+const pratityasamutpadaSamudayaNirodha = phrases('#buddhism/phrases/_pratityasamutpada_samudaya_nirodha.ts');
 
 export default {
   pages: [
@@ -29,16 +29,16 @@ export default {
       chapters: ['Maṅgala', 'Abhiṣeka'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_mala.js', ' (recite the prayer, then blow and rub the mālā gently)'),
-          ...phrase('#buddhism/phrases/_japa.js'),
-          ...phrase('#buddhism/phrases/_dharma.js'),
-          ...phrase('#buddhism/phrases/_namaskara.js'),
+          ...phrase('#buddhism/phrases/_mala.ts', ' (recite the prayer, then blow and rub the mālā gently)'),
+          ...phrase('#buddhism/phrases/_japa.ts'),
+          ...phrase('#buddhism/phrases/_dharma.ts'),
+          ...phrase('#buddhism/phrases/_namaskara.ts'),
         ],
         [
-          ...phrase('#buddhism/phrases/_saranagamana_cittotpada.js'),
-          ...phrase('#buddhism/phrases/_catvary_apramanani.js'),
-          ...phrase('#buddhism/phrases/_prajna_paramita.js', '', 7),
-          ...phrase('#buddhism/phrases/_sunyata.js'),
+          ...phrase('#buddhism/phrases/_saranagamana_cittotpada.ts'),
+          ...phrase('#buddhism/phrases/_catvary_apramanani.ts'),
+          ...phrase('#buddhism/phrases/_prajna_paramita.ts', '', 7),
+          ...phrase('#buddhism/phrases/_sunyata.ts'),
         ],
       ],
       number: '3',
@@ -52,13 +52,13 @@ export default {
       chapters: ['Abhiṣeka'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_anekajati.js'),
-          ...phrase('#buddhism/phrases/_pratityasamutpada.js'),
+          ...phrase('#buddhism/phrases/_anekajati.ts'),
+          ...phrase('#buddhism/phrases/_pratityasamutpada.ts'),
         ],
         [
-          ...phrase('#buddhism/phrases/_vairocana_sarvakata_danavidhih.js'),
-          ...phrase('#buddhism/phrases/_ratnadhvaja_parikrama.js'),
-          ...phrase('#buddhism/phrases/_vimala_usnisa.js'),
+          ...phrase('#buddhism/phrases/_vairocana_sarvakata_danavidhih.ts'),
+          ...phrase('#buddhism/phrases/_ratnadhvaja_parikrama.ts'),
+          ...phrase('#buddhism/phrases/_vimala_usnisa.ts'),
         ],
       ],
       number: '6',

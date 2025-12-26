@@ -4,8 +4,7 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-/* eslint-disable import/extensions */
-import darsanaMukta from './_darsana_mukta.js';
+import darsanaMukta from './_darsana_mukta';
 
 const core = {
   sanskrit: {

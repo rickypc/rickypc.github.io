@@ -22,16 +22,16 @@ export default {
       chapters: ['Maṅgala', 'Abhiṣeka'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_mala.js', ' (recite the prayer, then blow and rub the mālā gently)'),
-          ...phrase('#buddhism/phrases/_japa.js'),
-          ...phrase('#buddhism/phrases/_dharma.js'),
-          ...phrase('#buddhism/phrases/_namaskara.js'),
+          ...phrase('#buddhism/phrases/_mala.ts', ' (recite the prayer, then blow and rub the mālā gently)'),
+          ...phrase('#buddhism/phrases/_japa.ts'),
+          ...phrase('#buddhism/phrases/_dharma.ts'),
+          ...phrase('#buddhism/phrases/_namaskara.ts'),
         ],
         [
           header('Cleansing'),
           ...main('ॐ सर्वतथागता अभिषेकते समय श्रीये हूं॥', 'oṃ sarva tathāgata abhiṣekate samaya śrīye hūṃ॥', 7),
-          ...phrase('#buddhism/phrases/_sunyata.js'),
-          ...phrase('#buddhism/phrases/_pratityasamutpada.js'),
+          ...phrase('#buddhism/phrases/_sunyata.ts'),
+          ...phrase('#buddhism/phrases/_pratityasamutpada.ts'),
         ],
       ],
       number: '3',
@@ -42,9 +42,9 @@ export default {
       chapters: ['Abhiṣeka'],
       contents: [
         [
-          ...phrase('#buddhism/phrases/_vairocana_sarvakata_danavidhih.js'),
-          ...phrase('#buddhism/phrases/_ratnadhvaja_parikrama.js'),
-          ...phrase('#buddhism/phrases/_vimala_usnisa.js'),
+          ...phrase('#buddhism/phrases/_vairocana_sarvakata_danavidhih.ts'),
+          ...phrase('#buddhism/phrases/_ratnadhvaja_parikrama.ts'),
+          ...phrase('#buddhism/phrases/_vimala_usnisa.ts'),
         ],
         [
           header('Preparation', ' (blessing mudrā with our left hand is held above the supplies, palm down with the thumb pressing down the pinky finger. Our right hand is held below the supplies, palm up with the thumb pressing down the pinky finger)'),

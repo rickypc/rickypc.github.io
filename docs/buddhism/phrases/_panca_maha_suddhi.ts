@@ -4,12 +4,11 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-/* eslint-disable import/extensions */
-import aksobhya from './_aksobhya.js';
-import amoghapasaPadmaUsnisa from './_amoghapasa_padma_usnisa.js';
-import mahavairocanaSarvadurgatiParisodhana from './_mahavairocana_sarvadurgati_parisodhana.js';
-import usnisaVijaya from './_usnisa_vijaya.js';
-import vimalaUsnisa from './_vimala_usnisa.js';
+import aksobhya from './_aksobhya';
+import amoghapasaPadmaUsnisa from './_amoghapasa_padma_usnisa';
+import mahavairocanaSarvadurgatiParisodhana from './_mahavairocana_sarvadurgati_parisodhana';
+import usnisaVijaya from './_usnisa_vijaya';
+import vimalaUsnisa from './_vimala_usnisa';
 
 export default {
   path: import.meta.url,

@@ -40,7 +40,7 @@ export default [
   ['roll', `${phrases}/_bhaisajyaguru.ts`],
   ['thangka', `${phrases}/_bhaisajyaguru.ts`],
   ['wheel', `${phrases}/_bhaisajyaguru.ts`],
-  ['condensed', `${phrases}/_bodhi_garbhalamkara_laksa.tsjs`],
+  ['condensed', `${phrases}/_bodhi_garbhalamkara_laksa.ts`],
   ['roll', `${phrases}/_bodhi_garbhalamkara_laksa.ts`],
   ['wheel', `${phrases}/_bodhi_garbhalamkara_laksa.ts`],
   ['base', '#buddhism/_cintamani_dharmacakra_yasti.ts'],

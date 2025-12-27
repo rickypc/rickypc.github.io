@@ -17,7 +17,7 @@ import Image from '@site/src/components/common/Image';
 import { useRef } from 'react';
 import { useVisibility } from '@site/src/hooks/observer';
 
-const useVisibilityMock = useVisibility as jest.MockedFunction<typeof useVisibility>;
+const useVisibilityMock = jest.mocked(useVisibility);
 
 jest.unmock('@site/src/components/common/Image');
 

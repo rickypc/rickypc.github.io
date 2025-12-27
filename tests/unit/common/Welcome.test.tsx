@@ -10,7 +10,7 @@ import '@testing-library/jest-dom';
 import Welcome from '@site/src/components/common/Welcome';
 import { usePrint, useWelcome } from '@site/src/hooks/observer';
 
-const usePrintMock = usePrint as jest.MockedFunction<typeof usePrint>;
+const usePrintMock = jest.mocked(usePrint);
 
 describe('Welcome', () => {
   it('calls useWelcome with navigation=false by default and renders speech admonition', () => {

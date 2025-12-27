@@ -16,7 +16,7 @@ import '@testing-library/jest-dom';
 import Filter from '@site/src/components/portfolio/Filter';
 import { useMedia } from '@site/src/hooks/observer';
 
-const useMediaMock = useMedia as jest.MockedFunction<typeof useMedia>;
+const useMediaMock = jest.mocked(useMedia);
 
 jest.unmock('@site/src/components/portfolio/Filter');
 

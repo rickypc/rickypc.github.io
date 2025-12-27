@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -14,7 +14,7 @@ export const body = (phrase: PropsWithChildren, infix: string = '।') => {
   const group = Array.isArray(phrase.children) ? phrase.children : [phrase.children];
   const last = group.length - 1;
   return group.flatMap((words, index) => {
-    const text = `${words?.props?.children ? words.props.children : words}`;
+    const text = `${words?.props?.children ? words.props.children : (words || '')}`;
     return `${text ? `${text}${index !== last ? infix : ''}` : ''}`;
   }).join('\n');
 };

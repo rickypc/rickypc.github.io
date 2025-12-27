@@ -12,7 +12,7 @@ import Oracle from '@site/src/components/about/Oracle';
 import { useRef } from 'react';
 import { useVisibility } from '@site/src/hooks/observer';
 
-const useVisibilityMock = useVisibility as jest.MockedFunction<typeof useVisibility>;
+const useVisibilityMock = jest.mocked(useVisibility);
 
 jest.unmock('@site/src/components/about/Oracle');
 

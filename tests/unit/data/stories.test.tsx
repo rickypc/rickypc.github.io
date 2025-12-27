@@ -40,7 +40,7 @@ describe('data.stories', () => {
   describe('preamble', () => {
     it('description', () => {
       expect(preamble.description).toBe(
-        'Real-world experiences, lessons learned, and reflections from my journey as a full stack developer and engineering leader. These stories highlight how I\'ve helped teams and projects thrive - through technology, mentorship, and personal growth.',
+        'Real-world experiences, lessons learned, and reflections from my journey as a modern multidisciplinary technologist. These stories highlight how I\'ve helped teams and projects thrive - through technology, mentorship, personal growth, and the trust formed along the way.',
       );
     });
 

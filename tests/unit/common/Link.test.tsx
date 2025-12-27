@@ -11,7 +11,7 @@ import Link from '@site/src/components/common/Link';
 import * as useBrokenLinks from '@docusaurus/useBrokenLinks';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
-const collectLink = (useBrokenLinks as any).collectLink as jest.Mock;
+const collectLink = jest.mocked(jest.mocked<any>(useBrokenLinks).collectLink);
 
 jest.unmock('@site/src/components/common/Link');
 
@@ -33,7 +33,7 @@ describe('Link', () => {
     });
 
     it('renders trailing slashed internal link without rel/target and calls collectLink', () => {
-      (useDocusaurusContext as jest.Mock).mockReturnValue({
+      jest.mocked<any>(useDocusaurusContext).mockReturnValue({
         siteConfig: {
           trailingSlash: true,
           url: 'https://domain.test',
@@ -52,7 +52,7 @@ describe('Link', () => {
     });
 
     it('renders non-trailing slashed internal link without rel/target and calls collectLink', () => {
-      (useDocusaurusContext as jest.Mock).mockReturnValue({
+      jest.mocked<any>(useDocusaurusContext).mockReturnValue({
         siteConfig: {
           trailingSlash: false,
           url: 'https://domain.test',

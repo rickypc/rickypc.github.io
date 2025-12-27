@@ -14,7 +14,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 jest.unmock('@site/src/components/resume/Content');
 
 describe('resume.Content', () => {
-  (useDocusaurusContext as jest.Mock).mockReturnValue({
+  jest.mocked<any>(useDocusaurusContext).mockReturnValue({
     siteConfig: {
       themeConfig: {
         navbar: {

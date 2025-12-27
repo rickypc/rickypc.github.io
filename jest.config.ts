@@ -9,7 +9,7 @@ process.env.TZ = 'UTC';
 module.exports = {
   clearMocks: true,
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.[jt]s*'],
+  collectCoverageFrom: ['(docs|src)/**/*.[jt]s*'],
   coverageDirectory: './coverage/',
   errorOnDeprecated: true,
   logHeapUsage: true,

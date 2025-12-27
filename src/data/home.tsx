@@ -88,8 +88,9 @@ export const hats = [
         <Link href="/about" title="bridge the gap">bridge the gap</Link>
         <span> between front-end and back-end development, building </span>
         <Link href="/portfolio" title="scalable, high-performing applications">scalable, high-performing applications</Link>
-        <span>. My work connects disciplines and people,</span>
-        <span> always focused on delivering real-world impact.</span>
+        <span>. My work connects disciplines, people, and the modern tools</span>
+        <span> that drive faster, sharper iteration, always focused on</span>
+        <span> delivering real-world impact.</span>
       </>
     ),
     label: 'Full Stack Developer',
@@ -106,8 +107,9 @@ export const hats = [
         <span>I blend </span>
         <Link href="/about" title="technical expertise, creative thinking, and business strategy">technical expertise, creative thinking, and business strategy</Link>
         <span> to align engineering efforts with company goals.</span>
-        <span> I enjoy working at the intersection of innovation and execution,</span>
-        <span> where ideas become solutions.</span>
+        <span> I work at the intersection of innovation and execution,</span>
+        <span> using generative tools to accelerate exploration,</span>
+        <span> sharpen ideas, and bring well-tested solutions to life.</span>
       </>
     ),
     label: 'Smart Creative',
@@ -125,7 +127,8 @@ export const hats = [
         <Link href="/timeline" title="experience and a strong academic foundation">experience and a strong academic foundation</Link>
         <span> in software engineering, I help organizations build resilient </span>
         <Link href="/portfolio" title="technology platforms">technology platforms</Link>
-        <span> and deliver distinctive value through forward-thinking solutions.</span>
+        <span> and deliver distinctive value through forward-thinking solutions,</span>
+        <span> continually evolving with the pace of modern technology.</span>
       </>
     ),
     label: 'Innovator',

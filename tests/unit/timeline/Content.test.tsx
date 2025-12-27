@@ -13,8 +13,8 @@ import Content from '@site/src/components/timeline/Content';
 import { timelines } from '@site/src/data/timeline';
 import { useMedia, usePrint } from '@site/src/hooks/observer';
 
-const useMediaMock = useMedia as jest.MockedFunction<typeof useMedia>;
-const usePrintMock = usePrint as jest.MockedFunction<typeof usePrint>;
+const useMediaMock = jest.mocked(useMedia);
+const usePrintMock = jest.mocked(usePrint);
 
 jest.unmock('@site/src/components/timeline/Content');
 

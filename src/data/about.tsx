@@ -54,8 +54,15 @@ export const layout: LayoutProps = {
 };
 
 export const paragraphs = [
-  'On the left, you\'ll find two graphs that capture how I work: one reflects my adaptability and ability to influence, while the other shows how I balance thoughtful analysis with strong execution.',
-  'I bring together emotional intelligence, a broad network, and clear, decisive leadership. I thrive in complex environments - digging into challenges, analyzing them with care, and driving toward meaningful results. At the heart of it all, I\'m focused on connecting people, inspiring teams, and turning ideas into action.',
+  `On the left, you'll find two graphs that capture how I work: one reflects
+  my adaptability and ability to influence, while the other shows how I balance
+  thoughtful analysis with strong execution.`.replace(/\n\s*/g, ' '),
+  `I bring together emotional intelligence, a broad network, and clear,
+  decisive leadership. I thrive in complex environments - digging into
+  challenges, analyzing them with care, and moving toward meaningful results.
+  At the heart of it all, I'm focused on connecting people, inspiring teams,
+  and turning ideas into action, supported by modern tools that help me think
+  and iterate with greater clarity.`.replace(/\n\s*/g, ' '),
 ];
 
 export const preamble: PreambleProps = {

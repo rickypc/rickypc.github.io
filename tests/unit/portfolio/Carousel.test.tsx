@@ -18,8 +18,8 @@ import { createRef } from 'react';
 import { listeners } from 'motion/react';
 import { usePrint, useVisibility } from '@site/src/hooks/observer';
 
-const usePrintMock = usePrint as jest.MockedFunction<typeof usePrint>;
-const useVisibilityMock = useVisibility as jest.MockedFunction<typeof useVisibility>;
+const usePrintMock = jest.mocked(usePrint);
+const useVisibilityMock = jest.mocked(useVisibility);
 
 jest.unmock('@site/src/components/portfolio/Carousel');
 

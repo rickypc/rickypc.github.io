@@ -67,7 +67,10 @@ export const layout: LayoutProps = {
 };
 
 export const preamble: PreambleProps = {
-  description: 'Real-world experiences, lessons learned, and reflections from my journey as a full stack developer and engineering leader. These stories highlight how I\'ve helped teams and projects thrive - through technology, mentorship, and personal growth.',
+  description: `Real-world experiences, lessons learned, and reflections from
+  my journey as a modern multidisciplinary technologist. These stories
+  highlight how I've helped teams and projects thrive - through technology,
+  mentorship, personal growth, and the trust formed along the way.`.replace(/\n\s*/g, ' '),
   title: 'Stories',
 };
 

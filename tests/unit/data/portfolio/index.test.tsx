@@ -19,7 +19,7 @@ describe('portfolio.index', () => {
   it('first catalog item has required primitive fields with sensible values', () => {
     const first = catalog[0];
 
-    const requiredPrimitives = ['title', 'description', 'prefix', 'href', 'tags', 'images'];
+    const requiredPrimitives = ['description', 'href', 'images', 'prefix', 'tags', 'title'];
     expect(Object.keys(first)).toEqual(expect.arrayContaining(requiredPrimitives));
 
     expect(typeof first.title).toBe('string');

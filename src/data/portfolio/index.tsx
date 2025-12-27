@@ -583,6 +583,10 @@ export const layout: LayoutProps = {
 };
 
 export const preamble: PreambleProps = {
-  description: 'Each project here reflects years of hands-on experience, thoughtful problem-solving, and a commitment to quality. Alongside every build, you\'ll find the technology stack that helped bring it to life - and the impact it delivered.',
+  description: `Each project here reflects years of hands-on experience,
+  thoughtful problem-solving, and a commitment to quality. Alongside every
+  build, you'll find the technology stack that brought it to life, the impact
+  it delivered, and the continual learning that keeps my work aligned with the
+  pace of modern technology.`.replace(/\n\s*/g, ' '),
   title: 'Portfolio',
 };

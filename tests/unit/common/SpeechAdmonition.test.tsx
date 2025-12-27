@@ -11,7 +11,7 @@ import { admonitions } from '@site/src/data/common';
 import SpeechAdmonition from '@site/src/components/common/SpeechAdmonition';
 import { useSpeech } from '@site/src/hooks/observer';
 
-const useSpeechMock = useSpeech as jest.MockedFunction<typeof useSpeech>;
+const useSpeechMock = jest.mocked(useSpeech);
 
 jest.unmock('@site/src/components/common/SpeechAdmonition');
 

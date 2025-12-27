@@ -25,8 +25,10 @@ export type Options = Partial<PlaywrightTestArgs>
   & {
     browser?: Browser;
     browserName?: string;
+    file?: string;
     name?: string;
     page?: Page;
+    pages?: number;
     selector?: string,
     testInfo?: TestInfo;
     theme?: string,
@@ -165,8 +167,20 @@ export const hasNavigations = async (options: Options) => {
   }
 };
 
+export const hasPdf = async (options: Options) => {
+  const images = await pdfToPng(options.url!);
+  expect(images).toHaveLength(options.pages!);
+  await Promise.all(images.map(async (img, i) => {
+    expect(img.content).toMatchSnapshot(`${options.file}/page-${i}.png`);
+    await options.testInfo!.attach(`${options.file} page ${i + 1}`, {
+      body: img.content,
+      contentType: 'image/png',
+    });
+  }));
+};
+
 export const hasPrint = async (options: Options) => {
-  test.skip(options.browserName !== 'chromium', 'PDF only works in Chromium');
+  test.skip(options.browserName !== 'chromium', 'Print only works in Chromium');
   const search = options.url!.includes('portfolio')
     ? '?docusaurus-data-carousel-play=manual' : '';
   await options.page!.goto(`${options.url}${search}`, { waitUntil: 'networkidle' });

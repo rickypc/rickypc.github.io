@@ -18,22 +18,31 @@ module.exports = defineConfig({
   projects: [
     {
       name: 'chromium',
+      testIgnore: /.*pdf\.spec\.ts/,
       use: { ...devices['Desktop Chrome'], viewport },
     },
     {
       name: 'firefox',
+      testIgnore: /.*pdf\.spec\.ts/,
       use: { ...devices['Desktop Firefox'], viewport },
     },
     {
       name: 'mobile-chrome',
+      testIgnore: /.*pdf\.spec\.ts/,
       use: { ...devices['Pixel 5'] },
     },
     {
       name: 'mobile-safari',
+      testIgnore: /.*pdf\.spec\.ts/,
       use: { ...devices['iPhone 12'] },
     },
     {
+      name: 'pdf',
+      testMatch: /.*pdf\.spec\.ts/,
+    },
+    {
       name: 'webkit',
+      testIgnore: /.*pdf\.spec\.ts/,
       use: { ...devices['Desktop Safari'], viewport },
     },
   ],

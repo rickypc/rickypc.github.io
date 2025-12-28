@@ -24,7 +24,7 @@ import ts from 'typescript-eslint';
 const compat = new FlatCompat({ baseDirectory: dirname(fileURLToPath(import.meta.url)) });
 const config: Linter.Config[] = [
   // Order Matters™!
-  { ignores: ['build/', '.docusaurus/'] },
+  { ignores: ['build/', '.docusaurus/', 'supports/'] },
   ...compat.config({ extends: ['airbnb', 'airbnb/hooks'] }),
   {
     plugins: { '@docusaurus': docusaurus as any },

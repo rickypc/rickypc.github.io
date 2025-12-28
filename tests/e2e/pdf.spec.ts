@@ -11,14 +11,14 @@ import { expect, hasPdf, test } from './helper';
 test.describe('isolated tests', () => {
   const pdfDir = join(__dirname, '..', '..', 'build', 'pdf');
   const files = readdirSync(pdfDir).filter((file) => file.endsWith('.pdf'));
-  const pages = new Map<string, number>([
-    ['arya-tara-atiyoga.pdf', 6],
-    ['consecration-statue-stupa.pdf', 4],
-    ['consecration-supplies.pdf', 2],
-    ['mandala-wheels.pdf', 5],
-    ['mandala-wheels-strip.pdf', 2],
-    ['prayer-wheels.pdf', 2],
-  ]);
+  const pages: Record<string, number> = {
+    'arya-tara-atiyoga.pdf': 6,
+    'consecration-statue-stupa.pdf': 4,
+    'consecration-supplies.pdf': 2,
+    'mandala-wheels.pdf': 5,
+    'mandala-wheels-strip.pdf': 2,
+    'prayer-wheels.pdf': 2,
+  };
 
   test('validates total number of PDFs', async () => {
     expect(files).toHaveLength(169);
@@ -29,7 +29,8 @@ test.describe('isolated tests', () => {
     test(`validates PDF: ${file}`, async ({}, testInfo) => {
       await hasPdf({
         file,
-        pages: pages.get(file) ?? 1,
+        // eslint-disable-next-line security/detect-object-injection
+        pages: pages[file] ?? 1,
         testInfo,
         url: join(pdfDir, file),
       });

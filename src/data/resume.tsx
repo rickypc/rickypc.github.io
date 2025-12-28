@@ -14,7 +14,7 @@ import { stories } from '@site/src/data/stories';
 import { type ThemeConfig } from '@docusaurus/preset-classic';
 import { timelines } from '@site/src/data/timeline';
 
-export type HeaderProps = {
+type HeaderProps = {
   siteConfig: DocusaurusConfig;
 };
 
@@ -29,11 +29,10 @@ export const certifications = {
       achievements: (
         <ul>
           <li>
-            Mining Massive Datasets (
+            Mining Massive Datasets -&nbsp;
             <strong>
-              With Distinction
+              <em>With Distinction</em>
             </strong>
-            )
           </li>
           <li>Machine Learning</li>
           <li>Automata</li>
@@ -47,7 +46,7 @@ export const certifications = {
 
 export const educations = {
   content: [
-    { achievements: (<p>Outstanding Graduate Project Award</p>), key: 'calstate-fullerton' },
+    { achievements: (<article>Outstanding Graduate Project Award</article>), key: 'calstate-fullerton' },
     { key: 'petra' },
   ],
   heading: { as: 'h2' as HeadingType, children: 'Education' },
@@ -82,6 +81,7 @@ export const experiences = {
           key: 'experian',
         },
       ],
+      year: '2013 - Present',
     },
     {
       achievements: (
@@ -215,7 +215,7 @@ export const header = ({ siteConfig }: HeaderProps) => {
     heading: {
       as: 'h1' as HeadingType,
       children: (
-        <Link href={siteConfig.url} title="Visit website" translate="no">
+        <Link href={siteConfig.url} translate="no">
           {siteConfig.title}
         </Link>
       ),
@@ -278,6 +278,11 @@ export const leadership = {
   heading: { as: 'h2' as HeadingType, children: 'Leadership Profile' },
 };
 
+export const preamble = {
+  content: 'Principal Engineer with 30+ years of experience architecting, building, and scaling production systems across cloud, distributed, and event-driven environments. I define technical direction, design end-to-end architectures, and deliver systems that are reliable, observable, and built to last. Equally comfortable writing code, designing APIs, reviewing architectures, or debugging complex failures in production. Known for clear technical judgment, deep hands-on expertise, and the ability to turn ambiguous problems into well-engineered solutions.',
+  heading: { as: 'h2' as HeadingType, children: 'Professional Summary' },
+};
+
 export const skills = {
   children: (
     <ul>
@@ -336,11 +341,6 @@ export const strengths = {
     </ul>
   ),
   heading: { as: 'h2' as HeadingType, children: 'Core Strengths' },
-};
-
-export const summary = {
-  content: 'Principal Engineer with 30+ years of experience architecting, building, and scaling production systems across cloud, distributed, and event-driven environments. I define technical direction, design end-to-end architectures, and deliver systems that are reliable, observable, and built to last. Equally comfortable writing code, designing APIs, reviewing architectures, or debugging complex failures in production. Known for clear technical judgment, deep hands-on expertise, and the ability to turn ambiguous problems into well-engineered solutions.',
-  heading: { as: 'h2' as HeadingType, children: 'Professional Summary' },
 };
 
 export const testimonials = {

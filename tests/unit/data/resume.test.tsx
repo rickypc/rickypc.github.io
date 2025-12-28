@@ -15,10 +15,10 @@ import {
   header,
   layout,
   leadership,
+  preamble,
   skills,
   storyMap,
   strengths,
-  summary,
   testimonials,
   timelineMap,
 } from '@site/src/data/resume';
@@ -248,6 +248,19 @@ describe('data.resume', () => {
     });
   });
 
+  describe('preamble', () => {
+    it('has a heading with correct structure', () => {
+      expect(preamble.heading).toBeDefined();
+      expect(preamble.heading.as).toBe('h2');
+      expect(preamble.heading.children).toBe('Professional Summary');
+    });
+
+    it('content is a non-empty string', () => {
+      expect(typeof preamble.content).toBe('string');
+      expect(preamble.content.length).toBeGreaterThan(0);
+    });
+  });
+
   describe('skills', () => {
     it('has a heading with correct structure', () => {
       expect(skills.heading).toBeDefined();
@@ -307,19 +320,6 @@ describe('data.resume', () => {
         expect(isValidElement(li)).toBeTruthy();
         expect(li.type).toBe('li');
       });
-    });
-  });
-
-  describe('summary', () => {
-    it('has a heading with correct structure', () => {
-      expect(summary.heading).toBeDefined();
-      expect(summary.heading.as).toBe('h2');
-      expect(summary.heading.children).toBe('Professional Summary');
-    });
-
-    it('content is a non-empty string', () => {
-      expect(typeof summary.content).toBe('string');
-      expect(summary.content.length).toBeGreaterThan(0);
     });
   });
 

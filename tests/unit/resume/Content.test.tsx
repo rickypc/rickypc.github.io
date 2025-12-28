@@ -35,7 +35,7 @@ describe('resume.Content', () => {
     render(<Content />);
     expect(screen.getByText('My Site')).toBeInTheDocument();
 
-    // Summary.
+    // Preamble.
     expect(screen.getByText('Professional Summary')).toBeInTheDocument();
 
     // Strengths.
@@ -50,7 +50,7 @@ describe('resume.Content', () => {
 
     // Experiences.
     expect(screen.getByText('Professional Experience')).toBeInTheDocument();
-    expect(screen.getByText('Principal-Level Senior Software Engineer - Experian Consumer Services (2017-Present)'))
+    expect(screen.getByText('Principal-Level Senior Software Engineer - Experian Consumer Services (2013-Present)'))
       .toBeInTheDocument();
     expect(screen.getByText('Experian Consumer Services')).toBeInTheDocument();
 

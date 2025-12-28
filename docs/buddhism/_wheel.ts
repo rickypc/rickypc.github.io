@@ -136,7 +136,7 @@ export default function wheel(path: string) {
             ],
           },
         ],
-        [{ margin: [0, 0, 0, 0], style: 'intro', text: 'ཨཱཿ' }],
+        [{ style: 'intro', text: 'ཨཱཿ' }],
         [{ margin: [0, 1, 0, -1], style: 'intro', text: 'ཧཱུྃ' }],
       ];
       table.heights = [rowHeight, rowHeight, rowHeight];

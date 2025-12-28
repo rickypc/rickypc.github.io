@@ -241,6 +241,6 @@ export const timelines: TimelineProps[] = [
       children: 'Independent Professional',
       href: 'https://en.wikipedia.org/wiki/Entrepreneurship',
     },
-    year: '1995 - Current',
+    year: '1995 - Present',
   },
 ];

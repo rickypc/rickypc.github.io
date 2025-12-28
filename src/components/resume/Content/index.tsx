@@ -11,13 +11,12 @@ import {
   educations,
   experiences,
   header,
-  type HeaderProps,
   type HeadingProps,
   leadership,
+  preamble,
   skills,
   storyMap,
   strengths,
-  summary,
   testimonials,
   timelineMap,
 } from '@site/src/data/resume';
@@ -32,6 +31,13 @@ import {
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './styles.module.css';
 
+type ActivityProps = {
+  entry: {
+    key: string;
+    year?: string;
+  };
+};
+
 type BlockProps = {
   as?: 'header' | 'section';
   className?: string;
@@ -44,6 +50,18 @@ type ExperienceProps = {
     key: string;
   };
 };
+
+const Activity = memo(function Activity({ entry }: ActivityProps) {
+  const timeline = timelineMap[entry.key];
+  const year = (entry.year || timeline.year).replace(/\s+/g, '');
+  return (
+    <Heading as="h3">
+      <Link href={`/timeline#${entry.key}`}>
+        {`${timeline.title.children} - ${timeline.affiliation.children} (${year})`}
+      </Link>
+    </Heading>
+  );
+});
 
 const Block = memo(function Block({
   as: As = 'section',
@@ -67,11 +85,7 @@ const Certifications = memo(function Certifications() {
     <Block className={styles.certifications} heading={certifications.heading}>
       {certifications.content.map((certification) => (
         <Fragment key={certification.key}>
-          <Heading as="h3">
-            <Link href={`/timeline#${certification.key}`}>
-              {`${timelineMap[certification.key].title.children} - ${timelineMap[certification.key].affiliation.children} (${timelineMap[certification.key].year.replace(/\s+/g, '')})`}
-            </Link>
-          </Heading>
+          <Activity entry={certification} />
           {certification.achievements}
         </Fragment>
       ))}
@@ -84,11 +98,7 @@ const Educations = memo(function Educations() {
     <Block className={styles.educations} heading={educations.heading}>
       {educations.content.map((education) => (
         <Fragment key={education.key}>
-          <Heading as="h3">
-            <Link href={`/timeline#${education.key}`}>
-              {`${timelineMap[education.key].title.children} - ${timelineMap[education.key].affiliation.children} (${timelineMap[education.key].year.replace(/\s+/g, '')})`}
-            </Link>
-          </Heading>
+          <Activity entry={education} />
           {education.achievements}
         </Fragment>
       ))}
@@ -100,14 +110,16 @@ const Experience = memo(function Experience({ summary }: ExperienceProps) {
   return (
     <article aria-label={catalogMap[summary.key].title}>
       <strong>
-        <Link href={`/portfolio#${summary.key}`} title={`Visit ${catalogMap[summary.key].title} portfolio`}>
-          {catalogMap[summary.key].title}
-        </Link>
+        <em>
+          <Link href={`/portfolio#${summary.key}`} title={`Visit ${catalogMap[summary.key].title} portfolio`}>
+            {catalogMap[summary.key].title}
+          </Link>
+        </em>
       </strong>
       &nbsp;-&nbsp;
       {summary.content}
       &nbsp;
-      <em>
+      <em className={styles.tags}>
         (
         {catalogMap[summary.key].tags.join(', ')}
         )
@@ -121,11 +133,7 @@ const Experiences = memo(function Experiences() {
     <Block className={styles.experiences} heading={experiences.heading}>
       {experiences.content.map((experience) => (
         <Fragment key={experience.key}>
-          <Heading as="h3">
-            <Link href={`/timeline#${experience.key}`}>
-              {`${timelineMap[experience.key].title.children} - ${timelineMap[experience.key].affiliation.children} (${timelineMap[experience.key].year.replace(/\s+/g, '')})`}
-            </Link>
-          </Heading>
+          <Activity entry={experience} />
           {experience.summaries.map((summary) => (
             <Experience key={summary.key} summary={summary} />
           ))}
@@ -136,7 +144,8 @@ const Experiences = memo(function Experiences() {
   );
 });
 
-const Header = memo(function Header({ siteConfig }: HeaderProps) {
+const Header = memo(function Header() {
+  const { siteConfig } = useDocusaurusContext();
   const props = header({ siteConfig });
   return (
     <Block as="header" className={styles.header} heading={props.heading}>
@@ -154,6 +163,14 @@ const Leadership = memo(function Leadership() {
   );
 });
 
+const Preamble = memo(function Preamble() {
+  return (
+    <Block className={styles.preamble} heading={preamble.heading}>
+      <p>{preamble.content}</p>
+    </Block>
+  );
+});
+
 const Skills = memo(function Skills() {
   return (
     <Block className={styles.skills} heading={skills.heading}>
@@ -166,14 +183,6 @@ const Strengths = memo(function Strengths() {
   return (
     <Block className={styles.strengths} heading={strengths.heading}>
       {strengths.children}
-    </Block>
-  );
-});
-
-const Summary = memo(function Summary() {
-  return (
-    <Block className={styles.summary} heading={summary.heading}>
-      <p>{summary.content}</p>
     </Block>
   );
 });
@@ -197,11 +206,10 @@ const Testimonials = memo(function Testimonials() {
 });
 
 export default memo(function Content() {
-  const { siteConfig } = useDocusaurusContext();
   return (
     <>
-      <Header siteConfig={siteConfig} />
-      <Summary />
+      <Header />
+      <Preamble />
       <Strengths />
       <Leadership />
       <Experiences />

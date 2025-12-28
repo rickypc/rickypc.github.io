@@ -48,9 +48,14 @@ section.block:last-of-type {
   opacity: 0.8;
 }
 
+.block.educations .col article,
 .block.experiences .col article {
   margin: 0 0 0.5rem 1.25rem;
   text-align: justify;
+}
+
+.block.experiences .col article em.tags {
+  font-size: 0.85rem;
 }
 
 .block.experiences .col ul {
@@ -74,7 +79,7 @@ section.block:last-of-type {
 
   .block .col a,
   .block .col article,
-  .block .col article em,
+  .block .col article strong em a,
   .block .col li,
   .block .col li strong,
   .block .col p {
@@ -86,24 +91,37 @@ section.block:last-of-type {
     color: #000;
   }
 
+  .block.experiences .col article em.tags {
+    font-size: 0.8rem;
+  }
+
   .block.header .col h1 {
     margin: 0rem 0 0.15rem 0;
   }
 
   .block.header .col h1 a {
-    font-size: 1.25rem;
+    font-size: 1.75rem;
   }
 
   .block .col h2 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin: 0.5rem 0 0.15rem 0;
   }
 
   .block .col h3 {
-    font-size: 0.9rem;
     margin: 0.35rem 0 0.15rem 0;
   }
 
+  /* Add page break. */
+  .block.experiences .col h3:last-of-type {
+    margin-top: 0.75rem;
+  }
+
+  .block .col h3 a {
+    font-size: 0.95rem;
+  }
+
+  .block.educations .col article,
   .block.experiences .col article {
     margin: 0 0 0.25rem 0.75rem;
   }

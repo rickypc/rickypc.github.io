@@ -200,3 +200,6 @@ export const motion = {
 };
 
 export const useMotionValue = jest.fn((value) => value);
+export const useScroll = jest.fn(() => ({ scrollYProgress: 0 }));
+export const useSpring = jest.fn(() => ({ y: 0 }));
+export const useTransform = jest.fn();

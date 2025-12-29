@@ -44,6 +44,179 @@ export const certifications = {
   heading: { as: 'h2' as HeadingType, children: 'Certifications' },
 };
 
+export const codeBackground = {
+  content: `
+
+
+use std::time::{Duration, Instant};
+
+struct Task {
+  id: u32,
+  label: &'static str,
+  progress: f32,
+}
+
+impl Task {
+  fn new(id: u32, label: &'static str) -> Self {
+    Self { id, label, progress: 0.0 }
+  }
+  fn update(&mut self, dt: f32) {
+    self.progress = (self.progress + dt * 0.1).min(1.0);
+  }
+}
+
+struct Scheduler {
+  tasks: Vec<Task>,
+  last: Instant,
+}
+
+impl Scheduler {
+  fn new() -> Self {
+    Self { tasks: vec![], last: Instant::now() }
+  }
+  fn add(&mut self, label: &'static str) {
+    let id = self.tasks.len() as u32;
+    self.tasks.push(Task::new(id, label));
+  }
+  fn tick(&mut self) {
+    let dt = self.last.elapsed().as_secs_f32();
+    for t in &mut self.tasks {
+      t.update(dt);
+    }
+    self.last = Instant::now();
+  }
+  fn summary(&self) -> String {
+    self.tasks
+      .iter()
+      .map(|t| format!("{}: {:.0}%", t.label, t.progress * 100.0))
+      .collect::<Vec<_>>()
+      .join(", ")
+  }
+}
+
+fn compute_load(v: &[u32]) -> u32 {
+  v.iter().fold(0, |a, b| a.wrapping_add(b.wrapping_mul(3)))
+}
+
+fn generate_series(n: usize) -> Vec<u32> {
+  let mut x = 1u32;
+  let mut out = Vec::with_capacity(n);
+  for _ in 0..n {
+    x = x.rotate_left(3) ^ 0x9e37;
+    out.push(x);
+  }
+  out
+}
+
+struct Logger {
+  entries: Vec<String>,
+}
+
+impl Logger {
+  fn new() -> Self {
+    Self { entries: vec![] }
+  }
+  fn log(&mut self, msg: String) {
+    self.entries.push(msg);
+  }
+  fn flush(&self) {
+    for e in &self.entries {
+      println!("[log] {}", e);
+    }
+  }
+}
+
+fn normalize(v: &mut [f32]) {
+  let sum: f32 = v.iter().sum();
+  if sum > 0.0 {
+    for x in v {
+      *x /= sum;
+    }
+  }
+}
+
+fn smooth(v: &mut [f32]) {
+  if v.len() < 3 {
+    return;
+  }
+  let mut prev = v[0];
+  for i in 1..v.len() - 1 {
+    let current = v[i];
+    let next = v[i + 1];
+    v[i] = (prev + current + next) / 3.0;
+    prev = current;
+  }
+}
+
+struct Analyzer {
+  buffer: Vec<f32>,
+}
+
+impl Analyzer {
+  fn new() -> Self {
+    Self { buffer: vec![0.0; 16] }
+  }
+  fn sample(&mut self, x: f32) {
+    self.buffer.rotate_left(1);
+    self.buffer[self.buffer.len() - 1] = x;
+  }
+  fn process(&mut self) {
+    smooth(&mut self.buffer);
+    normalize(&mut self.buffer);
+  }
+  fn score(&self) -> f32 {
+    self.buffer.iter().enumerate().map(|(i, v)| *v * (i as f32)).sum()
+  }
+}
+
+fn checksum(v: &[u8]) -> u32 {
+  v.iter().fold(0u32, |a, b| a.wrapping_add((*b as u32).wrapping_mul(17)))
+}
+
+fn build_packet(id: u16, payload: &[u8]) -> Vec<u8> {
+  let mut out = vec![(id >> 8) as u8, (id & 0xFF) as u8];
+  out.extend_from_slice(payload);
+  let sum = checksum(payload);
+  out.extend_from_slice(&sum.to_be_bytes());
+  out
+}
+
+fn simulate_io(logger: &mut Logger) {
+  let payload = [1, 2, 3, 4, 5, 6];
+  let packet = build_packet(42, &payload);
+  logger.log(format!("packet {} bytes", packet.len()));
+}
+
+fn main() {
+  let mut sched = Scheduler::new();
+  let mut logger = Logger::new();
+  let mut analyzer = Analyzer::new();
+
+  sched.add("parse");
+  sched.add("compile");
+  sched.add("optimize");
+  sched.add("emit");
+
+  let series = generate_series(32);
+  let load = compute_load(&series);
+
+  for _ in 0..10 {
+    sched.tick();
+    analyzer.sample(sched.tasks.len() as f32);
+    analyzer.process();
+  }
+
+  simulate_io(&mut logger);
+
+  println!("load: {}", load);
+  println!("tasks: {}", sched.summary());
+  println!("score: {:.2}", analyzer.score());
+
+  logger.flush();
+}
+  `,
+};
+
 export const educations = {
   content: [
     { achievements: (<article>Outstanding Graduate Project Award</article>), key: 'calstate-fullerton' },

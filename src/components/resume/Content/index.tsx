@@ -8,6 +8,7 @@ import { clsx, textContent } from '@site/src/data/common';
 import {
   catalogMap,
   certifications,
+  codeBackground,
   educations,
   experiences,
   header,
@@ -20,14 +21,20 @@ import {
   testimonials,
   timelineMap,
 } from '@site/src/data/resume';
-import Heading from '@theme/Heading';
-import Link from '@site/src/components/common/Link';
 import {
   Fragment,
   memo,
   type PropsWithChildren,
   type ReactElement,
 } from 'react';
+import Heading from '@theme/Heading';
+import Link from '@site/src/components/common/Link';
+import {
+  motion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'motion/react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './styles.module.css';
 
@@ -90,6 +97,19 @@ const Certifications = memo(function Certifications() {
         </Fragment>
       ))}
     </Block>
+  );
+});
+
+const CodeBackground = memo(function CodeBackground() {
+  const { scrollYProgress } = useScroll();
+  const y = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, -200]),
+    { damping: 30, mass: 0.1, stiffness: 500 },
+  );
+  return (
+    <motion.span className={styles.codeBackground} style={{ y }}>
+      {codeBackground.content}
+    </motion.span>
   );
 });
 
@@ -217,6 +237,7 @@ export default memo(function Content() {
       <Certifications />
       <Skills />
       <Testimonials />
+      <CodeBackground />
     </>
   );
 });

@@ -15,3 +15,10 @@
 .resume :global(.container) {
   position: relative;
 }
+
+@media print {
+  @page {
+    margin: 0.5in;
+    size: Letter portrait;
+  }
+}

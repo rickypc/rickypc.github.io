@@ -21,7 +21,8 @@ section.block:last-of-type {
 }
 
 .block .col h1 {
-  font-size: 2rem;
+  font-size: 4.9rem;
+  text-align: center;
 }
 
 .block .col h2 {
@@ -46,6 +47,7 @@ section.block:last-of-type {
 .block.header .col p {
   font-size: 0.9rem;
   opacity: 0.8;
+  text-align: center;
 }
 
 .block.educations .col article,
@@ -73,7 +75,6 @@ section.block:last-of-type {
     rgba(0, 0, 0, 0.85) 12.5%,
     rgba(0, 0, 0, 0.25) 25%,
     rgba(0, 0, 0, 0) 100%);
-  opacity: 0.125;
   overflow: hidden;
   pointer-events: none;
   position: absolute;
@@ -89,33 +90,40 @@ section.block:last-of-type {
   z-index: -1;
 }
 
+[data-theme='dark'] .codeBackground {
+  color: #dcd2ff24;
+}
+
+[data-theme='light'] .codeBackground {
+  color: #dcd2ff;
+}
+
 @media print {
   .block,
   .block.header {
     margin-top: 0;
   }
 
-  .block:last-of-type {
+  section.block:last-of-type {
     margin-bottom: 0;
   }
 
   .block .col {
+    flex: 0 0 100%;
     line-height: 1;
+    margin-left: 0;
+    max-width: 100%;
     padding: 0;
   }
 
   .block .col a,
   .block .col article,
-  .block .col article strong em a,
   .block .col li,
   .block .col li strong,
   .block .col p {
+    color: #000;
     font-size: 0.85rem;
     opacity: 1;
-  }
-
-  .block .col a {
-    color: #000;
   }
 
   .block.experiences .col article em.tags {
@@ -123,25 +131,24 @@ section.block:last-of-type {
   }
 
   .block.header .col h1 {
-    margin: 0rem 0 0.15rem 0;
+    line-height: 1;
+    margin: 0 0 0.15rem 0;
   }
 
+  .block.header .col h1,
   .block.header .col h1 a {
+    color: #000;
     font-size: 1.75rem;
   }
 
   .block .col h2 {
+    color: #000;
     font-size: 1.1rem;
     margin: 0.5rem 0 0.15rem 0;
   }
 
   .block .col h3 {
     margin: 0.35rem 0 0.15rem 0;
-  }
-
-  /* Add page break. */
-  .block.experiences .col h3:last-of-type {
-    margin-top: 0.75rem;
   }
 
   .block .col h3 a {
@@ -153,11 +160,25 @@ section.block:last-of-type {
     margin: 0 0 0.25rem 0.75rem;
   }
 
+  .block .col ul {
+    padding-bottom: 0;
+  }
+
   .block.experiences .col ul {
     margin-left: 0.5rem;
   }
 
   .codeBackground {
     display: none;
+  }
+}
+
+/* Safari only */
+@supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
+  @media print {
+    .block .col h2,
+    .block .col h3 {
+      line-height: 1;
+    }
   }
 }

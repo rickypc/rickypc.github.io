@@ -38,6 +38,14 @@
   margin-left: auto;
 }
 
+[data-theme='dark'] .timeline a {
+  color: #a5d8ff;
+}
+
+[data-theme='dark'] .timeline a:hover {
+  color: #d0ebff;
+}
+
 .timeline .logo {
   background: #fff;
   border: 2px solid #f5f7fa;
@@ -102,18 +110,33 @@
   text-align: right;
 }
 
-.timeline .inner h2 {
+.timeline .inner h2,
+.timeline .inner h3,
+.timeline .inner h4 {
   font-family: 'Yeseva One', cursive;
-  font-size: 2rem;
   font-weight: 400;
+}
+
+.timeline .inner h2,
+.timeline .inner h3 {
   margin: 0.3rem 0;
 }
 
+.timeline .inner h2 {
+  font-size: 1.25rem;
+  letter-spacing: 0.08rem;
+}
+
+[data-theme='dark'] .timeline .inner h2 {
+  color: #c6c6c6;
+}
+
+[data-theme='light'] .timeline .inner h2 {
+  color: #40454b;
+}
+
 .timeline .inner h3 {
-  font-family: 'Yeseva One', cursive;
-  font-size: 1.45rem;
-  font-weight: 400;
-  margin: 0.3rem 0;
+  font-size: 1.6rem;
 }
 
 .timeline .inner h3 span[class*='reaction_'] span[class*='heart_'] {
@@ -138,10 +161,8 @@
 }
 
 .timeline .inner h4 {
-  font-family: 'Yeseva One', sans-serif;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-style: italic;
-  font-weight: 400;
   margin: 0.5rem 0;
 }
 
@@ -167,12 +188,13 @@
 
 @media print {
   .content:before {
-    left: 5rem;
+    left: 2.5rem;
     print-color-adjust: exact;
   }
 
   .timeline {
     break-inside: avoid;
+    margin: 0 0 1rem 0;
     width: 100%;
   }
 
@@ -180,25 +202,48 @@
     direction: ltr;
   }
 
+  .timeline .inner {
+    opacity: 1 !important;
+    transform: none !important;
+    width: calc(100% - 5rem);
+  }
+
   .left.timeline .inner {
     text-align: left;
   }
 
-  .timeline .inner {
-    opacity: 1 !important;
-    transform: none !important;
+  .timeline .inner h2,
+  .timeline .inner h3,
+  .timeline .inner h4 {
+    margin: 0.25rem 0;
+  }
+
+  .timeline .inner h2 {
+    font-size: 1.1rem;
+  }
+
+  .timeline .inner h3 {
+    font-size: 1.25rem;
+  }
+
+  .timeline .inner h4 {
+    font-size: 1rem;
   }
 
   .timeline .inner p {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    margin-bottom: 0;
+    text-align: justify;
   }
 
   [data-theme] .timeline .logo {
     background: none !important;
     border: 2px solid rgba(0, 0, 0, 0.15);
     box-shadow: none;
+    height: 5rem;
     transform: none !important;
     transition: none;
+    width: 5rem;
   }
 
   [data-theme] .timeline .logo::before {

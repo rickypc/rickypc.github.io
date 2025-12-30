@@ -123,6 +123,7 @@ export const motion = {
       </article>
     );
   },
+  aside: ({ children, ...props }: PropsWithChildren) => <aside {...props}>{children}</aside>,
   button: ({
     children,
     ref,

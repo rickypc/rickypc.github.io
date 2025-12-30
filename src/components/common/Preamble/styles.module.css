@@ -1,6 +1,6 @@
 /*!
  * All the code that follow is
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright (c) 2015 - 2025 Richard Huang <rickypc@users.noreply.github.com>.
  * All Rights Reserved. Not for reuse without permission.
  */
 
@@ -43,7 +43,9 @@
 
 @media print {
   .preamble {
-    margin-top: 0;
+    flex: 0 0 100%;
+    margin: 0;
+    max-width: 100%;
   }
 
   [data-theme] .preamble h1 {
@@ -52,6 +54,6 @@
 
   [data-theme] .preamble p {
     font-size: 0.85rem;
-    line-height: 1.5rem;
+    line-height: 1.15rem;
   }
 }

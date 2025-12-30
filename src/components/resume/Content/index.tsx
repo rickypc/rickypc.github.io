@@ -103,13 +103,13 @@ const Certifications = memo(function Certifications() {
 const CodeBackground = memo(function CodeBackground() {
   const { scrollYProgress } = useScroll();
   const y = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -200]),
+    useTransform(scrollYProgress, [0, 1], [0, -250]),
     { damping: 30, mass: 0.1, stiffness: 500 },
   );
   return (
-    <motion.span className={styles.codeBackground} style={{ y }}>
+    <motion.aside className={styles.codeBackground} style={{ y }}>
       {codeBackground.content}
-    </motion.span>
+    </motion.aside>
   );
 });
 

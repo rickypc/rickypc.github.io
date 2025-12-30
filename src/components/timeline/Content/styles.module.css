@@ -11,16 +11,53 @@
 }
 
 .content:before {
-  background: #ccd1d9;
   content: '';
   height: 100%;
   left: 50%;
   /* Half. */
   margin-left: -0.0625rem;
+  mask-image: linear-gradient(#0000, #000 1% 99%, #0000);
   position: absolute;
   top: 0;
   width: 0.125rem;
   z-index: 1;
+}
+
+[data-theme='dark'] .content:before {
+  background: repeating-linear-gradient(to bottom,
+    #bac3d4 0 0.5rem,
+    transparent 0.5rem 1rem);
+}
+
+[data-theme='light'] .content:before {
+  background: repeating-linear-gradient(to bottom,
+    #ccd1d9 0 0.5rem,
+    transparent 0.5rem 1rem);
+}
+
+.content .indicator {
+  height: 100%;
+  left: calc(50% - 0.0625rem);
+  mask-image: linear-gradient(#0000, #000 0.5% 99.5%, #0000);
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0.125rem;
+  z-index: 1;
+}
+
+[data-theme='dark'] .content .indicator {
+  background-image: linear-gradient(to top in oklab,
+    oklch(58% .32 303.9) 0%,
+    oklch(55% .26 259.8) 10%,
+    oklch(57.6% 0.066 259.7) 100%);
+}
+
+[data-theme='light'] .content .indicator {
+  background-image: linear-gradient(to top in oklab,
+    oklch(62.7% .265 303.9) 0%,
+    oklch(62.3% .214 259.815) 10%,
+    oklch(57.6% 0.066 259.7 / 0) 100%);
 }
 
 .timeline {
@@ -189,6 +226,7 @@
 @media print {
   .content:before {
     left: 2.5rem;
+    mask-image: none;
     print-color-adjust: exact;
   }
 

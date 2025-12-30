@@ -5,7 +5,13 @@
  */
 
 import { clsx, key } from '@site/src/data/common';
-import { domAnimation, LazyMotion, motion } from 'motion/react';
+import {
+  domAnimation,
+  LazyMotion,
+  motion,
+  useScroll,
+  useSpring,
+} from 'motion/react';
 import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
 import Image from '@site/src/components/common/Image';
@@ -66,6 +72,13 @@ const Timeline = memo(function Timeline({
 });
 
 export default memo(function Content() {
+  const { scrollYProgress } = useScroll();
+  // After scrollYProgress assignment.
+  const scaleY = useSpring(scrollYProgress, {
+    damping: 30,
+    restDelta: 0.001,
+    stiffness: 100,
+  });
   const [single] = useMedia('screen and (max-width: 48rem)');
 
   const position = useCallback(
@@ -82,6 +95,7 @@ export default memo(function Content() {
           {...timeline}
         />
       ))}
+      <motion.span className={styles.indicator} style={{ originY: 0, scaleY }} />
     </div>
   );
 });

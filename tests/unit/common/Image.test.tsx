@@ -83,6 +83,7 @@ describe('Image', () => {
         <Image
           alt="Alt"
           link={{ href: '/test', title: 'Test' }}
+          live
           picture={basePicture}
         />
       ));

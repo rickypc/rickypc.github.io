@@ -130,6 +130,10 @@ section.block:last-of-type {
     font-size: 0.8rem;
   }
 
+  .block.header {
+    margin-bottom: 1rem;
+  }
+
   .block.header .col h1 {
     line-height: 1;
     margin: 0 0 0.15rem 0;

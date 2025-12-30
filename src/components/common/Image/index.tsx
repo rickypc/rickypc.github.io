@@ -142,10 +142,10 @@ const Picture = memo(function Picture({
                 <motion.img
                   {...rest}
                   alt={loaded ? alt : undefined}
-                  animate={{ opacity: loaded ? 1 : 0 }}
+                  animate={{ opacity: live || loaded ? 1 : 0 }}
                   draggable={false}
                   height={fit.height}
-                  initial={{ opacity: 0 }}
+                  initial={{ opacity: live ? 1 : 0 }}
                   key={key(alt, 'picture')}
                   onLoad={onFallbackLoad}
                   src={fit.path}

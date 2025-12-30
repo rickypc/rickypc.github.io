@@ -163,8 +163,15 @@
   }
 
   .content .story {
+    margin-bottom: 1rem;
     opacity: 1 !important;
+    padding: 0.75rem;
     transform: none !important;
+  }
+
+  .content .story h2,
+  .content .story>p {
+    margin-bottom: 0.75rem;
   }
 
   .content .story h2 {
@@ -177,5 +184,19 @@
 
   .content .story address .dash::before {
     print-color-adjust: exact;
+  }
+
+  .content address .name {
+    font-size: 0.8rem;
+    line-height: 1.1rem;
+  }
+
+  .content address .title {
+    font-size: 0.75rem;
+  }
+
+  .content address .affiliation svg {
+    height: 0.95rem;
+    width: 0.95rem;
   }
 }

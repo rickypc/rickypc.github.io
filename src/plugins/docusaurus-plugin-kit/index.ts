@@ -449,6 +449,8 @@ export default function plugin(context: LoadContext): Plugin {
               'Cantarell',
               'Open Sans',
               'Helvetica Neue',
+              'Arial',
+              'Noto Sans',
               'sans-serif',
             ],
           }),

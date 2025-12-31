@@ -11,6 +11,7 @@ import {
   context,
   fileName,
   key,
+  oneLine,
   tail,
   textContent,
 } from '@site/src/data/common';
@@ -125,6 +126,41 @@ describe('data.common', () => {
 
     it('handles empty prefix or suffix correctly', () => {
       expect(key('Solo', '', '', 'end', '_')).toBe('solo_end');
+    });
+  });
+
+  describe('oneLine', () => {
+    it.each([
+      {
+        name: 'removes newlines and indentation',
+        input: `
+        hello
+          world
+      `,
+        expected: ' hello world ',
+      },
+      {
+        name: 'handles strings with no newlines',
+        input: 'hello world',
+        expected: 'hello world',
+      },
+      {
+        name: 'handles empty string',
+        input: '',
+        expected: '',
+      },
+      {
+        name: 'handles multiple consecutive newlines',
+        input: 'hello\n\n\nworld',
+        expected: 'hello world',
+      },
+      {
+        name: 'preserves internal spaces',
+        input: 'hello   world',
+        expected: 'hello   world',
+      },
+    ])('$name', ({ input, expected }) => {
+      expect(oneLine(input)).toBe(expected);
     });
   });
 

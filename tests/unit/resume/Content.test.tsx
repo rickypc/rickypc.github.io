@@ -36,7 +36,7 @@ describe('resume.Content', () => {
     expect(screen.getByText('My Site')).toBeInTheDocument();
 
     // Preamble.
-    expect(screen.getByText('Professional Summary')).toBeInTheDocument();
+    expect(screen.getByText('Summary')).toBeInTheDocument();
 
     // Strengths.
     expect(screen.getByText('Core Strengths')).toBeInTheDocument();
@@ -44,28 +44,33 @@ describe('resume.Content', () => {
       .toBeInTheDocument();
 
     // Leadership.
-    expect(screen.getByText('Leadership Profile')).toBeInTheDocument();
+    expect(screen.getByText('Leadership')).toBeInTheDocument();
     expect(screen.getByText('Define architecture and technical strategy across teams'))
       .toBeInTheDocument();
 
     // Experiences.
-    expect(screen.getByText('Professional Experience')).toBeInTheDocument();
-    expect(screen.getByText('Principal-Level Senior Software Engineer - Experian Consumer Services (2013-Present)'))
-      .toBeInTheDocument();
-    expect(screen.getByText('Experian Consumer Services')).toBeInTheDocument();
+    expect(screen.getByText('Experience')).toBeInTheDocument();
+    expect(screen.getByRole('heading', {
+      level: 3,
+      name: /Principal-Level Senior Software Engineer.*Experian Consumer Services.*2013 - Present/i,
+    })).toBeInTheDocument();
 
     // Educations.
     expect(screen.getByText('Education')).toBeInTheDocument();
-    expect(screen.getByText('Master of Science, Software Engineering - California State University, Fullerton (2005-2007)'))
-      .toBeInTheDocument();
+    expect(screen.getByRole('heading', {
+      level: 3,
+      name: /Master of Science, Software Engineering.*California State University, Fullerton.*2005 - 2007/i,
+    })).toBeInTheDocument();
 
     // Certifications.
     expect(screen.getByText('Certifications')).toBeInTheDocument();
-    expect(screen.getByText('Advanced Studies, Data Science - Stanford University (2015)'))
-      .toBeInTheDocument();
+    expect(screen.getByRole('heading', {
+      level: 3,
+      name: /Advanced Studies, Data Science.*Stanford University.*2015/i,
+    })).toBeInTheDocument();
 
     // Skills.
-    expect(screen.getByText('Technical Skills')).toBeInTheDocument();
+    expect(screen.getByText('Skills')).toBeInTheDocument();
     expect(screen.getByText('Cloud & Infrastructure:')).toBeInTheDocument();
 
     // Testimonials.

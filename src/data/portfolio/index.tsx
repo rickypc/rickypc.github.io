@@ -7,11 +7,20 @@
 /* eslint-disable global-require */
 
 import { type LayoutProps } from '@site/src/components/common/Layout';
+import { oneLine } from '@site/src/data/common';
 import { type PreambleProps } from '@site/src/components/common/Preamble';
 
 export const catalog = [
   {
-    description: 'A consumer-focused platform developed to provide individuals with secure access to their credit reports and credit scores at no cost. As part of Experian - one of the three largest credit bureaus - the system was designed for scale and reliability, enabling millions of users to monitor their financial health through web and mobile applications. Experian also expanded its offerings with Smart Money, a digital banking service providing checking and savings accounts alongside pre-approved credit cards and loans, extending its role in empowering consumers to manage and improve their financial well-being.',
+    description: oneLine(`A consumer-focused system providing individuals with
+      secure, no-cost access to their credit reports, credit scores, and
+      identity monitoring tools. Built as part of one of the nation's major
+      credit bureaus, the platform is engineered for scale and reliability,
+      supporting millions of users across web and mobile channels as they track
+      and improve their financial health. The ecosystem also includes Smart
+      Money, a digital banking extension offering checking and savings
+      accounts, pre-approved credit cards, and personalized loan options,
+      further empowering consumers to manage their financial well-being.`),
     href: 'https://experian.com',
     images: [
       {
@@ -72,6 +81,11 @@ export const catalog = [
       },
     ],
     prefix: 'experian',
+    summary: oneLine(`A large-scale platform that provides secure access to
+      credit reports, credit scores, identity monitoring, and Smart Money
+      digital banking. Designed for multi-channel delivery across web and
+      mobile, supporting millions of users with high availability, strong
+      security, and real-time financial insights.`),
     tags: [
       'Python',
       'React',
@@ -84,10 +98,18 @@ export const catalog = [
       'PHP',
       'REST',
     ],
-    title: 'Experian Consumer Services',
+    title: 'Consumer Credit & Financial Wellness Platform',
   },
   {
-    description: 'A high-volume email marketing platform built for enterprise clients to deliver targeted campaigns at massive scale. Designed as a B2B solution, the system enabled leading brands - including Yahoo!, Starbucks, Walgreens, SiriusXM, and Carnival - to engage their customers through personalized messaging. Engineered for reliability and throughput, the architecture supported billions of emails per day with advanced segmentation, tracking, and reporting features, giving client teams the flexibility to manage campaigns and measure performance across diverse audiences.',
+    description: oneLine(`A large-scale email marketing system built for
+      enterprise brands to deliver highly targeted campaigns at massive volume.
+      Designed as a B2B platform, it powered customer engagement for major
+      global companies such as Yahoo!, Starbucks, Walgreens, SiriusXM, and
+      Carnival through personalized, data-driven messaging. Engineered for
+      reliability and throughput, the architecture supported billions of emails
+      per day with advanced segmentation, tracking, and reporting capabilities,
+      giving marketing teams the flexibility to orchestrate campaigns and
+      measure performance across diverse audiences.`),
     href: 'https://meetmarigold.com',
     images: [
       {
@@ -132,6 +154,9 @@ export const catalog = [
       },
     ],
     prefix: 'cheetahmail',
+    summary: oneLine(`High-throughput system powering targeted campaigns for
+      major global brands, supporting billions of emails per day with advanced
+      segmentation, tracking, and reporting.`),
     tags: [
       'Python',
       'Linux',
@@ -141,10 +166,15 @@ export const catalog = [
       'Perl',
       'REST',
     ],
-    title: 'Experian CheetahMail',
+    title: 'Enterprise Email Marketing Platform',
   },
   {
-    description: 'A scalable platform designed for ticket sellers to showcase live event offerings - from sports to concerts - directly to Yahoo! users. Built on a SOAP Web Services architecture, the system was engineered for flexibility and high traffic volume, supporting millions of visits across Yahoo!\'s ecosystem.',
+    description: oneLine(`A scalable ticketing platform enabling sellers to
+      publish live event inventory - sports, concerts, and theater - directly
+      across Yahoo!'s high-traffic ecosystem. Built on a SOAP Web Services
+      architecture, the system supported flexible integrations and sustained
+      millions of user sessions, delivering reliable performance under heavy
+      load while powering event discovery and purchasing for a global audience.`),
     href: undefined,
     images: [
       {
@@ -173,6 +203,9 @@ export const catalog = [
       },
     ],
     prefix: 'yahoo-tickets',
+    summary: oneLine(`Scalable ticketing platform enabling sellers to publish
+      live event inventory across Yahoo!'s ecosystem, supporting high-traffic
+      volume, flexible integrations, and reliable performance.`),
     tags: [
       'C#',
       'TypeScript',
@@ -184,7 +217,11 @@ export const catalog = [
     title: 'Yahoo! Tickets',
   },
   {
-    description: 'A pioneering tech media platform founded by Om Malik, GigaOm delivers insights on startups, emerging technologies, and industry trends. The site was built as a custom WordPress plugin, enabling scalable content delivery across multiple topic channels and serving millions of engaged readers.',
+    description: oneLine(`A pioneering tech media system powering GigaOm's
+      multi-channel coverage of startups, emerging technologies, and industry
+      trends. Built as a custom WordPress plugin, the platform supported
+      scalable content delivery, flexible editorial workflows, and high reader
+      engagement across millions of monthly visitors.`),
     href: 'https://gigaom.com',
     images: [
       {
@@ -261,16 +298,25 @@ export const catalog = [
       },
     ],
     prefix: 'gigaom',
+    summary: oneLine(`Custom publishing engine powering a multi-channel tech
+      media site with scalable content delivery, high engagement, and flexible
+      editorial workflows.`),
     tags: [
       'PHP',
       'TypeScript',
       'MySQL',
       'REST',
     ],
-    title: 'GigaOm',
+    title: 'GigaOm Publishing Platform',
   },
   {
-    description: 'An online marketplace for reselling tickets to sports, theater, and concert events - along with curated vacation packages for major games. The platform was built using a diverse technology stack to support both B2B and B2C transactions, ensuring flexibility, reliability, and scale across multiple business models.',
+    description: oneLine(`An online marketplace for reselling tickets to
+      sports, theater, and concert events, along with curated travel packages
+      for major games. Built to support both B2B and B2C commerce models, the
+      platform handled high-volume search, purchasing flows, and partner
+      integrations. Its diverse technology stack enabled transactional
+      reliability, operational flexibility, and scale across multiple business
+      lines.`),
     href: 'https://www.tickpick.com',
     images: [
       {
@@ -315,6 +361,9 @@ export const catalog = [
       },
     ],
     prefix: 'razorgator',
+    summary: oneLine(`B2B/B2C ticket marketplace supporting sports, concerts,
+      theater, and travel packages, engineered for transactional reliability,
+      multi-model commerce, and high-volume search and purchasing flows.`),
     tags: [
       'C#',
       'TypeScript',
@@ -324,10 +373,14 @@ export const catalog = [
       'REST',
       'XML',
     ],
-    title: 'RazorGator',
+    title: 'RazorGator Ticket Marketplace',
   },
   {
-    description: 'A long-standing music retailer based in Tucson, Arizona, Rainbow Guitars has supported local and international musicians for over 33 years. The platform was built to extend their passion for music beyond the storefront - connecting artists and enthusiasts worldwide through a rich, accessible online experience.',
+    description: oneLine(`A digital storefront extending a 33-year music
+      retailer's reach to global customers. Built to showcase detailed product
+      information, diverse inventory, and a rich browsing experience, the
+      platform connected musicians worldwide to the shop's passion for
+      instruments and sound.`),
     href: 'https://www.rainbowguitars.com',
     images: [
       {
@@ -340,6 +393,9 @@ export const catalog = [
       },
     ],
     prefix: 'rainbow-guitars',
+    summary: oneLine(`Rainbow Guitars E-Commerce Platform - Online retail
+      system supporting rich product detail, diverse inventory, and a smooth
+      purchasing experience for a long-standing music retailer.`),
     tags: [
       'C#',
       'TypeScript',
@@ -347,10 +403,14 @@ export const catalog = [
       'ASP.NET',
       'REST',
     ],
-    title: 'Rainbow Guitars',
+    title: 'Rainbow Guitars E-Commerce Platform',
   },
   {
-    description: 'A family-run store rooted in a deep appreciation for artisan craftsmanship and authentic living. The platform was built to showcase their passion - bringing beautifully crafted products and rich, sensory details to a global audience, while reflecting the lifestyle and values behind every offering.',
+    description: oneLine(`A lifestyle-driven commerce experience highlighting
+      handcrafted goods and artisan craftsmanship. Designed to reflect the
+      brand's values and aesthetic, the platform delivered rich visual
+      storytelling and a premium shopping experience for customers seeking
+      authentic, curated products.`),
     href: undefined,
     images: [
       {
@@ -363,6 +423,8 @@ export const catalog = [
       },
     ],
     prefix: 'fortini-home',
+    summary: oneLine(`Lifestyle-focused retail system showcasing handcrafted
+      products with rich visual storytelling and a premium shopping experience.`),
     tags: [
       'C#',
       'TypeScript',
@@ -370,10 +432,14 @@ export const catalog = [
       'ASP.NET',
       'REST',
     ],
-    title: 'Fortini Home',
+    title: 'Fortini Home Artisan Retail Platform',
   },
   {
-    description: 'A global logistics platform tailored for the trade show industry - serving exhibitors, exhibit houses, and event organizers. Built to extend their reach and streamline operations, the system enables seamless international shipping and helps clients deliver standout experiences around the world.',
+    description: oneLine(`A global logistics system built for the trade show
+      industry, supporting exhibitors, exhibit houses, and event organizers.
+      Designed for international shipping workflows, operational visibility,
+      and seamless coordination, the platform helped clients manage complex
+      logistics and deliver standout event experiences worldwide.`),
     href: undefined,
     images: [
       {
@@ -386,15 +452,22 @@ export const catalog = [
       },
     ],
     prefix: 'exhibit-transport',
+    summary: oneLine(`Global logistics system supporting international shipping
+      workflows, operational visibility, and seamless coordination for the
+      trade show industry.`),
     tags: [
       'PHP',
       'TypeScript',
       'MySQL',
     ],
-    title: 'Exhibit Transport',
+    title: 'Exhibit Transport Logistics Platform',
   },
   {
-    description: 'A bold and independent BMX brand known for crafting bikes that stand up to real-world punishment. The platform was built to amplify their unique voice and showcase bikes designed to handle the intensity of riders who push limits - just like the founders and their crew have done from the start.',
+    description: oneLine(`A brand-driven e-commerce system showcasing
+      high-performance BMX products. Built to reflect the company's bold
+      identity, the platform highlighted rugged bikes designed for real-world
+      punishment while supporting robust product management and customer
+      engagement.`),
     href: 'https://www.sandmbikes.com',
     images: [
       {
@@ -407,15 +480,22 @@ export const catalog = [
       },
     ],
     prefix: 'sm-bikes',
+    summary: oneLine(`Brand-driven commerce system showcasing high-performance
+      BMX products with strong product management and customer engagement
+      capabilities.`),
     tags: [
       'PHP',
       'TypeScript',
       'MySQL',
     ],
-    title: 'S&M Bikes',
+    title: 'S&M Bikes Commerce Platform',
   },
   {
-    description: 'A service-driven platform designed to help Clipper Corp deliver tailored solutions that boost revenue while reducing operational costs. Built to support innovation and client engagement, the system empowers their team to offer strategic, cost-effective services to a growing global audience.',
+    description: oneLine(`A service-oriented system enabling Clipper Corp to
+      deliver tailored solutions that increase revenue and reduce operational
+      costs. Built for flexibility and client engagement, the platform
+      supported scalable service delivery and strengthened the company's
+      ability to innovate for a global audience.`),
     href: 'https://www.clippercorp.com',
     images: [
       {
@@ -428,16 +508,24 @@ export const catalog = [
       },
     ],
     prefix: 'clipper-corp',
+    summary: oneLine(`Service-oriented system enabling tailored solutions,
+      scalable delivery, and improved operational efficiency.`),
     tags: [
       'PHP',
       'TypeScript',
       'MySQL',
     ],
-    title: 'Clipper Corp',
+    title: 'Clipper Corp Service Solutions Platform',
   },
   {
-    description: 'A wireless asset management platform designed to support real-time vehicle and asset tracking. Built to deliver GPS-based monitoring, internet-enabled tracking, and robust backend and user interface applications, the system laid the foundation for future innovations in connected mobility.',
-    href: undefined,
+    description: oneLine(`A wireless asset-management system built to provide
+      continuous, real-time tracking of vehicles and high-value equipment.
+      Designed with GPS-based monitoring, internet-enabled telemetry, and a
+      robust backend and user interface layer, the platform delivered reliable
+      location intelligence, alerts, and operational visibility. Its
+      architecture established the groundwork for future advancements in
+      connected mobility and large-scale fleet tracking solutions.`),
+    href: 'https://www.airiq.com',
     images: [
       {
         alt: 'Aircept Landing',
@@ -465,6 +553,9 @@ export const catalog = [
       },
     ],
     prefix: 'airiq',
+    summary: oneLine(`System supporting continuous vehicle and equipment
+      tracking with GPS monitoring, telemetry, alerts, and location
+      intelligence.`),
     tags: [
       'C#',
       'TypeScript',
@@ -472,10 +563,14 @@ export const catalog = [
       'ASP.NET',
       'REST',
     ],
-    title: 'AirIQ (formerly Aircept)',
+    title: 'Real-Time GPS Asset Tracking Platform',
   },
   {
-    description: 'A youth-focused clothing retailer known for its signature denim, graphic tees, and casual wear. The platform was developed to launch their e-commerce presence—making it easy for customers to browse and purchase online, while extending the brand\'s reach beyond physical retail.',
+    description: oneLine(`A digital commerce system launching the online
+      presence of a national youth-focused clothing retailer. Built for
+      product discovery, merchandising, and seamless purchasing, the platform
+      extended the brand's reach beyond physical stores and supported a modern
+      retail experience.`),
     href: undefined,
     images: [
       {
@@ -496,16 +591,23 @@ export const catalog = [
       },
     ],
     prefix: 'anchorblue',
+    summary: oneLine(`Online retail platform supporting product discovery,
+      merchandising, and seamless purchasing for a national youth clothing
+      brand.`),
     tags: [
       'PHP',
       'TypeScript',
       'MySQL',
       'REST',
     ],
-    title: 'AnchorBlue',
+    title: 'AnchorBlue E-Commerce Platform',
   },
   {
-    description: 'A precision-driven platform built to showcase WheelBuilder\'s commitment to high-quality wheel products and services. Through meticulous parts selection and rigorous quality control, the system enables global access to their craftsmanship - connecting riders everywhere with performance they can trust.',
+    description: oneLine(`A precision-driven product system showcasing
+      WheelBuilder's commitment to high-quality wheel craftsmanship. Built to
+      support custom configuration, meticulous parts selection, and global
+      ordering, the platform connected riders worldwide with performance they
+      could trust.`),
     href: 'https://wheelbuilder.com',
     images: [
       {
@@ -518,16 +620,22 @@ export const catalog = [
       },
     ],
     prefix: 'wheelbuilder',
+    summary: oneLine(`Precision-driven product system supporting custom wheel
+      configuration, accurate ordering, and high-quality product presentation.`),
     tags: [
       'PHP',
       'TypeScript',
       'MySQL',
       'REST',
     ],
-    title: 'WheelBuilder',
+    title: 'WheelBuilder Custom Wheel Platform',
   },
   {
-    description: 'A respected leader in engineering and management services, known for delivering quality and building long-term client trust. The platform was developed to extend their capabilities into a dynamic marketplace - offering efficient, consistent, and responsive solutions tailored to evolving industry demands.',
+    description: oneLine(`A dynamic services platform extending a respected
+      engineering and management firm into a modern digital marketplace. Built
+      for consistent, responsive client engagement, the system supported
+      scalable operations and evolving industry demands while reinforcing
+      long-term client trust.`),
     href: 'https://www.pacificaservices.com',
     images: [
       {
@@ -540,17 +648,23 @@ export const catalog = [
       },
     ],
     prefix: 'pacifica-services',
+    summary: oneLine(`Dynamic services system enabling consistent client
+      engagement, scalable operations, and support for evolving industry needs.`),
     tags: [
       'PHP',
       'TypeScript',
       'MySQL',
     ],
-    title: 'Pacifica Services',
+    title: 'Pacifica Services Engineering Platform',
   },
 ];
 
+export const catalogMap = Object.fromEntries(catalog.map((item) => [item.prefix, item]));
+
 export const layout: LayoutProps = {
-  description: 'Scalable platforms for Yahoo!, GigaOm, & more - Ricky Huang\'s portfolio showcases engineering, media, e-commerce & logistics expertise.',
+  description: oneLine(`Scalable platforms for Yahoo!, GigaOm, & more - Ricky
+    Huang's portfolio showcases engineering, media, e-commerce & logistics
+    expertise.`),
   keywords: [
     'software engineering portfolio',
     'Yahoo! Tickets',
@@ -583,10 +697,10 @@ export const layout: LayoutProps = {
 };
 
 export const preamble: PreambleProps = {
-  description: `Each project here reflects years of hands-on experience,
-  thoughtful problem-solving, and a commitment to quality. Alongside every
-  build, you'll find the technology stack that brought it to life, the impact
-  it delivered, and the continual learning that keeps my work aligned with the
-  pace of modern technology.`.replace(/\n\s*/g, ' '),
+  description: oneLine(`Each project here reflects years of hands-on
+    experience, thoughtful problem-solving, and a commitment to quality.
+    Alongside every build, you'll find the technology stack that brought it to
+    life, the impact it delivered, and the continual learning that keeps my
+    work aligned with the pace of modern technology.`),
   title: 'Portfolio',
 };

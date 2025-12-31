@@ -5,6 +5,7 @@
  */
 
 import { type LayoutProps } from '@site/src/components/common/Layout';
+import { oneLine } from '@site/src/data/common';
 import People from '@site/src/pages/about/img/type.people.svg';
 import { type PreambleProps } from '@site/src/components/common/Preamble';
 import Task from '@site/src/pages/about/img/type.task.svg';
@@ -26,7 +27,8 @@ export const characteristic = {
 export const headline = 'Leading with People, Purpose, and Results';
 
 export const layout: LayoutProps = {
-  description: 'Ricky Huang blends people skills, sharp analysis, and results-driven leadership to inspire teams and deliver impact.',
+  description: oneLine(`Ricky Huang blends people skills, sharp analysis, and
+    results-driven leadership to inspire teams and deliver impact.`),
   keywords: [
     'leadership',
     'people skills',
@@ -54,29 +56,25 @@ export const layout: LayoutProps = {
 };
 
 export const paragraphs = [
-  `On the left, you'll find two graphs that capture how I work: one reflects
-  my adaptability and ability to influence, while the other shows how I balance
-  thoughtful analysis with strong execution.`.replace(/\n\s*/g, ' '),
-  `I bring together emotional intelligence, a broad network, and clear,
-  decisive leadership. I thrive in complex environments - digging into
-  challenges, analyzing them with care, and moving toward meaningful results.
-  At the heart of it all, I'm focused on connecting people, inspiring teams,
-  and turning ideas into action, supported by modern tools that help me think
-  and iterate with greater clarity.`.replace(/\n\s*/g, ' '),
+  oneLine(`On the left, you'll find two graphs that capture how I work: one
+    reflects my adaptability and ability to influence, while the other shows
+    how I balance thoughtful analysis with strong execution.`),
+  oneLine(`I bring together emotional intelligence, a broad network, and clear,
+    decisive leadership. I thrive in complex environments - digging into
+    challenges, analyzing them with care, and moving toward meaningful results.
+    At the heart of it all, I'm focused on connecting people, inspiring teams,
+    and turning ideas into action, supported by modern tools that help me think
+    and iterate with greater clarity.`),
 ];
 
 export const preamble: PreambleProps = {
-  description: 'I bring together a sharp focus on results with thoughtful analysis and sound judgment - always aiming to build meaningful outcomes through strong leadership and human connection.',
+  description: oneLine(`I bring together a sharp focus on results with
+    thoughtful analysis and sound judgment - always aiming to build meaningful
+    outcomes through strong leadership and human connection.`),
   title: 'About Ricky Huang',
 };
 
 export const types = [
-  {
-    alt: 'Transformer People Type',
-    Image: People,
-  },
-  {
-    alt: 'Transactor Task Type',
-    Image: Task,
-  },
+  { alt: 'Transformer People Type', Image: People },
+  { alt: 'Transactor Task Type', Image: Task },
 ];

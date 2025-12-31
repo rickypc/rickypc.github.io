@@ -4,7 +4,8 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { body } from './_common';
+import { body } from '#buddhism/_common';
+import { oneLine } from '#root/src/data/common';
 
 /**
  * Generates a pdfMake object for `thangka backside mantra`.
@@ -75,15 +76,16 @@ export default function thangka(path: string) {
         lineHeight: 0.85,
       },
       info: {
-        keywords: `This document is about the
+        keywords: oneLine(`This document is about the
           ${transliteration?.title?.toLowerCase()} and its sacred role in
           traditional rituals where prayers are placed on the back of a paubhā
           or thangka to serve as relics in support of purification and the
           removal of obscuration while nurturing wisdom and compassion so that
-          practitioners may advance toward Buddhahood`.replace(/\n\s*/g, ' '),
-        subject: `Placing prayers on the back of a paubhā or thangka helps
-          purify defilement and obscuration, fosters wisdom and compassion, and
-          supports the attainment of Buddhahood in this very lifetime`.replace(/\n\s*/g, ' '),
+          practitioners may advance toward Buddhahood`),
+        subject: oneLine(`Placing prayers on the back of a paubhā or thangka
+          helps purify defilement and obscuration, fosters wisdom and
+          compassion, and supports the attainment of Buddhahood in this very
+          lifetime`),
         title: `${transliteration?.title?.[0]}${transliteration?.title?.slice(1)?.toLowerCase()} paubhā/thangka prayer`,
       },
       pageMargins: [7.5, 0, 7.5, 0],

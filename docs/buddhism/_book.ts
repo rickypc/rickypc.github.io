@@ -4,7 +4,8 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import image, { type Image } from './_image';
+import image, { type Image } from '#buddhism/_image';
+import { oneLine } from '#root/src/data/common';
 
 type Page = {
   chapters?: string[];
@@ -184,14 +185,14 @@ export default async function book(path: string) {
       content,
       defaultStyle: { font: 'NotoSans', fontSize: 10 },
       info: {
-        keywords: `This document is about the ${title?.toLowerCase()} prayer
-          book also known as pustaka or pecha and its sacred role in
+        keywords: oneLine(`This document is about the ${title?.toLowerCase()}
+          prayer book also known as pustaka or pecha and its sacred role in
           traditional prayer rituals where it supports purification and the
           removal of obscuration while nurturing wisdom and compassion so that
-          practitioners may advance toward Buddhahood`.replace(/\n\s*/g, ' '),
-        subject: `Reciting prayer purifies defilement and obscuration,
+          practitioners may advance toward Buddhahood`),
+        subject: oneLine(`Reciting prayer purifies defilement and obscuration,
           fosters wisdom and compassion, and supports the attainment of
-          Buddhahood in this very lifetime`.replace(/\n\s*/g, ' '),
+          Buddhahood in this very lifetime`),
         title: `${title?.[0]}${title?.slice(1)?.toLowerCase()} prayer book`,
       },
       pageMargins: [7.5, 7.5, 7.5, 7.5],

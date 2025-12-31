@@ -139,6 +139,8 @@ const key = (
   return `${begin}${(value as string)?.toLowerCase?.().replace(/\s+/, '-').replace(/\.[^/.]+$/, '')}${end}`;
 };
 
+export const oneLine = (text: string) => text.replace(/\n\s*/g, ' ');
+
 const tail = (path: string, keyword: string) => (path?.slice((path?.lastIndexOf(keyword) || -1) + 1) || '');
 
 // After key & tail assignments.

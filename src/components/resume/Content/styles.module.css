@@ -13,25 +13,68 @@ section.block:last-of-type {
   padding: 0 6rem;
 }
 
+.block .col article,
+.block .col p,
+.block .col ul {
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+}
+
 .block .col h1,
 .block .col h2,
 .block .col h3 {
-  font-weight: 700;
+  font-family: 'Yeseva One', cursive;
+  font-weight: 400;
   margin: 2rem 0 0.5rem 0;
 }
 
 .block .col h1 {
-  font-size: 4.9rem;
+  font-size: 4.7rem;
   text-align: center;
+}
+
+.block .col h1 a:hover {
+  text-decoration-thickness: 0.0625rem;
+  text-underline-offset: 0.375rem;
+}
+
+.block .col h2,
+.block .col h3,
+.block.header .col p.contacts {
+  align-items: center;
+  display: flex;
 }
 
 .block .col h2 {
   font-size: 1.4rem;
 }
 
+.block .col h2 svg {
+  margin: 0 0.3rem 0 0;
+}
+
 .block .col h3 {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  justify-content: space-between;
   margin-top: 1.5rem;
+}
+
+[data-theme='dark'] .block .col h3 .affiliation {
+  color: #9c9ea6;
+  text-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, 0.18);
+}
+
+[data-theme='dark'] .block .col h3 .year {
+  color: #81838a;
+}
+
+[data-theme='light'] .block .col h3 .affiliation {
+  color: #6f7680;
+  text-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='light'] .block .col h3 .year {
+  color: #868e96;
 }
 
 .block .col p {
@@ -45,9 +88,19 @@ section.block:last-of-type {
 }
 
 .block.header .col p {
-  font-size: 0.9rem;
-  opacity: 0.8;
   text-align: center;
+}
+
+.block.header .col p.contacts {
+  justify-content: center;
+}
+
+.block.header .col p.contacts svg {
+  margin: 0 0.1rem 0 1rem;
+}
+
+.block.header .col p.contacts svg:first-of-type {
+  margin-left: 0;
 }
 
 .block.educations .col article,
@@ -62,6 +115,12 @@ section.block:last-of-type {
 
 .block.experiences .col ul {
   margin-left: 1.25rem;
+}
+
+.block .col ul li::marker {
+  content: '» ';
+  font-size: 1.175rem;
+  line-height: 0;
 }
 
 .codeBackground {
@@ -120,10 +179,11 @@ section.block:last-of-type {
   .block .col article,
   .block .col li,
   .block .col li strong,
+  .block .col li strong em,
+  .block .col li strong em a,
   .block .col p {
     color: #000;
     font-size: 0.85rem;
-    opacity: 1;
   }
 
   .block.experiences .col article em.tags {
@@ -131,7 +191,15 @@ section.block:last-of-type {
   }
 
   .block.header {
-    margin-bottom: 1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .block.header .col h1,
+  .block.header .col h1 a,
+  .block .col h2,
+  .block .col h3,
+  .block .col h3 a {
+    color: #000;
   }
 
   .block.header .col h1 {
@@ -141,12 +209,10 @@ section.block:last-of-type {
 
   .block.header .col h1,
   .block.header .col h1 a {
-    color: #000;
     font-size: 1.75rem;
   }
 
   .block .col h2 {
-    color: #000;
     font-size: 1.1rem;
     margin: 0.5rem 0 0.15rem 0;
   }
@@ -155,6 +221,7 @@ section.block:last-of-type {
     margin: 0.35rem 0 0.15rem 0;
   }
 
+  .block .col h3,
   .block .col h3 a {
     font-size: 0.95rem;
   }
@@ -172,6 +239,11 @@ section.block:last-of-type {
     margin-left: 0.5rem;
   }
 
+  .block .col ul li::marker {
+    font-size: 1.05rem;
+    line-height: 0;
+  }
+
   .codeBackground {
     display: none;
   }
@@ -179,10 +251,30 @@ section.block:last-of-type {
 
 /* Safari only */
 @supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
+  .block .col ul {
+    list-style: none;
+  }
+
+  .block .col ul li {
+    position: relative;
+  }
+
+  .block .col ul li::before {
+    content: '»';
+    left: -1.15rem;
+    line-height: 1.35rem;
+    position: absolute;
+  }
+
   @media print {
     .block .col h2,
     .block .col h3 {
       line-height: 1;
+    }
+
+    .block .col ul li::before {
+      left: -0.8rem;
+      line-height: 0.7rem;
     }
   }
 }

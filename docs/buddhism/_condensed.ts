@@ -4,7 +4,8 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import { body, type Substance, substance } from './_strip';
+import { body, type Substance, substance } from '#buddhism/_strip';
+import { oneLine } from '#root/src/data/common';
 
 /**
  * Generates a pdfMake object for `condensed mantra roll`.
@@ -122,17 +123,17 @@ export default function condensed(path: string) {
       content,
       defaultStyle: { font: 'NotoSans', fontSize: fontSizes.default, lineHeight },
       info: {
-        keywords: `This document is about the
+        keywords: oneLine(`This document is about the
           ${transliteration?.title?.toLowerCase()} and its sacred role
           in traditional consecration rituals where condensed prayer rolls or
           zung are placed inside Buddha statues or stupas or prayer wheels to
           serve as relics in support of purification and the removal of
           obscuration while nurturing wisdom and compassion so that
-          practitioners may advance toward Buddhahood`.replace(/\n\s*/g, ' '),
-        subject: `Placing condensed prayer rolls inside a Buddha statue or
-          prayer wheel helps purify defilement and obscuration, fosters wisdom
-          and compassion, and supports the attainment of Buddhahood in this
-          very lifetime`.replace(/\n\s*/g, ' '),
+          practitioners may advance toward Buddhahood`),
+        subject: oneLine(`Placing condensed prayer rolls inside a Buddha statue
+          or prayer wheel helps purify defilement and obscuration, fosters
+          wisdom and compassion, and supports the attainment of Buddhahood in
+          this very lifetime`),
         title: `${transliteration?.title?.[0]}${transliteration?.title?.slice(1)?.toLowerCase()} condensed prayer roll`,
       },
       pageMargins: [7.5, 7.5, 7.5, 7.5],

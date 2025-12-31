@@ -7,6 +7,7 @@
 /* eslint-disable global-require */
 
 import { type LayoutProps } from '@site/src/components/common/Layout';
+import { oneLine } from '@site/src/data/common';
 import { type PictureInfo } from '@site/src/components/common/Image';
 import { type PreambleProps } from '@site/src/components/common/Preamble';
 
@@ -28,7 +29,8 @@ export type TimelineProps = {
 };
 
 export const layout: LayoutProps = {
-  description: 'Milestones in Ricky Huang\'s journey - from architecture to engineering, startups to global impact, and everything in between.',
+  description: oneLine(`Milestones in Ricky Huang's journey - from architecture
+    to engineering, startups to global impact, and everything in between.`),
   keywords: [
     'career timeline',
     'software engineering milestones',
@@ -64,10 +66,10 @@ export const layout: LayoutProps = {
 };
 
 export const preamble: PreambleProps = {
-  description: `A curated journey through key milestones in my career,
-  education, and technical growth. Each moment reflects a step forward -
-  building expertise, shaping ideas, and driving impact across industries and
-  technologies.`.replace(/\n\s*/g, ' '),
+  description: oneLine(`A curated journey through key milestones in my career,
+    education, and technical growth. Each moment reflects a step forward -
+    building expertise, shaping ideas, and driving impact across industries and
+    technologies.`),
   title: 'Timeline',
 };
 
@@ -78,7 +80,11 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.experian.com/corporate/experian-interactive',
       translate: 'no',
     },
-    description: 'Accepted the Senior Software Engineer role at Experian Consumer Services to sharpen technical leadership and expand entrepreneurial range. Earned multiple recognitions, including the Experian Platinum Aspire, EMF Hero - Above and Beyond, and recurring Experian Spot - Excellence in Action awards.',
+    description: oneLine(`Accepted the Senior Software Engineer role at
+      Experian Consumer Services to sharpen technical leadership and expand
+      entrepreneurial range. Earned multiple recognitions, including the
+      Experian Platinum Aspire, EMF Hero - Above and Beyond, and recurring
+      Experian Spot - Excellence in Action awards.`),
     picture: {
       avif: require('@site/src/pages/timeline/img/experian.avif').default,
       fallback: require('@site/src/pages/timeline/img/experian.jpg'),
@@ -97,7 +103,13 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.stanford.edu',
       translate: 'no',
     },
-    description: 'Completed advanced computer science coursework from Stanford University, including Automata, Machine Learning, and Mining Massive Datasets. Strengthened theoretical foundations in computation, gained practical experience with modern ML techniques, and developed proficiency in large-scale data processing. Earned a Certificate of Completion with Distinction in Mining Massive Datasets for exceptional performance.',
+    description: oneLine(`Completed advanced computer science coursework from
+      Stanford University, including Automata, Machine Learning, and Mining
+      Massive Datasets. Strengthened theoretical foundations in computation,
+      gained practical experience with modern ML techniques, and developed
+      proficiency in large-scale data processing. Earned a Certificate of
+      Completion with Distinction in Mining Massive Datasets for exceptional
+      performance.`),
     picture: {
       avif: require('@site/src/pages/timeline/img/stanford.avif').default,
       fallback: require('@site/src/pages/timeline/img/stanford.jpg'),
@@ -116,7 +128,10 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.experian.com/corporate/experian-interactive',
       translate: 'no',
     },
-    description: 'Accepted the Automation Engineer position at Experian Consumer Services to deepen technical versatility and broaden engineering expertise. Later promoted to Senior Automation Engineer, continuing to drive innovation and efficiency across automated systems.',
+    description: oneLine(`Accepted the Automation Engineer position at Experian
+      Consumer Services to deepen technical versatility and broaden engineering
+      expertise. Later promoted to Senior Automation Engineer, continuing to
+      drive innovation and efficiency across automated systems.`),
     picture: {
       avif: require('@site/src/pages/timeline/img/experian.avif').default,
       fallback: require('@site/src/pages/timeline/img/experian.jpg'),
@@ -135,7 +150,12 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.fullerton.edu',
       translate: 'no',
     },
-    description: 'Graduated from California State University, Fullerton with a Master\'s in Software Engineering. Gained expertise in delivering mission-ready, software-enabled systems that drive productivity, spark innovation, and create competitive advantage. Honored with the Outstanding Graduate Project award for the Master of Science in Software Engineering.',
+    description: oneLine(`Graduated from California State University, Fullerton
+      with a Master's in Software Engineering. Gained expertise in delivering
+      mission-ready, software-enabled systems that drive productivity, spark
+      innovation, and create competitive advantage. Honored with the
+      Outstanding Graduate Project award for the Master of Science in Software
+      Engineering.`),
     picture: {
       avif: require('@site/src/pages/timeline/img/csuf.avif').default,
       fallback: require('@site/src/pages/timeline/img/csuf.jpg'),
@@ -154,7 +174,11 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.experian.com/marketing/',
       translate: 'no',
     },
-    description: 'Accepted the Senior Software Engineer role at Experian CheetahMail to strengthen engineering depth and grow as a leader. Earned the Experian CheetahMail Pinnacle award and was later promoted to Software Development Lead, driving team performance and technical excellence.',
+    description: oneLine(`Accepted the Senior Software Engineer role at
+      Experian CheetahMail to strengthen engineering depth and grow as a
+      leader. Earned the Experian CheetahMail Pinnacle award and was later
+      promoted to Software Development Lead, driving team performance and
+      technical excellence.`),
     picture: {
       avif: require('@site/src/pages/timeline/img/cheetahmail.avif').default,
       fallback: require('@site/src/pages/timeline/img/cheetahmail.jpg'),
@@ -173,7 +197,10 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.airiq.com',
       translate: 'no',
     },
-    description: 'Accepted a Software Engineer position at AirIQ, building on the wireless asset management work previously developed under the Aircept name. This role expanded my hands-on experience with GPS tracking systems and real-time data platforms.',
+    description: oneLine(`Accepted a Software Engineer position at AirIQ,
+      building on the wireless asset management work previously developed under
+      the Aircept name. This role expanded my hands-on experience with GPS
+      tracking systems and real-time data platforms.`),
     picture: {
       avif: require('@site/src/pages/timeline/img/airiq.avif').default,
       fallback: require('@site/src/pages/timeline/img/airiq.jpg'),
@@ -192,7 +219,10 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.tickpick.com',
       translate: 'no',
     },
-    description: 'Accepted a Web Developer position at RazorGator to strengthen front-end and back-end development skills. This role deepened my expertise in building dynamic, user-focused web applications within a fast-paced e-commerce environment.',
+    description: oneLine(`Accepted a Web Developer position at RazorGator to
+      strengthen front-end and back-end development skills. This role deepened
+      my expertise in building dynamic, user-focused web applications within a
+      fast-paced e-commerce environment.`),
     picture: {
       avif: require('@site/src/pages/timeline/img/razorgator.avif').default,
       fallback: require('@site/src/pages/timeline/img/razorgator.jpg'),
@@ -211,7 +241,11 @@ export const timelines: TimelineProps[] = [
       href: 'https://petra.ac.id/?lang=en',
       translate: 'no',
     },
-    description: 'Graduated from Petra Christian University with a Bachelor\'s degree in Architecture. Gained a deep understanding of planning, designing, and constructing physical structures - skills that later translated into software development, shaping how I approach system design, structure, and user experience.',
+    description: oneLine(`Graduated from Petra Christian University with a
+      Bachelor's degree in Architecture. Gained a deep understanding of
+      planning, designing, and constructing physical structures - skills that
+      later translated into software development, shaping how I approach system
+      design, structure, and user experience.`),
     picture: {
       avif: require('@site/src/pages/timeline/img/petra.avif').default,
       fallback: require('@site/src/pages/timeline/img/petra.jpg'),
@@ -225,11 +259,12 @@ export const timelines: TimelineProps[] = [
     year: '1993 - 1997',
   },
   {
-    affiliation: {
-      children: 'Self Employed',
-      href: '/',
-    },
-    description: 'As an independent professional, I\'ve worn many hats - balancing roles with precision, adapting seamlessly to shifting challenges, and thriving in fast-paced environments. I bring a wealth of insights, hands-on experience, and technical depth to every partnership and employer I collaborate with.',
+    affiliation: { children: 'Self Employed', href: '/' },
+    description: oneLine(`As an independent professional, I've worn many
+      hats - balancing roles with precision, adapting seamlessly to shifting
+      challenges, and thriving in fast-paced environments. I bring a wealth of
+      insights, hands-on experience, and technical depth to every partnership
+      and employer I collaborate with.`),
     // This is smaller size than the one in home.
     picture: {
       avif: require('@site/src/pages/timeline/img/self.avif').default,
@@ -244,3 +279,5 @@ export const timelines: TimelineProps[] = [
     year: '1995 - Present',
   },
 ];
+
+export const timelineMap = Object.fromEntries(timelines.map((item) => [item.prefix, item]));

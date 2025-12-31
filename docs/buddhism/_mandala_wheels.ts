@@ -4,7 +4,8 @@
  * All Rights Reserved. Not for reuse without permission.
  */
 
-import image from './_image';
+import image from '#buddhism/_image';
+import { oneLine } from '#root/src/data/common';
 
 /**
  * Generates a pdfMake object for `5 mandala wheels`.
@@ -21,16 +22,16 @@ export default async function mandalaWheels() {
         await image({ alt: 'Viśvavajra Maṇḍala', path: '#buddhism/img/mandala-visva-vajra.webp', width: 587 }),
       ],
       info: {
-        keywords: `This document is about the maṇḍala wheels and its
+        keywords: oneLine(`This document is about the maṇḍala wheels and its
           sacred role in traditional consecration rituals where jambhala -
           vasudhārā - ganapati - aṣṭamaṅgala and viśvavajra wheels are placed
           inside Buddha statues or stupas or prayer wheels to serve as relics
           in support of purification and the removal of obscuration while
           nurturing wisdom and compassion so that practitioners may advance
-          toward Buddhahood`.replace(/\n\s*/g, ' '),
-        subject: `Placing maṇḍala wheels inside a Buddha statue helps purify
-          defilement and obscuration, fosters wisdom and compassion, and
-          supports the attainment of Buddhahood in this very lifetime`.replace(/\n\s*/g, ' '),
+          toward Buddhahood`),
+        subject: oneLine(`Placing maṇḍala wheels inside a Buddha statue helps
+          purify defilement and obscuration, fosters wisdom and compassion, and
+          supports the attainment of Buddhahood in this very lifetime`),
         title: 'Maṇḍala wheels',
       },
     },

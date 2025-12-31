@@ -55,17 +55,22 @@ type ExperienceProps = {
   summary: {
     content: string;
     key: string;
+    title?: string;
   };
 };
 
 const Activity = memo(function Activity({ entry }: ActivityProps) {
   const timeline = timelineMap[entry.key];
-  const year = (entry.year || timeline.year).replace(/\s+/g, '');
   return (
     <Heading as="h3">
-      <Link href={`/timeline#${entry.key}`}>
-        {`${timeline.title.children} - ${timeline.affiliation.children} (${year})`}
-      </Link>
+      <span className={styles.role}>
+        <Link className={styles.title} href={`/timeline#${entry.key}`}>
+          {timeline.title.children}
+        </Link>
+        <span className={styles.separator}>, </span>
+        <span className={styles.affiliation}>{timeline.affiliation.children}</span>
+      </span>
+      <span className={styles.year}>{entry.year || timeline.year}</span>
     </Heading>
   );
 });
@@ -127,12 +132,13 @@ const Educations = memo(function Educations() {
 });
 
 const Experience = memo(function Experience({ summary }: ExperienceProps) {
+  const title = summary.title || catalogMap[summary.key].title;
   return (
-    <article aria-label={catalogMap[summary.key].title}>
+    <article aria-label={title}>
       <strong>
         <em>
-          <Link href={`/portfolio#${summary.key}`} title={`Visit ${catalogMap[summary.key].title} portfolio`}>
-            {catalogMap[summary.key].title}
+          <Link href={`/portfolio#${summary.key}`} title={`Visit ${title}`}>
+            {title}
           </Link>
         </em>
       </strong>
@@ -170,7 +176,7 @@ const Header = memo(function Header() {
   return (
     <Block as="header" className={styles.header} heading={props.heading}>
       <p>{props.roles}</p>
-      <p>{props.contacts}</p>
+      <p className={styles.contacts}>{props.contacts}</p>
     </Block>
   );
 });

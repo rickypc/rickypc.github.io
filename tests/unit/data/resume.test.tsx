@@ -6,9 +6,8 @@
  * @jest-environment jsdom
  */
 
-import { catalog } from '@site/src/data/portfolio';
+import { catalog, catalogMap } from '@site/src/data/portfolio';
 import {
-  catalogMap,
   certifications,
   educations,
   experiences,
@@ -17,15 +16,14 @@ import {
   leadership,
   preamble,
   skills,
-  storyMap,
   strengths,
   testimonials,
-  timelineMap,
 } from '@site/src/data/resume';
 import { type DocusaurusConfig } from '@docusaurus/types';
 import { isValidElement, type ReactElement } from 'react';
-import { stories } from '@site/src/data/stories';
-import { timelines } from '@site/src/data/timeline';
+import { stories, storyMap } from '@site/src/data/stories';
+import { textContent } from '@site/src/data/common';
+import { timelines, timelineMap } from '@site/src/data/timeline';
 
 describe('data.resume', () => {
   describe('catalogMap', () => {
@@ -48,7 +46,7 @@ describe('data.resume', () => {
     it('has a heading with correct structure', () => {
       expect(certifications.heading).toBeDefined();
       expect(certifications.heading.as).toBe('h2');
-      expect(certifications.heading.children).toBe('Certifications');
+      expect(textContent(certifications.heading.children).trim()).toBe('Certifications');
     });
 
     it('has content array', () => {
@@ -64,7 +62,7 @@ describe('data.resume', () => {
     it('has a heading with correct structure', () => {
       expect(educations.heading).toBeDefined();
       expect(educations.heading.as).toBe('h2');
-      expect(educations.heading.children).toBe('Education');
+      expect(textContent(educations.heading.children).trim()).toBe('Education');
     });
 
     it('has content array', () => {
@@ -83,7 +81,7 @@ describe('data.resume', () => {
     it('has a heading with correct structure', () => {
       expect(experiences.heading).toBeDefined();
       expect(experiences.heading.as).toBe('h2');
-      expect(experiences.heading.children).toBe('Professional Experience');
+      expect(textContent(experiences.heading.children).trim()).toBe('Experience');
     });
 
     it('has content array', () => {
@@ -132,11 +130,7 @@ describe('data.resume', () => {
       expect(Array.isArray(contacts)).toBeTruthy();
       // Check JSX elements.
       const items = contacts.filter((item) => isValidElement(item));
-      expect(items).toHaveLength(4);
-
-      // Check separators.
-      const separators = contacts.filter((item) => item === ' • ');
-      expect(separators).toHaveLength(3);
+      expect(items).toHaveLength(8);
 
       expect(heading.as).toBe('h1');
       expect(isValidElement(heading.children)).toBeTruthy();
@@ -177,11 +171,7 @@ describe('data.resume', () => {
       expect(Array.isArray(contacts)).toBeTruthy();
       // Check JSX elements.
       const items = contacts.filter((item) => isValidElement(item));
-      expect(items).toHaveLength(4);
-
-      // Check separators.
-      const separators = contacts.filter((item) => item === ' • ');
-      expect(separators).toHaveLength(3);
+      expect(items).toHaveLength(8);
 
       expect(heading.as).toBe('h1');
       expect(isValidElement(heading.children)).toBeTruthy();
@@ -229,7 +219,7 @@ describe('data.resume', () => {
     it('has a heading with correct structure', () => {
       expect(leadership.heading).toBeDefined();
       expect(leadership.heading.as).toBe('h2');
-      expect(leadership.heading.children).toBe('Leadership Profile');
+      expect(textContent(leadership.heading.children).trim()).toBe('Leadership');
     });
 
     it('has children array', () => {
@@ -252,7 +242,7 @@ describe('data.resume', () => {
     it('has a heading with correct structure', () => {
       expect(preamble.heading).toBeDefined();
       expect(preamble.heading.as).toBe('h2');
-      expect(preamble.heading.children).toBe('Professional Summary');
+      expect(textContent(preamble.heading.children).trim()).toBe('Summary');
     });
 
     it('content is a non-empty string', () => {
@@ -265,7 +255,7 @@ describe('data.resume', () => {
     it('has a heading with correct structure', () => {
       expect(skills.heading).toBeDefined();
       expect(skills.heading.as).toBe('h2');
-      expect(skills.heading.children).toBe('Technical Skills');
+      expect(textContent(skills.heading.children).trim()).toBe('Skills');
     });
 
     it('has children array', () => {
@@ -304,7 +294,7 @@ describe('data.resume', () => {
     it('has a heading with correct structure', () => {
       expect(strengths.heading).toBeDefined();
       expect(strengths.heading.as).toBe('h2');
-      expect(strengths.heading.children).toBe('Core Strengths');
+      expect(textContent(strengths.heading.children).trim()).toBe('Core Strengths');
     });
 
     it('has children array', () => {
@@ -327,7 +317,7 @@ describe('data.resume', () => {
     it('has a heading with correct structure', () => {
       expect(testimonials.heading).toBeDefined();
       expect(testimonials.heading.as).toBe('h2');
-      expect(testimonials.heading.children).toBe('Testimonials');
+      expect(textContent(testimonials.heading.children).trim()).toBe('Testimonials');
     });
 
     it('content is an array of objects with keys', () => {

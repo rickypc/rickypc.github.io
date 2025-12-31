@@ -117,7 +117,17 @@ section.block:last-of-type {
   margin-left: 1.25rem;
 }
 
-.block .col ul li::marker {
+.block.testimonials .col ul {
+  column-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin-top: 0.25rem;
+  padding: 0;
+  row-gap: 0.75rem;
+}
+
+.block:not(.testimonials) .col ul li::marker {
   content: '» ';
   font-size: 1.175rem;
   line-height: 0;
@@ -157,6 +167,12 @@ section.block:last-of-type {
   color: #dcd2ff;
 }
 
+@media screen and (max-width: 48rem) {
+  .block.testimonials .col ul {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media print {
   .block,
   .block.header {
@@ -177,17 +193,14 @@ section.block:last-of-type {
 
   .block .col a,
   .block .col article,
+  .block.experiences .col article em.tags,
   .block .col li,
   .block .col li strong,
   .block .col li strong em,
   .block .col li strong em a,
   .block .col p {
     color: #000;
-    font-size: 0.85rem;
-  }
-
-  .block.experiences .col article em.tags {
-    font-size: 0.8rem;
+    font-size: 0.825rem;
   }
 
   .block.header {
@@ -198,7 +211,9 @@ section.block:last-of-type {
   .block.header .col h1 a,
   .block .col h2,
   .block .col h3,
-  .block .col h3 a {
+  .block .col h3 a,
+  [data-theme] .block .col h3 .affiliation,
+  [data-theme] .block .col h3 .year {
     color: #000;
   }
 
@@ -235,11 +250,20 @@ section.block:last-of-type {
     padding-bottom: 0;
   }
 
+  .block.certifications .col ul {
+    display: flex;
+    gap: 4.5rem;
+  }
+
   .block.experiences .col ul {
     margin-left: 0.5rem;
   }
 
-  .block .col ul li::marker {
+  .block.testimonials .col ul {
+    row-gap: 0.5rem;
+  }
+
+  .block:not(.testimonials) .col ul li::marker {
     font-size: 1.05rem;
     line-height: 0;
   }
@@ -259,7 +283,7 @@ section.block:last-of-type {
     position: relative;
   }
 
-  .block .col ul li::before {
+  .block:not(.testimonials) .col ul li::before {
     content: '»';
     left: -1.15rem;
     line-height: 1.35rem;
@@ -272,7 +296,7 @@ section.block:last-of-type {
       line-height: 1;
     }
 
-    .block .col ul li::before {
+    .block:not(.testimonials) .col ul li::before {
       left: -0.8rem;
       line-height: 0.7rem;
     }

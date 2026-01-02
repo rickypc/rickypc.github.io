@@ -3,6 +3,40 @@
  * All rights reserved.
  */
 
+.background {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  height: auto;
+  left: 0;
+  line-height: 1.25;
+  mask-image: linear-gradient(to right,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.85) 12.5%,
+      rgba(0, 0, 0, 0.25) 25%,
+      rgba(0, 0, 0, 0) 100%);
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 5rem;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(to right,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.85) 12.5%,
+      rgba(0, 0, 0, 0.25) 25%,
+      rgba(0, 0, 0, 0) 100%);
+  white-space: pre;
+  width: 100%;
+  z-index: -1;
+}
+
+[data-theme='dark'] .background {
+  color: #dcd2ff24;
+}
+
+[data-theme='light'] .background {
+  color: #dcd2ff;
+}
+
 section.block:last-of-type {
   margin-bottom: 3rem;
 }
@@ -132,38 +166,8 @@ section.block:last-of-type {
   line-height: 0;
 }
 
-.codeBackground {
-  font-family: 'Courier New', monospace;
-  font-size: 1rem;
-  height: auto;
-  left: 0;
-  line-height: 1.25;
-  mask-image: linear-gradient(to right,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.85) 12.5%,
-    rgba(0, 0, 0, 0.25) 25%,
-    rgba(0, 0, 0, 0) 100%);
-  overflow: hidden;
-  pointer-events: none;
-  position: absolute;
-  top: 5rem;
-  user-select: none;
-  -webkit-mask-image: linear-gradient(to right,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.85) 12.5%,
-    rgba(0, 0, 0, 0.25) 25%,
-    rgba(0, 0, 0, 0) 100%);
-  white-space: pre;
-  width: 100%;
-  z-index: -1;
-}
-
-[data-theme='dark'] .codeBackground {
-  color: #dcd2ff24;
-}
-
-[data-theme='light'] .codeBackground {
-  color: #dcd2ff;
+.qr {
+  display: none;
 }
 
 @media screen and (max-width: 48rem) {
@@ -173,6 +177,10 @@ section.block:last-of-type {
 }
 
 @media print {
+  .background {
+    display: none;
+  }
+
   .block,
   .block.header {
     margin-top: 0;
@@ -192,7 +200,6 @@ section.block:last-of-type {
 
   .block .col a,
   .block .col article,
-  .block.experiences .col article em.tags,
   .block .col li,
   .block .col li strong,
   .block .col li strong em,
@@ -214,6 +221,7 @@ section.block:last-of-type {
   [data-theme] .block .col h3 .affiliation,
   [data-theme] .block .col h3 .year {
     color: #000;
+    text-shadow: none;
   }
 
   .block.header .col h1 {
@@ -245,6 +253,11 @@ section.block:last-of-type {
     margin: 0 0 0.25rem 0.75rem;
   }
 
+  .block.experiences .col article em.tags {
+    color: #000;
+    font-size: 0.75rem;
+  }
+
   .block .col ul {
     padding-bottom: 0;
   }
@@ -267,8 +280,13 @@ section.block:last-of-type {
     line-height: 0;
   }
 
-  .codeBackground {
-    display: none;
+  .qr {
+    bottom: 0;
+    display: block;
+    height: 3.5rem;
+    position: fixed;
+    right: 0;
+    width: 3.5rem;
   }
 }
 
@@ -290,9 +308,33 @@ section.block:last-of-type {
   }
 
   @media print {
+    .block .col a,
+    .block .col article,
+    .block .col li,
+    .block .col li strong,
+    .block .col li strong em,
+    .block .col li strong em a,
+    .block .col p {
+      font-size: 0.81rem;
+    }
+
     .block .col h2,
     .block .col h3 {
       line-height: 1;
+    }
+
+    .block .col h3,
+    .block .col h3 a {
+      font-size: 0.94rem;
+    }
+
+    [data-theme] .block .col h3 .affiliation,
+    [data-theme] .block .col h3 .year {
+      font-size: 0.875rem;
+    }
+
+    .block.experiences .col article em.tags {
+      font-size: 0.725rem;
     }
 
     .block:not(.testimonials) .col ul li::before {

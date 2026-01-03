@@ -205,7 +205,6 @@ section.block:last-of-type {
   .block .col li strong em,
   .block .col li strong em a,
   .block .col p {
-    color: #000;
     font-size: 0.825rem;
   }
 
@@ -220,7 +219,6 @@ section.block:last-of-type {
   .block .col h3 a,
   [data-theme] .block .col h3 .affiliation,
   [data-theme] .block .col h3 .year {
-    color: #000;
     text-shadow: none;
   }
 
@@ -253,8 +251,11 @@ section.block:last-of-type {
     margin: 0 0 0.25rem 0.75rem;
   }
 
+  .block.experiences .col article[data-project="razorgator"] {
+    margin-right: 6.75rem;
+  }
+
   .block.experiences .col article em.tags {
-    color: #000;
     font-size: 0.75rem;
   }
 
@@ -283,10 +284,10 @@ section.block:last-of-type {
   .qr {
     bottom: 0;
     display: block;
-    height: 3.5rem;
+    height: 6rem;
     position: fixed;
     right: 0;
-    width: 3.5rem;
+    width: 6rem;
   }
 }
 

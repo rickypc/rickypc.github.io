@@ -124,6 +124,40 @@ html:not(.plugin-\@easyops-cn\/docusaurus-search-local) #__docusaurus:not(.docus
   display: none;
 }
 
+nav.navbar {
+  background: transparent;
+}
+
+nav.navbar::before {
+  backdrop-filter: blur(0.75rem);
+  border-bottom: 0.0625rem solid color-mix(in oklab, #fff 6%, transparent);
+  content: '';
+  --ifm-navbar-background-color: color-mix(in oklab, #fff 8%, transparent);
+  inset: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+[data-theme='dark'] .navbar__item,
+[data-theme='dark'] .navbar__title {
+  text-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.45);
+}
+
+[data-theme='dark'] .navbar__link:hover,
+[data-theme='dark'] .navbar__link--active {
+  text-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.55);
+}
+
+[data-theme='light'] .navbar__item,
+[data-theme='light'] .navbar__title {
+  text-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, 0.10);
+}
+
+[data-theme='light'] .navbar__link:hover,
+[data-theme='light'] .navbar__link--active {
+  text-shadow: 0 0.03125rem 0.0625rem rgba(0, 0, 0, 0.40);
+}
+
 .navbar__item.navbar__item--github,
 .navbar__item.navbar__item--linkedin,
 .navbar__item.navbar__item--translate {
@@ -189,6 +223,22 @@ html:not(.plugin-\@easyops-cn\/docusaurus-search-local) #__docusaurus:not(.docus
   background: var(--ifm-color-emphasis-200);
 }
 
+footer.footer {
+  background-color: color-mix(in oklab, var(--ifm-footer-background-color) 20%, transparent);
+  border-top: 0.0625rem solid color-mix(in oklab, var(--ifm-footer-background-color) 10%, transparent);
+  user-select: none;
+}
+
+[data-theme='dark'] footer.footer {
+  --ifm-footer-background-color: #303846;
+  --ifm-footer-color: var(--ifm-footer-link-color);
+}
+
+[data-theme='light'] footer.footer {
+  --ifm-footer-background-color: #8a94a3;
+  --ifm-footer-color: var(--ifm-font-color-base);
+}
+
 @keyframes shimmer {
   to {
     background-position-x: 0;
@@ -196,6 +246,25 @@ html:not(.plugin-\@easyops-cn\/docusaurus-search-local) #__docusaurus:not(.docus
 }
 
 @media print {
+  @page {
+    background: #ffffff !important;
+    margin: 0.5in;
+    size: Letter portrait;
+  }
+
+  [data-theme]:root {
+    --ifm-background-color: #ffffff !important;
+    min-height: auto !important;
+  }
+
+  html[data-theme] * {
+    color: #000 !important;
+  }
+
+  html[data-theme] a {
+    color: #0645ad !important;
+  }
+
   footer.theme-doc-footer .theme-doc-footer-tags-row,
   nav.theme-doc-breadcrumbs {
     display: none;

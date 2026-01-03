@@ -18,12 +18,9 @@
   background-size: cover;
   content: '';
   display: block;
-  height: 100%;
-  left: 0;
+  inset: -3.75rem 0 -5.65rem 0;
   opacity: 0.35;
   position: absolute;
-  top: 0;
-  width: 100%;
   z-index: -1;
 }
 
@@ -31,8 +28,14 @@
   text-decoration: none;
 }
 
+[data-theme='dark'] :global(.theme-layout-main):has(>.home)+footer:global(.footer) {
+  background-color: color-mix(in oklab, var(--ifm-footer-background-color) 65%, transparent);
+  border-bottom: 0.0625rem solid color-mix(in oklab, var(--ifm-footer-background-color) 65%, transparent);
+}
+
 @media print {
   .home::before {
     background: transparent;
+    inset: 0;
   }
 }

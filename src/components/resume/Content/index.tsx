@@ -25,6 +25,7 @@ import {
   memo,
   type PropsWithChildren,
   type ReactElement,
+  useMemo,
 } from 'react';
 import Heading from '@theme/Heading';
 import { image } from '@site/src/data/home';
@@ -56,6 +57,12 @@ type ExperienceProps = {
     content: string;
     key: string;
     title?: string;
+  };
+};
+
+type TestimonialProps = {
+  testimonial: {
+    key: string;
   };
 };
 
@@ -132,9 +139,11 @@ const Educations = memo(function Educations() {
 });
 
 const Experience = memo(function Experience({ summary }: ExperienceProps) {
-  const title = summary.title || catalogMap[summary.key].title;
+  const catalog = catalogMap[summary.key];
+  const tags = catalog.tags.join(', ');
+  const title = summary.title || catalog.title;
   return (
-    <article aria-label={title}>
+    <article aria-label={title} data-project={summary.key}>
       <strong>
         <em>
           <Link href={`/portfolio#${summary.key}`} title={`Visit ${title}`}>
@@ -147,7 +156,7 @@ const Experience = memo(function Experience({ summary }: ExperienceProps) {
       &nbsp;
       <em className={styles.tags}>
         (
-        {catalogMap[summary.key].tags.join(', ')}
+        {tags}
         )
       </em>
     </article>
@@ -172,7 +181,7 @@ const Experiences = memo(function Experiences() {
 
 const Header = memo(function Header() {
   const { siteConfig } = useDocusaurusContext();
-  const props = header({ siteConfig });
+  const props = useMemo(() => header({ siteConfig }), [siteConfig]);
   return (
     <Block as="header" className={styles.header} heading={props.heading}>
       <p>{props.roles}</p>
@@ -224,18 +233,24 @@ const Strengths = memo(function Strengths() {
   );
 });
 
+const Testimonial = memo(function Testimonial({ testimonial }: TestimonialProps) {
+  return (
+    <li>
+      &#34;
+      <Link href={`/stories#${testimonial.key}`}>
+        {storyMap[testimonial.key].overview}
+      </Link>
+      &#34;
+    </li>
+  );
+});
+
 const Testimonials = memo(function Testimonials() {
   return (
     <Block className={styles.testimonials} heading={testimonials.heading}>
       <ul>
         {testimonials.content.map((testimonial) => (
-          <li key={testimonial.key}>
-            &#34;
-            <Link href={`/stories#${testimonial.key}`}>
-              {storyMap[testimonial.key].overview}
-            </Link>
-            &#34;
-          </li>
+          <Testimonial key={testimonial.key} testimonial={testimonial} />
         ))}
       </ul>
     </Block>

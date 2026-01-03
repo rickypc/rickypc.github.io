@@ -62,7 +62,7 @@ const config: Config = {
       metadata: [
         { name: 'author', content: 'Ricky Huang' },
         { property: 'og:image', content: 'https://ricky.one/img/self.png' },
-        { property: 'og:site_name', content: 'Ricky Huang - Engineering Leadership & Full Stack Innovation' },
+        { property: 'og:site_name', content: 'Ricky Huang: Engineering Leadership & Full Stack Innovation' },
         { property: 'og:type', content: 'website' },
         { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:image', content: 'https://ricky.one/img/self.png' },

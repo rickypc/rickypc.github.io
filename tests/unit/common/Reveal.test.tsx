@@ -17,7 +17,7 @@ jest.unmock('@site/src/components/common/Reveal');
 
 describe('Reveal', () => {
   describe('visibility states', () => {
-    it('when not visible: no play class and correct split into words and characters', () => {
+    test('when not visible: no play class and correct split into words and characters', () => {
       const { result } = renderHook(() => useRef(null));
       useVisibilityMock.mockReturnValue({ ref: result.current, visible: false });
       const { container } = render(<Reveal>hello world</Reveal>);
@@ -35,7 +35,7 @@ describe('Reveal', () => {
       expect(charCount).toBe(10);
     });
 
-    it('when visible: adds play class', () => {
+    test('when visible: adds play class', () => {
       const { result } = renderHook(() => useRef(null));
       useVisibilityMock.mockReturnValue({ ref: result.current, visible: true });
       const { container } = render(<Reveal>test</Reveal>);
@@ -46,7 +46,7 @@ describe('Reveal', () => {
   });
 
   describe('child type handling', () => {
-    it('handles a React element child (cloneElement branch)', () => {
+    test('handles a React element child (cloneElement branch)', () => {
       render((
         <Reveal coeff={1}>
           <span>foo bar</span>
@@ -62,7 +62,7 @@ describe('Reveal', () => {
       const singleText = <>solo test</>;
       const rawStrings = <>{['foo', 'bar']}</>;
 
-      it.each([
+      test.each([
         [
           'multiple element children',
           <>
@@ -92,7 +92,7 @@ describe('Reveal', () => {
         },
       );
 
-      it('processes a Fragment whose children are raw strings', () => {
+      test('processes a Fragment whose children are raw strings', () => {
         render(<Reveal coeff={0}>{rawStrings}</Reveal>);
 
         const spans = screen.getAllByTestId('span');

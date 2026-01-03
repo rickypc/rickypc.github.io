@@ -19,7 +19,7 @@ describe('Heart', () => {
     ['with custom className', { className: 'custom-class' }, ['custom-class', 'reaction']],
   ];
 
-  it.each(cases)('%s', (_desc, extraProps, expectedClasses) => {
+  test.each(cases)('%s', (_desc, extraProps, expectedClasses) => {
     const { container } = render(<Heart id="heart1" {...extraProps} />);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const span = container.querySelector('span');

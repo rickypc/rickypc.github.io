@@ -13,7 +13,7 @@ import Button from '@site/src/components/common/Button';
 jest.unmock('@site/src/components/common/Button');
 
 describe('Button', () => {
-  it('renders children, applies className, and spreads extra props', () => {
+  test('renders children, applies className, and spreads extra props', () => {
     render((
       <Button className="test-class" data-testid="my-btn">
         Click me
@@ -24,7 +24,7 @@ describe('Button', () => {
     expect(btn).toHaveAttribute('data-testid', 'my-btn');
   });
 
-  it('forwards ref to the underlying button element', () => {
+  test('forwards ref to the underlying button element', () => {
     const ref = createRef<HTMLButtonElement>();
     render(<Button ref={ref}>Ref Button</Button>);
     expect(ref.current).toBeInstanceOf(HTMLButtonElement);

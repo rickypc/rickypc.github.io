@@ -11,7 +11,7 @@ jest.mock('#buddhism/_strip', () => ({
 }));
 
 describe('docs.buddhism._cintamani_dharmacakra_yasti', () => {
-  it('builds the prayer wheel life force pillar document correctly', async () => {
+  test('builds the prayer wheel life force pillar document correctly', async () => {
     const result = await cintamaniDharmacakraYasti();
 
     // Top-level structure.

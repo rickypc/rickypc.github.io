@@ -12,7 +12,7 @@ import Figure from '@site/src/components/about/Figure';
 jest.unmock('@site/src/components/about/Figure');
 
 describe('about.Figure', () => {
-  it('renders a figure with shape container and img roles for each type', () => {
+  test('renders a figure with shape container and img roles for each type', () => {
     render(<Figure />);
 
     // The outer <figure> should have the CSS class.

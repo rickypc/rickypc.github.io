@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
  */
 
@@ -22,12 +22,25 @@
 @media print {
   .figure {
     margin: 0 auto;
-    max-width: 12.5%;
+    max-width: 50%;
     opacity: 1 !important;
     transform: none !important;
   }
 
+  .figure picture {
+    margin: 0;
+  }
+
   .figure picture img {
     filter: none;
+  }
+}
+
+/* Safari only */
+@supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
+  @media print {
+    :global(.col--2):has(.figure) {
+      --ifm-col-width: 100%;
+    }
   }
 }

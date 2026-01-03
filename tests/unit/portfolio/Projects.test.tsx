@@ -14,7 +14,7 @@ jest.unmock('@site/src/components/portfolio/Projects');
 describe('portfolio.Projects', () => {
   const onClickMock = jest.fn();
 
-  it('renders wrapper and no items when filtered is empty', () => {
+  test('renders wrapper and no items when filtered is empty', () => {
     const { container } = render(<Projects filtered={[]} onClick={onClickMock} />);
 
     // Wrapper exists with correct class.
@@ -28,7 +28,7 @@ describe('portfolio.Projects', () => {
     expect(items).toHaveLength(0);
   });
 
-  it('renders one Project item per filtered entry with correct structure', () => {
+  test('renders one Project item per filtered entry with correct structure', () => {
     const filtered = [
       {
         description: 'Desc1',

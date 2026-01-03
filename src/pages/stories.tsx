@@ -9,6 +9,7 @@ import Layout from '@site/src/components/common/Layout';
 import { layout, preamble } from '@site/src/data/stories';
 import { memo } from 'react';
 import Preamble from '@site/src/components/common/Preamble';
+import QRCode from '@site/src/components/common/QRCode';
 import styles from './stories.module.css';
 
 export default memo(function Stories() {
@@ -18,6 +19,7 @@ export default memo(function Stories() {
       <section className={clsx('row', styles.row)}>
         <Content />
       </section>
+      <QRCode />
     </Layout>
   );
 });

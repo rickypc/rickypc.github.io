@@ -6,7 +6,7 @@
 import base from '#buddhism/_base';
 
 describe('docs.buddhism._base', () => {
-  it('loads definition and options from required module', async () => {
+  test('loads definition and options from required module', async () => {
     jest.mock('#buddhism/default', () => () => ({
       definition: {
         info: { keywords: ['a', 'b'] },
@@ -28,7 +28,7 @@ describe('docs.buddhism._base', () => {
     });
   });
 
-  it('uses defaults when module returns empty object', async () => {
+  test('uses defaults when module returns empty object', async () => {
     jest.mock('#buddhism/empty', () => () => ({}), { virtual: true });
 
     const result = await base('#buddhism/empty');

@@ -17,7 +17,7 @@ jest.mock('@site/src/data/common', () => ({
 }));
 
 describe('theme.DocCategoryGeneratedIndexPage', () => {
-  it('injects meta tags, calls useWelcome, and forwards props to original DocCategoryGeneratedIndexPage', () => {
+  test('injects meta tags, calls useWelcome, and forwards props to original DocCategoryGeneratedIndexPage', () => {
     const props = {
       categoryGeneratedIndex: {
         description: 'Category description here.',

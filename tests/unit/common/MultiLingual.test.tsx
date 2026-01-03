@@ -18,7 +18,7 @@ describe('MultiLingual', () => {
   const transliteration = { className: 'trans-class', unify: true };
 
   describe('when all language props are provided', () => {
-    it.each([
+    test.each([
       ['chinese', {
         id: 'ch',
         infix: '·',
@@ -81,13 +81,13 @@ describe('MultiLingual', () => {
     });
   });
 
-  it('renders nothing when no children props are provided', () => {
+  test('renders nothing when no children props are provided', () => {
     const { container } = render(<MultiLingual transliteration={transliteration} />);
     // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toBeNull();
   });
 
-  it('falls back to default markers when transliteration not provided', () => {
+  test('falls back to default markers when transliteration not provided', () => {
     const sanskritOnly = { children: 'sa', testId: 'sa' };
     render(<MultiLingual sanskrit={sanskritOnly} />);
     const el = screen.getByTestId('phrase-block-sa');

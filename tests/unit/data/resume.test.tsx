@@ -26,7 +26,7 @@ import { timelines, timelineMap } from '@site/src/data/timeline';
 
 describe('data.resume', () => {
   describe('catalogMap', () => {
-    it('creates a map keyed by prefix', () => {
+    test('creates a map keyed by prefix', () => {
       expect(catalogMap).toBeDefined();
       expect(typeof catalogMap).toBe('object');
 
@@ -36,19 +36,19 @@ describe('data.resume', () => {
       });
     });
 
-    it('contains the same number of entries as catalog', () => {
+    test('contains the same number of entries as catalog', () => {
       expect(Object.keys(catalogMap)).toHaveLength(catalog.length);
     });
   });
 
   describe('certifications', () => {
-    it('has a heading with correct structure', () => {
+    test('has a heading with correct structure', () => {
       expect(certifications.heading).toBeDefined();
       expect(certifications.heading.as).toBe('h2');
       expect(textContent(certifications.heading.children).trim()).toBe('Certifications');
     });
 
-    it('has content array', () => {
+    test('has content array', () => {
       expect(Array.isArray(certifications.content)).toBeTruthy();
       expect(certifications.content).toHaveLength(1);
       const first = certifications.content[0];
@@ -58,13 +58,13 @@ describe('data.resume', () => {
   });
 
   describe('educations', () => {
-    it('has a heading with correct structure', () => {
+    test('has a heading with correct structure', () => {
       expect(educations.heading).toBeDefined();
       expect(educations.heading.as).toBe('h2');
       expect(textContent(educations.heading.children).trim()).toBe('Education');
     });
 
-    it('has content array', () => {
+    test('has content array', () => {
       expect(Array.isArray(educations.content)).toBeTruthy();
       expect(educations.content).toHaveLength(2);
       const first = educations.content[0];
@@ -77,13 +77,13 @@ describe('data.resume', () => {
   });
 
   describe('experiences', () => {
-    it('has a heading with correct structure', () => {
+    test('has a heading with correct structure', () => {
       expect(experiences.heading).toBeDefined();
       expect(experiences.heading.as).toBe('h2');
       expect(textContent(experiences.heading.children).trim()).toBe('Experience');
     });
 
-    it('has content array', () => {
+    test('has content array', () => {
       expect(Array.isArray(experiences.content)).toBeTruthy();
       expect(experiences.content).toHaveLength(5);
       experiences.content.forEach((item) => {
@@ -117,7 +117,7 @@ describe('data.resume', () => {
       url: 'https://domain.test',
     };
 
-    it('returns an object with contacts, heading, and roles', () => {
+    test('returns an object with contacts, heading, and roles', () => {
       const result = header({ siteConfig: mockSiteConfig as DocusaurusConfig });
 
       expect(result).toHaveProperty('contacts');
@@ -153,7 +153,7 @@ describe('data.resume', () => {
       ]);
     });
 
-    it('returns default object with contacts, heading, and roles', () => {
+    test('returns default object with contacts, heading, and roles', () => {
       const result = header({
         siteConfig: {
           ...mockSiteConfig,
@@ -196,7 +196,7 @@ describe('data.resume', () => {
   });
 
   describe('layout', () => {
-    it('contains required metadata fields', () => {
+    test('contains required metadata fields', () => {
       expect(layout).toHaveProperty('description');
       expect(typeof layout.description).toBe('string');
       expect(layout.description?.length).toBeGreaterThan(0);
@@ -215,13 +215,13 @@ describe('data.resume', () => {
   });
 
   describe('leadership', () => {
-    it('has a heading with correct structure', () => {
+    test('has a heading with correct structure', () => {
       expect(leadership.heading).toBeDefined();
       expect(leadership.heading.as).toBe('h2');
       expect(textContent(leadership.heading.children).trim()).toBe('Leadership');
     });
 
-    it('has children array', () => {
+    test('has children array', () => {
       expect(isValidElement(leadership.children)).toBeTruthy();
       const { children } = leadership;
       expect(children.type).toBe('ul');
@@ -238,26 +238,26 @@ describe('data.resume', () => {
   });
 
   describe('preamble', () => {
-    it('has a heading with correct structure', () => {
+    test('has a heading with correct structure', () => {
       expect(preamble.heading).toBeDefined();
       expect(preamble.heading.as).toBe('h2');
       expect(textContent(preamble.heading.children).trim()).toBe('Summary');
     });
 
-    it('content is a non-empty string', () => {
+    test('content is a non-empty string', () => {
       expect(typeof preamble.content).toBe('string');
       expect(preamble.content.length).toBeGreaterThan(0);
     });
   });
 
   describe('skills', () => {
-    it('has a heading with correct structure', () => {
+    test('has a heading with correct structure', () => {
       expect(skills.heading).toBeDefined();
       expect(skills.heading.as).toBe('h2');
       expect(textContent(skills.heading.children).trim()).toBe('Skills');
     });
 
-    it('has children array', () => {
+    test('has children array', () => {
       expect(isValidElement(skills.children)).toBeTruthy();
       const { children } = skills;
       expect(children.type).toBe('ul');
@@ -274,7 +274,7 @@ describe('data.resume', () => {
   });
 
   describe('storyMap', () => {
-    it('creates a map keyed by prefix', () => {
+    test('creates a map keyed by prefix', () => {
       expect(storyMap).toBeDefined();
       expect(typeof storyMap).toBe('object');
 
@@ -284,19 +284,19 @@ describe('data.resume', () => {
       });
     });
 
-    it('contains the same number of entries as catalog', () => {
+    test('contains the same number of entries as catalog', () => {
       expect(Object.keys(storyMap)).toHaveLength(stories.length);
     });
   });
 
   describe('strengths', () => {
-    it('has a heading with correct structure', () => {
+    test('has a heading with correct structure', () => {
       expect(strengths.heading).toBeDefined();
       expect(strengths.heading.as).toBe('h2');
       expect(textContent(strengths.heading.children).trim()).toBe('Core Strengths');
     });
 
-    it('has children array', () => {
+    test('has children array', () => {
       expect(isValidElement(strengths.children)).toBeTruthy();
       const { children } = strengths;
       expect(children.type).toBe('ul');
@@ -313,13 +313,13 @@ describe('data.resume', () => {
   });
 
   describe('testimonials', () => {
-    it('has a heading with correct structure', () => {
+    test('has a heading with correct structure', () => {
       expect(testimonials.heading).toBeDefined();
       expect(testimonials.heading.as).toBe('h2');
       expect(textContent(testimonials.heading.children).trim()).toBe('Testimonials');
     });
 
-    it('content is an array of objects with keys', () => {
+    test('content is an array of objects with keys', () => {
       expect(Array.isArray(testimonials.content)).toBeTruthy();
       expect(testimonials.content).toHaveLength(4);
 
@@ -331,7 +331,7 @@ describe('data.resume', () => {
   });
 
   describe('timelineMap', () => {
-    it('creates a map keyed by prefix', () => {
+    test('creates a map keyed by prefix', () => {
       expect(timelineMap).toBeDefined();
       expect(typeof timelineMap).toBe('object');
 
@@ -341,7 +341,7 @@ describe('data.resume', () => {
       });
     });
 
-    it('contains the same number of entries as catalog', () => {
+    test('contains the same number of entries as catalog', () => {
       expect(Object.keys(timelineMap)).toHaveLength(timelines.length);
     });
   });

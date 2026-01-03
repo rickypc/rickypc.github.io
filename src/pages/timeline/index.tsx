@@ -9,6 +9,7 @@ import Layout from '@site/src/components/common/Layout';
 import { layout, preamble } from '@site/src/data/timeline';
 import { memo } from 'react';
 import Preamble from '@site/src/components/common/Preamble';
+import QRCode from '@site/src/components/common/QRCode';
 import styles from './styles.module.css';
 
 export default memo(function Timeline() {
@@ -18,6 +19,7 @@ export default memo(function Timeline() {
       <section className={clsx('row', styles.row)}>
         <Content />
       </section>
+      <QRCode />
     </Layout>
   );
 });

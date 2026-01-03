@@ -9,6 +9,7 @@ import Hats from '@site/src/components/home/Hats';
 import Layout from '@site/src/components/common/Layout';
 import { layout } from '@site/src/data/home';
 import { memo } from 'react';
+import QRCode from '@site/src/components/common/QRCode';
 import Socials from '@site/src/components/home/Socials';
 import styles from './index.module.css';
 
@@ -33,6 +34,7 @@ export default memo(function Home() {
           <Socials />
         </div>
       </section>
+      <QRCode />
     </Layout>
   );
 });

@@ -13,7 +13,7 @@ import { socials } from '@site/src/data/home';
 jest.unmock('@site/src/components/home/Socials');
 
 describe('home.Socials', () => {
-  it('renders one link per social entry', () => {
+  test('renders one link per social entry', () => {
     const { container } = render(<Socials />);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const ul = container.querySelector('ul');

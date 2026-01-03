@@ -12,7 +12,7 @@ import Hats from '@site/src/components/home/Hats';
 jest.unmock('@site/src/components/home/Hats');
 
 describe('home.Hats', () => {
-  it('renders all hats with proper structure and content', () => {
+  test('renders all hats with proper structure and content', () => {
     const { container } = render(<Hats />);
     const expecteds = [
       {

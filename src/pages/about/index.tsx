@@ -11,6 +11,7 @@ import { layout, preamble } from '@site/src/data/about';
 import { memo } from 'react';
 import Oracle from '@site/src/components/about/Oracle';
 import Preamble from '@site/src/components/common/Preamble';
+import QRCode from '@site/src/components/common/QRCode';
 import styles from './styles.module.css';
 
 export default memo(function About() {
@@ -27,6 +28,7 @@ export default memo(function About() {
         </div>
       </section>
       <Oracle />
+      <QRCode />
     </Layout>
   );
 });

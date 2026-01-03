@@ -17,7 +17,7 @@ jest.unmock('@site/src/components/common/Link');
 
 describe('Link', () => {
   describe('with href provided', () => {
-    it('renders external link with rel, target, aria-label, and class', () => {
+    test('renders external link with rel, target, aria-label, and class', () => {
       render((
         <Link className="ext" href="https://example.com" title="external">
           External
@@ -32,7 +32,7 @@ describe('Link', () => {
       expect(anchor).toHaveClass('ext');
     });
 
-    it('renders trailing slashed internal link without rel/target and calls collectLink', () => {
+    test('renders trailing slashed internal link without rel/target and calls collectLink', () => {
       jest.mocked<any>(useDocusaurusContext).mockReturnValue({
         siteConfig: {
           trailingSlash: true,
@@ -51,7 +51,7 @@ describe('Link', () => {
       expect(collectLink).toHaveBeenCalledWith('/docs/intro');
     });
 
-    it('renders non-trailing slashed internal link without rel/target and calls collectLink', () => {
+    test('renders non-trailing slashed internal link without rel/target and calls collectLink', () => {
       jest.mocked<any>(useDocusaurusContext).mockReturnValue({
         siteConfig: {
           trailingSlash: false,
@@ -70,7 +70,7 @@ describe('Link', () => {
       expect(collectLink).toHaveBeenCalledWith('/docs/intro');
     });
 
-    it.each([
+    test.each([
       ['https://external.com'],
       ['/files/report.pdf'],
     ])('does not call collectLink for %s', (href) => {
@@ -80,7 +80,7 @@ describe('Link', () => {
   });
 
   describe('without href', () => {
-    it('renders span when validate=true and href is missing', () => {
+    test('renders span when validate=true and href is missing', () => {
       render((
         // eslint-disable-next-line jsx-a11y/anchor-is-valid
         <Link className="no-link" validate title="missing">
@@ -94,7 +94,7 @@ describe('Link', () => {
       expect(span).not.toHaveAttribute('title');
     });
 
-    it('renders anchor when validate=false and href is missing', () => {
+    test('renders anchor when validate=false and href is missing', () => {
       render((
         // eslint-disable-next-line jsx-a11y/anchor-is-valid
         <Link className="fallback" title="fallback">

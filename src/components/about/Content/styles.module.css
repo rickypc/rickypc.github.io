@@ -94,9 +94,14 @@
     box-shadow: none;
   }
 
+  .content h2,
+  .content h3 {
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
   .content h2 {
     font-size: 1.25rem;
-    margin-bottom: 0.5rem;
   }
 
   .content h3 {
@@ -110,5 +115,14 @@
 
   .content p {
     margin-bottom: 0.5rem;
+  }
+}
+
+/* Safari only */
+@supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
+  @media print {
+    :global(.col--6):has(.content) {
+      --ifm-col-width: 100%;
+    }
   }
 }

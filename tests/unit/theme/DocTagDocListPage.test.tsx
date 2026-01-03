@@ -18,7 +18,7 @@ jest.mock('@site/src/data/common', () => ({
 }));
 
 describe('theme.DocTagDocListPage', () => {
-  it('injects meta tags, calls useWelcome, and forwards props to original DocTagDocListPage', () => {
+  test('injects meta tags, calls useWelcome, and forwards props to original DocTagDocListPage', () => {
     const props = {
       extra: 'value',
       tag: {

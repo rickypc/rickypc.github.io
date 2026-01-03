@@ -22,7 +22,7 @@ const NotFoundContentMock = NotFoundContent as (_: Props) => ReactElement;
 jest.unmock('@theme/NotFound/Content');
 
 describe('theme.NotFound.Content', () => {
-  it('calls useWelcome with navigation default false', () => {
+  test('calls useWelcome with navigation default false', () => {
     const { container } = render(<NotFoundContentMock className="class" />);
 
     expect(useWelcome).toHaveBeenCalledTimes(1);
@@ -46,7 +46,7 @@ describe('theme.NotFound.Content', () => {
     expect(svg).toBeInTheDocument();
   });
 
-  it('when navigation prop true, useWelcome is called with navigation true and navigation is not forwarded', () => {
+  test('when navigation prop true, useWelcome is called with navigation true and navigation is not forwarded', () => {
     const { container } = render(<NotFoundContentMock navigation />);
 
     expect(useWelcome).toHaveBeenCalledTimes(1);

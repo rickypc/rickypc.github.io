@@ -1,0 +1,19 @@
+/*!
+ * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
+ * All rights reserved.
+ */
+
+.qr {
+  display: none;
+}
+
+@media print {
+  .qr {
+    bottom: 0;
+    display: block;
+    height: 6rem;
+    position: fixed;
+    right: 0;
+    width: 6rem;
+  }
+}

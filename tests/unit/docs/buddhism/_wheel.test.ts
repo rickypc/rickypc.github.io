@@ -12,7 +12,7 @@ jest.mock('#buddhism/_strip', () => ({
 }));
 
 describe('docs.buddhism._wheel', () => {
-  it('handles Tibetan (bo-CN) branch correctly', () => {
+  test('handles Tibetan (bo-CN) branch correctly', () => {
     jest.mock('#buddhism/bo', () => ({
       default: {
         lang: 'bo-CN',
@@ -76,7 +76,7 @@ describe('docs.buddhism._wheel', () => {
     expect(layout.paddingTop()).toBe(0.25);
   });
 
-  it('handles Sanskrit (sa-IN) branch correctly', () => {
+  test('handles Sanskrit (sa-IN) branch correctly', () => {
     jest.mock('#buddhism/sa', () => ({
       default: {
         lang: 'sa-IN',
@@ -101,7 +101,7 @@ describe('docs.buddhism._wheel', () => {
     expect(substance).toHaveBeenCalledTimes(1);
   });
 
-  it('handles default (transliteration) branch correctly', () => {
+  test('handles default (transliteration) branch correctly', () => {
     jest.mock('#buddhism/default', () => ({
       default: {
         lang: 'en-US',
@@ -124,7 +124,7 @@ describe('docs.buddhism._wheel', () => {
     expect(substance).toHaveBeenCalledTimes(1);
   });
 
-  it('uses all fallback defaults when fields are missing', () => {
+  test('uses all fallback defaults when fields are missing', () => {
     jest.mock('#buddhism/fallback', () => ({
       default: { transliteration: { title: 'Fallback' } },
     }), { virtual: true });

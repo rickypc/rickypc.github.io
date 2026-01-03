@@ -6,7 +6,7 @@
 import pratitya from '#buddhism/phrases/_pratityasamutpada';
 
 describe('docs.buddhism._pratitya_samutpada', () => {
-  it('exports the correct core structure', () => {
+  test('exports the correct core structure', () => {
     expect(pratitya.core).toHaveProperty('pali.children');
     expect(pratitya.core).toHaveProperty('pali.sinhala.children');
     expect(pratitya.core).toHaveProperty('sanskrit.children');
@@ -16,7 +16,7 @@ describe('docs.buddhism._pratitya_samutpada', () => {
     expect(pratitya.core).toHaveProperty('transliteration.speech');
   });
 
-  it('builds the pali section correctly', () => {
+  test('builds the pali section correctly', () => {
     expect(pratitya.pali.title).toBe('Paṭiccasamuppāda Gāthā');
 
     expect(pratitya.pali.children).toBe(
@@ -38,7 +38,7 @@ describe('docs.buddhism._pratitya_samutpada', () => {
     expect(pratitya.pali.sinhala.title).toBe('පටිච්චසමුප්පාද ගාථා');
   });
 
-  it('builds the sanskrit section correctly', () => {
+  test('builds the sanskrit section correctly', () => {
     expect(pratitya.sanskrit.title).toBe('प्रतीत्यसमुत्पाद गाथा');
 
     expect(pratitya.sanskrit.children).toBe(
@@ -60,7 +60,7 @@ describe('docs.buddhism._pratitya_samutpada', () => {
     expect(pratitya.sanskrit.siddham.title).toBe('𑖢𑖿𑖨𑖝𑖱𑖝𑖿𑖧𑖭𑖦𑖲𑖝𑖿𑖢𑖯𑖟 𑖐𑖯𑖞𑖯');
   });
 
-  it('builds the tibetan section correctly', () => {
+  test('builds the tibetan section correctly', () => {
     expect(pratitya.tibetan.children).toBe(pratitya.core.tibetan.children);
 
     expect(pratitya.tibetan.repeat).toEqual({
@@ -72,11 +72,11 @@ describe('docs.buddhism._pratitya_samutpada', () => {
     expect(pratitya.tibetan.title).toBe('རྟེན་ཅིང་འབྲེལ་བར་འབྱུང་བའི་ཚིགས་སུ་བཅད་པ།');
   });
 
-  it('builds the translation section correctly', () => {
+  test('builds the translation section correctly', () => {
     expect(pratitya.translation.title).toBe('Dependent Origination');
   });
 
-  it('builds the transliteration section correctly', () => {
+  test('builds the transliteration section correctly', () => {
     expect(pratitya.transliteration.title).toBe('Pratītyasamutpāda Gāthā');
     expect(pratitya.transliteration.repetition).toBe(7);
 
@@ -97,7 +97,7 @@ describe('docs.buddhism._pratitya_samutpada', () => {
     );
   });
 
-  it('includes the chinese title', () => {
+  test('includes the chinese title', () => {
     expect(pratitya.chinese.title).toBe('緣起經');
   });
 });

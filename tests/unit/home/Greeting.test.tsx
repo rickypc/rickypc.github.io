@@ -12,7 +12,7 @@ import Greeting from '@site/src/components/home/Greeting';
 jest.unmock('@site/src/components/home/Greeting');
 
 describe('home.Greeting', () => {
-  it('renders greeting text, IPA, Speech, and Heart inside Heading', () => {
+  test('renders greeting text, IPA, Speech, and Heart inside Heading', () => {
     render(<Greeting />);
 
     // Verify Heading wrapper.

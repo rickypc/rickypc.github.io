@@ -8,9 +8,14 @@
 import { render, screen } from '@testing-library/react';
 import About from '@site/src/pages/about';
 import { layout, preamble } from '@site/src/data/about';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 describe('pages.about', () => {
-  it('renders Layout and exposes primitive layout props', () => {
+  jest.mocked<any>(useDocusaurusContext).mockReturnValue({
+    siteConfig: { url: 'https://domain.test' },
+  });
+
+  test('renders Layout and exposes primitive layout props', () => {
     render(<About />);
     const layoutEl = screen.queryByTestId('layout');
 
@@ -19,7 +24,7 @@ describe('pages.about', () => {
     expect(layoutEl.getAttribute('title')).toEqual(layout.title);
   });
 
-  it('renders Preamble with normalized props and is placed inside Layout', () => {
+  test('renders Preamble with normalized props and is placed inside Layout', () => {
     render(<About />);
     const layoutEl = screen.queryByTestId('layout');
     const preambleEl = screen.queryByTestId('preamble');
@@ -30,7 +35,7 @@ describe('pages.about', () => {
     expect(layoutEl?.contains(preambleEl)).toBeTruthy();
   });
 
-  it('renders a section with class "row" that contains Content and Figure', () => {
+  test('renders a section with class "row" that contains Content and Figure', () => {
     const { container } = render(<About />);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const sectionEl = container.querySelector('section');
@@ -48,7 +53,7 @@ describe('pages.about', () => {
     expect(sectionEl.contains(figure)).toBeTruthy();
   });
 
-  it('renders Oracle inside Layout and it appears after the section', () => {
+  test('renders Oracle inside Layout and it appears after the section', () => {
     render(<About />);
     const oracle = screen.queryByTestId('oracle');
 

@@ -17,7 +17,7 @@ import {
 
 describe('data.about', () => {
   describe('characteristic', () => {
-    it('has an attributes array of strings and a title', () => {
+    test('has an attributes array of strings and a title', () => {
       expect(Array.isArray(characteristic.attributes)).toBeTruthy();
       expect(characteristic.attributes.length).toBeGreaterThan(0);
       characteristic.attributes.forEach((attr) => {
@@ -30,7 +30,7 @@ describe('data.about', () => {
   });
 
   describe('headline', () => {
-    it('is a non-empty string', () => {
+    test('is a non-empty string', () => {
       expect(typeof headline).toBe('string');
       expect(headline.length).toBeGreaterThan(0);
       expect(headline).toMatch(/People, Purpose, and Results/);
@@ -38,7 +38,7 @@ describe('data.about', () => {
   });
 
   describe('layout', () => {
-    it('contains description, keywords array, and title', () => {
+    test('contains description, keywords array, and title', () => {
       expect(typeof layout.description).toBe('string');
       expect(layout.description?.length).toBeGreaterThan(0);
 
@@ -55,7 +55,7 @@ describe('data.about', () => {
   });
 
   describe('paragraphs', () => {
-    it('is an array of two non-empty strings', () => {
+    test('is an array of two non-empty strings', () => {
       expect(Array.isArray(paragraphs)).toBeTruthy();
       expect(paragraphs).toHaveLength(2);
       paragraphs.forEach((p) => {
@@ -66,7 +66,7 @@ describe('data.about', () => {
   });
 
   describe('preamble', () => {
-    it('has description and title as non-empty strings', () => {
+    test('has description and title as non-empty strings', () => {
       expect(typeof preamble.description).toBe('string');
       expect(preamble.description.length).toBeGreaterThan(0);
 
@@ -76,7 +76,7 @@ describe('data.about', () => {
   });
 
   describe('types', () => {
-    it('is an array of two items with alt and Image properties', () => {
+    test('is an array of two items with alt and Image properties', () => {
       expect(Array.isArray(types)).toBeTruthy();
       expect(types).toHaveLength(2);
 

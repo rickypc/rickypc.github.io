@@ -30,7 +30,7 @@ describe('resume.Content', () => {
     },
   });
 
-  it('renders without crashing', () => {
+  test('renders without crashing', () => {
     render(<Content />);
     expect(screen.getByText('My Site')).toBeInTheDocument();
 

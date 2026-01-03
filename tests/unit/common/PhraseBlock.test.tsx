@@ -12,7 +12,7 @@ import PhraseBlock from '@site/src/components/common/PhraseBlock';
 jest.unmock('@site/src/components/common/PhraseBlock');
 
 describe('PhraseBlock', () => {
-  it('renders single-child phrase with structure and Buttons', () => {
+  test('renders single-child phrase with structure and Buttons', () => {
     const phrase = {
       children: 'ABC',
       className: 'cls',
@@ -49,7 +49,7 @@ describe('PhraseBlock', () => {
     expect(screen.getByTestId('buttons')).toBeInTheDocument();
   });
 
-  it.each([
+  test.each([
     [
       'unify multiple children',
       { children: ['a', 'b'], unify: true, className: 'cls2' },
@@ -69,7 +69,7 @@ describe('PhraseBlock', () => {
     expect(codeElem?.textContent).toEqual(expected);
   });
 
-  it('does not render Buttons when the rendered code is empty', () => {
+  test('does not render Buttons when the rendered code is empty', () => {
     const phrase = { children: null, testId: 'empty', unify: false };
     render(<PhraseBlock infix="*" prefix="P" suffix="S" phrase={phrase} />);
     expect(screen.queryByTestId('buttons')).toBeNull();

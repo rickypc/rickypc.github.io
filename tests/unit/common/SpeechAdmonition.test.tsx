@@ -16,14 +16,14 @@ const useSpeechMock = jest.mocked(useSpeech);
 jest.unmock('@site/src/components/common/SpeechAdmonition');
 
 describe('SpeechAdmonition', () => {
-  it('does not render anything when speech is ready', () => {
+  test('does not render anything when speech is ready', () => {
     useSpeechMock.mockReturnValue([true]);
     const { container } = render(<SpeechAdmonition />);
     // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toBeNull();
   });
 
-  it('renders admonition inside an <aside> when speech is not ready', () => {
+  test('renders admonition inside an <aside> when speech is not ready', () => {
     useSpeechMock.mockReturnValue([false]);
     render(<SpeechAdmonition />);
 

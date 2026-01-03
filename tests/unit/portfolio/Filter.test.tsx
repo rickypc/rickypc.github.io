@@ -29,7 +29,7 @@ jest.mock('@site/src/data/portfolio', () => ({
 describe('portfolio.Filter', () => {
   const expectedTags = ['All', 'alpha', 'beta', 'gamma'];
 
-  it('renders Collapsible with correct tags when viewport is narrow', () => {
+  test('renders Collapsible with correct tags when viewport is narrow', () => {
     const onClickMock = jest.fn();
     useMediaMock.mockReturnValue([true]);
 
@@ -51,7 +51,7 @@ describe('portfolio.Filter', () => {
     expect(onClickMock).toHaveBeenCalledWith('beta');
   });
 
-  it('renders Pills with correct props when viewport is wide', () => {
+  test('renders Pills with correct props when viewport is wide', () => {
     const onClickMock = jest.fn();
     useMediaMock.mockReturnValue([false]);
 

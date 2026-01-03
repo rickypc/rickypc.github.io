@@ -44,7 +44,7 @@ jest.mock('@site/src/data/timeline', () => ({
 describe('timeline.Content', () => {
   usePrintMock.mockReturnValue([false]);
 
-  it('renders wrapper and timeline items with correct layout when single = false', () => {
+  test('renders wrapper and timeline items with correct layout when single = false', () => {
     // Single = false -> position alternates: idx0 -> right, idx1 -> left.
     useMediaMock.mockReturnValue([false]);
 
@@ -117,7 +117,7 @@ describe('timeline.Content', () => {
     });
   });
 
-  it('renders all timeline items on the right when single = true', () => {
+  test('renders all timeline items on the right when single = true', () => {
     useMediaMock.mockReturnValue([true]);
 
     const { container } = render(<Content />);

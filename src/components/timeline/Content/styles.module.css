@@ -294,7 +294,15 @@
     .timeline .inner h2,
     .timeline .inner h3,
     .timeline .inner h4 {
-      line-height: 1;
+      line-height: 1rem;
+    }
+
+    .timeline .inner h3 {
+      font-size: 1.15rem;
+    }
+
+    .timeline .inner p {
+      line-height: 1.15rem;
     }
   }
 }

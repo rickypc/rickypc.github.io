@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
  */
 
@@ -91,5 +91,18 @@
 
   .figure .shape svg:nth-of-type(1) {
     margin-right: 3rem;
+  }
+
+  .figure .shape svg circle {
+    animation: none;
+  }
+}
+
+/* Safari only */
+@supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
+  @media print {
+    :global(.col--4):has(.figure) {
+      --ifm-col-width: 100%;
+    }
   }
 }

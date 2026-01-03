@@ -12,7 +12,7 @@ jest.mock('#buddhism/_image', () => ({
 }));
 
 describe('docs.buddhism._prayer_wheels', () => {
-  it('builds the prayer wheel mandalas document correctly', async () => {
+  test('builds the prayer wheel mandalas document correctly', async () => {
     const result = await prayerWheel();
 
     expect(result).toHaveProperty('definition');

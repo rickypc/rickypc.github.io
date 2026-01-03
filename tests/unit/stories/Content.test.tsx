@@ -32,14 +32,14 @@ jest.mock('@site/src/data/stories', () => ({
 }));
 
 describe('stories.Content', () => {
-  it('renders a wrapper with the content class', () => {
+  test('renders a wrapper with the content class', () => {
     const { container } = render(<Content />);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const wrapper = container.querySelector('.content');
     expect(wrapper).toBeInTheDocument();
   });
 
-  it('renders one story per entry with heading, heart, content, and links', () => {
+  test('renders one story per entry with heading, heart, content, and links', () => {
     render(<Content />);
     const articles = screen.getAllByTestId('article');
 

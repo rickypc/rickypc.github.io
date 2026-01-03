@@ -37,7 +37,7 @@ describe('Pills', () => {
     // eslint-disable-next-line testing-library/no-render-in-lifecycle
     beforeEach(() => renderComponent('banana'));
 
-    it('renders a <dl> with correct items', () => {
+    test('renders a <dl> with correct items', () => {
       // eslint-disable-next-line testing-library/no-node-access
       const dl = container.querySelector('dl');
       expect(dl?.tagName).toBe('DL');
@@ -53,7 +53,7 @@ describe('Pills', () => {
       });
     });
 
-    it('calls onClick with the clicked item', () => {
+    test('calls onClick with the clicked item', () => {
       fireEvent.click(dtElements[0]);
       expect(onClick).toHaveBeenCalledWith('apple');
     });
@@ -63,7 +63,7 @@ describe('Pills', () => {
     // eslint-disable-next-line testing-library/no-render-in-lifecycle
     beforeEach(() => renderComponent('cherry'));
 
-    it('applies active class and renders indicator on active item', () => {
+    test('applies active class and renders indicator on active item', () => {
       // eslint-disable-next-line no-unused-vars
       const [appleDt, bananaDt, cherryDt] = dtElements;
       expect(appleDt).not.toHaveClass('active');

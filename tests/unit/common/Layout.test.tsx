@@ -14,7 +14,7 @@ import { useWelcome } from '@site/src/hooks/observer';
 jest.unmock('@site/src/components/common/Layout');
 
 describe('Layout', () => {
-  it('calls useWelcome once on mount', () => {
+  test('calls useWelcome once on mount', () => {
     render((
       <Layout
         className="whatever"
@@ -42,7 +42,7 @@ describe('Layout', () => {
       title: 'Page Title',
     };
 
-    it('renders keyword and extra metas', () => {
+    test('renders keyword and extra metas', () => {
       render(<Layout {...props} />);
 
       const child = screen.getByTestId('child');
@@ -62,7 +62,7 @@ describe('Layout', () => {
         .toHaveAttribute('content', 'noindex');
     });
 
-    it('includes JSON-LD script with page metadata', () => {
+    test('includes JSON-LD script with page metadata', () => {
       render(<Layout {...props} />);
 
       const script = screen.getByTestId('metadata')
@@ -76,7 +76,7 @@ describe('Layout', () => {
       }));
     });
 
-    it('renders twitter metas', () => {
+    test('renders twitter metas', () => {
       render(<Layout {...props} />);
 
       const { head } = document;
@@ -88,14 +88,14 @@ describe('Layout', () => {
         .toHaveAttribute('content', 'Page Title');
     });
 
-    it('renders children', () => {
+    test('renders children', () => {
       render(<Layout {...props} />);
 
       expect(screen.getByTestId('child')).toBeInTheDocument();
     });
   });
 
-  it('omits extra metas when metadatas is undefined', () => {
+  test('omits extra metas when metadatas is undefined', () => {
     render((
       <Layout
         className="c"

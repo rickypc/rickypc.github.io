@@ -201,12 +201,16 @@
 
   .content address .name {
     font-size: 0.8rem;
-    padding: 0.45rem 0 0 0.3rem;
+    padding: 0.45rem 0.25rem 0 0.5rem;
   }
 
   .content address .title {
     font-size: 0.7rem;
     padding: 0.45rem 0 0 0;
+  }
+
+  .content .story address p {
+    margin-bottom: 0;
   }
 
   .content address .affiliation svg {
@@ -223,16 +227,24 @@
 /* Safari only */
 @supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
   @media print {
+    .content .story {
+      padding: 0.5rem 0.75rem 0 0.75rem;
+    }
+
     .content .story h2 {
-      line-height: 1;
+      line-height: 1.15rem;
     }
 
     .content .story p {
       font-size: 0.81rem;
     }
 
+    .content .story address p {
+      font-size: 0.75rem;
+    }
+
     .content address .affiliation svg {
-      margin: 0 0 0.1rem 0.15rem;
+      margin: 0 0 0.075rem 0.05rem;
     }
   }
 }

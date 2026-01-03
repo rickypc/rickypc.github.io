@@ -40,11 +40,7 @@
 }
 
 @media print {
-  .social {
-    padding: 0;
-  }
-
-  .social li>a {
+  :global(.row):has(.social) {
     display: none;
   }
 }

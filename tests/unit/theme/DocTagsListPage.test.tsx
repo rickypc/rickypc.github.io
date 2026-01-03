@@ -18,7 +18,7 @@ jest.mock('@site/src/data/common', () => ({
 }));
 
 describe('theme.DocTagsListPage', () => {
-  it('injects meta tags, calls useWelcome, and forwards props to original DocTagsListPage', () => {
+  test('injects meta tags, calls useWelcome, and forwards props to original DocTagsListPage', () => {
     const description = expect.stringContaining('Practical notes on Buddhism');
     const props = { someProp: 'value', tags: [] };
 

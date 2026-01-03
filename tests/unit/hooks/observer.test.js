@@ -45,7 +45,7 @@ describe('useMedia', () => {
     });
   });
 
-  it('initializes state to matchMedia(query).matches', async () => {
+  test('initializes state to matchMedia(query).matches', async () => {
     const query = '(min-width: 600px)';
     const { result } = renderHook(() => useMedia(query));
 
@@ -55,7 +55,7 @@ describe('useMedia', () => {
     expect(window.matchMedia).toHaveBeenCalledWith(query);
   });
 
-  it('updates state when the media query fires change events', async () => {
+  test('updates state when the media query fires change events', async () => {
     const query = '(min-width: 600px)';
     const { result } = renderHook(() => useMedia(query));
 
@@ -70,7 +70,7 @@ describe('useMedia', () => {
     await waitFor(() => expect(result.current[0]).toBeFalsy());
   });
 
-  it('removes its listener on unmount', async () => {
+  test('removes its listener on unmount', async () => {
     const query = '(min-width: 600px)';
     const { unmount } = renderHook(() => useMedia(query));
 
@@ -86,7 +86,7 @@ describe('useMedia', () => {
     expect(listeners.has(query)).toBeFalsy();
   });
 
-  it('tears down the old listener and subscribes a new one when query changes', async () => {
+  test('tears down the old listener and subscribes a new one when query changes', async () => {
     const q1 = '(min-width: 400px)';
     const q2 = '(max-width: 500px)';
 
@@ -124,12 +124,12 @@ describe('useMedia', () => {
 });
 
 describe('usePrint', () => {
-  it('should return false initially', () => {
+  test('should return false initially', () => {
     const { result } = renderHook(() => usePrint());
     expect(result.current[0]).toBeFalsy();
   });
 
-  it('should set printing to false on afterprint event', () => {
+  test('should set printing to false on afterprint event', () => {
     const { result } = renderHook(() => usePrint());
 
     // First simulate beforeprint.
@@ -148,19 +148,19 @@ describe('useSpeech', () => {
     delete window.SpeechSynthesisUtterance;
   });
 
-  it('returns false when both globals are missing', async () => {
+  test('returns false when both globals are missing', async () => {
     const { result } = renderHook(() => useSpeech());
     await waitFor(() => expect(result.current[0]).toBeFalsy());
   });
 
-  it('returns false when only speechSynthesis is defined', async () => {
+  test('returns false when only speechSynthesis is defined', async () => {
     window.speechSynthesis = {};
 
     const { result } = renderHook(() => useSpeech());
     await waitFor(() => expect(result.current[0]).toBeFalsy());
   });
 
-  it('returns false when only SpeechSynthesisUtterance is defined', async () => {
+  test('returns false when only SpeechSynthesisUtterance is defined', async () => {
     // Dummy constructor.
     // eslint-disable-next-line func-names
     window.SpeechSynthesisUtterance = function () {};
@@ -169,7 +169,7 @@ describe('useSpeech', () => {
     await waitFor(() => expect(result.current[0]).toBeFalsy());
   });
 
-  it('returns true when both speechSynthesis and SpeechSynthesisUtterance are defined', async () => {
+  test('returns true when both speechSynthesis and SpeechSynthesisUtterance are defined', async () => {
     window.speechSynthesis = {};
     // Dummy constructor
     // eslint-disable-next-line func-names
@@ -209,7 +209,7 @@ describe('useVisibility (Browser)', () => {
     delete global.IntersectionObserver;
   });
 
-  it('does nothing if ref.current is falsy, but reacts to visibilitychange', () => {
+  test('does nothing if ref.current is falsy, but reacts to visibilitychange', () => {
     const docAddSpy = jest.spyOn(document, 'addEventListener');
     const docRemoveSpy = jest.spyOn(document, 'removeEventListener');
     let focusHandler;
@@ -245,7 +245,7 @@ describe('useVisibility (Browser)', () => {
     expect(winRemoveSpy).toHaveBeenCalledWith('focus', expect.any(Function));
   });
 
-  it('observes when ref.current is set and toggles visible on intersections', () => {
+  test('observes when ref.current is set and toggles visible on intersections', () => {
     const docAddSpy = jest.spyOn(document, 'addEventListener');
     const docRemoveSpy = jest.spyOn(document, 'removeEventListener');
     let focusHandler;
@@ -311,7 +311,7 @@ describe('useWelcome', () => {
     `;
   });
 
-  it('default object and navigation = true (undefined)', () => {
+  test('default object and navigation = true (undefined)', () => {
     Object.defineProperty(window.navigator, 'language', {
       configurable: true,
       value: undefined,
@@ -347,7 +347,7 @@ describe('useWelcome', () => {
     expect(translateLink.href).toContain('https://rickypc-github-io.translate.goog/missing-empty/?_x_tr_sl=auto&_x_tr_tl=en');
   });
 
-  it('default object and navigation = true (en-US)', () => {
+  test('default object and navigation = true (en-US)', () => {
     Object.defineProperty(window.navigator, 'language', {
       configurable: true,
       value: 'en-US',
@@ -375,7 +375,7 @@ describe('useWelcome', () => {
     expect(title.getAttribute('translate')).toBe('no');
   });
 
-  it('default object and navigation = true (en-US) - non-browser', () => {
+  test('default object and navigation = true (en-US) - non-browser', () => {
     Object.defineProperty(window.navigator, 'language', {
       configurable: true,
       value: 'en-US',
@@ -395,7 +395,7 @@ describe('useWelcome', () => {
     expect(root.className).toBe('docusaurus-root');
   });
 
-  it('navigation = false (zh-CN)', () => {
+  test('navigation = false (zh-CN)', () => {
     Object.defineProperty(window.navigator, 'language', {
       configurable: true,
       value: 'zh-CN',
@@ -423,7 +423,7 @@ describe('useWelcome', () => {
     expect(title.getAttribute('translate')).toBe('no');
   });
 
-  it('navigation = true (fr)', () => {
+  test('navigation = true (fr)', () => {
     Object.defineProperty(window.navigator, 'language', {
       configurable: true,
       value: 'fr',

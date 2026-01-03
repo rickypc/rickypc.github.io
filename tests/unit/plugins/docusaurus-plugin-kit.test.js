@@ -133,7 +133,7 @@ const Plugin = require(`@site/src/plugins/${name}`);
 
 describe(`plugins.${name}`, () => {
   describe('createSitemapItems', () => {
-    it('appends pdf entries using git lastmod when available', async () => {
+    test('appends pdf entries using git lastmod when available', async () => {
       const defaultItems = [{ url: '/a' }];
       const defaultCreateSitemapItems = jest.fn(async () => defaultItems);
       getFileCommitDate.mockResolvedValue({ date: new Date('2025-10-01T07:00:00.000Z') });
@@ -152,7 +152,7 @@ describe(`plugins.${name}`, () => {
       });
     });
 
-    it('falls back to today when git has no latest', async () => {
+    test('falls back to today when git has no latest', async () => {
       getFileCommitDate.mockResolvedValue({});
       const defaultCreateSitemapItems = jest.fn(async () => []);
       const out = await Plugin.createSitemapItems({ defaultCreateSitemapItems, siteConfig: { url: 'https://x.y' } });
@@ -164,7 +164,7 @@ describe(`plugins.${name}`, () => {
 
   describe('fileResolve', () => {
     const siteDir = '/root';
-    it.each([
+    test.each([
       ['plain/path/file.txt', `${siteDir}/plain/path/file.txt`],
       ['@alias/utils/helper.ts', `${siteDir}/src/aliased/utils/helper.ts`],
       ['#lib/math/add.ts', `${siteDir}/lib/math/add.ts`],
@@ -181,7 +181,7 @@ describe(`plugins.${name}`, () => {
     // After siteDir assignment.
     const outDir = join(siteDir, out);
 
-    it('writes pdf files and updates progress bar once per pdf', async () => {
+    test('writes pdf files and updates progress bar once per pdf', async () => {
       const beforeIncrements = increment.mock.calls.length;
       const beforeWrites = createWriteStream.mock.calls.length;
 
@@ -197,7 +197,7 @@ describe(`plugins.${name}`, () => {
       expect(stop).toHaveBeenCalledTimes(1);
     });
 
-    it('skip recent pdf files, but updates progress bar once per pdf', async () => {
+    test('skip recent pdf files, but updates progress bar once per pdf', async () => {
       const beforeIncrements = increment.mock.calls.length;
       const beforeWrites = createWriteStream.mock.calls.length;
       const now = Date.now();
@@ -222,7 +222,7 @@ describe(`plugins.${name}`, () => {
   });
 
   describe('inlineAboveFold', () => {
-    it('processes HTML files and updates progress bar', async () => {
+    test('processes HTML files and updates progress bar', async () => {
       readdir.mockResolvedValue(['file1.html', 'file2.html']);
 
       await Plugin.inlineAboveFold('./out', MultiBar());
@@ -251,7 +251,7 @@ describe(`plugins.${name}`, () => {
   });
 
   describe('lastModified', () => {
-    it.each([
+    test.each([
       ['file-success', { mtimeMs: 123456789 }, 123456789],
       ['file-failure', new Error('ENOENT'), 0],
     ])('path=%s -> expected=%s', async (path, statReturn, expected) => {
@@ -262,7 +262,7 @@ describe(`plugins.${name}`, () => {
   });
 
   describe('outputPaths', () => {
-    it.each([
+    test.each([
       {
         expected: ['/fakeDir/file1.md', '/fakeDir/nested/file3.md'],
         files: ['file1.md', 'file2.txt', 'nested/file3.md'],
@@ -293,7 +293,7 @@ describe(`plugins.${name}`, () => {
   describe('postBuild', () => {
     const base = { outDir: './out', siteConfig: { trailingSlash: false }, siteDir: './site' };
 
-    it('runs generatePdf and inlineAboveFold concurrently when trailingSlash is true', async () => {
+    test('runs generatePdf and inlineAboveFold concurrently when trailingSlash is true', async () => {
       const ctx = { ...base, siteConfig: { trailingSlash: true } };
       readdir.mockResolvedValue(['file1.html', 'file2.html']);
 
@@ -311,7 +311,7 @@ describe(`plugins.${name}`, () => {
       expect(writeFile).toHaveBeenCalledWith('out/file1.html', expect.stringContaining('data-beasties-container'), 'utf8');
     });
 
-    it('skips inlineAboveFold when trailingSlash is false', async () => {
+    test('skips inlineAboveFold when trailingSlash is false', async () => {
       await Plugin.postBuild(base);
 
       // generatePdf.
@@ -328,7 +328,7 @@ describe(`plugins.${name}`, () => {
   describe('stale', () => {
     const siteDir = '/root';
 
-    it.each([
+    test.each([
       // Target does not exist -> stale.
       ['non-existent target', new Error('ENOENT'), [], true],
       // Data newer than target -> stale.
@@ -362,7 +362,7 @@ describe(`plugins.${name}`, () => {
   });
 
   describe('plugin API (default export)', () => {
-    it('configureWebpack returns expected shape and includes Fontaine transform', () => {
+    test('configureWebpack returns expected shape and includes Fontaine transform', () => {
       const plugin = Plugin.default({ outDir: 'out' });
       const cw = plugin.configureWebpack({}, false);
       expect(cw.devServer.static[0].publicPath).toBe('/pdf');
@@ -372,7 +372,7 @@ describe(`plugins.${name}`, () => {
       expect(plugin.name).toBe(name);
     });
 
-    it('extendCli action: explicit args resolve config path and invoke postBuild side-effects', async () => {
+    test('extendCli action: explicit args resolve config path and invoke postBuild side-effects', async () => {
       const plugin = Plugin.default({ siteDir: '/ctx/site' });
       const actions = {};
       const cli = {
@@ -398,7 +398,7 @@ describe(`plugins.${name}`, () => {
       expect(createWriteStream.mock.calls.length - beforeWrites).toEqual(pdf.length);
     });
 
-    it('extendCli action: default args and falsy cliSiteDir fallback behave independently', async () => {
+    test('extendCli action: default args and falsy cliSiteDir fallback behave independently', async () => {
       // Default (undefined) invocation.
       const pluginA = Plugin.default({ siteDir: '/ctx/siteA' });
       const actionsA = {};

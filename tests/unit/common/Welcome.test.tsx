@@ -13,20 +13,20 @@ import { usePrint, useWelcome } from '@site/src/hooks/observer';
 const usePrintMock = jest.mocked(usePrint);
 
 describe('Welcome', () => {
-  it('calls useWelcome with navigation=false by default and renders speech admonition', () => {
+  test('calls useWelcome with navigation=false by default and renders speech admonition', () => {
     usePrintMock.mockReturnValue([false]);
     render(<Welcome />);
     expect(useWelcome).toHaveBeenCalledWith({ navigation: false });
     expect(screen.getByTestId('speech-admonition')).toBeInTheDocument();
   });
 
-  it('calls useWelcome with navigation=true when prop is true', () => {
+  test('calls useWelcome with navigation=true when prop is true', () => {
     usePrintMock.mockReturnValue([false]);
     render(<Welcome navigation />);
     expect(useWelcome).toHaveBeenCalledWith({ navigation: true });
   });
 
-  it('expands details when printing=true and restores when printing=false', async () => {
+  test('expands details when printing=true and restores when printing=false', async () => {
     // Create mock <details> elements with a child <div>.
     const details1 = document.createElement('details');
     const div1 = document.createElement('div');

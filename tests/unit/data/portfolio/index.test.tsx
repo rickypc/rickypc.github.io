@@ -9,14 +9,14 @@ import { catalog, layout, preamble } from '@site/src/data/portfolio';
 
 describe('portfolio.index', () => {
   // Verify container and capture first item once.
-  it('catalog is a non-empty array and exposes a first item object', () => {
+  test('catalog is a non-empty array and exposes a first item object', () => {
     expect(Array.isArray(catalog)).toBeTruthy();
     expect(catalog.length).toBeGreaterThan(0);
     expect(typeof catalog[0]).toBe('object');
   });
 
   // Validate first item's primitive/top-level fields.
-  it('first catalog item has required primitive fields with sensible values', () => {
+  test('first catalog item has required primitive fields with sensible values', () => {
     const first = catalog[0];
 
     const requiredPrimitives = ['description', 'href', 'images', 'prefix', 'tags', 'title'];
@@ -42,7 +42,7 @@ describe('portfolio.index', () => {
   });
 
   // Validate images structure only.
-  it('first catalog item images array contains objects with alt and picture keys of expected shape', () => {
+  test('first catalog item images array contains objects with alt and picture keys of expected shape', () => {
     const first = catalog[0];
 
     expect(Array.isArray(first.images)).toBeTruthy();
@@ -69,7 +69,7 @@ describe('portfolio.index', () => {
     });
   });
 
-  it('layout export has title, description, and non-empty keywords array', () => {
+  test('layout export has title, description, and non-empty keywords array', () => {
     expect(typeof layout).toBe('object');
 
     expect(typeof layout.title).toBe('string');
@@ -86,7 +86,7 @@ describe('portfolio.index', () => {
     });
   });
 
-  it('preamble export has description and title', () => {
+  test('preamble export has description and title', () => {
     expect(typeof preamble).toBe('object');
 
     expect(typeof preamble.title).toBe('string');

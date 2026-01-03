@@ -63,19 +63,19 @@ jest.mock('#buddhism/mock-split-empty', () => ({
 
 describe('docs.buddhism._common', () => {
   describe('body()', () => {
-    it('handles a single string child', () => {
+    test('handles a single string child', () => {
       const result = body({ children: 'Hello' }, '|');
 
       expect(result).toBe('Hello');
     });
 
-    it('joins multiple children with the infix and newline', () => {
+    test('joins multiple children with the infix and newline', () => {
       const result = body({ children: ['A', 'B', 'C'] }, '-');
 
       expect(result).toBe('A-\nB-\nC');
     });
 
-    it('extracts nested React element children', () => {
+    test('extracts nested React element children', () => {
       const result = body({
         children: [
           createElement('span', null, 'X'),
@@ -86,7 +86,7 @@ describe('docs.buddhism._common', () => {
       expect(result).toBe('X।\nY');
     });
 
-    it('handles empty or falsy children gracefully', () => {
+    test('handles empty or falsy children gracefully', () => {
       const result = body({ children: ['', null, 'A'] }, '/');
 
       expect(result).toBe('\n\nA');
@@ -94,7 +94,7 @@ describe('docs.buddhism._common', () => {
   });
 
   describe('instruction()', () => {
-    it('wraps a single string into an instruction object', () => {
+    test('wraps a single string into an instruction object', () => {
       const result = instruction('Read this');
 
       expect(result).toEqual({
@@ -102,7 +102,7 @@ describe('docs.buddhism._common', () => {
       });
     });
 
-    it('wraps multiple strings into instruction objects', () => {
+    test('wraps multiple strings into instruction objects', () => {
       const result = instruction(['One', 'Two']);
 
       expect(result).toEqual({
@@ -113,14 +113,14 @@ describe('docs.buddhism._common', () => {
       });
     });
 
-    it('passes through objects unchanged', () => {
+    test('passes through objects unchanged', () => {
       const input = [{ style: 'instruction', text: 'Keep me' }];
       const result = instruction(input);
 
       expect(result).toEqual({ text: input });
     });
 
-    it('mixes strings and objects correctly', () => {
+    test('mixes strings and objects correctly', () => {
       const input = [
         'Alpha',
         { style: 'instruction', text: 'Beta' },
@@ -140,7 +140,7 @@ describe('docs.buddhism._common', () => {
   });
 
   describe('header()', () => {
-    it('returns section-set when commentaries is non-empty', () => {
+    test('returns section-set when commentaries is non-empty', () => {
       const result = header('My Title', 'Some commentary');
 
       expect(result).toEqual({
@@ -152,7 +152,7 @@ describe('docs.buddhism._common', () => {
       });
     });
 
-    it('returns section + section-set styles when commentaries is empty', () => {
+    test('returns section + section-set styles when commentaries is empty', () => {
       const result = header('My Title');
 
       expect(result).toEqual({
@@ -161,7 +161,7 @@ describe('docs.buddhism._common', () => {
       });
     });
 
-    it('handles array commentaries correctly', () => {
+    test('handles array commentaries correctly', () => {
       const result = header('Title', ['A', 'B']);
 
       expect(result).toEqual({
@@ -175,7 +175,7 @@ describe('docs.buddhism._common', () => {
   });
 
   describe('main()', () => {
-    it('returns phrase-set with repetition when repetition > 0', () => {
+    test('returns phrase-set with repetition when repetition > 0', () => {
       const result = main('Sanskrit text', 'Translit text', 3);
 
       expect(result).toEqual([
@@ -190,7 +190,7 @@ describe('docs.buddhism._common', () => {
       ]);
     });
 
-    it('returns phrase + phrase-set styles when repetition = 0', () => {
+    test('returns phrase + phrase-set styles when repetition = 0', () => {
       const result = main('Sanskrit', 'Translit');
 
       expect(result).toEqual([
@@ -199,7 +199,7 @@ describe('docs.buddhism._common', () => {
       ]);
     });
 
-    it('handles array commentaries for both fields', () => {
+    test('handles array commentaries for both fields', () => {
       const result = main(['A', 'B'], ['X', 'Y'], 0);
 
       expect(result).toEqual([
@@ -210,7 +210,7 @@ describe('docs.buddhism._common', () => {
   });
 
   describe('phrase()', () => {
-    it('builds a full phrase block with header + main', () => {
+    test('builds a full phrase block with header + main', () => {
       const result = phrase('#buddhism/mock-default', 'Note', 3);
 
       expect(result).toEqual([
@@ -223,7 +223,7 @@ describe('docs.buddhism._common', () => {
       ]);
     });
 
-    it('uses transliteration.repetition when repetition arg is 0', () => {
+    test('uses transliteration.repetition when repetition arg is 0', () => {
       const result = phrase('#buddhism/mock-default-empty');
 
       expect(result).toEqual([
@@ -236,7 +236,7 @@ describe('docs.buddhism._common', () => {
       ]);
     });
 
-    it('uses explicit title when provided', () => {
+    test('uses explicit title when provided', () => {
       const result = phrase('#buddhism/mock-default', '', 0, 'Custom Title');
 
       expect(result[0]).toEqual(header('Custom Title', ''));
@@ -244,7 +244,7 @@ describe('docs.buddhism._common', () => {
   });
 
   describe('phrases()', () => {
-    it('splits sanskrit/transliteration at empty string and builds two blocks', () => {
+    test('splits sanskrit/transliteration at empty string and builds two blocks', () => {
       const result = phrases('#buddhism/mock-split', 'Note');
 
       expect(result).toEqual([
@@ -266,7 +266,7 @@ describe('docs.buddhism._common', () => {
       ]);
     });
 
-    it('splits sanskrit/transliteration at empty string and builds two blocks (no title)', () => {
+    test('splits sanskrit/transliteration at empty string and builds two blocks (no title)', () => {
       const result = phrases('#buddhism/mock-split-empty', 'Note');
 
       expect(result).toEqual([
@@ -288,7 +288,7 @@ describe('docs.buddhism._common', () => {
       ]);
     });
 
-    it('uses explicit title when provided', () => {
+    test('uses explicit title when provided', () => {
       const result = phrases('#buddhism/mock-split', undefined, 0, 'Custom Title');
 
       expect(result[0][0]).toEqual(header('Custom Title', ''));

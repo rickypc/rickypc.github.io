@@ -19,7 +19,7 @@ describe('portfolio.Zoom', () => {
     document.body.classList.remove('no-scroll');
   });
 
-  it('renders closed state when open.picture is not an object and ignores Escape key', () => {
+  test('renders closed state when open.picture is not an object and ignores Escape key', () => {
     const open = { alt: 'Alt text', picture: undefined };
     render(<Zoom open={open} onClick={onClickMock} />);
 
@@ -40,7 +40,7 @@ describe('portfolio.Zoom', () => {
     expect(onClickMock).not.toHaveBeenCalled();
   });
 
-  it('opens: toggles no-scroll, resets scrollTop via setter, focuses figure, and shows image', () => {
+  test('opens: toggles no-scroll, resets scrollTop via setter, focuses figure, and shows image', () => {
     const alt = 'Alt text';
     const picture = { avif: 'x.avif', fallback: {}, webp: 'x.webp' };
 
@@ -64,7 +64,7 @@ describe('portfolio.Zoom', () => {
     expect(screen.getByTestId(/^img-/)).toBeInTheDocument();
   });
 
-  it('calls onClick when overlay or figure clicked', () => {
+  test('calls onClick when overlay or figure clicked', () => {
     const pic = { avif: '', fallback: {}, webp: '' };
     render(<Zoom open={{ alt: 'A', picture: pic }} onClick={onClickMock} />);
 
@@ -73,7 +73,7 @@ describe('portfolio.Zoom', () => {
     expect(onClickMock).toHaveBeenCalledTimes(2);
   });
 
-  it('handles key events when opened: ignores non-Escape, fires on Escape, cleans up listener on unmount', () => {
+  test('handles key events when opened: ignores non-Escape, fires on Escape, cleans up listener on unmount', () => {
     const pic = { avif: '', fallback: {}, webp: '' };
     const { unmount } = render(<Zoom open={{ alt: 'K', picture: pic }} onClick={onClickMock} />);
 
@@ -91,7 +91,7 @@ describe('portfolio.Zoom', () => {
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
 
-  it('removes no-scroll class when open.picture toggles to non-object', () => {
+  test('removes no-scroll class when open.picture toggles to non-object', () => {
     const alt = 'A';
     const picture = { avif: '', fallback: {}, webp: '' };
     const { rerender } = render(<Zoom open={{ alt, picture }} onClick={onClickMock} />);

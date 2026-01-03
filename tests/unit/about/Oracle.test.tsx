@@ -16,7 +16,7 @@ const useVisibilityMock = jest.mocked(useVisibility);
 jest.unmock('@site/src/components/about/Oracle');
 
 describe('about.Oracle', () => {
-  it.each([
+  test.each([
     [false, 'oracle'],
     [true, 'play oracle'],
   ])('visible=%s -> container.className="%s"', (visible, expectedClassName) => {
@@ -30,7 +30,7 @@ describe('about.Oracle', () => {
     expect(outer.className).toEqual(expectedClassName);
   });
 
-  it('renders three oracular items and calls ref on the inner div', () => {
+  test('renders three oracular items and calls ref on the inner div', () => {
     const { result } = renderHook(() => useRef<null>(null));
     useVisibilityMock.mockReturnValue({ ref: result.current, visible: false });
     const { container } = render(<Oracle />);

@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
  */
 
@@ -11,5 +11,14 @@
 @media print {
   .row {
     margin-top: 3rem;
+  }
+}
+
+/* Safari only */
+@supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
+  @media print {
+    .row {
+      margin-top: 1.75rem;
+    }
   }
 }

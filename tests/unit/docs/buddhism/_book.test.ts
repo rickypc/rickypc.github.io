@@ -12,7 +12,7 @@ jest.mock('#buddhism/_image', () => ({
 }));
 
 describe('docs.buddhism._book', () => {
-  it('builds a title page correctly', async () => {
+  test('builds a title page correctly', async () => {
     jest.mock('#buddhism/book-title', () => ({
       default: {
         pages: [
@@ -79,7 +79,7 @@ describe('docs.buddhism._book', () => {
     expect(result.options.tableLayouts.page.vLineWidth()).toBe(0.5);
   });
 
-  it('builds a content page with chapters and contents', async () => {
+  test('builds a content page with chapters and contents', async () => {
     jest.mock('#buddhism/book-content', () => ({
       default: {
         title: 'Chants',
@@ -113,7 +113,7 @@ describe('docs.buddhism._book', () => {
     expect(canvas).toEqual({ canvas: [] });
   });
 
-  it('creates divider canvas for non-final pages', async () => {
+  test('creates divider canvas for non-final pages', async () => {
     jest.mock('#buddhism/book-multi', () => ({
       default: {
         title: 'Multi',
@@ -152,7 +152,7 @@ describe('docs.buddhism._book', () => {
     expect(canvas2).toEqual({ canvas: [] });
   });
 
-  it('handles empty pages array', async () => {
+  test('handles empty pages array', async () => {
     jest.mock('#buddhism/book-empty', () => ({
       default: { title: 'Empty' },
     }), { virtual: true });

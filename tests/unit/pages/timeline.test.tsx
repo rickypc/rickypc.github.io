@@ -9,8 +9,13 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { layout, preamble } from '@site/src/data/timeline';
 import Timeline from '@site/src/pages/timeline';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 describe('pages.timeline', () => {
+  jest.mocked<any>(useDocusaurusContext).mockReturnValue({
+    siteConfig: { url: 'https://domain.test' },
+  });
+
   test('renders Layout with className and layout props, renders Preamble then section.row with Content', () => {
     render(<Timeline />);
 

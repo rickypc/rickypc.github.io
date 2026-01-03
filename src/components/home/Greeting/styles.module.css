@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2015 - 2024 Richard Huang <rickypc@users.noreply.github.com>.
+ * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
  */
 
@@ -90,7 +90,7 @@
     font-family: Poppins, sans-serif;
     font-size: 1.25rem;
     font-weight: 400;
-    margin: 3rem 0 0.75rem 1.875rem;
+    margin: 0 0 0.5rem 1.875rem;
   }
 
   [data-theme] .greeting::before {

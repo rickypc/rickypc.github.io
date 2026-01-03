@@ -166,10 +166,6 @@ section.block:last-of-type {
   line-height: 0;
 }
 
-.qr {
-  display: none;
-}
-
 @media screen and (max-width: 48rem) {
   .block.testimonials .col ul {
     grid-template-columns: 1fr;
@@ -279,15 +275,6 @@ section.block:last-of-type {
   .block:not(.testimonials) .col ul li::marker {
     font-size: 1.05rem;
     line-height: 0;
-  }
-
-  .qr {
-    bottom: 0;
-    display: block;
-    height: 6rem;
-    position: fixed;
-    right: 0;
-    width: 6rem;
   }
 }
 

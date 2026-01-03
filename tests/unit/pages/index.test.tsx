@@ -9,8 +9,13 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Home from '@site/src/pages/index';
 import { layout } from '@site/src/data/home';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 describe('pages.index', () => {
+  jest.mocked<any>(useDocusaurusContext).mockReturnValue({
+    siteConfig: { url: 'https://domain.test' },
+  });
+
   test('renders Layout with correct class and layout props; places Greeting, Hats+Figure and Socials in correct DOM structure', () => {
     render(<Home />);
 

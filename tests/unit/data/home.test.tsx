@@ -17,7 +17,7 @@ import {
 } from '@site/src/data/home';
 
 describe('data.home', () => {
-  it('renders greeting fragment with two spans', () => {
+  test('renders greeting fragment with two spans', () => {
     const { container } = render(<div>{greeting}</div>);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const spans = container.querySelectorAll('span');
@@ -27,7 +27,7 @@ describe('data.home', () => {
     expect(spans[1]).toHaveTextContent('Ricky Huang');
   });
 
-  it('exports four hats with correct children (img + Reveal)', () => {
+  test('exports four hats with correct children (img + Reveal)', () => {
     expect(Array.isArray(hats)).toBeTruthy();
     expect(hats).toHaveLength(4);
 
@@ -49,7 +49,7 @@ describe('data.home', () => {
     });
   });
 
-  it('each hat.description renders at least one link', () => {
+  test('each hat.description renders at least one link', () => {
     hats.forEach((hat) => {
       const { container } = render(<div>{hat.description}</div>);
       const links = within(container).getAllByTestId(/^link-/);
@@ -61,17 +61,17 @@ describe('data.home', () => {
     });
   });
 
-  it('exports image with correct alt and picture props', () => {
+  test('exports image with correct alt and picture props', () => {
     expect(image.alt).toBe('Ricky Huang');
     expect(image.picture.fallback).toBe('self.png');
     expect(image.picture.webp).toBe('self.webp');
   });
 
-  it('exports ipa string correctly', () => {
+  test('exports ipa string correctly', () => {
     expect(ipa).toBe('/ˈɹɪki ˈhwɑːŋ/');
   });
 
-  it('exports layout with description, keywords array, and title', () => {
+  test('exports layout with description, keywords array, and title', () => {
     expect(typeof layout.description).toBe('string');
     expect(layout.description).toMatch(/^Welcome to Ricky Huang's site/);
 
@@ -82,7 +82,7 @@ describe('data.home', () => {
     expect(layout.title).toContain('Engineering Leadership');
   });
 
-  it('exports two socials entries with href, title, and Icon component', () => {
+  test('exports two socials entries with href, title, and Icon component', () => {
     expect(Array.isArray(socials)).toBeTruthy();
     expect(socials).toHaveLength(2);
 

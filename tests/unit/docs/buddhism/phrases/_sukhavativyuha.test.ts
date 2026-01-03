@@ -18,13 +18,13 @@ jest.mock('#buddhism/phrases/_amitabha', () => ({
 }));
 
 describe('docs.buddhism._sukhavativyuha', () => {
-  it('exports the correct core structure', () => {
+  test('exports the correct core structure', () => {
     expect(sukhavativyuha.core).toHaveProperty('sanskrit.children');
     expect(sukhavativyuha.core).toHaveProperty('transliteration.children');
     expect(sukhavativyuha.core).toHaveProperty('transliteration.speech');
   });
 
-  it('builds the sanskrit section correctly', () => {
+  test('builds the sanskrit section correctly', () => {
     expect(sukhavativyuha.sanskrit.title).toBe('सुखावतीव्यूह धारणी');
 
     expect(sukhavativyuha.sanskrit.children).toBe(
@@ -41,11 +41,11 @@ describe('docs.buddhism._sukhavativyuha', () => {
     });
   });
 
-  it('builds the translation section correctly', () => {
+  test('builds the translation section correctly', () => {
     expect(sukhavativyuha.translation.title).toBe('Pure Land Rebirth Dhāraṇī');
   });
 
-  it('builds the transliteration section correctly', () => {
+  test('builds the transliteration section correctly', () => {
     expect(sukhavativyuha.transliteration.title).toBe('Sukhāvatīvyūha Dhāraṇī');
 
     expect(sukhavativyuha.transliteration.children).toBe(
@@ -63,7 +63,7 @@ describe('docs.buddhism._sukhavativyuha', () => {
     );
   });
 
-  it('sets the correct language and path', () => {
+  test('sets the correct language and path', () => {
     expect(sukhavativyuha.lang).toBe('sa-IN');
     expect(sukhavativyuha).toHaveProperty('path');
   });

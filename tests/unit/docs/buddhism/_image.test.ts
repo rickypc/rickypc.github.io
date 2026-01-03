@@ -27,12 +27,12 @@ describe('docs.buddhism._image', () => {
     });
   });
 
-  it('returns null when no path is provided', async () => {
+  test('returns null when no path is provided', async () => {
     const result = await image({ width: 100 });
     expect(result).toBeNull();
   });
 
-  it('returns a pdfMake image object for PNG', async () => {
+  test('returns a pdfMake image object for PNG', async () => {
     const result = await image({ path: './img.png', width: 100 }, mockResolver);
 
     expect(readFileSync).toHaveBeenCalled();
@@ -46,7 +46,7 @@ describe('docs.buddhism._image', () => {
     ]);
   });
 
-  it('adds alt text when provided', async () => {
+  test('adds alt text when provided', async () => {
     const result = await image({
       alt: 'Caption',
       path: './img.png',
@@ -62,7 +62,7 @@ describe('docs.buddhism._image', () => {
     });
   });
 
-  it('uses custom margin when provided', async () => {
+  test('uses custom margin when provided', async () => {
     const result = await image({
       height: 100,
       path: './img.png',
@@ -72,7 +72,7 @@ describe('docs.buddhism._image', () => {
     expect(result?.[0]?.margin).toEqual([1, 2, 3, 4]);
   });
 
-  it('converts WEBP images using sharp', async () => {
+  test('converts WEBP images using sharp', async () => {
     jest.mocked(extname).mockReturnValue('.webp');
 
     const result = await image({ path: './img.webp', width: 100 }, mockResolver);
@@ -81,7 +81,7 @@ describe('docs.buddhism._image', () => {
     expect(result?.[0]?.image).toContain('data:image/png;base64,');
   });
 
-  it('uses JPEG mime for .jpg', async () => {
+  test('uses JPEG mime for .jpg', async () => {
     jest.mocked(extname).mockReturnValue('.jpg');
 
     const result = await image({ path: './img.jpg', width: 100 }, mockResolver);

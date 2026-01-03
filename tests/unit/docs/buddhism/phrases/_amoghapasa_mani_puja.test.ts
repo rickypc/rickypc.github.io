@@ -18,7 +18,7 @@ jest.mock('#buddhism/phrases/_amoghapasa_padma_usnisa', () => ({
 }));
 
 describe('docs.buddhism.phrases._amoghapasa_mani_puja', () => {
-  it('exports the correct core structure', () => {
+  test('exports the correct core structure', () => {
     expect(puja.core).toEqual({
       sanskrit: {
         children: 'ॐ अमोघ पूजा मणिपद्म वज्रे तथागत विलोकिते समन्त प्रसर हूँ',
@@ -32,7 +32,7 @@ describe('docs.buddhism.phrases._amoghapasa_mani_puja', () => {
     });
   });
 
-  it('builds the sanskrit section correctly', () => {
+  test('builds the sanskrit section correctly', () => {
     expect(puja.sanskrit.title).toBe('अमोघपाश मणि पूजा');
 
     expect(puja.sanskrit.children).toBe(
@@ -43,7 +43,7 @@ describe('docs.buddhism.phrases._amoghapasa_mani_puja', () => {
     );
   });
 
-  it('builds the transliteration section correctly', () => {
+  test('builds the transliteration section correctly', () => {
     expect(puja.transliteration.title).toBe('Amoghapāśa Maṇi Pūja');
     expect(puja.transliteration.repetition).toBe(3);
 
@@ -62,7 +62,7 @@ describe('docs.buddhism.phrases._amoghapasa_mani_puja', () => {
     );
   });
 
-  it('builds the translation section correctly', () => {
+  test('builds the translation section correctly', () => {
     expect(puja.translation.title).toBe('Amoghapāśa Jewels Offering');
   });
 });

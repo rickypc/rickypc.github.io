@@ -9,7 +9,7 @@ import { act, renderHook } from '@testing-library/react';
 import useTransport from '@site/src/hooks/transport';
 
 describe('useTransport', () => {
-  it('returns parsed JSON when fetch resolves with valid JSON', async () => {
+  test('returns parsed JSON when fetch resolves with valid JSON', async () => {
     const mockJson = { data: [1, 2, 3], ok: true };
     const mockResponse = {
       json: jest.fn().mockResolvedValue(mockJson),
@@ -27,7 +27,7 @@ describe('useTransport', () => {
     expect(returned).toEqual(mockJson);
   });
 
-  it('returns empty object when response.json throws (non-JSON body)', async () => {
+  test('returns empty object when response.json throws (non-JSON body)', async () => {
     const mockResponse = {
       json: jest.fn().mockRejectedValue(new Error('invalid json')),
     };
@@ -44,7 +44,7 @@ describe('useTransport', () => {
     expect(returned).toEqual({});
   });
 
-  it('propagates fetch rejection error (fetch throws)', async () => {
+  test('propagates fetch rejection error (fetch throws)', async () => {
     const fetchError = new Error('network failure');
     global.fetch = jest.fn().mockRejectedValue(fetchError);
 

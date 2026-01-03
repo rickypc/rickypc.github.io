@@ -11,6 +11,7 @@ import Layout from '@site/src/components/common/Layout';
 import { memo, useCallback, useState } from 'react';
 import Preamble from '@site/src/components/common/Preamble';
 import Projects from '@site/src/components/portfolio/Projects';
+import QRCode from '@site/src/components/common/QRCode';
 import Zoom from '@site/src/components/portfolio/Zoom';
 import styles from './styles.module.css';
 
@@ -39,6 +40,7 @@ export default memo(function Portfolio() {
         <Projects filtered={filtered} onClick={onProjectClick} open={open} />
       </section>
       <Zoom onClick={onZoomClick} open={open} />
+      <QRCode />
     </Layout>
   );
 });

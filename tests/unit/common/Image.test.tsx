@@ -41,7 +41,7 @@ describe('Image', () => {
   beforeEach(() => jest.useFakeTimers());
 
   describe('visibility', () => {
-    it('does not render sources or img when not visible', () => {
+    test('does not render sources or img when not visible', () => {
       const { result } = renderHook(() => useRef(null));
       useVisibilityMock.mockReturnValue({ ref: result.current, visible: false });
       const { container } = render(<Image alt="Alt" picture={basePicture} />);
@@ -54,7 +54,7 @@ describe('Image', () => {
       expect(picture?.querySelector('img')).toBeNull();
     });
 
-    it('renders a picture element when visible', () => {
+    test('renders a picture element when visible', () => {
       const { result } = renderHook(() => useRef(null));
       useVisibilityMock.mockReturnValue({ ref: result.current, visible: true });
       const { container } = render(<Image alt="Alt" picture={basePicture} />);
@@ -64,7 +64,7 @@ describe('Image', () => {
   });
 
   describe('sources and fallback', () => {
-    it('renders avif, webp sources and fallback img', () => {
+    test('renders avif, webp sources and fallback img', () => {
       const { container } = render(<Image alt="Alt" picture={basePicture} />);
       // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const sources = container.querySelectorAll('source');
@@ -78,7 +78,7 @@ describe('Image', () => {
   });
 
   describe('link wrapper', () => {
-    it('wraps picture in an anchor when link prop is provided', () => {
+    test('wraps picture in an anchor when link prop is provided', () => {
       render((
         <Image
           alt="Alt"
@@ -96,7 +96,7 @@ describe('Image', () => {
   });
 
   describe('preSrc background and load behavior', () => {
-    it('applies preSrc background, sets alt on load, and clears preSrc after delay', () => {
+    test('applies preSrc background, sets alt on load, and clears preSrc after delay', () => {
       const onLoad = jest.fn();
       const { container } = render((
         <Image alt="Alt text" onLoad={onLoad} picture={basePicture} />
@@ -116,7 +116,7 @@ describe('Image', () => {
       expect(pic).not.toHaveStyle('background-image: url(preSrc.jpg)');
     });
 
-    it('invokes onLoad again on subsequent loads without restoring preSrc', async () => {
+    test('invokes onLoad again on subsequent loads without restoring preSrc', async () => {
       const onLoad = jest.fn();
       const { container } = render((
         <Image alt="Alt" onLoad={onLoad} picture={basePicture} />
@@ -177,7 +177,7 @@ describe('Image', () => {
       },
     ];
 
-    it.each(scenarios)('$name', ({ expected, images, width }) => {
+    test.each(scenarios)('$name', ({ expected, images, width }) => {
       const original = Object.getOwnPropertyDescriptor(
         HTMLElement.prototype,
         'clientWidth',

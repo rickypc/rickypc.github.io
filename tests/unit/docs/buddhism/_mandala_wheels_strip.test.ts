@@ -12,7 +12,7 @@ jest.mock('#buddhism/_image', () => ({
 }));
 
 describe('docs.buddhism._mandala_wheels_strip', () => {
-  it('builds the mandala wheels strip document correctly', async () => {
+  test('builds the mandala wheels strip document correctly', async () => {
     const result = await mandalaWheelsStrip();
 
     expect(result).toHaveProperty('definition');

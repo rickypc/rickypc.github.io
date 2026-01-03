@@ -18,7 +18,7 @@ describe('Preamble', () => {
   };
 
   describe('default rendering', () => {
-    it('renders header, heading, and description', () => {
+    test('renders header, heading, and description', () => {
       render(<Preamble {...baseProps} />);
 
       // eslint-disable-next-line testing-library/no-node-access

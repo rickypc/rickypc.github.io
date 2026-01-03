@@ -22,7 +22,7 @@ type Props = {
 const PhraseMock = Phrase as (_: Props) => ReactElement;
 
 describe('GrPrint', () => {
-  it('renders a print icon with passed props', () => {
+  test('renders a print icon with passed props', () => {
     render(<GrPrint className="print" title="PrintTitle" />);
     const icon = screen.getByTestId('icon-svg');
     expect(icon).toHaveAttribute('class', 'print');
@@ -31,7 +31,7 @@ describe('GrPrint', () => {
 });
 
 describe('Instruction', () => {
-  it('renders MDXDetails and Image when image prop is provided', () => {
+  test('renders MDXDetails and Image when image prop is provided', () => {
     const props = { image: 'path/to/img.png', text: null, transliteration: { title: 'MyTitle' } } as any;
     render(<Instruction {...props} />);
 
@@ -44,7 +44,7 @@ describe('Instruction', () => {
     expect(img).toHaveClass('picture');
   });
 
-  it('renders a div with instruction text when only text prop is provided', () => {
+  test('renders a div with instruction text when only text prop is provided', () => {
     const props = { image: undefined, text: 'Please read carefully', transliteration: { title: 'IgnoredTitle' } };
     render(<Instruction {...props} />);
     const div = screen.getByText('Please read carefully');
@@ -55,14 +55,14 @@ describe('Instruction', () => {
 describe('Phrase', () => {
   const transliteration = { children: 'Hello', testId: 'transliteration' };
 
-  it('returns null when transliteration is not provided', () => {
+  test('returns null when transliteration is not provided', () => {
     const { container } = render(<PhraseMock />);
     // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toBeNull();
   });
 
   describe('basic rendering without speech or repetition', () => {
-    it('renders only PhraseBlock with default Sanskrit markers', () => {
+    test('renders only PhraseBlock with default Sanskrit markers', () => {
       render((
         <PhraseMock transliteration={{ ...transliteration, speech: undefined, repetition: 0 }} />
       ));
@@ -73,7 +73,7 @@ describe('Phrase', () => {
       expect(block.textContent).toBe('Hello');
     });
 
-    it('does not include Details, Speech, or PDF links', () => {
+    test('does not include Details, Speech, or PDF links', () => {
       render((
         <PhraseMock transliteration={{ ...transliteration, speech: undefined, repetition: 0 }} />
       ));
@@ -83,7 +83,7 @@ describe('Phrase', () => {
     });
   });
 
-  it('renders Speech and support wrapper when speech is provided', () => {
+  test('renders Speech and support wrapper when speech is provided', () => {
     const { container } = render((
       <PhraseMock transliteration={{ ...transliteration, speech: 'SpeakUp', repetition: 0 }} />
     ));
@@ -94,7 +94,7 @@ describe('Phrase', () => {
   });
 
   describe('repetition badge', () => {
-    it('does not render badge when repetition is 0', () => {
+    test('does not render badge when repetition is 0', () => {
       const { container } = render((
         <PhraseMock path="/docs/buddhism/phrases/_arya_tara.ts" transliteration={transliteration as any} />
       ));
@@ -102,7 +102,7 @@ describe('Phrase', () => {
       expect(container.querySelector('.badge')).toBeNull();
     });
 
-    it('renders badge when repetition > 1', () => {
+    test('renders badge when repetition > 1', () => {
       const { container } = render((
         <PhraseMock transliteration={{ ...transliteration, repetition: 5 }} />
       ));
@@ -115,7 +115,7 @@ describe('Phrase', () => {
   });
 
   describe('PDF links generation', () => {
-    it('renders all four PDF links with correct hrefs and testids', () => {
+    test('renders all four PDF links with correct hrefs and testids', () => {
       render((
         <PhraseMock path="/docs/buddhism/phrases/_arya_tara.ts" transliteration={{ ...transliteration, title: 'MyPrayer' }} />
       ));
@@ -133,7 +133,7 @@ describe('Phrase', () => {
   });
 
   describe('inline Instruction rendering', () => {
-    it('renders Instruction when image prop is provided on Phrase', () => {
+    test('renders Instruction when image prop is provided on Phrase', () => {
       render((
         <PhraseMock image="img.png" path="/docs/buddhism/phrases/_arya_tara.ts" transliteration={{ ...transliteration, title: 'ImgTest' }} />
       ));
@@ -141,7 +141,7 @@ describe('Phrase', () => {
       expect(screen.getByTestId('img-ImgTest')).toHaveAttribute('src', 'img.png');
     });
 
-    it('renders Instruction when instruction prop is provided on Phrase', () => {
+    test('renders Instruction when instruction prop is provided on Phrase', () => {
       render((
         <PhraseMock instruction="Read this" transliteration={{ ...transliteration, title: 'NoImg' }} />
       ));

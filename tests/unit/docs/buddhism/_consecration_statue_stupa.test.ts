@@ -28,7 +28,7 @@ const phraseCalls = [...jest.mocked(phrase).mock.calls];
 const phrasesCalls = [...jest.mocked(phrases).mock.calls];
 
 describe('docs.buddhism._consecration_statue_stupa', () => {
-  it('exports the correct top-level structure', () => {
+  test('exports the correct top-level structure', () => {
     expect(consecration).toHaveProperty('pages');
     expect(consecration).toHaveProperty('path');
     expect(consecration).toHaveProperty('title');
@@ -37,12 +37,12 @@ describe('docs.buddhism._consecration_statue_stupa', () => {
     expect(consecration.title).toBe('Buddha Statue/Stupa/Sculpture Consecration');
   });
 
-  it('calls phrases() once for pratityasamutpadaSamudayaNirodha', () => {
+  test('calls phrases() once for pratityasamutpadaSamudayaNirodha', () => {
     expect(phrasesCalls).toHaveLength(1);
     expect(phrasesCalls[0]).toEqual(['#buddhism/phrases/_pratityasamutpada_samudaya_nirodha.ts']);
   });
 
-  it('second page uses phrase() correctly for both columns', () => {
+  test('second page uses phrase() correctly for both columns', () => {
     const page = consecration.pages[1] as any;
 
     expect(page.chapters).toEqual(['Maṅgala', 'Abhiṣeka']);
@@ -62,7 +62,7 @@ describe('docs.buddhism._consecration_statue_stupa', () => {
     expect(phraseCalls[7]).toEqual(['#buddhism/phrases/_sunyata.ts']);
   });
 
-  it('third page uses phrases() result correctly', () => {
+  test('third page uses phrases() result correctly', () => {
     const page = consecration.pages[2] as any;
 
     expect(page.chapters).toEqual(['Abhiṣeka']);
@@ -71,7 +71,7 @@ describe('docs.buddhism._consecration_statue_stupa', () => {
     expect(page.number).toBe('5');
   });
 
-  it('fourth page uses phrase() for both columns', () => {
+  test('fourth page uses phrase() for both columns', () => {
     const page = consecration.pages[3] as any;
 
     expect(page.chapters).toEqual(['Abhiṣeka']);
@@ -85,7 +85,7 @@ describe('docs.buddhism._consecration_statue_stupa', () => {
     expect(phraseCalls[12]).toEqual(['#buddhism/phrases/_vimala_usnisa.ts']);
   });
 
-  it('fifth page uses header() and phrase-set blocks', () => {
+  test('fifth page uses header() and phrase-set blocks', () => {
     const page = consecration.pages[4] as any;
 
     expect(page.chapters).toEqual(['Abhiṣeka']);
@@ -94,7 +94,7 @@ describe('docs.buddhism._consecration_statue_stupa', () => {
     expect(headerCalls[0]).toEqual(['Āhvāna [Invitation]']);
   });
 
-  it('sixth page uses main() and header()', () => {
+  test('sixth page uses main() and header()', () => {
     const page = consecration.pages[6] as any;
 
     expect(page.chapters).toEqual(['Abhiṣeka']);
@@ -108,7 +108,7 @@ describe('docs.buddhism._consecration_statue_stupa', () => {
     ]);
   });
 
-  it('last major page uses main() and header()', () => {
+  test('last major page uses main() and header()', () => {
     const page = consecration.pages[11] as any;
 
     expect(page.chapters).toEqual(['Abhiṣeka']);

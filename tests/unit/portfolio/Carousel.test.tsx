@@ -33,12 +33,12 @@ describe('portfolio.Carousel', () => {
   useVisibilityMock.mockReturnValue({ ref: { current: null }, visible: true });
 
   describe('Indicators', () => {
-    it('renders nothing when only one image', () => {
+    test('renders nothing when only one image', () => {
       render(<Carousel images={[images[0]]} onClick={jest.fn()} prefix="p" />);
       expect(screen.queryByRole('button', { name: /Slide/ })).toBeNull();
     });
 
-    it('renders indicators and marks current slide', () => {
+    test('renders indicators and marks current slide', () => {
       render(<Carousel images={images} onClick={jest.fn()} prefix="p" />);
       const buttons = screen.getAllByRole('button', { name: /Slide/ });
       expect(buttons).toHaveLength(4);
@@ -53,7 +53,7 @@ describe('portfolio.Carousel', () => {
   });
 
   describe('Next and Previous', () => {
-    it('Next disables at last image, previous disables at first image', () => {
+    test('Next disables at last image, previous disables at first image', () => {
       render(<Carousel images={images} onClick={jest.fn()} prefix="p" />);
       const next = screen.getByRole('button', { name: /Next: B/ });
       fireEvent.click(next);
@@ -81,7 +81,7 @@ describe('portfolio.Carousel', () => {
   });
 
   describe('Slide', () => {
-    it('fires onClick and onKeyDown', () => {
+    test('fires onClick and onKeyDown', () => {
       const onClick = jest.fn();
       const { container } = render(
         <Carousel images={images} onClick={onClick} prefix="p" />,
@@ -95,7 +95,7 @@ describe('portfolio.Carousel', () => {
   });
 
   describe('Slider drag logic', () => {
-    it('suppresses click when dragging', () => {
+    test('suppresses click when dragging', () => {
       const onClick = jest.fn();
       usePrintMock.mockReturnValue([true]);
       const { container } = render(
@@ -108,7 +108,7 @@ describe('portfolio.Carousel', () => {
       expect(onClick).not.toHaveBeenCalled();
     });
 
-    it('updates active on dragEnd with velocity', () => {
+    test('updates active on dragEnd with velocity', () => {
       render(<Carousel images={images} onClick={jest.fn()} prefix="p" />);
       act(() => listeners['slider-onDragEnd'](
         {},
@@ -126,7 +126,7 @@ describe('portfolio.Carousel', () => {
       ).toBeInTheDocument();
     });
 
-    it('updates active on dragEnd with offset', () => {
+    test('updates active on dragEnd with offset', () => {
       render(<Carousel images={images} onClick={jest.fn()} prefix="p" />);
       act(() => listeners['slider-onDragEnd'](
         {},
@@ -146,7 +146,7 @@ describe('portfolio.Carousel', () => {
   });
 
   describe('Carousel auto-play', () => {
-    it('advances slides when visible and not paused/opened', () => {
+    test('advances slides when visible and not paused/opened', () => {
       jest.useFakeTimers();
       render(<Carousel images={images} onClick={jest.fn()} prefix="p" />);
       act(() => jest.advanceTimersByTime(3001));
@@ -156,7 +156,7 @@ describe('portfolio.Carousel', () => {
       jest.useRealTimers();
     });
 
-    it('pauses on mouse enter and resumes on mouse leave', () => {
+    test('pauses on mouse enter and resumes on mouse leave', () => {
       jest.useFakeTimers();
       // eslint-disable-next-line no-unused-vars
       const ref = createRef<{ setPaused(paused: boolean): void }>();

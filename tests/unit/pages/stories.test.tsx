@@ -9,8 +9,13 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { layout, preamble } from '@site/src/data/stories';
 import Stories from '@site/src/pages/stories';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 describe('pages.stories', () => {
+  jest.mocked<any>(useDocusaurusContext).mockReturnValue({
+    siteConfig: { url: 'https://domain.test' },
+  });
+
   test('renders Layout with className and layout props', () => {
     render(<Stories />);
 

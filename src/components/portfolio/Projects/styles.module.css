@@ -117,6 +117,7 @@
 }
 
 .portfolios {
+  align-items: start;
   display: grid;
   grid-gap: 1.5rem;
   /* min: (bigger width between 15rem and 1/3 of total width minus gaps) */
@@ -132,21 +133,27 @@
     background: var(--ifm-background-color);
   }
 
+  .portfolio figure {
+    margin: 0 0.75rem;
+  }
+
   .portfolio figcaption {
-    padding-top: 1rem;
+    padding-top: 0.5rem;
   }
 
   .portfolio figcaption h2,
   .portfolio figure {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.35rem;
   }
 
   .portfolio figcaption h2 {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+    line-height: 1rem;
   }
 
   .portfolio figcaption p {
-    font-size: 0.85rem;
+    font-size: 0.825rem;
+    line-height: 1rem;
   }
 
   .portfolio figcaption .tags,
@@ -156,10 +163,102 @@
 
   .portfolios {
     align-items: center;
+    break-inside: auto;
+    grid-gap: 0.75rem;
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* FF specific as 2024. */
+  @supports (-moz-appearance:none) {
+    .portfolios {
+      column-count: 2;
+      column-gap: 0.75rem;
+      display: block;
+    }
+
+    .portfolios article {
+      margin-bottom: 0.75rem;
+    }
   }
 
   .portfolios>article {
     break-inside: avoid;
+  }
+}
+
+/* Safari only */
+@supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
+  @media print {
+    .portfolios {
+      grid-auto-rows: max-content;
+    }
+
+    .portfolios article {
+      break-inside: avoid;
+    }
+
+    .portfolios article:nth-child(1) {
+      margin-bottom: 9.5rem;
+    }
+
+    .portfolios article:nth-child(2) {
+      margin-bottom: 8.5rem;
+    }
+
+    .portfolios article:nth-child(3) {
+      margin-bottom: 22rem;
+    }
+
+    .portfolios article:nth-child(4) {
+      margin-bottom: 25.6rem;
+    }
+
+    .portfolios article:nth-child(5) {
+      margin-bottom: 22rem;
+    }
+
+    .portfolios article:nth-child(6) {
+      margin-bottom: 24rem;
+    }
+
+    .portfolios article:nth-child(7) {
+      margin-bottom: 24.5rem;
+    }
+
+    .portfolios article:nth-child(8) {
+      margin-bottom: 25.125rem;
+    }
+
+    .portfolios article:nth-child(9) {
+      margin-bottom: 27rem;
+    }
+
+    .portfolios article:nth-child(10) {
+      margin-bottom: 26rem;
+    }
+
+    .portfolios article:nth-child(11) {
+      margin-bottom: 20rem;
+    }
+
+    .portfolios article:nth-child(12) {
+      margin-bottom: 25.6rem;
+    }
+
+    .portfolios article:nth-child(13) {
+      margin-bottom: 26.6rem;
+    }
+
+    .portfolios article:nth-child(14) {
+      margin-bottom: 25.6rem;
+    }
+
+    .portfolio figcaption p {
+      font-size: 0.81rem;
+    }
+
+    .portfolio figcaption .tags li {
+      font-size: 0.65rem;
+    }
   }
 }

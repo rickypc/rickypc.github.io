@@ -28,12 +28,12 @@ describe('Collapsible', () => {
   };
 
   describe('rendering', () => {
-    it('displays the active item label on the button', () => {
+    test('displays the active item label on the button', () => {
       renderComponent('Item 2');
       expect(screen.getByRole('button')).toHaveTextContent('Item 2');
     });
 
-    it('applies active class to the corresponding menuitem', () => {
+    test('applies active class to the corresponding menuitem', () => {
       renderComponent('Item 3');
       const span = screen.getByRole('menuitem', { name: 'Item 3' });
       expect(span).toHaveClass('table-of-contents__link--active');
@@ -41,7 +41,7 @@ describe('Collapsible', () => {
   });
 
   describe('interaction', () => {
-    it('toggles expanded class on the root when button is clicked', () => {
+    test('toggles expanded class on the root when button is clicked', () => {
       renderComponent('Item 1');
       const button = screen.getByTestId('button-btn');
       fireEvent.click(button);
@@ -49,7 +49,7 @@ describe('Collapsible', () => {
       expect(button.parentNode).toHaveClass('expanded');
     });
 
-    it.each([
+    test.each([
       ['clicking an item', (span: HTMLElement) => fireEvent.click(span)],
       ['pressing Enter on an item', (span: HTMLElement) => fireEvent.keyDown(span, {
         charCode: 13,
@@ -66,7 +66,7 @@ describe('Collapsible', () => {
   });
 
   describe('prop spreading', () => {
-    it('spreads extra props to the button and each menuitem', () => {
+    test('spreads extra props to the button and each menuitem', () => {
       renderComponent('Item 1', { 'data-testid': 'collapsible' });
 
       const button = screen.getByRole('button');

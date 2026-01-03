@@ -21,7 +21,7 @@ jest.mock('@site/src/data/about', () => ({
 }));
 
 describe('about.Content', () => {
-  it('renders headline with Heart, paragraphs, and characteristic list', () => {
+  test('renders headline with Heart, paragraphs, and characteristic list', () => {
     render(<Content />);
 
     // Two headings: <Heading as="h2"> and <Heading as="h3">.

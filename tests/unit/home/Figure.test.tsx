@@ -17,7 +17,7 @@ jest.unmock('@site/src/components/common/Image');
 jest.unmock('@site/src/components/home/Figure');
 
 describe('home.Figure', () => {
-  it('renders a <figure> with correct accessibility attributes, CSS class, and nested Image', () => {
+  test('renders a <figure> with correct accessibility attributes, CSS class, and nested Image', () => {
     const { result } = renderHook(() => useRef(null));
     useVisibilityMock.mockReturnValue({ ref: result.current, visible: true });
     const { container } = render(<Figure />);

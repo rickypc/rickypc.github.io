@@ -213,7 +213,7 @@ describe('Speech', () => {
     const startUtterance = async (fakes) => act(async () => fakes.instances.at(-1)._emit('start'));
 
     // eslint-disable-next-line jest/expect-expect
-    it('shows Play when idle, can play -> pause -> stop -> controls update', async () => {
+    test('shows Play when idle, can play -> pause -> stop -> controls update', async () => {
       const voices = [
         { name: 'Google Bahasa Indonesia', lang: 'id-ID' },
         { name: 'Damayanti', lang: 'id-ID' },
@@ -233,7 +233,7 @@ describe('Speech', () => {
     });
 
     // eslint-disable-next-line jest/expect-expect
-    it('creates paused state deterministically by driving UI and resumes correctly', async () => {
+    test('creates paused state deterministically by driving UI and resumes correctly', async () => {
       const voices = [{ name: 'Damayanti', lang: 'id-ID' }];
       mocks = setupMocks(voices);
       render(<Speech names={[voices[0].name]}>resume creation test</Speech>);
@@ -253,7 +253,7 @@ describe('Speech', () => {
   });
 
   describe('edge cases', () => {
-    it('skips setup when ready is false', () => {
+    test('skips setup when ready is false', () => {
       global.speechSynthesis = undefined;
       global.SpeechSynthesisUtterance = undefined;
       useSpeech.mockReturnValue([false]);
@@ -262,7 +262,7 @@ describe('Speech', () => {
       expect(() => unmount()).not.toThrow();
     });
 
-    it('shows Admonition when no usable voice', async () => {
+    test('shows Admonition when no usable voice', async () => {
       mocks = setupMocks([]);
       render(<Speech>no voice</Speech>);
       // eslint-disable-next-line no-underscore-dangle
@@ -271,7 +271,7 @@ describe('Speech', () => {
       expect(await screen.findByTestId('admonition')).toHaveTextContent('voice is not available');
     });
 
-    it('assigns utterance.lang and utterance.voice when matching voice found', async () => {
+    test('assigns utterance.lang and utterance.voice when matching voice found', async () => {
       const voices = [
         { name: 'Google Bahasa Indonesia', lang: 'id-ID' },
         { name: 'Damayanti', lang: 'id-ID' },
@@ -287,7 +287,7 @@ describe('Speech', () => {
       expect(last.voice.name).toEqual(voices[0].name);
     });
 
-    it('respects document.dataset.volume silent override and fallback to provided volume', async () => {
+    test('respects document.dataset.volume silent override and fallback to provided volume', async () => {
       const voices = [{ name: 'Damayanti', lang: 'id-ID' }];
       // Silent override.
       mocks = setupMocks(voices);
@@ -318,7 +318,7 @@ describe('Speech', () => {
       expect(mocks.instances.pop().volume).toBeCloseTo(0.75);
     });
 
-    it('registers end/error listeners and cleans up on unmount', async () => {
+    test('registers end/error listeners and cleans up on unmount', async () => {
       const voices = [{ name: 'Google Bahasa Indonesia', lang: 'id-ID' }];
       mocks = setupMocks(voices);
       const { unmount } = render(<Speech names={[voices[0].name]}>end event test</Speech>);
@@ -348,7 +348,7 @@ describe('Speech', () => {
   });
 
   describe('voice-selection quirks', () => {
-    it('handles first lang segment >2 chars (browser inconsistency)', async () => {
+    test('handles first lang segment >2 chars (browser inconsistency)', async () => {
       const voices = [
         { name: 'WeirdVoice', lang: 'eng-US' },
         { name: 'Other', lang: 'id-ID' },
@@ -364,7 +364,7 @@ describe('Speech', () => {
       expect(last.voice.name).toBe('WeirdVoice');
     });
 
-    it('matches underscore-formatted lang by replacing underscores', async () => {
+    test('matches underscore-formatted lang by replacing underscores', async () => {
       const voices = [
         { name: 'UnderscoreVoice', lang: 'id_ID' },
         { name: 'Other', lang: 'en-US' },
@@ -381,7 +381,7 @@ describe('Speech', () => {
     });
 
     // eslint-disable-next-line jest/expect-expect
-    it('executes underscore->hyphen fallback in voices.find', async () => {
+    test('executes underscore->hyphen fallback in voices.find', async () => {
       const voices = [
         { name: 'Stub', lang: 'id' },
         { name: 'Indo Underscore', lang: 'id_ID' },
@@ -395,7 +395,7 @@ describe('Speech', () => {
 
   describe('onPlay branch', () => {
     // eslint-disable-next-line jest/expect-expect
-    it('when already speaking, clicking Play triggers cancel and waits 250ms', async () => {
+    test('when already speaking, clicking Play triggers cancel and waits 250ms', async () => {
       jest.useFakeTimers();
       const voices = [{ name: 'CoverageVoice', lang: 'en-US' }];
       mocks = setupMocks(voices);
@@ -411,7 +411,7 @@ describe('Speech', () => {
 
   describe('children.props.children branch', () => {
     // eslint-disable-next-line jest/expect-expect
-    it('renders element child text via children.props.children', async () => {
+    test('renders element child text via children.props.children', async () => {
       const voices = [{ name: 'AnyVoice', lang: 'en-US' }];
       mocks = setupMocks([]);
       render(<Speech lang="en-US"><span>element text</span></Speech>);

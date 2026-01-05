@@ -90,7 +90,7 @@ describe('data.resume', () => {
         expect(isValidElement(item.achievements)).toBeTruthy();
         expect(typeof item.key).toBe('string');
         expect(item.key.length).toBeGreaterThan(0);
-        expect(Array.isArray(item.summaries)).toBe(true);
+        expect(Array.isArray(item.summaries)).toBeTruthy();
         expect(item.summaries.length).toBeGreaterThan(0);
         item.summaries.forEach((sum) => {
           expect(typeof sum.key).toBe('string');

@@ -1,0 +1,195 @@
+/*!
+ * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
+ * All rights reserved.
+ */
+
+.quadrant :global(#radial) stop:nth-child(1) {
+  stop-color: #b8f2c8;
+  stop-opacity: 1;
+}
+
+.quadrant :global(#radial) stop:nth-child(2) {
+  stop-color: #a0e8ba;
+  stop-opacity: 0.99;
+}
+
+.quadrant :global(#radial) stop:nth-child(3) {
+  stop-color: #8addac;
+  stop-opacity: 0.985;
+}
+
+.quadrant :global(#radial) stop:nth-child(4) {
+  stop-color: #74d29e;
+  stop-opacity: 0.975;
+}
+
+.quadrant :global(#radial) stop:nth-child(5) {
+  stop-color: #63c88f;
+  stop-opacity: 0.965;
+}
+
+.quadrant :global(#radial) stop:nth-child(6) {
+  stop-color: #55bd82;
+  stop-opacity: 0.955;
+}
+
+.quadrant :global(#radial) stop:nth-child(7) {
+  stop-color: #4fb67c;
+  stop-opacity: 0.945;
+}
+
+.quadrant :global(#radial) stop:nth-child(8) {
+  stop-color: #3fa86e;
+  stop-opacity: 0.93;
+}
+
+.quadrant :global(#radial) stop:nth-child(9) {
+  stop-color: #2f965f;
+  stop-opacity: 0.915;
+}
+
+.quadrant :global(#radial) stop:nth-child(10) {
+  stop-color: #258a55;
+  stop-opacity: 0.90;
+}
+
+.quadrant rect:global(.inner) {
+  height: 12.5rem;
+  stroke-width: 0.0625rem;
+  width: 12.5rem;
+}
+
+[data-theme='dark'] .quadrant rect:global(.inner) {
+  fill: rgba(255, 255, 255, 0.08);
+  stroke: rgba(255, 255, 255, 0.20);
+}
+
+[data-theme='light'] .quadrant rect:global(.inner) {
+  fill: rgba(255, 255, 255, 0.12);
+  stroke: rgba(0, 0, 0, 0.12);
+}
+
+.quadrant path:global(.arrow) {
+  stroke-width: 0.125rem;
+}
+
+[data-theme='dark'] .quadrant :global(#arrow) path,
+[data-theme='dark'] .quadrant path:global(.arrow) {
+  stroke: #7cd4c3;
+  fill: #6bcab8;
+}
+
+[data-theme='light'] .quadrant :global(#arrow) path,
+[data-theme='light'] .quadrant path:global(.arrow) {
+  stroke: #279e8d;
+  fill: #1f8f7f;
+}
+
+.quadrant text {
+  fill: currentColor;
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+}
+
+.quadrant text:global(.axis) {
+  font-size: 1rem;
+}
+
+.quadrant text:global(.label) {
+  font-size: 0.825rem;
+}
+
+[data-theme='dark'] .quadrant text:global(.axis) {
+  fill: #9fe8d8;
+}
+
+[data-theme='dark'] .quadrant text:global(.label) {
+  fill: #b8d0e4;
+}
+
+[data-theme='light'] .quadrant text:global(.axis) {
+  fill: #2fae9b;
+}
+
+[data-theme='light'] .quadrant text:global(.label) {
+  fill: #5a6f80;
+}
+
+.quadrant path:global(.axis),
+.quadrant path:global(.grid) {
+  stroke: #777
+}
+
+.quadrant path:global(.axis) {
+  opacity: 0.5;
+  stroke-width: 0.085rem;
+}
+
+[data-theme='dark'] .quadrant path:global(.axis) {
+  stroke: rgba(220, 240, 255, 0.65);
+}
+
+[data-theme='light'] .quadrant path:global(.axis) {
+  stroke: rgba(60, 90, 120, 0.75);
+}
+
+.quadrant path:global(.grid) {
+  stroke-width: 0.03125rem;
+}
+
+[data-theme='dark'] .quadrant path:global(.grid) {
+  stroke: rgba(220, 240, 255, 0.18);
+}
+
+[data-theme='light'] .quadrant path:global(.grid) {
+  stroke: rgba(60, 90, 120, 0.25);
+}
+
+.quadrant circle {
+  animation: blink 3.5s ease-in-out 0s 5 forwards;
+  will-change: opacity;
+}
+
+@keyframes blink {
+  from,
+  to {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@media print {
+  .quadrant circle {
+    animation: none;
+  }
+
+  [data-theme] .quadrant :global(#arrow) path,
+  [data-theme] .quadrant path:global(.arrow) {
+    stroke: #279e8d;
+    fill: #1f8f7f;
+  }
+
+  [data-theme] .quadrant path:global(.axis) {
+    stroke: rgba(60, 90, 120, 0.75);
+  }
+
+  [data-theme] .quadrant path:global(.grid) {
+    stroke: rgba(60, 90, 120, 0.25);
+  }
+
+  [data-theme] .quadrant rect:global(.inner) {
+    fill: #fff;
+    stroke: rgba(0, 0, 0, 0.12);
+  }
+
+  [data-theme] .quadrant text:global(.axis) {
+    fill: #2fae9b;
+  }
+
+  [data-theme] .quadrant text:global(.label) {
+    fill: #5a6f80;
+  }
+}

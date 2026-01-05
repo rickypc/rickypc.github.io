@@ -33,7 +33,7 @@ describe('docs.buddhism._consecration_statue_stupa', () => {
     expect(consecration).toHaveProperty('path');
     expect(consecration).toHaveProperty('title');
 
-    expect(Array.isArray(consecration.pages)).toBe(true);
+    expect(Array.isArray(consecration.pages)).toBeTruthy();
     expect(consecration.title).toBe('Buddha Statue/Stupa/Sculpture Consecration');
   });
 

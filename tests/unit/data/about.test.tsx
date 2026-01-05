@@ -5,14 +5,13 @@
  * @jest-environment jsdom
  */
 
-import { isValidElement } from 'react';
 import {
   characteristic,
   headline,
   layout,
   paragraphs,
   preamble,
-  types,
+  quadrants,
 } from '@site/src/data/about';
 
 describe('data.about', () => {
@@ -75,21 +74,35 @@ describe('data.about', () => {
     });
   });
 
-  describe('types', () => {
-    test('is an array of two items with alt and Image properties', () => {
-      expect(Array.isArray(types)).toBeTruthy();
-      expect(types).toHaveLength(2);
+  describe('quadrants', () => {
+    const quadrant = (name: keyof typeof quadrants) => {
+      // eslint-disable-next-line security/detect-object-injection
+      const q = quadrants[name];
 
-      const [first, second] = types;
-      expect(typeof first.alt).toBe('string');
-      expect(first.alt).toMatch(/Transformer People Type/);
-      expect(isValidElement(<first.Image />)).toBeTruthy();
-      expect(first.Image).toEqual(expect.any(Function));
+      expect(typeof q.alt).toBe('string');
 
-      expect(typeof second.alt).toBe('string');
-      expect(second.alt).toMatch(/Transactor Task Type/);
-      expect(isValidElement(<second.Image />)).toBeTruthy();
-      expect(second.Image).toEqual(expect.any(Function));
+      expect(Array.isArray(q.axes)).toBeTruthy();
+      expect(q.axes).toHaveLength(2);
+
+      expect(typeof q.circle).toBe('object');
+      expect(typeof q.circle.x).toBe('number');
+      expect(typeof q.circle.y).toBe('number');
+
+      expect(Array.isArray(q.labels)).toBeTruthy();
+      expect(q.labels).toHaveLength(4);
+    };
+
+    test('contains the expected top-level keys', () => {
+      expect(quadrants).toHaveProperty('people');
+      expect(quadrants).toHaveProperty('task');
+    });
+
+    test('validates the structure of the "people" quadrant', () => {
+      expect(() => quadrant('people')).not.toThrow();
+    });
+
+    test('validates the structure of the "task" quadrant', () => {
+      expect(() => quadrant('task')).not.toThrow();
     });
   });
 });

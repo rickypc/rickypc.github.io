@@ -5,6 +5,7 @@
 
 .content {
   border-radius: 1.25rem;
+  box-shadow: 0.3rem 0.25rem 1.25rem rgba(29, 142, 238, 0.32);
   margin: 0 auto 3rem auto;
   max-width: 42.75rem;
   padding: 3.5rem;
@@ -14,13 +15,10 @@
 
 [data-theme='dark'] .content {
   background: #082f51;
-  box-shadow: 0.5rem 0.5rem 0.9rem 0 rgba(17, 99, 171, 0.55);
 }
 
 [data-theme='light'] .content {
   background: #c1dff9;
-  /* Less strong than dark shadow */
-  box-shadow: 0.3rem 0.3rem 0.9rem 0 rgba(15, 99, 172, 0.55);
 }
 
 .content h2 {

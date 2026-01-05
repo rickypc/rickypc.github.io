@@ -4,9 +4,9 @@
  */
 
 import { domAnimation, LazyMotion, motion } from 'motion/react';
-import { key } from '@site/src/data/common';
 import { memo } from 'react';
-import { types } from '@site/src/data/about';
+import PersonaQuadrant from '@site/src/components/about/PersonaQuadrant';
+import { quadrants } from '@site/src/data/about';
 import styles from './styles.module.css';
 
 export default memo(function Figure() {
@@ -21,8 +21,8 @@ export default memo(function Figure() {
         whileInView={{ opacity: [0, 1], scale: [0.85, 1] }}
       >
         <div className={styles.shape}>
-          {types.map(({ alt, Image }) => (
-            <Image key={key(alt, 'about-figure')} {...{ 'aria-label': alt, role: 'img' }} />
+          {Object.entries(quadrants).map(([type, quadrant]) => (
+            <PersonaQuadrant className={type} key={type} {...quadrant} />
           ))}
         </div>
       </motion.figure>

@@ -10,7 +10,6 @@ import styles from './styles.module.css';
 
 export default memo(function Oracle() {
   const { ref, visible } = useVisibility<HTMLDivElement>({ threshold: 0.15 });
-
   return (
     <div className={clsx(visible && styles.play, styles.oracle)}>
       <div className={styles.oraculares} ref={ref}>

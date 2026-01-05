@@ -5,9 +5,26 @@
 
 import { type LayoutProps } from '@site/src/components/common/Layout';
 import { oneLine } from '@site/src/data/common';
-import People from '@site/src/pages/about/img/type.people.svg';
 import { type PreambleProps } from '@site/src/components/common/Preamble';
-import Task from '@site/src/pages/about/img/type.task.svg';
+
+type QuadrantAnchor = 'start' | 'middle' | 'end';
+
+export type QuadrantAxis = QuadrantPosition & {
+  anchor: QuadrantAnchor;
+  text: string;
+  transform?: string;
+};
+
+export type QuadrantLabel = QuadrantPosition & {
+  anchor: QuadrantAnchor;
+  text: string;
+  title: string;
+};
+
+export type QuadrantPosition = {
+  x: number;
+  y: number;
+};
 
 export const characteristic = {
   attributes: [
@@ -73,7 +90,119 @@ export const preamble: PreambleProps = {
   title: 'About Ricky Huang',
 };
 
-export const types = [
-  { alt: 'Transformer People Type', Image: People },
-  { alt: 'Transactor Task Type', Image: Task },
-];
+export const quadrants = {
+  people: {
+    alt: 'Transformer People Type',
+    axes: [
+      {
+        anchor: 'middle',
+        text: 'INFLUENCE',
+        x: 100,
+        y: 221,
+      },
+      {
+        anchor: 'middle',
+        text: 'ADAPTABILITY',
+        transform: 'rotate(-90)',
+        x: -100,
+        y: -10,
+      },
+    ] as QuadrantAxis[],
+    circle: {
+      x: 190,
+      y: 30,
+    } as QuadrantPosition,
+    labels: [
+      {
+        anchor: 'start',
+        text: 'Adaptor',
+        title: oneLine(`Adaptors are supportive, resilient and flexible in
+          response to change. They are quiet and accommodating.`),
+        x: 3,
+        y: 12,
+      },
+      {
+        anchor: 'end',
+        text: 'Transformer',
+        title: oneLine(`Transformers combine interpersonal sensitivity with
+          powerful social networks and definite leadership impact.`),
+        x: 197,
+        y: 12,
+      },
+      {
+        anchor: 'start',
+        text: 'Individualist',
+        title: oneLine(`Individualists are task-rather than people-focused.
+          They favor environments where their specialist expertise is valued.`),
+        x: 3,
+        y: 197,
+      },
+      {
+        anchor: 'end',
+        text: 'Influencer',
+        title: oneLine(`Influencers excel at communicating their message. They
+          enjoy using power and single-mindedly pursue their goals.`),
+        x: 197,
+        y: 197,
+      },
+    ] as QuadrantLabel[],
+  },
+  task: {
+    alt: 'Transactor Task Type',
+    axes: [
+      {
+        anchor: 'middle',
+        text: 'DELIVERY',
+        x: 100,
+        y: 221,
+      },
+      {
+        anchor: 'middle',
+        text: 'THOUGHT',
+        transform: 'rotate(-90)',
+        x: -100,
+        y: -10,
+      },
+    ] as QuadrantAxis[],
+    circle: {
+      x: 190,
+      y: 10,
+    } as QuadrantPosition,
+    labels: [
+      {
+        anchor: 'start',
+        text: 'Thinker',
+        title: oneLine(`Thinkers get straight to the core of a problem to find
+          solutions. They may pursue ideas at the expense of accomplishing
+          results.`),
+        x: 3,
+        y: 12,
+      },
+      {
+        anchor: 'end',
+        text: 'Transactor',
+        title: oneLine(`Transactors combine thoughtful analysis with the driven
+          pursuit of goals. They enjoy challenges and can be relied upon to
+          deliver results.`),
+        x: 179,
+        y: 12,
+      },
+      {
+        anchor: 'start',
+        text: 'Preserver',
+        title: oneLine(`Preservers adopt conventional approaches to their work
+          and steer clear of participation in intellectual debate.`),
+        x: 3,
+        y: 197,
+      },
+      {
+        anchor: 'end',
+        text: 'Doer',
+        title: oneLine(`Doers approach their work with dynamism and
+          conscientiousness. They favor action over intellectualized debate.`),
+        x: 197,
+        y: 197,
+      },
+    ] as QuadrantLabel[],
+  },
+};

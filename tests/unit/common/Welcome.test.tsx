@@ -65,7 +65,7 @@ describe('Welcome', () => {
     rerender(<Welcome navigation />);
 
     // details1 was originally closed, so it should be collapsed again.
-    expect(details1.open).toBe(false);
+    expect(details1.open).toBeFalsy();
     expect(details1.dataset.collapsed).toBe('true');
     expect(div1.style.display).toBe('none');
     expect(div1.style.height).toBe('0px');

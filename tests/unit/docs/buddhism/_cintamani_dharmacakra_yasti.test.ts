@@ -30,7 +30,7 @@ describe('docs.buddhism._cintamani_dharmacakra_yasti', () => {
     expect(rollSection.margin).toEqual([0, 0, 0, 7.5]);
 
     const { table } = rollSection;
-    expect(table?.dontBreakRows).toBe(true);
+    expect(table?.dontBreakRows).toBeTruthy();
     expect(table?.heights).toHaveLength(3);
     expect(table?.widths).toEqual([18, '*']);
 

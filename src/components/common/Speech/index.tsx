@@ -50,7 +50,7 @@ function GrPause(props: IconBaseProps): ReactElement {
  * @returns {object} The icon.
  */
 function GrPlay(props: IconBaseProps): ReactElement {
-  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'polygon', attr: { fill: 'none', strokeWidth: '2', points: '3 22 21 12 3 2' }, child: [] }] })(props);
+  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 24 24' }, child: [{ tag: 'polygon', attr: { fill: 'none', strokeWidth: '2', points: '5 22 23 12 5 2' }, child: [] }] })(props);
 }
 
 /**

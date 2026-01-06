@@ -3,9 +3,8 @@
  * All rights reserved.
  */
 
-import { greeting, ipa } from '@site/src/data/home';
-import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
+import { identity } from '@site/src/data/home';
 import { memo } from 'react';
 import Speech from '@site/src/components/common/Speech';
 import styles from './styles.module.css';
@@ -34,10 +33,10 @@ import styles from './styles.module.css';
  */
 export default memo(function Greeting() {
   return (
-    <Heading as="h1" className={styles.greeting}>
-      <span>{greeting}</span>
+    <div className={styles.greeting}>
+      <span className={styles.identity}>{identity.children}</span>
       <div className={styles.pronunciation}>
-        <span className={styles.ipa}>{ipa}</span>
+        <span className={styles.ipa}>{identity.ipa}</span>
         <Speech
           lang="en-US"
           names={[
@@ -64,6 +63,6 @@ export default memo(function Greeting() {
         </Speech>
         <Heart className={styles.reaction} id="home-landing" />
       </div>
-    </Heading>
+    </div>
   );
 });

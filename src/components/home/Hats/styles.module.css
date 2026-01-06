@@ -23,6 +23,14 @@
   text-shadow: 0.125rem 0.125rem 0.1875rem rgba(255, 255, 255, 0.1);
 }
 
+[data-theme='dark'] .hats .hat h2 i {
+  text-shadow: 0.0625rem 0.0625rem 0.125rem rgba(0, 0, 0, 0.25);
+}
+
+[data-theme='light'] .hats .hat h2 i {
+  text-shadow: 0.125rem 0.125rem 0.1875rem rgba(255, 255, 255, 0.1);
+}
+
 .hats .hat h2 .reader {
   display: none;
 }
@@ -39,7 +47,6 @@
   font-weight: 500;
   line-height: 1.875rem;
   margin: 0 0 1rem 0;
-  text-align: justify;
 }
 
 .hats .hat p:last-of-type {
@@ -75,6 +82,91 @@
   font-weight: 500;
 }
 
+.hats .hat .details {
+  backdrop-filter: blur(0.375rem);
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.75rem color-mix(in oklab, black 10%, transparent),
+    0 0.0625rem 0.125rem color-mix(in oklab, black 15%, transparent);
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+[data-theme='dark'] .hats .hat .details {
+  background-color: color-mix(in oklab, #303846 18%, transparent);
+}
+
+[data-theme='light'] .hats .hat .details {
+  background-color: color-mix(in oklab, #8a94a3 12%, transparent);
+}
+
+.hats .hat .details .toggle {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  font-size: 1rem;
+  font-weight: 600;
+  gap: 0.5rem;
+  line-height: 1rem;
+  padding: 0.75rem 0.5rem 0.75rem 0.5rem;
+  transition: color 150ms ease-in-out;
+  width: 100%;
+}
+
+.hats .hat .details .toggle .icon {
+  height: 1rem;
+  transform: rotate(0deg);
+  transition: color 150ms ease-in-out, transform 150ms ease-in-out;
+  width: 1rem;
+}
+
+[data-theme='dark'] .hats .hat .details .toggle:hover,
+[data-theme='dark'] .hats .hat .details .toggle:hover .icon {
+  color: color-mix(in oklab, white 70%, #e5e7eb 30%);
+}
+
+[data-theme='light'] .hats .hat .details .toggle:hover,
+[data-theme='light'] .hats .hat .details .toggle:hover .icon {
+  color: color-mix(in oklab, #4b5563 100%, black 25%);
+}
+
+.hats .hat .details .toggle .active.icon {
+  transform: rotate(45deg);
+}
+
+[data-theme='dark'] .hats .hat .details .wrapper {
+  border-top: 0.0625rem solid color-mix(in oklab, #303846 75%, transparent);
+}
+
+[data-theme='light'] .hats .hat .details .wrapper {
+  border-top: 0.0625rem solid color-mix(in oklab, #8a94a3 25%, transparent);
+}
+
+.hats .hat .details .content p {
+  font-size: 0.95rem;
+  line-height: 1.25rem;
+  padding: 0 0.75rem;
+}
+
+.hats .hat .details .content p:first-of-type {
+  margin-top: 0.5rem;
+}
+
+.hats .hat .details .content p:last-of-type {
+  margin-bottom: 0.5rem;
+}
+
+[data-theme='dark'] .hats .hat .details .content p,
+[data-theme='dark'] .hats .hat .details .toggle,
+[data-theme='dark'] .hats .hat .details .toggle .icon {
+  color: #e5e7eb;
+}
+
+[data-theme='light'] .hats .hat .details .content p,
+[data-theme='light'] .hats .hat .details .toggle,
+[data-theme='light'] .hats .hat .details .toggle .icon {
+  color: #4b5563;
+}
+
 @keyframes rainbow {
   0%,
   100% {
@@ -88,7 +180,11 @@
 
 @media print {
   .hats .hat {
-    padding: 0.3rem 1.5rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  .hats .hat:last-of-type>p {
+    margin-right: 5rem;
   }
 
   .hats .hat h2 {
@@ -99,14 +195,21 @@
   [data-theme] .hats .hat h2 i {
     background: none;
     color: #000;
+    text-shadow: none;
   }
 
   .hats .hat h2 [class*='phrases_'][class*='play_'] i {
     animation: none;
   }
 
+  [data-theme] .hats .hat p,
+  .hats .hat .details .content p {
+    font-size: 0.825rem;
+    line-height: 1.15rem;
+  }
+
   [data-theme] .hats .hat p {
-    font-size: 0.85rem;
+    font-weight: 400;
     margin-bottom: 1rem;
   }
 
@@ -118,6 +221,39 @@
   .hats .hat h2 [class*='word_'] [class*='character_'] {
     font-size: 1.25rem;
   }
+
+  [data-theme] .hats .hat .details {
+    backdrop-filter: none;
+    background: none;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .hats .hat .details .toggle {
+    gap: 0;
+    padding: 0 0 0.5rem 0;
+    text-align: left;
+  }
+
+  .hats .hat .details .toggle .icon {
+    display: none;
+  }
+
+  [data-theme] .hats .hat .details .wrapper {
+    border: none;
+  }
+
+  .hats .hat .details .content p {
+    padding: 0;
+  }
+
+  .hats .hat .details .content p:first-of-type {
+    margin-top: 0;
+  }
+
+  .hats .hat .details .content p:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
 /* Safari only */
@@ -127,8 +263,10 @@
       --ifm-col-width: 100%;
     }
 
-    [data-theme] .hats .hat p {
-      line-height: 1.25rem;
+    [data-theme] .hats .hat p,
+    .hats .hat .details .content p {
+      font-size: 0.81rem;
+      line-height: 1.05rem;
     }
   }
 }

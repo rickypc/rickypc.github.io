@@ -8,17 +8,18 @@
 import { render, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {
-  greeting,
   hats,
+  identity,
   image,
-  ipa,
   layout,
+  preamble,
   socials,
 } from '@site/src/data/home';
 
 describe('data.home', () => {
   test('renders greeting fragment with two spans', () => {
-    const { container } = render(<div>{greeting}</div>);
+    // eslint-disable-next-line testing-library/no-node-access
+    const { container } = render(<div>{identity.children}</div>);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const spans = container.querySelectorAll('span');
     expect(spans).toHaveLength(2);
@@ -68,7 +69,7 @@ describe('data.home', () => {
   });
 
   test('exports ipa string correctly', () => {
-    expect(ipa).toBe('/ˈɹɪki ˈhwɑːŋ/');
+    expect(identity.ipa).toBe('/ˈɹɪki ˈhwɑːŋ/');
   });
 
   test('exports layout with description, keywords array, and title', () => {
@@ -80,6 +81,11 @@ describe('data.home', () => {
 
     expect(typeof layout.title).toBe('string');
     expect(layout.title).toContain('Engineering Leadership');
+  });
+
+  test('exports preamble with description and title', () => {
+    expect(preamble.description).toMatch(/^I design and deliver cloud-native/);
+    expect(preamble.title).toMatch(/^Engineering Leader & Full-Stack/);
   });
 
   test('exports two socials entries with href, title, and Icon component', () => {

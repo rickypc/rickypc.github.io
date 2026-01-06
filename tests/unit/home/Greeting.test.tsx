@@ -13,18 +13,18 @@ jest.unmock('@site/src/components/home/Greeting');
 
 describe('home.Greeting', () => {
   test('renders greeting text, IPA, Speech, and Heart inside Heading', () => {
-    render(<Greeting />);
+    const { container } = render(<Greeting />);
 
     // Verify Heading wrapper.
-    const heading = screen.getByTestId('heading');
-    expect(heading.tagName).toBe('H1');
-    expect(heading.className).toBe('greeting');
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
+    const heading = container.querySelector('.greeting');
+    expect(heading!.tagName).toBe('DIV');
 
     // Greeting span.
     // eslint-disable-next-line testing-library/no-node-access
-    const greetSpan = heading.querySelector(':scope>span');
+    const greetSpan = heading!.querySelector(':scope>span');
     // eslint-disable-next-line testing-library/no-node-access
-    const ipaSpan = heading.querySelector('span.ipa');
+    const ipaSpan = heading!.querySelector('span.ipa');
     expect(greetSpan).toHaveTextContent('Hello, I\'m Ricky Huang');
     expect(ipaSpan).toHaveTextContent('/ˈɹɪki ˈhwɑːŋ/');
     expect(ipaSpan).toHaveClass('ipa');

@@ -3,11 +3,13 @@
  * All rights reserved.
  */
 
+import { clsx } from '@site/src/data/common';
 import Figure from '@site/src/components/home/Figure';
 import Greeting from '@site/src/components/home/Greeting';
 import Hats from '@site/src/components/home/Hats';
+import Heading from '@theme/Heading';
 import Layout from '@site/src/components/common/Layout';
-import { layout } from '@site/src/data/home';
+import { layout, preamble } from '@site/src/data/home';
 import { memo } from 'react';
 import QRCode from '@site/src/components/common/QRCode';
 import Socials from '@site/src/components/home/Socials';
@@ -19,6 +21,10 @@ export default memo(function Home() {
       <header className="row row--no-gutters" role="banner">
         <div className="col">
           <Greeting />
+          <div className={clsx('col', styles.preamble)}>
+            <Heading as="h1">{preamble.title}</Heading>
+            <p>{preamble.description}</p>
+          </div>
         </div>
       </header>
       <section className="row row--no-gutters">

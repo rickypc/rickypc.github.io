@@ -5,14 +5,18 @@
  * @jest-environment jsdom
  */
 
-import { render, within } from '@testing-library/react';
+import { fireEvent, render, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Hats from '@site/src/components/home/Hats';
+import { usePrint } from '@site/src/hooks/observer';
+
+const usePrintMock = jest.mocked(usePrint);
 
 jest.unmock('@site/src/components/home/Hats');
 
 describe('home.Hats', () => {
   test('renders all hats with proper structure and content', () => {
+    usePrintMock.mockReturnValue([false]);
     const { container } = render(<Hats />);
     const expecteds = [
       {
@@ -20,11 +24,11 @@ describe('home.Hats', () => {
         heading: /^Engineering Leader/,
       },
       {
-        description: /^I bridge the gap between/,
+        description: /^I bridge front-end and back-end/,
         heading: /^Full Stack Developer/,
       },
       {
-        description: /^I blend technical expertise/,
+        description: /^I combine engineering depth/,
         heading: /^Smart Creative/,
       },
       {
@@ -58,5 +62,27 @@ describe('home.Hats', () => {
       expect(heading.tagName).toBe('H2');
       expect(heading).toHaveTextContent(expected.heading);
     }
+
+    // eslint-disable-next-line testing-library/no-node-access
+    fireEvent.click(articles[0].querySelector('.details'));
+  });
+
+  test('renders all hats when printing', () => {
+    usePrintMock.mockReturnValue([true]);
+    const { container } = render(<Hats />);
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const root = container.firstChild;
+    expect(root).toBeInstanceOf(HTMLElement);
+    expect(root.tagName).toBe('DIV');
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(root.childElementCount).toBe(4);
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const articles = root.querySelectorAll('article');
+    expect(articles).toHaveLength(4);
+
+    // eslint-disable-next-line testing-library/no-node-access
+    fireEvent.click(articles[0].querySelector('.details'));
   });
 });

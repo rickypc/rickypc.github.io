@@ -11,6 +11,7 @@ import { type LayoutProps } from '@site/src/components/common/Layout';
 import Link from '@site/src/components/common/Link';
 import { type ComponentType, type ReactElement } from 'react';
 import { oneLine } from '@site/src/data/common';
+import { type PreambleProps } from '@site/src/components/common/Preamble';
 import Reveal from '@site/src/components/common/Reveal';
 
 export type SocialProps = {
@@ -43,13 +44,6 @@ export function FaLinkedin(props: IconBaseProps): ReactElement {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 448 512' }, child: [{ tag: 'path', attr: { d: 'M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z' }, child: [] }] })(props);
 }
 
-export const greeting = (
-  <>
-    <span>Hello, I&#39;m</span>
-    <span translate="no"> Ricky Huang</span>
-  </>
-);
-
 export const hats = [
   {
     children: (
@@ -60,14 +54,43 @@ export const hats = [
     ),
     description: (
       <>
-        <span>I lead engineering teams with clarity and purpose, combining </span>
-        <Link href="/about" title="thoughtful analysis and sound judgment">thoughtful analysis and sound judgment</Link>
-        <span> to meet evolving business needs. </span>
-        <span>I thrive in dynamic environments, guiding teams </span>
+        <span>I lead engineering teams with clarity, direction, and </span>
+        <Link href="/about" title="strong technical judgement">strong technical judgement</Link>
+        <span>. I guide organizations </span>
         <Link href="/stories" title="through complexity">through complexity</Link>
-        <span> and toward meaningful results</span>
+        <span>
+          , aligning architecture, execution, and long-term strategy to
+          reliable, meaningful results.
+        </span>
       </>
     ),
+    details: {
+      content: (
+        <>
+          <p>
+            I lead engineering organizations by creating clarity in
+            environments that are often ambiguous, fast-moving, or technically
+            complex. My approach blends hands-on technical depth with a strong
+            sense of direction, ensuring teams understand not just what
+            they&#39;re building, but why it matters. I focus on establishing
+            architectural standards, improving engineering quality, and
+            creating systems that scale with the business rather than
+            constrain it.
+          </p>
+          <p>
+            I&#39;m known for stepping into difficult situations - unclear
+            requirements, legacy systems, production issues, or cross-team
+            conflicts - and bringing structure, calm, and a path forward. I
+            mentor engineers at all levels, helping them grow their judgment,
+            technical confidence, and ability to deliver under pressure.
+            Whether guiding long-term platform strategy or unblocking a team in
+            the middle of a release, I bring a steady, pragmatic leadership
+            style that elevates both people and outcomes.
+          </p>
+        </>
+      ),
+      title: 'How I Lead Engineering Teams',
+    },
     label: 'Engineering Leader',
   },
   {
@@ -85,14 +108,42 @@ export const hats = [
     description: (
       <>
         <span>I </span>
-        <Link href="/about" title="bridge the gap">bridge the gap</Link>
-        <span> between front-end and back-end development, building </span>
+        <Link href="/about" title="bridge front-end and back-end development">bridge front-end and back-end development</Link>
+        <span> to build </span>
         <Link href="/portfolio" title="scalable, high-performing applications">scalable, high-performing applications</Link>
-        <span>. My work connects disciplines, people, and the modern tools</span>
-        <span> that drive faster, sharper iteration, always focused on</span>
-        <span> delivering real-world impact.</span>
+        <span>
+          . My work connects systems, teams, and modern tooling to deliver fast
+          iteration and real-world impact.
+        </span>
       </>
     ),
+    details: {
+      content: (
+        <>
+          <p>
+            As a full-stack engineer, I design and build systems that span
+            front-end interfaces, backend services, data flows, and cloud
+            infrastructure. I&#39;m comfortable moving between layers - from
+            React components and API design to distributed systems,
+            event-driven architectures, and AWS-managed services. This breadth
+            allows me to connect disciplines, identify integration risks early,
+            and deliver cohesive solutions that feel seamless to users and
+            maintainable to teams.
+          </p>
+          <p>
+            My work emphasizes performance, reliability, and long-term
+            maintainability. I build systems that are observable, testable,
+            and designed to evolve. Whether I&#39;m implementing a new feature,
+            designing a service boundary, or debugging a production issue, I
+            bring a deep understanding of how each layer affects the others.
+            This holistic perspective helps teams ship faster, reduce
+            complexity, and avoid the hidden costs that accumulate when systems
+            are built in isolation.
+          </p>
+        </>
+      ),
+      title: 'How I Build End-to-End Systems',
+    },
     label: 'Full Stack Developer',
   },
   {
@@ -104,14 +155,41 @@ export const hats = [
     ),
     description: (
       <>
-        <span>I blend </span>
-        <Link href="/about" title="technical expertise, creative thinking, and business strategy">technical expertise, creative thinking, and business strategy</Link>
-        <span> to align engineering efforts with company goals.</span>
-        <span> I work at the intersection of innovation and execution,</span>
-        <span> using generative tools to accelerate exploration,</span>
-        <span> sharpen ideas, and bring well-tested solutions to life.</span>
+        <span>I combine </span>
+        <Link href="/about" title="engineering depth, creative thinking, and business strategy">engineering depth, creative thinking, and business strategy</Link>
+        <span>
+          &nbsp;to turn ideas into well-tested solutions. I work at the
+          intersection of innovation and execution, using modern tools to
+          accelerate exploration and sharpen product direction.
+        </span>
       </>
     ),
+    details: {
+      content: (
+        <>
+          <p>
+            I operate at the intersection of engineering, product strategy, and
+            creative exploration. My strength lies in taking ambiguous ideas -
+            early concepts, rough sketches, half-formed requirements - and
+            turning them into well-tested, technically sound solutions. I use
+            modern tools, including generative AI, to accelerate ideation,
+            validate assumptions, and explore multiple paths before committing
+            to a direction.
+          </p>
+          <p>
+            This mindset helps teams move faster without sacrificing quality.
+            I challenge assumptions, simplify complexity, and uncover
+            opportunities that might otherwise be missed. Whether brainstorming
+            with product teams, prototyping new features, or evaluating
+            architectural tradeoffs, I bring a creative yet grounded approach
+            that balances innovation with execution. The result is solutions
+            that are not only technically strong but strategically aligned with
+            business goals.
+          </p>
+        </>
+      ),
+      title: 'How I Blend Engineering and Creative Problem-Solving',
+    },
     label: 'Smart Creative',
   },
   {
@@ -124,16 +202,53 @@ export const hats = [
     description: (
       <>
         <span>With over 30 years of </span>
-        <Link href="/timeline" title="experience and a strong academic foundation">experience and a strong academic foundation</Link>
+        <Link href="/timeline" title="experience and a deep foundation">experience and a deep foundation</Link>
         <span> in software engineering, I help organizations build resilient </span>
-        <Link href="/portfolio" title="technology platforms">technology platforms</Link>
-        <span> and deliver distinctive value through forward-thinking solutions,</span>
-        <span> continually evolving with the pace of modern technology.</span>
+        <Link href="/portfolio" title="platforms and forward-looking solutions">platforms and forward-looking solutions</Link>
+        <span>
+          . I evolve with modern technology to deliver systems that stand the
+          test of time.
+        </span>
       </>
     ),
+    details: {
+      content: (
+        <>
+          <p>
+            With more than three decades of engineering experience, I&#39;ve
+            seen multiple waves of technology - from early web systems to
+            cloud-native architectures and modern event-driven platforms. This
+            perspective helps me identify what truly matters: durability,
+            clarity, and the ability to adapt. I design systems that stand the
+            test of time, even as tools, frameworks, and best practices evolve.
+          </p>
+          <p>
+            My work focuses on building resilient platforms, improving
+            architectural foundations, and helping organizations modernize
+            without losing stability. I bring a forward-looking mindset
+            grounded in practical experience, enabling teams to adopt new
+            technologies thoughtfully rather than reactively. Whether evolving
+            legacy systems, introducing new patterns, or shaping long-term
+            technical strategy, I help organizations stay ahead of change while
+            maintaining reliability and trust.
+          </p>
+        </>
+      ),
+      title: 'How I Drive Long-Term Technical Evolution',
+    },
     label: 'Innovator',
   },
 ];
+
+export const identity = {
+  children: (
+    <>
+      <span>Hello, I&#39;m </span>
+      <span className="name" translate="no">Ricky Huang</span>
+    </>
+  ),
+  ipa: '/ˈɹɪki ˈhwɑːŋ/',
+};
 
 export const image = {
   alt: 'Ricky Huang',
@@ -144,8 +259,6 @@ export const image = {
     webp: require('@site/src/pages/img/self.webp').default,
   },
 };
-
-export const ipa = '/ˈɹɪki ˈhwɑːŋ/';
 
 export const layout: LayoutProps = {
   description: oneLine(`Welcome to Ricky Huang's site - engineering leader,
@@ -182,6 +295,14 @@ export const layout: LayoutProps = {
     />,
   ],
   title: 'Engineering Leadership & Full Stack Innovation',
+};
+
+export const preamble: PreambleProps = {
+  description: oneLine(`I design and deliver cloud-native, distributed
+    platforms that power high-volume, business-critical products. With 30+
+    years of hands-on engineering experience, I bring clarity, technical depth,
+    and strong architectural judgment to complex problems.`),
+  title: 'Engineering Leader & Full-Stack Architect Building Scalable, Resilient Systems',
 };
 
 export const socials: SocialProps[] = [

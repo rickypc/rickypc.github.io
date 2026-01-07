@@ -77,10 +77,10 @@ test.describe('isolated tests', () => {
 
   test('has greeting', async ({ page }) => {
     // [class] can contain multiple classes, controls_ may not be the first.
-    await hasSpeech({ page, selector: 'main header h1 [class*="controls_"]', url });
+    await hasSpeech({ page, selector: 'main header [class*="greeting_"] [class*="controls_"]', url });
     const nth = 1;
     // After nth assignment.
-    const locator = page.locator(`main header h1>[class*="pronunciation_"]>span:nth-of-type(${nth})`);
+    const locator = page.locator(`main header [class*="greeting_"]>[class*="pronunciation_"]>span:nth-of-type(${nth})`);
     await expect(locator).toBeVisible();
     expect(await locator.textContent()).toMatchSnapshot(`greeting-${nth}.txt`);
   });

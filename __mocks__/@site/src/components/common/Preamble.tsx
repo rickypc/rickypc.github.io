@@ -6,6 +6,21 @@
 import { type PropsWithChildren, type ReactElement } from 'react';
 
 /**
+ * Minimal mock common/Intro component that renders children.
+ * @param {PropsWithChildren} props
+ *   The component props.
+ * @returns {ReactElement}
+ *   The common/Intro component.
+ */
+export function Intro({ children, ...rest }: PropsWithChildren): ReactElement {
+  return (
+    <div data-testid="intro" {...rest}>
+      {children}
+    </div>
+  );
+}
+
+/**
  * Minimal mock common/Preamble component that renders children.
  * @param {PropsWithChildren} props
  *   The component props.

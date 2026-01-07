@@ -10,6 +10,22 @@ import {
   type ReactNode,
 } from 'react';
 
+const below20: string[] = [
+  '', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
+  'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen',
+  'seventeen', 'eighteen', 'nineteen',
+];
+
+const tens: string[] = [
+  '', '', 'twenty', 'thirty', 'forty', 'fifty',
+  'sixty', 'seventy', 'eighty', 'ninety',
+];
+
+const thousands: string[] = [
+  '', 'thousand', 'million', 'billion', 'trillion',
+  'quadrillion', 'quintillion',
+];
+
 export const a11y = (value?: string, rest = {}) => ({ 'aria-label': value, title: value, ...rest });
 
 export const admonitions = {
@@ -21,6 +37,30 @@ export const admonitions = {
     text: 'Speech synthesis may not work properly. Change or update your browser for a better experience.',
     type: 'warning',
   },
+};
+
+export const chunkToWords = (input: number): string => {
+  let num = input;
+  const response: string[] = [];
+  if (num >= 100) {
+    response.push(`${below20[Math.floor(num / 100)]} hundred`);
+    num %= 100;
+    if (num > 0) {
+      response.push(' ');
+    }
+  }
+  if (num >= 20) {
+    response.push(tens[Math.floor(num / 10)]);
+    num %= 10;
+    if (num > 0) {
+      // eslint-disable-next-line security/detect-object-injection
+      response.push(`-${below20[num]}`);
+    }
+  } else if (num > 0) {
+    // eslint-disable-next-line security/detect-object-injection
+    response.push(below20[num]);
+  }
+  return response.join('');
 };
 
 export const clsx = (...classes: (boolean | null | number | string | undefined)[]) => classes.filter((cls) => cls && typeof (cls) === 'string').join(' ');
@@ -125,6 +165,47 @@ export const context = ({
   name: title,
   url: 'https://ricky.one',
 });
+
+// Before humanizeYears assignment.
+export const numberToWords = (input: number): string => {
+  let num = input;
+  if (num === 0) {
+    return 'zero';
+  }
+  let chunkIndex = 0;
+  let words = '';
+  while (num > 0) {
+    const chunk = num % 1000;
+    if (chunk > 0) {
+      const chunkWords = chunkToWords(chunk);
+      // eslint-disable-next-line security/detect-object-injection
+      const suffix = thousands[chunkIndex];
+      words = `${chunkWords}${suffix ? ` ${suffix}` : ''}${words ? ` ${words}` : ''}`;
+    }
+    num = Math.floor(num / 1000);
+    chunkIndex += 1;
+  }
+  return words.trim();
+};
+
+export const humanizeYears = (num: number, format = 'exact') => {
+  const rounded = num < 10 ? num : Math.floor(num / 10) * 10;
+  // After rounded assignment.
+  const exact = num === rounded;
+  switch (format) {
+    case 'decades': {
+      const decades = Math.floor(rounded / 10);
+      const word = numberToWords(decades);
+      return num % 10 === 0 ? `${word} decades` : `more than ${word} decades`;
+    }
+    case 'over':
+      return exact ? `${num} years` : `over ${rounded} years`;
+    case 'plus':
+      return exact ? `${num} years` : `${rounded}+ years`;
+    default:
+      return `${num} year${num === 1 ? '' : 's'}`;
+  }
+};
 
 const key = (
   value?: ReactNode,

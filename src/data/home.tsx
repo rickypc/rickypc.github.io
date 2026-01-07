@@ -10,9 +10,11 @@ import { type IconBaseProps } from 'react-icons';
 import { type LayoutProps } from '@site/src/components/common/Layout';
 import Link from '@site/src/components/common/Link';
 import { type ComponentType, type ReactElement } from 'react';
-import { oneLine } from '@site/src/data/common';
+import { humanizeYears, oneLine } from '@site/src/data/common';
 import { type PreambleProps } from '@site/src/components/common/Preamble';
 import Reveal from '@site/src/components/common/Reveal';
+
+const total = new Date().getFullYear() - 1995;
 
 export type SocialProps = {
   href?: string;
@@ -68,9 +70,12 @@ export const hats = [
       content: (
         <>
           <p>
-            I lead engineering organizations by creating clarity in
-            environments that are often ambiguous, fast-moving, or technically
-            complex. My approach blends hands-on technical depth with a strong
+            I lead&nbsp;
+            <Link href="/timeline" title="engineering organizations">engineering organizations</Link>
+            &nbsp;by creating clarity in environments that are often ambiguous,
+            fast-moving, or technically complex.&nbsp;
+            <Link href="/about" title="My approach">My approach</Link>
+            &nbsp;blends hands-on technical depth with a strong
             sense of direction, ensuring teams understand not just what
             they&#39;re building, but why it matters. I focus on establishing
             architectural standards, improving engineering quality, and
@@ -121,14 +126,16 @@ export const hats = [
       content: (
         <>
           <p>
-            As a full-stack engineer, I design and build systems that span
-            front-end interfaces, backend services, data flows, and cloud
-            infrastructure. I&#39;m comfortable moving between layers - from
-            React components and API design to distributed systems,
-            event-driven architectures, and AWS-managed services. This breadth
-            allows me to connect disciplines, identify integration risks early,
-            and deliver cohesive solutions that feel seamless to users and
-            maintainable to teams.
+            As a full-stack engineer, I&nbsp;
+            <Link href="/portfolio" title="design and build systems">design and build systems</Link>
+            &nbsp;that span front-end interfaces, backend services, data flows,
+            and cloud infrastructure. I&#39;m comfortable moving between layers
+            - from React components and API design to distributed systems,
+            event-driven architectures, and AWS-managed services. This&nbsp;
+            <Link href="/resume" title="breadth">breadth</Link>
+            &nbsp;allows me to connect disciplines, identify integration risks
+            early, and deliver cohesive solutions that feel seamless to users
+            and maintainable to teams.
           </p>
           <p>
             My work emphasizes performance, reliability, and long-term
@@ -169,12 +176,14 @@ export const hats = [
         <>
           <p>
             I operate at the intersection of engineering, product strategy, and
-            creative exploration. My strength lies in taking ambiguous ideas -
-            early concepts, rough sketches, half-formed requirements - and
-            turning them into well-tested, technically sound solutions. I use
-            modern tools, including generative AI, to accelerate ideation,
-            validate assumptions, and explore multiple paths before committing
-            to a direction.
+            creative exploration.&nbsp;
+            <Link href="/resume" title="My strength">My strength</Link>
+            &nbsp;lies in taking ambiguous ideas - early concepts, rough
+            sketches, half-formed requirements - and turning them into&nbsp;
+            <Link href="/portfolio" title="well-tested, technically sound solutions">well-tested, technically sound solutions</Link>
+            . I use modern tools, including generative AI, to accelerate
+            ideation, validate assumptions, and explore multiple paths before
+            committing to a direction.
           </p>
           <p>
             This mindset helps teams move faster without sacrificing quality.
@@ -201,7 +210,11 @@ export const hats = [
     ),
     description: (
       <>
-        <span>With over 30 years of </span>
+        <span>
+          With&nbsp;
+          {humanizeYears(total, 'over')}
+          &nbsp;of&nbsp;
+        </span>
         <Link href="/timeline" title="experience and a deep foundation">experience and a deep foundation</Link>
         <span> in software engineering, I help organizations build resilient </span>
         <Link href="/portfolio" title="platforms and forward-looking solutions">platforms and forward-looking solutions</Link>
@@ -215,18 +228,22 @@ export const hats = [
       content: (
         <>
           <p>
-            With more than three decades of engineering experience, I&#39;ve
-            seen multiple waves of technology - from early web systems to
-            cloud-native architectures and modern event-driven platforms. This
-            perspective helps me identify what truly matters: durability,
-            clarity, and the ability to adapt. I design systems that stand the
-            test of time, even as tools, frameworks, and best practices evolve.
+            With&nbsp;
+            <Link href="/timeline" title={humanizeYears(total, 'decades')}>{humanizeYears(total, 'decades')}</Link>
+            &nbsp;of engineering experience, I&#39;ve seen multiple waves of
+            technology - from early web systems to cloud-native architectures
+            and modern event-driven platforms. This perspective helps me
+            identify what truly matters:&nbsp;
+            <Link href="/about" title="durability, clarity, and the ability to adapt">durability, clarity, and the ability to adapt</Link>
+            . I design systems that stand the test of time, even as
+            tools, frameworks, and best practices evolve.
           </p>
           <p>
             My work focuses on building resilient platforms, improving
             architectural foundations, and helping organizations modernize
-            without losing stability. I bring a forward-looking mindset
-            grounded in practical experience, enabling teams to adopt new
+            without losing stability. I bring a&nbsp;
+            <Link href="/stories" title="forward-looking mindset">forward-looking mindset</Link>
+            &nbsp;grounded in practical experience, enabling teams to adopt new
             technologies thoughtfully rather than reactively. Whether evolving
             legacy systems, introducing new patterns, or shaping long-term
             technical strategy, I help organizations stay ahead of change while
@@ -299,9 +316,10 @@ export const layout: LayoutProps = {
 
 export const preamble: PreambleProps = {
   description: oneLine(`I design and deliver cloud-native, distributed
-    platforms that power high-volume, business-critical products. With 30+
-    years of hands-on engineering experience, I bring clarity, technical depth,
-    and strong architectural judgment to complex problems.`),
+    platforms that power high-volume, business-critical products. With
+    ${humanizeYears(total, 'plus')} of hands-on engineering experience, I bring
+    clarity, technical depth, and strong architectural judgment to complex
+    problems.`),
   title: 'Engineering Leader & Full-Stack Architect Building Scalable, Resilient Systems',
 };
 

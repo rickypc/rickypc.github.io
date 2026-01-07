@@ -89,6 +89,7 @@
     0 0.0625rem 0.125rem color-mix(in oklab, black 15%, transparent);
   margin-top: 0.5rem;
   overflow: hidden;
+  user-select: none;
 }
 
 [data-theme='dark'] .hats .hat .details {

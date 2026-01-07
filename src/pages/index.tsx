@@ -3,11 +3,10 @@
  * All rights reserved.
  */
 
-import { clsx } from '@site/src/data/common';
 import Figure from '@site/src/components/home/Figure';
 import Greeting from '@site/src/components/home/Greeting';
 import Hats from '@site/src/components/home/Hats';
-import Heading from '@theme/Heading';
+import { Intro } from '@site/src/components/common/Preamble';
 import Layout from '@site/src/components/common/Layout';
 import { layout, preamble } from '@site/src/data/home';
 import { memo } from 'react';
@@ -18,13 +17,10 @@ import styles from './index.module.css';
 export default memo(function Home() {
   return (
     <Layout className={styles.home} {...layout}>
-      <header className="row row--no-gutters" role="banner">
+      <header aria-label={preamble.title} className="row row--no-gutters" role="banner">
         <div className="col">
           <Greeting />
-          <div className={clsx('col', styles.preamble)}>
-            <Heading as="h1">{preamble.title}</Heading>
-            <p>{preamble.description}</p>
-          </div>
+          <Intro className={styles.preamble} {...preamble} />
         </div>
       </header>
       <section className="row row--no-gutters">

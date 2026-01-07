@@ -48,11 +48,21 @@
   }
 
   [data-theme] .preamble h1 {
-    font-size: 1.75rem;
+    font-size: 1.25rem;
   }
 
   [data-theme] .preamble p {
-    font-size: 0.85rem;
+    font-size: 0.825rem;
     line-height: 1.15rem;
+  }
+}
+
+/* Safari only */
+@supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
+  @media print {
+    [data-theme] .preamble p {
+      font-size: 0.81rem;
+      line-height: 1.05rem;
+    }
   }
 }

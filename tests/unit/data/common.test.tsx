@@ -6,10 +6,13 @@
 import {
   a11y,
   admonitions,
+  chunkToWords,
   clsx,
   context,
   fileName,
+  humanizeYears,
   key,
+  numberToWords,
   oneLine,
   tail,
   textContent,
@@ -49,6 +52,50 @@ describe('data.common', () => {
         text: 'Speech synthesis may not work properly. Change or update your browser for a better experience.',
         type: 'warning',
       });
+    });
+  });
+
+  describe('chunkToWords', () => {
+    test.each([
+      // 1–19 (below20 cases).
+      [1, 'one'],
+      [7, 'seven'],
+      [10, 'ten'],
+      [13, 'thirteen'],
+      [19, 'nineteen'],
+
+      // 20–99 (tens only).
+      [20, 'twenty'],
+      [30, 'thirty'],
+      [40, 'forty'],
+      [90, 'ninety'],
+
+      // 21–99 (tens + hyphen + ones).
+      [21, 'twenty-one'],
+      [34, 'thirty-four'],
+      [58, 'fifty-eight'],
+      [99, 'ninety-nine'],
+
+      // 100–999 (hundreds only).
+      [100, 'one hundred'],
+      [300, 'three hundred'],
+      [900, 'nine hundred'],
+
+      // 101–199 (hundreds + space + ones).
+      [101, 'one hundred one'],
+      [115, 'one hundred fifteen'],
+
+      // 120–199 (hundreds + space + tens).
+      [120, 'one hundred twenty'],
+      [180, 'one hundred eighty'],
+
+      // 121–999 (hundreds + space + tens + hyphen + ones).
+      [121, 'one hundred twenty-one'],
+      [342, 'three hundred forty-two'],
+      [519, 'five hundred nineteen'],
+      [987, 'nine hundred eighty-seven'],
+    ])('chunkToWords(%i) -> %s', (input, expected) => {
+      expect(chunkToWords(input)).toBe(expected);
     });
   });
 
@@ -108,6 +155,42 @@ describe('data.common', () => {
     });
   });
 
+  describe('humanizeYears', () => {
+    test.each([
+      // Decades format.
+      [10, 'decades', 'one decades'],
+      [20, 'decades', 'two decades'],
+      [25, 'decades', 'more than two decades'],
+      [37, 'decades', 'more than three decades'],
+      [99, 'decades', 'more than nine decades'],
+
+      // Over format.
+      [5, 'over', '5 years'],
+      [11, 'over', 'over 10 years'],
+      [29, 'over', 'over 20 years'],
+      [30, 'over', '30 years'],
+
+      // Plus format.
+      [4, 'plus', '4 years'],
+      [12, 'plus', '10+ years'],
+      [27, 'plus', '20+ years'],
+      [40, 'plus', '40 years'],
+
+      // Default: exact format.
+      [1, 'exact', '1 year'],
+      [2, 'exact', '2 years'],
+      [9, 'exact', '9 years'],
+      [10, 'exact', '10 years'],
+      [21, 'exact', '21 years'],
+
+      // Default fallback when format is unknown.
+      [3, undefined, '3 years'],
+      [1, 'unknown', '1 year'],
+    ])('humanizeYears(%i, %s) -> %s', (num, format, expected) => {
+      expect(humanizeYears(num, format)).toBe(expected);
+    });
+  });
+
   describe('key()', () => {
     test('lowercases and hyphenates spaces, strips file extensions', () => {
       expect(key('Hello World')).toBe('hello-world');
@@ -125,6 +208,45 @@ describe('data.common', () => {
 
     test('handles empty prefix or suffix correctly', () => {
       expect(key('Solo', '', '', 'end', '_')).toBe('solo_end');
+    });
+  });
+
+  describe('numberToWords', () => {
+    test.each([
+      // Zero.
+      [0, 'zero'],
+
+      // 1–999 (single chunk, relies on chunkToWords correctness).
+      [1, 'one'],
+      [19, 'nineteen'],
+      [105, 'one hundred five'],
+      [999, 'nine hundred ninety-nine'],
+
+      // Thousands.
+      [1000, 'one thousand'],
+      [1001, 'one thousand one'],
+      [1234, 'one thousand two hundred thirty-four'],
+      [900000, 'nine hundred thousand'],
+
+      // Millions.
+      [1_000_000, 'one million'],
+      [1_000_001, 'one million one'],
+      [1_234_567, 'one million two hundred thirty-four thousand five hundred sixty-seven'],
+
+      // Billions.
+      [1_000_000_000, 'one billion'],
+      [1_000_000_001, 'one billion one'],
+      [2_147_483_647, 'two billion one hundred forty-seven million four hundred eighty-three thousand six hundred forty-seven'],
+
+      // Mixed multi-chunk with zeros in the middle.
+      [1_000_020, 'one million twenty'],
+      [1_005_000, 'one million five thousand'],
+      [10_000_010, 'ten million ten'],
+
+      // Large but within safe integer range.
+      [999_999_999_999, 'nine hundred ninety-nine billion nine hundred ninety-nine million nine hundred ninety-nine thousand nine hundred ninety-nine'],
+    ])('numberToWords(%i) -> %s', (input, expected) => {
+      expect(numberToWords(input)).toBe(expected);
     });
   });
 

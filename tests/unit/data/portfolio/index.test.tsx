@@ -5,7 +5,8 @@
  * @jest-environment jsdom
  */
 
-import { catalog, layout, preamble } from '@site/src/data/portfolio';
+import { catalog, intro, layout } from '@site/src/data/portfolio';
+import { textContent } from '@site/src/data/common';
 
 describe('portfolio.index', () => {
   // Verify container and capture first item once.
@@ -69,6 +70,15 @@ describe('portfolio.index', () => {
     });
   });
 
+  test('intro export has description and title', () => {
+    expect(typeof intro).toBe('object');
+
+    expect(typeof intro.description).toBe('string');
+    expect(textContent(intro.description).length).toBeGreaterThan(0);
+
+    expect(intro.title).toBe('Portfolio');
+  });
+
   test('layout export has title, description, and non-empty keywords array', () => {
     expect(typeof layout).toBe('object');
 
@@ -84,15 +94,5 @@ describe('portfolio.index', () => {
       expect(typeof kw).toBe('string');
       expect(kw.length).toBeGreaterThan(0);
     });
-  });
-
-  test('preamble export has description and title', () => {
-    expect(typeof preamble).toBe('object');
-
-    expect(typeof preamble.title).toBe('string');
-    expect(preamble.title.length).toBeGreaterThan(0);
-
-    expect(typeof preamble.description).toBe('string');
-    expect(preamble.description.length).toBeGreaterThan(0);
   });
 });

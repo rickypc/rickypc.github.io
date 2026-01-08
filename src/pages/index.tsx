@@ -6,10 +6,10 @@
 import Figure from '@site/src/components/home/Figure';
 import Greeting from '@site/src/components/home/Greeting';
 import Hats from '@site/src/components/home/Hats';
-import { Intro } from '@site/src/components/common/Preamble';
+import { intro, layout } from '@site/src/data/home';
 import Layout from '@site/src/components/common/Layout';
-import { layout, preamble } from '@site/src/data/home';
 import { memo } from 'react';
+import Preamble from '@site/src/components/common/Preamble';
 import QRCode from '@site/src/components/common/QRCode';
 import Socials from '@site/src/components/home/Socials';
 import styles from './index.module.css';
@@ -17,12 +17,11 @@ import styles from './index.module.css';
 export default memo(function Home() {
   return (
     <Layout className={styles.home} {...layout}>
-      <header aria-label={preamble.title} className="row row--no-gutters" role="banner">
-        <div className="col">
-          <Greeting />
-          <Intro className={styles.preamble} {...preamble} />
-        </div>
-      </header>
+      <Preamble
+        col="col"
+        intro={{ before: (<Greeting />), className: styles.preamble, ...intro }}
+        row="row row--no-gutters"
+      />
       <section className="row row--no-gutters">
         <div className="col col--10">
           <Hats />

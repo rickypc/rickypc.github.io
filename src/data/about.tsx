@@ -3,9 +3,9 @@
  * All rights reserved.
  */
 
+import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
 import { oneLine } from '@site/src/data/common';
-import { type PreambleProps } from '@site/src/components/common/Preamble';
 
 type QuadrantAnchor = 'start' | 'middle' | 'end';
 
@@ -41,6 +41,13 @@ export const characteristic = {
 };
 
 export const headline = 'Leading with People, Purpose, and Results';
+
+export const intro: IntroProps = {
+  description: oneLine(`I bring together a sharp focus on results with
+    thoughtful analysis and sound judgment - always aiming to build meaningful
+    outcomes through strong leadership and human connection.`),
+  title: 'About Ricky Huang',
+};
 
 export const layout: LayoutProps = {
   description: oneLine(`Ricky Huang blends people skills, sharp analysis, and
@@ -82,13 +89,6 @@ export const paragraphs = [
     and turning ideas into action, supported by modern tools that help me think
     and iterate with greater clarity.`),
 ];
-
-export const preamble: PreambleProps = {
-  description: oneLine(`I bring together a sharp focus on results with
-    thoughtful analysis and sound judgment - always aiming to build meaningful
-    outcomes through strong leadership and human connection.`),
-  title: 'About Ricky Huang',
-};
 
 export const quadrants = {
   people: {

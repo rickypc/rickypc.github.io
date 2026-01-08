@@ -7,7 +7,7 @@
 
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { layout, preamble } from '@site/src/data/timeline';
+import { intro, layout } from '@site/src/data/timeline';
 import Timeline from '@site/src/pages/timeline';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
@@ -27,8 +27,7 @@ describe('pages.timeline', () => {
 
     const preambleEl = screen.getByTestId('preamble');
     expect(preambleEl).toBeInTheDocument();
-    expect(preambleEl.getAttribute('description')).toContain(preamble.description);
-    expect(preambleEl.getAttribute('title')).toContain(preamble.title);
+    expect(JSON.parse(preambleEl.dataset.intro!)).toEqual(expect.objectContaining(intro));
 
     const content = screen.getByTestId('content');
 

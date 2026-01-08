@@ -10,7 +10,6 @@ import {
   codeBackground,
   educations,
   experiences,
-  header,
   type HeadingProps,
   leadership,
   preamble,
@@ -25,7 +24,6 @@ import {
   memo,
   type PropsWithChildren,
   type ReactElement,
-  useMemo,
 } from 'react';
 import Heading from '@theme/Heading';
 import Link from '@site/src/components/common/Link';
@@ -35,7 +33,6 @@ import {
   useSpring,
   useTransform,
 } from 'motion/react';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './styles.module.css';
 
 type ActivityProps = {
@@ -46,7 +43,6 @@ type ActivityProps = {
 };
 
 type BlockProps = {
-  as?: 'header' | 'section';
   className?: string;
   heading: HeadingProps;
 };
@@ -82,19 +78,17 @@ const Activity = memo(function Activity({ entry }: ActivityProps) {
 });
 
 const Block = memo(function Block({
-  as: As = 'section',
   children,
   className,
   heading,
 }: PropsWithChildren<BlockProps>): ReactElement {
-  const role = As === 'header' ? 'banner' : undefined;
   return (
-    <As aria-label={textContent(heading.children)} className={clsx(className, 'row', styles.block)} role={role}>
+    <section aria-label={textContent(heading.children)} className={clsx(className, 'row', styles.block)}>
       <div className={clsx('col', styles.col, 'col--10', 'col--offset-1')}>
         <Heading {...heading}>{heading.children}</Heading>
         {children}
       </div>
-    </As>
+    </section>
   );
 });
 
@@ -178,17 +172,6 @@ const Experiences = memo(function Experiences() {
   );
 });
 
-const Header = memo(function Header() {
-  const { siteConfig } = useDocusaurusContext();
-  const props = useMemo(() => header({ siteConfig }), [siteConfig]);
-  return (
-    <Block as="header" className={styles.header} heading={props.heading}>
-      <p>{props.roles}</p>
-      <p className={styles.contacts}>{props.contacts}</p>
-    </Block>
-  );
-});
-
 const Leadership = memo(function Leadership() {
   return (
     <Block className={styles.leadership} heading={leadership.heading}>
@@ -248,7 +231,6 @@ const Testimonials = memo(function Testimonials() {
 export default memo(function Content() {
   return (
     <>
-      <Header />
       <Preamble />
       <Strengths />
       <Leadership />

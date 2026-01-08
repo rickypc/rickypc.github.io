@@ -7,11 +7,11 @@
 
 import { GenIcon } from 'react-icons/lib';
 import { type IconBaseProps } from 'react-icons';
+import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
 import Link from '@site/src/components/common/Link';
 import { type ComponentType, type ReactElement } from 'react';
 import { humanizeYears, oneLine } from '@site/src/data/common';
-import { type PreambleProps } from '@site/src/components/common/Preamble';
 import Reveal from '@site/src/components/common/Reveal';
 
 const total = new Date().getFullYear() - 1995;
@@ -277,6 +277,15 @@ export const image = {
   },
 };
 
+export const intro: IntroProps = {
+  description: oneLine(`I design and deliver cloud-native, distributed
+    platforms that power high-volume, business-critical products. With
+    ${humanizeYears(total, 'plus')} of hands-on engineering experience, I bring
+    clarity, technical depth, and strong architectural judgment to complex
+    problems.`),
+  title: 'Engineering Leader & Full-Stack Architect Building Scalable, Resilient Systems',
+};
+
 export const layout: LayoutProps = {
   description: oneLine(`Welcome to Ricky Huang's site - engineering leader,
     full stack developer, and innovator with decades of software expertise.`),
@@ -312,15 +321,6 @@ export const layout: LayoutProps = {
     />,
   ],
   title: 'Engineering Leadership & Full Stack Innovation',
-};
-
-export const preamble: PreambleProps = {
-  description: oneLine(`I design and deliver cloud-native, distributed
-    platforms that power high-volume, business-critical products. With
-    ${humanizeYears(total, 'plus')} of hands-on engineering experience, I bring
-    clarity, technical depth, and strong architectural judgment to complex
-    problems.`),
-  title: 'Engineering Leader & Full-Stack Architect Building Scalable, Resilient Systems',
 };
 
 export const socials: SocialProps[] = [

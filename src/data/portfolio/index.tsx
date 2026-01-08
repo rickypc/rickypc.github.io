@@ -5,9 +5,9 @@
 
 /* eslint-disable global-require */
 
+import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
 import { oneLine } from '@site/src/data/common';
-import { type PreambleProps } from '@site/src/components/common/Preamble';
 
 export const catalog = [
   {
@@ -660,6 +660,15 @@ export const catalog = [
 
 export const catalogMap = Object.fromEntries(catalog.map((item) => [item.prefix, item]));
 
+export const intro: IntroProps = {
+  description: oneLine(`Each project here reflects years of hands-on
+    experience, thoughtful problem-solving, and a commitment to quality.
+    Alongside every build, you'll find the technology stack that brought it to
+    life, the impact it delivered, and the continual learning that keeps my
+    work aligned with the pace of modern technology.`),
+  title: 'Portfolio',
+};
+
 export const layout: LayoutProps = {
   description: oneLine(`Scalable platforms for Yahoo!, GigaOm, & more - Ricky
     Huang's portfolio showcases engineering, media, e-commerce & logistics
@@ -693,13 +702,4 @@ export const layout: LayoutProps = {
   ],
   */
   title: 'Scalable Systems - Yahoo!, GigaOm & More',
-};
-
-export const preamble: PreambleProps = {
-  description: oneLine(`Each project here reflects years of hands-on
-    experience, thoughtful problem-solving, and a commitment to quality.
-    Alongside every build, you'll find the technology stack that brought it to
-    life, the impact it delivered, and the continual learning that keeps my
-    work aligned with the pace of modern technology.`),
-  title: 'Portfolio',
 };

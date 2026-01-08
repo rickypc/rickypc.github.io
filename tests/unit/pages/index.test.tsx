@@ -39,10 +39,9 @@ describe('pages.index', () => {
     expect(hatsSection).toBeTruthy();
     expect(hatsSection).toContainElement(hats);
 
-    // eslint-disable-next-line testing-library/no-node-access
-    const header = greeting.closest('header');
-    expect(header).toBeTruthy();
-    expect(header).toContainElement(greeting);
+    const preamble = screen.getByTestId('preamble');
+    expect(preamble).toBeTruthy();
+    expect(preamble).toContainElement(greeting);
 
     const layoutEl = screen.getByTestId('layout');
     expect(layoutEl).toBeInTheDocument();

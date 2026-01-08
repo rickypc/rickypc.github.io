@@ -5,14 +5,26 @@
  * @jest-environment jsdom
  */
 
-import { layout, preamble, stories } from '@site/src/data/stories';
+import { intro, layout, stories } from '@site/src/data/stories';
+import { textContent } from '@site/src/data/common';
 
 describe('data.stories', () => {
   describe('exports', () => {
-    test('has layout, preamble, stories', () => {
+    test('has layout, intro, stories', () => {
       expect(layout).toBeDefined();
-      expect(preamble).toBeDefined();
+      expect(intro).toBeDefined();
       expect(stories).toBeDefined();
+    });
+  });
+
+  describe('intro', () => {
+    test('has description and title', () => {
+      expect(typeof intro).toBe('object');
+
+      expect(typeof intro.description).toBe('string');
+      expect(textContent(intro.description).length).toBeGreaterThan(0);
+
+      expect(intro.title).toBe('Stories');
     });
   });
 
@@ -33,18 +45,6 @@ describe('data.stories', () => {
 
     test('no metadatas', () => {
       expect(layout.metadatas).toBeUndefined();
-    });
-  });
-
-  describe('preamble', () => {
-    test('description', () => {
-      expect(preamble.description).toBe(
-        'Real-world experiences, lessons learned, and reflections from my journey as a modern multidisciplinary technologist. These stories highlight how I\'ve helped teams and projects thrive - through technology, mentorship, personal growth, and the trust formed along the way.',
-      );
-    });
-
-    test('title', () => {
-      expect(preamble.title).toBe('Stories');
     });
   });
 

@@ -11,8 +11,8 @@ import {
   hats,
   identity,
   image,
+  intro,
   layout,
-  preamble,
   socials,
 } from '@site/src/data/home';
 
@@ -68,6 +68,11 @@ describe('data.home', () => {
     expect(image.picture.webp).toBe('self.webp');
   });
 
+  test('exports intro with description and title', () => {
+    expect(intro.description).toMatch(/^I design and deliver cloud-native/);
+    expect(intro.title).toMatch(/^Engineering Leader & Full-Stack/);
+  });
+
   test('exports ipa string correctly', () => {
     expect(identity.ipa).toBe('/ˈɹɪki ˈhwɑːŋ/');
   });
@@ -81,11 +86,6 @@ describe('data.home', () => {
 
     expect(typeof layout.title).toBe('string');
     expect(layout.title).toContain('Engineering Leadership');
-  });
-
-  test('exports preamble with description and title', () => {
-    expect(preamble.description).toMatch(/^I design and deliver cloud-native/);
-    expect(preamble.title).toMatch(/^Engineering Leader & Full-Stack/);
   });
 
   test('exports two socials entries with href, title, and Icon component', () => {

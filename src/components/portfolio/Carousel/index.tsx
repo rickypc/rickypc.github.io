@@ -18,7 +18,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { usePrint, useVisibility } from '@site/src/hooks/observer';
+import { usePrint, useResize, useVisibility } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
 export type CarouselHandles = {
@@ -65,6 +65,7 @@ type SliderProps = {
   onClick: (_: ImageProps) => void;
   prefix: string;
   printing: boolean;
+  resizing: boolean;
   // eslint-disable-next-line no-unused-vars
   setActive: (_: number) => void;
   viewport: RefObject<HTMLDivElement | null>;
@@ -176,6 +177,7 @@ const Slider = memo(function Slider({
   onClick,
   prefix,
   printing,
+  resizing,
   setActive,
   viewport,
 }: SliderProps): ReactElement {
@@ -193,7 +195,7 @@ const Slider = memo(function Slider({
       const targetX = -active * (viewport.current.offsetWidth || 1);
       animate(x, targetX, { damping: 30, stiffness: 300, type: 'spring' });
     }
-  }, [active, dragging, x, viewport]);
+  }, [active, dragging, resizing, viewport, x]);
 
   return (
     <motion.div
@@ -246,6 +248,7 @@ export default memo(function Carousel({
   const opened = typeof (open?.picture) === 'object';
   const [paused, setPaused] = useState(false);
   const [printing] = usePrint();
+  const [resizing] = useResize();
   const viewport = useRef<HTMLDivElement>(null);
   const { visible } = useVisibility({ ref: viewport, threshold: 0.1 });
 
@@ -271,6 +274,7 @@ export default memo(function Carousel({
   }, [duration, images.length, opened, paused, visible]);
 
   useEffect(() => setPaused(printing), [printing]);
+  useEffect(() => setPaused(resizing), [resizing]);
 
   return (
     <div className={styles.carousel}>
@@ -290,6 +294,7 @@ export default memo(function Carousel({
             onClick,
             prefix,
             printing,
+            resizing,
             setActive,
             viewport,
           }}

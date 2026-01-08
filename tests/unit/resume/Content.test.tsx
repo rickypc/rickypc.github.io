@@ -14,27 +14,13 @@ jest.unmock('@site/src/components/resume/Content');
 
 describe('resume.Content', () => {
   jest.mocked<any>(useDocusaurusContext).mockReturnValue({
-    siteConfig: {
-      themeConfig: {
-        navbar: {
-          items: [
-            { to: '/blog' },
-            { to: '/projects' },
-            { to: 'https://github.com/me' },
-            { to: 'https://linkedin.com/in/me' },
-          ],
-        },
-      },
-      title: 'My Site',
-      url: 'https://domain.test',
-    },
+    siteConfig: { url: 'https://domain.test' },
   });
 
   test('renders without crashing', () => {
     render(<Content />);
-    expect(screen.getByText('My Site')).toBeInTheDocument();
 
-    // Preamble.
+    // Summary.
     expect(screen.getByText('Summary')).toBeInTheDocument();
 
     // Strengths.

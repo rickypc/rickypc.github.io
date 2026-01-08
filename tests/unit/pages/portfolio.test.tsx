@@ -6,7 +6,7 @@
  */
 
 import { fireEvent, render, screen } from '@testing-library/react';
-import { catalog, layout, preamble } from '@site/src/data/portfolio';
+import { catalog, intro, layout } from '@site/src/data/portfolio';
 import Portfolio from '@site/src/pages/portfolio';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
@@ -17,8 +17,8 @@ jest.mock('@site/src/data/portfolio', () => ({
     { id: 1, title: 'HasTag1', tags: ['Tag1', 'Common'] },
     { id: 2, title: 'NoTag1', tags: ['Other', 'Common'] },
   ],
+  intro: { title: 'Preamble Title', description: 'Preamble Desc' },
   layout: { title: 'Portfolio Title', description: 'Portfolio Desc' },
-  preamble: { title: 'Preamble Title', description: 'Preamble Desc' },
 }));
 
 describe('pages.portfolio', () => {
@@ -37,8 +37,7 @@ describe('pages.portfolio', () => {
   test('renders Preamble with expected props', () => {
     render(<Portfolio />);
     const pre = screen.getByTestId('preamble');
-    expect(pre.getAttribute('description')).toEqual(preamble.description);
-    expect(pre.getAttribute('title')).toEqual(preamble.title);
+    expect(JSON.parse(pre.dataset.intro!)).toEqual(expect.objectContaining(intro));
   });
 
   test('initial state: Filter current All, Projects full catalog, Zoom closed', () => {

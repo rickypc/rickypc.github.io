@@ -11,9 +11,24 @@ import { layout } from '@site/src/data/resume';
 import Resume from '@site/src/pages/resume';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
+jest.unmock('@site/src/components/common/Preamble');
+
 describe('pages.resume', () => {
   jest.mocked<any>(useDocusaurusContext).mockReturnValue({
-    siteConfig: { url: 'https://domain.test' },
+    siteConfig: {
+      themeConfig: {
+        navbar: {
+          items: [
+            { to: '/blog' },
+            { to: '/projects' },
+            { to: 'https://github.com/me' },
+            { to: 'https://linkedin.com/in/me' },
+          ],
+        },
+      },
+      title: 'My Site',
+      url: 'https://domain.test',
+    },
   });
 
   test('renders Layout with className and layout props, then Content', () => {

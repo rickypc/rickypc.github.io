@@ -45,6 +45,7 @@
 
 .greeting .pronunciation {
   align-items: center;
+  backdrop-filter: blur(0.375rem);
   border-radius: 1.375rem;
   display: flex;
   flex-wrap: nowrap;
@@ -54,23 +55,29 @@
 }
 
 [data-theme='dark'] .greeting .pronunciation {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%,
-    rgba(255, 255, 255, 0.08) 50%,
-    rgba(255, 255, 255, 0.03) 100%);
-  box-shadow: inset 0 0 0.125rem 0.0625rem rgba(255, 255, 255, 0.06),
-    inset 0 0 0.5rem 0.25rem rgba(255, 255, 255, 0.04),
-    inset 0 0 1rem 0.5rem rgba(255, 255, 255, 0.03);
-  text-shadow: 0 0625rem 0.0625rem rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg,
+    color-mix(in oklab, #303846 35%, transparent) 0%,
+    color-mix(in oklab, #303846 15%, transparent) 50%,
+    color-mix(in oklab, #303846 8%, transparent) 100%);
+  box-shadow:
+    0 0.25rem 0.75rem color-mix(in oklab, black 10%, transparent),
+    0 0.0625rem 0.125rem color-mix(in oklab, black 15%, transparent),
+    inset 0 0 0.125rem rgba(255, 255, 255, 0.05),
+    inset 0 0 0.5rem rgba(255, 255, 255, 0.03);
+  text-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, 0.5);
 }
 
 [data-theme='light'] .greeting .pronunciation {
-  background: linear-gradient(135deg, rgba(170, 180, 200, 0.35) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(255, 255, 255, 0.04) 100%);
-  box-shadow: inset 0 0 0.125rem 0.0625rem rgba(130, 140, 160, 0.15),
-    inset 0 0 0.5rem 0.25rem rgba(255, 255, 255, 0.08),
-    inset 0 0 1rem 0.5rem rgba(255, 255, 255, 0.04);
-  text-shadow: 0 0625rem 0.0625rem rgba(40, 47, 73, 0.25);
+  background: linear-gradient(135deg,
+      color-mix(in oklab, #8a94a3 20%, transparent) 0%,
+      color-mix(in oklab, #8a94a3 10%, transparent) 50%,
+      color-mix(in oklab, #8a94a3 5%, transparent) 100%);
+  box-shadow:
+    0 0.25rem 0.75rem color-mix(in oklab, black 8%, transparent),
+    0 0.0625rem 0.125rem color-mix(in oklab, black 12%, transparent),
+    inset 0 0 0.125rem rgba(255, 255, 255, 0.08),
+    inset 0 0 0.5rem rgba(255, 255, 255, 0.04);
+  text-shadow: 0 0.0625rem 0.0625rem rgba(40, 47, 73, 0.25);
 }
 
 .greeting div[class*='controls_'] {

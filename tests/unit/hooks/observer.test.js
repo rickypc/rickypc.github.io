@@ -11,6 +11,7 @@ import { useLocation } from '@docusaurus/router';
 import {
   useMedia,
   usePrint,
+  useResize,
   useSpeech,
   useVisibility,
   useWelcome,
@@ -139,6 +140,69 @@ describe('usePrint', () => {
     // Then simulate afterprint.
     act(() => window.dispatchEvent(new Event('afterprint')));
     expect(result.current[0]).toBeFalsy();
+  });
+});
+
+describe('useResize', () => {
+  test('sets resizing to true immediately on resize', () => {
+    const { result } = renderHook(() => useResize());
+
+    expect(result.current[0]).toBeFalsy();
+
+    act(() => window.dispatchEvent(new Event('resize')));
+
+    expect(result.current[0]).toBeTruthy();
+  });
+
+  test('sets resizing to false after debounce delay', () => {
+    jest.useFakeTimers();
+    const { result } = renderHook(() => useResize(500));
+
+    act(() => window.dispatchEvent(new Event('resize')));
+
+    expect(result.current[0]).toBeTruthy();
+
+    act(() => jest.advanceTimersByTime(500));
+
+    expect(result.current[0]).toBeFalsy();
+    jest.useRealTimers();
+  });
+
+  test('debounce resets if resize fires repeatedly', () => {
+    jest.useFakeTimers();
+    const { result } = renderHook(() => useResize(500));
+
+    act(() => window.dispatchEvent(new Event('resize')));
+
+    expect(result.current[0]).toBeTruthy();
+
+    // Fire resize again before debounce ends.
+    act(() => {
+      jest.advanceTimersByTime(300);
+      window.dispatchEvent(new Event('resize'));
+    });
+
+    // Still resizing.
+    expect(result.current[0]).toBeTruthy();
+
+    // Now let full debounce pass.
+    act(() => jest.advanceTimersByTime(500));
+
+    expect(result.current[0]).toBeFalsy();
+    jest.useRealTimers();
+  });
+
+  test('removes resize listener on unmount', () => {
+    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+
+    const { unmount } = renderHook(() => useResize(500));
+
+    unmount();
+
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      'resize',
+      expect.any(Function),
+    );
   });
 });
 

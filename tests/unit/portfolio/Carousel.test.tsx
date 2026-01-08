@@ -15,9 +15,10 @@ import '@testing-library/jest-dom';
 import Carousel from '@site/src/components/portfolio/Carousel';
 import { createRef } from 'react';
 import { listeners } from 'motion/react';
-import { usePrint, useVisibility } from '@site/src/hooks/observer';
+import { usePrint, useResize, useVisibility } from '@site/src/hooks/observer';
 
 const usePrintMock = jest.mocked(usePrint);
+const useResizeMock = jest.mocked(useResize);
 const useVisibilityMock = jest.mocked(useVisibility);
 
 jest.unmock('@site/src/components/portfolio/Carousel');
@@ -30,6 +31,7 @@ describe('portfolio.Carousel', () => {
     {},
   ];
   usePrintMock.mockReturnValue([false]);
+  useResizeMock.mockReturnValue([false]);
   useVisibilityMock.mockReturnValue({ ref: { current: null }, visible: true });
 
   describe('Indicators', () => {
@@ -98,6 +100,7 @@ describe('portfolio.Carousel', () => {
     test('suppresses click when dragging', () => {
       const onClick = jest.fn();
       usePrintMock.mockReturnValue([true]);
+      useResizeMock.mockReturnValue([false]);
       const { container } = render(
         <Carousel images={images} onClick={onClick} prefix="p" />,
       );

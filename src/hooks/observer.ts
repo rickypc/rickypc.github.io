@@ -56,6 +56,35 @@ export function usePrint() {
   return [printing];
 }
 
+/**
+ * Detects when the page is being resized.
+ * @param {number} [delay] - The debounce delay (in milliseconds) after the
+ *   last resize event before `resizing` is set back to false.
+ * @returns {[boolean]} React tuple: [resizing].
+ */
+export function useResize(delay = 250) {
+  const [resizing, setResizing] = useState(false);
+
+  useEffect(() => {
+    let timeout: number | undefined;
+
+    const onResize = () => {
+      setResizing(true);
+      clearTimeout(timeout);
+      timeout = window.setTimeout(() => setResizing(false), delay);
+    };
+
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [delay]);
+
+  return [resizing];
+}
+
 const useSafeLayoutEffect = typeof (window) !== 'undefined' ? useLayoutEffect : useEffect;
 
 /**

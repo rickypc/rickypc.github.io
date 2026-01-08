@@ -18,12 +18,15 @@
 
 .controls .control {
   border-radius: 50%;
-  color: var(--ifm-link-color);
   font-size: 1.25rem;
   height: 2rem;
   line-height: 1rem;
   transform: translateZ(0);
   transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+  transition:
+    background 150ms ease,
+    color var(--ifm-transition-fast) var(--ifm-transition-timing-default),
+    filter 150ms ease;
   width: 2rem;
   will-change: filter;
 }
@@ -32,14 +35,22 @@
   filter: drop-shadow(0.075rem 0.075rem 0.075rem rgba(0, 0, 0, 0.4));
 }
 
+[data-theme='dark'] .controls .control {
+  color: color-mix(in oklab, var(--ifm-link-color) 90%, white 10%);
+}
+
 [data-theme='dark'] .controls .control:hover {
-  background: rgba(0, 100, 255, 0.5);
-  color: #a8d8e8;
+  background: color-mix(in oklab, var(--ifm-link-color) 35%, transparent);
+  color: color-mix(in oklab, #a8d8e8 90%, white 10%);
+}
+
+[data-theme='light'] .controls .control {
+  color: color-mix(in oklab, var(--ifm-link-color) 90%, black 10%);
 }
 
 [data-theme='light'] .controls .control:hover {
-  background: rgba(200, 220, 250, 0.5);
-  color: #1a73e8;
+  background: color-mix(in oklab, var(--ifm-link-color) 25%, transparent);
+  color: color-mix(in oklab, #1a73e8 90%, black 10%);
 }
 
 .controls .control svg {

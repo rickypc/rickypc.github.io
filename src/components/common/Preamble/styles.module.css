@@ -25,19 +25,19 @@
 }
 
 [data-theme='dark'] .preamble h1 {
-  color: #d3d3d3;
+  color: #d8d8da;
 }
 
 [data-theme='dark'] .preamble p {
-  color: #c6c6cc;
+  color: #aeb0b8;
 }
 
 [data-theme='light'] .preamble h1 {
-  color: #282f49;
+  color: #22283c;
 }
 
 [data-theme='light'] .preamble p {
-  color: #747480;
+  color: #5c5f6e;
 }
 
 @media print {

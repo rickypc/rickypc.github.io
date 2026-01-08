@@ -8,11 +8,12 @@
 import {
   characteristic,
   headline,
+  intro,
   layout,
   paragraphs,
-  preamble,
   quadrants,
 } from '@site/src/data/about';
+import { textContent } from '@site/src/data/common';
 
 describe('data.about', () => {
   describe('characteristic', () => {
@@ -33,6 +34,18 @@ describe('data.about', () => {
       expect(typeof headline).toBe('string');
       expect(headline.length).toBeGreaterThan(0);
       expect(headline).toMatch(/People, Purpose, and Results/);
+    });
+  });
+
+  describe('intro', () => {
+    test('has description and title', () => {
+      expect(typeof intro).toBe('object');
+
+      expect(typeof intro.description).toBe('string');
+      expect(textContent(intro.description).length).toBeGreaterThan(0);
+
+      expect(typeof intro.title).toBe('string');
+      expect(intro.title).toMatch(/^About Ricky Huang/);
     });
   });
 
@@ -61,16 +74,6 @@ describe('data.about', () => {
         expect(typeof p).toBe('string');
         expect(p.length).toBeGreaterThan(0);
       });
-    });
-  });
-
-  describe('preamble', () => {
-    test('has description and title as non-empty strings', () => {
-      expect(typeof preamble.description).toBe('string');
-      expect(preamble.description.length).toBeGreaterThan(0);
-
-      expect(typeof preamble.title).toBe('string');
-      expect(preamble.title).toMatch(/^About Ricky Huang/);
     });
   });
 

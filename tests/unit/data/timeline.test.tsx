@@ -5,14 +5,26 @@
  * @jest-environment jsdom
  */
 
-import { layout, preamble, timelines } from '@site/src/data/timeline';
+import { intro, layout, timelines } from '@site/src/data/timeline';
+import { textContent } from '@site/src/data/common';
 
 describe('data.timeline', () => {
   describe('exports', () => {
-    test('exports layout, preamble, timelines', () => {
+    test('exports layout, intro, timelines', () => {
       expect(layout).toBeDefined();
-      expect(preamble).toBeDefined();
+      expect(intro).toBeDefined();
       expect(timelines).toBeDefined();
+    });
+  });
+
+  describe('intro', () => {
+    test('has description and title', () => {
+      expect(typeof intro).toBe('object');
+
+      expect(typeof intro.description).toBe('string');
+      expect(textContent(intro.description).length).toBeGreaterThan(0);
+
+      expect(intro.title).toBe('Timeline');
     });
   });
 
@@ -33,18 +45,6 @@ describe('data.timeline', () => {
 
     test('no metadatas', () => {
       expect(layout.metadatas).toBeUndefined();
-    });
-  });
-
-  describe('preamble', () => {
-    test('description', () => {
-      expect(preamble.description).toBe(
-        'A curated journey through key milestones in my career, education, and technical growth. Each moment reflects a step forward - building expertise, shaping ideas, and driving impact across industries and technologies.',
-      );
-    });
-
-    test('title', () => {
-      expect(preamble.title).toBe('Timeline');
     });
   });
 

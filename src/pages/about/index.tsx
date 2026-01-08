@@ -6,8 +6,8 @@
 import { clsx } from '@site/src/data/common';
 import Content from '@site/src/components/about/Content';
 import Figure from '@site/src/components/about/Figure';
+import { intro, layout } from '@site/src/data/about';
 import Layout from '@site/src/components/common/Layout';
-import { layout, preamble } from '@site/src/data/about';
 import { memo } from 'react';
 import Oracle from '@site/src/components/about/Oracle';
 import Preamble from '@site/src/components/common/Preamble';
@@ -17,7 +17,7 @@ import styles from './styles.module.css';
 export default memo(function About() {
   return (
     <Layout {...layout}>
-      <Preamble {...preamble} />
+      <Preamble intro={intro} />
       <section className={clsx('row', styles.row)}>
         <div className="col col--1" />
         <div className="col col--6">

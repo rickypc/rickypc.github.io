@@ -5,10 +5,10 @@
 
 /* eslint-disable global-require */
 
+import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
 import { oneLine } from '@site/src/data/common';
 import { type PictureInfo } from '@site/src/components/common/Image';
-import { type PreambleProps } from '@site/src/components/common/Preamble';
 
 export type TimelineProps = {
   affiliation: {
@@ -25,6 +25,14 @@ export type TimelineProps = {
     href?: string;
   };
   year: string;
+};
+
+export const intro: IntroProps = {
+  description: oneLine(`A curated journey through key milestones in my career,
+    education, and technical growth. Each moment reflects a step forward -
+    building expertise, shaping ideas, and driving impact across industries and
+    technologies.`),
+  title: 'Timeline',
 };
 
 export const layout: LayoutProps = {
@@ -62,14 +70,6 @@ export const layout: LayoutProps = {
   ],
   */
   title: 'Timeline - Career, Education & Technical Milestones',
-};
-
-export const preamble: PreambleProps = {
-  description: oneLine(`A curated journey through key milestones in my career,
-    education, and technical growth. Each moment reflects a step forward -
-    building expertise, shaping ideas, and driving impact across industries and
-    technologies.`),
-  title: 'Timeline',
 };
 
 export const timelines: TimelineProps[] = [

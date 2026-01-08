@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { catalog, layout, preamble } from '@site/src/data/portfolio';
+import { catalog, intro, layout } from '@site/src/data/portfolio';
 import { clsx } from '@site/src/data/common';
 import Filter from '@site/src/components/portfolio/Filter';
 import { type ImageProps } from '@site/src/components/common/Image';
@@ -30,7 +30,7 @@ export default memo(function Portfolio() {
 
   return (
     <Layout className={styles.portfolio} {...layout}>
-      <Preamble {...preamble} />
+      <Preamble intro={intro} />
       <section className={clsx(styles.filter, 'row', styles.row)}>
         <div className="col">
           <Filter current={current} onClick={onFilterClick} />

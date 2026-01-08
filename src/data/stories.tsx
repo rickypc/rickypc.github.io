@@ -3,9 +3,9 @@
  * All rights reserved.
  */
 
+import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
 import { oneLine } from '@site/src/data/common';
-import { type PreambleProps } from '@site/src/components/common/Preamble';
 
 export type StoryProps = {
   affiliation: {
@@ -29,6 +29,14 @@ export type StoryProps = {
     children: string;
     href?: string;
   };
+};
+
+export const intro: IntroProps = {
+  description: oneLine(`Real-world experiences, lessons learned, and
+    reflections from my journey as a modern multidisciplinary technologist.
+    These stories highlight how I've helped teams and projects thrive - through
+    technology, mentorship, personal growth, and the trust formed along the way.`),
+  title: 'Stories',
 };
 
 export const layout: LayoutProps = {
@@ -66,14 +74,6 @@ export const layout: LayoutProps = {
   ],
   */
   title: 'Stories, Testimonials & Lessons from the Journey',
-};
-
-export const preamble: PreambleProps = {
-  description: oneLine(`Real-world experiences, lessons learned, and
-    reflections from my journey as a modern multidisciplinary technologist.
-    These stories highlight how I've helped teams and projects thrive - through
-    technology, mentorship, personal growth, and the trust formed along the way.`),
-  title: 'Stories',
 };
 
 export const stories: StoryProps[] = [

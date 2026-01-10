@@ -37,7 +37,7 @@ test.describe.serial('shared page tests', () => {
 
   test('has 1 header and 8 sections', async () => {
     // [class] can contain multiple classes, timeline_ may not be the first.
-    expect(await page.textContent('main header[class*="block_"]'))
+    expect(await page.textContent('main header[class*="header_"]'))
       .toMatchSnapshot('header.txt');
     await band(8, async (index) => {
       const nth = index + 1;

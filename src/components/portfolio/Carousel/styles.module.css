@@ -56,7 +56,6 @@
   top: 50%;
   transform: translateY(-50%);
   transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.4);
-  -webkit-backdrop-filter: blur(0.5rem);
   width: 2.25rem;
   z-index: 1;
 }
@@ -128,7 +127,6 @@
   padding: 0.725rem 0.6rem 0.6rem 0.6rem;
   pointer-events: auto;
   position: absolute;
-  -webkit-backdrop-filter: blur(0.5rem);
 }
 
 .carousel .indicator {
@@ -142,7 +140,6 @@
   cursor: pointer;
   height: 0.625rem;
   transition: all 0.25s ease;
-  -webkit-backdrop-filter: blur(0.25rem) saturate(1.1);
   width: 0.625rem;
 }
 
@@ -165,7 +162,6 @@
     0 0 0.30rem rgba(255, 255, 255, 0.18);
   height: 0.625rem;
   transition: all 0.25s ease;
-  -webkit-backdrop-filter: blur(0.25rem) saturate(1.1);
   width: 2.25rem;
 }
 
@@ -195,7 +191,6 @@
     0 0 0.25rem rgba(255, 255, 255, 0.18);
   height: 100%;
   position: absolute;
-  -webkit-backdrop-filter: blur(0.25rem) saturate(1.1);
   width: 0;
 }
 

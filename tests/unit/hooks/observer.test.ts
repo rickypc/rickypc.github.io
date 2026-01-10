@@ -6,7 +6,7 @@
  */
 
 import { act, renderHook, waitFor } from '@testing-library/react';
-import type { Location } from 'history';
+import { type Location } from 'history';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import { useLocation } from '@docusaurus/router';
 import {
@@ -35,6 +35,7 @@ const spies = {
 };
 
 describe('useMedia', () => {
+  // eslint-disable-next-line no-unused-vars
   let mediaQueryListeners: Map<string, (ev: MediaQueryListEvent) => void>;
   let mediaQueryLists: MediaQueryList[];
 
@@ -238,7 +239,7 @@ describe('useSpeech', () => {
 
   test('returns false when only SpeechSynthesisUtterance is defined', async () => {
     // Dummy constructor.
-    Object.defineProperty(window, 'SpeechSynthesisUtterance', { configurable: true, value: function () {} });
+    Object.defineProperty(window, 'SpeechSynthesisUtterance', { configurable: true, value() {} });
 
     const { result } = renderHook(() => useSpeech());
     await waitFor(() => expect(result.current[0]).toBeFalsy());
@@ -247,7 +248,7 @@ describe('useSpeech', () => {
   test('returns true when both speechSynthesis and SpeechSynthesisUtterance are defined', async () => {
     // Dummy constructor
     Object.defineProperty(window, 'speechSynthesis', { configurable: true, value: {} });
-    Object.defineProperty(window, 'SpeechSynthesisUtterance', { configurable: true, value: function () { } });
+    Object.defineProperty(window, 'SpeechSynthesisUtterance', { configurable: true, value() {} });
 
     const { result } = renderHook(() => useSpeech());
     await waitFor(() => expect(result.current[0]).toBeTruthy());
@@ -333,18 +334,27 @@ describe('useVisibility (Browser)', () => {
     expect(result.current.visible).toBeFalsy();
 
     // Fire an intersection entry = true.
-    act(() => onIntersect([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver));
+    act(() => onIntersect(
+      [{ isIntersecting: true } as IntersectionObserverEntry],
+      {} as IntersectionObserver,
+    ));
     expect(result.current.visible).toBeTruthy();
 
     // Then out of view.
-    act(() => onIntersect([{ isIntersecting: false } as IntersectionObserverEntry], {} as IntersectionObserver));
+    act(() => onIntersect(
+      [{ isIntersecting: false } as IntersectionObserverEntry],
+      {} as IntersectionObserver,
+    ));
     expect(result.current.visible).toBeFalsy();
 
     // Also listens to visibilitychange.
     expect(spies.doc.add).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
     Object.defineProperty(document, 'hidden', { configurable: true, value: false });
     act(() => {
-      onIntersect([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver);
+      onIntersect(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      );
       document.dispatchEvent(new Event('visibilitychange'));
     });
     expect(result.current.visible).toBeTruthy();

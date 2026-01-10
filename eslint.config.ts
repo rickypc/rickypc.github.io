@@ -43,7 +43,15 @@ const config: Linter.Config[] = [
     ...testing.configs['flat/react'],
   },
   {
-    languageOptions: { ecmaVersion: 2024, globals: { ...globals.browser } },
+    languageOptions: {
+      ecmaVersion: 2024,
+      globals: {
+        ...globals.browser,
+        EventListener: 'readonly',
+        EventListenerOrEventListenerObject: 'readonly',
+        IntersectionObserverCallback: 'readonly',
+      },
+    },
     plugins: { 'no-secrets': noSecrets },
     rules: {
       'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
@@ -67,7 +75,6 @@ const config: Linter.Config[] = [
     files: ['**/*.{ts,tsx}'],
     ...ts.configs.recommended[0],
     ...ts.configs.recommendedTypeChecked[0],
-    languageOptions: { parser: ts },
   },
 ];
 

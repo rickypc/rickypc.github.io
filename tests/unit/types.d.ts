@@ -18,25 +18,19 @@ declare module 'cli-progress' {
   export const stop: any;
 
   export interface MultiBarInstance {
+    // eslint-disable-next-line no-unused-vars
     create(...args: any[]): any;
     stop(): void;
     update(): void;
   }
 
   export interface MultiBarConstructor {
+    // eslint-disable-next-line no-unused-vars
     new(...args: any[]): MultiBarInstance;
+    // eslint-disable-next-line no-unused-vars
     (...args: any[]): MultiBarInstance;
   }
 
   export const MultiBar: MultiBarConstructor;
   export type MultiBar = MultiBarInstance;
 }
-
-declare module '@docusaurus/utils' {
-  export const DEFAULT_BUILD_DIR_NAME: string;
-  export const DEFAULT_CONFIG_FILE_NAME: string;
-  export const getFileCommitDate: any;
-  export const loadFreshModule: any;
-  export const siteConfig: any;
-}
-

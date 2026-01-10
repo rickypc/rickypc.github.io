@@ -21,12 +21,7 @@ import {
   stop,
 } from 'cli-progress';
 import { createWriteStream } from 'node:fs';
-import {
-  DEFAULT_CONFIG_FILE_NAME,
-  getFileCommitDate,
-  loadFreshModule,
-  siteConfig,
-} from '@docusaurus/utils';
+import { DEFAULT_CONFIG_FILE_NAME, getFileCommitDate, loadFreshModule } from '@docusaurus/utils';
 import { join } from 'node:path';
 import { type PluginOptions } from '@docusaurus/plugin-sitemap';
 import { process } from 'beasties';
@@ -34,6 +29,7 @@ import { type Stats } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { Writable } from 'node:stream';
 
+// eslint-disable-next-line no-unused-vars
 type ActionFn = (arg: unknown, opts: Record<string, unknown> | undefined) => unknown;
 
 type CliActions = {
@@ -48,7 +44,9 @@ type SitemapItem = SitemapItems[number];
 
 const accessMock = jest.mocked(access);
 const createWriteStreamMock = jest.mocked(createWriteStream);
+// eslint-disable-next-line no-unused-vars
 const readdirMock = jest.mocked(readdir as unknown as (path: any) => Promise<string[]>);
+const siteConfig = { title: 'site-title', url: 'https://example.com' };
 const statMock = jest.mocked(stat);
 
 jest.mock('node:fs', () => {
@@ -157,7 +155,7 @@ describe(`plugins.${name}`, () => {
     test('appends pdf entries using git lastmod when available', async () => {
       const defaultItems = [{ url: '/a' }];
       const defaultCreateSitemapItems = jest.fn(async () => defaultItems);
-      getFileCommitDate.mockResolvedValue({ date: new Date('2025-10-01T07:00:00.000Z') });
+      (getFileCommitDate as jest.Mock).mockResolvedValue({ date: new Date('2025-10-01T07:00:00.000Z') });
 
       const result = await Plugin.createSitemapItems({ defaultCreateSitemapItems, siteConfig: { url: 'https://mysite.test' } });
 
@@ -174,7 +172,7 @@ describe(`plugins.${name}`, () => {
     });
 
     test('falls back to today when git has no latest', async () => {
-      getFileCommitDate.mockResolvedValue({});
+      (getFileCommitDate as jest.Mock).mockResolvedValue({});
       const defaultCreateSitemapItems = jest.fn(async () => []);
       const out = await Plugin.createSitemapItems({ defaultCreateSitemapItems, siteConfig: { url: 'https://x.y' } });
       const today = new Date().toISOString().split('T')[0];
@@ -408,7 +406,7 @@ describe(`plugins.${name}`, () => {
         description: jest.fn().mockReturnThis(),
         option: jest.fn().mockReturnThis(),
       };
-      loadFreshModule.mockResolvedValue(siteConfig);
+      (loadFreshModule as jest.Mock).mockResolvedValue(siteConfig);
 
       plugin.extendCli(cli);
       const beforeWrites = createWriteStreamMock.mock.calls.length;
@@ -424,7 +422,7 @@ describe(`plugins.${name}`, () => {
       const pluginA = Plugin.default({ siteDir: '/ctx/siteA' });
       const actionsA: CliActions = {};
       const cliA = makeCli(actionsA);
-      loadFreshModule.mockResolvedValue(siteConfig);
+      (loadFreshModule as jest.Mock).mockResolvedValue(siteConfig);
       pluginA.extendCli(cliA);
 
       const beforeA = createWriteStreamMock.mock.calls.length;

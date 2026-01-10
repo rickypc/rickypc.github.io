@@ -5,7 +5,6 @@
 
 import { clsx } from '@site/src/data/common';
 import {
-  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -85,7 +84,7 @@ export function useResize(delay = 250) {
   return [resizing];
 }
 
-const useSafeLayoutEffect = typeof (window) !== 'undefined' ? useLayoutEffect : useEffect;
+export const useSafeLayoutEffect = typeof (window) !== 'undefined' ? useLayoutEffect : useEffect;
 
 /**
  * Detects if speech synthesis is ready during page load.
@@ -111,28 +110,21 @@ export function useSpeech() {
  */
 // eslint-disable-next-line react-hooks/rules-of-hooks
 export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...rest } = {}) {
-  // Page is active.
-  const [active, setActive] = useState(true);
+  // Element is visible.
+  const [inView, setInView] = useState(false);
+  // Page is visible.
+  const [pageVisible, setPageVisible] = useState(true);
   // Window has focus.
-  const [focused, setFocused] = useState(false);
-  // Geometry is visible.
-  const [visible, setVisible] = useState(false);
-
-  const onVisibilityChange = useCallback(
-    () => {
-      setActive(!document.hidden);
-      setVisible(document.visibilityState === 'visible');
-    },
-    [],
-  );
+  const [windowFocused, setWindowFocused] = useState(false);
 
   useEffect(() => {
     const { current } = ref;
     let observer: IntersectionObserver | undefined;
     if (current instanceof Element) {
-      observer = new IntersectionObserver(([entry]) => {
-        setVisible(entry.isIntersecting);
-      }, { threshold, ...rest });
+      observer = new IntersectionObserver(
+        ([entry]) => setInView(entry.isIntersecting),
+        { threshold, ...rest },
+      );
       observer.observe(current);
     }
     return () => {
@@ -145,20 +137,21 @@ export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...re
   // Listen once.
   useSafeLayoutEffect(() => {
     // Initial.
-    setActive(!document.hidden);
-    setFocused(document.hasFocus());
-    const onFocusChange = (evt: FocusEvent) => setFocused(evt.type === 'focus');
-    document.addEventListener('visibilitychange', onVisibilityChange);
-    window.addEventListener('blur', onFocusChange);
-    window.addEventListener('focus', onFocusChange);
+    setPageVisible(!document.hidden);
+    setWindowFocused(document.hasFocus());
+    const onPageVisibilityChange = () => setPageVisible(!document.hidden);
+    const onWindowFocusChange = (evt: FocusEvent) => setWindowFocused(evt.type === 'focus');
+    document.addEventListener('visibilitychange', onPageVisibilityChange);
+    window.addEventListener('blur', onWindowFocusChange);
+    window.addEventListener('focus', onWindowFocusChange);
     return () => {
-      document.removeEventListener('visibilitychange', onVisibilityChange);
-      window.removeEventListener('blur', onFocusChange);
-      window.removeEventListener('focus', onFocusChange);
+      document.removeEventListener('visibilitychange', onPageVisibilityChange);
+      window.removeEventListener('blur', onWindowFocusChange);
+      window.removeEventListener('focus', onWindowFocusChange);
     };
   }, []);
 
-  return { ref, visible: active && focused && visible };
+  return { ref, visible: inView && pageVisible && windowFocused };
 }
 
 /**

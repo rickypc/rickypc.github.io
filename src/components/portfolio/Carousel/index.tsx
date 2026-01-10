@@ -39,10 +39,13 @@ export type CarouselProps = {
 
 type IndicatorsProps = {
   active: number;
+  cycle: number;
+  duration: number;
   images: ImageProps[];
   // eslint-disable-next-line no-unused-vars
   onClick: (_: number) => void;
   prefix: string;
+  stopped: boolean;
 };
 
 type NavigationProps = {
@@ -73,9 +76,12 @@ type SliderProps = {
 
 const Indicators = memo(function Indicators({
   active,
+  cycle,
+  duration,
   images,
   onClick,
   prefix,
+  stopped,
 }: IndicatorsProps): false | ReactElement {
   return images.length > 1 && (
     <div className={styles.indicators}>
@@ -90,6 +96,18 @@ const Indicators = memo(function Indicators({
           />
         );
       })}
+      <div className={styles.progress}>
+        <motion.div
+          animate={stopped ? { opacity: 0, width: '0%' } : { opacity: 1, width: ['0%', '100%'] }}
+          className={styles.bar}
+          initial={{ opacity: 1, width: '0%' }}
+          key={cycle}
+          transition={{
+            opacity: { duration: 0.25, ease: 'easeOut' },
+            width: { duration: duration / 1000, ease: 'linear' },
+          }}
+        />
+      </div>
     </div>
   );
 });
@@ -236,7 +254,7 @@ const Slider = memo(function Slider({
 });
 
 export default memo(function Carousel({
-  duration = 3000,
+  duration = 5000,
   images,
   onClick,
   open,
@@ -245,13 +263,19 @@ export default memo(function Carousel({
   title,
 }: CarouselProps) {
   const [active, setActive] = useState(0);
+  const [cycle, setCycle] = useState(0);
   const opened = typeof (open?.picture) === 'object';
   const [paused, setPaused] = useState(false);
   const [printing] = usePrint();
   const [resizing] = useResize();
+  const [stopped, setStopped] = useState(false);
   const viewport = useRef<HTMLDivElement>(null);
   const { visible } = useVisibility({ ref: viewport, threshold: 0.1 });
 
+  const onCycle = () => {
+    setCycle((prev) => prev + 1);
+    setStopped(false);
+  };
   const onMouseEnter = useCallback(() => setPaused(true), []);
   const onMouseLeave = useCallback(() => setPaused(false), []);
 
@@ -261,9 +285,14 @@ export default memo(function Carousel({
     let interval: ReturnType<typeof setInterval> | null = null;
     if (document.documentElement.dataset.carouselPlay !== 'manual'
       && images.length && !paused && !opened && visible) {
+      // Initial.
+      onCycle();
       interval = setInterval(() => {
         setActive((current) => (current + 1) % images.length);
+        onCycle();
       }, duration);
+    } else {
+      setStopped(true);
     }
     return () => {
       if (interval) {
@@ -304,9 +333,12 @@ export default memo(function Carousel({
         <Indicators
           {...{
             active,
+            cycle,
+            duration,
             images,
             onClick: setActive,
             prefix,
+            stopped,
           }}
         />
       </div>

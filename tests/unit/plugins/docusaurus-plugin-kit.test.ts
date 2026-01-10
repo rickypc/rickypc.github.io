@@ -28,9 +28,28 @@ import {
   siteConfig,
 } from '@docusaurus/utils';
 import { join } from 'node:path';
+import { type PluginOptions } from '@docusaurus/plugin-sitemap';
 import { process } from 'beasties';
+import { type Stats } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { Writable } from 'node:stream';
+
+type ActionFn = (arg: unknown, opts: Record<string, unknown> | undefined) => unknown;
+
+type CliActions = {
+  action?: ActionFn;
+  command?: string;
+};
+
+type CreateSitemapItemsFn = NonNullable<PluginOptions['createSitemapItems']>;
+type SitemapItems = Awaited<ReturnType<CreateSitemapItemsFn>>;
+// After SitemapItems assignment.
+type SitemapItem = SitemapItems[number];
+
+const accessMock = jest.mocked(access);
+const createWriteStreamMock = jest.mocked(createWriteStream);
+const readdirMock = jest.mocked(readdir as unknown as (path: any) => Promise<string[]>);
+const statMock = jest.mocked(stat);
 
 jest.mock('node:fs', () => {
   const original = jest.requireActual('node:fs');
@@ -38,7 +57,7 @@ jest.mock('node:fs', () => {
     ...original,
     createWriteStream: jest.fn(() => {
       const w = new Writable({ write(chunk, enc, cb) { cb(); } });
-      w.pipe = () => w;
+      w.pipe = () => w as any;
       return w;
     }),
   };
@@ -93,7 +112,7 @@ jest.mock('#root/package.json', () => ({
  * // actions.command === 'kit:pdf [siteDir]'
  * // typeof actions.action === 'function'
  */
-function makeCli(actions) {
+function makeCli(actions: CliActions) {
   return {
     action: jest.fn(function action(fn) {
       // eslint-disable-next-line no-param-reassign
@@ -114,7 +133,7 @@ function makeCli(actions) {
   };
 }
 
-const makeTemplate = (title) => jest.fn(async (path) => ({
+const makeTemplate = (title: string) => jest.fn(async (path) => ({
   definition: { content: [{ text: `${title}:${path}` }], info: { title } },
   options: { compress: false },
 }));
@@ -124,7 +143,9 @@ const name = 'docusaurus-plugin-kit';
 ['base', 'book', 'condensed', 'roll', 'thangka', 'wheel']
   .forEach((template) => jest.mock(`#buddhism/_${template}`, () => makeTemplate(template)));
 jest.mock('#buddhism/_pdf', () => [['base', '#lib/path/one.md'], ['book', '#lib/path/two.md']]);
-jest.mock('#root/src/data/common', () => ({ fileName: (p, t) => `${t}-${p.replace(/[^a-z0-9]/gi, '')}` }));
+jest.mock('#root/src/data/common', () => ({
+  fileName: (path: string, template: string) => `${template}-${path.replace(/[^a-z0-9]/gi, '')}`,
+}));
 
 // Sync.
 const pdf = require('#buddhism/_pdf');
@@ -143,12 +164,12 @@ describe(`plugins.${name}`, () => {
       expect(defaultCreateSitemapItems).toHaveBeenCalledTimes(1);
       const appended = result.slice(defaultItems.length);
       expect(appended).toHaveLength(pdf.length);
-      appended.forEach((p) => {
-        const normalized = p.url.replace(/^(https?:)\/+/, '$1//');
+      appended.forEach((item: SitemapItem) => {
+        const normalized = item.url.replace(/^(https?:)\/+/, '$1//');
         expect(normalized.startsWith('https://mysite.test/pdf/')).toBeTruthy();
         expect(normalized.endsWith('.pdf')).toBeTruthy();
-        expect(p.lastmod).toBe('2025-10-01');
-        expect(p).toMatchObject({ changefreq: 'weekly', priority: 0.5 });
+        expect(item.lastmod).toBe('2025-10-01');
+        expect(item).toMatchObject({ changefreq: 'weekly', priority: 0.5 });
       });
     });
 
@@ -158,7 +179,7 @@ describe(`plugins.${name}`, () => {
       const out = await Plugin.createSitemapItems({ defaultCreateSitemapItems, siteConfig: { url: 'https://x.y' } });
       const today = new Date().toISOString().split('T')[0];
       expect(out.length).toBeGreaterThan(0);
-      out.forEach((p) => expect(p.lastmod).toEqual(today));
+      out.forEach((item: SitemapItem) => expect(item.lastmod).toEqual(today));
     });
   });
 
@@ -183,7 +204,7 @@ describe(`plugins.${name}`, () => {
 
     test('writes pdf files and updates progress bar once per pdf', async () => {
       const beforeIncrements = increment.mock.calls.length;
-      const beforeWrites = createWriteStream.mock.calls.length;
+      const beforeWrites = createWriteStreamMock.mock.calls.length;
 
       await Plugin.generatePdf({ outDir, siteConfig, siteDir }, MultiBar());
 
@@ -191,7 +212,7 @@ describe(`plugins.${name}`, () => {
       expect(barsUpdate).toHaveBeenCalledTimes(4);
       expect(mkdir).toHaveBeenCalledWith(join(outDir, 'pdf'), { recursive: true });
       expect(create).toHaveBeenCalledWith(length, 0, { color: '\x1B[34m', task: 'Create PDF' });
-      expect(createWriteStream.mock.calls.length - beforeWrites).toBe(length);
+      expect(createWriteStreamMock.mock.calls.length - beforeWrites).toBe(length);
       expect(increment.mock.calls.length - beforeIncrements).toBe(length);
       expect(setTotal).not.toHaveBeenCalled();
       expect(stop).toHaveBeenCalledTimes(1);
@@ -199,12 +220,12 @@ describe(`plugins.${name}`, () => {
 
     test('skip recent pdf files, but updates progress bar once per pdf', async () => {
       const beforeIncrements = increment.mock.calls.length;
-      const beforeWrites = createWriteStream.mock.calls.length;
+      const beforeWrites = createWriteStreamMock.mock.calls.length;
       const now = Date.now();
-      access.mockResolvedValueOnce(undefined);
-      stat.mockImplementation((path) => Promise.resolve({
-        mtimeMs: path.includes('/pdf/') ? now : 50,
-      }));
+      accessMock.mockResolvedValueOnce(undefined);
+      statMock.mockImplementation((path) => Promise.resolve({
+        mtimeMs: String(path).includes('/pdf/') ? now : 50,
+      } as Stats));
 
       await Plugin.generatePdf({ outDir, siteConfig, siteDir }, MultiBar());
 
@@ -212,18 +233,18 @@ describe(`plugins.${name}`, () => {
       expect(barsUpdate).toHaveBeenCalledTimes(4);
       expect(mkdir).toHaveBeenCalledWith(join(outDir, 'pdf'), { recursive: true });
       expect(create).toHaveBeenCalledWith(length, 0, { color: '\x1B[34m', task: 'Create PDF' });
-      expect(createWriteStream.mock.calls.length - beforeWrites).toBe(0);
+      expect(createWriteStreamMock.mock.calls.length - beforeWrites).toBe(0);
       expect(increment.mock.calls.length - beforeIncrements).toBe(length);
       expect(setTotal).not.toHaveBeenCalled();
       expect(stop).toHaveBeenCalledTimes(1);
 
-      stat.mockImplementation(() => Promise.resolve());
+      statMock.mockImplementation(() => Promise.resolve(undefined as any));
     });
   });
 
   describe('inlineAboveFold', () => {
     test('processes HTML files and updates progress bar', async () => {
-      readdir.mockResolvedValue(['file1.html', 'file2.html']);
+      readdirMock.mockResolvedValue(['file1.html', 'file2.html']);
 
       await Plugin.inlineAboveFold('./out', MultiBar());
 
@@ -255,7 +276,7 @@ describe(`plugins.${name}`, () => {
       ['file-success', { mtimeMs: 123456789 }, 123456789],
       ['file-failure', new Error('ENOENT'), 0],
     ])('path=%s -> expected=%s', async (path, statReturn, expected) => {
-      stat[`mock${statReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](statReturn);
+      statMock[`mock${statReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](statReturn as Stats);
 
       await expect(Plugin.lastModified(path)).resolves.toBe(expected);
     });
@@ -282,7 +303,7 @@ describe(`plugins.${name}`, () => {
         pattern: '*.json',
       },
     ])('$name', async ({ files, pattern, expected }) => {
-      readdir.mockResolvedValue(files);
+      readdirMock.mockResolvedValue(files);
 
       const result = await Plugin.outputPaths('/fakeDir', pattern);
 
@@ -295,13 +316,13 @@ describe(`plugins.${name}`, () => {
 
     test('runs generatePdf and inlineAboveFold concurrently when trailingSlash is true', async () => {
       const ctx = { ...base, siteConfig: { trailingSlash: true } };
-      readdir.mockResolvedValue(['file1.html', 'file2.html']);
+      readdirMock.mockResolvedValue(['file1.html', 'file2.html']);
 
       await Plugin.postBuild(ctx);
 
       // generatePdf.
       expect(mkdir).toHaveBeenCalledWith(join(ctx.outDir, 'pdf'), { recursive: true });
-      expect(createWriteStream.mock.calls).toHaveLength(pdf.length);
+      expect(createWriteStreamMock.mock.calls).toHaveLength(pdf.length);
 
       // inlineAboveFold.
       expect(process).toHaveBeenCalledTimes(1);
@@ -316,7 +337,7 @@ describe(`plugins.${name}`, () => {
 
       // generatePdf.
       expect(mkdir).toHaveBeenCalledWith(join(base.outDir, 'pdf'), { recursive: true });
-      expect(createWriteStream.mock.calls).toHaveLength(pdf.length);
+      expect(createWriteStreamMock.mock.calls).toHaveLength(pdf.length);
 
       // inlineAboveFold.
       expect(process).not.toHaveBeenCalled();
@@ -340,14 +361,14 @@ describe(`plugins.${name}`, () => {
       // Target fresh -> not stale.
       ['target fresh', undefined, [50, Date.now(), 50], false],
     ])('%s -> expected=%s', async (scenario, accessReturn, stats, expected) => {
-      access[`mock${accessReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](accessReturn);
+      accessMock[`mock${accessReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](accessReturn);
       // Mock stat results in order: data, target, template.
-      stat.mockImplementation(() => {
+      statMock.mockImplementation(() => {
         const mtimeMs = stats.shift();
         if (!mtimeMs) {
           throw new Error('ENOENT');
         }
-        return Promise.resolve({ mtimeMs });
+        return Promise.resolve({ mtimeMs } as Stats);
       });
 
       await expect(Plugin.stale({
@@ -357,7 +378,7 @@ describe(`plugins.${name}`, () => {
         target: 'target.pdf',
       })).resolves.toBe(expected);
 
-      stat.mockImplementation(() => Promise.resolve());
+      statMock.mockImplementation(() => Promise.resolve(undefined as any));
     });
   });
 
@@ -374,15 +395,15 @@ describe(`plugins.${name}`, () => {
 
     test('extendCli action: explicit args resolve config path and invoke postBuild side-effects', async () => {
       const plugin = Plugin.default({ siteDir: '/ctx/site' });
-      const actions = {};
+      const actions: CliActions = {};
       const cli = {
         action: jest.fn().mockImplementation(function action(fn) {
           actions.action = fn;
-          return this;
+          return cli;
         }),
         command: jest.fn().mockImplementation(function command(cmd) {
           actions.command = cmd;
-          return this;
+          return cli;
         }),
         description: jest.fn().mockReturnThis(),
         option: jest.fn().mockReturnThis(),
@@ -390,37 +411,37 @@ describe(`plugins.${name}`, () => {
       loadFreshModule.mockResolvedValue(siteConfig);
 
       plugin.extendCli(cli);
-      const beforeWrites = createWriteStream.mock.calls.length;
+      const beforeWrites = createWriteStreamMock.mock.calls.length;
 
-      await actions.action('./some/dir', { config: 'myconf.ts', outDir: 'custom-build' });
+      await actions.action?.('./some/dir', { config: 'myconf.ts', outDir: 'custom-build' });
 
       expect(loadFreshModule).toHaveBeenCalled();
-      expect(createWriteStream.mock.calls.length - beforeWrites).toEqual(pdf.length);
+      expect(createWriteStreamMock.mock.calls.length - beforeWrites).toEqual(pdf.length);
     });
 
     test('extendCli action: default args and falsy cliSiteDir fallback behave independently', async () => {
       // Default (undefined) invocation.
       const pluginA = Plugin.default({ siteDir: '/ctx/siteA' });
-      const actionsA = {};
+      const actionsA: CliActions = {};
       const cliA = makeCli(actionsA);
       loadFreshModule.mockResolvedValue(siteConfig);
       pluginA.extendCli(cliA);
 
-      const beforeA = createWriteStream.mock.calls.length;
-      await actionsA.action(undefined, undefined);
-      expect(createWriteStream.mock.calls.length - beforeA).toEqual(pdf.length);
+      const beforeA = createWriteStreamMock.mock.calls.length;
+      await actionsA.action?.(undefined, undefined);
+      expect(createWriteStreamMock.mock.calls.length - beforeA).toEqual(pdf.length);
 
       // Falsy cliSiteDir -> fallback to context.siteDir and default filenames.
       const context = { siteDir: '/fallback/context/site' };
       const pluginB = Plugin.default(context);
-      const actionsB = {};
+      const actionsB: CliActions = {};
       const cliB = makeCli(actionsB);
       pluginB.extendCli(cliB);
 
-      const beforeB = createWriteStream.mock.calls.length;
-      await actionsB.action('', {});
+      const beforeB = createWriteStreamMock.mock.calls.length;
+      await actionsB.action?.('', {});
       expect(loadFreshModule).toHaveBeenCalledWith(join(context.siteDir, DEFAULT_CONFIG_FILE_NAME));
-      expect(createWriteStream.mock.calls.length - beforeB).toEqual(pdf.length);
+      expect(createWriteStreamMock.mock.calls.length - beforeB).toEqual(pdf.length);
     });
   });
 });

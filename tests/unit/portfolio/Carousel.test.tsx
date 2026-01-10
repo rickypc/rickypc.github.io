@@ -152,7 +152,7 @@ describe('portfolio.Carousel', () => {
     test('advances slides when visible and not paused/opened', () => {
       jest.useFakeTimers();
       render(<Carousel images={images} onClick={jest.fn()} prefix="p" />);
-      act(() => jest.advanceTimersByTime(3001));
+      act(() => jest.advanceTimersByTime(5001));
       expect(
         screen.getByRole('button', { name: 'Slide 2: B (current slide)' }),
       ).toBeInTheDocument();
@@ -169,22 +169,22 @@ describe('portfolio.Carousel', () => {
       // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const viewport = container.querySelector('.viewport');
       fireEvent.mouseEnter(viewport as Element);
-      act(() => jest.advanceTimersByTime(3001));
+      act(() => jest.advanceTimersByTime(5001));
       expect(
         screen.getByRole('button', { name: 'Slide 1: A (current slide)' }),
       ).toBeInTheDocument();
       fireEvent.mouseLeave(viewport as Element);
-      act(() => jest.advanceTimersByTime(3001));
+      act(() => jest.advanceTimersByTime(5001));
       expect(
         screen.getByRole('button', { name: 'Slide 2: B (current slide)' }),
       ).toBeInTheDocument();
       act(() => ref.current?.setPaused(true));
-      act(() => jest.advanceTimersByTime(3001));
+      act(() => jest.advanceTimersByTime(5001));
       expect(
         screen.getByRole('button', { name: 'Slide 2: B (current slide)' }),
       ).toBeInTheDocument();
       act(() => ref.current?.setPaused(false));
-      act(() => jest.advanceTimersByTime(3001));
+      act(() => jest.advanceTimersByTime(5001));
       expect(
         screen.getByRole('button', { name: 'Slide 3 (current slide)' }),
       ).toBeInTheDocument();

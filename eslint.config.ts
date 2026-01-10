@@ -67,6 +67,7 @@ const config: Linter.Config[] = [
     files: ['**/*.{ts,tsx}'],
     ...ts.configs.recommended[0],
     ...ts.configs.recommendedTypeChecked[0],
+    languageOptions: { parser: ts },
   },
 ];
 

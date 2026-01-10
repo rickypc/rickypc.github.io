@@ -6,6 +6,7 @@
  */
 
 import { act, renderHook, waitFor } from '@testing-library/react';
+import type { Location } from 'history';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import { useLocation } from '@docusaurus/router';
 import {
@@ -17,32 +18,46 @@ import {
   useWelcome,
 } from '@site/src/hooks/observer';
 
+const useIsBrowserMock = jest.mocked(useIsBrowser);
+const useLocationMock = jest.mocked(useLocation);
+
 jest.unmock('@site/src/hooks/observer');
 
+const spies = {
+  doc: {
+    add: jest.spyOn(document, 'addEventListener'),
+    remove: jest.spyOn(document, 'removeEventListener'),
+  },
+  win: {
+    add: jest.spyOn(window, 'addEventListener'),
+    remove: jest.spyOn(window, 'removeEventListener'),
+  },
+};
+
 describe('useMedia', () => {
-  let listeners;
-  let mqlInstances;
+  let mediaQueryListeners: Map<string, (ev: MediaQueryListEvent) => void>;
+  let mediaQueryLists: MediaQueryList[];
 
   beforeEach(() => {
-    listeners = new Map();
-    mqlInstances = [];
+    mediaQueryListeners = new Map();
+    mediaQueryLists = [];
 
     // Stub window.matchMedia fresh each test.
-    window.matchMedia = jest.fn((query) => {
+    window.matchMedia = jest.fn((query): MediaQueryList => {
       const mql = {
         addEventListener: jest.fn((event, cb) => {
-          listeners.set(query, cb);
+          mediaQueryListeners.set(query, cb);
         }),
         matches: query.includes('min-width'),
         media: query,
         removeEventListener: jest.fn((event, cb) => {
-          if (listeners.get(query) === cb) {
-            listeners.delete(query);
+          if (mediaQueryListeners.get(query) === cb) {
+            mediaQueryListeners.delete(query);
           }
         }),
       };
-      mqlInstances.push(mql);
-      return mql;
+      mediaQueryLists.push(mql as unknown as MediaQueryList);
+      return mql as unknown as MediaQueryList;
     });
   });
 
@@ -64,8 +79,8 @@ describe('useMedia', () => {
 
     act(() => {
       // Simulate the listener callback.
-      const cb = listeners.get(query);
-      cb({ matches: false, media: query });
+      const cb = mediaQueryListeners.get(query);
+      cb?.({ matches: false, media: query } as MediaQueryListEvent);
     });
 
     await waitFor(() => expect(result.current[0]).toBeFalsy());
@@ -76,35 +91,35 @@ describe('useMedia', () => {
     const { unmount } = renderHook(() => useMedia(query));
 
     // Wait until addEventListener has definitely run.
-    await waitFor(() => expect(mqlInstances[0].addEventListener)
+    const mql = mediaQueryLists[0];
+    await waitFor(() => expect(mql.addEventListener)
       .toHaveBeenCalledWith('change', expect.any(Function)));
 
     unmount();
 
-    const mql = mqlInstances[0];
     expect(mql.removeEventListener)
       .toHaveBeenCalledWith('change', expect.any(Function));
-    expect(listeners.has(query)).toBeFalsy();
+    expect(mediaQueryListeners.has(query)).toBeFalsy();
   });
 
   test('tears down the old listener and subscribes a new one when query changes', async () => {
-    const q1 = '(min-width: 400px)';
-    const q2 = '(max-width: 500px)';
+    const query1 = '(min-width: 400px)';
+    const query2 = '(max-width: 500px)';
 
     const { result, rerender } = renderHook(
       ({ q }) => useMedia(q),
-      { initialProps: { q: q1 } },
+      { initialProps: { q: query1 } },
     );
 
     // Initial effect.
     await waitFor(() => {
-      expect(window.matchMedia).toHaveBeenLastCalledWith(q1);
+      expect(window.matchMedia).toHaveBeenLastCalledWith(query1);
       expect(result.current[0]).toBeTruthy();
     });
-    const mql1 = mqlInstances[0];
+    const mql1 = mediaQueryLists[0];
 
     // Change the query.
-    rerender({ q: q2 });
+    rerender({ q: query2 });
 
     // Now the old listener cleanup + new subscription + state update should all fire.
     await waitFor(() => {
@@ -113,8 +128,8 @@ describe('useMedia', () => {
         .toHaveBeenCalledWith('change', expect.any(Function));
 
       // New subscription was added.
-      const mql2 = mqlInstances[1];
-      expect(window.matchMedia).toHaveBeenLastCalledWith(q2);
+      const mql2 = mediaQueryLists[1];
+      expect(window.matchMedia).toHaveBeenLastCalledWith(query2);
       expect(mql2.addEventListener)
         .toHaveBeenCalledWith('change', expect.any(Function));
 
@@ -193,13 +208,10 @@ describe('useResize', () => {
   });
 
   test('removes resize listener on unmount', () => {
-    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
-
     const { unmount } = renderHook(() => useResize(500));
-
     unmount();
 
-    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+    expect(spies.win.remove).toHaveBeenCalledWith(
       'resize',
       expect.any(Function),
     );
@@ -208,8 +220,8 @@ describe('useResize', () => {
 
 describe('useSpeech', () => {
   afterEach(() => {
-    delete window.speechSynthesis;
-    delete window.SpeechSynthesisUtterance;
+    Object.defineProperty(window, 'speechSynthesis', { configurable: true, value: undefined });
+    Object.defineProperty(window, 'SpeechSynthesisUtterance', { configurable: true, value: undefined });
   });
 
   test('returns false when both globals are missing', async () => {
@@ -218,7 +230,7 @@ describe('useSpeech', () => {
   });
 
   test('returns false when only speechSynthesis is defined', async () => {
-    window.speechSynthesis = {};
+    Object.defineProperty(window, 'speechSynthesis', { configurable: true, value: {} });
 
     const { result } = renderHook(() => useSpeech());
     await waitFor(() => expect(result.current[0]).toBeFalsy());
@@ -226,18 +238,16 @@ describe('useSpeech', () => {
 
   test('returns false when only SpeechSynthesisUtterance is defined', async () => {
     // Dummy constructor.
-    // eslint-disable-next-line func-names
-    window.SpeechSynthesisUtterance = function () {};
+    Object.defineProperty(window, 'SpeechSynthesisUtterance', { configurable: true, value: function () {} });
 
     const { result } = renderHook(() => useSpeech());
     await waitFor(() => expect(result.current[0]).toBeFalsy());
   });
 
   test('returns true when both speechSynthesis and SpeechSynthesisUtterance are defined', async () => {
-    window.speechSynthesis = {};
     // Dummy constructor
-    // eslint-disable-next-line func-names
-    window.SpeechSynthesisUtterance = function () {};
+    Object.defineProperty(window, 'speechSynthesis', { configurable: true, value: {} });
+    Object.defineProperty(window, 'SpeechSynthesisUtterance', { configurable: true, value: function () { } });
 
     const { result } = renderHook(() => useSpeech());
     await waitFor(() => expect(result.current[0]).toBeTruthy());
@@ -245,119 +255,107 @@ describe('useSpeech', () => {
 });
 
 describe('useVisibility (Browser)', () => {
-  let ioCallback;
-  let observeMock;
-  let spyVisibility;
-  let unobserveMock;
+  let observeMock: jest.Mock<void, [Element]>;
+  let onIntersect: IntersectionObserverCallback;
+  let onWindowFocusChange: EventListenerOrEventListenerObject;
+  let unobserveMock: jest.Mock<void, [Element]>;
 
   beforeAll(() => {
     // Stub IntersectionObserver globally.
     observeMock = jest.fn();
     unobserveMock = jest.fn();
     global.IntersectionObserver = jest.fn((callback) => {
-      ioCallback = callback;
+      onIntersect = callback;
       return { observe: observeMock, unobserve: unobserveMock };
-    });
-  });
-
-  beforeEach(() => {
-    // Mock the visibilityState getter to start as 'hidden'.
-    spyVisibility = jest
-      .spyOn(document, 'visibilityState', 'get')
-      .mockReturnValue('hidden');
+    }) as unknown as typeof IntersectionObserver;
   });
 
   afterAll(() => {
     // Restore the original IntersectionObserver
-    global.IntersectionObserver.mockRestore?.();
-    delete global.IntersectionObserver;
+    (global.IntersectionObserver as any).mockRestore?.();
+    delete (global as any).IntersectionObserver;
   });
 
   test('does nothing if ref.current is falsy, but reacts to visibilitychange', () => {
-    const docAddSpy = jest.spyOn(document, 'addEventListener');
-    const docRemoveSpy = jest.spyOn(document, 'removeEventListener');
-    let focusHandler;
-    const winAddSpy = jest.spyOn(window, 'addEventListener').mockImplementation((event, cb) => {
+    spies.win.add.mockImplementation((event, cb) => {
       if (event === 'focus') {
-        focusHandler = cb;
+        onWindowFocusChange = cb;
       }
     });
-    const winRemoveSpy = jest.spyOn(window, 'addEventListener');
 
     // Render without passing a ref -> ref.current is undefined.
     const { result, unmount } = renderHook(() => useVisibility());
-    act(() => focusHandler(new Event('focus')));
+    act(() => (onWindowFocusChange as EventListener)(new FocusEvent('focus')));
 
     // IntersectionObserver never constructed.
     expect(global.IntersectionObserver).not.toHaveBeenCalled();
     expect(result.current.visible).toBeFalsy();
 
     // visibilitychange listener was added.
-    expect(docAddSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
-    expect(winAddSpy).toHaveBeenCalledWith('blur', expect.any(Function));
-    expect(winAddSpy).toHaveBeenCalledWith('focus', expect.any(Function));
+    expect(spies.doc.add).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
+    expect(spies.win.add).toHaveBeenCalledWith('blur', expect.any(Function));
+    expect(spies.win.add).toHaveBeenCalledWith('focus', expect.any(Function));
 
     // Simulate page becoming visible.
-    spyVisibility.mockReturnValue('visible');
+    Object.defineProperty(document, 'hidden', { configurable: true, value: false });
     act(() => document.dispatchEvent(new Event('visibilitychange')));
-    expect(result.current.visible).toBeTruthy();
+    expect(result.current.visible).toBeFalsy();
 
     // On unmount, we remove that listener.
     act(() => unmount());
-    expect(docRemoveSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
-    expect(winRemoveSpy).toHaveBeenCalledWith('blur', expect.any(Function));
-    expect(winRemoveSpy).toHaveBeenCalledWith('focus', expect.any(Function));
+    expect(spies.doc.remove).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
+    expect(spies.win.remove).toHaveBeenCalledWith('blur', expect.any(Function));
+    expect(spies.win.remove).toHaveBeenCalledWith('focus', expect.any(Function));
   });
 
   test('observes when ref.current is set and toggles visible on intersections', () => {
-    const docAddSpy = jest.spyOn(document, 'addEventListener');
-    const docRemoveSpy = jest.spyOn(document, 'removeEventListener');
-    let focusHandler;
     const options = { rootMargin: '10px', threshold: 0.25 };
     const span = document.createElement('span');
     // After span assignment.
     const ref = { current: span };
-    const winAddSpy = jest.spyOn(window, 'addEventListener').mockImplementation((event, cb) => {
+    spies.win.add.mockImplementation((event, cb) => {
       if (event === 'focus') {
-        focusHandler = cb;
+        onWindowFocusChange = cb;
       }
     });
-    const winRemoveSpy = jest.spyOn(window, 'addEventListener');
 
     const { result, unmount } = renderHook(() => useVisibility({ ref, ...options }));
-    act(() => focusHandler(new Event('focus')));
+    act(() => (onWindowFocusChange as EventListener)(new FocusEvent('focus')));
 
     // Observer constructed with the same options we passed.
     expect(global.IntersectionObserver).toHaveBeenCalledWith(expect.any(Function), options);
 
-    expect(winAddSpy).toHaveBeenCalledWith('blur', expect.any(Function));
-    expect(winAddSpy).toHaveBeenCalledWith('focus', expect.any(Function));
+    expect(spies.win.add).toHaveBeenCalledWith('blur', expect.any(Function));
+    expect(spies.win.add).toHaveBeenCalledWith('focus', expect.any(Function));
 
     // And it starts observing our element.
     expect(observeMock).toHaveBeenCalledWith(span);
     expect(result.current.visible).toBeFalsy();
 
     // Fire an intersection entry = true.
-    act(() => ioCallback([{ isIntersecting: true }]));
+    act(() => onIntersect([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver));
     expect(result.current.visible).toBeTruthy();
 
     // Then out of view.
-    act(() => ioCallback([{ isIntersecting: false }]));
+    act(() => onIntersect([{ isIntersecting: false } as IntersectionObserverEntry], {} as IntersectionObserver));
     expect(result.current.visible).toBeFalsy();
 
     // Also listens to visibilitychange.
-    expect(docAddSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
-    spyVisibility.mockReturnValue('visible');
-    act(() => document.dispatchEvent(new Event('visibilitychange')));
+    expect(spies.doc.add).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
+    Object.defineProperty(document, 'hidden', { configurable: true, value: false });
+    act(() => {
+      onIntersect([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver);
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
     expect(result.current.visible).toBeTruthy();
 
     // Cleanup: both removeEventListener and unobserve.
     act(() => unmount());
 
-    expect(docRemoveSpy).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
+    expect(spies.doc.remove).toHaveBeenCalledWith('visibilitychange', expect.any(Function));
     expect(unobserveMock).toHaveBeenCalledWith(span);
-    expect(winRemoveSpy).toHaveBeenCalledWith('blur', expect.any(Function));
-    expect(winRemoveSpy).toHaveBeenCalledWith('focus', expect.any(Function));
+    expect(spies.win.remove).toHaveBeenCalledWith('blur', expect.any(Function));
+    expect(spies.win.remove).toHaveBeenCalledWith('focus', expect.any(Function));
   });
 });
 
@@ -380,35 +378,37 @@ describe('useWelcome', () => {
       configurable: true,
       value: undefined,
     });
-    useIsBrowser.mockReturnValue(true);
-    useLocation.mockReturnValue({ pathname: '/missing' });
+    useIsBrowserMock.mockReturnValue(true);
+    useLocationMock.mockReturnValue({ pathname: '/missing' } as Location);
 
     // eslint-disable-next-line testing-library/no-node-access
     let root = document.getElementById('__docusaurus');
-    root.className = 'docusaurus-root';
+    root!.className = 'docusaurus-root';
 
     renderHook(() => useWelcome());
 
     // eslint-disable-next-line testing-library/no-node-access
     let translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
-    expect(translateLink.href).toContain('https://rickypc-github-io.translate.goog/missing/?_x_tr_sl=auto&_x_tr_tl=en');
+    expect((translateLink as HTMLAnchorElement).href)
+      .toContain('https://rickypc-github-io.translate.goog/missing/?_x_tr_sl=auto&_x_tr_tl=en');
 
     // Empty-string case.
     Object.defineProperty(window.navigator, 'language', {
       configurable: true,
       value: '',
     });
-    useLocation.mockReturnValue({ pathname: '/missing-empty' });
+    useLocationMock.mockReturnValue({ pathname: '/missing-empty' } as Location);
 
     // eslint-disable-next-line testing-library/no-node-access
     root = document.getElementById('__docusaurus');
-    root.className = 'docusaurus-root';
+    root!.className = 'docusaurus-root';
 
     renderHook(() => useWelcome());
 
     // eslint-disable-next-line testing-library/no-node-access
     translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
-    expect(translateLink.href).toContain('https://rickypc-github-io.translate.goog/missing-empty/?_x_tr_sl=auto&_x_tr_tl=en');
+    expect((translateLink as HTMLAnchorElement).href)
+      .toContain('https://rickypc-github-io.translate.goog/missing-empty/?_x_tr_sl=auto&_x_tr_tl=en');
   });
 
   test('default object and navigation = true (en-US)', () => {
@@ -416,27 +416,27 @@ describe('useWelcome', () => {
       configurable: true,
       value: 'en-US',
     });
-    useIsBrowser.mockReturnValue(true);
-    useLocation.mockReturnValue({ pathname: '/docs/intro' });
+    useIsBrowserMock.mockReturnValue(true);
+    useLocationMock.mockReturnValue({ pathname: '/docs/intro' } as Location);
 
     // eslint-disable-next-line testing-library/no-node-access
     const root = document.getElementById('__docusaurus');
-    root.className = 'docusaurus-root';
+    root!.className = 'docusaurus-root';
 
     renderHook(() => useWelcome());
 
     // eslint-disable-next-line testing-library/no-node-access
     const translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
     expect(translateLink).not.toBeNull();
-    expect(translateLink.href).toContain('/docs/intro/');
-    expect(translateLink.href).toContain('https://rickypc-github-io.translate.goog/docs/intro/?_x_tr_sl=auto&_x_tr_tl=en');
+    expect((translateLink as HTMLAnchorElement).href)
+      .toContain('https://rickypc-github-io.translate.goog/docs/intro/?_x_tr_sl=auto&_x_tr_tl=en');
 
-    expect(root.className).not.toMatch(/--exclusive/);
-    expect(root.className).toMatch(/--welcome/);
+    expect(root!.className).not.toMatch(/--exclusive/);
+    expect(root!.className).toMatch(/--welcome/);
 
     // eslint-disable-next-line testing-library/no-node-access
     const title = document.querySelector('nav .navbar__brand .navbar__title');
-    expect(title.getAttribute('translate')).toBe('no');
+    expect(title!.getAttribute('translate')).toBe('no');
   });
 
   test('default object and navigation = true (en-US) - non-browser', () => {
@@ -444,19 +444,19 @@ describe('useWelcome', () => {
       configurable: true,
       value: 'en-US',
     });
-    useIsBrowser.mockReturnValue(false);
-    useLocation.mockReturnValue({ pathname: '/no-browser' });
+    useIsBrowserMock.mockReturnValue(false);
+    useLocationMock.mockReturnValue({ pathname: '/no-browser' } as Location);
 
     // eslint-disable-next-line testing-library/no-node-access
     const root = document.getElementById('__docusaurus');
-    root.className = 'docusaurus-root';
+    root!.className = 'docusaurus-root';
 
     renderHook(() => useWelcome());
 
     // eslint-disable-next-line testing-library/no-node-access
     const title = document.querySelector('nav .navbar__brand .navbar__title');
-    expect(title.getAttribute('translate')).toBeNull();
-    expect(root.className).toBe('docusaurus-root');
+    expect(title!.getAttribute('translate')).toBeNull();
+    expect(root!.className).toBe('docusaurus-root');
   });
 
   test('navigation = false (zh-CN)', () => {
@@ -464,27 +464,28 @@ describe('useWelcome', () => {
       configurable: true,
       value: 'zh-CN',
     });
-    useIsBrowser.mockReturnValue(true);
-    useLocation.mockReturnValue({ pathname: '/zh' });
+    useIsBrowserMock.mockReturnValue(true);
+    useLocationMock.mockReturnValue({ pathname: '/zh' } as Location);
 
     // eslint-disable-next-line testing-library/no-node-access
     const root = document.getElementById('__docusaurus');
-    root.className = 'docusaurus-root';
+    root!.className = 'docusaurus-root';
 
     renderHook(() => useWelcome({ navigation: false }));
 
     // eslint-disable-next-line testing-library/no-node-access
     const translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
     expect(translateLink).not.toBeNull();
-    expect(translateLink.href).toContain('https://rickypc-github-io.translate.goog/zh/?_x_tr_sl=en&_x_tr_tl=zh-CN');
+    expect((translateLink as HTMLAnchorElement).href)
+      .toContain('https://rickypc-github-io.translate.goog/zh/?_x_tr_sl=en&_x_tr_tl=zh-CN');
 
     // Navigation false should add exclusive and welcome classes.
-    expect(root.className).toMatch(/--exclusive/);
-    expect(root.className).toMatch(/--welcome/);
+    expect(root!.className).toMatch(/--exclusive/);
+    expect(root!.className).toMatch(/--welcome/);
 
     // eslint-disable-next-line testing-library/no-node-access
     const title = document.querySelector('nav .navbar__brand .navbar__title');
-    expect(title.getAttribute('translate')).toBe('no');
+    expect(title!.getAttribute('translate')).toBe('no');
   });
 
   test('navigation = true (fr)', () => {
@@ -492,19 +493,20 @@ describe('useWelcome', () => {
       configurable: true,
       value: 'fr',
     });
-    useIsBrowser.mockReturnValue(true);
-    useLocation.mockReturnValue({ pathname: '/fr' });
+    useIsBrowserMock.mockReturnValue(true);
+    useLocationMock.mockReturnValue({ pathname: '/fr' } as Location);
 
     // eslint-disable-next-line testing-library/no-node-access
     const root = document.getElementById('__docusaurus');
-    root.className = 'docusaurus-root';
+    root!.className = 'docusaurus-root';
 
     renderHook(() => useWelcome({ navigation: true }));
 
     // eslint-disable-next-line testing-library/no-node-access
     const translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
-    expect(translateLink.href).toContain('https://rickypc-github-io.translate.goog/fr/?_x_tr_sl=en&_x_tr_tl=fr');
+    expect((translateLink as HTMLAnchorElement).href)
+      .toContain('https://rickypc-github-io.translate.goog/fr/?_x_tr_sl=en&_x_tr_tl=fr');
 
-    expect(root.className).toMatch(/--welcome/);
+    expect(root!.className).toMatch(/--welcome/);
   });
 });

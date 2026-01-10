@@ -3,12 +3,14 @@
  * All rights reserved.
  */
 
-import { useVisibility } from '@site/src/hooks/observer';
+import { useEffect } from 'react';
+import { useSafeLayoutEffect } from '@site/src/hooks/observer';
 
 jest.unmock('@site/src/hooks/observer');
 
-describe('useVisibility (Node.js)', () => {
-  test('can be required under Node and exports useVisibility', () => {
-    expect(typeof useVisibility).toBe('function');
+describe('useSafeLayoutEffect (SSR)', () => {
+  test('uses useEffect internally', () => {
+    expect(typeof useSafeLayoutEffect).toBe('function');
+    expect(useSafeLayoutEffect).toEqual(useEffect);
   });
 });

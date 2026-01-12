@@ -32,14 +32,14 @@ import { type PluginOptions } from '@docusaurus/plugin-sitemap';
 import sharpAdapter from '@docusaurus/responsive-loader/sharp';
 import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
 // Templates & definitions.
-import base from '#buddhism/_base';
-import book from '#buddhism/_book';
-import condensed from '#buddhism/_condensed';
+import base from '#buddhism/pdf/templates/_base';
+import book from '#buddhism/pdf/templates/_book';
+import condensed from '#buddhism/pdf/templates/_condensed';
 import { fileName } from '#root/src/data/common';
-import pdf from '#buddhism/_pdf';
-import roll from '#buddhism/_roll';
-import thangka from '#buddhism/_thangka';
-import wheel from '#buddhism/_wheel';
+import pdf from '#buddhism/pdf/_index';
+import roll from '#buddhism/pdf/templates/_roll';
+import thangka from '#buddhism/pdf/templates/_thangka';
+import wheel from '#buddhism/pdf/templates/_wheel';
 
 type CreateSitemapItemsFn = NonNullable<PluginOptions['createSitemapItems']>;
 type CreateSitemapItemsParams = Parameters<CreateSitemapItemsFn>[0];

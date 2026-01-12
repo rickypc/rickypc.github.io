@@ -139,14 +139,14 @@ const makeTemplate = (title: string) => jest.fn(async (path) => ({
 const name = 'docusaurus-plugin-kit';
 
 ['base', 'book', 'condensed', 'roll', 'thangka', 'wheel']
-  .forEach((template) => jest.mock(`#buddhism/_${template}`, () => makeTemplate(template)));
-jest.mock('#buddhism/_pdf', () => [['base', '#lib/path/one.md'], ['book', '#lib/path/two.md']]);
+  .forEach((template) => jest.mock(`#buddhism/pdf/templates/_${template}`, () => makeTemplate(template)));
+jest.mock('#buddhism/pdf/_index', () => [['base', '#lib/path/one.md'], ['book', '#lib/path/two.md']]);
 jest.mock('#root/src/data/common', () => ({
   fileName: (path: string, template: string) => `${template}-${path.replace(/[^a-z0-9]/gi, '')}`,
 }));
 
 // Sync.
-const pdf = require('#buddhism/_pdf');
+const pdf = require('#buddhism/pdf/_index');
 // eslint-disable-next-line import/no-dynamic-require
 const Plugin = require(`@site/src/plugins/${name}`);
 

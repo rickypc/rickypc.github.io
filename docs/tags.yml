@@ -1,3 +1,27 @@
 buddhism:
   description: 'Key Buddhist concepts that shape how I think, live, and grow - insights into mindfulness, compassion, and impermanence.'
   label: Buddhism
+
+core-teachings:
+  description: 'Central doctrines like karma, suffering, and liberation - structured guidance for understanding the path toward awakening.'
+  label: Core Teachings
+
+foundational-understanding:
+  description: 'Essential Buddhist views on life, rebirth, and meaning - clear grounding for why we exist and how to use this life wisely.'
+  label: Foundational Understanding
+
+life-application:
+  description: 'Practical wisdom for navigating emotions, choices, death, and rebirth - using Buddhist insight to live with clarity and purpose.'
+  label: Life Application
+
+practical-daily-practice:
+  description: 'Simple, effective methods for meditation, ethics, and mindful living that help transform everyday life into steady progress.'
+  label: Practical Daily Practice
+
+rituals-ceremonies:
+  description: 'Clear instructions for prayers, mantras, consecrations, and sacred actions that support spiritual growth and intention.'
+  label: Rituals & Ceremonies
+
+teachers-lineage-modern-practice:
+  description: Guidance on navigating lineage, teachers, permissions, and modern challenges in Tibetan Buddhist practice.
+  label: Teachers, Lineage & Modern Practice

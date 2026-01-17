@@ -91,11 +91,15 @@ export async function createSitemapItems({
 }: CreateSitemapItemsParams): Promise<SitemapItems> {
   const items = await defaultCreateSitemapItems(rest);
   const today = new Date().toISOString().split('T')[0];
+  const uncommitted: string[] = [];
   const pdfs = await Promise.all(pdf.map(async ([template, path]) => {
     const commit = await getFileCommitDate(
       path.replace(/^#/, 'docs/'),
       { age: 'newest', includeAuthor: false },
-    );
+    ).catch(() => {
+      uncommitted.push(`- ${path}`);
+      return null;
+    });
     return {
       changefreq: 'weekly',
       // YYYY-MM-DD via en-CA.
@@ -104,6 +108,14 @@ export async function createSitemapItems({
       url: join(rest.siteConfig.url, 'pdf', `${fileName(path, template)}.pdf`),
     } as SitemapItem;
   }));
+  if (uncommitted.length) {
+    // eslint-disable-next-line
+    console.error('\x1B[31mPlease commit these files so lastmod dates can be generated correctly:');
+    // eslint-disable-next-line
+    console.error(uncommitted.join('\n'));
+    // eslint-disable-next-line
+    console.error('');
+  }
   return [...items, ...pdfs];
 }
 

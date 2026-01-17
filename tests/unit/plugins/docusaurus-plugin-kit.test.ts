@@ -153,13 +153,21 @@ const Plugin = require(`@site/src/plugins/${name}`);
 describe(`plugins.${name}`, () => {
   describe('createSitemapItems', () => {
     test('appends pdf entries using git lastmod when available', async () => {
+      const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
       const defaultItems = [{ url: '/a' }];
       const defaultCreateSitemapItems = jest.fn(async () => defaultItems);
-      (getFileCommitDate as jest.Mock).mockResolvedValue({ date: new Date('2025-10-01T07:00:00.000Z') });
+      (getFileCommitDate as jest.Mock).mockResolvedValue({
+        date: new Date('2025-10-01T07:00:00.000Z'),
+      });
 
-      const result = await Plugin.createSitemapItems({ defaultCreateSitemapItems, siteConfig: { url: 'https://mysite.test' } });
+      const result = await Plugin.createSitemapItems({
+        defaultCreateSitemapItems,
+        siteConfig: { url: 'https://mysite.test' },
+      });
 
-      expect(defaultCreateSitemapItems).toHaveBeenCalledTimes(1);
+      expect(spy).not.toHaveBeenCalled();
+
       const appended = result.slice(defaultItems.length);
       expect(appended).toHaveLength(pdf.length);
       appended.forEach((item: SitemapItem) => {
@@ -169,15 +177,52 @@ describe(`plugins.${name}`, () => {
         expect(item.lastmod).toBe('2025-10-01');
         expect(item).toMatchObject({ changefreq: 'weekly', priority: 0.5 });
       });
+
+      spy.mockRestore();
     });
 
-    test('falls back to today when git has no latest', async () => {
-      (getFileCommitDate as jest.Mock).mockResolvedValue({});
+    test('falls back to today and prints summary when git throws', async () => {
       const defaultCreateSitemapItems = jest.fn(async () => []);
-      const out = await Plugin.createSitemapItems({ defaultCreateSitemapItems, siteConfig: { url: 'https://x.y' } });
+      (getFileCommitDate as jest.Mock).mockRejectedValue(new Error('no commit'));
+      const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      const result = await Plugin.createSitemapItems({
+        defaultCreateSitemapItems,
+        siteConfig: { url: 'https://x.y' },
+      });
+
       const today = new Date().toISOString().split('T')[0];
-      expect(out.length).toBeGreaterThan(0);
-      out.forEach((item: SitemapItem) => expect(item.lastmod).toEqual(today));
+      expect(result.length).toBeGreaterThan(0);
+      result.forEach((item: SitemapItem) => expect(item.lastmod).toBe(today));
+
+      expect(spy).toHaveBeenCalledTimes(3);
+      expect(spy).toHaveBeenNthCalledWith(1, '\x1B[31mPlease commit these files so lastmod dates can be generated correctly:');
+      expect(spy).toHaveBeenNthCalledWith(2, '- #lib/path/one.md\n- #lib/path/two.md');
+      expect(spy).toHaveBeenNthCalledWith(3, '');
+
+      spy.mockRestore();
+    });
+
+    test('does not print summary when git commit exists', async () => {
+      (getFileCommitDate as jest.Mock).mockResolvedValue({
+        date: new Date('2025-10-01T07:00:00.000Z'),
+      });
+
+      const defaultCreateSitemapItems = jest.fn(async () => []);
+      const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      const result = await Plugin.createSitemapItems({
+        defaultCreateSitemapItems,
+        siteConfig: { url: 'https://mysite.test' },
+      });
+
+      expect(spy).not.toHaveBeenCalled();
+
+      result.forEach((item: SitemapItem) => {
+        expect(item.lastmod).toBe('2025-10-01');
+      });
+
+      spy.mockRestore();
     });
   });
 

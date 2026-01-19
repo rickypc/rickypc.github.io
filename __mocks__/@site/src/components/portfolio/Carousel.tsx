@@ -15,6 +15,10 @@ import { type PropsWithChildren, type ReactElement } from 'react';
 export default function PortfolioCarousel({
   children,
   ...rest
-}: PropsWithChildren): ReactElement {
+}: PropsWithChildren<any>): ReactElement {
+  if (rest.ref && typeof rest.ref === 'object') {
+    // eslint-disable-next-line no-param-reassign
+    rest.ref.current = { setPaused: jest.fn() };
+  }
   return <div data-testid="carousel" {...rest}>{children}</div>;
 }

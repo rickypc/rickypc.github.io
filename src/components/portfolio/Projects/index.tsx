@@ -14,9 +14,16 @@ import Carousel, { type CarouselHandles } from '@site/src/components/portfolio/C
 import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
 import { type ImageProps } from '@site/src/components/common/Image';
-import { key } from '@site/src/data/common';
+import { clsx, key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
-import { memo, type ReactElement, useRef } from 'react';
+import {
+  memo,
+  type ReactElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import transition from '@site/src/data/portfolio/common';
 import styles from './styles.module.css';
 
@@ -30,8 +37,12 @@ type Filtered = {
 };
 
 type ProjectProps = Filtered & {
+  hovered: number;
+  index: number;
   // eslint-disable-next-line no-unused-vars
   onClick: (_: ImageProps) => void;
+  onHoverEnd: () => void;
+  onHoverStart: () => void;
   open?: ImageProps;
 };
 
@@ -60,23 +71,34 @@ const Tags = memo(function Tags({ prefix, tags }: TagsProps): ReactElement {
 // After Tags assignment.
 const Project = memo(function Project({
   description,
+  hovered,
   href,
   images,
+  index,
   onClick,
+  onHoverEnd,
+  onHoverStart,
   open,
   prefix,
   tags,
   title,
 }: ProjectProps): ReactElement {
   const carousel = useRef<CarouselHandles>(null);
+  useEffect(
+    // eslint-disable-next-line no-bitwise
+    () => carousel.current?.setPaused?.((~hovered && hovered !== index) as boolean),
+    [hovered, index],
+  );
   return (
     <motion.article
       aria-label={title}
-      className={styles.portfolio}
+      className={clsx(hovered === index && styles.hover, styles.portfolio)}
       id={prefix}
       layout
-      onLayoutAnimationComplete={() => carousel.current?.setPaused(false)}
-      onLayoutAnimationStart={() => carousel.current?.setPaused(true)}
+      onHoverEnd={onHoverEnd}
+      onHoverStart={onHoverStart}
+      onLayoutAnimationComplete={() => carousel.current?.setPaused?.(false)}
+      onLayoutAnimationStart={() => carousel.current?.setPaused?.(true)}
       transition={transition}
     >
       <figure>
@@ -104,13 +126,28 @@ const Project = memo(function Project({
 });
 
 export default memo(function Projects({ filtered, onClick, open }: ProjectsProps): ReactElement {
+  const [hovered, setHovered] = useState(-1);
+  const createHoverStart = useCallback((index: number) => () => setHovered(index), []);
+  const onHoverEnd = useCallback(() => setHovered(-1), []);
   return (
     <LazyMotion features={domMax}>
       <LayoutGroup>
         <motion.div className={styles.portfolios}>
           <AnimatePresence>
-            {filtered.map(({ prefix, ...rest }) => (
-              <Project key={`project-${prefix}`} {...{ onClick, open, prefix }} {...rest} />
+            {filtered.map(({ prefix, ...rest }, index) => (
+              <Project
+                key={`project-${prefix}`}
+                {...{
+                  hovered,
+                  index,
+                  onClick,
+                  onHoverEnd,
+                  onHoverStart: createHoverStart(index),
+                  open,
+                  prefix,
+                }}
+                {...rest}
+              />
             ))}
           </AnimatePresence>
         </motion.div>

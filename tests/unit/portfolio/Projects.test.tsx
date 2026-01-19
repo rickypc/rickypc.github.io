@@ -5,7 +5,7 @@
  * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Projects from '@site/src/components/portfolio/Projects';
 
@@ -61,6 +61,7 @@ describe('portfolio.Projects', () => {
     filtered.forEach((proj, index) => {
       // eslint-disable-next-line security/detect-object-injection
       const item = items[index];
+      fireEvent.mouseEnter(item);
 
       // Carousel stub receives prefix.
       // eslint-disable-next-line security/detect-object-injection
@@ -101,6 +102,8 @@ describe('portfolio.Projects', () => {
       // eslint-disable-next-line testing-library/no-node-access
       const desc = item.querySelector('p');
       expect(desc).toHaveTextContent(proj.description);
+
+      fireEvent.mouseLeave(item);
     });
   });
 });

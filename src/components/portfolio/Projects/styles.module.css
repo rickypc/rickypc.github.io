@@ -5,7 +5,10 @@
 
 .portfolio {
   border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0);
   overflow: hidden;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  will-change: transform;
 }
 
 [data-theme='dark'] .portfolio {
@@ -16,6 +19,22 @@
 [data-theme='light'] .portfolio {
   background: #fafafa;
   border: 0.0625rem solid #dee2e6;
+}
+
+.hover.portfolio {
+  transform: scale(1.007);
+}
+
+[data-theme='dark'] .hover.portfolio {
+  box-shadow:
+    0 0.125rem 0.5rem rgba(0, 0, 0, 0.45),
+    0 0 0.75rem rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='light'] .hover.portfolio {
+  box-shadow:
+    0 0.125rem 0.5rem rgba(0, 0, 0, 0.14),
+    0 0 0.75rem rgba(255, 255, 255, 0.12);
 }
 
 .portfolio figure {
@@ -122,7 +141,6 @@
   gap: clamp(1rem, 2vw, 1.75rem);
   grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
   margin: 1rem 0 0 0;
-  overflow: hidden;
   padding: 0;
 }
 

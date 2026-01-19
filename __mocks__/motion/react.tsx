@@ -13,6 +13,8 @@ import {
 type ArticleProps = {
   className?: string;
   layout?: boolean;
+  onHoverEnd: () => void,
+  onHoverStart: () => void,
   onLayoutAnimationComplete?: () => void;
   onLayoutAnimationStart?: () => void;
   whileInView?: {
@@ -105,6 +107,8 @@ export const motion = {
     children,
     className,
     layout,
+    onHoverEnd,
+    onHoverStart,
     onLayoutAnimationComplete,
     onLayoutAnimationStart,
     whileInView,
@@ -117,7 +121,14 @@ export const motion = {
       onLayoutAnimationComplete();
     }
     return (
-      <article className={className} data-layout={String(!!layout)} data-testid="article" {...props}>
+      <article
+        className={className}
+        data-layout={String(!!layout)}
+        data-testid="article"
+        onMouseEnter={onHoverStart}
+        onMouseLeave={onHoverEnd}
+        {...props}
+      >
         {children}
       </article>
     );

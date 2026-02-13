@@ -20,7 +20,6 @@ export default {
   },
   transliteration: {
     children: 'oṃ hanu pāśa bhāra hṛdaya svāhā',
-    speech: 'oum hanu pasa bara hridaya swaha',
     // Liberation By Seeing.
     title: 'Darśana Mukta',
   },

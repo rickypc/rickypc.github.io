@@ -11,9 +11,9 @@ import {
   expect,
   hasMetadatas,
   hasNavigations,
+  hasPlayback,
   hasPrint,
   hasScreenshot,
-  hasSpeech,
   hasUrl,
   mobile,
   type Page,
@@ -77,7 +77,7 @@ test.describe('isolated tests', () => {
 
   test('has greeting', async ({ page }) => {
     // [class] can contain multiple classes, controls_ may not be the first.
-    await hasSpeech({ page, selector: 'main header [class*="greeting_"] [class*="controls_"]', url });
+    await hasPlayback({ page, selector: 'main header [class*="greeting_"] [class*="controls_"] [class*="control_"]', url });
     const nth = 1;
     // After nth assignment.
     const locator = page.locator(`main header [class*="greeting_"]>[class*="pronunciation_"]>span:nth-of-type(${nth})`);
@@ -86,14 +86,22 @@ test.describe('isolated tests', () => {
   });
 
   test('has correct print screenshot', async ({ browserName, page }, testInfo) => hasPrint({
-    browserName, page, testInfo, url,
+    browserName,
+    page,
+    selector: 'section.row article[aria-label="Innovator"] [class*="character_"][style*="opacity: 1"]:nth-of-type(9)',
+    testInfo,
+    url,
   }));
 
   ['Dark', 'Light'].forEach((theme) => {
     test(
       `has correct ${theme.toLowerCase()} theme screenshot`,
       async ({ page }, testInfo) => hasScreenshot({
-        page, selector: 'figure[style*="transform: none"]', testInfo, theme, url,
+        page,
+        selector: 'section.row article[aria-label="Innovator"] [class*="character_"][style*="opacity: 1"]:nth-of-type(9)',
+        testInfo,
+        theme,
+        url,
       }),
     );
   });

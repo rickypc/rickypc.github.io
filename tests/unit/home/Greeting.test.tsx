@@ -12,7 +12,7 @@ import Greeting from '@site/src/components/home/Greeting';
 jest.unmock('@site/src/components/home/Greeting');
 
 describe('home.Greeting', () => {
-  test('renders greeting text, IPA, Speech, and Heart inside Heading', () => {
+  test('renders greeting text, IPA, Playback, and Heart inside Heading', () => {
     const { container } = render(<Greeting />);
 
     // Verify Heading wrapper.
@@ -29,27 +29,13 @@ describe('home.Greeting', () => {
     expect(ipaSpan).toHaveTextContent('/ˈɹɪki ˈhwɑːŋ/');
     expect(ipaSpan).toHaveClass('ipa');
 
-    // Speech component.
-    const speech = screen.getByTestId('speech');
-    expect(speech).toHaveAttribute(
-      'data-names',
-      [
-        'Microsoft Guy Online (Natural) - English (United States)',
-        'Microsoft David - English (United States)',
-        'Reed (English (United States))',
-        'Eddy (English (United States))',
-        'Reed (English (US))',
-        'Eddy (English (US))',
-        'Microsoft Aria Online (Natural) - English (United States)',
-        'Microsoft Zira - English (United States)',
-        'Damayanti',
-        'Kanya',
-        'Google español',
-        'Google US English',
-      ].join('|'),
-    );
-    expect(speech).toHaveAttribute('lang', 'en-US');
-    expect(speech).toHaveTextContent('ricky huang');
+    // Playback component.
+    const playback = screen.getByTestId('playback');
+    expect(playback).toHaveAttribute('data-path', expect.stringContaining('_ricky_huang'));
+    expect(playback).toHaveAttribute('data-transliteration', JSON.stringify({
+      children: 'Ricky Huang',
+      title: 'Ricky Huang',
+    }));
 
     // Heart component.
     const heart = screen.getByTestId('heart');

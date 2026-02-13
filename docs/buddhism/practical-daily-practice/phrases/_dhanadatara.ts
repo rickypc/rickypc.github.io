@@ -24,7 +24,6 @@ export default {
   transliteration: {
     children: 'oṃ tāre tuttāre ture dhanaṃ me dada svāhā',
     repetition: 3,
-    speech: 'oum tare tu tare ture danam me dada swaha',
     // The wealth and prosperity granting Tara.
     title: 'Dhanadatārā',
   },

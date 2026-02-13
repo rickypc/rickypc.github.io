@@ -22,11 +22,10 @@ export default {
     },
   },
   translation: {
-    title: 'Glorious Goddess Primary',
+    title: 'Glorious Goddess Essence (Heart)',
   },
   transliteration: {
     children: 'bhyōḥ rakmō-bhyō । rakmō-bhyō-bhyō । rakmō-thūna-bhyō । viḷāragacēnamo । rakmō-avyata-thūna-bhyō । rulu rulu । hūṃ bhyō hūṃ',
-    speech: 'bhyoh rakmo bhyo, rakmo bhyo bhyo, rakmo thuna bhyo, wilaraga ce namo, rakmo awiata thuna bhyo, rulu rulu, houm bhyo houm',
     title: 'Śrīdēvī Hṛdaya',
   },
 };

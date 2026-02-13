@@ -26,7 +26,6 @@ export default {
   },
   transliteration: {
     children: 'oṃ padma uṣṇīṣa vimale hūṃ phaṭ',
-    speech: 'oum padma usnisa wimale houm patt',
     // Amoghapāśa Lotus Pinnacle.
     title: 'Amoghapāśa Padma Uṣṇīṣa',
   },

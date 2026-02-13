@@ -29,17 +29,16 @@ const core = {
     },
   },
   tibetan: {
-    children: 'ཡེ་དྷ་རྨཱ་ཧེ་ཏུ་པྲ་བྷ་བཱ་ཧེ་ཏུཾ་ཏེ་ཥཱཾ་ཏ་ཐཱ་ག་ཏ་ཨུ་བཱ་ཙ། ཏེ་ཥཱཾ་ཙ་ཡོ་ནི་རོ་དྷ་ཨེ་བཾ་བཱ་དཱི་མ་ཧཱ་ཤྲ་མ་ཎཿ',
+    children: [
+      'ཡེ་དྷ་རྨཱ་ཧེ་ཏུ་པྲ་བྷ་བཱ་ཧེ་ཏུཾ་ཏེ་ཥཱཾ་ཏ་ཐཱ་ག་ཏ་ཨུ་བཱ་ཙ',
+      'ཏེ་ཥཱཾ་ཙ་ཡོ་ནི་རོ་དྷ་ཨེ་བཾ་བཱ་དཱི་མ་ཧཱ་ཤྲ་མ་ཎཿ',
+    ].join('། '),
   },
   transliteration: {
     children: [
       'ye dharmā hetuprabhavā hetuṃ teṣāṃ tathāgata uvāca',
       'teṣāṃ-ca yo nirodha evaṃvādi mahāśramaṇaḥ',
     ].join(' । '),
-    speech: [
-      'y dharma hei-tu-prabawa, hei-tum t-samm tathagata uwaca',
-      't-samm-ca yo nirodha, ewamwadi mahasramanah',
-    ].join(', '),
   },
 };
 
@@ -100,11 +99,6 @@ export default {
       'jñānān na cīyate karma karmābhāvān na jāyate',
     ].join(' । '),
     repetition: 7,
-    speech: [
-      core.transliteration.speech,
-      'ajnanac ciya-t karma, jan-manah karma karanam',
-      'jnanan na ciya-t karma, karmabawan na jayate',
-    ].join(', '),
     title: 'Pratītyasamutpāda Gāthā',
   },
 };

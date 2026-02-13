@@ -9,13 +9,14 @@ import {
   readdir,
   readFile,
   stat,
+  unlink,
   writeFile,
 } from 'node:fs/promises';
 import { basename, join, resolve } from 'node:path';
 import Beasties from 'beasties';
 import concurrent from 'timeable-promise/concurrent';
 import { createHash, createHmac } from 'node:crypto';
-import { createWriteStream } from 'node:fs';
+import { createWriteStream, readFileSync } from 'node:fs';
 import {
   DEFAULT_BUILD_DIR_NAME,
   DEFAULT_CONFIG_FILE_NAME,
@@ -23,6 +24,7 @@ import {
   loadFreshModule,
 } from '@docusaurus/utils';
 import { type DocusaurusConfig, type LoadContext, type Plugin } from '@docusaurus/types';
+import { execSync, spawn } from 'node:child_process';
 import { FontaineTransform } from 'fontaine';
 import { dependencies, imports } from '#root/package.json';
 import { minimatch } from 'minimatch';
@@ -30,16 +32,20 @@ import { MultiBar } from 'cli-progress';
 import PdfMake from 'pdfmake';
 import { type PluginOptions } from '@docusaurus/plugin-sitemap';
 import sharpAdapter from '@docusaurus/responsive-loader/sharp';
+import sleep from 'timeable-promise/sleep';
 import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
 // Templates & definitions.
-import base from '#buddhism/pdf/templates/_base';
-import book from '#buddhism/pdf/templates/_book';
-import condensed from '#buddhism/pdf/templates/_condensed';
-import { fileName } from '#root/src/data/common';
-import pdf from '#buddhism/pdf/_index';
-import roll from '#buddhism/pdf/templates/_roll';
-import thangka from '#buddhism/pdf/templates/_thangka';
-import wheel from '#buddhism/pdf/templates/_wheel';
+import audio from '#buddhism/media/audio/_index';
+import base from '#buddhism/media/pdf/templates/_base';
+import { body, properCase } from '#buddhism/media/_common';
+import book from '#buddhism/media/pdf/templates/_book';
+import condensed from '#buddhism/media/pdf/templates/_condensed';
+import { fileName, oneLine } from '#root/src/data/common';
+import pdf from '#buddhism/media/pdf/_index';
+import roll from '#buddhism/media/pdf/templates/_roll';
+import thangka from '#buddhism/media/pdf/templates/_thangka';
+import utterance from '#buddhism/media/audio/_utterance';
+import wheel from '#buddhism/media/pdf/templates/_wheel';
 
 type CreateSitemapItemsFn = NonNullable<PluginOptions['createSitemapItems']>;
 type CreateSitemapItemsParams = Parameters<CreateSitemapItemsFn>[0];
@@ -50,8 +56,9 @@ type SitemapItem = SitemapItems[number];
 type StaleProps = {
   data: string;
   maxAgeDays?: number;
+  model?: string;
   siteDir: string;
-  template: string;
+  template?: string;
   target: string;
 };
 
@@ -64,8 +71,10 @@ type Templates = {
   wheel: typeof wheel;
 };
 
+const algorithm = 'sha256';
 // 24 * 60 * 60 * 1000.
 export const MS_PER_DAY = 86400000;
+const provenance = Buffer.from(readFileSync('.provenance', 'utf8').trim(), 'base64');
 const templates: Templates = {
   base,
   book,
@@ -92,12 +101,29 @@ export async function createSitemapItems({
   const items = await defaultCreateSitemapItems(rest);
   const today = new Date().toISOString().split('T')[0];
   const uncommitted: string[] = [];
+  // eslint-disable-next-line no-unused-vars
+  const audios = await Promise.all(audio.map(async ([_, path]) => {
+    const commit = await getFileCommitDate(
+      path.replace(/^#/, 'docs/'),
+      { age: 'newest', includeAuthor: false },
+    ).catch(() => {
+      uncommitted.push(`- audio: ${path}`);
+      return null;
+    });
+    return {
+      changefreq: 'weekly',
+      // YYYY-MM-DD via en-CA.
+      lastmod: commit?.date ? commit.date.toLocaleDateString('en-CA') : today,
+      priority: 0.5,
+      url: join(rest.siteConfig.url, 'audio', `${fileName(path)}.m4a`),
+    } as SitemapItem;
+  }));
   const pdfs = await Promise.all(pdf.map(async ([template, path]) => {
     const commit = await getFileCommitDate(
       path.replace(/^#/, 'docs/'),
       { age: 'newest', includeAuthor: false },
     ).catch(() => {
-      uncommitted.push(`- ${path}`);
+      uncommitted.push(`- pdf: ${path}`);
       return null;
     });
     return {
@@ -116,7 +142,7 @@ export async function createSitemapItems({
     // eslint-disable-next-line
     console.error('');
   }
-  return [...items, ...pdfs];
+  return [...items, ...audios, ...pdfs];
 }
 
 /**
@@ -173,16 +199,20 @@ export async function outputPaths(outDir: string, pattern: string): Promise<stri
  * modification times of related files, and a maximum age threshold.
  * @param {object} options - Options for staleness check.
  * @param {string} options.data - Path to the data file.
- * @param {number} options.maxAgeDays - Maximum allowed age in days before the target is stale.
+ * @param {number} options.maxAgeDays - Maximum allowed age in days before the
+ *   target is stale.
+ * @param {string} options.model - Model name used to generate the target.
  * @param {string} options.siteDir - Root directory of the site.
- * @param {string} options.template - Template name used to build the target.
+ * @param {string} options.template - Template name used to generate the
+ *   target.
  * @param {string} options.target - Path to the target file.
  * @returns {Promise<boolean>} A promise that resolves to `true` if the target
- * is stale, otherwise `false`.
+ *   is stale, otherwise `false`.
  * @example
  * const isStale = await stale({
  *   data: 'content/articles.json',
  *   maxAgeDays: 3,
+ *   model: 'en_US-model_name',
  *   siteDir: '/root',
  *   template: 'article',
  *   target: '/root/build/articles.html',
@@ -192,25 +222,47 @@ export async function outputPaths(outDir: string, pattern: string): Promise<stri
 export async function stale({
   data,
   maxAgeDays = 7,
+  model = '',
   siteDir,
-  template,
   target,
+  template = '',
 }: StaleProps): Promise<boolean> {
   // Target does not exist.
   if (await access(target).then(() => false).catch(() => true)) {
     return true;
   }
+
   const dataModified = await lastModified(fileResolve(data, siteDir));
   const targetModified = await lastModified(target);
   // Data recently modified.
   if (dataModified >= targetModified) {
     return true;
   }
-  const templateModified = await lastModified(fileResolve(`#buddhism/_${template}.ts`, siteDir));
-  // Template recently modified.
-  if (templateModified >= targetModified) {
-    return true;
+
+  // Model check (optional)
+  if (model) {
+    // Extract prefix before first `_`.
+    const prefix = model.split('_')[0].toLowerCase();
+    const modelModified = await lastModified(
+      fileResolve(`#root/models/${prefix}/${model}.onnx`, siteDir),
+    );
+    // Model recently modified.
+    if (modelModified >= targetModified) {
+      return true;
+    }
   }
+
+  // Template check (optional)
+  if (template) {
+    const templateModified = await lastModified(
+      fileResolve(`#buddhism/_${template}.ts`, siteDir),
+    );
+    // Template recently modified.
+    if (templateModified >= targetModified) {
+      return true;
+    }
+  }
+
   // Stale due to age cutoff.
   const cutoff = Date.now() - maxAgeDays * MS_PER_DAY;
   if (cutoff >= targetModified) {
@@ -224,9 +276,179 @@ export async function stale({
 // ----------------------------------------------------------------------------
 
 /**
+ * Generate audio files.
+ * @param {object} context - The Docusaurus load context.
+ * @param {string} context.outDir - The output directory where generated files
+ *   are located.
+ * @param {object} context.siteConfig - The site configuration object.
+ * @param {string} context.siteDir - The root directory of the site.
+ * @param {MultiBar} bars - A MultiBar instance used to render progress bars.
+ * @returns {Promise<void>} Resolves when all audios have been generated.
+ */
+export async function generateAudio(
+  { outDir, siteConfig, siteDir }: LoadContext,
+  bars: MultiBar,
+): Promise<void> {
+  const generator = `piper:${execSync(
+    // Python is whitespace-sensitive; newlines/indent must stay exact.
+    'python -c "from importlib.metadata import version;v=\'\'\ntry: v=version(\'piper-tts\')\nexcept: pass\nprint(v)"',
+    { encoding: 'utf8' },
+  )?.trim()}`;
+
+  if (generator === 'piper:') {
+    // eslint-disable-next-line
+    console.error('\x1B[31mPiper not found - activate the correct venv.\x1B[0m');
+    return;
+  }
+
+  const bar = bars.create(
+    1,
+    0,
+    { color: '\x1B[35m', task: 'Map Tracks' },
+    { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
+  );
+  bars.update();
+  // eslint-disable-next-line no-unused-vars
+  const tracks = audio.reduce((accumulator, [_, path]) => {
+    if (!path.includes('_ricky_huang')) {
+      accumulator.set(path, accumulator.size + 1);
+    }
+    return accumulator;
+  }, new Map<string, number>());
+  bar.increment();
+  bars.update();
+  bar.setTotal(audio.length);
+  (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m';
+  bar.update(0, { task: 'Make Audio' });
+
+  // Ensure the folder exist.
+  const audioDir = join(outDir, 'audio');
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  await mkdir(audioDir, { recursive: true });
+
+  await concurrent(audio, async (batch, index) => {
+    // Workload arbritary weight numbers.
+    const weight = index * 75;
+    // Tiny stagger to smooth progress bar display.
+    await sleep(weight);
+    await Promise.all(batch.map(async ([model, path]) => {
+      const target = join(audioDir, `${fileName(path)}.m4a`);
+      if (await stale({
+        data: path,
+        model,
+        siteDir,
+        target,
+      })) {
+        const { default: { transliteration } } = await import(path);
+        // eslint-disable-next-line security/detect-non-literal-fs-filename
+        await unlink(target).catch(() => {});
+        await new Promise<void>((settle, reject) => {
+          const date = new Date();
+          const name = target.includes('ricky-huang.m4a');
+          // Language identifier.
+          const prefix = model.split('_')[0].toLowerCase();
+          const titleLower = transliteration?.title?.toLowerCase();
+          const utteranceText = transliteration?.utterance || utterance(body(transliteration));
+          // After utteranceText assignment.
+          const stamp = createHash(algorithm).update(JSON.stringify({
+            date, generator, model, utteranceText,
+          })).digest('hex');
+          // After stamp assignment.
+          const metadata = [
+            '-metadata', `album=${name ? 'Name' : 'Mantra'} Pronunciations`,
+            '-metadata', `album_artist=${siteConfig.title}`,
+            '-metadata', `artist=${siteConfig.title}`,
+            '-metadata', `comment=${oneLine(`Producer: ${siteConfig.url};
+              Provenance: ${createHmac(algorithm, provenance).update(stamp).digest('base64')};
+              Stamp: ${algorithm}:${stamp}`)}`,
+            '-metadata', `composer=${siteConfig.title}`,
+            // YYYY-MM-DD via en-CA.
+            '-metadata', `date=${date.toLocaleDateString('en-CA')}`,
+            '-metadata', `description=${oneLine(`A guided pronunciation of the
+              ${titleLower}, emphasizing syllable clarity, pacing, tone, breath
+              flow, and ${name ? 'precise name articulation' : 'confident and accurate recitation'}.`)}`,
+            '-metadata', `genre=${name ? 'Speech' : 'Mantra'}`,
+            '-metadata', `title=${properCase(transliteration?.title)} pronunciation`,
+            '-metadata', `track=${name ? 1 : tracks.get(path)}`,
+          ];
+          const ffmpeg = spawn('ffmpeg', [
+            '-ac', '1',
+            '-ar', '22050',
+            '-f', 's16le',
+            '-hide_banner',
+            '-i', '-',
+            '-f', 'image2',
+            '-i', fileResolve('#root/cover.jpg', siteDir),
+            '-loglevel', 'quiet',
+            '-map', '0:a',
+            '-map', '1',
+            '-disposition:v', 'attached_pic',
+            ...metadata,
+            '-b:a', '128k',
+            '-c:a', 'aac',
+            '-c:v', 'mjpeg',
+            target,
+          ]);
+          const piper = spawn('python', [
+            '-m', 'piper',
+            `--data-dir=${fileResolve(`#root/models/${prefix}/`, siteDir)}`,
+            '--model', model,
+            '--output-raw',
+            '--',
+            utteranceText,
+          ])
+            .on('close', (code) => {
+              ffmpeg.stdin.end();
+              if (code === 0) {
+                settle();
+              } else {
+                ffmpeg.kill();
+                reject(new Error(`piper exited with ${code}`));
+              }
+            })
+            .on('error', (ex) => {
+              ffmpeg.kill();
+              reject(new Error('piper error', ex));
+            });
+
+          ffmpeg
+            .on('close', (code) => {
+              if (code === 0) {
+                settle();
+              } else {
+                piper.kill();
+                reject(new Error(`ffmpeg exited with ${code}`));
+              }
+            })
+            .on('error', (ex) => {
+              piper.kill();
+              reject(new Error('ffmpeg error', ex));
+            });
+
+          piper.stdout
+            .on('error', reject)
+            .pipe(ffmpeg.stdin)
+            .on('error', reject);
+          // eslint-disable-next-line
+        }).catch((ex) => console.error(`\x1b[31mFailed writing ${target}:\x1b[0m`, ex));
+        // Tiny stagger to unblock progress bar display, scaled by workload
+        // weight.
+        await sleep(weight);
+      }
+      bar.increment();
+      bars.update();
+    }));
+  }, 5);
+  (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
+  bars.update();
+  bar.stop();
+}
+
+/**
  * Generate PDF files.
  * @param {object} context - The Docusaurus load context.
- * @param {string} context.outDir - The output directory where generated files are located.
+ * @param {string} context.outDir - The output directory where generated files
+ *   are located.
  * @param {object} context.siteConfig - The site configuration object.
  * @param {string} context.siteDir - The root directory of the site.
  * @param {MultiBar} bars - A MultiBar instance used to render progress bars.
@@ -236,8 +458,7 @@ export async function generatePdf(
   { outDir, siteConfig, siteDir }: LoadContext,
   bars: MultiBar,
 ): Promise<void> {
-  const algorithm = 'sha256';
-  const bar = bars.create(pdf.length, 0, { color: '\x1B[34m', task: 'Create PDF' });
+  const bar = bars.create(pdf.length, 0, { color: '\x1B[34m', task: 'Make PDF  ' });
   bars.update();
   const devanagari = join(__dirname, 'font', 'noto', 'NotoSerifDevanagari-Regular.ttf');
   const devanagariBold = join(__dirname, 'font', 'noto', 'NotoSerifDevanagari-Bold.ttf');
@@ -267,18 +488,12 @@ export async function generatePdf(
       normal: devanagari,
     },
   });
-  const provenance = Buffer.from(
-    (await readFile('.provenance', 'utf8')).trim(),
-    'base64',
-  );
 
   await concurrent(pdf, async (batch, index) => {
     // Workload arbritary weight numbers.
     const weight = index * 75;
     // Tiny stagger to smooth progress bar display.
-    await new Promise((settle) => {
-      setTimeout(settle, weight);
-    });
+    await sleep(weight);
     await Promise.all(batch.map(async ([template, path]) => {
       const target = join(pdfDir, `${fileName(path, template)}.pdf`);
       if (await stale({
@@ -325,12 +540,11 @@ export async function generatePdf(
           stream.on('error', reject);
           document.pipe(stream);
           document.end();
-        });
-        // Tiny stagger to unblock progress bar display.
-        await new Promise((settle) => {
-          // Scaled by workload weight.
-          setTimeout(settle, weight);
-        });
+          // eslint-disable-next-line
+        }).catch((ex) => console.error(`\x1b[31mFailed writing ${target}:\x1b[0m`, ex));
+        // Tiny stagger to unblock progress bar display, scaled by workload
+        // weight.
+        await sleep(weight);
       }
       bar.increment();
       bars.update();
@@ -364,9 +578,7 @@ export async function inlineAboveFold(outDir: string, bars:MultiBar): Promise<vo
   bar.update(0, { task: 'Inline CSS' });
   await concurrent(paths, async (batch, index) => {
     // Tiny stagger to smooth progress bar display.
-    await new Promise((settle) => {
-      setTimeout(settle, index);
-    });
+    await sleep(index);
     await Promise.all(batch.map(async (path) => {
       // eslint-disable-next-line security/detect-non-literal-fs-filename
       const html = await readFile(path, 'utf8');
@@ -401,6 +613,7 @@ export async function postBuild({ outDir, siteConfig, siteDir }: LoadContext): P
     stopOnComplete: true,
   });
   await Promise.all([
+    generateAudio({ outDir, siteConfig, siteDir } as LoadContext, bars),
     generatePdf({ outDir, siteConfig, siteDir } as LoadContext, bars),
     siteConfig.trailingSlash ? inlineAboveFold(outDir, bars) : Promise.resolve(),
   ]);
@@ -423,7 +636,10 @@ export default function plugin(context: LoadContext): Plugin {
       return {
         devServer: {
           compress: true,
-          static: [{ directory: join(context.outDir, 'pdf'), publicPath: '/pdf' }],
+          static: [
+            { directory: join(context.outDir, 'audio'), publicPath: '/audio' },
+            { directory: join(context.outDir, 'pdf'), publicPath: '/pdf' },
+          ],
         },
         mergeStrategy: { 'module.rules': 'prepend' },
         module: {
@@ -471,8 +687,8 @@ export default function plugin(context: LoadContext): Plugin {
     },
     extendCli(cli) {
       cli
-        .command('build:pdf [siteDir]')
-        .description('Generate PDF files.')
+        .command('build:media [siteDir]')
+        .description('Generate media files.')
         .option(
           '--config <config>',
           'The path to docusaurus config file (default: `[siteDir]/docusaurus.config.ts`)',

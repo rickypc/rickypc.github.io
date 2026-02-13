@@ -11,12 +11,12 @@ const core = {
   },
   transliteration: {
     children: 'oṃ amogha pūja maṇipadma vajre tathāgata vilokite samanta prasara hūṃ',
-    speech: 'oum amoga puja mani padma wajre tathagata wiloki-t samanta prasara houm',
   },
 };
 
 export default {
   core,
+  path: import.meta.url,
   sanskrit: {
     children: [core.sanskrit.children, amoghapasaPadmaUsnisa.sanskrit.children].join(' । '),
     title: 'अमोघपाश मणि पूजा',
@@ -27,7 +27,6 @@ export default {
   transliteration: {
     children: [core.transliteration.children, amoghapasaPadmaUsnisa.transliteration.children].join(' । '),
     repetition: 3,
-    speech: [core.transliteration.speech, amoghapasaPadmaUsnisa.transliteration.speech].join(', '),
     title: 'Amoghapāśa Maṇi Pūja',
   },
 };

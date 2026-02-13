@@ -67,14 +67,6 @@ export default {
       pratityasamutpada.core.transliteration.children,
       [rasmiVimalaDharani.transliteration.children, rasmiVimalaHrdaya.transliteration.children].join(' । '),
     ],
-    speech: [
-      usnisaVijaya.transliteration.speech,
-      vimalaUsnisa.transliteration.speech,
-      guhyadhatuKaranda.transliteration.speech,
-      bodhiGarbhalamkaraLaksa.transliteration.speech,
-      pratityasamutpada.core.transliteration.speech,
-      [rasmiVimalaDharani.transliteration.speech, rasmiVimalaHrdaya.transliteration.speech].join(', '),
-    ].join(', '),
     // The Six Dharmakāya Relics.
     title: 'Ṣáṭ Dharmakāya Śarīrāḥ',
   },

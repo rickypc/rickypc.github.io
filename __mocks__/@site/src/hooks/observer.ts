@@ -9,8 +9,6 @@ export const usePrint = jest.fn();
 
 export const useResize = jest.fn();
 
-export const useSpeech = jest.fn();
-
 export const useVisibility = jest.fn();
 
 export const useWelcome = jest.fn();

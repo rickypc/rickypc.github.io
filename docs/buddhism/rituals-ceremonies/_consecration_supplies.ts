@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { header, main, phrase } from '#buddhism/pdf/_common';
+import { phrase } from '#buddhism/media/_common';
 
 export default {
   pages: [
@@ -21,14 +21,13 @@ export default {
       chapters: ['Maṅgala', 'Abhiṣeka'],
       contents: [
         [
-          ...phrase('#buddhism/practical-daily-practice/phrases/_mala.ts', ' (recite the prayer, then blow and rub the mālā gently)'),
+          ...phrase('#buddhism/practical-daily-practice/phrases/_mala.ts', ' (recite the prayer, gently blow on the mālā and rub it lightly)'),
           ...phrase('#buddhism/practical-daily-practice/phrases/_japa.ts'),
           ...phrase('#buddhism/practical-daily-practice/phrases/_dharma.ts'),
           ...phrase('#buddhism/practical-daily-practice/phrases/_namaskara.ts'),
         ],
         [
-          header('Cleansing'),
-          ...main('ॐ सर्वतथागता अभिषेकते समय श्रीये हूं॥', 'oṃ sarva tathāgata abhiṣekate samaya śrīye hūṃ॥', 7),
+          ...phrase('#buddhism/practical-daily-practice/phrases/_abhiseka.ts', '', 7, 'Empowerment'),
           ...phrase('#buddhism/practical-daily-practice/phrases/_sunyata.ts'),
           ...phrase('#buddhism/practical-daily-practice/phrases/_pratityasamutpada.ts'),
         ],
@@ -46,8 +45,7 @@ export default {
           ...phrase('#buddhism/practical-daily-practice/phrases/_vimala_usnisa.ts'),
         ],
         [
-          header('Preparation', ' (blessing mudrā with our left hand is held above the supplies, palm down with the thumb pressing down the pinky finger. Our right hand is held below the supplies, palm up with the thumb pressing down the pinky finger)'),
-          ...main('ॐ धर्मधातु ये स्वाहा धर्मधातु गर्भे स्वाहा॥', 'oṃ dharmadhātu ye svāhā dharmadhātu garbhe svāhā॥', 7),
+          ...phrase('#buddhism/practical-daily-practice/phrases/_pratistha.ts', ' (blessing mudrā: left hand above the items, palm down with the thumb pressing the little finger; right hand below the items, palm up with the thumb pressing the little finger)', 7, 'Consecration'),
         ],
       ],
       number: '4',

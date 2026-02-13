@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { body } from '#buddhism/pdf/_strip';
+import { body } from '#buddhism/media/pdf/_strip';
 import { oneLine } from '#root/src/data/common';
 
 // ((page height - (margins + borders)) / 6) - paddings.

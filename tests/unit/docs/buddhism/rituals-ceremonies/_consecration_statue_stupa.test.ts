@@ -4,14 +4,9 @@
  */
 
 import consecration from '#buddhism/rituals-ceremonies/_consecration_statue_stupa';
-import {
-  header,
-  main,
-  phrase,
-  phrases,
-} from '#buddhism/pdf/_common';
+import { header, phrase, phrases } from '#buddhism/media/_common';
 
-jest.mock('#buddhism/pdf/_common', () => ({
+jest.mock('#buddhism/media/_common', () => ({
   header: jest.fn((title, note) => ({ mockedHeader: true, note, title })),
   main: jest.fn((a, b, n) => [{
     a, b, mockedMain: true, n,
@@ -23,7 +18,6 @@ jest.mock('#buddhism/pdf/_common', () => ({
 }));
 
 const headerCalls = [...jest.mocked(header).mock.calls];
-const mainCalls = [...jest.mocked(main).mock.calls];
 const phraseCalls = [...jest.mocked(phrase).mock.calls];
 const phrasesCalls = [...jest.mocked(phrases).mock.calls];
 
@@ -39,7 +33,9 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
 
   test('calls phrases() once for pratityasamutpadaSamudayaNirodha', () => {
     expect(phrasesCalls).toHaveLength(1);
-    expect(phrasesCalls[0]).toEqual(['#buddhism/practical-daily-practice/phrases/_pratityasamutpada_samudaya_nirodha.ts']);
+    expect(phrasesCalls[0]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_pratityasamutpada_samudaya_nirodha.ts',
+    ]);
   });
 
   test('second page uses phrase() correctly for both columns', () => {
@@ -50,16 +46,32 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
 
     expect(phraseCalls[0]).toEqual([
       '#buddhism/practical-daily-practice/phrases/_mala.ts',
-      ' (recite the prayer, then blow and rub the mālā gently)',
+      ' (recite the prayer, gently blow on the mālā and rub it lightly)',
     ]);
-    expect(phraseCalls[1]).toEqual(['#buddhism/practical-daily-practice/phrases/_japa.ts']);
-    expect(phraseCalls[2]).toEqual(['#buddhism/practical-daily-practice/phrases/_dharma.ts']);
-    expect(phraseCalls[3]).toEqual(['#buddhism/practical-daily-practice/phrases/_namaskara.ts']);
+    expect(phraseCalls[1]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_japa.ts',
+    ]);
+    expect(phraseCalls[2]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_dharma.ts',
+    ]);
+    expect(phraseCalls[3]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_namaskara.ts',
+    ]);
 
-    expect(phraseCalls[4]).toEqual(['#buddhism/practical-daily-practice/phrases/_saranagamana_cittotpada.ts']);
-    expect(phraseCalls[5]).toEqual(['#buddhism/practical-daily-practice/phrases/_catvary_apramanani.ts']);
-    expect(phraseCalls[6]).toEqual(['#buddhism/practical-daily-practice/phrases/_prajna_paramita.ts', '', 7]);
-    expect(phraseCalls[7]).toEqual(['#buddhism/practical-daily-practice/phrases/_sunyata.ts']);
+    expect(phraseCalls[4]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_saranagamana_cittotpada.ts',
+    ]);
+    expect(phraseCalls[5]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_catvary_apramanani.ts',
+    ]);
+    expect(phraseCalls[6]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_prajna_paramita.ts',
+      '',
+      7,
+    ]);
+    expect(phraseCalls[7]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_sunyata.ts',
+    ]);
   });
 
   test('third page uses phrases() result correctly', () => {
@@ -77,12 +89,22 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
     expect(page.chapters).toEqual(['Abhiṣeka']);
     expect(page.number).toBe('6');
 
-    expect(phraseCalls[8]).toEqual(['#buddhism/practical-daily-practice/phrases/_anekajati.ts']);
-    expect(phraseCalls[9]).toEqual(['#buddhism/practical-daily-practice/phrases/_pratityasamutpada.ts']);
+    expect(phraseCalls[8]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_anekajati.ts',
+    ]);
+    expect(phraseCalls[9]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_pratityasamutpada.ts',
+    ]);
 
-    expect(phraseCalls[10]).toEqual(['#buddhism/practical-daily-practice/phrases/_vairocana_sarvakata_danavidhih.ts']);
-    expect(phraseCalls[11]).toEqual(['#buddhism/practical-daily-practice/phrases/_ratnadhvaja_parikrama.ts']);
-    expect(phraseCalls[12]).toEqual(['#buddhism/practical-daily-practice/phrases/_vimala_usnisa.ts']);
+    expect(phraseCalls[10]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_vairocana_sarvakata_danavidhih.ts',
+    ]);
+    expect(phraseCalls[11]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_ratnadhvaja_parikrama.ts',
+    ]);
+    expect(phraseCalls[12]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_vimala_usnisa.ts',
+    ]);
   });
 
   test('fifth page uses header() and phrase-set blocks', () => {
@@ -99,12 +121,11 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
 
     expect(page.chapters).toEqual(['Abhiṣeka']);
     expect(page.number).toBe('7');
-
-    expect(headerCalls[1]).toEqual(['Cakṣu Unmilan [Opening Of Eyes]']);
-    expect(mainCalls[0]).toEqual([
-      'ॐ ज्ञान चक्षु प्रवेशय फट्॥',
-      'oṃ jñāna cakṣu praveśāya phaṭ॥',
+    expect(phraseCalls[13]).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_caksu_unmilana.ts',
+      '',
       3,
+      'Cakṣu Unmīlana [Eye-Opening]',
     ]);
   });
 
@@ -113,11 +134,11 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
 
     expect(page.chapters).toEqual(['Abhiṣeka']);
     expect(page.number).toBe('8');
-
-    expect(headerCalls.at(-3)).toEqual(['Svastigāthā [Verses of Auspiciousness]']);
-    expect(mainCalls.at(-1)).toEqual([
-      'पञ्चेन्द्रियावबोधनीये स्वहा । जय जय सुजय॥',
-      'pañcendriyāvabodhanīye svāhā । jaya jaya sujaya॥',
+    expect(phraseCalls.at(-1)).toEqual([
+      '#buddhism/practical-daily-practice/phrases/_prarthanasiddhih.ts',
+      '',
+      0,
+      'Prārthanāsiddhiḥ [Fulfillment of Aspiration]',
     ]);
   });
 });

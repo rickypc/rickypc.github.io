@@ -16,6 +16,7 @@ import usnisaVijaya from './_usnisa_vijaya';
 import vimalaUsnisa from './_vimala_usnisa';
 
 export default {
+  path: import.meta.url,
   sanskrit: {
     children: [
       [ekadasaMukhaLokesvara.sanskrit.children, avalokitesvara.sanskrit.children].join(' । '),
@@ -59,18 +60,6 @@ export default {
       amoghapasaPadmaUsnisa.transliteration.children,
       aksobhya.transliteration.children,
     ],
-    speech: [
-      [ekadasaMukhaLokesvara.transliteration.speech, avalokitesvara.transliteration.speech].join(', '),
-      [usnisaVijaya.transliteration.speech, 'oum amrite, amrita udbawe, amrita wi-krante, amrita gatre, amrita gamine, amrita ayurdade, gagana kirtikare, sarwa klesa kesayamkare swaha'].join(', '),
-      milarepa.transliteration.speech,
-      mahavairocanaSarvadurgatiParisodhana.transliteration.speech,
-      bhaisajyaguru.transliteration.speech,
-      rasmiVimalaDharani.transliteration.speech,
-      rasmiVimalaHrdaya.transliteration.speech,
-      vimalaUsnisa.transliteration.speech,
-      amoghapasaPadmaUsnisa.transliteration.speech,
-      aksobhya.transliteration.speech,
-    ].join(', '),
     // The Ten Mantras for the Dead.
     title: 'Daśa Atyaya Mantrāḥ',
   },

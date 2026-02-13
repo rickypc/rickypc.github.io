@@ -17,6 +17,9 @@ export type ButtonProps = {
   className?: string;
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  onMouseDown?: MouseEventHandler<HTMLButtonElement>;
+  onMouseLeave?: MouseEventHandler<HTMLButtonElement>;
+  onMouseUp?: MouseEventHandler<HTMLButtonElement>;
   ref?: Ref<HTMLButtonElement>;
   whileTap?: {
     scale?: number;

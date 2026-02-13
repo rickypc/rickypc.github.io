@@ -9,10 +9,7 @@ import sukhavativyuha from '#buddhism/practical-daily-practice/phrases/_sukhavat
 jest.mock('#buddhism/practical-daily-practice/phrases/_amitabha', () => ({
   default: {
     sanskrit: { children: 'AMITABHA_SANSKRIT' },
-    transliteration: {
-      children: 'AMITABHA_TRANSLIT',
-      speech: 'amitabha speech',
-    },
+    transliteration: { children: 'AMITABHA_TRANSLIT' },
   },
   __esModule: true,
 }));
@@ -21,7 +18,6 @@ describe('docs.buddhism._sukhavativyuha', () => {
   test('exports the correct core structure', () => {
     expect(sukhavativyuha.core).toHaveProperty('sanskrit.children');
     expect(sukhavativyuha.core).toHaveProperty('transliteration.children');
-    expect(sukhavativyuha.core).toHaveProperty('transliteration.speech');
   });
 
   test('builds the sanskrit section correctly', () => {
@@ -53,13 +49,6 @@ describe('docs.buddhism._sukhavativyuha', () => {
         sukhavativyuha.core.transliteration.children,
         amitabha.transliteration.children,
       ].join(' । '),
-    );
-
-    expect(sukhavativyuha.transliteration.speech).toBe(
-      [
-        sukhavativyuha.core.transliteration.speech,
-        amitabha.transliteration.speech,
-      ].join(', '),
     );
   });
 

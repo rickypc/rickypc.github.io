@@ -213,7 +213,8 @@ const Slider = memo(function Slider({
       const targetX = -active * (viewport.current.offsetWidth || 1);
       animate(x, targetX, { damping: 30, stiffness: 300, type: 'spring' });
     }
-  }, [active, dragging, resizing, viewport, x]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, dragging, resizing, viewport]);
 
   return (
     <motion.div

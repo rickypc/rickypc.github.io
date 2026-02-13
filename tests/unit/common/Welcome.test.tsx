@@ -5,7 +5,7 @@
  * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Welcome from '@site/src/components/common/Welcome';
 import { usePrint, useWelcome } from '@site/src/hooks/observer';
@@ -13,11 +13,10 @@ import { usePrint, useWelcome } from '@site/src/hooks/observer';
 const usePrintMock = jest.mocked(usePrint);
 
 describe('Welcome', () => {
-  test('calls useWelcome with navigation=false by default and renders speech admonition', () => {
+  test('calls useWelcome with navigation=false by default and renders nothing', () => {
     usePrintMock.mockReturnValue([false]);
     render(<Welcome />);
     expect(useWelcome).toHaveBeenCalledWith({ navigation: false });
-    expect(screen.getByTestId('speech-admonition')).toBeInTheDocument();
   });
 
   test('calls useWelcome with navigation=true when prop is true', () => {

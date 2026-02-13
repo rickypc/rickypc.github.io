@@ -23,11 +23,10 @@ export default {
     title: 'སངས་རྒྱས་ཤཱཀྱ་ཐུབ་པ',
   },
   translation: {
-    title: 'Śākya Sage Primary',
+    title: 'Śākya Sage Essence (Heart)',
   },
   transliteration: {
     children: 'oṃ muni muni mahāmuni śākyamuni svāhā',
-    speech: 'oum muni muni mahamuni sakyamuni swaha',
     title: 'Śākyamuni Hṛdaya',
   },
 };

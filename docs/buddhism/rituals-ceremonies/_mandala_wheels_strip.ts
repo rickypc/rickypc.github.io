@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import image from '#buddhism/pdf/_image';
+import image from '#buddhism/media/pdf/_image';
 import { oneLine } from '#root/src/data/common';
 
 const width = 155.4;

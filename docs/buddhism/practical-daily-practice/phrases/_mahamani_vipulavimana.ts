@@ -14,7 +14,6 @@ const core = {
   },
   transliteration: {
     children: 'oṃ vipulagarbhe maṇiprabhe tathāgatanidarśane । maṇi maṇi suprabhe vimale sāgara gambhīre hūṃ hūṃ jvāla jvāla । buddhāvilokite guhyādhiṣṭita garbhe svāhā । padmadhara amogha jayate curu curu svāhā । oṃ maṇivajre hūṃ । oṃ maṇidhare hūṃ phaṭ । oṃ maṇipadme hūṃ hrīḥ arapacamita hṛdaya svāhā',
-    speech: 'oum wipula garbe, mani prabe, tathagata nidarsane, mani mani suprabe, wimale sagara gambire, houm houm, jwala jwala, buddha-wilokite guh-ya-dhistita garbe swaha, padma-dara amoga jayate, curu curu swaha, oum mani-wajre houm, oum mani-dare houm patt, oum mani-padme houm hrih, arapacamita hridaya swaha',
   },
 };
 
@@ -40,7 +39,6 @@ export default {
   transliteration: {
     children: [core.transliteration.children, darsanaMukta.transliteration.children].join(' । '),
     repetition: 3,
-    speech: [core.transliteration.speech, darsanaMukta.transliteration.speech].join(', '),
     title: 'Mahāmaṇi Vipulavimāna',
   },
 };

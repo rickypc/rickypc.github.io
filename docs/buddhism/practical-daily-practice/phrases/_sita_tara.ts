@@ -19,13 +19,12 @@ export default {
     title: 'སྒྲོལ་དཀར',
   },
   translation: {
-    title: 'White Tārā Primary',
+    title: 'White Tārā Essence (Heart)',
   },
   transliteration: {
     children: 'oṃ tāre tuttāre ture mama āyuḥ-puṇya-jñāna-puṣṭiṃ kuru svāhā',
     className: 'phrase--gray',
     repetition: 21,
-    speech: 'oum tare tu tare ture mama ayu punya jiana pustim kuru swaha',
     title: 'Sitātārā Hṛdaya',
   },
 };

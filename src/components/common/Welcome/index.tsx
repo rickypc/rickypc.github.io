@@ -3,13 +3,7 @@
  * All rights reserved.
  */
 
-import {
-  memo,
-  type ReactElement,
-  useEffect,
-  useRef,
-} from 'react';
-import SpeechAdmonition from '@site/src/components/common/SpeechAdmonition';
+import { memo, useEffect, useRef } from 'react';
 import { usePrint, useWelcome } from '@site/src/hooks/observer';
 import './styles.module.css';
 
@@ -17,7 +11,7 @@ export type WelcomeProps = {
   navigation?: boolean;
 };
 
-export default memo(function Welcome({ navigation = false }: WelcomeProps): ReactElement {
+export default memo(function Welcome({ navigation = false }: WelcomeProps): null {
   const [printing] = usePrint();
   const snapshots = useRef<boolean[]>([]);
   useWelcome({ navigation });
@@ -56,5 +50,5 @@ export default memo(function Welcome({ navigation = false }: WelcomeProps): Reac
     }
   }, [printing]);
 
-  return <SpeechAdmonition />;
+  return null;
 });

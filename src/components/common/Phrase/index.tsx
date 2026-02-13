@@ -14,10 +14,15 @@ import {
 } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
 import MDXDetails from '@theme-original/MDXComponents/Details';
-import { memo, type ReactElement, type ReactNode } from 'react';
-import pdf from '#buddhism/pdf/_index';
+import {
+  Children,
+  memo,
+  type ReactElement,
+  type ReactNode,
+} from 'react';
+import pdf from '#buddhism/media/pdf/_index';
 import PhraseBlock from '@site/src/components/common/PhraseBlock';
-import Speech from '@site/src/components/common/Speech';
+import Playback from '@site/src/components/common/Playback';
 import { type Transliteration } from '@site/src/components/common/MultiLingual';
 import styles from './styles.module.css';
 
@@ -127,13 +132,39 @@ export const Instruction = memo(function Instruction({
   }
 });
 
+const pdfs = {
+  index: new Set(pdf.map(([template, source]) => `${template}:${source}`)),
+  links: [
+    {
+      Icon: GrDocumentText,
+      template: 'roll',
+      titleFor: (transliteration: Transliteration) => `Open ${transliteration.title} prayer roll`,
+    },
+    {
+      Icon: GrDocumentStore,
+      template: 'condensed',
+      titleFor: (transliteration: Transliteration) => `Open ${transliteration.title} condensed prayer roll`,
+    },
+    {
+      Icon: GrCycle,
+      template: 'wheel',
+      titleFor: (transliteration: Transliteration) => `Open ${transliteration.title} prayer wheel`,
+    },
+    {
+      Icon: GrDocumentImage,
+      template: 'thangka',
+      titleFor: (transliteration: Transliteration) => `Open ${transliteration.title} paubhā/thangka prayer`,
+    },
+  ],
+  resolve(alias: string) {
+    return pdfs.links.filter(({ template }) => pdfs.index.has(`${template}:${alias}`));
+  },
+};
+
 const Repetition = memo(function Repetition({
   value = 1,
 }: RepetitionProps): ReactElement | null {
-  if (value < 2) {
-    return null;
-  }
-  return (
+  return value < 2 ? null : (
     <span
       className={clsx(styles.badge, 'badge', 'badge--primary')}
       title={`Preferred repetition: ${value} times`}
@@ -149,65 +180,23 @@ const Support = memo(function Support({
   repetition = 0,
   transliteration,
 }: SupportProps): ReactElement | null {
-  const alias = `#${tail(path, '/buddhism')}`;
-  const hasCondensed = pdf.some(([template, source]) => template === 'condensed' && source === alias);
-  const hasRoll = pdf.some(([template, source]) => template === 'roll' && source === alias);
-  const hasThangka = pdf.some(([template, source]) => template === 'thangka' && source === alias);
-  const hasWheel = pdf.some(([template, source]) => template === 'wheel' && source === alias);
-  const value = repetition || transliteration.repetition;
-  if (!value && !hasRoll && !hasThangka && !hasWheel && !transliteration.speech) {
-    return null;
-  }
-  return (
-    <div className={styles.support}>
-      <Repetition value={value} />
-      {hasRoll && (
-        <Link
-          className={styles.icon}
-          href={key(fileName(path, 'roll'), '/pdf', '/', 'pdf', '.')}
-          rel="noopener noreferrer"
-          target="_blank"
-          title={`Open ${transliteration.title} prayer roll`}
-        >
-          <GrDocumentText />
-        </Link>
-      )}
-      {hasCondensed && (
-        <Link
-          className={styles.icon}
-          href={key(fileName(path, 'condensed'), '/pdf', '/', 'pdf', '.')}
-          rel="noopener noreferrer"
-          target="_blank"
-          title={`Open ${transliteration.title} condensed prayer roll`}
-        >
-          <GrDocumentStore />
-        </Link>
-      )}
-      {hasWheel && (
-        <Link
-          className={styles.icon}
-          href={key(fileName(path, 'wheel'), '/pdf', '/', 'pdf', '.')}
-          rel="noopener noreferrer"
-          target="_blank"
-          title={`Open ${transliteration.title} prayer wheel`}
-        >
-          <GrCycle />
-        </Link>
-      )}
-      {hasThangka && (
-        <Link
-          className={styles.icon}
-          href={key(fileName(path, 'thangka'), '/pdf', '/', 'pdf', '.')}
-          rel="noopener noreferrer"
-          target="_blank"
-          title={`Open ${transliteration.title} paubhā/thangka prayer`}
-        >
-          <GrDocumentImage />
-        </Link>
-      )}
-      <Speech>{transliteration.speech}</Speech>
-    </div>
-  );
+  const children = Children.toArray([
+    <Repetition key="repetition" value={repetition || transliteration.repetition} />,
+    ...pdfs.resolve(`#${tail(path, '/buddhism')}`).map(({ Icon, template, titleFor }) => (
+      <Link
+        className={styles.icon}
+        href={key(fileName(path, template), '/pdf', '/', 'pdf', '.')}
+        key={template}
+        rel="noopener noreferrer"
+        target="_blank"
+        title={titleFor(transliteration)}
+      >
+        <Icon />
+      </Link>
+    )),
+    <Playback key="playback" path={path} />,
+  ]);
+  return children.length ? <div className={styles.support}>{children}</div> : null;
 });
 
 export default memo(function Phrase({
@@ -217,10 +206,7 @@ export default memo(function Phrase({
   repetition = 0,
   transliteration,
 }: PhraseProps): ReactElement | null {
-  if (!transliteration) {
-    return null;
-  }
-  return (
+  return transliteration ? (
     <>
       <Instruction {...{ image, text: instruction, transliteration }} />
       <PhraseBlock
@@ -231,5 +217,5 @@ export default memo(function Phrase({
       />
       <Support {...{ path, repetition, transliteration }} />
     </>
-  );
+  ) : null;
 });

@@ -50,13 +50,6 @@ export default {
         <span style={{ color: 'green' }}>oṃ karma jambhala āḥ svāhā</span>
       </>
     ),
-    speech: [
-      'oum jambala jalendraye swaha',
-      'oum jambala jalendraye dhanam mei-di hrih dakini jambala sambara swaha',
-      'oum jambala jalendraye wasudharini swaha',
-      'oum padma krodha arya jambala hridaya houm patt',
-      'oum karma jambala ah swaha',
-    ].join(', '),
     // The five Jambhala.
     title: 'Pañca Jambhala',
   },

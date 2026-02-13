@@ -20,7 +20,6 @@ export default {
   },
   transliteration: {
     children: 'ratna ratna ratnaśikhene svāhā',
-    speech: 'ratna ratna, ratnasike-ne swaha',
     title: 'Ratnaśikhin Hṛdaya',
   },
 };

@@ -64,18 +64,6 @@ export default {
       avalokitesvara.transliteration.children,
       amitabha.transliteration.children,
     ],
-    speech: [
-      amoghapasaPadmaUsnisa.transliteration.speech,
-      darsanaMukta.transliteration.speech,
-      sadjaMukta.transliteration.speech,
-      mahamaniVipulavimana.core.transliteration.speech,
-      aksobhya.transliteration.speech,
-      ratnasikhin.transliteration.speech,
-      bhaisajyaguru.transliteration.speech,
-      usnisaVijaya.transliteration.speech,
-      avalokitesvara.transliteration.speech,
-      amitabha.transliteration.speech,
-    ].join(', '),
     // The Ten Liberation Mantras.
     title: 'Daśa Mukta Mantrāḥ',
   },

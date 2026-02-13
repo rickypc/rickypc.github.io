@@ -3,11 +3,13 @@
 
 /build
 .cache-loader
+cover.jpg
 /coverage/
 .docusaurus
 .DS_Store
 .env.*
 *.log*
+/models
 /node_modules
 /playwright/.cache/
 /playwright/report/

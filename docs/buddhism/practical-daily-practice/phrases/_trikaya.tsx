@@ -26,7 +26,6 @@ export default {
         <span style={{ color: 'blue' }}>hūṃ</span>
       </>
     ),
-    speech: 'oum.. a.. houm',
     // The trinity of body, speech, and mind.
     title: 'Trikāya',
   },

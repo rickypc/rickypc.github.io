@@ -44,13 +44,6 @@ export default {
       vimalaUsnisa.transliteration.children,
       amoghapasaPadmaUsnisa.transliteration.children,
     ],
-    speech: [
-      mahavairocanaSarvadurgatiParisodhana.transliteration.speech,
-      aksobhya.transliteration.speech,
-      usnisaVijaya.transliteration.speech,
-      vimalaUsnisa.transliteration.speech,
-      amoghapasaPadmaUsnisa.transliteration.speech,
-    ].join(', '),
     // The Five Great Purifications.
     title: 'Pañca Mahā Śuddhi',
   },

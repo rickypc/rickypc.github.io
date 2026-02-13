@@ -9,10 +9,7 @@ import puja from '#buddhism/practical-daily-practice/phrases/_amoghapasa_mani_pu
 jest.mock('#buddhism/practical-daily-practice/phrases/_amoghapasa_padma_usnisa', () => ({
   default: {
     sanskrit: { children: 'PADMA_USNISA_SANSKRIT' },
-    transliteration: {
-      children: 'PADMA_USNISA_TRANSLIT',
-      speech: 'padma usnisa speech',
-    },
+    transliteration: { children: 'PADMA_USNISA_TRANSLIT' },
   },
   __esModule: true,
 }));
@@ -26,8 +23,6 @@ describe('docs.buddhism.phrases._amoghapasa_mani_puja', () => {
       transliteration: {
         children:
           'oṃ amogha pūja maṇipadma vajre tathāgata vilokite samanta prasara hūṃ',
-        speech:
-          'oum amoga puja mani padma wajre tathagata wiloki-t samanta prasara houm',
       },
     });
   });
@@ -52,13 +47,6 @@ describe('docs.buddhism.phrases._amoghapasa_mani_puja', () => {
         puja.core.transliteration.children,
         amoghapasaPadmaUsnisa.transliteration.children,
       ].join(' । '),
-    );
-
-    expect(puja.transliteration.speech).toBe(
-      [
-        puja.core.transliteration.speech,
-        amoghapasaPadmaUsnisa.transliteration.speech,
-      ].join(', '),
     );
   });
 

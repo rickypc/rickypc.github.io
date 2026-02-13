@@ -11,7 +11,6 @@ const core = {
   },
   transliteration: {
     children: 'oṃ amṛte । amṛta udbhave । amṛta saṃbhave । amṛta garbhe । amṛta siddhe । amṛta teje । amṛta vikrānte । amṛta vikrānta gāmine । amṛta gagana kṛtikare । amṛta duṃdubhi svare । sarva artha sādhane । sarva karma kleśa kṣayaṃkare svāhā',
-    speech: 'oum amrite, amrita udbawe, amrita sambawe, amrita garbe, amrita siddhe, amrita t-j, amrita wi-krante, amrita wi-kranta gamine, amrita gagana kirtikare, amrita dumdubi sware, sarwa arta sadhane, sarwa karma klesa kesayamkare swaha',
   },
 };
 
@@ -33,7 +32,6 @@ export default {
   },
   transliteration: {
     children: [core.transliteration.children, amitabha.transliteration.children].join(' । '),
-    speech: [core.transliteration.speech, amitabha.transliteration.speech].join(', '),
     title: 'Sukhāvatīvyūha Dhāraṇī',
   },
 };

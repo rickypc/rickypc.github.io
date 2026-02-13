@@ -61,10 +61,10 @@ describe('Phrase', () => {
     expect(container.firstChild).toBeNull();
   });
 
-  describe('basic rendering without speech or repetition', () => {
+  describe('basic rendering without playback or repetition', () => {
     test('renders only PhraseBlock with default Sanskrit markers', () => {
       render((
-        <PhraseMock transliteration={{ ...transliteration, speech: undefined, repetition: 0 }} />
+        <PhraseMock transliteration={{ ...transliteration, repetition: 0 }} />
       ));
       const block = screen.getByTestId('phrase-block-transliteration');
       expect(block).toHaveAttribute('data-infix', '।');
@@ -73,24 +73,22 @@ describe('Phrase', () => {
       expect(block.textContent).toBe('Hello');
     });
 
-    test('does not include Details, Speech, or PDF links', () => {
+    test('does not include Details, Playback, or PDF links', () => {
       render((
-        <PhraseMock transliteration={{ ...transliteration, speech: undefined, repetition: 0 }} />
+        <PhraseMock transliteration={{ ...transliteration, repetition: 0 }} />
       ));
       expect(screen.queryByTestId(/^link-/)).toBeNull();
       expect(screen.queryByTestId('mdx-details')).toBeNull();
-      expect(screen.queryByTestId('speech')).toBeNull();
     });
   });
 
-  test('renders Speech and support wrapper when speech is provided', () => {
+  test('renders Playback and support wrapper when audio exists', () => {
     const { container } = render((
-      <PhraseMock transliteration={{ ...transliteration, speech: 'SpeakUp', repetition: 0 }} />
+      <PhraseMock transliteration={{ ...transliteration, repetition: 0 }} />
     ));
     expect(screen.queryByTestId(/^link-/)).toBeNull();
-    expect(screen.getByTestId('speech').textContent).toBe('SpeakUp');
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
-    expect(container.querySelector('.support')).toBeInTheDocument();
+    expect(container.querySelector('.support [data-testid="playback"]')).toBeInTheDocument();
   });
 
   describe('repetition badge', () => {

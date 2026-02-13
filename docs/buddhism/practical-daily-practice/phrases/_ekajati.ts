@@ -22,11 +22,10 @@ export default {
     },
   },
   translation: {
-    title: 'One Plait Lady Primary',
+    title: 'One Plait Lady Essence (Heart)',
   },
   transliteration: {
     children: 'samaya hoḥ । oṃ mama rulu rulu hūṃ bhyō hūṃ । mahā amṛta rakta baliṃta pūja hoḥ dharmadhātu evaṃ',
-    speech: 'samaya hoh, oum mama ru-lu ru-lu houm bhyo houm, maha amrita rakta balimta puja hoh, dharmadhatu ewam',
     title: 'Ekajaṭī Hṛdaya',
   },
 };

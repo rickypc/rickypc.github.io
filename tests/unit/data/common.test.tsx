@@ -5,10 +5,10 @@
 
 import {
   a11y,
-  admonitions,
   chunkToWords,
   clsx,
   context,
+  fetchAsJson,
   fileName,
   humanizeYears,
   key,
@@ -35,22 +35,6 @@ describe('data.common', () => {
       expect(result).toEqual({
         'aria-label': 'OnlyLabel',
         title: 'OnlyLabel',
-      });
-    });
-  });
-
-  describe('admonitions', () => {
-    test('defines print and speech warnings with text and type', () => {
-      expect(admonitions).toHaveProperty('print');
-      expect(admonitions.print).toEqual({
-        text: 'The print content is not ready. Scroll to the bottom to load all images, then try again.',
-        type: 'warning',
-      });
-
-      expect(admonitions).toHaveProperty('speech');
-      expect(admonitions.speech).toEqual({
-        text: 'Speech synthesis may not work properly. Change or update your browser for a better experience.',
-        type: 'warning',
       });
     });
   });
@@ -131,6 +115,38 @@ describe('data.common', () => {
       expect(parsed.description).toBe('CustomDesc');
       expect(parsed.keywords).toBe('x,y,z');
       expect(parsed.name).toBe('MyTitle');
+    });
+  });
+
+  describe('fetchAsJson()', () => {
+    test('returns parsed JSON when fetch resolves with valid JSON', async () => {
+      const data = { array: [1, 2, 3], ok: true };
+      const mockFetch = { json: jest.fn().mockResolvedValue(data) };
+      global.fetch = jest.fn().mockResolvedValue(mockFetch);
+
+      const result = await fetchAsJson('https://example.com/api', { method: 'GET' });
+
+      expect(global.fetch).toHaveBeenCalledWith('https://example.com/api', { method: 'GET' });
+      expect(mockFetch.json).toHaveBeenCalled();
+      expect(result).toEqual(data);
+    });
+
+    test('returns empty object when response.json throws (non-JSON body)', async () => {
+      const mockFetch = { json: jest.fn().mockRejectedValue(new Error('invalid json')) };
+      global.fetch = jest.fn().mockResolvedValue(mockFetch);
+
+      const result = await fetchAsJson('/no-json');
+
+      expect(global.fetch).toHaveBeenCalledWith('/no-json');
+      expect(mockFetch.json).toHaveBeenCalled();
+      expect(result).toEqual({});
+    });
+
+    test('propagates fetch rejection error (fetch throws)', async () => {
+      global.fetch = jest.fn().mockRejectedValue(new Error('network failure'));
+
+      await expect(fetchAsJson('/bad')).rejects.toThrow('network failure');
+      expect(global.fetch).toHaveBeenCalledWith('/bad');
     });
   });
 

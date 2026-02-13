@@ -27,7 +27,6 @@ export default {
   },
   transliteration: {
     children: 'namo sapta saptatibhyaḥ । samyaksaṃbuddha koṭināṃ pariśuddha manasa । vācitta pratiṣṭitānāṃ । namo bhagavate amitāyuṣasya tathāgatasya । oṃ tathāgata śuddhe āyuviśuddhani । saṃhāra saṃhāra । sarva tathāgata vīrya valeda prati saṃhāra । āyu smara smara । sarva tathāgata samayaṃ । bodhi bodhi । buddhyā vibuddhyā । bodhaya bodhaya । sarva satvanāṃ । sarva pāpā varaṇa viśuddhe । vigatamāra bhayaṃ । subuddhā buddhe huru huru svāhā',
-    speech: 'namo sapta saptatibyah, samyaksambuddha kotinam parisuddha manasa, wacitta pratistitanam, namo bagawate amitayusasya tathagatasya, oum tathagata suddhe ayuwisuddhani, samhara samhara, sarwa tathagata, wirya wa-le-da prati samhara, ayu smara smara, sarwa tathagata samayam, bodhi bodhi, buddhya wibuddhya, bodhaya bodhaya, sarwa satwanam, sarwa papa warana wisuddhe, wigatamara bayam, subuddha buddhe huru huru swaha',
     // Immaculate Radiance Dhāraṇī.
     title: 'Raśmi Vimala Viśuddha Prabhā Nāma Dhāraṇī',
   },

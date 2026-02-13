@@ -23,7 +23,6 @@ export default {
   },
   transliteration: {
     children: 'oṃ āḥ guru hasavajra sarvasiddhi phala hūṃ',
-    speech: 'oum, ah, guru hasa wajra, sarwa siddhi phala houm',
     title: 'Milarepa Hṛdaya',
   },
 };

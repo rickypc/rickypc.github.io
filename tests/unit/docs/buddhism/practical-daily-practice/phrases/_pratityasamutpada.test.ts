@@ -13,7 +13,6 @@ describe('docs.buddhism._pratitya_samutpada', () => {
     expect(pratitya.core).toHaveProperty('sanskrit.siddham.children');
     expect(pratitya.core).toHaveProperty('tibetan.children');
     expect(pratitya.core).toHaveProperty('transliteration.children');
-    expect(pratitya.core).toHaveProperty('transliteration.speech');
   });
 
   test('builds the pali section correctly', () => {
@@ -86,14 +85,6 @@ describe('docs.buddhism._pratitya_samutpada', () => {
         'ajñānāc cīyate karma janmanaḥ karma kāraṇam',
         'jñānān na cīyate karma karmābhāvān na jāyate',
       ].join(' । '),
-    );
-
-    expect(pratitya.transliteration.speech).toBe(
-      [
-        pratitya.core.transliteration.speech,
-        'ajnanac ciya-t karma, jan-manah karma karanam',
-        'jnanan na ciya-t karma, karmabawan na jayate',
-      ].join(', '),
     );
   });
 

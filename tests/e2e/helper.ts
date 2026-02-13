@@ -15,6 +15,7 @@ import {
   type TestInfo,
 } from '@playwright/test';
 import { pdfToPng } from 'pdf-to-png-converter';
+import { execFile, spawn } from 'node:child_process';
 
 // eslint-disable-next-line no-unused-vars
 export type BandCallback<T, U = T> = (value: T, index?: number, array?: T[]) => U | Promise<U>;
@@ -35,6 +36,67 @@ export type Options = Partial<PlaywrightTestArgs>
   };
 
 export const afterAll = async (context: BrowserContext) => context.close();
+
+const audioMetadata = (path: string) => new Promise((resolve, reject) => {
+  execFile('ffprobe', [
+    '-print_format', 'json',
+    '-show_entries', 'stream=channels,codec_name,codec_type,height,index,pix_fmt,time_base,width',
+    '-show_format',
+    '-v', 'quiet',
+    path,
+  ], (ex, stdout) => {
+    if (ex) {
+      reject(ex);
+    } else {
+      const json = JSON.parse(stdout);
+      const { format } = json;
+
+      delete json.programs;
+      delete json.stream_groups;
+
+      json.format = {
+        filename: format.filename,
+        format_name: format.format_name,
+        tags: {
+          album: format.tags?.album,
+          album_artist: format.tags?.album_artist,
+          artist: format.tags?.artist,
+          composer: format.tags?.composer,
+          description: format.tags?.description,
+          genre: format.tags?.genre,
+          title: format.tags?.title,
+          track: format.tags?.track,
+        },
+      };
+
+      resolve(json);
+    }
+  });
+});
+
+const audioSpectrogram = (path: string): Promise<Buffer> => new Promise((resolve, reject) => {
+  const chunks: Buffer[] = [];
+  const ffmpeg = spawn('ffmpeg', [
+    '-hide_banner',
+    '-i', path,
+    '-loglevel', 'quiet',
+    '-filter_complex',
+    'asetnsamples=n=4096:p=0,highpass=f=80,lowpass=f=300,showwavespic=s=1024x512,scale=1024x512',
+    '-frames:v', '1',
+    '-f', 'image2',
+    '-vcodec', 'png',
+    'pipe:1',
+  ]);
+  ffmpeg.stdout.on('data', (chunk) => chunks.push(chunk));
+  ffmpeg
+    .on('close', (code) => {
+      if (code === 0) {
+        resolve(Buffer.concat(chunks));
+      } else {
+        reject(new Error(`ffmpeg exited with code ${code}`));
+      }
+    }).on('error', reject);
+});
 
 export const band = async <T>(
   count: number,
@@ -63,6 +125,26 @@ export const hasActiveNavigation = async (options: Options) => {
     await expect(options.page!.getByRole('link', options))
       .toHaveClass(/navbar__link--active/);
   }
+};
+
+export const hasAudio = async (options: Options) => {
+  const signature = Buffer.from(JSON.stringify(await audioMetadata(options.url!), null, 2), 'utf8');
+  const spectrogram = await audioSpectrogram(options.url!);
+
+  expect(signature).toMatchSnapshot(`${options.file}/signature.json`);
+  expect(spectrogram).toMatchSnapshot(`${options.file}/spectrogram.png`, {
+    // 6.5%.
+    maxDiffPixelRatio: 0.065,
+  });
+
+  await options.testInfo!.attach(`${options.file} signature`, {
+    body: signature,
+    contentType: 'application/json',
+  });
+  await options.testInfo!.attach(`${options.file} spectrogram`, {
+    body: spectrogram,
+    contentType: 'image/png',
+  });
 };
 
 export const hasHeader = async (options: Options) => {
@@ -178,19 +260,45 @@ export const hasPdf = async (options: Options) => {
   }));
 };
 
+export const hasPlayback = async (options: Options) => {
+  await options.page!.goto(
+    `${options.url}?docusaurus-data-volume=silent`,
+    { waitUntil: 'domcontentloaded' },
+  );
+  const locator = options.page!.locator(options.selector!);
+  if (await locator.isVisible()) {
+    await expect(locator).toHaveAttribute('title', /play/i);
+    await locator.click();
+    await expect(locator).toHaveAttribute('title', /pause/i);
+    await options.page!.waitForFunction(
+      (el) => el?.getAttribute('title')?.toLowerCase() !== 'pause',
+      await locator.elementHandle(),
+    );
+    await expect(locator).toHaveAttribute('title', /play/i);
+  }
+};
+
 export const hasPrint = async (options: Options) => {
   test.skip(options.browserName !== 'chromium', 'Print only works in Chromium');
   const search = options.url!.includes('portfolio')
     ? '?docusaurus-data-carousel-play=manual' : '';
-  await options.page!.goto(`${options.url}${search}`, { waitUntil: 'networkidle' });
+  await options.page!.goto(
+    `${options.url}${search}`,
+    { waitUntil: 'networkidle' },
+  );
   await options.page!.evaluate(() => window
     .dispatchEvent(new Event('beforeprint')));
   const last = options.page!.locator('picture > img').last();
-  if (await last.count() > 0) {
+  if (await last?.count?.()) {
     await last.scrollIntoViewIfNeeded();
-    await options.page!.evaluate(async () => new Promise((resolve) => {
-      setTimeout(() => requestAnimationFrame(resolve), 500);
-    }));
+  }
+  await options.page!.waitForLoadState('networkidle');
+  await options.page!.evaluate(async () => new Promise((resolve) => {
+    setTimeout(() => requestAnimationFrame(resolve), 750);
+  }));
+  if (options.selector) {
+    await options.page!.waitForSelector(options.selector, { timeout: 750 })
+      .catch(() => {});
   }
   const pdf = await options.page!.pdf({
     format: 'Letter',
@@ -226,7 +334,7 @@ export const hasScreenshot = async (options: Options) => {
     { waitUntil: 'networkidle' },
   );
   if (options.selector) {
-    await options.page!.waitForSelector(options.selector, { timeout: 250 })
+    await options.page!.waitForSelector(options.selector, { timeout: 750 })
       .catch(() => {});
   }
   await expect(options.page!)
@@ -235,22 +343,6 @@ export const hasScreenshot = async (options: Options) => {
     body: await options.page!.screenshot(screenshotOptions),
     contentType: 'image/png',
   });
-};
-
-export const hasSpeech = async (options: Options) => {
-  await options.page!.goto(
-    `${options.url}?docusaurus-data-volume=silent`,
-    { waitUntil: 'domcontentloaded' },
-  );
-  const locator = options.page!.locator(options.selector!);
-  if (await locator.isVisible()) {
-    await locator.click();
-    expect(await options.page!.evaluate(() => speechSynthesis.speaking))
-      .toBeTruthy();
-    await options.page!.waitForFunction(() => !speechSynthesis.speaking);
-    expect(await options.page!.evaluate(() => speechSynthesis.speaking))
-      .toBeFalsy();
-  }
 };
 
 export const hasUrl = async (options: Options) => expect(options.page!)

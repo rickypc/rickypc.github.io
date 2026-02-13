@@ -20,7 +20,6 @@ export default {
   },
   transliteration: {
     children: 'oṃ āḥ hūṃ vajra guru padma tötreng tsal sarva vasuratna siddhi phala hūṃ āḥ',
-    speech: 'oum ah houm, wajra guru padma totreng sal, sarwa wasuratna, siddhi phala houm ah',
     // Guru Jambhala.
     title: 'Vasuratna',
   },

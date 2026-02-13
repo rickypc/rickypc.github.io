@@ -22,11 +22,10 @@ export default {
     },
   },
   translation: {
-    title: 'Diamond Dagger Primary',
+    title: 'Diamond Dagger Essence (Heart)',
   },
   transliteration: {
     children: 'oṃ vajra kīli kīlāya sarva vighnān vaṃ hūṃ phaṭ । oṃ chinda bhiṇḍa hana daha dīptacakra hūṃ',
-    speech: 'oum wajra kili kilaya sarwa wighnan wam houm patt, oum chinda bhinda hana daha diptacakra houm',
     title: 'Vajrakīlāya Hṛdaya',
   },
 };

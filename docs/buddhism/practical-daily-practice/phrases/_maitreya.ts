@@ -24,7 +24,6 @@ export default {
   },
   transliteration: {
     children: 'oṃ mohi mohi mahāmohi svāhā । oṃ muni muni smarā svāhā',
-    speech: 'oum mohi mohi maha mohi swaha, oum muni muni smara swaha',
     title: 'Maitreya Hṛdaya',
   },
 };

@@ -23,11 +23,10 @@ export default {
     title: 'འཇམ་དཔལ་དབྱངས',
   },
   translation: {
-    title: 'Buddhas Transcendent Wisdom Primary',
+    title: 'Buddhas Transcendent Wisdom Essence (Heart)',
   },
   transliteration: {
     children: 'oṃ arapacana dhīḥ',
-    speech: 'oum arapacana dhih',
     title: 'Mañjuśrī Hṛdaya',
   },
 };

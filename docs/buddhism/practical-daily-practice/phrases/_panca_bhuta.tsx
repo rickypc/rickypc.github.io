@@ -58,7 +58,6 @@ export default {
         <span> śuddhe śodhanaye svāhā</span>
       </>
     ),
-    speech: 'oum e ho sudhe sudhe, yam ho sudhe sudhe, ram ho sudhe sudhe, wam ho sudhe sudhe, lamn ho sudhe sudhe, e, yam, ram, wam, lamn, sudhe sodhanaye swaha',
     // The five elements.
     title: 'Pañcabhūta',
   },

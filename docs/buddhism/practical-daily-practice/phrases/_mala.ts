@@ -4,6 +4,7 @@
  */
 
 export default {
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ रुचिरा मणि प्रवर्तमानये स्वाहा',
     title: 'माला',
@@ -14,7 +15,6 @@ export default {
   transliteration: {
     children: 'oṃ rucirā maṇi pravartamānaye svāhā',
     repetition: 3,
-    speech: 'oum rucira mani prawartamanaye swaha',
     // The prayer beads blessing.
     title: 'Mālā',
   },

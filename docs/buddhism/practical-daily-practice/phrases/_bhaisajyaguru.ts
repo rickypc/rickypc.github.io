@@ -24,7 +24,6 @@ export default {
   },
   transliteration: {
     children: 'oṃ bhaiṣajye bhaiṣajye bhaiṣajya samudgate svāhā',
-    speech: 'oum baisaye baisaye, baisaya samudgate swaha',
     title: 'Bhaiṣajyaguru Hṛdaya',
   },
 };

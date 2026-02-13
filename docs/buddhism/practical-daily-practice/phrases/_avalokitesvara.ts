@@ -12,7 +12,7 @@ export default {
     children: 'oṃ maṇipadme huṃ',
     sinhala: {
       children: 'ඕං මණිපද්මේ හුං',
-      title: 'අවලෝකිතේශ්වර',
+      title: 'අවලෝකිතේශ්වරා',
     },
     title: 'Avalokiteśvara',
   },
@@ -21,7 +21,7 @@ export default {
     children: 'ॐ मणिपद्मे हूँ',
     siddham: {
       children: '𑖌𑖼 𑖦𑖜𑖰𑖢𑖟𑖿𑖦𑖸 𑖮𑖳𑖽',
-      title: '𑖀𑖪𑖩𑖺𑖎𑖰𑖝𑖸𑖫𑖿𑖪𑖨',
+      title: '𑖀𑖪𑖩𑖺𑖎𑖰𑖝𑖸𑖫𑖿𑖪𑖨𑖺',
     },
     title: 'अवलोकितेश्वर',
   },
@@ -35,11 +35,10 @@ export default {
     title: 'སྤྱན་རས་གཟིགས',
   },
   translation: {
-    title: 'Watchful Lord Primary',
+    title: 'Watchful Lord Essence (Heart)',
   },
   transliteration: {
     children: 'oṃ maṇipadme hūṃ',
-    speech: 'oum manipadme houm',
     title: 'Avalokiteśvara Hṛdaya',
   },
 };

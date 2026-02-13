@@ -4,6 +4,7 @@
  */
 
 export default {
+  path: import.meta.url,
   sanskrit: {
     children: 'नमो गुरुभ्यः । नमो देवभ्यः । नमो डाकिनीभ्यः',
     title: 'त्रिमूल शरण',
@@ -13,7 +14,6 @@ export default {
   },
   transliteration: {
     children: 'namo gurubhyaḥ । namo devábhyaḥ । namo ḍākinībhyaḥ',
-    speech: 'namo guru-byah, namo dewa-byah, namo dakini-byah',
     title: 'Trimūla Śaraṇa',
   },
 };

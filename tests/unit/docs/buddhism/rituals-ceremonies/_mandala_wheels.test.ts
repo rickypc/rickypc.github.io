@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
-import image from '#buddhism/pdf/_image';
+import image from '#buddhism/media/pdf/_image';
 import mandalaWheels from '#buddhism/rituals-ceremonies/_mandala_wheels';
 
-jest.mock('#buddhism/pdf/_image', () => ({
+jest.mock('#buddhism/media/pdf/_image', () => ({
   default: jest.fn(async (opts) => ({ mocked: true, ...opts })),
   __esModule: true,
 }));

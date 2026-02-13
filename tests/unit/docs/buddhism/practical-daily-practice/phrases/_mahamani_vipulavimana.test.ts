@@ -10,10 +10,7 @@ jest.mock('#buddhism/practical-daily-practice/phrases/_darsana_mukta', () => ({
   default: {
     sanskrit: { children: 'DARSANA_SANSKRIT' },
     tibetan: { children: 'DARSANA_TIBETAN' },
-    transliteration: {
-      children: 'DARSANA_TRANSLIT',
-      speech: 'darsana speech',
-    },
+    transliteration: { children: 'DARSANA_TRANSLIT' },
   },
   __esModule: true,
 }));
@@ -23,7 +20,6 @@ describe('docs.buddhism._mahamani_vipulavimana', () => {
     expect(mahamani.core).toHaveProperty('sanskrit.children');
     expect(mahamani.core).toHaveProperty('tibetan.children');
     expect(mahamani.core).toHaveProperty('transliteration.children');
-    expect(mahamani.core).toHaveProperty('transliteration.speech');
   });
 
   test('builds the sanskrit section correctly', () => {
@@ -67,13 +63,6 @@ describe('docs.buddhism._mahamani_vipulavimana', () => {
         mahamani.core.transliteration.children,
         darsanaMukta.transliteration.children,
       ].join(' । '),
-    );
-
-    expect(mahamani.transliteration.speech).toBe(
-      [
-        mahamani.core.transliteration.speech,
-        darsanaMukta.transliteration.speech,
-      ].join(', '),
     );
   });
 });

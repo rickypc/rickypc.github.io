@@ -24,7 +24,6 @@ export default {
   },
   transliteration: {
     children: 'oṃ ārya sūrya tatama svāhā',
-    speech: 'oum arya surya tatama swaha',
     title: 'Ārya Bhagavate Majū Hṛdaya',
   },
 };

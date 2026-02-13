@@ -33,9 +33,12 @@ title: Āryatārā Atiyoga
 ---
 
 import Ahvana from '#buddhism/practical-daily-practice/phrases/_ahvana.mdx';
+import Aksara from '#buddhism/practical-daily-practice/phrases/_aksara.mdx';
 import AmoghapasaManiPuja from '#buddhism/practical-daily-practice/phrases/_amoghapasa_mani_puja.mdx';
 import AryaTara from '#buddhism/practical-daily-practice/phrases/_arya_tara.mdx';
 import AryaTaraAstaghoraTaraniSutra from '#buddhism/practical-daily-practice/phrases/_arya_tara_astaghora_tarani_sutra.mdx';
+import AryaTaraBijaksara from '#buddhism/practical-daily-practice/phrases/_arya_tara_bijaksara.mdx';
+import AryaTaraNama from '#buddhism/practical-daily-practice/phrases/_arya_tara_nama.mdx';
 import AryaTaraSataksara from '#buddhism/practical-daily-practice/phrases/_arya_tara_sataksara.mdx';
 import AryaTaraSvaPratijnaNama from '#buddhism/practical-daily-practice/phrases/_arya_tara_svapratijna_nama.mdx';
 import DhanadaTara from '#buddhism/practical-daily-practice/phrases/_dhanadatara.mdx';
@@ -71,13 +74,7 @@ flip on the long edge)
 Blessing.
 
 #### Mālā
-<Mala
-  instruction={(
-    <>
-      Recite the prayer, then blow and rub the <Link href="https://en.wikipedia.org/wiki/Japamala">mālā</Link> gently.
-    </>
-  )}
-/>
+<Mala />
 
 #### Japa
 <Japa />
@@ -161,7 +158,7 @@ Purification.
 />
 
 #### Śūnyatā
-<Phrase
+<Aksara
   image={require('#buddhism/img/sunyata.webp').default}
   instruction={(
     <div className="row">
@@ -175,16 +172,7 @@ Purification.
       </span>
     </div>
   )}
-  transliteration={{ children: 'a', speech: 'a', title: 'Śūnyatā' }}
 />
-<details>
-  <summary>
-    Primordial state.
-  </summary>
-  <div>
-    <MultiLingual sanskrit={{ children: 'अ', title: 'शून्यता' }} />
-  </div>
-</details>
 
 #### Pañcabhūta
 <Pancabhuta
@@ -203,7 +191,7 @@ Purification.
 />
 
 #### Śūnyatā
-<Phrase
+<Aksara
   image={require('#buddhism/img/sunyata-radiate.webp').default}
   instruction={(
     <div className="row">
@@ -225,16 +213,7 @@ Purification.
       </span>
     </div>
   )}
-  transliteration={{ children: 'a', speech: 'a', title: 'Śūnyatā' }}
 />
-<details>
-  <summary>
-    Primordial state.
-  </summary>
-  <div>
-    <MultiLingual sanskrit={{ children: 'अ', title: 'शून्यता' }} />
-  </div>
-</details>
 
 <TrimulaSarana />
 
@@ -242,22 +221,12 @@ Purification.
 Cultivation.
 
 #### Śūraṅgama
-<Surangama
-  instruction={(
-    <>
-      The efficacious phrases of the Śūraṅgama prayer that keep the world from <Link href="https://en.wikipedia.org/wiki/Buddhist_eschatology#Causes_of_the_end_of_true_dharma">coming to an end</Link>.
-    </>
-  )}
-/>
+<Surangama />
 
 #### Mahā Cakra Vajra
 <MahaCakraVajra
   image={require('#buddhism/img/maha-cakra-vajra.webp').default}
-  instruction={(
-    <>
-      The Great Wheel of Truth.
-    </>
-  )}
+  instruction="The Great Wheel of Truth."
 />
 
 #### Amoghapāśa Maṇi Pūja
@@ -302,9 +271,7 @@ Cultivation.
         className="col col--2"
         picture={{ fallback: require('#buddhism/img/mudra-tara.webp').default }}
       />
-      <span className="col col--10">
-        Noble Tārā invitation with Noble Tārā mudrā.
-      </span>
+      <span className="col col--10">Noble Tārā invitation with Noble Tārā mudrā.</span>
     </div>
   )}
 />
@@ -324,21 +291,10 @@ Cultivation.
 <AryaTaraAstaghoraTaraniSutra />
 
 ### Āryatārā Āghoṣa
-<Phrase
-  instruction="Communicating and invoking Noble Tārā directly."
-  transliteration={{ children: '​​tāre', className: 'green', speech: 'tare' }}
-/>
-<details>
-  <summary>
-    Tārā's name.
-  </summary>
-  <div>
-    <MultiLingual sanskrit={{ children: 'तारे' }} />
-  </div>
-</details>
+<AryaTaraNama />
 
 ### Āryatārā Ātma Utpatti
-<Phrase
+<AryaTaraBijaksara
   image={require('#buddhism/img/self-generation.webp').default}
   instruction={(
     <>
@@ -360,16 +316,7 @@ Cultivation.
       </p>
     </>
   )}
-  transliteration={{ children: 'tāṃ', className: 'green', speech: 'tamm', title: 'Āryatārā Ātma Utpatti' }}
 />
-<details>
-  <summary>
-    Tārā's seed syllable.
-  </summary>
-  <div>
-    <MultiLingual sanskrit={{ children: 'ताँ' }} />
-  </div>
-</details>
 
 ### Pūjā
 Offering.
@@ -441,20 +388,12 @@ Offering.
 
 <VajraGita
   image={require('#buddhism/img/samantabhadra.webp').default}
-  instruction={(
-    <>
-      Vajra song to remain within the all-pervasive expanse of the mind's nature.
-    </>
-  )}
+  instruction="Vajra song to remain within the all-pervasive expanse of the mind's nature."
 />
 
 <Sukhavativyuha
   image={require('#buddhism/img/amitabha.webp').default}
-  instruction={(
-    <>
-      Pure Land Rebirth Dhāraṇī / Infinite Life Dhāraṇī / The Larger Amitabha Dhāraṇī.
-    </>
-  )}
+  instruction="Pure Land Rebirth Dhāraṇī / Infinite Life Dhāraṇī / The Larger Amitabha Dhāraṇī."
 />
 
 <EkadasamukhaLokesvara

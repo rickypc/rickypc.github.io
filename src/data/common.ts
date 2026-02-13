@@ -28,17 +28,6 @@ const thousands: string[] = [
 
 export const a11y = (value?: string, rest = {}) => ({ 'aria-label': value, title: value, ...rest });
 
-export const admonitions = {
-  print: {
-    text: 'The print content is not ready. Scroll to the bottom to load all images, then try again.',
-    type: 'warning',
-  },
-  speech: {
-    text: 'Speech synthesis may not work properly. Change or update your browser for a better experience.',
-    type: 'warning',
-  },
-};
-
 export const chunkToWords = (input: number): string => {
   let num = input;
   const response: string[] = [];
@@ -165,6 +154,15 @@ export const context = ({
   name: title,
   url: 'https://ricky.one',
 });
+
+export const fetchAsJson = async (...args: Parameters<typeof fetch>): Promise<Response | {}> => {
+  const result = await fetch(...args);
+  try {
+    return await result.json();
+  } catch {
+    return {};
+  }
+};
 
 // Before humanizeYears assignment.
 export const numberToWords = (input: number): string => {

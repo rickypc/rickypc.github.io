@@ -22,7 +22,6 @@ export type MultiLingualProps = {
 export type Transliteration = {
   className?: string;
   repetition?: number;
-  speech?: string;
   title?: string;
   unify?: boolean;
 };

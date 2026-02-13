@@ -24,7 +24,6 @@ export default {
   },
   transliteration: {
     children: 'oṃ cale cule cunde svāhā',
-    speech: 'oum cale cule cun-d swaha',
     title: 'Mahā Cundī Durgā Dhāranī',
   },
 };

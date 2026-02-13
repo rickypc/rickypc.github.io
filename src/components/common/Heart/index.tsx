@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { clsx } from '@site/src/data/common';
+import { clsx/* , fetchAsJson */ } from '@site/src/data/common';
 // import { GenIcon } from 'react-icons/lib';
 import {
   memo,
@@ -13,7 +13,6 @@ import {
   // useState,
 } from 'react';
 // import useIsBrowser from '@docusaurus/useIsBrowser';
-// import useTransport from '@site/src/hooks/transport';
 import styles from './styles.module.css';
 
 export type HeartProps = {
@@ -57,7 +56,6 @@ export default memo(function Heart({ className, id }: HeartProps): ReactElement 
     setHeart,
   ] = useState(storage(key));
   const addedInBrowser = added && browser;
-  const { fetchAsJson } = useTransport();
   const Icon = addedInBrowser ? FaHeart : FaRegHeart;
   const ns = 'ricky.one';
   const title = addedInBrowser ? 'Liked' : 'Like';
@@ -74,7 +72,7 @@ export default memo(function Heart({ className, id }: HeartProps): ReactElement 
       await fetchAsJson(`${url}?trackOnly=true`);
       onUpdate(key, { added: true, count: (count + 1), timestamp: new Date().valueOf() });
     }
-  }, [added, count, fetchAsJson, key, onUpdate, url]);
+  }, [added, count, key, onUpdate, url]);
 
   useEffect(() => {
     (async () => {
@@ -86,7 +84,7 @@ export default memo(function Heart({ className, id }: HeartProps): ReactElement 
       }
     })();
     // return none.
-  }, [added, fetchAsJson, key, onUpdate, timestamp, url]);
+  }, [added, key, onUpdate, timestamp, url]);
 
   // We can't use a11y here because it will create SEO problem.
   return (

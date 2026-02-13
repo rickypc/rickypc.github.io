@@ -6,6 +6,7 @@
 import sadjaMukta from './_sadja_mukta';
 
 export default {
+  path: import.meta.url,
   sanskrit: {
     children: [
       'ॐ धरे धरे बंधरे स्वहा',
@@ -26,12 +27,6 @@ export default {
       'mama koling samanta',
     ].join(' । '),
     repetition: 3,
-    speech: [
-      'oum dhare dhare bandhare swaha',
-      'jaya jaya siddhi siddhi pala pala',
-      sadjaMukta.transliteration.speech,
-      'mama koling samanta',
-    ].join(', '),
     title: 'Pariṇāmanā',
   },
 };

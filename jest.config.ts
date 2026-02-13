@@ -20,6 +20,7 @@ module.exports = {
     '@theme-original/(.*)': '@docusaurus/theme-classic/src/theme/$1',
   },
   testEnvironment: 'node',
+  testPathIgnorePatterns: ['<rootDir>/supports/'],
   testRegex: 'tests/unit/.*.test.[jt]sx?$',
   transform: {
     '^.+\\.[jt]sx?$': [

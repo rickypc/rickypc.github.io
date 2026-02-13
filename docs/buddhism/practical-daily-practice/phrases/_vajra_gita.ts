@@ -4,6 +4,7 @@
  */
 
 export default {
+  path: import.meta.url,
   sanskrit: {
     children: 'एम किरि किरि । मस्ह्त वालि वालि । समित सुरु सुरु । कुटाली मसु मसु । एकर सुलि भतये । चकिर भुलि भतये । समुन्त चर्य सुघये । भेतसन भ्यकुलये । सकरि धुकन । मतरि वैतन । परलि हिसन । मखर्त केलनम् । सम्भर तमेक चन्तप । सुर्य भतरे पशनप । रनभिति सघुरलप । मस्मिन् सगुलितयप । घुर घुर सग खर्नलम् । नर नर इथर् पतलम् । सिर्न सिर्न भेस रस्पलम् । भुन्ध भुन्ध चिस्ह सकेलम् । ससह् । रिरिह् । लिलिह् । इइह् । मिमिह् । रररह्',
     title: 'वज्रगीता',
@@ -17,7 +18,6 @@ export default {
   },
   transliteration: {
     children: 'ema kiri kiri । mashta vāli vāli । samita suru suru । kutali masu masu । ekara suli bhatayé । cakira bhuli bhatayé । samunta carya sughayé । bhetasana bhyakulayé । sakari dhukana । matari vaitana । parali hisana । makharta kelanam । sambhara tameka cantapa । surya bhatare pashanapa । ranabhiti saghuralapa । masmin sagulitayapa । ghura ghura saga kharnalam । nara nara ithar patalam । sirna sirna bhesa raspalam । bhundha bhundha cisha sakelam । sasah । ririh । lilih । i ih । mimih । ra ra rah',
-    speech: 'ema kiri kiri, masta wali wali, samita suru suru, kutali masu masu, ekara suli bataye, cakira buli bataye, samunta carya sugaye, b-tasana byakulaye, sakari dhukana, ma-tari waitana, parali hisana, makarta kelanam, sambara ta-mei-ka cantapa, surya bhatare pasanapa, ranabiti sagu-ra-lapa, masmin sagulita-yapa, gura gura saga karnalam, nara nara itar patalam, sirna sirna b-sa raspalam, bunda bunda cisa sakke-lamn, sasah, ririh, lilih, i ih, mimih, ra ra rah',
     title: 'Vajragītā',
   },
 };

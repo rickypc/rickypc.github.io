@@ -16,23 +16,27 @@ module.exports = defineConfig({
   outputDir: './playwright/results',
   projects: [
     {
+      name: 'audio',
+      testMatch: /.*audio\.spec\.ts/,
+    },
+    {
       name: 'chromium',
-      testIgnore: /.*pdf\.spec\.ts/,
+      testIgnore: /.*(audio|pdf)\.spec\.ts/,
       use: { ...devices['Desktop Chrome'], viewport },
     },
     {
       name: 'firefox',
-      testIgnore: /.*pdf\.spec\.ts/,
+      testIgnore: /.*(audio|pdf)\.spec\.ts/,
       use: { ...devices['Desktop Firefox'], viewport },
     },
     {
       name: 'mobile-chrome',
-      testIgnore: /.*pdf\.spec\.ts/,
+      testIgnore: /.*(audio|pdf)\.spec\.ts/,
       use: { ...devices['Pixel 5'] },
     },
     {
       name: 'mobile-safari',
-      testIgnore: /.*pdf\.spec\.ts/,
+      testIgnore: /.*(audio|pdf)\.spec\.ts/,
       use: { ...devices['iPhone 12'] },
     },
     {
@@ -41,7 +45,7 @@ module.exports = defineConfig({
     },
     {
       name: 'webkit',
-      testIgnore: /.*pdf\.spec\.ts/,
+      testIgnore: /.*(audio|pdf)\.spec\.ts/,
       use: { ...devices['Desktop Safari'], viewport },
     },
   ],

@@ -1,0 +1,81 @@
+/*!
+ * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
+ * All rights reserved.
+ */
+
+.controls {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  margin-right: 0.25rem;
+  position: relative;
+}
+
+.controls .progress {
+  height: 2.1rem;
+  inset: -0.05rem;
+  pointer-events: none;
+  position: absolute;
+  width: 2.1rem;
+}
+
+.controls .progress .circle {
+  fill: none;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke 150ms ease;
+}
+
+[data-theme='dark'] .controls .progress .circle {
+  stroke: color-mix(in oklab, var(--ifm-link-color) 65%, transparent);
+}
+
+[data-theme='light'] .controls .progress .circle {
+  stroke: color-mix(in oklab, var(--ifm-link-color) 55%, transparent);
+}
+
+.controls .control {
+  border-radius: 50%;
+  font-size: 1.25rem;
+  height: 2rem;
+  line-height: 1rem;
+  transform: translateZ(0);
+  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+  transition:
+    background 150ms ease,
+    color var(--ifm-transition-fast) var(--ifm-transition-timing-default),
+    filter 150ms ease;
+  width: 2rem;
+  will-change: filter;
+}
+
+[data-theme='dark'] .controls .control {
+  color: color-mix(in oklab, var(--ifm-link-color) 90%, white 10%);
+}
+
+[data-theme='dark'] .controls .control:hover {
+  background: color-mix(in oklab, var(--ifm-link-color) 35%, transparent);
+  color: color-mix(in oklab, #a8d8e8 90%, white 10%);
+  filter: drop-shadow(0.075rem 0.075rem 0.1rem rgba(85, 168, 240, 0.45));
+}
+
+[data-theme='light'] .controls .control {
+  color: color-mix(in oklab, var(--ifm-link-color) 90%, black 10%);
+}
+
+[data-theme='light'] .controls .control:hover {
+  background: color-mix(in oklab, var(--ifm-link-color) 10%, transparent);
+  color: color-mix(in oklab, #1a73e8 90%, black 10%);
+  filter: drop-shadow(0.075rem 0.075rem 0.075rem rgba(0, 0, 0, 0.18));
+}
+
+.controls .control svg {
+  vertical-align: middle;
+}
+
+@media print {
+  .controls .control {
+    display: none;
+  }
+}

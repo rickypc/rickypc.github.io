@@ -27,7 +27,6 @@ export default {
   },
   transliteration: {
     children: 'namo nava navatīnāṃ tathāgata । gaṅgā nadī vālukā । koṭinayuta śata sahasrānām । oṃ bhūbhūri । cārini cari । caraṇa cire । muni muni । śreṣṭha alaṃkāre svāhā',
-    speech: 'namo nawa nawatinam tathagata, ganga nadi waluka, kotinayuta sata sahasranam, oum buburi, carini cari, carana cire, muni muni, srestha alamkare swaha',
     // Immaculate Radiance Hṛdaya.
     title: 'Raśmi Vimala Viśuddha Prabhā Nāma Hṛdaya',
   },

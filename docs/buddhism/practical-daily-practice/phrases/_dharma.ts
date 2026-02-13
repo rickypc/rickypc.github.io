@@ -4,6 +4,7 @@
  */
 
 export default {
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ धुरु धुरु जयामुखे स्वाहा',
     title: 'धर्म',
@@ -14,7 +15,6 @@ export default {
   transliteration: {
     children: 'oṃ dhuru dhuru jayaṃukḥe svāhā',
     repetition: 3,
-    speech: 'oum dhuru dhuru jaya-muke swaha',
     // The virtue blessing.
     title: 'Dharma',
   },

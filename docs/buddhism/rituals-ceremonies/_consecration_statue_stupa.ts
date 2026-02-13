@@ -3,12 +3,7 @@
  * All rights reserved.
  */
 
-import {
-  header,
-  main,
-  phrase,
-  phrases,
-} from '#buddhism/pdf/_common';
+import { header, phrase, phrases } from '#buddhism/media/_common';
 
 const pratityasamutpadaSamudayaNirodha = phrases('#buddhism/practical-daily-practice/phrases/_pratityasamutpada_samudaya_nirodha.ts');
 
@@ -28,7 +23,7 @@ export default {
       chapters: ['Maṅgala', 'Abhiṣeka'],
       contents: [
         [
-          ...phrase('#buddhism/practical-daily-practice/phrases/_mala.ts', ' (recite the prayer, then blow and rub the mālā gently)'),
+          ...phrase('#buddhism/practical-daily-practice/phrases/_mala.ts', ' (recite the prayer, gently blow on the mālā and rub it lightly)'),
           ...phrase('#buddhism/practical-daily-practice/phrases/_japa.ts'),
           ...phrase('#buddhism/practical-daily-practice/phrases/_dharma.ts'),
           ...phrase('#buddhism/practical-daily-practice/phrases/_namaskara.ts'),
@@ -91,16 +86,12 @@ export default {
       chapters: ['Abhiṣeka'],
       contents: [
         [
-          header('Cakṣu Unmilan [Opening Of Eyes]'),
-          ...main('ॐ ज्ञान चक्षु प्रवेशय फट्॥', 'oṃ jñāna cakṣu praveśāya phaṭ॥', 3),
-          header('Pañcajñāna [Five Wisdoms]'),
-          ...main('ॐ आः हूँ स्वाहा॥', 'oṃ āḥ hūṃ svāhā॥', 3),
-          header('Abhiṣekapūjā [Consecration Offering]'),
-          ...main('ॐ भगवं सर्वतथागत परमपूजा प्रतीच्छ होः । ॐ पुरुषाय होः॥', 'oṃ sarva tathāgata mahāpūja pratīccha hoḥ । oṃ puruṣāya hoḥ॥', 3),
+          ...phrase('#buddhism/practical-daily-practice/phrases/_caksu_unmilana.ts', '', 3, 'Cakṣu Unmīlana [Eye-Opening]'),
+          ...phrase('#buddhism/practical-daily-practice/phrases/_panca_jnana.ts', '', 3, 'Pañcajñāna [Five Wisdoms]'),
+          ...phrase('#buddhism/practical-daily-practice/phrases/_abhiseka_puja.ts', '', 3, 'Abhiṣekapūjā [Empowerement Offering]'),
         ],
         [
-          header('Supratiṣṭha [Request For Deities To Remain]', ' (blessing mudrā with our left hand is held above the statue/stupa/sculpture, palm down with the thumb pressing down the pinky finger. Our right hand is held below the statue/stupa/sculpture, palm up with the thumb pressing down the pinky finger)'),
-          ...main('ॐ गुरु बुद्ध बोधिसत्त्व धर्मपाल सपरिवार एजति जः हूं बं होः । ॐ सुप्रतिष्ठ वज्रये स्वाहा॥', 'oṃ guru buddha bodhisattva dharmapāla saparivāra ejati jaḥ hūṃ baṃ hoḥ । oṃ supratiṣṭha vajraye svāhā॥', 3),
+          ...phrase('#buddhism/practical-daily-practice/phrases/_supratistha.ts', ' (perfect consecration mudrā: left hand above the items, palm down with the thumb pressing the little finger; right hand below the items, palm up with the thumb pressing the little finger)', 3, 'Supratiṣṭha [Perfect Consecration]'),
           header('Puṇya Pariṇāmanā [Merit Dedication]', ' (in our own words)'),
           { margin: [0, 7.5, 0, 7.5], text: '' },
         ],
@@ -135,8 +126,7 @@ export default {
           { style: ['phrase', 'phrase-set'], text: 'yan lag dr\'ug chu sung gi tra shi shog।' },
           { style: ['phrase', 'phrase-set'], text: 'tha\' dr\'äl d\'on d\'am thug kyi tra shi shog।' },
           { style: ['phrase', 'phrase-set'], text: 'gyäl wa\'i ku sung thug kyi tra shi shog॥' },
-          header('Prārthanāsiddhiḥ [Accomplishment Of All Aspirations]'),
-          ...main('पञ्चेन्द्रियावबोधनीये स्वहा । जय जय सुजय॥', 'pañcendriyāvabodhanīye svāhā । jaya jaya sujaya॥'),
+          ...phrase('#buddhism/practical-daily-practice/phrases/_prarthanasiddhih.ts', '', 0, 'Prārthanāsiddhiḥ [Fulfillment of Aspiration]'),
         ],
       ],
       number: '8',

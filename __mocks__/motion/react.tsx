@@ -139,6 +139,7 @@ export const motion = {
     ref,
     ...props
   }: PropsWithChildren<ButtonProps>) => <button ref={ref} {...props} type="button">{children}</button>,
+  circle: ({ children, ...props }: PropsWithChildren) => <circle {...props}>{children}</circle>,
   div: ({
     children,
     className,
@@ -208,9 +209,25 @@ export const motion = {
       {children}
     </span>
   ),
+  svg: ({ children, ...props }: PropsWithChildren) => <svg {...props}>{children}</svg>,
 };
 
-export const useMotionValue = jest.fn((value) => value);
+export const useMotionValue = jest.fn((value) => {
+  let response = value;
+  return {
+    get() {
+      return response;
+    },
+    set(newValue: number) {
+      response = newValue;
+    },
+  };
+});
 export const useScroll = jest.fn(() => ({ scrollYProgress: 0 }));
 export const useSpring = jest.fn(() => ({ y: 0 }));
-export const useTransform = jest.fn();
+export const useTransform = jest.fn((value, cb) => {
+  if (typeof (cb) === 'function') {
+    const val = typeof (value.get) === 'function' ? value.get() : value;
+    cb(val);
+  }
+});

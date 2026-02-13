@@ -24,7 +24,6 @@ export default {
   },
   transliteration: {
     children: 'oṃ sarva tathāgata uṣṇīṣa sitātapatre hūṃ phaṭ hūṃ mama hūṃ ni svāhā',
-    speech: 'oum sarwa tathagata, usnisa sitatapatre, houm patt, houm mama, houm ni, swaha',
     // White Parasol Goddess.
     title: 'Uṣṇīṣa Sitātapatrā Hṛdaya',
   },

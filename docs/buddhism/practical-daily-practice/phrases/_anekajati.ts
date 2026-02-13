@@ -4,6 +4,7 @@
  */
 
 export default {
+  path: import.meta.url,
   sanskrit: {
     children: [
       'अनेकजातिसंसारं । सन्धाविस्सं अनिब्बिसं । गहकारं गवेसन्तो । दुक्खा जाति पुनप्पुनं',
@@ -19,14 +20,6 @@ export default {
       'anekajāti saṃsāraṃ । sandhāvissaṃ anibbisaṃ । gahakārakaṁ gavesanto । dukkhā jāti punappunaṃ',
       'gahakāraka diṭṭhosi । puna gehaṃ na kāhasi । sabbā te phāsukā bhaggā । gahakūṭaṃ visaṅkhataṃ । visaṅkhāra gataṃ cittaṃ । taṇhānaṃ khayamajjhagā',
     ],
-    speech: [
-      'an-ekajati samsaram, sandhawisam anibisam',
-      'gahakarakam ga-w-santo, duka jati punapunam',
-      '',
-      'gahakaraka dithosi, puna g-hamm na kahasi',
-      'sabba t pasuka bhagga, gahakutam wisankatam',
-      'wisankara gatam cittam, tanhanam kayamajaga',
-    ].join(', '),
     title: 'Anekajāti Gāthā',
     unify: 1,
   },

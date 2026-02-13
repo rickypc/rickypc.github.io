@@ -87,21 +87,6 @@ export function useResize(delay = 250) {
 export const useSafeLayoutEffect = typeof (window) !== 'undefined' ? useLayoutEffect : useEffect;
 
 /**
- * Detects if speech synthesis is ready during page load.
- * @returns {[boolean]} React tuple: [ready].
- */
-export function useSpeech() {
-  const [ready, setReady] = useState<boolean>();
-
-  useEffect(() => {
-    setReady(typeof (speechSynthesis) !== 'undefined' && typeof (SpeechSynthesisUtterance) !== 'undefined');
-    // return none.
-  }, []);
-
-  return [ready];
-}
-
-/**
  * Detects if a DOM ref is visible using IntersectionObserver.
  * @param {object} [options] - Options for visibility detection.
  * @param {object} [options.ref] - React ref to observe (default: useRef()).

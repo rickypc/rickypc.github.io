@@ -35,11 +35,10 @@ export default {
     title: 'ཀརྨ་རྒྱལ་ལྷ',
   },
   translation: {
-    title: 'Monastery Protector Primary',
+    title: 'Monastery Protector Essence (Heart)',
   },
   transliteration: {
     children: 'oṃ saṃghārāma siddhi hūṃ',
-    speech: 'oum samgarama siddhi houm',
     title: 'Saṃghārāma Hṛdaya',
   },
 };

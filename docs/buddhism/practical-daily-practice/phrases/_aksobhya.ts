@@ -23,7 +23,6 @@ export default {
   },
   transliteration: {
     children: 'oṃ kaṃkaṇi kaṃkaṇi । rocani rocani । troṭani troṭani । trāsani trāsani । pratihana pratihana । sarva karma paramparāṇi me sarva sattvānāñca svāhā',
-    speech: 'oum kamkani kamkani, rocani rocani, trotani trotani, trasani trasani, pratihana pratihana, sarwa karma paramparani mei sarwa sattwananca swaha',
     title: 'Akṣobhya Dhāraṇī',
   },
 };

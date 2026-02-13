@@ -16,6 +16,7 @@ export default {
     },
     title: 'Suññatā',
   },
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ स्वभाव शुद्धाः सर्व धर्माः स्वभाव शुद्धो ऽहं',
     siddham: {
@@ -34,7 +35,6 @@ export default {
   transliteration: {
     children: 'oṃ svabhāva śuddhā sarva dharmāḥ svabhāva śuddho \'ham',
     repetition: 7,
-    speech: 'oum swabawa suddha sarwa dharmah swabawa suddho hamm',
     title: 'Śūnyatā',
   },
 };

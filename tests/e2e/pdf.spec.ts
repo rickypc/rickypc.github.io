@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { readdirSync } from 'node:fs';
 import { expect, hasPdf, test } from './helper';
 
-test.describe('isolated tests', () => {
+test.describe('pdf isolated tests', () => {
   const pdfDir = join(__dirname, '..', '..', 'build', 'pdf');
   const files = readdirSync(pdfDir).filter((file) => file.endsWith('.pdf'));
   const pages: Record<string, number> = {

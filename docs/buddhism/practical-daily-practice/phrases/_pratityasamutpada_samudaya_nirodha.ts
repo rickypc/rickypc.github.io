@@ -4,6 +4,7 @@
  */
 
 export default {
+  path: import.meta.url,
   sanskrit: {
     children: [
       'अविज्जा-पच्चया संखारा । संखार-पच्चया विज्ञाणं',
@@ -45,23 +46,6 @@ export default {
       'jāti nirodhā jarā maraṇaṁ soka parideva dukkha domanassupāyāsā nirujjhanti',
       'evametassa kevalassa dukkhakhandhassa nirodho hoti',
     ],
-    speech: [
-      'awija paccaya sankara, sankara paccaya winyanam',
-      'winyana paccaya namarupam, nama rupa paccaya salayatanam',
-      'salayatana paccaya passo, pasa paccaya w-da-na',
-      'w-da-na paccaya tanha, tanha paccaya upadanam',
-      'upadana paccaya bhawo, bhawa paccaya jati',
-      'jati paccaya jara maranam soka pari dewa duka domanasupayasa sambawanti',
-      'ewa-mei-tasa qe-wa-lasa dukakandasa samudayo hoti',
-      '',
-      'awijayat-w-wa ase-sa wiraga nirodha sankara nirodho, sankara nirodha winyana nirodho',
-      'winyana nirodha namarupa nirodho, namarupa nirodha salayatana nirodho',
-      'salayatana nirodha pasa nirodho, pasa nirodha w-da-na nirodho',
-      'w-da-na nirodha tanha nirodho, tanha nirodha upadana nirodho',
-      'upadana nirodha bhawa nirodho, bhawa nirodha jati nirodho',
-      'jati nirodha jara maranam soka pari dewa duka domanasupayasa nirujanti',
-      'ewa-mei-tasa qe-wa-lasa dukakandasa nirodho hoti',
-    ].join(', '),
     title: 'Pratītyasamutpāda Samudaya Nirodha',
     unify: 1,
   },

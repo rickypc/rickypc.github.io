@@ -31,7 +31,6 @@ export default {
   transliteration: {
     children: 'oṃ dhara dhara dhīre dhīre dhuru dhuru iṭṭe viṭṭe । cale cale । pracale pracale । kusume kusumavare । ili mili viṭi । citti jvālaṃ āpanāya । parama śuddhasattva mahā kāruṇika svāhā',
     repetition: 3,
-    speech: 'oum, dhara dhara, dhire dhire, dhuru dhuru, it-t wi-t, cale cale, pracale pracale, kusume, kusuma wa-re, ili mili witi, citti jwalam apanaya, parama suddha sattwa, maha karunika swaha',
     // The eleven-faced lord of the world (Avalokiteśvara).
     title: 'Ekādaśamukhalokeśvara',
   },

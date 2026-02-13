@@ -23,11 +23,10 @@ export default {
     title: 'རྡོ་རྗེ་འཆང',
   },
   translation: {
-    title: 'Diamond Holder Primary',
+    title: 'Diamond Holder Essence (Heart)',
   },
   transliteration: {
     children: 'oṃ āḥ vajradhara siddhi hūṃ hūṃ । oṃ vajrayoginī hūṃ phaṭ svāhā',
-    speech: 'oum, ah, wajradhara siddhi houm houm, oum wajrayogini houm patt swaha',
     title: 'Vajradhara Hṛdaya',
   },
 };

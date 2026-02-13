@@ -12,7 +12,7 @@ export default {
     children: 'oṃ tāre tuttāre ture svāhā',
     sinhala: {
       children: 'ඕං තාරේ තුත්තරේ තුරේ ස්වාහා',
-      title: 'ආරිය තාරා',
+      title: 'ආර්ය තාරා',
     },
     title: 'Ariya Tārā',
   },
@@ -21,7 +21,7 @@ export default {
     children: 'ॐ तारे तुत्तारे तुरे सोहा',
     siddham: {
       children: '𑖌𑖼 𑖝𑖯𑖨𑖸 𑖝𑗜𑖝𑖿𑖝𑖯𑖨𑖸 𑖝𑗜𑖨𑖸 𑖭𑖿𑖪𑖯𑖮𑖯',
-      title: '𑖁𑖨𑖿𑖧𑖝𑖯𑖨',
+      title: '𑖀𑖨𑖺𑖬𑖝𑖯𑖨',
     },
     title: 'आर्यतारा',
   },
@@ -35,13 +35,12 @@ export default {
     title: 'སྒྲོལ་ལྗང',
   },
   translation: {
-    title: 'Noble Tārā Primary',
+    title: 'Noble Tārā Essence (Heart)',
   },
   transliteration: {
     children: 'oṃ tāre tuttāre ture svāhā',
     className: 'phrase--green',
     repetition: 21,
-    speech: 'oum tare tu tare ture swaha',
     title: 'Āryatārā Hṛdaya',
   },
 };

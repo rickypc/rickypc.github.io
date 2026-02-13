@@ -20,7 +20,6 @@ export default {
   },
   transliteration: {
     children: 'a āḥ śa sa ma ha',
-    speech: 'a ah sha sa ma ha',
     // Six Spaces of Samantabhadra.
     title: 'Ṣaḍja Mukta',
   },

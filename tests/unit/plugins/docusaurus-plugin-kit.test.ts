@@ -22,6 +22,8 @@ import {
 } from 'cli-progress';
 import { createWriteStream } from 'node:fs';
 import { DEFAULT_CONFIG_FILE_NAME, getFileCommitDate, loadFreshModule } from '@docusaurus/utils';
+import { execSync, spawn } from 'node:child_process';
+import { EventEmitter } from 'node:events';
 import { join } from 'node:path';
 import { type PluginOptions } from '@docusaurus/plugin-sitemap';
 import { process } from 'beasties';
@@ -44,10 +46,17 @@ type SitemapItem = SitemapItems[number];
 
 const accessMock = jest.mocked(access);
 const createWriteStreamMock = jest.mocked(createWriteStream);
+const execSyncMock = jest.mocked(execSync);
 // eslint-disable-next-line no-unused-vars
 const readdirMock = jest.mocked(readdir as unknown as (path: any) => Promise<string[]>);
 const siteConfig = { title: 'site-title', url: 'https://example.com' };
+const spawnMock = jest.mocked(spawn);
 const statMock = jest.mocked(stat);
+
+jest.mock('node:child_process', () => ({
+  execSync: jest.fn(),
+  spawn: jest.fn(),
+}));
 
 jest.mock('node:fs', () => {
   const original = jest.requireActual('node:fs');
@@ -138,15 +147,32 @@ const makeTemplate = (title: string) => jest.fn(async (path) => ({
 
 const name = 'docusaurus-plugin-kit';
 
+jest.mock('#buddhism/media/audio/_index', () => [
+  ['model', '#lib/path/one.md'],
+  ['model', '#lib/path/_ricky_huang.md'],
+]);
+jest.mock('#buddhism/media/pdf/_index', () => [
+  ['base', '#lib/path/one.md'],
+  ['book', '#lib/path/_ricky_huang.md'],
+]);
 ['base', 'book', 'condensed', 'roll', 'thangka', 'wheel']
-  .forEach((template) => jest.mock(`#buddhism/pdf/templates/_${template}`, () => makeTemplate(template)));
-jest.mock('#buddhism/pdf/_index', () => [['base', '#lib/path/one.md'], ['book', '#lib/path/two.md']]);
-jest.mock('#root/src/data/common', () => ({
-  fileName: (path: string, template: string) => `${template}-${path.replace(/[^a-z0-9]/gi, '')}`,
-}));
+  .forEach((template) => jest.mock(`#buddhism/media/pdf/templates/_${template}`, () => makeTemplate(template)));
+jest.mock('#lib/path/one.md', () => ({
+  transliteration: {
+    children: 'One',
+    title: 'One',
+  },
+}), { virtual: true });
+jest.mock('#lib/path/_ricky_huang.md', () => ({
+  transliteration: {
+    children: 'Two',
+    title: 'Two',
+  },
+}), { virtual: true });
 
 // Sync.
-const pdf = require('#buddhism/pdf/_index');
+const audio = require('#buddhism/media/audio/_index');
+const pdf = require('#buddhism/media/pdf/_index');
 // eslint-disable-next-line import/no-dynamic-require
 const Plugin = require(`@site/src/plugins/${name}`);
 
@@ -168,9 +194,24 @@ describe(`plugins.${name}`, () => {
 
       expect(spy).not.toHaveBeenCalled();
 
-      const appended = result.slice(defaultItems.length);
-      expect(appended).toHaveLength(pdf.length);
-      appended.forEach((item: SitemapItem) => {
+      const audioStart = defaultItems.length;
+      // After audioStart assignment.
+      const audioEnd = audioStart + audio.length;
+      const audios = result.slice(audioStart, audioEnd);
+      const pdfs = result.slice(audioEnd);
+
+      expect(audios).toHaveLength(audio.length);
+      expect(pdfs).toHaveLength(pdf.length);
+
+      audios.forEach((item: SitemapItem) => {
+        const normalized = item.url.replace(/^(https?:)\/+/, '$1//');
+        expect(normalized.startsWith('https://mysite.test/audio/')).toBeTruthy();
+        expect(normalized.endsWith('.m4a')).toBeTruthy();
+        expect(item.lastmod).toBe('2025-10-01');
+        expect(item).toMatchObject({ changefreq: 'weekly', priority: 0.5 });
+      });
+
+      pdfs.forEach((item: SitemapItem) => {
         const normalized = item.url.replace(/^(https?:)\/+/, '$1//');
         expect(normalized.startsWith('https://mysite.test/pdf/')).toBeTruthy();
         expect(normalized.endsWith('.pdf')).toBeTruthy();
@@ -197,7 +238,7 @@ describe(`plugins.${name}`, () => {
 
       expect(spy).toHaveBeenCalledTimes(3);
       expect(spy).toHaveBeenNthCalledWith(1, '\x1B[31mPlease commit these files so lastmod dates can be generated correctly:');
-      expect(spy).toHaveBeenNthCalledWith(2, '- #lib/path/one.md\n- #lib/path/two.md');
+      expect(spy).toHaveBeenNthCalledWith(2, '- audio: #lib/path/one.md\n- audio: #lib/path/_ricky_huang.md\n- pdf: #lib/path/one.md\n- pdf: #lib/path/_ricky_huang.md');
       expect(spy).toHaveBeenNthCalledWith(3, '');
 
       spy.mockRestore();
@@ -238,6 +279,287 @@ describe(`plugins.${name}`, () => {
     });
   });
 
+  describe('generateAudio', () => {
+    const { length } = audio;
+    const out = `${name}-test-out`;
+    const siteDir = tmpdir();
+    // After siteDir assignment.
+    const outDir = join(siteDir, out);
+
+    test('logs error and returns early when Piper is missing', async () => {
+      const consoleMock = jest.spyOn(console, 'error')
+        .mockImplementation(() => {});
+      execSyncMock.mockReturnValueOnce('');
+
+      await Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
+
+      expect(barUpdate).not.toHaveBeenCalled();
+      expect(consoleMock).toHaveBeenCalledWith(
+        expect.stringContaining('Piper not found'),
+      );
+      expect(create).not.toHaveBeenCalled();
+      expect(spawnMock).not.toHaveBeenCalled();
+    });
+
+    test('writes audio files and updates progress bar once per m4a', async () => {
+      const beforeIncrements = increment.mock.calls.length;
+      const ffmpeg = new EventEmitter() as any;
+      ffmpeg.end = jest.fn();
+      ffmpeg.kill = jest.fn();
+      ffmpeg.stdin = ffmpeg;
+      const piper = new EventEmitter() as any;
+      piper.kill = jest.fn();
+      piper.pipe = jest.fn((stream) => stream);
+      piper.stdout = piper;
+
+      execSyncMock.mockReturnValueOnce('1.2.3');
+      // 2 files.
+      spawnMock
+        .mockReturnValueOnce(ffmpeg)
+        .mockReturnValueOnce(piper)
+        .mockReturnValueOnce(ffmpeg)
+        .mockReturnValueOnce(piper);
+
+      const promise = Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
+      setTimeout(() => {
+        piper.emit('close', 0);
+        ffmpeg.emit('close', 0);
+      }, 50);
+      await promise;
+
+      expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
+      expect(barsUpdate).toHaveBeenCalledTimes(length + 3);
+      expect(create).toHaveBeenCalledWith(
+        1,
+        0,
+        { color: '\x1B[35m', task: 'Map Tracks' },
+        { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
+      );
+      expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
+      expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
+      expect(setTotal).toHaveBeenCalledWith(length);
+      expect(spawnMock).toHaveBeenCalledTimes(4);
+      expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(2, 'python', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(4, 'python', expect.any(Array));
+      expect(stop).toHaveBeenCalledTimes(1);
+    });
+
+    test('skip recent audio files, but updates progress bar once per m4a', async () => {
+      const beforeIncrements = increment.mock.calls.length;
+      const ffmpeg = new EventEmitter() as any;
+      ffmpeg.end = jest.fn();
+      ffmpeg.kill = jest.fn();
+      ffmpeg.stdin = ffmpeg;
+      const now = Date.now();
+      const piper = new EventEmitter() as any;
+      piper.kill = jest.fn();
+      piper.pipe = jest.fn((stream) => stream);
+      piper.stdout = piper;
+
+      accessMock.mockResolvedValueOnce(undefined);
+      execSyncMock.mockReturnValueOnce('1.2.3');
+      statMock.mockImplementation((path) => Promise.resolve({
+        mtimeMs: String(path).includes('/audio/') ? now : 50,
+      } as Stats));
+
+      await Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
+
+      expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
+      expect(barsUpdate).toHaveBeenCalledTimes(length + 3);
+      expect(create).toHaveBeenCalledWith(
+        1,
+        0,
+        { color: '\x1B[35m', task: 'Map Tracks' },
+        { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
+      );
+      expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
+      expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
+      expect(setTotal).toHaveBeenCalledTimes(1);
+      expect(spawnMock).not.toHaveBeenCalled();
+      expect(stop).toHaveBeenCalledTimes(1);
+
+      statMock.mockImplementation(() => Promise.resolve(undefined as any));
+    });
+
+    test('logs error when piper exits non-zero', async () => {
+      const beforeIncrements = increment.mock.calls.length;
+      const consoleMock = jest.spyOn(console, 'error')
+        .mockImplementation(() => {});
+      const ffmpeg = new EventEmitter() as any;
+      ffmpeg.end = jest.fn();
+      ffmpeg.kill = jest.fn();
+      ffmpeg.stdin = ffmpeg;
+      const piper = new EventEmitter() as any;
+      piper.kill = jest.fn();
+      piper.pipe = jest.fn((stream) => stream);
+      piper.stdout = piper;
+
+      execSyncMock.mockReturnValueOnce('1.2.3');
+      // 2 files.
+      spawnMock
+        .mockReturnValueOnce(ffmpeg)
+        .mockReturnValueOnce(piper)
+        .mockReturnValueOnce(ffmpeg)
+        .mockReturnValueOnce(piper);
+
+      const promise = Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
+      setTimeout(() => {
+        // Throw error first.
+        piper.emit('error', new Error('error'));
+        piper.emit('close', 1);
+        ffmpeg.emit('close', 0);
+      }, 50);
+      await promise;
+      expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
+      expect(barsUpdate).toHaveBeenCalledTimes(length + 3);
+      expect(consoleMock).toHaveBeenCalledTimes(2);
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        1,
+        expect.stringMatching(/Failed writing .*\.m4a:/),
+        expect.objectContaining({ message: 'piper error' }),
+      );
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        2,
+        expect.stringMatching(/Failed writing .*\.m4a:/),
+        expect.objectContaining({ message: 'piper error' }),
+      );
+      expect(create).toHaveBeenCalledWith(
+        1,
+        0,
+        { color: '\x1B[35m', task: 'Map Tracks' },
+        { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
+      );
+      expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
+      expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
+      expect(setTotal).toHaveBeenCalledWith(length);
+      expect(spawnMock).toHaveBeenCalledTimes(4);
+      expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(2, 'python', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(4, 'python', expect.any(Array));
+      expect(stop).toHaveBeenCalledTimes(1);
+    });
+
+    test('logs error when ffmpeg exits non-zero', async () => {
+      const beforeIncrements = increment.mock.calls.length;
+      const consoleMock = jest.spyOn(console, 'error')
+        .mockImplementation(() => {});
+      const ffmpeg = new EventEmitter() as any;
+      ffmpeg.end = jest.fn();
+      ffmpeg.kill = jest.fn();
+      ffmpeg.stdin = ffmpeg;
+      const piper = new EventEmitter() as any;
+      piper.kill = jest.fn();
+      piper.pipe = jest.fn((stream) => stream);
+      piper.stdout = piper;
+
+      execSyncMock.mockReturnValueOnce('1.2.3');
+      // 2 files.
+      spawnMock
+        .mockReturnValueOnce(ffmpeg)
+        .mockReturnValueOnce(piper)
+        .mockReturnValueOnce(ffmpeg)
+        .mockReturnValueOnce(piper);
+
+      const promise = Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
+      setTimeout(() => {
+        // Throw error first.
+        ffmpeg.emit('error', new Error('error'));
+        ffmpeg.emit('close', 1);
+        piper.emit('close', 0);
+      }, 50);
+      await promise;
+      expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
+      expect(barsUpdate).toHaveBeenCalledTimes(length + 3);
+      expect(consoleMock).toHaveBeenCalledTimes(2);
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        1,
+        expect.stringMatching(/Failed writing .*\.m4a:/),
+        expect.objectContaining({ message: 'ffmpeg error' }),
+      );
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        2,
+        expect.stringMatching(/Failed writing .*\.m4a:/),
+        expect.objectContaining({ message: 'ffmpeg error' }),
+      );
+      expect(create).toHaveBeenCalledWith(
+        1,
+        0,
+        { color: '\x1B[35m', task: 'Map Tracks' },
+        { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
+      );
+      expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
+      expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
+      expect(setTotal).toHaveBeenCalledWith(length);
+      expect(spawnMock).toHaveBeenCalledTimes(4);
+      expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(2, 'python', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(4, 'python', expect.any(Array));
+      expect(stop).toHaveBeenCalledTimes(1);
+    });
+
+    test('logs error when piping fails', async () => {
+      const beforeIncrements = increment.mock.calls.length;
+      const consoleMock = jest.spyOn(console, 'error')
+        .mockImplementation(() => {});
+      const ffmpeg = new EventEmitter() as any;
+      ffmpeg.end = jest.fn();
+      ffmpeg.kill = jest.fn();
+      ffmpeg.stdin = ffmpeg;
+      const piper = new EventEmitter() as any;
+      piper.kill = jest.fn();
+      piper.pipe = jest.fn((stream) => stream);
+      piper.stdout = piper;
+
+      execSyncMock.mockReturnValueOnce('1.2.3');
+      // 2 files.
+      spawnMock
+        .mockReturnValueOnce(ffmpeg)
+        .mockReturnValueOnce(piper)
+        .mockReturnValueOnce(ffmpeg)
+        .mockReturnValueOnce(piper);
+
+      const promise = Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
+      setTimeout(() => {
+        // Throw error first.
+        piper.stdout.emit('error', new Error('error'));
+        ffmpeg.emit('close', 0);
+      }, 50);
+      await promise;
+      expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
+      expect(barsUpdate).toHaveBeenCalledTimes(length + 3);
+      expect(consoleMock).toHaveBeenCalledTimes(2);
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        1,
+        expect.stringMatching(/Failed writing .*\.m4a:/),
+        expect.objectContaining({ message: 'piper error' }),
+      );
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        2,
+        expect.stringMatching(/Failed writing .*\.m4a:/),
+        expect.objectContaining({ message: 'piper error' }),
+      );
+      expect(create).toHaveBeenCalledWith(
+        1,
+        0,
+        { color: '\x1B[35m', task: 'Map Tracks' },
+        { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
+      );
+      expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
+      expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
+      expect(setTotal).toHaveBeenCalledWith(length);
+      expect(spawnMock).toHaveBeenCalledTimes(4);
+      expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(2, 'python', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(4, 'python', expect.any(Array));
+      expect(stop).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('generatePdf', () => {
     const { length } = pdf;
     const out = `${name}-test-out`;
@@ -254,7 +576,7 @@ describe(`plugins.${name}`, () => {
       expect(barUpdate).not.toHaveBeenCalled();
       expect(barsUpdate).toHaveBeenCalledTimes(4);
       expect(mkdir).toHaveBeenCalledWith(join(outDir, 'pdf'), { recursive: true });
-      expect(create).toHaveBeenCalledWith(length, 0, { color: '\x1B[34m', task: 'Create PDF' });
+      expect(create).toHaveBeenCalledWith(length, 0, { color: '\x1B[34m', task: 'Make PDF  ' });
       expect(createWriteStreamMock.mock.calls.length - beforeWrites).toBe(length);
       expect(increment.mock.calls.length - beforeIncrements).toBe(length);
       expect(setTotal).not.toHaveBeenCalled();
@@ -275,13 +597,37 @@ describe(`plugins.${name}`, () => {
       expect(barUpdate).not.toHaveBeenCalled();
       expect(barsUpdate).toHaveBeenCalledTimes(4);
       expect(mkdir).toHaveBeenCalledWith(join(outDir, 'pdf'), { recursive: true });
-      expect(create).toHaveBeenCalledWith(length, 0, { color: '\x1B[34m', task: 'Create PDF' });
+      expect(create).toHaveBeenCalledWith(length, 0, { color: '\x1B[34m', task: 'Make PDF  ' });
       expect(createWriteStreamMock.mock.calls.length - beforeWrites).toBe(0);
       expect(increment.mock.calls.length - beforeIncrements).toBe(length);
       expect(setTotal).not.toHaveBeenCalled();
       expect(stop).toHaveBeenCalledTimes(1);
 
       statMock.mockImplementation(() => Promise.resolve(undefined as any));
+    });
+
+    test('logs an error when PDF writing fails', async () => {
+      const consoleMock = jest.spyOn(console, 'error')
+        .mockImplementation(() => {});
+      createWriteStreamMock.mockImplementationOnce(() => {
+        throw new Error('error');
+      }).mockImplementationOnce(() => {
+        throw new Error('error');
+      });
+
+      await Plugin.generatePdf({ outDir, siteConfig, siteDir }, MultiBar());
+
+      expect(consoleMock).toHaveBeenCalledTimes(2);
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        1,
+        expect.stringMatching(/Failed writing .*\.pdf:/),
+        expect.objectContaining({ message: 'error' }),
+      );
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        2,
+        expect.stringMatching(/Failed writing .*\.pdf:/),
+        expect.objectContaining({ message: 'error' }),
+      );
     });
   });
 
@@ -316,9 +662,9 @@ describe(`plugins.${name}`, () => {
 
   describe('lastModified', () => {
     test.each([
-      ['file-success', { mtimeMs: 123456789 }, 123456789],
-      ['file-failure', new Error('ENOENT'), 0],
-    ])('path=%s -> expected=%s', async (path, statReturn, expected) => {
+      ['file-success', 123456789, { mtimeMs: 123456789 }],
+      ['file-failure', 0, new Error('ENOENT')],
+    ])('path=%s -> expected=%s', async (path, expected, statReturn) => {
       statMock[`mock${statReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](statReturn as Stats);
 
       await expect(Plugin.lastModified(path)).resolves.toBe(expected);
@@ -359,51 +705,65 @@ describe(`plugins.${name}`, () => {
 
     test('runs generatePdf and inlineAboveFold concurrently when trailingSlash is true', async () => {
       const ctx = { ...base, siteConfig: { trailingSlash: true } };
+      execSyncMock.mockReturnValueOnce('1.2.3');
       readdirMock.mockResolvedValue(['file1.html', 'file2.html']);
 
       await Plugin.postBuild(ctx);
 
+      // generateAudio.
+      expect(mkdir).toHaveBeenNthCalledWith(1, join(ctx.outDir, 'audio'), { recursive: true });
+      expect(spawnMock.mock.calls).toHaveLength(audio.length * 2);
+
       // generatePdf.
-      expect(mkdir).toHaveBeenCalledWith(join(ctx.outDir, 'pdf'), { recursive: true });
+      expect(mkdir).toHaveBeenNthCalledWith(2, join(ctx.outDir, 'pdf'), { recursive: true });
       expect(createWriteStreamMock.mock.calls).toHaveLength(pdf.length);
 
       // inlineAboveFold.
       expect(process).toHaveBeenCalledTimes(1);
-      expect(readFile).toHaveBeenCalledTimes(3);
+      expect(readFile).toHaveBeenCalledTimes(2);
+      expect(readFile).toHaveBeenNthCalledWith(1, join(ctx.outDir, 'file1.html'), 'utf8');
+      expect(readFile).toHaveBeenNthCalledWith(2, join(ctx.outDir, 'file2.html'), 'utf8');
       // Assert writeFile called only for file1 (file2 already had beasties marker).
       expect(writeFile).toHaveBeenCalledTimes(1);
-      expect(writeFile).toHaveBeenCalledWith('out/file1.html', expect.stringContaining('data-beasties-container'), 'utf8');
+      expect(writeFile).toHaveBeenCalledWith(join(ctx.outDir, 'file1.html'), expect.stringContaining('data-beasties-container'), 'utf8');
     });
 
     test('skips inlineAboveFold when trailingSlash is false', async () => {
+      execSyncMock.mockReturnValueOnce('1.2.3');
+
       await Plugin.postBuild(base);
 
+      // generateAudio.
+      expect(mkdir).toHaveBeenNthCalledWith(1, join(base.outDir, 'audio'), { recursive: true });
+      expect(spawnMock.mock.calls).toHaveLength(audio.length * 2);
+
       // generatePdf.
-      expect(mkdir).toHaveBeenCalledWith(join(base.outDir, 'pdf'), { recursive: true });
+      expect(mkdir).toHaveBeenNthCalledWith(2, join(base.outDir, 'pdf'), { recursive: true });
       expect(createWriteStreamMock.mock.calls).toHaveLength(pdf.length);
 
       // inlineAboveFold.
       expect(process).not.toHaveBeenCalled();
-      expect(readFile).toHaveBeenCalledTimes(1);
+      expect(readFile).not.toHaveBeenCalled();
       expect(writeFile).not.toHaveBeenCalled();
     });
   });
 
   describe('stale', () => {
     const siteDir = '/root';
-
     test.each([
       // Target does not exist -> stale.
-      ['non-existent target', new Error('ENOENT'), [], true],
+      ['non-existent target', true, new Error('ENOENT'), []],
       // Data newer than target -> stale.
-      ['data newer than target', undefined, [200, 100, 50], true],
+      ['data newer than target', true, undefined, [200, 100, 50, 50]],
+      // Model newer than target -> stale.
+      ['model newer than target', true, undefined, [50, 100, 200, 50]],
       // Template newer than target -> stale.
-      ['template newer than target', undefined, [50, 100, 200], true],
+      ['template newer than target', true, undefined, [50, 100, 50, 200]],
       // Target older than cutoff -> stale.
-      ['target older than cutoff', undefined, [50, Date.now() - 8 * Plugin.MS_PER_DAY, 50], true],
+      ['target older than cutoff', true, undefined, [50, Date.now() - 8 * Plugin.MS_PER_DAY, 50, 50]],
       // Target fresh -> not stale.
-      ['target fresh', undefined, [50, Date.now(), 50], false],
-    ])('%s -> expected=%s', async (scenario, accessReturn, stats, expected) => {
+      ['target fresh', false, undefined, [50, Date.now(), 50, 50]],
+    ])('%s -> expected=%s', async (scenario, expected, accessReturn, stats) => {
       accessMock[`mock${accessReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](accessReturn);
       // Mock stat results in order: data, target, template.
       statMock.mockImplementation(() => {
@@ -416,6 +776,7 @@ describe(`plugins.${name}`, () => {
 
       await expect(Plugin.stale({
         data: '@data/file.txt',
+        model: 'modelName',
         siteDir,
         template: 'templateName',
         target: 'target.pdf',
@@ -429,7 +790,8 @@ describe(`plugins.${name}`, () => {
     test('configureWebpack returns expected shape and includes Fontaine transform', () => {
       const plugin = Plugin.default({ outDir: 'out' });
       const cw = plugin.configureWebpack({}, false);
-      expect(cw.devServer.static[0].publicPath).toBe('/pdf');
+      expect(cw.devServer.static[0].publicPath).toBe('/audio');
+      expect(cw.devServer.static[1].publicPath).toBe('/pdf');
       expect(cw.plugins).toEqual(expect.arrayContaining([expect.objectContaining({
         __fontaine_opts: expect.any(Object),
       })]));
@@ -460,6 +822,7 @@ describe(`plugins.${name}`, () => {
 
       expect(loadFreshModule).toHaveBeenCalled();
       expect(createWriteStreamMock.mock.calls.length - beforeWrites).toEqual(pdf.length);
+      expect(spawnMock).toHaveBeenCalledTimes(audio.length * 2);
     });
 
     test('extendCli action: default args and falsy cliSiteDir fallback behave independently', async () => {
@@ -473,6 +836,8 @@ describe(`plugins.${name}`, () => {
       const beforeA = createWriteStreamMock.mock.calls.length;
       await actionsA.action?.(undefined, undefined);
       expect(createWriteStreamMock.mock.calls.length - beforeA).toEqual(pdf.length);
+      expect(spawnMock).toHaveBeenCalledTimes(audio.length * 2);
+      spawnMock.mockClear();
 
       // Falsy cliSiteDir -> fallback to context.siteDir and default filenames.
       const context = { siteDir: '/fallback/context/site' };
@@ -485,6 +850,7 @@ describe(`plugins.${name}`, () => {
       await actionsB.action?.('', {});
       expect(loadFreshModule).toHaveBeenCalledWith(join(context.siteDir, DEFAULT_CONFIG_FILE_NAME));
       expect(createWriteStreamMock.mock.calls.length - beforeB).toEqual(pdf.length);
+      expect(spawnMock).toHaveBeenCalledTimes(audio.length * 2);
     });
   });
 });

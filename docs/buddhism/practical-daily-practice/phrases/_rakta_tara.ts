@@ -19,13 +19,12 @@ export default {
     title: 'སྒྲོལ་མ་དམར་མོ',
   },
   translation: {
-    title: 'Red Tārā Primary',
+    title: 'Red Tārā Essence (Heart)',
   },
   transliteration: {
     children: 'oṃ tāre tāṃ svāhā',
     className: 'phrase--red',
     repetition: 21,
-    speech: 'oum tare tamm swaha',
     title: 'Raktatārā Hṛdaya',
   },
 };

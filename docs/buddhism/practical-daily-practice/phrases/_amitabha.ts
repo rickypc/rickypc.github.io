@@ -23,11 +23,10 @@ export default {
     title: 'འོད་དཔག་མེད',
   },
   translation: {
-    title: 'Infinite Light Primary',
+    title: 'Infinite Light Essence (Heart)',
   },
   transliteration: {
     children: 'oṃ amitābha hrīḥ',
-    speech: 'oum amitaba, hrih',
     title: 'Amitābha Hṛdaya',
   },
 };

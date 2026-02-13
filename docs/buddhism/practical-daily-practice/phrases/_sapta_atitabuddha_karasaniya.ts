@@ -24,7 +24,6 @@ export default {
   },
   transliteration: {
     children: 'ripa ripate kuhā kuhāte traṇite ṇigalate vimarite mahāgate jaṃlaṃcaṃte svāhā',
-    speech: 'ripa ripa-t, kuha kuha-t, trani-t, nigala-t, wimari-t, maha ga-t, jamlam cam-t, swaha',
     title: 'Sapta Atītabuddha Karasaniya',
   },
 };

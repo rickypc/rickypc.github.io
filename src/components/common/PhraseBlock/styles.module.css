@@ -45,6 +45,10 @@
   border-left: 0.35rem solid var(--ifm-color-danger-dark);
 }
 
+.lines:global(.phrase--text-green) {
+  color: var(--ifm-color-success-darkest);
+}
+
 .numbers {
   display: table;
   padding: var(--ifm-pre-padding) 0;

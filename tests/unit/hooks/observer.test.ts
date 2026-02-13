@@ -13,7 +13,6 @@ import {
   useMedia,
   usePrint,
   useResize,
-  useSpeech,
   useVisibility,
   useWelcome,
 } from '@site/src/hooks/observer';
@@ -216,42 +215,6 @@ describe('useResize', () => {
       'resize',
       expect.any(Function),
     );
-  });
-});
-
-describe('useSpeech', () => {
-  afterEach(() => {
-    Object.defineProperty(window, 'speechSynthesis', { configurable: true, value: undefined });
-    Object.defineProperty(window, 'SpeechSynthesisUtterance', { configurable: true, value: undefined });
-  });
-
-  test('returns false when both globals are missing', async () => {
-    const { result } = renderHook(() => useSpeech());
-    await waitFor(() => expect(result.current[0]).toBeFalsy());
-  });
-
-  test('returns false when only speechSynthesis is defined', async () => {
-    Object.defineProperty(window, 'speechSynthesis', { configurable: true, value: {} });
-
-    const { result } = renderHook(() => useSpeech());
-    await waitFor(() => expect(result.current[0]).toBeFalsy());
-  });
-
-  test('returns false when only SpeechSynthesisUtterance is defined', async () => {
-    // Dummy constructor.
-    Object.defineProperty(window, 'SpeechSynthesisUtterance', { configurable: true, value() {} });
-
-    const { result } = renderHook(() => useSpeech());
-    await waitFor(() => expect(result.current[0]).toBeFalsy());
-  });
-
-  test('returns true when both speechSynthesis and SpeechSynthesisUtterance are defined', async () => {
-    // Dummy constructor
-    Object.defineProperty(window, 'speechSynthesis', { configurable: true, value: {} });
-    Object.defineProperty(window, 'SpeechSynthesisUtterance', { configurable: true, value() {} });
-
-    const { result } = renderHook(() => useSpeech());
-    await waitFor(() => expect(result.current[0]).toBeTruthy());
   });
 });
 

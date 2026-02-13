@@ -5,7 +5,17 @@
 
 import phrase from '#buddhism/practical-daily-practice/phrases/_mala';
 
-<Phrase {...phrase} {...props} />
+<Phrase
+  instruction={(
+    <>
+      Recite the prayer, gently blow on the&nbsp;
+      <Link href="https://en.wikipedia.org/wiki/Japamala">mālā</Link>
+      &nbsp;and rub it lightly.
+    </>
+  )}
+  {...phrase}
+  {...props}
+/>
 
 <details>
   <summary>

@@ -4,6 +4,7 @@
  */
 
 export default {
+  path: import.meta.url,
   sanskrit: {
     children: 'ॐ सांभारा सांभारा विमानसारा महाजप हूं । ॐ स्मरा स्मरा विमानस्कारा महाजप हूं',
     title: 'जप',
@@ -14,7 +15,6 @@ export default {
   transliteration: {
     children: 'oṃ sambhara sambhara vimānasara mahājapa hūṃ । oṃ smara smara vimānaskara mahājapa hūṃ',
     repetition: 3,
-    speech: 'oum sambara sambara wimanasara maha japa houm, oum smara smara wimanaskara maha japa houm',
     // The prayer blessing.
     title: 'Japa',
   },

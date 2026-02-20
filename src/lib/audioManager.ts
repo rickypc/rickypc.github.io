@@ -12,7 +12,7 @@ class AudioManager {
 
   constructor() {
     this.active = null;
-    this.volume = document.documentElement.dataset.volume === 'silent' ? 0 : 1;
+    this.volume = typeof (document) !== 'undefined' && document.documentElement.dataset.volume === 'silent' ? 0 : 1;
   }
 
   /**

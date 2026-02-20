@@ -26,7 +26,7 @@ import { execSync, spawn } from 'node:child_process';
 import { EventEmitter } from 'node:events';
 import { join } from 'node:path';
 import { type PluginOptions } from '@docusaurus/plugin-sitemap';
-import { process } from 'beasties';
+import { process as beastiesProcess } from 'beasties';
 import { type Stats } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { Writable } from 'node:stream';
@@ -340,9 +340,9 @@ describe(`plugins.${name}`, () => {
       expect(setTotal).toHaveBeenCalledWith(length);
       expect(spawnMock).toHaveBeenCalledTimes(4);
       expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(2, 'python', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(2, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(4, 'python', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(4, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(stop).toHaveBeenCalledTimes(1);
     });
 
@@ -436,9 +436,9 @@ describe(`plugins.${name}`, () => {
       expect(setTotal).toHaveBeenCalledWith(length);
       expect(spawnMock).toHaveBeenCalledTimes(4);
       expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(2, 'python', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(2, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(4, 'python', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(4, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(stop).toHaveBeenCalledTimes(1);
     });
 
@@ -495,9 +495,9 @@ describe(`plugins.${name}`, () => {
       expect(setTotal).toHaveBeenCalledWith(length);
       expect(spawnMock).toHaveBeenCalledTimes(4);
       expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(2, 'python', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(2, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(4, 'python', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(4, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(stop).toHaveBeenCalledTimes(1);
     });
 
@@ -553,9 +553,9 @@ describe(`plugins.${name}`, () => {
       expect(setTotal).toHaveBeenCalledWith(length);
       expect(spawnMock).toHaveBeenCalledTimes(4);
       expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(2, 'python', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(2, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(4, 'python', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(4, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(stop).toHaveBeenCalledTimes(1);
     });
   });
@@ -649,7 +649,7 @@ describe(`plugins.${name}`, () => {
       );
       // Assert increment called thrice (initial scan + once per file).
       expect(increment).toHaveBeenCalledTimes(3);
-      expect(process).toHaveBeenCalledTimes(1);
+      expect(beastiesProcess).toHaveBeenCalledTimes(1);
       expect(readFile).toHaveBeenCalledTimes(2);
       // Assert writeFile called only for file1 (file2 already had beasties marker).
       expect(writeFile).toHaveBeenCalledTimes(1);
@@ -719,7 +719,7 @@ describe(`plugins.${name}`, () => {
       expect(createWriteStreamMock.mock.calls).toHaveLength(pdf.length);
 
       // inlineAboveFold.
-      expect(process).toHaveBeenCalledTimes(1);
+      expect(beastiesProcess).toHaveBeenCalledTimes(1);
       expect(readFile).toHaveBeenCalledTimes(2);
       expect(readFile).toHaveBeenNthCalledWith(1, join(ctx.outDir, 'file1.html'), 'utf8');
       expect(readFile).toHaveBeenNthCalledWith(2, join(ctx.outDir, 'file2.html'), 'utf8');
@@ -742,7 +742,7 @@ describe(`plugins.${name}`, () => {
       expect(createWriteStreamMock.mock.calls).toHaveLength(pdf.length);
 
       // inlineAboveFold.
-      expect(process).not.toHaveBeenCalled();
+      expect(beastiesProcess).not.toHaveBeenCalled();
       expect(readFile).not.toHaveBeenCalled();
       expect(writeFile).not.toHaveBeenCalled();
     });

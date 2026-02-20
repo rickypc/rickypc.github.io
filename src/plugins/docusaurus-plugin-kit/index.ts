@@ -291,7 +291,7 @@ export async function generateAudio(
 ): Promise<void> {
   const generator = `piper:${execSync(
     // Python is whitespace-sensitive; newlines/indent must stay exact.
-    'python -c "from importlib.metadata import version;v=\'\'\ntry: v=version(\'piper-tts\')\nexcept: pass\nprint(v)"',
+    `${process.env.HOME}/.venv/default/bin/python -c "from importlib.metadata import version;v=''\ntry: v=version('piper-tts')\nexcept: pass\nprint(v)"`,
     { encoding: 'utf8' },
   )?.trim()}`;
 
@@ -389,7 +389,7 @@ export async function generateAudio(
             '-c:v', 'mjpeg',
             target,
           ]);
-          const piper = spawn('python', [
+          const piper = spawn(`${process.env.HOME}/.venv/default/bin/python`, [
             '-m', 'piper',
             `--data-dir=${fileResolve(`#root/models/${prefix}/`, siteDir)}`,
             '--model', model,

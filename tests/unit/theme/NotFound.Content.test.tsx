@@ -16,7 +16,6 @@ type Props = {
   navigation?: boolean;
 };
 
-// eslint-disable-next-line no-unused-vars
 const NotFoundContentMock = NotFoundContent as (_: Props) => ReactElement;
 
 jest.unmock('@theme/NotFound/Content');

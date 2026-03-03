@@ -45,6 +45,7 @@ describe('docs.buddhism.media.audio._utterance', () => {
 
   describe('integration', () => {
     test.each([
+      ['a', 'a- .'],
       ['Oṃ āḥ hum', 'om ah hom'],
       ['bha te phat', 'ba, t-e patt'],
       ['me ṅa jjha', 'm-e na ja'],

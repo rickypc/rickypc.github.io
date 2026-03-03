@@ -39,7 +39,6 @@ type Filtered = {
 type ProjectProps = Filtered & {
   hovered: number;
   index: number;
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: ImageProps) => void;
   onHoverEnd: () => void;
   onHoverStart: () => void;
@@ -53,7 +52,6 @@ type TagsProps = {
 
 export type ProjectsProps = {
   filtered: Filtered[];
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: ImageProps) => void;
   open?: ImageProps;
 };

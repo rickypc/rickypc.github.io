@@ -161,8 +161,7 @@ describe('portfolio.Carousel', () => {
 
     test('pauses on mouse enter and resumes on mouse leave', () => {
       jest.useFakeTimers();
-      // eslint-disable-next-line no-unused-vars
-      const ref = createRef<{ setPaused(paused: boolean): void }>();
+      const ref = createRef<{ setPaused(_paused: boolean): void }>();
       const { container } = render(
         <Carousel images={images} onClick={jest.fn()} prefix="p" ref={ref} />,
       );

@@ -34,8 +34,7 @@ const spies = {
 };
 
 describe('useMedia', () => {
-  // eslint-disable-next-line no-unused-vars
-  let mediaQueryListeners: Map<string, (ev: MediaQueryListEvent) => void>;
+  let mediaQueryListeners: Map<string, (_ev: MediaQueryListEvent) => void>;
   let mediaQueryLists: MediaQueryList[];
 
   beforeEach(() => {

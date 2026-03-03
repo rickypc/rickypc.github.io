@@ -27,12 +27,12 @@ import { EventEmitter } from 'node:events';
 import { join } from 'node:path';
 import { type PluginOptions } from '@docusaurus/plugin-sitemap';
 import { process as beastiesProcess } from 'beasties';
+import { ReadableStream } from 'node:stream/web';
 import { type Stats } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { Writable } from 'node:stream';
 
-// eslint-disable-next-line no-unused-vars
-type ActionFn = (arg: unknown, opts: Record<string, unknown> | undefined) => unknown;
+type ActionFn = (_arg: unknown, _opts: Record<string, unknown> | undefined) => unknown;
 
 type CliActions = {
   action?: ActionFn;
@@ -47,8 +47,7 @@ type SitemapItem = SitemapItems[number];
 const accessMock = jest.mocked(access);
 const createWriteStreamMock = jest.mocked(createWriteStream);
 const execSyncMock = jest.mocked(execSync);
-// eslint-disable-next-line no-unused-vars
-const readdirMock = jest.mocked(readdir as unknown as (path: any) => Promise<string[]>);
+const readdirMock = jest.mocked(readdir as unknown as (_path: any) => Promise<string[]>);
 const siteConfig = { title: 'site-title', url: 'https://example.com' };
 const spawnMock = jest.mocked(spawn);
 const statMock = jest.mocked(stat);
@@ -91,6 +90,7 @@ jest.mock('#root/package.json', () => ({
     '@alias/*': 'src/aliased/*',
     '@alias/utils/*': 'src/aliased/utils/*',
     '#lib/*': 'lib/*',
+    '#root/*': '*',
   },
 }));
 
@@ -148,8 +148,9 @@ const makeTemplate = (title: string) => jest.fn(async (path) => ({
 const name = 'docusaurus-plugin-kit';
 
 jest.mock('#buddhism/media/audio/_index', () => [
-  ['model', '#lib/path/one.md'],
-  ['model', '#lib/path/_ricky_huang.md'],
+  ['id_ID-news_tts-medium', '#lib/path/one.md'],
+  ['en_US-hfc_male-medium', '#lib/path/_ricky_huang.md'],
+  ['id_ID-news_tts-medium', '#lib/path/three.md'],
 ]);
 jest.mock('#buddhism/media/pdf/_index', () => [
   ['base', '#lib/path/one.md'],
@@ -167,6 +168,12 @@ jest.mock('#lib/path/_ricky_huang.md', () => ({
   transliteration: {
     children: 'Two',
     title: 'Two',
+  },
+}), { virtual: true });
+jest.mock('#lib/path/three.md', () => ({
+  transliteration: {
+    children: 'Three',
+    title: 'Three',
   },
 }), { virtual: true });
 
@@ -238,7 +245,7 @@ describe(`plugins.${name}`, () => {
 
       expect(spy).toHaveBeenCalledTimes(3);
       expect(spy).toHaveBeenNthCalledWith(1, '\x1B[31mPlease commit these files so lastmod dates can be generated correctly:');
-      expect(spy).toHaveBeenNthCalledWith(2, '- audio: #lib/path/one.md\n- audio: #lib/path/_ricky_huang.md\n- pdf: #lib/path/one.md\n- pdf: #lib/path/_ricky_huang.md');
+      expect(spy).toHaveBeenNthCalledWith(2, '- audio: #lib/path/one.md\n- audio: #lib/path/_ricky_huang.md\n- audio: #lib/path/three.md\n- pdf: #lib/path/one.md\n- pdf: #lib/path/_ricky_huang.md');
       expect(spy).toHaveBeenNthCalledWith(3, '');
 
       spy.mockRestore();
@@ -307,24 +314,27 @@ describe(`plugins.${name}`, () => {
       ffmpeg.end = jest.fn();
       ffmpeg.kill = jest.fn();
       ffmpeg.stdin = ffmpeg;
-      const piper = new EventEmitter() as any;
-      piper.kill = jest.fn();
-      piper.pipe = jest.fn((stream) => stream);
-      piper.stdout = piper;
+      global.fetch = jest.fn().mockResolvedValue({ body: {}, ok: true, status: 200 });
+      const piper1 = new EventEmitter() as any;
+      piper1.kill = jest.fn();
+      piper1.stderr = piper1;
+      const piper2 = new EventEmitter() as any;
+      piper2.kill = jest.fn();
+      piper2.stderr = piper2;
 
       execSyncMock.mockReturnValueOnce('1.2.3');
-      // 2 files.
       spawnMock
+        .mockReturnValueOnce(piper1)
+        .mockReturnValueOnce(piper2)
+        // 3 files.
         .mockReturnValueOnce(ffmpeg)
-        .mockReturnValueOnce(piper)
         .mockReturnValueOnce(ffmpeg)
-        .mockReturnValueOnce(piper);
+        .mockReturnValueOnce(ffmpeg);
 
       const promise = Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
-      setTimeout(() => {
-        piper.emit('close', 0);
-        ffmpeg.emit('close', 0);
-      }, 50);
+      setTimeout(() => piper1.emit('data', Buffer.from('Running on http://127.0.0.1:5001')), 1);
+      setTimeout(() => piper2.emit('data', Buffer.from('Running on http://127.0.0.1:5002')), 2);
+      setTimeout(() => ffmpeg.emit('close', 0), 5);
       await promise;
 
       expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
@@ -336,35 +346,58 @@ describe(`plugins.${name}`, () => {
         { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
       );
       expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
+      expect(global.fetch).toHaveBeenCalledTimes(length);
+      expect(global.fetch).toHaveBeenNthCalledWith(
+        1,
+        'http://127.0.0.1:5001',
+        { body: JSON.stringify({ text: 'one' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' },
+      );
+      expect(global.fetch).toHaveBeenNthCalledWith(
+        2,
+        'http://127.0.0.1:5002',
+        { body: JSON.stringify({ text: 'two' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' },
+      );
+      expect(global.fetch).toHaveBeenNthCalledWith(
+        3,
+        'http://127.0.0.1:5001',
+        { body: JSON.stringify({ text: 'thr-ee' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' },
+      );
       expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
+      expect(piper1.kill).toHaveBeenCalledTimes(1);
+      expect(piper2.kill).toHaveBeenCalledTimes(1);
       expect(setTotal).toHaveBeenCalledWith(length);
-      expect(spawnMock).toHaveBeenCalledTimes(4);
-      expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
+      expect(spawnMock).toHaveBeenCalledTimes(length + 2);
+      expect(spawnMock).toHaveBeenNthCalledWith(1, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(spawnMock).toHaveBeenNthCalledWith(2, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(4, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(4, 'ffmpeg', expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(5, 'ffmpeg', expect.any(Array));
       expect(stop).toHaveBeenCalledTimes(1);
     });
 
     test('skip recent audio files, but updates progress bar once per m4a', async () => {
       const beforeIncrements = increment.mock.calls.length;
-      const ffmpeg = new EventEmitter() as any;
-      ffmpeg.end = jest.fn();
-      ffmpeg.kill = jest.fn();
-      ffmpeg.stdin = ffmpeg;
       const now = Date.now();
-      const piper = new EventEmitter() as any;
-      piper.kill = jest.fn();
-      piper.pipe = jest.fn((stream) => stream);
-      piper.stdout = piper;
+      const piper1 = new EventEmitter() as any;
+      piper1.kill = jest.fn();
+      piper1.stderr = piper1;
+      const piper2 = new EventEmitter() as any;
+      piper2.kill = jest.fn();
+      piper2.stderr = piper2;
 
       accessMock.mockResolvedValueOnce(undefined);
       execSyncMock.mockReturnValueOnce('1.2.3');
+      spawnMock
+        .mockReturnValueOnce(piper1)
+        .mockReturnValueOnce(piper2);
       statMock.mockImplementation((path) => Promise.resolve({
         mtimeMs: String(path).includes('/audio/') ? now : 50,
       } as Stats));
 
-      await Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
+      const promise = Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
+      setTimeout(() => piper1.emit('data', Buffer.from('Running on http://127.0.0.1:5001')), 1);
+      setTimeout(() => piper2.emit('data', Buffer.from('Running on http://127.0.0.1:5002')), 2);
+      await promise;
 
       expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
       expect(barsUpdate).toHaveBeenCalledTimes(length + 3);
@@ -375,55 +408,55 @@ describe(`plugins.${name}`, () => {
         { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
       );
       expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
+      expect(global.fetch).not.toHaveBeenCalled();
       expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
+      expect(piper1.kill).toHaveBeenCalledTimes(1);
+      expect(piper2.kill).toHaveBeenCalledTimes(1);
       expect(setTotal).toHaveBeenCalledTimes(1);
-      expect(spawnMock).not.toHaveBeenCalled();
+      expect(spawnMock).toHaveBeenCalledTimes(2);
+      expect(spawnMock).toHaveBeenNthCalledWith(1, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(2, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(stop).toHaveBeenCalledTimes(1);
 
       statMock.mockImplementation(() => Promise.resolve(undefined as any));
     });
 
-    test('logs error when piper exits non-zero', async () => {
+    test('logs error when piper responded with failure', async () => {
       const beforeIncrements = increment.mock.calls.length;
       const consoleMock = jest.spyOn(console, 'error')
         .mockImplementation(() => {});
-      const ffmpeg = new EventEmitter() as any;
-      ffmpeg.end = jest.fn();
-      ffmpeg.kill = jest.fn();
-      ffmpeg.stdin = ffmpeg;
-      const piper = new EventEmitter() as any;
-      piper.kill = jest.fn();
-      piper.pipe = jest.fn((stream) => stream);
-      piper.stdout = piper;
+      global.fetch = jest.fn().mockResolvedValue({ body: null, ok: false, status: 400 });
+      const piper1 = new EventEmitter() as any;
+      piper1.kill = jest.fn();
+      piper1.stderr = piper1;
+      const piper2 = new EventEmitter() as any;
+      piper2.kill = jest.fn();
+      piper2.stderr = piper2;
 
       execSyncMock.mockReturnValueOnce('1.2.3');
-      // 2 files.
       spawnMock
-        .mockReturnValueOnce(ffmpeg)
-        .mockReturnValueOnce(piper)
-        .mockReturnValueOnce(ffmpeg)
-        .mockReturnValueOnce(piper);
+        .mockReturnValueOnce(piper1)
+        .mockReturnValueOnce(piper2);
 
       const promise = Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
-      setTimeout(() => {
-        // Throw error first.
-        piper.emit('error', new Error('error'));
-        piper.emit('close', 1);
-        ffmpeg.emit('close', 0);
-      }, 50);
+      setTimeout(() => piper1.emit('data', Buffer.from('Running on http://127.0.0.1:5001')), 1);
+      setTimeout(() => piper2.emit('data', Buffer.from('Running on http://127.0.0.1:5002')), 2);
       await promise;
+
       expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
-      expect(barsUpdate).toHaveBeenCalledTimes(length + 3);
-      expect(consoleMock).toHaveBeenCalledTimes(2);
+      expect(barsUpdate).toHaveBeenCalledTimes(3);
+      expect(consoleMock).toHaveBeenCalledTimes(length);
       expect(consoleMock).toHaveBeenNthCalledWith(
         1,
-        expect.stringMatching(/Failed writing .*\.m4a:/),
-        expect.objectContaining({ message: 'piper error' }),
+        expect.stringMatching(/Failed writing .*\.m4a: Piper responded with 400/),
       );
       expect(consoleMock).toHaveBeenNthCalledWith(
         2,
-        expect.stringMatching(/Failed writing .*\.m4a:/),
-        expect.objectContaining({ message: 'piper error' }),
+        expect.stringMatching(/Failed writing .*\.m4a: Piper responded with 400/),
+      );
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        3,
+        expect.stringMatching(/Failed writing .*\.m4a: Piper responded with 400/),
       );
       expect(create).toHaveBeenCalledWith(
         1,
@@ -432,13 +465,29 @@ describe(`plugins.${name}`, () => {
         { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
       );
       expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
-      expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
+      expect(global.fetch).toHaveBeenCalledTimes(length);
+      expect(global.fetch).toHaveBeenNthCalledWith(
+        1,
+        'http://127.0.0.1:5001',
+        { body: JSON.stringify({ text: 'one' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' },
+      );
+      expect(global.fetch).toHaveBeenNthCalledWith(
+        2,
+        'http://127.0.0.1:5002',
+        { body: JSON.stringify({ text: 'two' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' },
+      );
+      expect(global.fetch).toHaveBeenNthCalledWith(
+        3,
+        'http://127.0.0.1:5001',
+        { body: JSON.stringify({ text: 'thr-ee' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' },
+      );
+      expect(increment.mock.calls.length - beforeIncrements).toBe(1);
+      expect(piper1.kill).toHaveBeenCalledTimes(1);
+      expect(piper2.kill).toHaveBeenCalledTimes(1);
       expect(setTotal).toHaveBeenCalledWith(length);
-      expect(spawnMock).toHaveBeenCalledTimes(4);
-      expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
+      expect(spawnMock).toHaveBeenCalledTimes(2);
+      expect(spawnMock).toHaveBeenNthCalledWith(1, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(spawnMock).toHaveBeenNthCalledWith(2, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(4, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(stop).toHaveBeenCalledTimes(1);
     });
 
@@ -446,34 +495,73 @@ describe(`plugins.${name}`, () => {
       const beforeIncrements = increment.mock.calls.length;
       const consoleMock = jest.spyOn(console, 'error')
         .mockImplementation(() => {});
+      const fetch1 = {
+        body: new ReadableStream({
+          start(controller) {
+            controller.enqueue(new Uint8Array([]));
+            controller.close();
+          },
+        }),
+        ok: true,
+        status: 200,
+      };
+      const fetch2 = {
+        body: new ReadableStream({
+          start(controller) {
+            controller.enqueue(new Uint8Array([]));
+            controller.close();
+          },
+        }),
+        ok: true,
+        status: 200,
+      };
+      const fetch3 = {
+        body: new ReadableStream({
+          start(controller) {
+            controller.enqueue(new Uint8Array([]));
+            controller.close();
+          },
+        }),
+        ok: true,
+        status: 200,
+      };
       const ffmpeg = new EventEmitter() as any;
       ffmpeg.end = jest.fn();
       ffmpeg.kill = jest.fn();
       ffmpeg.stdin = ffmpeg;
-      const piper = new EventEmitter() as any;
-      piper.kill = jest.fn();
-      piper.pipe = jest.fn((stream) => stream);
-      piper.stdout = piper;
+      global.fetch = jest.fn()
+        .mockResolvedValueOnce(fetch1)
+        .mockResolvedValueOnce(fetch2)
+        .mockResolvedValueOnce(fetch3);
+      const piper1 = new EventEmitter() as any;
+      piper1.kill = jest.fn();
+      piper1.stderr = piper1;
+      const piper2 = new EventEmitter() as any;
+      piper2.kill = jest.fn();
+      piper2.stderr = piper2;
 
       execSyncMock.mockReturnValueOnce('1.2.3');
-      // 2 files.
       spawnMock
+        .mockReturnValueOnce(piper1)
+        .mockReturnValueOnce(piper2)
+        // 3 files.
         .mockReturnValueOnce(ffmpeg)
-        .mockReturnValueOnce(piper)
         .mockReturnValueOnce(ffmpeg)
-        .mockReturnValueOnce(piper);
+        .mockReturnValueOnce(ffmpeg);
 
       const promise = Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
+      setTimeout(() => piper1.emit('data', Buffer.from('Running on http://127.0.0.1:5001')), 1);
+      setTimeout(() => piper2.emit('data', Buffer.from('Running on http://127.0.0.1:5002')), 2);
       setTimeout(() => {
         // Throw error first.
         ffmpeg.emit('error', new Error('error'));
         ffmpeg.emit('close', 1);
-        piper.emit('close', 0);
-      }, 50);
+      }, 5);
       await promise;
+
       expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
       expect(barsUpdate).toHaveBeenCalledTimes(length + 3);
-      expect(consoleMock).toHaveBeenCalledTimes(2);
+      expect(consoleMock).toHaveBeenCalledTimes(length);
       expect(consoleMock).toHaveBeenNthCalledWith(
         1,
         expect.stringMatching(/Failed writing .*\.m4a:/),
@@ -484,6 +572,11 @@ describe(`plugins.${name}`, () => {
         expect.stringMatching(/Failed writing .*\.m4a:/),
         expect.objectContaining({ message: 'ffmpeg error' }),
       );
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        3,
+        expect.stringMatching(/Failed writing .*\.m4a:/),
+        expect.objectContaining({ message: 'ffmpeg error' }),
+      );
       expect(create).toHaveBeenCalledWith(
         1,
         0,
@@ -491,71 +584,31 @@ describe(`plugins.${name}`, () => {
         { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
       );
       expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
-      expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
-      expect(setTotal).toHaveBeenCalledWith(length);
-      expect(spawnMock).toHaveBeenCalledTimes(4);
-      expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(2, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(4, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
-      expect(stop).toHaveBeenCalledTimes(1);
-    });
-
-    test('logs error when piping fails', async () => {
-      const beforeIncrements = increment.mock.calls.length;
-      const consoleMock = jest.spyOn(console, 'error')
-        .mockImplementation(() => {});
-      const ffmpeg = new EventEmitter() as any;
-      ffmpeg.end = jest.fn();
-      ffmpeg.kill = jest.fn();
-      ffmpeg.stdin = ffmpeg;
-      const piper = new EventEmitter() as any;
-      piper.kill = jest.fn();
-      piper.pipe = jest.fn((stream) => stream);
-      piper.stdout = piper;
-
-      execSyncMock.mockReturnValueOnce('1.2.3');
-      // 2 files.
-      spawnMock
-        .mockReturnValueOnce(ffmpeg)
-        .mockReturnValueOnce(piper)
-        .mockReturnValueOnce(ffmpeg)
-        .mockReturnValueOnce(piper);
-
-      const promise = Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
-      setTimeout(() => {
-        // Throw error first.
-        piper.stdout.emit('error', new Error('error'));
-        ffmpeg.emit('close', 0);
-      }, 50);
-      await promise;
-      expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
-      expect(barsUpdate).toHaveBeenCalledTimes(length + 3);
-      expect(consoleMock).toHaveBeenCalledTimes(2);
-      expect(consoleMock).toHaveBeenNthCalledWith(
+      expect(global.fetch).toHaveBeenCalledTimes(length);
+      expect(global.fetch).toHaveBeenNthCalledWith(
         1,
-        expect.stringMatching(/Failed writing .*\.m4a:/),
-        expect.objectContaining({ message: 'piper error' }),
+        'http://127.0.0.1:5001',
+        { body: JSON.stringify({ text: 'one' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' },
       );
-      expect(consoleMock).toHaveBeenNthCalledWith(
+      expect(global.fetch).toHaveBeenNthCalledWith(
         2,
-        expect.stringMatching(/Failed writing .*\.m4a:/),
-        expect.objectContaining({ message: 'piper error' }),
+        'http://127.0.0.1:5002',
+        { body: JSON.stringify({ text: 'two' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' },
       );
-      expect(create).toHaveBeenCalledWith(
-        1,
-        0,
-        { color: '\x1B[35m', task: 'Map Tracks' },
-        { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
+      expect(global.fetch).toHaveBeenNthCalledWith(
+        3,
+        'http://127.0.0.1:5001',
+        { body: JSON.stringify({ text: 'thr-ee' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' },
       );
-      expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
       expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
+      expect(piper1.kill).toHaveBeenCalledTimes(1);
+      expect(piper2.kill).toHaveBeenCalledTimes(1);
       expect(setTotal).toHaveBeenCalledWith(length);
-      expect(spawnMock).toHaveBeenCalledTimes(4);
-      expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
+      expect(spawnMock).toHaveBeenCalledTimes(length + 2);
+      expect(spawnMock).toHaveBeenNthCalledWith(1, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(spawnMock).toHaveBeenNthCalledWith(2, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
       expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
-      expect(spawnMock).toHaveBeenNthCalledWith(4, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
+      expect(spawnMock).toHaveBeenNthCalledWith(4, 'ffmpeg', expect.any(Array));
       expect(stop).toHaveBeenCalledTimes(1);
     });
   });
@@ -700,19 +753,70 @@ describe(`plugins.${name}`, () => {
     });
   });
 
+  describe('piperServer', () => {
+    test('spawns piper server and resolves when ready message appears', async () => {
+      const model = 'en_US-model2';
+      const piper = new EventEmitter() as any;
+      piper.kill = jest.fn();
+      piper.stderr = piper;
+      spawnMock.mockReturnValueOnce(piper);
+      const port = 5002;
+      const siteDir = '/root';
+
+      const promise = Plugin.piperServer(siteDir, model, port);
+      piper.emit('data', Buffer.from('Running on all addresses (0.0.0.0)'));
+      piper.emit('data', Buffer.from(`Running on http://127.0.0.1:${port}`));
+      const result = await promise;
+
+      expect(spawnMock).toHaveBeenCalledWith(
+        `${process.env.HOME}/.venv/default/bin/python`,
+        [
+          '-m', 'piper.http_server',
+          '--data-dir=/root/models/en',
+          '--model', model,
+          '--port',
+          String(port),
+        ],
+      );
+
+      expect(result).toBe(piper);
+    });
+  });
+
   describe('postBuild', () => {
     const base = { outDir: './out', siteConfig: { trailingSlash: false }, siteDir: './site' };
 
-    test('runs generatePdf and inlineAboveFold concurrently when trailingSlash is true', async () => {
+    test('runs generators and inlineAboveFold concurrently when trailingSlash is true', async () => {
       const ctx = { ...base, siteConfig: { trailingSlash: true } };
       execSyncMock.mockReturnValueOnce('1.2.3');
+      const ffmpeg = new EventEmitter() as any;
+      ffmpeg.end = jest.fn();
+      ffmpeg.kill = jest.fn();
+      ffmpeg.stdin = ffmpeg;
+      global.fetch = jest.fn().mockResolvedValue({ body: {}, ok: true, status: 200 });
+      const piper1 = new EventEmitter() as any;
+      piper1.kill = jest.fn();
+      piper1.stderr = piper1;
+      const piper2 = new EventEmitter() as any;
+      piper2.kill = jest.fn();
+      piper2.stderr = piper2;
       readdirMock.mockResolvedValue(['file1.html', 'file2.html']);
+      spawnMock
+        .mockReturnValueOnce(piper1)
+        .mockReturnValueOnce(piper2)
+        // 2 files.
+        .mockReturnValueOnce(ffmpeg)
+        .mockReturnValueOnce(ffmpeg);
 
-      await Plugin.postBuild(ctx);
+      const promise = Plugin.postBuild(ctx);
+      setTimeout(() => piper1.emit('data', Buffer.from('Running on http://127.0.0.1:5001')), 1);
+      setTimeout(() => piper2.emit('data', Buffer.from('Running on http://127.0.0.1:5002')), 2);
+      setTimeout(() => ffmpeg.emit('close', 0), 5);
+      await promise;
 
       // generateAudio.
       expect(mkdir).toHaveBeenNthCalledWith(1, join(ctx.outDir, 'audio'), { recursive: true });
-      expect(spawnMock.mock.calls).toHaveLength(audio.length * 2);
+      expect(spawnMock.mock.calls).toHaveLength(audio.length + 2);
 
       // generatePdf.
       expect(mkdir).toHaveBeenNthCalledWith(2, join(ctx.outDir, 'pdf'), { recursive: true });
@@ -730,12 +834,33 @@ describe(`plugins.${name}`, () => {
 
     test('skips inlineAboveFold when trailingSlash is false', async () => {
       execSyncMock.mockReturnValueOnce('1.2.3');
+      const ffmpeg = new EventEmitter() as any;
+      ffmpeg.end = jest.fn();
+      ffmpeg.kill = jest.fn();
+      ffmpeg.stdin = ffmpeg;
+      global.fetch = jest.fn().mockResolvedValue({ body: {}, ok: true, status: 200 });
+      const piper1 = new EventEmitter() as any;
+      piper1.kill = jest.fn();
+      piper1.stderr = piper1;
+      const piper2 = new EventEmitter() as any;
+      piper2.kill = jest.fn();
+      piper2.stderr = piper2;
+      spawnMock
+        .mockReturnValueOnce(piper1)
+        .mockReturnValueOnce(piper2)
+        // 2 files.
+        .mockReturnValueOnce(ffmpeg)
+        .mockReturnValueOnce(ffmpeg);
 
-      await Plugin.postBuild(base);
+      const promise = Plugin.postBuild(base);
+      setTimeout(() => piper1.emit('data', Buffer.from('Running on http://127.0.0.1:5001')), 1);
+      setTimeout(() => piper2.emit('data', Buffer.from('Running on http://127.0.0.1:5002')), 2);
+      setTimeout(() => ffmpeg.emit('close', 0), 5);
+      await promise;
 
       // generateAudio.
       expect(mkdir).toHaveBeenNthCalledWith(1, join(base.outDir, 'audio'), { recursive: true });
-      expect(spawnMock.mock.calls).toHaveLength(audio.length * 2);
+      expect(spawnMock.mock.calls).toHaveLength(audio.length + 2);
 
       // generatePdf.
       expect(mkdir).toHaveBeenNthCalledWith(2, join(base.outDir, 'pdf'), { recursive: true });
@@ -817,12 +942,34 @@ describe(`plugins.${name}`, () => {
 
       plugin.extendCli(cli);
       const beforeWrites = createWriteStreamMock.mock.calls.length;
+      execSyncMock.mockReturnValueOnce('1.2.3');
+      const ffmpeg = new EventEmitter() as any;
+      ffmpeg.end = jest.fn();
+      ffmpeg.kill = jest.fn();
+      ffmpeg.stdin = ffmpeg;
+      global.fetch = jest.fn().mockResolvedValue({ body: {}, ok: true, status: 200 });
+      const piper1 = new EventEmitter() as any;
+      piper1.kill = jest.fn();
+      piper1.stderr = piper1;
+      const piper2 = new EventEmitter() as any;
+      piper2.kill = jest.fn();
+      piper2.stderr = piper2;
+      spawnMock
+        .mockReturnValueOnce(piper1)
+        .mockReturnValueOnce(piper2)
+        // 2 files.
+        .mockReturnValueOnce(ffmpeg)
+        .mockReturnValueOnce(ffmpeg);
 
-      await actions.action?.('./some/dir', { config: 'myconf.ts', outDir: 'custom-build' });
+      const promise = actions.action?.('./some/dir', { config: 'myconf.ts', outDir: 'custom-build' });
+      setTimeout(() => piper1.emit('data', Buffer.from('Running on http://127.0.0.1:5001')), 1);
+      setTimeout(() => piper2.emit('data', Buffer.from('Running on http://127.0.0.1:5002')), 2);
+      setTimeout(() => ffmpeg.emit('close', 0), 5);
+      await promise;
 
       expect(loadFreshModule).toHaveBeenCalled();
       expect(createWriteStreamMock.mock.calls.length - beforeWrites).toEqual(pdf.length);
-      expect(spawnMock).toHaveBeenCalledTimes(audio.length * 2);
+      expect(spawnMock).toHaveBeenCalledTimes(audio.length + 2);
     });
 
     test('extendCli action: default args and falsy cliSiteDir fallback behave independently', async () => {
@@ -834,9 +981,33 @@ describe(`plugins.${name}`, () => {
       pluginA.extendCli(cliA);
 
       const beforeA = createWriteStreamMock.mock.calls.length;
-      await actionsA.action?.(undefined, undefined);
+      execSyncMock.mockReturnValueOnce('1.2.3');
+      const ffmpegA = new EventEmitter() as any;
+      ffmpegA.end = jest.fn();
+      ffmpegA.kill = jest.fn();
+      ffmpegA.stdin = ffmpegA;
+      global.fetch = jest.fn().mockResolvedValue({ body: {}, ok: true, status: 200 });
+      const piperA1 = new EventEmitter() as any;
+      piperA1.kill = jest.fn();
+      piperA1.stderr = piperA1;
+      const piperA2 = new EventEmitter() as any;
+      piperA2.kill = jest.fn();
+      piperA2.stderr = piperA2;
+      spawnMock
+        .mockReturnValueOnce(piperA1)
+        .mockReturnValueOnce(piperA2)
+        // 2 files.
+        .mockReturnValueOnce(ffmpegA)
+        .mockReturnValueOnce(ffmpegA);
+
+      const promiseA = actionsA.action?.(undefined, undefined);
+      setTimeout(() => piperA1.emit('data', Buffer.from('Running on http://127.0.0.1:5001')), 1);
+      setTimeout(() => piperA2.emit('data', Buffer.from('Running on http://127.0.0.1:5002')), 2);
+      setTimeout(() => ffmpegA.emit('close', 0), 5);
+      await promiseA;
+
       expect(createWriteStreamMock.mock.calls.length - beforeA).toEqual(pdf.length);
-      expect(spawnMock).toHaveBeenCalledTimes(audio.length * 2);
+      expect(spawnMock).toHaveBeenCalledTimes(audio.length + 2);
       spawnMock.mockClear();
 
       // Falsy cliSiteDir -> fallback to context.siteDir and default filenames.
@@ -847,10 +1018,33 @@ describe(`plugins.${name}`, () => {
       pluginB.extendCli(cliB);
 
       const beforeB = createWriteStreamMock.mock.calls.length;
-      await actionsB.action?.('', {});
+      const ffmpegB = new EventEmitter() as any;
+      ffmpegB.end = jest.fn();
+      ffmpegB.kill = jest.fn();
+      ffmpegB.stdin = ffmpegB;
+      global.fetch = jest.fn().mockResolvedValue({ body: {}, ok: true, status: 200 });
+      const piperB1 = new EventEmitter() as any;
+      piperB1.kill = jest.fn();
+      piperB1.stderr = piperB1;
+      const piperB2 = new EventEmitter() as any;
+      piperB2.kill = jest.fn();
+      piperB2.stderr = piperB2;
+      spawnMock
+        .mockReturnValueOnce(piperB1)
+        .mockReturnValueOnce(piperB2)
+        // 2 files.
+        .mockReturnValueOnce(ffmpegB)
+        .mockReturnValueOnce(ffmpegB);
+
+      const promiseB = actionsB.action?.('', {});
+      setTimeout(() => piperB1.emit('data', Buffer.from('Running on http://127.0.0.1:5001')), 1);
+      setTimeout(() => piperB2.emit('data', Buffer.from('Running on http://127.0.0.1:5002')), 2);
+      setTimeout(() => ffmpegB.emit('close', 0), 5);
+      await promiseB;
+
       expect(loadFreshModule).toHaveBeenCalledWith(join(context.siteDir, DEFAULT_CONFIG_FILE_NAME));
       expect(createWriteStreamMock.mock.calls.length - beforeB).toEqual(pdf.length);
-      expect(spawnMock).toHaveBeenCalledTimes(audio.length * 2);
+      expect(spawnMock).toHaveBeenCalledTimes(audio.length + 2);
     });
   });
 });

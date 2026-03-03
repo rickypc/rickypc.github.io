@@ -8,7 +8,6 @@ import 'motion/react';
 declare module 'motion/react' {
   // eslint-disable-next-line import/prefer-default-export
   export const listeners: {
-    // eslint-disable-next-line no-unused-vars
-    [key: string]: (...args: any[]) => void;
+    [key: string]: (..._args: any[]) => void;
   };
 }

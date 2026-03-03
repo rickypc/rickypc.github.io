@@ -9,7 +9,6 @@ import {
   readdir,
   readFile,
   stat,
-  unlink,
   writeFile,
 } from 'node:fs/promises';
 import { basename, join, resolve } from 'node:path';
@@ -24,13 +23,15 @@ import {
   loadFreshModule,
 } from '@docusaurus/utils';
 import { type DocusaurusConfig, type LoadContext, type Plugin } from '@docusaurus/types';
-import { execSync, spawn } from 'node:child_process';
+import { type ChildProcessWithoutNullStreams, execSync, spawn } from 'node:child_process';
 import { FontaineTransform } from 'fontaine';
 import { dependencies, imports } from '#root/package.json';
 import { minimatch } from 'minimatch';
 import { MultiBar } from 'cli-progress';
 import PdfMake from 'pdfmake';
 import { type PluginOptions } from '@docusaurus/plugin-sitemap';
+import { Readable } from 'node:stream';
+import { type ReadableStream } from 'node:stream/web';
 import sharpAdapter from '@docusaurus/responsive-loader/sharp';
 import sleep from 'timeable-promise/sleep';
 import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
@@ -101,8 +102,7 @@ export async function createSitemapItems({
   const items = await defaultCreateSitemapItems(rest);
   const today = new Date().toISOString().split('T')[0];
   const uncommitted: string[] = [];
-  // eslint-disable-next-line no-unused-vars
-  const audios = await Promise.all(audio.map(async ([_, path]) => {
+  const audios = await Promise.all(audio.map(async ([/* ignore */, path]) => {
     const commit = await getFileCommitDate(
       path.replace(/^#/, 'docs/'),
       { age: 'newest', includeAuthor: false },
@@ -135,11 +135,11 @@ export async function createSitemapItems({
     } as SitemapItem;
   }));
   if (uncommitted.length) {
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-console
     console.error('\x1B[31mPlease commit these files so lastmod dates can be generated correctly:');
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-console
     console.error(uncommitted.join('\n'));
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-console
     console.error('');
   }
   return [...items, ...audios, ...pdfs];
@@ -192,6 +192,39 @@ export async function outputPaths(outDir: string, pattern: string): Promise<stri
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   return minimatch.match(await readdir(outDir, { recursive: true }), pattern, { matchBase: true })
     .map((file) => join(outDir, file));
+}
+
+/**
+ * Start a Piper HTTP server for a given model.
+ * @param {string} siteDir - Absolute path to the site directory.
+ * @param {string} model - Piper model filename (e.g. 'en_US-amy-medium').
+ * @param {number} port - Port to run the server on.
+ * @returns {Promise<ChildProcessWithoutNullStreams>} Resolves once the server
+ *   is ready.
+ */
+export async function piperServer(
+  siteDir: string,
+  model: string,
+  port: number,
+): Promise<ChildProcessWithoutNullStreams> {
+  // Language identifier.
+  const prefix = model.split('_')[0].toLowerCase();
+  const server = spawn(`${process.env.HOME}/.venv/default/bin/python`, [
+    '-m', 'piper.http_server',
+    `--data-dir=${fileResolve(`#root/models/${prefix}/`, siteDir)}`,
+    '--model', model,
+    '--port', String(port),
+  ]);
+  await new Promise<void>((settle) => {
+    const onData = (data: Buffer) => {
+      if (data.toString().includes(`Running on http://127.0.0.1:${port}`)) {
+        server.stderr.off('data', onData);
+        settle();
+      }
+    };
+    server.stderr.on('data', onData);
+  });
+  return server;
 }
 
 /**
@@ -296,7 +329,7 @@ export async function generateAudio(
   )?.trim()}`;
 
   if (generator === 'piper:') {
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-console
     console.error('\x1B[31mPiper not found - activate the correct venv.\x1B[0m');
     return;
   }
@@ -308,13 +341,57 @@ export async function generateAudio(
     { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
   );
   bars.update();
-  // eslint-disable-next-line no-unused-vars
-  const tracks = audio.reduce((accumulator, [_, path]) => {
-    if (!path.includes('_ricky_huang')) {
-      accumulator.set(path, accumulator.size + 1);
-    }
-    return accumulator;
-  }, new Map<string, number>());
+
+  const { ports, tracks } = audio.reduce(
+    (accumulator, [model, path]) => {
+      const next = (accumulator.counters.get(model) ?? 0) + 1;
+      accumulator.counters.set(model, next);
+      if (!accumulator.ports.has(model)) {
+        accumulator.ports.set(model, accumulator.meta.get(model)!.port);
+      }
+      accumulator.tracks.set(path, {
+        album: accumulator.meta.get(model)!.album,
+        description: accumulator.meta.get(model)!.description,
+        genre: accumulator.meta.get(model)!.genre,
+        track: next,
+      });
+      return accumulator;
+    },
+    {
+      counters: new Map<string, number>(),
+      meta: new Map([
+        [
+          'id_ID-news_tts-medium',
+          {
+            album: 'Mantra Pronunciations',
+            description: 'and confident and accurate recitation.',
+            genre: 'Mantra',
+            port: 5001,
+          },
+        ],
+        [
+          'en_US-hfc_male-medium',
+          {
+            album: 'Name Pronunciations',
+            description: 'and precise name articulation.',
+            genre: 'Speech',
+            port: 5002,
+          },
+        ],
+      ]),
+      ports: new Map<string, number>(),
+      tracks: new Map<
+        string,
+        {
+          album: string;
+          description: string;
+          genre: string;
+          track: number;
+        }
+      >(),
+    },
+  );
+
   bar.increment();
   bars.update();
   bar.setTotal(audio.length);
@@ -326,6 +403,17 @@ export async function generateAudio(
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   await mkdir(audioDir, { recursive: true });
 
+  const servers = await [...ports.entries()].reduce(
+    async (promise, [model, port]) => {
+      const accumulator = await promise;
+      const prefix = model.split('_')[0].toLowerCase();
+      // eslint-disable-next-line security/detect-object-injection
+      accumulator[prefix] = await piperServer(siteDir, model, port);
+      return accumulator;
+    },
+    Promise.resolve({} as Record<string, ChildProcessWithoutNullStreams>),
+  );
+
   await concurrent(audio, async (batch, index) => {
     // Workload arbritary weight numbers.
     const weight = index * 75;
@@ -334,102 +422,75 @@ export async function generateAudio(
     await Promise.all(batch.map(async ([model, path]) => {
       const target = join(audioDir, `${fileName(path)}.m4a`);
       if (await stale({
-        data: path,
-        model,
-        siteDir,
-        target,
+        data: path, model, siteDir, target,
       })) {
         const { default: { transliteration } } = await import(path);
-        // eslint-disable-next-line security/detect-non-literal-fs-filename
-        await unlink(target).catch(() => {});
+        const titleLower = transliteration?.title?.toLowerCase();
+        const utteranceText = transliteration?.utterance || utterance(body(transliteration));
+        // After utteranceText assignment.
+        const response = await fetch(`http://127.0.0.1:${ports.get(model)}`, {
+          body: JSON.stringify({ text: utteranceText }),
+          headers: { 'Content-Type': 'application/json' },
+          method: 'POST',
+        });
+        if (!response.ok || !response.body) {
+          // eslint-disable-next-line no-console
+          console.error(`\x1b[31mFailed writing ${target}: Piper responded with ${response.status}\x1b[0m`);
+          return;
+        }
+        const {
+          album, description, genre, track,
+        } = tracks.get(path)!;
+        const date = new Date();
+        const stamp = createHash(algorithm).update(JSON.stringify({
+          date, generator, model, utteranceText,
+        })).digest('hex');
+        // After stamp assignment.
+        const metadata = [
+          '-metadata', `album=${album}`,
+          '-metadata', `album_artist=${siteConfig.title}`,
+          '-metadata', `artist=${siteConfig.title}`,
+          '-metadata', `comment=${oneLine(`Producer: ${siteConfig.url};
+            Provenance: ${createHmac(algorithm, provenance).update(stamp).digest('base64')};
+            Stamp: ${algorithm}:${stamp}`)}`,
+          '-metadata', `composer=${siteConfig.title}`,
+          // YYYY-MM-DD via en-CA.
+          '-metadata', `date=${date.toLocaleDateString('en-CA')}`,
+          '-metadata', `description=${oneLine(`A guided pronunciation of the
+            ${titleLower}, emphasizing syllable clarity, pacing, tone, breath
+            flow, ${description}`)}`,
+          '-metadata', `genre=${genre}`,
+          '-metadata', `title=${properCase(transliteration?.title)} pronunciation`,
+          '-metadata', `track=${track}`,
+        ];
+        // After metadata assignment.
+        const ffmpeg = spawn('ffmpeg', [
+          '-hide_banner',
+          '-i', '-',
+          '-f', 'image2',
+          '-i', fileResolve('#root/cover.jpg', siteDir),
+          '-loglevel', 'quiet',
+          '-map', '0:a',
+          '-map', '1',
+          '-disposition:v', 'attached_pic',
+          ...metadata,
+          '-b:a', '128k',
+          '-c:a', 'aac',
+          '-c:v', 'mjpeg',
+          '-y',
+          target,
+        ]);
         await new Promise<void>((settle, reject) => {
-          const date = new Date();
-          const name = target.includes('ricky-huang.m4a');
-          // Language identifier.
-          const prefix = model.split('_')[0].toLowerCase();
-          const titleLower = transliteration?.title?.toLowerCase();
-          const utteranceText = transliteration?.utterance || utterance(body(transliteration));
-          // After utteranceText assignment.
-          const stamp = createHash(algorithm).update(JSON.stringify({
-            date, generator, model, utteranceText,
-          })).digest('hex');
-          // After stamp assignment.
-          const metadata = [
-            '-metadata', `album=${name ? 'Name' : 'Mantra'} Pronunciations`,
-            '-metadata', `album_artist=${siteConfig.title}`,
-            '-metadata', `artist=${siteConfig.title}`,
-            '-metadata', `comment=${oneLine(`Producer: ${siteConfig.url};
-              Provenance: ${createHmac(algorithm, provenance).update(stamp).digest('base64')};
-              Stamp: ${algorithm}:${stamp}`)}`,
-            '-metadata', `composer=${siteConfig.title}`,
-            // YYYY-MM-DD via en-CA.
-            '-metadata', `date=${date.toLocaleDateString('en-CA')}`,
-            '-metadata', `description=${oneLine(`A guided pronunciation of the
-              ${titleLower}, emphasizing syllable clarity, pacing, tone, breath
-              flow, and ${name ? 'precise name articulation' : 'confident and accurate recitation'}.`)}`,
-            '-metadata', `genre=${name ? 'Speech' : 'Mantra'}`,
-            '-metadata', `title=${properCase(transliteration?.title)} pronunciation`,
-            '-metadata', `track=${name ? 1 : tracks.get(path)}`,
-          ];
-          const ffmpeg = spawn('ffmpeg', [
-            '-ac', '1',
-            '-ar', '22050',
-            '-f', 's16le',
-            '-hide_banner',
-            '-i', '-',
-            '-f', 'image2',
-            '-i', fileResolve('#root/cover.jpg', siteDir),
-            '-loglevel', 'quiet',
-            '-map', '0:a',
-            '-map', '1',
-            '-disposition:v', 'attached_pic',
-            ...metadata,
-            '-b:a', '128k',
-            '-c:a', 'aac',
-            '-c:v', 'mjpeg',
-            target,
-          ]);
-          const piper = spawn(`${process.env.HOME}/.venv/default/bin/python`, [
-            '-m', 'piper',
-            `--data-dir=${fileResolve(`#root/models/${prefix}/`, siteDir)}`,
-            '--model', model,
-            '--output-raw',
-            '--',
-            utteranceText,
-          ])
-            .on('close', (code) => {
-              ffmpeg.stdin.end();
-              if (code === 0) {
-                settle();
-              } else {
-                ffmpeg.kill();
-                reject(new Error(`piper exited with ${code}`));
-              }
-            })
-            .on('error', (ex) => {
-              ffmpeg.kill();
-              reject(new Error('piper error', ex));
-            });
-
-          ffmpeg
-            .on('close', (code) => {
-              if (code === 0) {
-                settle();
-              } else {
-                piper.kill();
-                reject(new Error(`ffmpeg exited with ${code}`));
-              }
-            })
-            .on('error', (ex) => {
-              piper.kill();
-              reject(new Error('ffmpeg error', ex));
-            });
-
-          piper.stdout
-            .on('error', reject)
-            .pipe(ffmpeg.stdin)
-            .on('error', reject);
-          // eslint-disable-next-line
+          ffmpeg.on('close', (code) => {
+            if (code === 0) {
+              settle();
+            } else {
+              reject(new Error(`ffmpeg exited with ${code}`));
+            }
+          });
+          ffmpeg.on('error', (ex) => reject(new Error('ffmpeg error', ex)));
+          Readable.fromWeb(response.body as unknown as ReadableStream).pipe(ffmpeg.stdin);
+          // eslint-disable-next-line no-console
         }).catch((ex) => console.error(`\x1b[31mFailed writing ${target}:\x1b[0m`, ex));
         // Tiny stagger to unblock progress bar display, scaled by workload
         // weight.
@@ -439,6 +500,8 @@ export async function generateAudio(
       bars.update();
     }));
   }, 5);
+  // eslint-disable-next-line security/detect-object-injection
+  Object.keys(servers).forEach((lang) => servers[lang].kill('SIGTERM'));
   (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bars.update();
   bar.stop();
@@ -502,37 +565,38 @@ export async function generatePdf(
         template,
         target,
       })) {
+        const date = new Date();
         const { definition, options } = await templates[template as keyof Templates](path);
+        const stamp = createHash(algorithm).update(JSON.stringify({
+          date, definition, generator, options,
+        })).digest('hex');
+        // After stamp assignment.
+        const document = printer.createPdfKitDocument({
+          ...definition,
+          displayTitle: true,
+          info: {
+            ...definition.info,
+            author: siteConfig.title,
+            creationDate: date,
+            creator: siteConfig.url,
+            custom: {
+              provenance: createHmac(algorithm, provenance)
+                .update(stamp).digest('base64'),
+            },
+            modDate: date,
+            producer: siteConfig.url,
+            stamp: `${algorithm}:${stamp}`,
+          },
+          watermark: {
+            bold: true,
+            color: 'red',
+            font: 'NotoSans',
+            fontSize: 90,
+            opacity: 0,
+            text: siteConfig.url,
+          },
+        }, options);
         await new Promise<void>((settle, reject) => {
-          const date = new Date();
-          const stamp = createHash(algorithm).update(JSON.stringify({
-            date, definition, generator, options,
-          })).digest('hex');
-          const document = printer.createPdfKitDocument({
-            ...definition,
-            displayTitle: true,
-            info: {
-              ...definition.info,
-              author: siteConfig.title,
-              creationDate: date,
-              creator: siteConfig.url,
-              custom: {
-                provenance: createHmac(algorithm, provenance)
-                  .update(stamp).digest('base64'),
-              },
-              modDate: date,
-              producer: siteConfig.url,
-              stamp: `${algorithm}:${stamp}`,
-            },
-            watermark: {
-              bold: true,
-              color: 'red',
-              font: 'NotoSans',
-              fontSize: 90,
-              opacity: 0,
-              text: siteConfig.url,
-            },
-          }, options);
           // eslint-disable-next-line security/detect-non-literal-fs-filename
           const stream = createWriteStream(target);
           document.on('end', settle);
@@ -540,7 +604,7 @@ export async function generatePdf(
           stream.on('error', reject);
           document.pipe(stream);
           document.end();
-          // eslint-disable-next-line
+          // eslint-disable-next-line no-console
         }).catch((ex) => console.error(`\x1b[31mFailed writing ${target}:\x1b[0m`, ex));
         // Tiny stagger to unblock progress bar display, scaled by workload
         // weight.

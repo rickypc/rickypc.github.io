@@ -17,7 +17,6 @@ import styles from './styles.module.css';
 type ItemProps = {
   active?: string;
   item: string;
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: string) => void;
   prefix: string;
 };
@@ -25,7 +24,6 @@ type ItemProps = {
 export type PillsProps = {
   active?: string;
   items: string[];
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: string) => void;
   prefix: string;
   translate?: 'no' | 'yes';

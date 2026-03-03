@@ -16,7 +16,6 @@ import styles from './styles.module.css';
 export type CollapsibleProps = {
   active?: string;
   items: string[];
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: string) => void;
   translate?: 'no' | 'yes';
 };
@@ -24,7 +23,6 @@ export type CollapsibleProps = {
 type ItemProps = {
   current?: boolean;
   item: string;
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: string) => void;
 };
 

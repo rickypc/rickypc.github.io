@@ -22,14 +22,12 @@ import { usePrint, useResize, useVisibility } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
 export type CarouselHandles = {
-  // eslint-disable-next-line no-unused-vars
-  setPaused: (paused: boolean) => void;
+  setPaused: (_paused: boolean) => void;
 };
 
 export type CarouselProps = {
   duration?: number;
   images: ImageProps[];
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: ImageProps) => void;
   open?: ImageProps;
   prefix: string;
@@ -42,7 +40,6 @@ type IndicatorsProps = {
   cycle: number;
   duration: number;
   images: ImageProps[];
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: number) => void;
   prefix: string;
   stopped: boolean;
@@ -51,7 +48,6 @@ type IndicatorsProps = {
 type NavigationProps = {
   active: number;
   images: ImageProps[];
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: (_: number) => number) => void;
 };
 
@@ -64,12 +60,10 @@ type SlideProps = {
 type SliderProps = {
   active: number;
   images: ImageProps[];
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: ImageProps) => void;
   prefix: string;
   printing: boolean;
   resizing: boolean;
-  // eslint-disable-next-line no-unused-vars
   setActive: (_: number) => void;
   viewport: RefObject<HTMLDivElement | null>;
 };
@@ -213,8 +207,7 @@ const Slider = memo(function Slider({
       const targetX = -active * (viewport.current.offsetWidth || 1);
       animate(x, targetX, { damping: 30, stiffness: 300, type: 'spring' });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, dragging, resizing, viewport]);
+  }, [active, dragging, resizing, viewport, x]);
 
   return (
     <motion.div

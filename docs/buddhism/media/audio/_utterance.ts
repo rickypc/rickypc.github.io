@@ -3,6 +3,10 @@
  * All rights reserved.
  */
 
+const lexemes = {
+  a: 'a- .',
+};
+
 const pronounces = {
   // Order Matters™.
   'bha ': 'ba, ',
@@ -79,6 +83,12 @@ const transliterations = {
  */
 export default function utterance(value: string) {
   let response = value.toLowerCase();
+
+  Object.entries(lexemes).forEach(([key, val]) => {
+    if (response === key) {
+      response = val;
+    }
+  });
 
   Object.entries(transliterations).forEach(([key, val]) => {
     response = response.replaceAll(key, val);

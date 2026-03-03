@@ -52,6 +52,7 @@ export default function Button({
   return (
     <button
       data-testid={`button-${ariaLabel || 'btn'}`}
+      data-whiletap={JSON.stringify(whileTap || {})}
       onClick={onClick}
       ref={refHandler}
       {...rest}

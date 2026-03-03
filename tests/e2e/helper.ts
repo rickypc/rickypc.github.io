@@ -17,8 +17,7 @@ import {
 import { pdfToPng } from 'pdf-to-png-converter';
 import { execFile, spawn } from 'node:child_process';
 
-// eslint-disable-next-line no-unused-vars
-export type BandCallback<T, U = T> = (value: T, index?: number, array?: T[]) => U | Promise<U>;
+export type BandCallback<T, U = T> = (_value: T, _index?: number, _array?: T[]) => U | Promise<U>;
 
 export type Options = Partial<PlaywrightTestArgs>
   & Partial<PlaywrightTestOptions>

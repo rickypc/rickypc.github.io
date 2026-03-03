@@ -18,7 +18,6 @@ type Props = {
   transliteration?: Transliteration;
 };
 
-// eslint-disable-next-line no-unused-vars
 const PhraseMock = Phrase as (_: Props) => ReactElement;
 
 describe('GrPrint', () => {

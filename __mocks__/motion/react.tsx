@@ -125,6 +125,7 @@ export const motion = {
         className={className}
         data-layout={String(!!layout)}
         data-testid="article"
+        data-whileinview={JSON.stringify(whileInView || {})}
         onMouseEnter={onHoverStart}
         onMouseLeave={onHoverEnd}
         {...props}
@@ -157,6 +158,7 @@ export const motion = {
         className={className}
         data-drag-elastic={dragElastic}
         data-drag-momentum={dragMomentum}
+        data-layout={JSON.stringify(layout || {})}
         data-testid="div"
         {...props}
       >
@@ -176,7 +178,12 @@ export const motion = {
         jsx-a11y/click-events-have-key-events,
         jsx-a11y/no-noninteractive-element-interactions
     */
-    <dt className={className} onClick={onClick} {...rest}>
+    <dt
+      className={className}
+      data-whiletap={JSON.stringify(whileTap || {})}
+      onClick={onClick}
+      {...rest}
+    >
       {children}
     </dt>
   ),
@@ -188,7 +195,14 @@ export const motion = {
     whileInView,
     ...props
   }: PropsWithChildren<FigureProps>) => (
-    <figure className={className} data-testid="figure" ref={ref} {...props}>
+    <figure
+      className={className}
+      data-layout={JSON.stringify(layout || {})}
+      data-testid="figure"
+      data-whileinview={JSON.stringify(whileInView || {})}
+      ref={ref}
+      {...props}
+    >
       {children}
     </figure>
   ),

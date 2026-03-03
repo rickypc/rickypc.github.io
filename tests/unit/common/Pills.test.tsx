@@ -64,8 +64,7 @@ describe('Pills', () => {
     beforeEach(() => renderComponent('cherry'));
 
     test('applies active class and renders indicator on active item', () => {
-      // eslint-disable-next-line no-unused-vars
-      const [appleDt, bananaDt, cherryDt] = dtElements;
+      const [appleDt, /* ignore */, cherryDt] = dtElements;
       expect(appleDt).not.toHaveClass('active');
       expect(cherryDt).toHaveClass('active');
 

@@ -8,7 +8,6 @@ import { type ReactElement } from 'react';
 
 type FilterProps = {
   current: boolean;
-  // eslint-disable-next-line no-unused-vars
   onClick: (_?: string) => void;
 };
 

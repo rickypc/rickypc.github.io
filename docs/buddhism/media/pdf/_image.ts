@@ -15,8 +15,7 @@ export type Image = {
   width?: number;
 };
 
-// eslint-disable-next-line no-unused-vars
-type ImageResolver = (path: string) => string;
+type ImageResolver = (_path: string) => string;
 
 // 300px = 72pt = 1".
 const pixels = 300 / 72;

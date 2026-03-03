@@ -34,8 +34,7 @@ export type AudioResponse = {
  */
 export default function useAudio(path: string, volume = 1): AudioResponse {
   const alias = `#${tail(path, '/buddhism')}`;
-  // eslint-disable-next-line no-unused-vars
-  const hasAudio = audio.some(([_, source]) => source === alias);
+  const hasAudio = audio.some(([/* ignore */, source]) => source === alias);
   const progress = useMotionValue(0);
   const ref = useRef<HTMLAudioElement | null>(null);
   const src = hasAudio ? key(fileName(path), '/audio', '/', 'm4a', '.') : '';
@@ -45,15 +44,14 @@ export default function useAudio(path: string, volume = 1): AudioResponse {
     if (!ref.current) {
       return;
     }
-    if (next === 'idle' || ref.current.ended || !ref.current.currentTime) {
+    if (next === 'idle' || ref.current.ended || (!['404', 'playing'].includes(next) && !ref.current.currentTime)) {
       ref.current.currentTime = 0;
       progress.set(0);
       setStatus('idle');
       return;
     }
     setStatus(next);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [progress]);
 
   useEffect(() => {
     if (!ref.current && src) {
@@ -73,38 +71,40 @@ export default function useAudio(path: string, volume = 1): AudioResponse {
       ref.current?.removeEventListener('error', onIdle);
       ref.current?.removeEventListener('pause', onPause);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [src]);
+  }, [onStateChange, src]);
 
   useEffect(() => {
     if (!ref.current) {
       return undefined;
     }
-    let last = 0;
-    let raf: number;
-
+    const frame = { id: 0, offset: 0, time: 0 };
     const tick = (now: number) => {
-      const { currentTime, duration } = ref.current!;
-      // ~30fps.
-      // istanbul ignore else
-      if (now - last > 33) {
-        last = now;
-        // istanbul ignore next
-        progress.set(duration ? currentTime / duration : 0);
+      const duration = Number.isFinite(ref.current?.duration) ? ref.current?.duration : 0;
+      if (duration) {
+        const currentTime = ref.current?.currentTime || 0;
+        if (!frame.time) {
+          // Align synthetic start with real position.
+          frame.offset = currentTime;
+          frame.time = now;
+        }
+        // Seconds.
+        const elapsed = (now - frame.time) / 1000;
+        // Don't run ahead of currentTime.
+        const time = Math.max(0, Math.min(frame.offset + elapsed, currentTime, duration));
+        progress.set(time / duration);
+      } else {
+        progress.set(0);
       }
       // istanbul ignore else
-      if (status === 'playing' && currentTime < duration) {
-        raf = requestAnimationFrame(tick);
+      if (status === 'playing') {
+        frame.id = requestAnimationFrame(tick);
       }
     };
-
     if (status === 'playing') {
-      raf = requestAnimationFrame(tick);
+      frame.id = requestAnimationFrame(tick);
     }
-
-    return () => cancelAnimationFrame(raf);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
+    return () => cancelAnimationFrame(frame.id);
+  }, [status, progress]);
 
   useEffect(() => {
     if (ref.current) {
@@ -119,8 +119,11 @@ export default function useAudio(path: string, volume = 1): AudioResponse {
   }, [onStateChange]);
 
   const onPlay = useCallback(async () => {
-    await audioManager.play(ref.current);
-    onStateChange('playing');
+    let next: AudioState = 'playing';
+    await audioManager.play(ref.current).catch((ex) => {
+      next = ex.name === 'NotSupportedError' ? '404' : 'idle';
+    });
+    onStateChange(next);
   }, [onStateChange]);
 
   const onStop = useCallback(async () => {

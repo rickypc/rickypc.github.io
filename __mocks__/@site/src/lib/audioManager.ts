@@ -5,6 +5,6 @@
 
 export default {
   pause: jest.fn(),
-  play: jest.fn(),
+  play: jest.fn(() => Promise.resolve()),
   volume: 1,
 };

@@ -8,7 +8,6 @@ import { type ReactElement } from 'react';
 type CollapsibleProps = {
   active: boolean;
   items: string[],
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: string) => void;
   translate: string;
 };

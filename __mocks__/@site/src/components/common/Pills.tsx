@@ -9,7 +9,6 @@ type PillsProps = {
   active: boolean;
   'aria-hidden': string;
   items: string[],
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: string) => void;
   prefix: string;
   translate: string;

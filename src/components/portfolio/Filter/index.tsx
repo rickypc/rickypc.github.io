@@ -11,7 +11,6 @@ import { useMedia } from '@site/src/hooks/observer';
 
 export type FilterProps = {
   current: string;
-  // eslint-disable-next-line no-unused-vars
   onClick: (_: string) => void;
 };
 

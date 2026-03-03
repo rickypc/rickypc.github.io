@@ -56,6 +56,32 @@ describe('useAudio', () => {
     expect(result.current.status).toBe('playing');
   });
 
+  test('onPlay error and sets status to 404', async () => {
+    (audioManager.play as jest.Mock).mockRejectedValueOnce(
+      Object.assign(new Error('error'), { name: 'NotSupportedError' }),
+    );
+    const { result } = renderHook(() => useAudio(path));
+
+    result.current.ref.current!.currentTime = 1;
+    await act(async () => result.current.onPlay());
+
+    expect(audioManager.play).toHaveBeenCalledTimes(1);
+    expect(result.current.status).toBe('404');
+  });
+
+  test('onPlay error and sets status to idle', async () => {
+    (audioManager.play as jest.Mock).mockRejectedValueOnce(
+      Object.assign(new Error('error'), { name: 'OtherError' }),
+    );
+    const { result } = renderHook(() => useAudio(path));
+
+    result.current.ref.current!.currentTime = 1;
+    await act(async () => result.current.onPlay());
+
+    expect(audioManager.play).toHaveBeenCalledTimes(1);
+    expect(result.current.status).toBe('idle');
+  });
+
   test('onPause calls audioManager.pause and sets status to paused', async () => {
     const { result } = renderHook(() => useAudio(path));
 
@@ -81,14 +107,40 @@ describe('useAudio', () => {
   test('RAF tick updates progress MotionValue', async () => {
     const { result } = renderHook(() => useAudio(path));
 
-    result.current.ref.current!.currentTime = 5;
-    // Set status to playing to start RAF loop.
+    result.current.ref.current!.currentTime = 0;
+    Object.defineProperty(result.current.ref.current, 'duration', {
+      value: NaN,
+      writable: true,
+    });
+
+    // Start playback (starts RAF loop).
     await act(async () => result.current.onPlay());
 
-    // Simulate RAF callback.
-    act(() => rafCallback?.(100));
+    // First RAF tick (duration = NaN → progress = 0).
+    act(() => rafCallback?.(1));
+    expect(result.current.progress.get()).toBe(0);
 
-    expect(result.current.progress.get()).toBeCloseTo(0.5);
+    // Now simulate metadata loaded.
+    Object.defineProperty(result.current.ref.current, 'duration', {
+      value: 10,
+      writable: true,
+    });
+    act(() => rafCallback?.(2));
+    expect(result.current.progress.get()).toBeCloseTo(0);
+
+    result.current.ref.current!.currentTime = 1;
+    act(() => rafCallback?.(1000));
+    expect(result.current.progress.get()).toBeCloseTo(0.1);
+
+    result.current.ref.current!.currentTime = 2;
+    act(() => rafCallback?.(2000));
+    expect(result.current.progress.get()).toBeCloseTo(0.2);
+
+    await act(async () => result.current.onStop());
+
+    result.current.ref.current!.currentTime = 3;
+    act(() => rafCallback?.(3000));
+    expect(result.current.progress.get()).toBeCloseTo(0);
   });
 
   test('pause event sets status to paused or idle depending on currentTime', async () => {

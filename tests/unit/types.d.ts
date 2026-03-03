@@ -18,17 +18,14 @@ declare module 'cli-progress' {
   export const stop: any;
 
   export interface MultiBarInstance {
-    // eslint-disable-next-line no-unused-vars
-    create(...args: any[]): any;
+    create(..._args: any[]): any;
     stop(): void;
     update(): void;
   }
 
   export interface MultiBarConstructor {
-    // eslint-disable-next-line no-unused-vars
-    new(...args: any[]): MultiBarInstance;
-    // eslint-disable-next-line no-unused-vars
-    (...args: any[]): MultiBarInstance;
+    new(..._args: any[]): MultiBarInstance;
+    (..._args: any[]): MultiBarInstance;
   }
 
   export const MultiBar: MultiBarConstructor;

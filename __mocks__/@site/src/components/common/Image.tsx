@@ -80,5 +80,5 @@ export default function Image({
       </a>
     );
   }
-  return <Picture picture={picture} {...rest} />;
+  return <Picture data-whiletap={JSON.stringify(whileTap || {})} picture={picture} {...rest} />;
 }

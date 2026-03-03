@@ -159,9 +159,9 @@ export async function createSitemapItems({
 export function fileResolve(path: string, siteDir: string): string {
   let response = path;
   Object.entries(imports).some(([key, value]) => {
-    const prefix = key.replace('*', '');
+    const prefix = key.replace(/\*$/, '');
     if (path.includes(prefix)) {
-      response = value.replace('*', path.replace(prefix, ''));
+      response = value.replace(/\*$/g, path.replace(prefix, ''));
       return true;
     }
     return false;

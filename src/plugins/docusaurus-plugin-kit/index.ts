@@ -403,16 +403,12 @@ export async function generateAudio(
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   await mkdir(audioDir, { recursive: true });
 
-  const servers = await [...ports.entries()].reduce(
-    async (promise, [model, port]) => {
-      const accumulator = await promise;
-      const prefix = model.split('_')[0].toLowerCase();
-      // eslint-disable-next-line security/detect-object-injection
-      accumulator[prefix] = await piperServer(siteDir, model, port);
-      return accumulator;
-    },
-    Promise.resolve({} as Record<string, ChildProcessWithoutNullStreams>),
-  );
+  const servers = Object.fromEntries(await Promise.all(
+    Array.from(ports, async ([model, port]) => ([
+      model.slice(0, model.indexOf('_')).toLowerCase(),
+      await piperServer(siteDir, model, port),
+    ])),
+  )) as Record<string, ChildProcessWithoutNullStreams>;
 
   await concurrent(audio, async (batch, index) => {
     // Workload arbritary weight numbers.
@@ -500,8 +496,7 @@ export async function generateAudio(
       bars.update();
     }));
   }, 5);
-  // eslint-disable-next-line security/detect-object-injection
-  Object.keys(servers).forEach((lang) => servers[lang].kill('SIGTERM'));
+  Object.values(servers).forEach((server) => server.kill('SIGTERM'));
   (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bars.update();
   bar.stop();

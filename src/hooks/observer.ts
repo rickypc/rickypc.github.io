@@ -7,6 +7,7 @@ import { clsx } from '@site/src/data/common';
 import {
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -136,7 +137,10 @@ export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...re
     };
   }, []);
 
-  return { ref, visible: inView && pageVisible && windowFocused };
+  return useMemo(
+    () => ({ ref, visible: inView && pageVisible && windowFocused }),
+    [inView, pageVisible, ref, windowFocused],
+  );
 }
 
 /**

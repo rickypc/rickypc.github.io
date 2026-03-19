@@ -11,6 +11,7 @@ import {
   type RefObject,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -131,12 +132,10 @@ export default function useAudio(path: string, volume = 1): AudioResponse {
     onStateChange('idle');
   }, [onStateChange]);
 
-  return {
-    onPause,
-    onPlay,
-    onStop,
-    progress,
-    ref,
-    status,
-  };
+  return useMemo(
+    () => ({
+      onPause, onPlay, onStop, progress, ref, status,
+    }),
+    [onPause, onPlay, onStop, progress, ref, status],
+  );
 }

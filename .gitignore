@@ -11,6 +11,7 @@ cover.jpg
 *.log*
 /models
 /node_modules
+package-lock.json
 /playwright/.cache/
 /playwright/report/
 /playwright/results/

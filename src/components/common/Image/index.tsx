@@ -4,24 +4,13 @@
  */
 
 import {
-  AnimatePresence,
-  domAnimation,
-  LazyMotion,
-  motion,
+  AnimatePresence, domAnimation, LazyMotion, motion,
 } from 'motion/react';
 import { clsx, key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
 import {
-  Fragment,
-  memo,
-  type ReactElement,
-  type ReactEventHandler,
-  type RefObject,
-  type SyntheticEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
+  Fragment, memo, type ReactElement, type ReactEventHandler, type RefObject,
+  type SyntheticEvent, useCallback, useEffect, useRef, useState,
 } from 'react';
 import { useVisibility } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
@@ -70,13 +59,7 @@ type PictureProps = {
 };
 
 const Picture = memo(function Picture({
-  alt,
-  className,
-  live,
-  onLoad,
-  picture,
-  ref,
-  ...rest
+  alt, className, live, onLoad, picture, ref, ...rest
 }: PictureProps): ReactElement {
   const [background, setBackground] = useState(true);
   const { images } = picture?.fallback?.src || {};

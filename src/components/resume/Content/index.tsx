@@ -5,33 +5,17 @@
 
 import { clsx, textContent } from '@site/src/data/common';
 import {
-  catalogMap,
-  certifications,
-  codeBackground,
-  educations,
-  experiences,
-  type HeadingProps,
-  leadership,
-  preamble,
-  skills,
-  storyMap,
-  strengths,
-  testimonials,
-  timelineMap,
+  catalogMap, certifications, codeBackground, educations, experiences,
+  type HeadingProps, leadership, preamble, skills, storyMap,
+  strengths, testimonials, timelineMap,
 } from '@site/src/data/resume';
 import {
-  Fragment,
-  memo,
-  type PropsWithChildren,
-  type ReactElement,
+  Fragment, memo, type PropsWithChildren, type ReactElement,
 } from 'react';
 import Heading from '@theme/Heading';
 import Link from '@site/src/components/common/Link';
 import {
-  motion,
-  useScroll,
-  useSpring,
-  useTransform,
+  motion, useScroll, useSpring, useTransform,
 } from 'motion/react';
 import styles from './styles.module.css';
 
@@ -78,9 +62,7 @@ const Activity = memo(function Activity({ entry }: ActivityProps) {
 });
 
 const Block = memo(function Block({
-  children,
-  className,
-  heading,
+  children, className, heading,
 }: PropsWithChildren<BlockProps>): ReactElement {
   return (
     <section aria-label={textContent(heading.children)} className={clsx(className, 'row', styles.block)}>

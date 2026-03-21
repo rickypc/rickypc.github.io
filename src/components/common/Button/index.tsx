@@ -6,10 +6,7 @@
 import { clsx } from '@site/src/data/common';
 import { domAnimation, LazyMotion, motion } from 'motion/react';
 import {
-  memo,
-  type MouseEventHandler,
-  type PropsWithChildren,
-  type ReactElement,
+  memo, type MouseEventHandler, type PropsWithChildren, type ReactElement,
   type Ref,
 } from 'react';
 
@@ -27,10 +24,7 @@ export type ButtonProps = {
 };
 
 export default memo(function Button({
-  children,
-  className,
-  ref,
-  ...rest
+  children, className, ref, ...rest
 }: PropsWithChildren<ButtonProps>): ReactElement {
   return (
     <LazyMotion features={domAnimation}>

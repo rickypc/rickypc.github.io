@@ -4,10 +4,7 @@
  */
 
 export default jest.fn(({
-  children,
-  description,
-  keywords,
-  title,
+  children, description, keywords, title,
 }) => (
   <div data-description={description} data-keywords={keywords?.join(',')} data-testid="layout" data-title={title}>
     {children}

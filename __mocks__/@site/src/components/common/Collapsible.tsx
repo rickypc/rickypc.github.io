@@ -20,10 +20,7 @@ type CollapsibleProps = {
  *   The common/Collapsible component.
  */
 export default function Collapsible({
-  active,
-  items,
-  onClick,
-  translate,
+  active, items, onClick, translate,
 }: CollapsibleProps): ReactElement {
   return (
     <div data-active={active} data-testid="collapsible" data-translate={translate}>

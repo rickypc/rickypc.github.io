@@ -6,10 +6,7 @@
 import Button from '@site/src/components/common/Button';
 import { clsx, key } from '@site/src/data/common';
 import {
-  memo,
-  type ReactElement,
-  useCallback,
-  useState,
+  memo, type ReactElement, useCallback, useState,
 } from 'react';
 import styles from './styles.module.css';
 
@@ -27,10 +24,7 @@ type ItemProps = {
 };
 
 const Item = memo(function Item({
-  current,
-  item,
-  onClick,
-  ...rest
+  current, item, onClick, ...rest
 }: ItemProps): ReactElement {
   return (
     <dt>
@@ -49,10 +43,7 @@ const Item = memo(function Item({
 });
 
 export default memo(function Collapsible({
-  active,
-  items,
-  onClick,
-  ...rest
+  active, items, onClick, ...rest
 }: CollapsibleProps): ReactElement {
   const [expanded, setExpanded] = useState(false);
 

@@ -30,9 +30,7 @@ export function Intro({ children, ...rest }: PropsWithChildren): ReactElement {
  *   The common/Preamble component.
  */
 export default function Preamble({
-  children,
-  intro,
-  ...rest
+  children, intro, ...rest
 }: PropsWithChildren<PreambleProps>): ReactElement {
   return (
     <div

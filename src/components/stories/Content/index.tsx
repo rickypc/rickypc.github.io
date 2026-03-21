@@ -13,12 +13,7 @@ import { stories, type StoryProps } from '@site/src/data/stories';
 import styles from './styles.module.css';
 
 const Story = memo(function Story({
-  affiliation,
-  author,
-  content,
-  header,
-  prefix,
-  title,
+  affiliation, author, content, header, prefix, title,
 }: StoryProps): ReactElement {
   return (
     <LazyMotion features={domAnimation}>

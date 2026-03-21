@@ -5,11 +5,7 @@
 
 import { clsx } from '@site/src/data/common';
 import {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
+  useEffect, useLayoutEffect, useMemo, useRef, useState,
 } from 'react';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import { useLocation } from '@docusaurus/router';

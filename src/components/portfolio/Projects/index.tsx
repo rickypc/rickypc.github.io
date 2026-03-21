@@ -4,11 +4,7 @@
  */
 
 import {
-  AnimatePresence,
-  domMax,
-  LayoutGroup,
-  LazyMotion,
-  motion,
+  AnimatePresence, domMax, LayoutGroup, LazyMotion, motion,
 } from 'motion/react';
 import Carousel, { type CarouselHandles } from '@site/src/components/portfolio/Carousel';
 import Heading from '@theme/Heading';
@@ -17,12 +13,7 @@ import { type ImageProps } from '@site/src/components/common/Image';
 import { clsx, key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
 import {
-  memo,
-  type ReactElement,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
+  memo, type ReactElement, useCallback, useEffect, useRef, useState,
 } from 'react';
 import transition from '@site/src/data/portfolio/common';
 import styles from './styles.module.css';
@@ -68,18 +59,8 @@ const Tags = memo(function Tags({ prefix, tags }: TagsProps): ReactElement {
 
 // After Tags assignment.
 const Project = memo(function Project({
-  description,
-  hovered,
-  href,
-  images,
-  index,
-  onClick,
-  onHoverEnd,
-  onHoverStart,
-  open,
-  prefix,
-  tags,
-  title,
+  description, hovered, href, images, index, onClick,
+  onHoverEnd, onHoverStart, open, prefix, tags, title,
 }: ProjectProps): ReactElement {
   const carousel = useRef<CarouselHandles>(null);
   useEffect(

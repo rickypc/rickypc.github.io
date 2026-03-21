@@ -69,8 +69,7 @@ export type Transliteration = {
  * }
  */
 export default memo(function MultiLingual({
-  transliteration = {},
-  ...languages
+  transliteration = {}, ...languages
 }: MultiLingualProps): ReactElement {
   return (
     <>

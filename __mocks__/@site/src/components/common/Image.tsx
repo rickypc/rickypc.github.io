@@ -36,10 +36,7 @@ type PictureProps = {
  *   The common/Picture component.
  */
 function Picture({
-  alt,
-  live,
-  picture,
-  ...rest
+  alt, live, picture, ...rest
 }: PictureProps): ReactElement {
   return (
     <picture data-live={String(live)} data-testid="picture" style={{ backgroundImage: `url(${picture?.fallback})` }}>
@@ -66,10 +63,7 @@ function Picture({
  *   The common/Image component.
  */
 export default function Image({
-  link,
-  picture,
-  whileTap,
-  ...rest
+  link, picture, whileTap, ...rest
 }: ImageProps): ReactElement {
   if (link) {
     const { whileTap: linkWhileTap, ...linkRest } = link;

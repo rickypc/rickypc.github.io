@@ -4,12 +4,7 @@
  */
 
 import {
-  access,
-  mkdir,
-  readdir,
-  readFile,
-  stat,
-  writeFile,
+  access, mkdir, readdir, readFile, stat, writeFile,
 } from 'node:fs/promises';
 import { basename, join, resolve } from 'node:path';
 import Beasties from 'beasties';
@@ -17,9 +12,7 @@ import concurrent from 'timeable-promise/concurrent';
 import { createHash, createHmac } from 'node:crypto';
 import { createWriteStream, readFileSync } from 'node:fs';
 import {
-  DEFAULT_BUILD_DIR_NAME,
-  DEFAULT_CONFIG_FILE_NAME,
-  getFileCommitDate,
+  DEFAULT_BUILD_DIR_NAME, DEFAULT_CONFIG_FILE_NAME, getFileCommitDate,
   loadFreshModule,
 } from '@docusaurus/utils';
 import { type DocusaurusConfig, type LoadContext, type Plugin } from '@docusaurus/types';
@@ -77,12 +70,7 @@ const algorithm = 'sha256';
 export const MS_PER_DAY = 86400000;
 const provenance = Buffer.from(readFileSync('.provenance', 'utf8').trim(), 'base64');
 const templates: Templates = {
-  base,
-  book,
-  condensed,
-  roll,
-  thangka,
-  wheel,
+  base, book, condensed, roll, thangka, wheel,
 };
 
 // ----------------------------------------------------------------------------
@@ -96,8 +84,7 @@ const templates: Templates = {
  * @returns {Array} Combined array of default items and PDF entries.
  */
 export async function createSitemapItems({
-  defaultCreateSitemapItems,
-  ...rest
+  defaultCreateSitemapItems, ...rest
 }: CreateSitemapItemsParams): Promise<SitemapItems> {
   const items = await defaultCreateSitemapItems(rest);
   const today = new Date().toISOString().split('T')[0];
@@ -253,12 +240,7 @@ export async function piperServer(
  * // -> true if target is missing, older than data/template, or past cutoff.
  */
 export async function stale({
-  data,
-  maxAgeDays = 7,
-  model = '',
-  siteDir,
-  target,
-  template = '',
+  data, maxAgeDays = 7, model = '', siteDir, target, template = '',
 }: StaleProps): Promise<boolean> {
   // Target does not exist.
   if (await access(target).then(() => false).catch(() => true)) {

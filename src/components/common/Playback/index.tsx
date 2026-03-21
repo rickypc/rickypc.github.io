@@ -121,16 +121,10 @@ const radius = 16;
 const strokeDasharray = 2 * Math.PI * radius;
 
 export default memo(function Playback({
-  className,
-  path,
-  volume = 1,
+  className, path, volume = 1,
 }: PlaybackProps): ReactElement | null {
   const {
-    onPause,
-    onPlay,
-    onStop,
-    progress,
-    status,
+    onPause, onPlay, onStop, progress, status,
   } = useAudio(path, volume);
   const [pressed, setPressed] = useState(false);
   const opacity = useTransform(progress, (value) => (value < 0.01 ? 0 : 1));

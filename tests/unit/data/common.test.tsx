@@ -4,18 +4,9 @@
  */
 
 import {
-  a11y,
-  chunkToWords,
-  clsx,
-  context,
-  fetchAsJson,
-  fileName,
-  humanizeYears,
-  key,
-  numberToWords,
-  oneLine,
-  tail,
-  textContent,
+  a11y, chunkToWords, clsx, context, fetchAsJson,
+  fileName, humanizeYears, key, numberToWords, oneLine,
+  tail, textContent,
 } from '@site/src/data/common';
 
 describe('data.common', () => {

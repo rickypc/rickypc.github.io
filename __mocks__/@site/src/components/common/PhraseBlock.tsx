@@ -26,10 +26,7 @@ type PhraseProps = {
  *   The common/PhraseBlock component.
  */
 export default function PhraseBlock({
-  infix,
-  phrase,
-  prefix,
-  suffix,
+  infix, phrase, prefix, suffix,
 }: PhraseBlockProps): ReactElement {
   return (
     <div

@@ -6,10 +6,7 @@
 import { clsx, textContent } from '@site/src/data/common';
 import Heading from '@theme/Heading';
 import {
-  memo,
-  type PropsWithChildren,
-  type ReactElement,
-  type ReactNode,
+  memo, type PropsWithChildren, type ReactElement, type ReactNode,
 } from 'react';
 import styles from './styles.module.css';
 
@@ -28,12 +25,7 @@ export type PreambleProps = {
 };
 
 export const Intro = memo(function Intro({
-  after,
-  before,
-  children,
-  className,
-  description,
-  title,
+  after, before, children, className, description, title,
 }: PropsWithChildren<IntroProps>): ReactElement {
   return (
     <>

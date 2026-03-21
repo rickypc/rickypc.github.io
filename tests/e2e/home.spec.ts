@@ -4,20 +4,9 @@
  */
 
 import {
-  afterAll,
-  band,
-  beforeAll,
-  type BrowserContext,
-  expect,
-  hasMetadatas,
-  hasNavigations,
-  hasPlayback,
-  hasPrint,
-  hasScreenshot,
-  hasUrl,
-  mobile,
-  type Page,
-  test,
+  afterAll, band, beforeAll, type BrowserContext, expect,
+  hasMetadatas, hasNavigations, hasPlayback, hasPrint, hasScreenshot,
+  hasUrl, mobile, type Page, test,
 } from './helper';
 
 const url = '/';

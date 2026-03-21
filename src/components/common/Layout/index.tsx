@@ -4,11 +4,7 @@
  */
 
 import {
-  Children,
-  memo,
-  type PropsWithChildren,
-  type ReactElement,
-  type ReactNode,
+  Children, memo, type PropsWithChildren, type ReactElement, type ReactNode,
 } from 'react';
 import { context } from '@site/src/data/common';
 import { PageMetadata } from '@docusaurus/theme-common';
@@ -24,12 +20,7 @@ export type LayoutProps = {
 };
 
 export default memo(function Layout({
-  children,
-  className,
-  description,
-  keywords,
-  metadatas,
-  title,
+  children, className, description, keywords, metadatas, title,
 }: PropsWithChildren<LayoutProps>): ReactElement {
   useWelcome();
   return (

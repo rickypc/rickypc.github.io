@@ -17,9 +17,7 @@ type ProjectsProps = {
  *   The portfolio/Projects component.
  */
 export default function PortfolioProjects({
-  children,
-  filtered,
-  ...rest
+  children, filtered, ...rest
 }: PropsWithChildren<ProjectsProps>): ReactElement {
   return (
     <div

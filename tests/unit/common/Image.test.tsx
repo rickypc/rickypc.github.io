@@ -6,11 +6,7 @@
  */
 
 import {
-  act,
-  fireEvent,
-  render,
-  renderHook,
-  screen,
+  act, fireEvent, render, renderHook, screen,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Image from '@site/src/components/common/Image';

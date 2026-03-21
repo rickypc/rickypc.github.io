@@ -7,16 +7,8 @@
 
 import { catalog, catalogMap } from '@site/src/data/portfolio';
 import {
-  certifications,
-  educations,
-  experiences,
-  header,
-  layout,
-  leadership,
-  preamble,
-  skills,
-  strengths,
-  testimonials,
+  certifications, educations, experiences, header, layout,
+  leadership, preamble, skills, strengths, testimonials,
 } from '@site/src/data/resume';
 import { type DocusaurusConfig } from '@docusaurus/types';
 import { isValidElement, type ReactElement } from 'react';

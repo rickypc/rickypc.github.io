@@ -8,12 +8,7 @@
 import { render, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {
-  hats,
-  identity,
-  image,
-  intro,
-  layout,
-  socials,
+  hats, identity, image, intro, layout, socials,
 } from '@site/src/data/home';
 
 describe('data.home', () => {

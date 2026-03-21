@@ -11,13 +11,6 @@ import Phrase, { Instruction } from '@site/src/components/common/Phrase';
 import Welcome from '@site/src/components/common/Welcome';
 
 export default {
-  // Use the default mapping.
-  ...MDXComponents,
-  // Register all other necessary custom component.
-  Image,
-  Instruction,
-  Link,
-  MultiLingual,
-  Phrase,
-  Welcome,
+  // Use the default mapping and register all other necessary custom component.
+  ...MDXComponents, Image, Instruction, Link, MultiLingual, Phrase, Welcome,
 };

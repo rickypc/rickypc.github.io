@@ -4,15 +4,9 @@
  */
 
 import {
-  type Browser,
-  type BrowserContext,
-  expect,
-  type Page,
-  type PageScreenshotOptions,
-  type PlaywrightTestArgs,
-  type PlaywrightTestOptions,
-  test,
-  type TestInfo,
+  type Browser, type BrowserContext, expect, type Page,
+  type PageScreenshotOptions, type PlaywrightTestArgs,
+  type PlaywrightTestOptions, test, type TestInfo,
 } from '@playwright/test';
 import { pdfToPng } from 'pdf-to-png-converter';
 import { execFile, spawn } from 'node:child_process';

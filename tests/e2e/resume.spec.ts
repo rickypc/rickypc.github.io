@@ -4,19 +4,9 @@
  */
 
 import {
-  afterAll,
-  band,
-  beforeAll,
-  type BrowserContext,
-  expect,
-  hasActiveNavigation,
-  hasMetadatas,
-  hasNavigations,
-  hasPrint,
-  hasScreenshot,
-  hasUrl,
-  type Page,
-  test,
+  afterAll, band, beforeAll, type BrowserContext, expect,
+  hasActiveNavigation, hasMetadatas, hasNavigations, hasPrint, hasScreenshot,
+  hasUrl, type Page, test,
 } from './helper';
 
 const url = '/resume';

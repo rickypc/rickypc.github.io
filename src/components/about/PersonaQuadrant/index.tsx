@@ -17,11 +17,7 @@ type PersonaQuadrantProps = {
 };
 
 export default memo(function PersonaQuadrant({
-  alt,
-  axes,
-  circle,
-  className,
-  labels,
+  alt, axes, circle, className, labels,
 }: PersonaQuadrantProps) {
   return (
     <svg {...a11y(alt)} className={clsx(className, styles.quadrant)} role="img" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">

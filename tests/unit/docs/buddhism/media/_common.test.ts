@@ -4,13 +4,7 @@
  */
 
 import {
-  body,
-  header,
-  instruction,
-  main,
-  phrase,
-  phrases,
-  properCase,
+  body, header, instruction, main, phrase, phrases, properCase,
 } from '#buddhism/media/_common';
 import { createElement } from 'react';
 

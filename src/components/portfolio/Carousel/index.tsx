@@ -8,15 +8,8 @@ import { animate, motion, useMotionValue } from 'motion/react';
 import Button from '@site/src/components/common/Button';
 import Image, { type ImageProps } from '@site/src/components/common/Image';
 import {
-  memo,
-  type ReactElement,
-  type Ref,
-  type RefObject,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
+  memo, type ReactElement, type Ref, type RefObject, useCallback,
+  useEffect, useImperativeHandle, useRef, useState,
 } from 'react';
 import { usePrint, useResize, useVisibility } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
@@ -69,13 +62,7 @@ type SliderProps = {
 };
 
 const Indicators = memo(function Indicators({
-  active,
-  cycle,
-  duration,
-  images,
-  onClick,
-  prefix,
-  stopped,
+  active, cycle, duration, images, onClick, prefix, stopped,
 }: IndicatorsProps): false | ReactElement {
   return images.length > 1 && (
     <div className={styles.indicators}>
@@ -107,9 +94,7 @@ const Indicators = memo(function Indicators({
 });
 
 const Next = memo(function Next({
-  active,
-  images,
-  onClick,
+  active, images, onClick,
 }: NavigationProps): false | ReactElement {
   if (images.length < 2) {
     return false;
@@ -139,9 +124,7 @@ const Next = memo(function Next({
 });
 
 const Previous = memo(function Previous({
-  active,
-  images,
-  onClick,
+  active, images, onClick,
 }: NavigationProps): false | ReactElement {
   if (images.length < 2) {
     return false;
@@ -184,14 +167,7 @@ const Slide = memo(function Slide({ image, live, onClick }: SlideProps): ReactEl
 });
 
 const Slider = memo(function Slider({
-  active,
-  images,
-  onClick,
-  prefix,
-  printing,
-  resizing,
-  setActive,
-  viewport,
+  active, images, onClick, prefix, printing, resizing, setActive, viewport,
 }: SliderProps): ReactElement {
   const [dragging, setDragging] = useState(false);
   const onSlideClick = useCallback((handler: () => void) => () => {
@@ -248,13 +224,7 @@ const Slider = memo(function Slider({
 });
 
 export default memo(function Carousel({
-  duration = 5000,
-  images,
-  onClick,
-  open,
-  prefix,
-  ref,
-  title,
+  duration = 5000, images, onClick, open, prefix, ref, title,
 }: CarouselProps) {
   const [active, setActive] = useState(0);
   const [cycle, setCycle] = useState(0);

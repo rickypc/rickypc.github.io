@@ -6,12 +6,7 @@
  */
 
 import {
-  characteristic,
-  headline,
-  intro,
-  layout,
-  paragraphs,
-  quadrants,
+  characteristic, headline, intro, layout, paragraphs, quadrants,
 } from '@site/src/data/about';
 import { textContent } from '@site/src/data/common';
 

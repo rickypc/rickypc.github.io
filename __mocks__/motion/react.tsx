@@ -4,10 +4,7 @@
  */
 
 import {
-  type MouseEventHandler,
-  type PropsWithChildren,
-  type ReactElement,
-  type Ref,
+  type MouseEventHandler, type PropsWithChildren, type ReactElement, type Ref,
 } from 'react';
 
 type ArticleProps = {
@@ -104,15 +101,8 @@ export const motion = {
   // eslint-disable-next-line @docusaurus/no-html-links
   a: ({ children, ...props }: PropsWithChildren) => <a {...props}>{children}</a>,
   article: ({
-    children,
-    className,
-    layout,
-    onHoverEnd,
-    onHoverStart,
-    onLayoutAnimationComplete,
-    onLayoutAnimationStart,
-    whileInView,
-    ...props
+    children, className, layout, onHoverEnd, onHoverStart,
+    onLayoutAnimationComplete, onLayoutAnimationStart, whileInView, ...props
   }: PropsWithChildren<ArticleProps>) => {
     if (onLayoutAnimationStart) {
       onLayoutAnimationStart();
@@ -136,20 +126,12 @@ export const motion = {
   },
   aside: ({ children, ...props }: PropsWithChildren) => <aside {...props}>{children}</aside>,
   button: ({
-    children,
-    ref,
-    ...props
+    children, ref, ...props
   }: PropsWithChildren<ButtonProps>) => <button ref={ref} {...props} type="button">{children}</button>,
   circle: ({ children, ...props }: PropsWithChildren) => <circle {...props}>{children}</circle>,
   div: ({
-    children,
-    className,
-    dragElastic,
-    dragMomentum,
-    layout,
-    onDragEnd,
-    onDragStart,
-    ...props
+    children, className, dragElastic, dragMomentum, layout,
+    onDragEnd, onDragStart, ...props
   }: PropsWithChildren<DivProps>) => {
     listeners[`${className}-onDragEnd`] = onDragEnd;
     listeners[`${className}-onDragStart`] = onDragStart;
@@ -167,11 +149,7 @@ export const motion = {
     );
   },
   dt: ({
-    children,
-    className,
-    onClick,
-    whileTap,
-    ...rest
+    children, className, onClick, whileTap, ...rest
   }: PropsWithChildren<DtProps>) => (
     /*
       eslint-disable-next-line
@@ -188,12 +166,7 @@ export const motion = {
     </dt>
   ),
   figure: ({
-    children,
-    className,
-    layout,
-    ref,
-    whileInView,
-    ...props
+    children, className, layout, ref, whileInView, ...props
   }: PropsWithChildren<FigureProps>) => (
     <figure
       className={className}
@@ -209,10 +182,7 @@ export const motion = {
   // eslint-disable-next-line jsx-a11y/alt-text
   img: (props: {}) => <img {...props} />,
   span: ({
-    children,
-    className,
-    layoutId,
-    ...rest
+    children, className, layoutId, ...rest
   }: PropsWithChildren<SpanProps>) => (
     <span
       className={className}

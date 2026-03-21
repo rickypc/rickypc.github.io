@@ -4,11 +4,8 @@
  */
 
 import {
-  type PropsWithChildren,
-  type ReactElement,
-  type ReactEventHandler,
-  type Ref,
-  type RefCallback,
+  type PropsWithChildren, type ReactElement, type ReactEventHandler,
+  type Ref, type RefCallback,
 } from 'react';
 
 type ButtonProps = {
@@ -30,12 +27,7 @@ type ButtonRefHandler = HTMLButtonElement & { _handler?: ReactEventHandler<HTMLB
  *   The common/Button component.
  */
 export default function Button({
-  'aria-label': ariaLabel,
-  children,
-  onClick,
-  ref,
-  whileTap,
-  ...rest
+  'aria-label': ariaLabel, children, onClick, ref, whileTap, ...rest
 }: PropsWithChildren<ButtonProps>): ReactElement {
   const refHandler: RefCallback<ButtonRefHandler> = (node) => {
     if (node) {

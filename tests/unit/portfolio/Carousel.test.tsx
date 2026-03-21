@@ -6,10 +6,7 @@
  */
 
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
+  act, fireEvent, render, screen,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Carousel from '@site/src/components/portfolio/Carousel';

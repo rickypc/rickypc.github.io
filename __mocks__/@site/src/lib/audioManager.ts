@@ -4,7 +4,5 @@
  */
 
 export default {
-  pause: jest.fn(),
-  play: jest.fn(() => Promise.resolve()),
-  volume: 1,
+  pause: jest.fn(), play: jest.fn(() => Promise.resolve()), volume: 1,
 };

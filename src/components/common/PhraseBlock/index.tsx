@@ -7,11 +7,7 @@ import Buttons from '@theme/CodeBlock/Buttons';
 import { clsx, key } from '@site/src/data/common';
 import { CodeBlockContextProvider, createCodeBlockMetadata, useCodeWordWrap } from '@docusaurus/theme-common/internal';
 import {
-  Fragment,
-  isValidElement,
-  memo,
-  type PropsWithChildren,
-  type ReactElement,
+  Fragment, isValidElement, memo, type PropsWithChildren, type ReactElement,
 } from 'react';
 import styles from './styles.module.css';
 
@@ -102,11 +98,7 @@ const useMetadata = (props: MetadataProps) => createCodeBlockMetadata({
 });
 
 export default memo(function PhraseBlock({
-  className = '',
-  infix,
-  phrase,
-  prefix,
-  suffix,
+  className = '', infix, phrase, prefix, suffix,
 }: PhraseBlockProps): ReactElement {
   const content = body(phrase, prefix, infix, suffix);
   const metadata = useMetadata({ className, code: text(content), title: phrase.title });

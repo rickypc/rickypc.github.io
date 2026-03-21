@@ -10,11 +10,7 @@ import { type Location } from 'history';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import { useLocation } from '@docusaurus/router';
 import {
-  useMedia,
-  usePrint,
-  useResize,
-  useVisibility,
-  useWelcome,
+  useMedia, usePrint, useResize, useVisibility, useWelcome,
 } from '@site/src/hooks/observer';
 
 const useIsBrowserMock = jest.mocked(useIsBrowser);

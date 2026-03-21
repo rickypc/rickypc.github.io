@@ -22,12 +22,7 @@ type PillsProps = {
  *   The common/Pills component.
  */
 export default function Pills({
-  active,
-  'aria-hidden': ariaHidden,
-  items,
-  onClick,
-  prefix,
-  translate,
+  active, 'aria-hidden': ariaHidden, items, onClick, prefix, translate,
 }: PillsProps): ReactElement {
   return (
     <div

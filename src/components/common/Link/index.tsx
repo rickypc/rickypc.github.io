@@ -6,10 +6,7 @@
 import { a11y } from '@site/src/data/common';
 import { domAnimation, LazyMotion, motion } from 'motion/react';
 import {
-  memo,
-  type PropsWithChildren,
-  type ReactElement,
-  type Ref,
+  memo, type PropsWithChildren, type ReactElement, type Ref,
 } from 'react';
 import useBrokenLinks from '@docusaurus/useBrokenLinks';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -29,13 +26,7 @@ export type LinkProps = {
 };
 
 export default memo(function Link({
-  children,
-  className,
-  href,
-  ref,
-  title,
-  validate = false,
-  ...rest
+  children, className, href, ref, title, validate = false, ...rest
 }: PropsWithChildren<LinkProps>): ReactElement {
   const links = useBrokenLinks();
   let rel;

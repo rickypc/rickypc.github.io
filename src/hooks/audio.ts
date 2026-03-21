@@ -8,12 +8,7 @@ import audioManager from '@site/src/lib/audioManager';
 import { fileName, key, tail } from '@site/src/data/common';
 import { type MotionValue, useMotionValue } from 'motion/react';
 import {
-  type RefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
+  type RefObject, useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 
 type AudioState = '404' | 'idle' | 'paused' | 'playing';

@@ -22,8 +22,7 @@ export function CodeBlockContextProvider({ children }: PropsWithChildren): React
 }
 
 export const createCodeBlockMetadata = jest.fn((meta: MetadataProps) => ({
-  code: meta.code,
-  title: meta.title,
+  code: meta.code, title: meta.title,
 }));
 
 export const useCodeWordWrap = () => ({ codeBlockRef: { current: null } });

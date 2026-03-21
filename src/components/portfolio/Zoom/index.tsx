@@ -7,11 +7,7 @@ import { a11y, clsx } from '@site/src/data/common';
 import { domMax, LazyMotion, motion } from 'motion/react';
 import Image, { type ImageProps } from '@site/src/components/common/Image';
 import {
-  memo,
-  type ReactElement,
-  useCallback,
-  useEffect,
-  useRef,
+  memo, type ReactElement, useCallback, useEffect, useRef,
 } from 'react';
 import transition from '@site/src/data/portfolio/common';
 import styles from './styles.module.css';

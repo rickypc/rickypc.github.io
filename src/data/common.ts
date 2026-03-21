@@ -4,10 +4,7 @@
  */
 
 import {
-  isValidElement,
-  type PropsWithChildren,
-  type ReactElement,
-  type ReactNode,
+  isValidElement, type PropsWithChildren, type ReactElement, type ReactNode,
 } from 'react';
 
 const below20: string[] = [

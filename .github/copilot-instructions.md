@@ -7,12 +7,12 @@
 - Custom plugin: `src/plugins/docusaurus-plugin-kit/`
 
 ## Commands
-- Build: `yarn build` / `npm run build`
-- Dev: `yarn start` / `npm run start`
-- Lint: `yarn lint` / `npm run lint`
-- E2E: `npx playwright test` / `yarn playwright test` (see `playwright.config.ts`)
-- Unit: `tests/unit/` (Jest + React Testing Library)
-- PDF: `yarn kit:pdf` (custom plugin)
+- Build: `npm run build`
+- Dev: `npm run start`
+- Lint: `npm run test:lint`
+- E2E: `npm run test:e2e` (see `playwright.config.ts`)
+- Unit: `npm run test:unit` (Jest + React Testing Library)
+- PDF: `npm run build:media` (custom plugin)
 
 ## Patterns
 - Components by feature: `src/components/feature/`

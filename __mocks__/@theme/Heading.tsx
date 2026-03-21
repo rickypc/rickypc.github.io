@@ -18,9 +18,7 @@ type HeadingProps = {
  *   The \@theme/Heading component.
  */
 export default function Heading({
-  as = 'div',
-  className,
-  children,
+  as = 'div', className, children,
 }: PropsWithChildren<HeadingProps>): ReactElement {
   return createElement(as, { className, 'data-testid': 'heading' }, children);
 }

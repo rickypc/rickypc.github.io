@@ -5,11 +5,7 @@
 
 import { clsx, key } from '@site/src/data/common';
 import {
-  domAnimation,
-  LazyMotion,
-  motion,
-  useScroll,
-  useSpring,
+  domAnimation, LazyMotion, motion, useScroll, useSpring,
 } from 'motion/react';
 import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
@@ -21,13 +17,7 @@ import { useMedia, usePrint } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
 
 const Timeline = memo(function Timeline({
-  affiliation,
-  className,
-  description,
-  picture,
-  prefix,
-  title,
-  year,
+  affiliation, className, description, picture, prefix, title, year,
 }: TimelineProps): ReactElement {
   const alt = `${affiliation.children} Logo`;
   const id = key(title.children, 'timeline');

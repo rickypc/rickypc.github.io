@@ -17,8 +17,7 @@ type AdmonitionProps = {
  *   The \@theme/Admonition component.
  */
 export default function Admonition({
-  children,
-  type,
+  children, type,
 }: PropsWithChildren<AdmonitionProps>): ReactElement {
   return <div data-testid="admonition" data-type={type}>{children}</div>;
 }

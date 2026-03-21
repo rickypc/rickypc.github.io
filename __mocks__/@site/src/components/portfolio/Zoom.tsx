@@ -17,9 +17,7 @@ type ZoomProps = {
  *   The portfolio/Zoom component.
  */
 export default function PortfolioZoom({
-  children,
-  open,
-  ...rest
+  children, open, ...rest
 }: PropsWithChildren<ZoomProps>): ReactElement {
   return (
     <div

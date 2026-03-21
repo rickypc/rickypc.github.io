@@ -6,10 +6,7 @@
  */
 
 import {
-  fireEvent,
-  render,
-  screen,
-  within,
+  fireEvent, render, screen, within,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Filter from '@site/src/components/portfolio/Filter';

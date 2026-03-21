@@ -7,18 +7,12 @@ import { GenIcon } from 'react-icons/lib';
 import { type IconBaseProps } from 'react-icons';
 import Image, { type ImageSource } from '@site/src/components/common/Image';
 import {
-  clsx,
-  fileName,
-  key,
-  tail,
+  clsx, fileName, key, tail,
 } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
 import MDXDetails from '@theme-original/MDXComponents/Details';
 import {
-  Children,
-  memo,
-  type ReactElement,
-  type ReactNode,
+  Children, memo, type ReactElement, type ReactNode,
 } from 'react';
 import pdf from '#buddhism/media/pdf/_index';
 import PhraseBlock from '@site/src/components/common/PhraseBlock';
@@ -111,9 +105,7 @@ export function GrPrint(props: IconBaseProps): ReactElement {
 }
 
 export const Instruction = memo(function Instruction({
-  image,
-  text,
-  transliteration,
+  image, text, transliteration,
 }: InstructionProps): ReactElement | undefined {
   if (image) {
     return (
@@ -176,9 +168,7 @@ const Repetition = memo(function Repetition({
 
 // istanbul ignore next
 const Support = memo(function Support({
-  path,
-  repetition = 0,
-  transliteration,
+  path, repetition = 0, transliteration,
 }: SupportProps): ReactElement | null {
   const children = Children.toArray([
     <Repetition key="repetition" value={repetition || transliteration.repetition} />,
@@ -200,11 +190,7 @@ const Support = memo(function Support({
 });
 
 export default memo(function Phrase({
-  image,
-  instruction,
-  path,
-  repetition = 0,
-  transliteration,
+  image, instruction, path, repetition = 0, transliteration,
 }: PhraseProps): ReactElement | null {
   return transliteration ? (
     <>

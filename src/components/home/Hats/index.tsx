@@ -11,11 +11,7 @@ import Heading from '@theme/Heading';
 import { type IconBaseProps } from 'react-icons';
 import { clsx, key } from '@site/src/data/common';
 import {
-  memo,
-  type PropsWithChildren,
-  type ReactElement,
-  type ReactNode,
-  useState,
+  memo, type PropsWithChildren, type ReactElement, type ReactNode, useState,
 } from 'react';
 import { usePrint } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
@@ -75,10 +71,7 @@ const Details = memo(function Details({ content, title }: DetailsProps) {
 });
 
 const Hat = memo(function Hat({
-  children,
-  description,
-  details,
-  label,
+  children, description, details, label,
 }: PropsWithChildren<HatProps>): ReactElement {
   return (
     <article aria-label={label} className={styles.hat}>

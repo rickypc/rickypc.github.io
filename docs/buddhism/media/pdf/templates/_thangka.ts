@@ -14,10 +14,7 @@ import { oneLine } from '#root/src/data/common';
 export default function thangka(path: string) {
   const {
     default: {
-      lang = 'bo-CN',
-      sanskrit,
-      tibetan,
-      transliteration,
+      lang = 'bo-CN', sanskrit, tibetan, transliteration,
     },
   /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   } = require(path);

@@ -4,15 +4,8 @@
  */
 
 import {
-  Children,
-  cloneElement,
-  Fragment,
-  isValidElement,
-  type JSX,
-  memo,
-  type PropsWithChildren,
-  type ReactElement,
-  type ReactNode,
+  Children, cloneElement, Fragment, isValidElement, type JSX,
+  memo, type PropsWithChildren, type ReactElement, type ReactNode,
 } from 'react';
 import { clsx, key } from '@site/src/data/common';
 import { domAnimation, LazyMotion, motion } from 'motion/react';

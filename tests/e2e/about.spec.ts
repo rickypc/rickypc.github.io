@@ -4,19 +4,9 @@
  */
 
 import {
-  afterAll,
-  beforeAll,
-  type BrowserContext,
-  expect,
-  hasActiveNavigation,
-  hasHeader,
-  hasMetadatas,
-  hasNavigations,
-  hasPrint,
-  hasScreenshot,
-  hasUrl,
-  type Page,
-  test,
+  afterAll, beforeAll, type BrowserContext, expect, hasActiveNavigation,
+  hasHeader, hasMetadatas, hasNavigations, hasPrint, hasScreenshot,
+  hasUrl, type Page, test,
 } from './helper';
 
 const url = '/about';

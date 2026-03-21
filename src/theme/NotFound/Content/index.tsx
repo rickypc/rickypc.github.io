@@ -16,8 +16,7 @@ type ContentProps = {
 };
 
 export default memo(function Content({
-  className,
-  navigation = false,
+  className, navigation = false,
 }: ContentProps): ReactElement {
   useWelcome({ navigation });
   return (

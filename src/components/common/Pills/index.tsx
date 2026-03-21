@@ -5,11 +5,7 @@
 
 import { clsx, key } from '@site/src/data/common';
 import {
-  AnimatePresence,
-  domMax,
-  LayoutGroup,
-  LazyMotion,
-  motion,
+  AnimatePresence, domMax, LayoutGroup, LazyMotion, motion,
 } from 'motion/react';
 import { memo, type ReactElement } from 'react';
 import styles from './styles.module.css';
@@ -30,11 +26,7 @@ export type PillsProps = {
 };
 
 const Item = memo(function Item({
-  active,
-  item,
-  onClick,
-  prefix,
-  ...rest
+  active, item, onClick, prefix, ...rest
 }: ItemProps): ReactElement {
   const current = active === item;
   return (
@@ -59,11 +51,7 @@ const Item = memo(function Item({
 });
 
 export default memo(function Pills({
-  active,
-  items,
-  onClick,
-  prefix,
-  ...rest
+  active, items, onClick, prefix, ...rest
 }: PillsProps): ReactElement {
   return (
     <LazyMotion features={domMax}>

@@ -15,11 +15,7 @@ import { properCase } from '#buddhism/media/_common';
 export default function roll(path: string) {
   const {
     default: {
-      lang = 'bo-CN',
-      sanskrit,
-      tibetan,
-      total = 6,
-      transliteration,
+      lang = 'bo-CN', sanskrit, tibetan, total = 6, transliteration,
     },
   /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   } = require(path);

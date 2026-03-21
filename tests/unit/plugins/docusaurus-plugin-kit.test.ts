@@ -4,21 +4,10 @@
  */
 
 import {
-  access,
-  mkdir,
-  readdir,
-  readFile,
-  stat,
-  writeFile,
+  access, mkdir, readdir, readFile, stat, writeFile,
 } from 'node:fs/promises';
 import {
-  barUpdate,
-  barsUpdate,
-  create,
-  increment,
-  MultiBar,
-  setTotal,
-  stop,
+  barUpdate, barsUpdate, create, increment, MultiBar, setTotal, stop,
 } from 'cli-progress';
 import { createWriteStream } from 'node:fs';
 import { DEFAULT_CONFIG_FILE_NAME, getFileCommitDate, loadFreshModule } from '@docusaurus/utils';

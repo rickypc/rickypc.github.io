@@ -63,7 +63,6 @@ describe('stories.Content', () => {
       expect(headerLink).toHaveTextContent(story.header.children);
 
       const heart = within(heading).getByTestId('heart');
-      // eslint-disable-next-line testing-library/no-node-access
       expect(heart).toHaveAttribute('id', `story-${story.header.children.toLowerCase()}`);
 
       // Endorsement paragraph.

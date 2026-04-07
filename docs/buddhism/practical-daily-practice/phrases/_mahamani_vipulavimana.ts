@@ -26,11 +26,7 @@ export default {
   },
   tibetan: {
     children: [core.tibetan.children, darsanaMukta.tibetan.children].join('། '),
-    repeat: {
-      condensed: 39,
-      roll: 14,
-      wheel: 13,
-    },
+    repeat: { condensed: 39, roll: 14, wheel: 13 },
     title: 'ནོར་བུ་ཆེན་པོ་རྒྱས་པའི་གཞལ་མེད་ཁང',
   },
   translation: {

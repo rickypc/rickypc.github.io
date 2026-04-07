@@ -4,6 +4,12 @@
  */
 
 const core = {
+  chinese: {
+    children: [
+      '耶 達摩 訶圖缽婆婆 訶敦 提舍 達多伽多 烏嚩左',
+      '提舍拶 友 尼囉陀 伊縛婆提 摩訶沙門那',
+    ].join(' · '),
+  },
   pali: {
     children: [
       'ye dhammā hetuppabhavā hetuṁ tesaṁ tathāgato uvāca',
@@ -44,6 +50,7 @@ const core = {
 
 export default {
   chinese: {
+    children: core.chinese.children,
     title: '緣起經',
   },
   core,
@@ -82,11 +89,7 @@ export default {
   },
   tibetan: {
     children: core.tibetan.children,
-    repeat: {
-      condensed: 129,
-      roll: 46,
-      wheel: 44,
-    },
+    repeat: { condensed: 129, roll: 46, wheel: 44 },
     title: 'རྟེན་ཅིང་འབྲེལ་བར་འབྱུང་བའི་ཚིགས་སུ་བཅད་པ།',
   },
   translation: {

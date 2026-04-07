@@ -11,11 +11,7 @@ export default {
   },
   tibetan: {
     children: 'ཨོཾ་ཀཾ་ཀ་ནི་ཀཾ་ཀ་ནི། རོ་ཙ་ནི་རོ་ཙ་ནི། ཏྲོ་ཊ་ནི་ཏྲོ་ཊ་ནི། ཏྲཱ་ས་ནི་ཏྲཱ་ས་ནི། པྲ་ཏི་ཧ་ན་པྲ་ཏི་ཧ་ན། སརྦ་ཀརྨ་པ་རཾ་པ་ར་ཎི་མེ་སརྦ་སཏྭཱ་ནཱཉྩ་སྭཱ་ཧཱ',
-    repeat: {
-      condensed: 91,
-      roll: 32,
-      wheel: 31,
-    },
+    repeat: { condensed: 91, roll: 32, wheel: 31 },
     title: 'མི་བསྐྱོད་པ',
     typography: {
       thangka: { default: 10, double: 18, single: 42.5 },

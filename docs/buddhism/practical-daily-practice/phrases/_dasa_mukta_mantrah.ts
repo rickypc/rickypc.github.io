@@ -44,11 +44,7 @@ export default {
       avalokitesvara.tibetan.children,
       amitabha.tibetan.children,
     ],
-    repeat: {
-      condensed: 17,
-      roll: 6,
-      wheel: 6,
-    },
+    repeat: { condensed: 17, roll: 6, wheel: 6 },
     title: 'སྔགས་ཐར་པ་བཅུ',
   },
   transliteration: {

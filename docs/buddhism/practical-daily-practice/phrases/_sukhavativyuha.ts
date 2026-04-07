@@ -20,11 +20,7 @@ export default {
   path: import.meta.url,
   sanskrit: {
     children: [core.sanskrit.children, amitabha.sanskrit.children].join(' । '),
-    repeat: {
-      condensed: 51,
-      roll: 18,
-      wheel: 17,
-    },
+    repeat: { condensed: 51, roll: 18, wheel: 17 },
     title: 'सुखावतीव्यूह धारणी',
   },
   translation: {

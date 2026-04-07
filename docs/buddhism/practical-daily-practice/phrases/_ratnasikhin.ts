@@ -11,11 +11,7 @@ export default {
   },
   tibetan: {
     children: 'ར་ཏྣ་ར་ཏྣ་ར་ཏྣ་ཤི་ཁེ་ནེ་སྭཱ་ཧཱ',
-    repeat: {
-      condensed: 415,
-      roll: 148,
-      wheel: 143,
-    },
+    repeat: { condensed: 415, roll: 148, wheel: 143 },
     title: 'རིན་ཆེན་གཙུག་ཏོར་ཅན',
   },
   transliteration: {

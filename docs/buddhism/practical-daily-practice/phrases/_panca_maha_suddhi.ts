@@ -29,11 +29,7 @@ export default {
       vimalaUsnisa.tibetan.children,
       amoghapasaPadmaUsnisa.tibetan.children,
     ],
-    repeat: {
-      condensed: 23,
-      roll: 8,
-      wheel: 7,
-    },
+    repeat: { condensed: 23, roll: 8, wheel: 7 },
     title: 'དག་པ་ཆེན་སྡེ་ལྔ',
   },
   transliteration: {

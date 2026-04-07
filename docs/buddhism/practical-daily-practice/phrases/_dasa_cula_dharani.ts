@@ -24,11 +24,7 @@ export default {
       sukhavatiVyuha.core.sanskrit.children,
       'ॐ परिपूर्ण चरे । समन्त दर्शने । महा विहार गते । समन्त विधामने । महा कार्य प्रतिष्ठापने । सर्वार्थ साधने सुप्रतिपूरे । आयान धर्मता महा विकुर्विते । महा मैत्री उपसंहिते । महार्षि सुसंगृहीते । समन्तार्थ अनुपालने स्वाहा',
     ],
-    repeat: {
-      condensed: 12,
-      roll: 5,
-      wheel: 5,
-    },
+    repeat: { condensed: 12, roll: 5, wheel: 5 },
     title: 'दश चूल धारणी',
     typography: {
       condensed: { default: 1.955, title: 1.655 },

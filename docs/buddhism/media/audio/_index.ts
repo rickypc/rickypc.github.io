@@ -48,6 +48,7 @@ export default [
   ['id_ID-news_tts-medium', `${phrases}/_manjusri.ts`],
   ['id_ID-news_tts-medium', `${phrases}/_milarepa.ts`],
   ['id_ID-news_tts-medium', `${phrases}/_namaskara.ts`],
+  ['id_ID-news_tts-medium', `${phrases}/_nilakantha_dharani.ts`],
   ['id_ID-news_tts-medium', `${phrases}/_panca_bhuta.ts`],
   ['id_ID-news_tts-medium', `${phrases}/_panca_jambhala.ts`],
   ['id_ID-news_tts-medium', `${phrases}/_panca_jnana.ts`],

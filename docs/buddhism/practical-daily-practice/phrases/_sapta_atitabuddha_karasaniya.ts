@@ -12,11 +12,7 @@ export default {
   path: import.meta.url,
   sanskrit: {
     children: 'रिप रिपते कुह कुहते त्रणिते णिगलते विमरिते महागते जंलंचंते वाहा',
-    repeat: {
-      condensed: 170,
-      roll: 61,
-      wheel: 59,
-    },
+    repeat: { condensed: 170, roll: 61, wheel: 59 },
     title: 'सप्त अतीतबुद्ध करसणिया',
   },
   translation: {

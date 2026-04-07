@@ -47,11 +47,7 @@ export default {
       pratityasamutpada.core.tibetan.children,
       [rasmiVimalaDharani.tibetan.children, rasmiVimalaHrdaya.tibetan.children].join('། '),
     ],
-    repeat: {
-      condensed: 6,
-      roll: 2,
-      wheel: 2,
-    },
+    repeat: { condensed: 6, roll: 2, wheel: 2 },
     title: 'ཆོས་སྐུ་རིང་བསྲེལ་དྲུག',
     typography: {
       condensed: { default: 1.875, title: 1.7 },

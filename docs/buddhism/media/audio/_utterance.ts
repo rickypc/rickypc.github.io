@@ -39,6 +39,7 @@ const pronounces = {
   '[say the nam-e]': '[[ sˈeɪ ðə nˈeɪm ]]',
   'ra h': 'ra, h',
   re: 'r-e',
+  ' r-e,': ' re,',
   se: 's-e',
   'sr-es': 'sres',
   'sr-ey': 'srey',

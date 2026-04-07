@@ -12,7 +12,7 @@ const config: Config = {
   baseUrl: '/',
   deploymentBranch: 'gh-pages',
   favicon: 'img/favicon.ico',
-  future: { experimental_faster: true, v4: true },
+  future: { faster: true, v4: true },
   /*
   headTags: [
     {

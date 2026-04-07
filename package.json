@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "@docusaurus/core": "3.9.2",
-    "@docusaurus/faster": "3.9.2",
-    "@docusaurus/lqip-loader": "3.9.2",
-    "@docusaurus/preset-classic": "3.9.2",
+    "@docusaurus/core": "3.10.0",
+    "@docusaurus/faster": "3.10.0",
+    "@docusaurus/lqip-loader": "3.10.0",
+    "@docusaurus/preset-classic": "3.10.0",
     "@docusaurus/responsive-loader": "1.7.1",
-    "@docusaurus/theme-common": "3.9.2",
+    "@docusaurus/theme-common": "3.10.0",
     "@easyops-cn/docusaurus-search-local": "0.55.1",
     "cli-progress": "3.12.0",
     "fontaine": "0.8.0",
@@ -18,9 +18,9 @@
     "timeable-promise": "1.7.4"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.9.2",
-    "@docusaurus/tsconfig": "3.9.2",
-    "@docusaurus/types": "3.9.2",
+    "@docusaurus/module-type-aliases": "3.10.0",
+    "@docusaurus/tsconfig": "3.10.0",
+    "@docusaurus/types": "3.10.0",
     "@types/cli-progress": "3.11.6",
     "@types/pdfmake": "0.2.12",
     "@types/react": "19.2.14",
@@ -38,7 +38,7 @@
   },
   "name": "rickypc.github.io",
   "optionalDependencies": {
-    "@docusaurus/eslint-plugin": "3.9.2",
+    "@docusaurus/eslint-plugin": "3.10.0",
     "@eslint/css": "1.1.0",
     "@eslint/eslintrc": "3.3.5",
     "@eslint/js": "10.0.1",
@@ -67,7 +67,7 @@
     "jest": "30.3.0",
     "jest-environment-jsdom": "30.3.0",
     "jiti": "2.6.1",
-    "lighthouse": "13.0.3",
+    "lighthouse": "13.1.0",
     "linkinator": "7.6.1",
     "pdf-to-png-converter": "3.14.0",
     "typescript": "6.0.2",

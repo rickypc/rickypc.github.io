@@ -74,6 +74,10 @@ export default {
     title: 'Great Compassion Dhāraṇī',
   },
   transliteration: {
+    // https://idp.bl.uk/collection/469DEE0D155C48D2945C912ED9ADB21D/
+    // https://vocus.cc/article/6975d62cfd8978000136975c
+    // https://vocus.cc/article/6975d9e8fd89780001379b1d
+    // https://vocus.cc/article/6975db96fd89780001380307
     children: [
       'oṃ apaloka lokātikrānta ehi hare mahābodhisattva sarpa-sarpa',
       'smara smara mama hṛdayam',

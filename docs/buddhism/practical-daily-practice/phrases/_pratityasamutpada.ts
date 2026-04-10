@@ -41,6 +41,7 @@ const core = {
     ].join('། '),
   },
   transliteration: {
+    // https://84000.co/translation/toh1-4/UT22084-001-004-section-3#UT22084-001-004-436
     children: [
       'ye dharmā hetuprabhavā hetuṃ teṣāṃ tathāgata uvāca',
       'teṣāṃ-ca yo nirodha evaṃvādi mahāśramaṇaḥ',
@@ -96,6 +97,8 @@ export default {
     title: 'Dependent Origination',
   },
   transliteration: {
+    // https://hasp.ub.uni-heidelberg.de/catalog/view/788/1479/93430
+    // https://biblioasia.nlb.gov.sg/all-sections/vol-16-issue-3-oct-dec-2020-borobudur/
     children: [
       core.transliteration.children,
       'ajñānāc cīyate karma janmanaḥ karma kāraṇam',

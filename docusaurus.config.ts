@@ -44,6 +44,7 @@ const config: Config = {
     [
       'classic',
       {
+        blog: false,
         docs: {},
         gtag: { trackingID: ['G-5G7P214N03', 'G-657RY80FJE', 'G-JYD543XZTH'] },
         sitemap: { createSitemapItems, ignorePatterns: ['/search/**'], lastmod: 'date' },

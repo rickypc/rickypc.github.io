@@ -101,7 +101,7 @@ describe('Playback', () => {
     fireEvent.mouseUp(btn);
     fireEvent.mouseLeave(btn);
 
-    // We don't assert animation — just ensure no crash.
+    // We don't assert animation - just ensure no crash.
     expect(btn).toBeInTheDocument();
   });
 });

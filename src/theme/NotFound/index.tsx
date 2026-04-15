@@ -14,7 +14,7 @@ type Props = WrapperProps<typeof NotFound>;
 
 export default memo(function NotFoundWrapper(props: Props): ReactElement {
   const layout = {
-    description: 'Page not found — the resource you requested doesn\'t exist. Try searching the site, visit the homepage, or browse the tags and sitemap to find what you need.',
+    description: 'Page not found - the resource you requested doesn\'t exist. Try searching the site, visit the homepage, or browse the tags and sitemap to find what you need.',
     keywords: [
       '404',
       'page not found',

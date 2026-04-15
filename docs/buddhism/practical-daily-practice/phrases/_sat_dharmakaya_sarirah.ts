@@ -55,6 +55,7 @@ export default {
     },
   },
   transliteration: {
+    // https://www.rigpawiki.org/index.php?title=Five_classes_of_great_dharanis
     children: [
       usnisaVijaya.transliteration.children,
       vimalaUsnisa.transliteration.children,

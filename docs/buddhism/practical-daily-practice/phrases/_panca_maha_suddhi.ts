@@ -33,6 +33,7 @@ export default {
     title: 'དག་པ་ཆེན་སྡེ་ལྔ',
   },
   transliteration: {
+    // https://fpmt.org/wp-content/uploads/hope!/a4/booklet/mantrasa4bklt.pdf
     children: [
       mahavairocanaSarvadurgatiParisodhana.transliteration.children,
       aksobhya.transliteration.children,

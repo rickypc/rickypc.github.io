@@ -34,17 +34,18 @@ describe('portfolio.Filter', () => {
 
     // Collapsible branch.
     const coll = screen.getByTestId('collapsible');
+    const withinColl = within(coll);
     expect(coll).toHaveAttribute('data-active', 'All');
     expect(coll).toHaveAttribute('data-translate', 'no');
 
     // Items in sorted order, with unique tags.
-    const buttons = screen.getAllByRole('button');
+    const buttons = withinColl.getAllByRole('button');
     expect(buttons).toHaveLength(expectedTags.length);
     // eslint-disable-next-line security/detect-object-injection
     buttons.forEach((btn, i) => expect(btn).toHaveTextContent(expectedTags[i]));
 
     // Clicking a tag invokes onClick with that tag.
-    fireEvent.click(screen.getByText('beta'));
+    fireEvent.click(withinColl.getByText('beta'));
     expect(onClickMock).toHaveBeenCalledWith('beta');
   });
 
@@ -56,18 +57,20 @@ describe('portfolio.Filter', () => {
 
     // Pills branch.
     const pills = screen.getByTestId('pills');
+    const withinPills = within(pills);
     expect(pills).toHaveAttribute('data-active', 'alpha');
     expect(pills).toHaveAttribute('data-prefix', 'portfolio');
     expect(pills).toHaveAttribute('data-translate', 'no');
     expect(pills).toHaveAttribute('data-aria-hidden', 'false');
 
     // Items rendered in same sorted order.
-    const buttons = within(pills).getAllByRole('button');
+    const buttons = withinPills.getAllByRole('button');
     expect(buttons).toHaveLength(expectedTags.length);
-    expectedTags.forEach((tag) => expect(screen.getByText(tag)).toBeInTheDocument());
+    expectedTags.forEach((tag) => expect(withinPills.getByText(tag))
+      .toBeInTheDocument());
 
     // Clicking the 'gamma' pill invokes onClick.
-    fireEvent.click(screen.getByText('gamma'));
+    fireEvent.click(withinPills.getByText('gamma'));
     expect(onClickMock).toHaveBeenCalledWith('gamma');
   });
 });

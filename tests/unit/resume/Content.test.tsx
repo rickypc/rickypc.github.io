@@ -19,6 +19,7 @@ describe('resume.Content', () => {
 
   test('renders without crashing', () => {
     render(<Content />);
+    const h3s = screen.getAllByRole('heading', { level: 3 });
 
     // Summary.
     expect(screen.getByText('Summary')).toBeInTheDocument();
@@ -35,24 +36,15 @@ describe('resume.Content', () => {
 
     // Experiences.
     expect(screen.getByText('Experience')).toBeInTheDocument();
-    expect(screen.getByRole('heading', {
-      level: 3,
-      name: /Principal-Level Senior Software Engineer.*Experian Consumer Services.*2013 - Present/i,
-    })).toBeInTheDocument();
+    expect(h3s[0].textContent).toMatch(/Principal-Level Senior Software Engineer.*Experian Consumer Services.*2013 - Present/i);
 
     // Educations.
     expect(screen.getByText('Education')).toBeInTheDocument();
-    expect(screen.getByRole('heading', {
-      level: 3,
-      name: /Master of Science, Software Engineering.*California State University, Fullerton.*2005 - 2007/i,
-    })).toBeInTheDocument();
+    expect(h3s[5].textContent).toMatch(/Master of Science, Software Engineering.*California State University, Fullerton.*2005 - 2007/i);
 
     // Certifications.
     expect(screen.getByText('Certifications')).toBeInTheDocument();
-    expect(screen.getByRole('heading', {
-      level: 3,
-      name: /Advanced Studies, Data Science.*Stanford University.*2015/i,
-    })).toBeInTheDocument();
+    expect(h3s[7].textContent).toMatch(/Advanced Studies, Data Science.*Stanford University.*2015/i);
 
     // Skills.
     expect(screen.getByText('Skills')).toBeInTheDocument();

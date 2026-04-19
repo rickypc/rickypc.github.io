@@ -28,7 +28,7 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
     expect(consecration).toHaveProperty('title');
 
     expect(Array.isArray(consecration.pages)).toBeTruthy();
-    expect(consecration.title).toBe('Buddha Statue/Stupa/Sculpture Consecration');
+    expect(consecration.title).toBe('Consecration of Stupas, Statues, Tsatsas, and Other Sacred Images');
   });
 
   test('calls phrases() once for pratityasamutpadaSamudayaNirodha', () => {

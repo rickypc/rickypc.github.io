@@ -15,7 +15,7 @@ export default {
           alignment: 'center',
           fontSize: 28,
           lineHeight: 0.85,
-          text: 'Buddha Statue/Stupa/Sculpture Consecration',
+          text: 'Consecration of Stupas, Statues, Tsatsas, and Other Sacred Images',
         },
       ],
     },
@@ -133,5 +133,5 @@ export default {
     },
   ],
   path: import.meta.url,
-  title: 'Buddha Statue/Stupa/Sculpture Consecration',
+  title: 'Consecration of Stupas, Statues, Tsatsas, and Other Sacred Images',
 };

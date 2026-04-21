@@ -8,6 +8,7 @@ import sukhavativyuha from '#buddhism/practical-daily-practice/phrases/_sukhavat
 
 jest.mock('#buddhism/practical-daily-practice/phrases/_amitabha', () => ({
   default: {
+    chinese: { children: 'AMITABHA_CHINESE' },
     sanskrit: { children: 'AMITABHA_SANSKRIT' },
     transliteration: { children: 'AMITABHA_TRANSLIT' },
   },
@@ -16,6 +17,7 @@ jest.mock('#buddhism/practical-daily-practice/phrases/_amitabha', () => ({
 
 describe('docs.buddhism._sukhavativyuha', () => {
   test('exports the correct core structure', () => {
+    expect(sukhavativyuha.core).toHaveProperty('chinese.children');
     expect(sukhavativyuha.core).toHaveProperty('sanskrit.children');
     expect(sukhavativyuha.core).toHaveProperty('transliteration.children');
   });

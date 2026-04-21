@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 牟尼 牟尼 嘛哈牟尼 釋迦牟尼 梭哈',
+    children: '唵 牟尼 牟尼 嘛哈牟尼 釋迦牟尼 梭哈',
     title: '釋迦牟尼佛',
   },
   path: import.meta.url,

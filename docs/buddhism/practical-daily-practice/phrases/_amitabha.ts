@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 阿咪咑巴 赫哩',
+    children: '唵 阿咪咑巴 赫哩',
     title: '阿弥陀佛',
   },
   path: import.meta.url,

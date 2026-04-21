@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 阿喇巴札那 諦',
+    children: '唵 阿喇巴札那 諦',
     title: '文殊師利菩薩',
   },
   path: import.meta.url,

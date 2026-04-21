@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 啊 班雜達惹 悉地 吽 吽 · 嗡 班雜瑜伽女 吽 呸 梭哈',
+    children: '唵 啊 班雜達惹 悉地 吽 吽 · 唵 班雜瑜伽女 吽 呸 梭哈',
     title: '金剛總持',
   },
   path: import.meta.url,

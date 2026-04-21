@@ -13,7 +13,7 @@ export default {
           alignment: 'center',
           fontSize: 28,
           margin: [0, 14, 0, 0],
-          text: 'Supplies Consecration',
+          text: 'Consecration of Supplies',
         },
       ],
     },
@@ -53,5 +53,5 @@ export default {
     '',
   ],
   path: import.meta.url,
-  title: 'Supplies Consecration',
+  title: 'Consecration of Supplies',
 };

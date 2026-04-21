@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 達咧 嘟達咧 嘟咧 梭哈',
+    children: '唵 達咧 嘟達咧 嘟咧 梭哈',
     title: '綠度母',
   },
   pali: {

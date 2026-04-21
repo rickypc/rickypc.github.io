@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 折隸 主隸 準提 梭哈',
+    children: '唵 折隸 主隸 準提 梭哈',
     title: '準提神咒',
   },
   path: import.meta.url,

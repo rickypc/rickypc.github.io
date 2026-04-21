@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 嘛呢叭咪 吽',
+    children: '唵 嘛呢叭咪 吽',
     title: '觀世音',
   },
   pali: {

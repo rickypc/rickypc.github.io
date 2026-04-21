@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 阿利也 蘇利哆 陀密 梭哈',
+    children: '唵 阿利也 蘇利哆 陀密 梭哈',
     title: '天上聖母',
   },
   path: import.meta.url,

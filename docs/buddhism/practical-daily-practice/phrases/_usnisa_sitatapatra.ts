@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 灑兒哇 咑他噶咑 烏殊尼沙 施達打巴遮 吽帕 吽 嘛嘛 吽 尼 梭哈',
+    children: '唵 灑兒哇 咑他噶咑 烏殊尼沙 施達打巴遮 吽 帕 吽 嘛嘛 吽 尼 梭哈',
     title: '大白伞盖佛母',
   },
   path: import.meta.url,

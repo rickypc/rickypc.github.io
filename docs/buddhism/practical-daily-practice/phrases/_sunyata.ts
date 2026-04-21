@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 梭巴瓦 虛達 薩兒哇 達兒瑪 梭巴瓦 虛多 杭',
+    children: '唵 梭巴瓦 虛達 薩兒哇 達兒瑪 梭巴瓦 虛多 杭',
     title: '舜若多',
   },
   pali: {

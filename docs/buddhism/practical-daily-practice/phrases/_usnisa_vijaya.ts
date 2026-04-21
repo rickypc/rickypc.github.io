@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 種 梭哈 · 嗡 阿彌達阿育達迭 梭哈 · 嗡 阿彌達 爹嘉瓦低 梭哈',
+    children: '唵 種 梭哈 · 唵 阿彌達阿育達迭 梭哈 · 唵 阿彌達 爹嘉瓦低 梭哈',
     title: '佛頂尊勝佛母',
   },
   path: import.meta.url,

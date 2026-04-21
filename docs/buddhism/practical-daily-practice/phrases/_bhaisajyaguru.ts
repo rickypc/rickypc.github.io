@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 貝堪則 貝堪則 貝堪雜 薩目嘎喋 梭哈',
+    children: '唵 貝堪則 貝堪則 貝堪雜 薩目嘎喋 梭哈',
     title: '藥師佛',
   },
   path: import.meta.url,

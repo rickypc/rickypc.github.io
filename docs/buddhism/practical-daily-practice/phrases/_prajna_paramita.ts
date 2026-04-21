@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 揭諦 揭諦 波羅揭諦 波羅僧揭諦 菩提 梭哈',
+    children: '唵 揭諦 揭諦 波羅揭諦 波羅僧揭諦 菩提 梭哈',
     title: '般若波羅蜜多',
   },
   pali: {

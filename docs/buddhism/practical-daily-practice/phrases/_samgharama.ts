@@ -5,7 +5,7 @@
 
 export default {
   chinese: {
-    children: '嗡 伽藍 悉地 吽',
+    children: '唵 伽藍 悉地 吽',
     title: '伽藍',
   },
   pali: {

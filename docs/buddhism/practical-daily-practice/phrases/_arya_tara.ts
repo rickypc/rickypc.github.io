@@ -18,7 +18,7 @@ export default {
   },
   path: import.meta.url,
   sanskrit: {
-    children: 'ॐ तारे तुत्तारे तुरे सोहा',
+    children: 'ॐ तारे तुत्तारे तुरे स्वाहा',
     siddham: {
       children: '𑖌𑖼 𑖝𑖯𑖨𑖸 𑖝𑗜𑖝𑖿𑖝𑖯𑖨𑖸 𑖝𑗜𑖨𑖸 𑖭𑖿𑖪𑖯𑖮𑖯',
       title: '𑖀𑖨𑖺𑖬𑖝𑖯𑖨',

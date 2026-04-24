@@ -6,7 +6,7 @@
 export default {
   path: import.meta.url,
   sanskrit: {
-    children: 'ॐ तारे ताँ सोहा',
+    children: 'ॐ तारे ताँ स्वाहा',
     title: 'रक्ततर',
   },
   tibetan: {

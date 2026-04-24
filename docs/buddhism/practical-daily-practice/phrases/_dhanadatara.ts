@@ -7,8 +7,8 @@ export default {
   lang: 'sa-IN',
   path: import.meta.url,
   sanskrit: {
-    children: 'ॐ तारे तुत्तारे तुरे धनम् मे दद सोहा',
-    repeat: { condensed: 311, roll: 113, wheel: 109 },
+    children: 'ॐ तारे तुत्तारे तुरे धनम् मे दद स्वाहा',
+    repeat: { condensed: 304, roll: 109, wheel: 105 },
     title: 'धनदतारा',
     typography: {
       thangka: { default: 10, double: 20, single: 42.5 },

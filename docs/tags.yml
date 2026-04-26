@@ -7,29 +7,17 @@ buddhism:
     into mindfulness, compassion, and impermanence.
   label: Buddhism
 
-core-teachings:
+foundations-core-view:
   description: >-
-    Central doctrines like karma, suffering, and liberation - structured
-    guidance for understanding the path toward awakening.
-  label: Core Teachings
+    Essential Buddhist views on life and rebirth, paired with core teachings on
+    karma, suffering, and liberation to guide the path to awakening.
+  label: Foundations & Core View
 
-foundational-understanding:
+practice-daily-life:
   description: >-
-    Essential Buddhist views on life, rebirth, and meaning - clear grounding
-    for why we exist and how to use this life wisely.
-  label: Foundational Understanding
-
-life-application:
-  description: >-
-    Practical wisdom for navigating emotions, choices, death, and rebirth -
-    using Buddhist insight to live with clarity and purpose.
-  label: Life Application
-
-practical-daily-practice:
-  description: >-
-    Simple, effective methods for meditation, ethics, and mindful living that
-    help transform everyday life into steady progress.
-  label: Practical Daily Practice
+    Practical methods for meditation, ethics, and mindful living, combined with
+    insight for navigating emotions, choices, death, and rebirth.
+  label: Practice & Daily Life
 
 rituals-ceremonies:
   description: >-

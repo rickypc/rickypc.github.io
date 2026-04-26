@@ -10,7 +10,7 @@ import Audio from '#root/tests/unit/helper/Audio';
 import audioManager from '@site/src/lib/audioManager';
 import useAudio from '@site/src/hooks/audio';
 
-const path = '/docs/buddhism/practical-daily-practice/phrases/_arya_tara.ts';
+const path = '/docs/buddhism/practice-daily-life/phrases/_arya_tara.ts';
 let rafCallback: Parameters<typeof requestAnimationFrame>[0] | null = null;
 
 (global as any).Audio = Audio;

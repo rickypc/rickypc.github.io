@@ -7,7 +7,7 @@ import Heart from '@site/src/components/common/Heart';
 import { identity } from '@site/src/data/home';
 import { memo } from 'react';
 import Playback from '@site/src/components/common/Playback';
-import phrase from '#buddhism/practical-daily-practice/phrases/_ricky_huang';
+import phrase from '#buddhism/practice-daily-life/phrases/_ricky_huang';
 import styles from './styles.module.css';
 
 /**

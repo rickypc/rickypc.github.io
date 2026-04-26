@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-const phrases = '#buddhism/practical-daily-practice/phrases';
+const phrases = '#buddhism/practice-daily-life/phrases';
 
 export default [
   ['condensed', `${phrases}/_aksobhya.ts`],

@@ -34,7 +34,7 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
   test('calls phrases() once for pratityasamutpadaSamudayaNirodha', () => {
     expect(phrasesCalls).toHaveLength(1);
     expect(phrasesCalls[0]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_pratityasamutpada_samudaya_nirodha.ts',
+      '#buddhism/practice-daily-life/phrases/_pratityasamutpada_samudaya_nirodha.ts',
     ]);
   });
 
@@ -45,32 +45,32 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
     expect(page.number).toBe('3');
 
     expect(phraseCalls[0]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_mala.ts',
+      '#buddhism/practice-daily-life/phrases/_mala.ts',
       ' (recite the prayer, gently blow on the mālā and rub it lightly)',
     ]);
     expect(phraseCalls[1]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_japa.ts',
+      '#buddhism/practice-daily-life/phrases/_japa.ts',
     ]);
     expect(phraseCalls[2]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_dharma.ts',
+      '#buddhism/practice-daily-life/phrases/_dharma.ts',
     ]);
     expect(phraseCalls[3]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_namaskara.ts',
+      '#buddhism/practice-daily-life/phrases/_namaskara.ts',
     ]);
 
     expect(phraseCalls[4]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_saranagamana_cittotpada.ts',
+      '#buddhism/practice-daily-life/phrases/_saranagamana_cittotpada.ts',
     ]);
     expect(phraseCalls[5]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_catvary_apramanani.ts',
+      '#buddhism/practice-daily-life/phrases/_catvary_apramanani.ts',
     ]);
     expect(phraseCalls[6]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_prajna_paramita.ts',
+      '#buddhism/practice-daily-life/phrases/_prajna_paramita.ts',
       '',
       7,
     ]);
     expect(phraseCalls[7]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_sunyata.ts',
+      '#buddhism/practice-daily-life/phrases/_sunyata.ts',
     ]);
   });
 
@@ -90,20 +90,20 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
     expect(page.number).toBe('6');
 
     expect(phraseCalls[8]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_anekajati.ts',
+      '#buddhism/practice-daily-life/phrases/_anekajati.ts',
     ]);
     expect(phraseCalls[9]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_pratityasamutpada.ts',
+      '#buddhism/practice-daily-life/phrases/_pratityasamutpada.ts',
     ]);
 
     expect(phraseCalls[10]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_vairocana_sarvakata_danavidhih.ts',
+      '#buddhism/practice-daily-life/phrases/_vairocana_sarvakata_danavidhih.ts',
     ]);
     expect(phraseCalls[11]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_ratnadhvaja_parikrama.ts',
+      '#buddhism/practice-daily-life/phrases/_ratnadhvaja_parikrama.ts',
     ]);
     expect(phraseCalls[12]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_vimala_usnisa.ts',
+      '#buddhism/practice-daily-life/phrases/_vimala_usnisa.ts',
     ]);
   });
 
@@ -122,7 +122,7 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
     expect(page.chapters).toEqual(['Abhiṣeka']);
     expect(page.number).toBe('7');
     expect(phraseCalls[13]).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_caksu_unmilana.ts',
+      '#buddhism/practice-daily-life/phrases/_caksu_unmilana.ts',
       '',
       3,
       'Cakṣu Unmīlana [Eye-Opening]',
@@ -135,7 +135,7 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
     expect(page.chapters).toEqual(['Abhiṣeka']);
     expect(page.number).toBe('8');
     expect(phraseCalls.at(-1)).toEqual([
-      '#buddhism/practical-daily-practice/phrases/_prarthanasiddhih.ts',
+      '#buddhism/practice-daily-life/phrases/_prarthanasiddhih.ts',
       '',
       0,
       'Prārthanāsiddhiḥ [Fulfillment of Aspiration]',

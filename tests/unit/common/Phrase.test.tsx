@@ -93,7 +93,7 @@ describe('Phrase', () => {
   describe('repetition badge', () => {
     test('does not render badge when repetition is 0', () => {
       const { container } = render((
-        <PhraseMock path="/docs/buddhism/practical-daily-practice/phrases/_arya_tara.ts" transliteration={transliteration as any} />
+        <PhraseMock path="/docs/buddhism/practice-daily-life/phrases/_arya_tara.ts" transliteration={transliteration as any} />
       ));
       // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       expect(container.querySelector('.badge')).toBeNull();
@@ -114,7 +114,7 @@ describe('Phrase', () => {
   describe('PDF links generation', () => {
     test('renders all four PDF links with correct hrefs and testids', () => {
       render((
-        <PhraseMock path="/docs/buddhism/practical-daily-practice/phrases/_arya_tara.ts" transliteration={{ ...transliteration, title: 'MyPrayer' }} />
+        <PhraseMock path="/docs/buddhism/practice-daily-life/phrases/_arya_tara.ts" transliteration={{ ...transliteration, title: 'MyPrayer' }} />
       ));
       [
         ['link-Open MyPrayer condensed prayer roll', '/pdf/arya-tara-condensed.pdf'],
@@ -132,7 +132,7 @@ describe('Phrase', () => {
   describe('inline Instruction rendering', () => {
     test('renders Instruction when image prop is provided on Phrase', () => {
       render((
-        <PhraseMock image="img.png" path="/docs/buddhism/practical-daily-practice/phrases/_arya_tara.ts" transliteration={{ ...transliteration, title: 'ImgTest' }} />
+        <PhraseMock image="img.png" path="/docs/buddhism/practice-daily-life/phrases/_arya_tara.ts" transliteration={{ ...transliteration, title: 'ImgTest' }} />
       ));
       expect(screen.getByTestId('mdx-details')).toBeInTheDocument();
       expect(screen.getByTestId('img-ImgTest')).toHaveAttribute('src', 'img.png');

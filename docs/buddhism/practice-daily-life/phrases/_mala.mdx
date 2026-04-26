@@ -1,0 +1,27 @@
+{/*!
+  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
+  * All rights reserved.
+  */}
+
+import phrase from '#buddhism/practice-daily-life/phrases/_mala';
+
+<Phrase
+  instruction={(
+    <>
+      Recite the prayer, gently blow on the&nbsp;
+      <Link href="https://en.wikipedia.org/wiki/Japamala">mālā</Link>
+      &nbsp;and rub it lightly.
+    </>
+  )}
+  {...phrase}
+  {...props}
+/>
+
+<details>
+  <summary>
+    The [prayer beads](https://en.wikipedia.org/wiki/Japamala) [blessing](https://en.wikipedia.org/wiki/Buddhist_devotion#Blessing).
+  </summary>
+  <div>
+    <MultiLingual {...phrase} />
+  </div>
+</details>

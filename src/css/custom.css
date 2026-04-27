@@ -223,6 +223,10 @@ nav.navbar::before {
   background: var(--ifm-color-emphasis-200);
 }
 
+hr {
+  background-color: var(--ifm-color-emphasis-300);
+}
+
 footer.footer {
   background-color: color-mix(in oklab, var(--ifm-footer-background-color) 20%, transparent);
   border-top: 0.0625rem solid color-mix(in oklab, var(--ifm-footer-background-color) 10%, transparent);

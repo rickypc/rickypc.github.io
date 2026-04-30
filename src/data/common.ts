@@ -211,7 +211,13 @@ const key = (
 ) => {
   const begin = prefix ? `${prefix}${prefixSeparator}` : '';
   const end = suffix ? `${suffixSeparator}${suffix}` : '';
-  return `${begin}${(value as string)?.toLowerCase?.().replace(/\s+/, '-').replace(/\.[^/.]+$/, '')}${end}`;
+  const str = (value as string)
+    ?.normalize?.('NFD')
+    ?.replace(/[\u0300-\u036f]/g, '')
+    ?.toLowerCase?.()
+    ?.replace(/\s+/, '-')
+    ?.replace(/\.[^/.]+$/, '');
+  return `${begin}${str}${end}`;
 };
 
 export const oneLine = (text: string) => text.replace(/\n\s*/g, ' ');

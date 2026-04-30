@@ -20,46 +20,25 @@ describe('MultiLingual', () => {
   describe('when all language props are provided', () => {
     test.each([
       ['chinese', {
-        id: 'ch',
-        infix: '·',
-        prefix: '꣼ ',
-        suffix: '。',
+        id: 'ch', infix: '·', prefix: '꣼ ', suffix: '。',
       }],
       ['pali', {
-        id: 'si',
-        infix: '.',
-        prefix: '꣼ ',
-        suffix: '෴',
+        id: 'si', infix: '.', prefix: '꣼ ', suffix: '෴',
       }],
       ['sanskrit', {
-        id: 'sa',
-        infix: '।',
-        prefix: '꣼ ',
-        suffix: '॥',
+        id: 'sa', infix: '।', prefix: '꣼ ', suffix: '॥',
       }],
       ['siddham', {
-        id: 'sid',
-        infix: '𑗂',
-        prefix: '꣼ ',
-        suffix: '𑗃',
+        id: 'sid', infix: '𑗂', prefix: '꣼ ', suffix: '𑗃',
       }],
       ['thai', {
-        id: 'th',
-        infix: 'ฯ',
-        prefix: '꣼ ',
-        suffix: '๚',
+        id: 'th', infix: 'ฯ', prefix: '꣼ ', suffix: '๚',
       }],
       ['tibetan', {
-        id: 'ti',
-        infix: '།',
-        prefix: '༄༅། །',
-        suffix: '༎',
+        id: 'ti', infix: '།', prefix: '༄༅། །', suffix: '༎',
       }],
     ])('%s phrase block has correct markers', (_lang, {
-      id,
-      infix,
-      prefix,
-      suffix,
+      id, infix, prefix, suffix,
     }) => {
       render((
         <MultiLingual

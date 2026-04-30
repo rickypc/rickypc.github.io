@@ -216,6 +216,22 @@ describe('data.common', () => {
     test('handles empty prefix or suffix correctly', () => {
       expect(key('Solo', '', '', 'end', '_')).toBe('solo_end');
     });
+
+    test('normalizes diacritics correctly', () => {
+      expect(key('Pāli')).toBe('pali');
+      expect(key('Siddhaṃ')).toBe('siddham');
+      expect(key('Ānāpānasati')).toBe('anapanasati');
+    });
+
+    test('normalizes diacritics before prefix/suffix logic', () => {
+      expect(key('Siddhaṃ', 'pre')).toBe('pre-siddham');
+      expect(key('Pāli', '', '', 'end', '_')).toBe('pali_end');
+    });
+
+    test('normalizes diacritics before whitespace and extension stripping', () => {
+      expect(key('Ānāpāna Sati')).toBe('anapana-sati');
+      expect(key('Nibbāna.txt')).toBe('nibbana');
+    });
   });
 
   describe('numberToWords', () => {

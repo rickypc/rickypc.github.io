@@ -3,8 +3,11 @@
  * All rights reserved.
  */
 
+import { key, tail } from '@site/src/data/common';
 import { memo, type PropsWithChildren, type ReactElement } from 'react';
 import PhraseBlock from '@site/src/components/common/PhraseBlock';
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
 
 export type MultiLingualProps = {
   chinese?: PropsWithChildren;
@@ -25,6 +28,30 @@ export type Transliteration = {
   title?: string;
   unify?: boolean;
 };
+
+const linguals = [
+  {
+    infix: '।', label: 'संस्कृतम्-Sanskrit', prefix: '꣼ ', suffix: '॥',
+  },
+  {
+    group: 'sanskrit', infix: '𑗂', label: '𑖭𑖿𑖠𑖩𑖿-Siddhaṃ', prefix: '꣼ ', suffix: '𑗃',
+  },
+  {
+    infix: '།', label: 'བོད་སྐད་-Tibetan', prefix: '༄༅། །', suffix: '༎',
+  },
+  {
+    infix: '.', label: 'Pāli', prefix: '꣼ ', suffix: '෴',
+  },
+  {
+    group: 'pali', infix: '.', label: 'සිංහල-Sinhala', prefix: '꣼ ', suffix: '෴',
+  },
+  {
+    infix: '·', label: '中文-Chinese', prefix: '꣼ ', suffix: '。',
+  },
+  {
+    infix: 'ฯ', label: 'ไทย-Thai', prefix: '꣼ ', suffix: '๚',
+  },
+];
 
 /**
  * MultiLingual component for managing written representations of
@@ -70,93 +97,32 @@ export type Transliteration = {
  */
 export default memo(function MultiLingual({
   transliteration = {}, ...languages
-}: MultiLingualProps): ReactElement {
-  return (
-    <>
-      {languages?.sanskrit?.children && (
+}: MultiLingualProps): ReactElement | null {
+  const tabs = linguals.map(({
+    group, infix, label, prefix, suffix,
+  }) => {
+    const lang = tail(key(label), '-');
+    const path = group?.split('.') ?? [];
+    path.push(lang);
+    // eslint-disable-next-line security/detect-object-injection
+    const phrase = path.reduce((acc: any, segment) => acc?.[segment], languages);
+    if (!phrase?.children) {
+      return null;
+    }
+    return (
+      <TabItem key={lang} label={label} value={lang}>
         <PhraseBlock
-          infix="।"
+          infix={infix}
           phrase={{
-            ...languages.sanskrit,
+            ...phrase,
             className: transliteration.className,
             unify: transliteration.unify,
           }}
-          prefix="꣼ "
-          suffix="॥"
+          prefix={prefix}
+          suffix={suffix}
         />
-      )}
-      {languages?.sanskrit?.siddham?.children && (
-        <PhraseBlock
-          infix="𑗂"
-          phrase={{
-            ...languages.sanskrit.siddham,
-            className: transliteration.className,
-            unify: transliteration.unify,
-          }}
-          prefix="꣼ "
-          suffix="𑗃"
-        />
-      )}
-      {languages?.tibetan?.children && (
-        <PhraseBlock
-          infix="།"
-          phrase={{
-            ...languages.tibetan,
-            className: transliteration.className,
-            unify: transliteration.unify,
-          }}
-          prefix="༄༅། །"
-          suffix="༎"
-        />
-      )}
-      {languages?.pali?.children && (
-        <PhraseBlock
-          infix="."
-          phrase={{
-            ...languages.pali,
-            className: transliteration.className,
-            unify: transliteration.unify,
-          }}
-          prefix="꣼ "
-          suffix="෴"
-        />
-      )}
-      {languages?.pali?.sinhala?.children && (
-        <PhraseBlock
-          infix="."
-          phrase={{
-            ...languages.pali.sinhala,
-            className: transliteration.className,
-            unify: transliteration.unify,
-          }}
-          prefix="꣼ "
-          suffix="෴"
-        />
-      )}
-      {languages?.chinese?.children && (
-        <PhraseBlock
-          infix="·"
-          phrase={{
-            ...languages.chinese,
-            className: transliteration.className,
-            unify: transliteration.unify,
-          }}
-          prefix="꣼ "
-          suffix="。"
-        />
-      )}
-      {languages?.thai?.children && (
-        <PhraseBlock
-          infix="ฯ"
-          phrase={{
-            ...languages.thai,
-            className: transliteration.className,
-            unify: transliteration.unify,
-          }}
-          prefix="꣼ "
-          suffix="๚"
-        />
-      )}
-    </>
-  );
+      </TabItem>
+    );
+  }).filter(Boolean);
+  return tabs.length ? (<Tabs groupId="multi-lingual">{tabs}</Tabs>) : null;
 });

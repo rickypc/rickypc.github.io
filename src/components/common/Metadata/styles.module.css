@@ -3,6 +3,10 @@
  * All rights reserved.
  */
 
+.metadata .readingTime {
+  opacity: 0.75;
+}
+
 @media print {
   :global(.markdown) h1,
   :global(.markdown) h2 {

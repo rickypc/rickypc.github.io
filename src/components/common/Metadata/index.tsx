@@ -3,15 +3,29 @@
  * All rights reserved.
  */
 
-import { memo, useEffect, useRef } from 'react';
-import { usePrint, useWelcome } from '@site/src/hooks/observer';
-import './styles.module.css';
+import {
+  memo, type ReactElement, useEffect, useRef,
+} from 'react';
+import { usePrint, useReadingTime, useWelcome } from '@site/src/hooks/observer';
+import styles from './styles.module.css';
 
-export type WelcomeProps = {
+type Props = {
   navigation?: boolean;
 };
 
-export default memo(function Welcome({ navigation = false }: WelcomeProps): null {
+const ReadingTime = memo(function ReadingTime(): ReactElement | null {
+  const [readingTime] = useReadingTime('.theme-doc-markdown');
+  const minutes = Math.floor(readingTime);
+  const seconds = Math.round((readingTime - minutes) * 60);
+  const text = minutes
+    ? `🕒 ${minutes}:${seconds.toString().padStart(2, '0')} min read`
+    : `🕒 ${seconds} sec read`;
+  return minutes || seconds ? (
+    <span className={styles.readingTime}>{text}</span>
+  ) : null;
+});
+
+export default memo(function Metadata({ navigation = false }: Props): ReactElement | null {
   const [printing] = usePrint();
   const snapshots = useRef<boolean[]>([]);
   useWelcome({ navigation });
@@ -50,5 +64,9 @@ export default memo(function Welcome({ navigation = false }: WelcomeProps): null
     }
   }, [printing]);
 
-  return null;
+  return navigation ? null : (
+    <small className={styles.metadata}>
+      <ReadingTime />
+    </small>
+  );
 });

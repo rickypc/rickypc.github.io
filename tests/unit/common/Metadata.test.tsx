@@ -7,21 +7,24 @@
 
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Welcome from '@site/src/components/common/Welcome';
-import { usePrint, useWelcome } from '@site/src/hooks/observer';
+import Metadata from '@site/src/components/common/Metadata';
+import { usePrint, useReadingTime, useWelcome } from '@site/src/hooks/observer';
 
 const usePrintMock = jest.mocked(usePrint);
+const useReadingTimeMock = jest.mocked(useReadingTime);
 
 describe('Welcome', () => {
   test('calls useWelcome with navigation=false by default and renders nothing', () => {
     usePrintMock.mockReturnValue([false]);
-    render(<Welcome />);
+    useReadingTimeMock.mockReturnValue([10.123456789]);
+    render(<Metadata />);
     expect(useWelcome).toHaveBeenCalledWith({ navigation: false });
   });
 
   test('calls useWelcome with navigation=true when prop is true', () => {
     usePrintMock.mockReturnValue([false]);
-    render(<Welcome navigation />);
+    useReadingTimeMock.mockReturnValue([0]);
+    render(<Metadata navigation />);
     expect(useWelcome).toHaveBeenCalledWith({ navigation: true });
   });
 
@@ -43,7 +46,7 @@ describe('Welcome', () => {
 
     // First render with printing=true.
     usePrintMock.mockReturnValue([true]);
-    const { rerender } = render(<Welcome />);
+    const { rerender } = render(<Metadata />);
 
     // Both details should be forced open and styled.
     expect(details1.open).toBeTruthy();
@@ -61,7 +64,7 @@ describe('Welcome', () => {
     // Re-render with printing=false.
     usePrintMock.mockReturnValue([false]);
     // Changing props to trigger the rerender correctly.
-    rerender(<Welcome navigation />);
+    rerender(<Metadata navigation />);
 
     // details1 was originally closed, so it should be collapsed again.
     expect(details1.open).toBeFalsy();

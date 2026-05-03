@@ -10,7 +10,7 @@ import { type Location } from 'history';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import { useLocation } from '@docusaurus/router';
 import {
-  useMedia, usePrint, useResize, useVisibility, useWelcome,
+  useMedia, usePrint, useReadingTime, useResize, useVisibility, useWelcome,
 } from '@site/src/hooks/observer';
 
 const useIsBrowserMock = jest.mocked(useIsBrowser);
@@ -150,6 +150,53 @@ describe('usePrint', () => {
     // Then simulate afterprint.
     act(() => window.dispatchEvent(new Event('afterprint')));
     expect(result.current[0]).toBeFalsy();
+  });
+});
+
+describe('useReadingTime', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  it('returns 0 when not in browser', () => {
+    useIsBrowserMock.mockReturnValue(false);
+    const { result } = renderHook(() => useReadingTime(''));
+
+    expect(result.current[0]).toBe(0);
+  });
+
+  it('returns 0 when element is not found', () => {
+    useIsBrowserMock.mockReturnValue(true);
+    const { result } = renderHook(() => useReadingTime('#missing'));
+
+    expect(result.current[0]).toBe(0);
+  });
+
+  it('calculates reading time based on text content', async () => {
+    document.body.innerHTML = `
+      <div id="content">Hello world this is a test</div>
+    `;
+    useIsBrowserMock.mockReturnValue(true);
+    const { result } = renderHook(() => useReadingTime('#content', 'en', 'word', 5));
+
+    await waitFor(() => expect(result.current[0]).toBeCloseTo(6 / 5));
+  });
+
+  it('updates when selector changes', async () => {
+    document.body.innerHTML = `
+      <div id="a">one two three</div>
+      <div id="b">one two three four five six</div>
+    `;
+    useIsBrowserMock.mockReturnValue(true);
+    const { result, rerender } = renderHook(
+      ({ sel }) => useReadingTime(sel, 'en', 'word', 3),
+      { initialProps: { sel: '#a' } },
+    );
+
+    await waitFor(() => expect(result.current[0]).toBeCloseTo(3 / 3));
+
+    rerender({ sel: '#b' });
+    await waitFor(() => expect(result.current[0]).toBeCloseTo(6 / 3));
   });
 });
 

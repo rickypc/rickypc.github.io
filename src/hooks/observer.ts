@@ -12,6 +12,8 @@ import { useLocation } from '@docusaurus/router';
 
 const docusaurus = 'docusaurus';
 
+type Granularity = 'grapheme' | 'sentence' | 'word';
+
 /**
  * Tracks media query change status using matchMedia and useState.
  * @param {string} query - CSS media query string.
@@ -53,6 +55,46 @@ export function usePrint() {
 }
 
 /**
+ * Calculates estimated reading time for the text content of a DOM element.
+ * @param {string} selector - A CSS selector used to locate the target element.
+ * @param {string} [locale] - The locale passed to `Intl.Segmenter`
+ *   (default: 'en').
+ * @param {'grapheme'|'sentence'|'word'} [granularity] - The segmentation
+ *   granularity (default: 'word').
+ * @param {number} [wordPerMinute] - Words-per-minute used to compute reading
+ *   time (default: 300).
+ * @returns {[number]} React tuple: [readingTime].
+ */
+export function useReadingTime(
+  selector: string,
+  locale = 'en',
+  granularity: Granularity = 'word',
+  wordPerMinute = 300,
+) {
+  const browser = useIsBrowser();
+  const [readingTime, setReadingTime] = useState(0);
+  const segmenter = useMemo(
+    () => (browser && selector ? new Intl.Segmenter(locale, { granularity }) : null),
+    [browser, locale, granularity, selector],
+  );
+
+  useEffect(() => {
+    if (!segmenter) {
+      return;
+    }
+    const text = (document.querySelector(selector) as HTMLElement)?.textContent;
+    if (!text) {
+      return;
+    }
+    setReadingTime(Array.from(segmenter.segment(text))
+      .filter((segment) => segment.isWordLike).length / wordPerMinute);
+    // return none.
+  }, [browser, segmenter, selector, wordPerMinute]);
+
+  return [readingTime];
+}
+
+/**
  * Detects when the page is being resized.
  * @param {number} [delay] - The debounce delay (in milliseconds) after the
  *   last resize event before `resizing` is set back to false.
@@ -81,14 +123,16 @@ export function useResize(delay = 250) {
   return [resizing];
 }
 
-export const useSafeLayoutEffect = typeof (window) !== 'undefined' ? useLayoutEffect : useEffect;
+export const useSafeLayoutEffect = typeof (window) !== 'undefined'
+  ? useLayoutEffect : useEffect;
 
 /**
  * Detects if a DOM ref is visible using IntersectionObserver.
  * @param {object} [options] - Options for visibility detection.
  * @param {object} [options.ref] - React ref to observe (default: useRef()).
  * @param {number} [options.threshold] - Visibility threshold (default: 1.0).
- * @returns {{ref: object, visible: boolean}} Object with ref and visibility state.
+ * @returns {{ref: object, visible: boolean}} Object with ref and visibility
+ *   state.
  */
 // eslint-disable-next-line react-hooks/rules-of-hooks
 export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...rest } = {}) {
@@ -142,8 +186,8 @@ export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...re
 /**
  * Reveals page after validation to prevent automated abuse.
  * @param {object} [options] - Configuration options.
- * @param {boolean} [options.navigation] - Whether to enable navigation handling
- *   (default: true).
+ * @param {boolean} [options.navigation] - Whether to enable navigation
+ *   handling (default: true).
  */
 export function useWelcome({ navigation = true } = {}) {
   const browser = useIsBrowser();
@@ -165,7 +209,8 @@ export function useWelcome({ navigation = true } = {}) {
 
   useEffect(() => {
     if (browser) {
-      document.querySelector('nav .navbar__brand .navbar__title')?.setAttribute?.('translate', 'no');
+      document.querySelector('nav .navbar__brand .navbar__title')
+        ?.setAttribute?.('translate', 'no');
       // istanbul ignore else
       // eslint-disable-next-line no-restricted-globals
       if (top === window) {

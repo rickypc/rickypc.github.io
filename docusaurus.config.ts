@@ -4,9 +4,9 @@
  */
 
 import { type Config } from '@docusaurus/types';
-import { createSitemapItems } from '#root/src/plugins/docusaurus-plugin-kit/index';
 import { type Options, type ThemeConfig } from '@docusaurus/preset-classic';
 import { type PluginOptions } from '@easyops-cn/docusaurus-search-local';
+import * as sitemap from '#root/src/plugins/sitemap';
 
 const config: Config = {
   baseUrl: '/',
@@ -39,7 +39,7 @@ const config: Config = {
   onBrokenLinks: 'throw',
   onDuplicateRoutes: 'throw',
   organizationName: 'rickypc',
-  plugins: [require.resolve('#root/src/plugins/docusaurus-plugin-kit/index.ts')],
+  plugins: [require.resolve('#root/src/plugins/media/index.ts')],
   presets: [
     [
       'classic',
@@ -47,7 +47,7 @@ const config: Config = {
         blog: false,
         docs: {},
         gtag: { trackingID: ['G-5G7P214N03', 'G-657RY80FJE', 'G-JYD543XZTH'] },
-        sitemap: { createSitemapItems, ignorePatterns: ['/search/**'], lastmod: 'date' },
+        sitemap,
         theme: { customCss: require.resolve('#root/src/css/custom.css') },
       } satisfies Options,
     ],

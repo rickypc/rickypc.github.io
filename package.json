@@ -66,12 +66,12 @@
     "globals": "17.6.0",
     "jest": "30.3.0",
     "jest-environment-jsdom": "30.3.0",
-    "jiti": "2.6.1",
+    "jiti": "2.7.0",
     "lighthouse": "13.2.0",
     "linkinator": "7.6.1",
     "pdf-to-png-converter": "4.0.0",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.59.1"
+    "typescript-eslint": "8.59.2"
   },
   "overrides": {
     "@typescript-eslint/utils": "*",

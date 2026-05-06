@@ -41,6 +41,7 @@ export default [
   ['id_ID-news_tts-medium', `${phrases}/_maha_cundi_durga.ts`],
   ['id_ID-news_tts-medium', `${phrases}/_mahamani_ratana_patimakara.ts`],
   ['id_ID-news_tts-medium', `${phrases}/_mahamani_vipulavimana.ts`],
+  ['id_ID-news_tts-medium', `${phrases}/_maha_pratisara_vidya_dharani.ts`],
   ['id_ID-news_tts-medium', `${phrases}/_mahavairocana_sarvadurgati_parisodhana.ts`],
   ['id_ID-news_tts-medium', `${phrases}/_maitreya.ts`],
   ['id_ID-news_tts-medium', `${phrases}/_mala.ts`],

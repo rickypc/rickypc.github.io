@@ -20,7 +20,7 @@ test.describe('pdf isolated tests', () => {
   };
 
   test('validates total number of PDFs', async () => {
-    expect(files).toHaveLength(172);
+    expect(files).toHaveLength(175);
   });
 
   files.forEach((file) => {

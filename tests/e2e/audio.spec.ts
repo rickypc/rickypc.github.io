@@ -12,7 +12,7 @@ test.describe('audio isolated tests', () => {
   const files = readdirSync(audioDir).filter((file) => file.endsWith('.m4a'));
 
   test('validates total number of M4As', async () => {
-    expect(files).toHaveLength(82);
+    expect(files).toHaveLength(83);
   });
 
   files.forEach((file) => {

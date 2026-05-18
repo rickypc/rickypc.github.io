@@ -12,14 +12,12 @@ import { properCase } from '#buddhism/media/_common';
  * @param {string} path - Multilingual file path.
  * @returns {object} A pdfMake compatible object.
  */
-export default function roll(path: string) {
+export default async function roll(path: string) {
   const {
     default: {
       lang = 'bo-CN', sanskrit, tibetan, total = 6, transliteration,
     },
-  /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  } = require(path);
-  /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
+  } = await import(path);
   let fontSizes = { default: 6, title: 4 };
   // Geometric box height:
   //   H_geom = (612                 // page height (8.5" * 72pt)

@@ -12,8 +12,9 @@ jest.mock('#buddhism/media/pdf/_strip', () => ({
 }));
 
 describe('docs.buddhism.media.pdf.templates._condensed', () => {
-  test('handles Tibetan (bo-CN) branch correctly', () => {
+  test('handles Tibetan (bo-CN) branch correctly', async () => {
     jest.mock('#buddhism/bo', () => ({
+      __esModule: true,
       default: {
         lang: 'bo-CN',
         tibetan: {
@@ -25,7 +26,7 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
       },
     }), { virtual: true });
 
-    const result = condensed('#buddhism/bo');
+    const result = await condensed('#buddhism/bo');
     const { definition, options } = result;
 
     // 3 rolls.
@@ -62,8 +63,9 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
     expect(layout.vLineWidth()).toBe(0.25);
   });
 
-  test('handles Sanskrit (sa-IN) branch correctly', () => {
+  test('handles Sanskrit (sa-IN) branch correctly', async () => {
     jest.mock('#buddhism/sa', () => ({
+      __esModule: true,
       default: {
         lang: 'sa-IN',
         transliteration: { title: 'Dhāraṇī' },
@@ -71,7 +73,7 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
       },
     }), { virtual: true });
 
-    const result = condensed('#buddhism/sa');
+    const result = await condensed('#buddhism/sa');
     const { definition } = result;
 
     expect(definition.defaultStyle).toEqual({
@@ -87,8 +89,9 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
     expect(substance).toHaveBeenCalledTimes(1);
   });
 
-  test('handles default (transliteration) branch correctly', () => {
+  test('handles default (transliteration) branch correctly', async () => {
     jest.mock('#buddhism/default', () => ({
+      __esModule: true,
       default: {
         lang: 'en-US',
         transliteration: { title: 'OM MANI PADME HUM' },
@@ -96,7 +99,7 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
       },
     }), { virtual: true });
 
-    const result = condensed('#buddhism/default');
+    const result = await condensed('#buddhism/default');
     const { definition } = result;
 
     expect(definition.defaultStyle).toEqual({
@@ -112,12 +115,13 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
     expect(substance).toHaveBeenCalledTimes(1);
   });
 
-  test('uses all fallback defaults when fields are missing', () => {
+  test('uses all fallback defaults when fields are missing', async () => {
     jest.mock('#buddhism/fallback', () => ({
+      __esModule: true,
       default: { transliteration: { title: 'Fallback' } },
     }), { virtual: true });
 
-    const result = condensed('#buddhism/fallback');
+    const result = await condensed('#buddhism/fallback');
     const { definition } = result;
 
     // Default font sizes + lineHeight.

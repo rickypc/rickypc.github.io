@@ -11,14 +11,12 @@ import { oneLine } from '#root/src/data/common';
  * @param {string} path - Multilingual file path.
  * @returns {object} A pdfMake compatible object.
  */
-export default function thangka(path: string) {
+export default async function thangka(path: string) {
   const {
     default: {
       lang = 'bo-CN', sanskrit, tibetan, transliteration,
     },
-  /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  } = require(path);
-  /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
+  } = await import(path);
   let delimiter = ' ';
   let font = 'NotoSans';
   let fontSizes = { default: 10, double: 30, single: 52.5 };

@@ -16,8 +16,9 @@ jest.mock('#buddhism/media/_common', () => {
 });
 
 describe('docs.buddhism.media.pdf.templates._thangka', () => {
-  test('handles Tibetan (bo-CN) branch correctly', () => {
+  test('handles Tibetan (bo-CN) branch correctly', async () => {
     jest.mock('#buddhism/bo', () => ({
+      __esModule: true,
       default: {
         lang: 'bo-CN',
         tibetan: {
@@ -28,7 +29,7 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
       },
     }), { virtual: true });
 
-    const result = thangka('#buddhism/bo');
+    const result = await thangka('#buddhism/bo');
     const { definition } = result;
 
     // body() called once.
@@ -50,8 +51,9 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
     expect(definition.info.title).toBe('Translit paubhā/thangka prayer');
   });
 
-  test('handles Sanskrit (sa-IN) branch correctly', () => {
+  test('handles Sanskrit (sa-IN) branch correctly', async () => {
     jest.mock('#buddhism/sa', () => ({
+      __esModule: true,
       default: {
         lang: 'sa-IN',
         sanskrit: { title: 'Dhāraṇī' },
@@ -59,7 +61,7 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
       },
     }), { virtual: true });
 
-    const result = thangka('#buddhism/sa');
+    const result = await thangka('#buddhism/sa');
     const { definition } = result;
 
     // Default font.
@@ -73,15 +75,16 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
     expect(body).toHaveBeenCalledTimes(1);
   });
 
-  test('handles default (transliteration) branch correctly', () => {
+  test('handles default (transliteration) branch correctly', async () => {
     jest.mock('#buddhism/default', () => ({
+      __esModule: true,
       default: {
         lang: 'en-US',
         transliteration: { title: 'OM MANI PADME HUM' },
       },
     }), { virtual: true });
 
-    const result = thangka('#buddhism/default');
+    const result = await thangka('#buddhism/default');
     const { definition } = result;
 
     // Default font.
@@ -95,12 +98,13 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
     expect(definition.info.title).toBe('Om mani padme hum paubhā/thangka prayer');
   });
 
-  test('uses fallback defaults when fields are missing', () => {
+  test('uses fallback defaults when fields are missing', async () => {
     jest.mock('#buddhism/fallback', () => ({
+      __esModule: true,
       default: { transliteration: { title: 'Fallback' } },
     }), { virtual: true });
 
-    const result = thangka('#buddhism/fallback');
+    const result = await thangka('#buddhism/fallback');
     const { definition } = result;
 
     // Default font + sizes.

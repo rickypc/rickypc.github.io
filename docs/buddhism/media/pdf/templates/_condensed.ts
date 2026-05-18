@@ -12,14 +12,12 @@ import { properCase } from '#buddhism/media/_common';
  * @param {string} path - Multilingual file path.
  * @returns {object} A pdfMake compatible object.
  */
-export default function condensed(path: string) {
+export default async function condensed(path: string) {
   const {
     default: {
       lang = 'bo-CN', sanskrit, tibetan, total = 18, transliteration,
     },
-  /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  } = require(path);
-  /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
+  } = await import(path);
   let fontSizes = { default: 2, title: 1.75 };
   let infix = '|';
   const lastRoll = total - 1;

@@ -7,8 +7,8 @@ import image from '#buddhism/media/pdf/_image';
 import prayerWheel from '#buddhism/rituals-ceremonies/_prayer_wheels';
 
 jest.mock('#buddhism/media/pdf/_image', () => ({
-  default: jest.fn(async (opts) => ({ mocked: true, ...opts })),
   __esModule: true,
+  default: jest.fn(async (opts) => ({ mocked: true, ...opts })),
 }));
 
 describe('docs.buddhism.rituals-ceremonies._prayer_wheels', () => {

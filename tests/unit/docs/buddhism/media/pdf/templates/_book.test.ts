@@ -7,13 +7,14 @@ import book from '#buddhism/media/pdf/templates/_book';
 import mockImage from '#buddhism/media/pdf/_image';
 
 jest.mock('#buddhism/media/pdf/_image', () => ({
-  default: jest.fn(async () => ({ mocked: true })),
   __esModule: true,
+  default: jest.fn(async () => ({ mocked: true })),
 }));
 
 describe('docs.buddhism.media.pdf.templates._book', () => {
   test('builds a title page correctly', async () => {
     jest.mock('#buddhism/book-title', () => ({
+      __esModule: true,
       default: {
         pages: [
           {
@@ -81,6 +82,7 @@ describe('docs.buddhism.media.pdf.templates._book', () => {
 
   test('builds a content page with chapters and contents', async () => {
     jest.mock('#buddhism/book-content', () => ({
+      __esModule: true,
       default: {
         title: 'Chants',
         pages: [
@@ -115,6 +117,7 @@ describe('docs.buddhism.media.pdf.templates._book', () => {
 
   test('creates divider canvas for non-final pages', async () => {
     jest.mock('#buddhism/book-multi', () => ({
+      __esModule: true,
       default: {
         title: 'Multi',
         pages: [
@@ -154,6 +157,7 @@ describe('docs.buddhism.media.pdf.templates._book', () => {
 
   test('handles empty pages array', async () => {
     jest.mock('#buddhism/book-empty', () => ({
+      __esModule: true,
       default: { title: 'Empty' },
     }), { virtual: true });
 

@@ -7,12 +7,12 @@ import amitabha from '#buddhism/practice-daily-life/phrases/_amitabha';
 import sukhavativyuha from '#buddhism/practice-daily-life/phrases/_sukhavativyuha';
 
 jest.mock('#buddhism/practice-daily-life/phrases/_amitabha', () => ({
+  __esModule: true,
   default: {
     chinese: { children: 'AMITABHA_CHINESE' },
     sanskrit: { children: 'AMITABHA_SANSKRIT' },
     transliteration: { children: 'AMITABHA_TRANSLIT' },
   },
-  __esModule: true,
 }));
 
 describe('docs.buddhism._sukhavativyuha', () => {

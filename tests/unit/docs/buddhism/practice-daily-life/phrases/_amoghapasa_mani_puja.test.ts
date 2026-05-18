@@ -7,11 +7,11 @@ import amoghapasaPadmaUsnisa from '#buddhism/practice-daily-life/phrases/_amogha
 import puja from '#buddhism/practice-daily-life/phrases/_amoghapasa_mani_puja';
 
 jest.mock('#buddhism/practice-daily-life/phrases/_amoghapasa_padma_usnisa', () => ({
+  __esModule: true,
   default: {
     sanskrit: { children: 'PADMA_USNISA_SANSKRIT' },
     transliteration: { children: 'PADMA_USNISA_TRANSLIT' },
   },
-  __esModule: true,
 }));
 
 describe('docs.buddhism.phrases._amoghapasa_mani_puja', () => {

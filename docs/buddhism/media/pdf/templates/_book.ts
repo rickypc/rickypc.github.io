@@ -51,9 +51,7 @@ const unalomeMargin = (unalomeWidth * 2) + 5;
  * @returns {object} A pdfMake compatible object.
  */
 export default async function book(path: string) {
-  /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
-  const { default: { pages = [], title } } = require(path);
-  /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
+  const { default: { pages = [], title } } = await import(path);
   const { length } = pages;
   // After length assignment.
   const lastPage = length - 1;

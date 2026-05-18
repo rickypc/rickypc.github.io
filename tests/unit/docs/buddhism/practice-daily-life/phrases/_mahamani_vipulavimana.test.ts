@@ -7,12 +7,12 @@ import darsanaMukta from '#buddhism/practice-daily-life/phrases/_darsana_mukta';
 import mahamani from '#buddhism/practice-daily-life/phrases/_mahamani_vipulavimana';
 
 jest.mock('#buddhism/practice-daily-life/phrases/_darsana_mukta', () => ({
+  __esModule: true,
   default: {
     sanskrit: { children: 'DARSANA_SANSKRIT' },
     tibetan: { children: 'DARSANA_TIBETAN' },
     transliteration: { children: 'DARSANA_TRANSLIT' },
   },
-  __esModule: true,
 }));
 
 describe('docs.buddhism._mahamani_vipulavimana', () => {

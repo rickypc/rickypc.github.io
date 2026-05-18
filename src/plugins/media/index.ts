@@ -3,47 +3,52 @@
  * All rights reserved.
  */
 
-import {
-  access, mkdir, readdir, readFile, stat, writeFile,
-} from 'node:fs/promises';
+import { access, mkdir, stat } from 'node:fs/promises';
 import { basename, join, resolve } from 'node:path';
-import Beasties from 'beasties';
-import concurrent from 'timeable-promise/concurrent';
-import { createHash, createHmac } from 'node:crypto';
-import { createWriteStream, readFileSync } from 'node:fs';
-import {
-  DEFAULT_BUILD_DIR_NAME, DEFAULT_CONFIG_FILE_NAME, loadFreshModule,
-} from '@docusaurus/utils';
-import {
-  type DocusaurusConfig, type LoadContext, type Plugin,
-} from '@docusaurus/types';
 import {
   type ChildProcessWithoutNullStreams, execSync, spawn,
 } from 'node:child_process';
+import concurrent from 'timeable-promise/concurrent';
+import { createHash, createHmac } from 'node:crypto';
+import {
+  DEFAULT_BUILD_DIR_NAME, DEFAULT_CONFIG_FILE_NAME, loadFreshModule,
+} from '@docusaurus/utils';
+import { devDependencies, imports } from '#root/package.json';
+import {
+  type DocusaurusConfig, type LoadContext, type Plugin,
+} from '@docusaurus/types';
+import { fileURLToPath } from 'node:url';
 import { FontaineTransform } from 'fontaine';
-import { dependencies, imports } from '#root/package.json';
-import { minimatch } from 'minimatch';
+import { glob } from 'fast-glob';
 import { MultiBar } from 'cli-progress';
-import PdfMake from 'pdfmake';
 import { Readable } from 'node:stream';
 import { type ReadableStream } from 'node:stream/web';
+import { readFileSync } from 'node:fs';
 import sharpAdapter from '@docusaurus/responsive-loader/sharp';
-import sleep from 'timeable-promise/sleep';
+import Tinypool from 'tinypool';
 import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
 // Templates & definitions.
 import audio from '#buddhism/media/audio/_index';
-import base from '#buddhism/media/pdf/templates/_base';
 import { body, properCase } from '#buddhism/media/_common';
-import book from '#buddhism/media/pdf/templates/_book';
-import condensed from '#buddhism/media/pdf/templates/_condensed';
 import { fileName, oneLine } from '#root/src/data/common';
 import pdf from '#buddhism/media/pdf/_index';
-import roll from '#buddhism/media/pdf/templates/_roll';
-import thangka from '#buddhism/media/pdf/templates/_thangka';
 import utterance from '#buddhism/media/audio/_utterance';
-import wheel from '#buddhism/media/pdf/templates/_wheel';
 
-type StaleProps = {
+type AudioMetadata = {
+  ports: Map<string, number>;
+  tracks: Map<string, Track>;
+};
+
+type AudioTrack = AudioMetadata & {
+  generator: string,
+  model: string,
+  path: string,
+  siteConfig: DocusaurusConfig,
+  siteDir: string,
+  target: string,
+};
+
+type Stale = {
   data: string;
   maxAgeDays?: number;
   model?: string;
@@ -52,22 +57,17 @@ type StaleProps = {
   target: string;
 };
 
-type Templates = {
-  base: typeof base;
-  book: typeof book;
-  condensed: typeof condensed;
-  roll: typeof roll;
-  thangka: typeof thangka;
-  wheel: typeof wheel;
+type Track = {
+  album: string;
+  description: string;
+  genre: string;
+  track: number;
 };
 
 const algorithm = 'sha256';
 // 24 * 60 * 60 * 1000.
 export const MS_PER_DAY = 86400000;
 const provenance = Buffer.from(readFileSync('.provenance', 'utf8').trim(), 'base64');
-const templates: Templates = {
-  base, book, condensed, roll, thangka, wheel,
-};
 
 // ----------------------------------------------------------------------------
 // Generic supporting methods.
@@ -98,6 +98,139 @@ export function fileResolve(path: string, siteDir: string): string {
 }
 
 /**
+ * Generates port and track metadata from audio entries.
+ * @returns {AudioMetadata} Audio metadata.
+ */
+export function generateAudioMetadata(): AudioMetadata {
+  return audio.reduce(
+    (accumulator, [model, path]) => {
+      const next = (accumulator.counters.get(model) ?? 0) + 1;
+      accumulator.counters.set(model, next);
+      if (!accumulator.ports.has(model)) {
+        accumulator.ports.set(model, accumulator.meta.get(model)!.port);
+      }
+      accumulator.tracks.set(path, {
+        album: accumulator.meta.get(model)!.album,
+        description: accumulator.meta.get(model)!.description,
+        genre: accumulator.meta.get(model)!.genre,
+        track: next,
+      });
+      return accumulator;
+    },
+    {
+      counters: new Map<string, number>(),
+      meta: new Map([
+        [
+          'id_ID-news_tts-medium',
+          {
+            album: 'Mantra Pronunciations',
+            description: 'and confident and accurate recitation.',
+            genre: 'Mantra',
+            port: 5001,
+          },
+        ],
+        [
+          'en_US-hfc_male-medium',
+          {
+            album: 'Name Pronunciations',
+            description: 'and precise name articulation.',
+            genre: 'Speech',
+            port: 5002,
+          },
+        ],
+      ]),
+      ports: new Map<string, number>(),
+      tracks: new Map<string, Track>(),
+    },
+  );
+}
+
+/**
+ * Generate a single audio track using the configured context.
+ * @param {AudioTrack} options - Options for audio track generator.
+ * @param {string} options.generator - The audio generator engine to use.
+ * @param {string} options.model - The model identifier used by the generator.
+ * @param {string} options.path - The source file path.
+ * @param {Map<string, number>} options.ports - Ports map.
+ * @param {DocusaurusConfig} options.siteConfig - The site configuration.
+ * @param {string} options.siteDir - Absolute path to the site directory.
+ * @param {string} options.target - Path to the target file.
+ * @param {object} options.tracks - Tracks map.
+ */
+export async function generateAudioTrack({
+  generator, model, path, ports, siteConfig, siteDir, target, tracks,
+}: AudioTrack): Promise<void> {
+  const { default: { transliteration } } = await import(path);
+  const titleLower = transliteration?.title?.toLowerCase();
+  const utteranceText = transliteration?.utterance || utterance(body(transliteration));
+  // After utteranceText assignment.
+  const response = await fetch(`http://127.0.0.1:${ports.get(model)}`, {
+    body: JSON.stringify({ text: utteranceText }),
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+  });
+  if (!response.ok || !response.body) {
+    // eslint-disable-next-line no-console
+    console.error(`\x1b[31mFailed writing ${target}: Piper responded with ${response.status}\x1b[0m`);
+    return;
+  }
+  const {
+    album, description, genre, track,
+  } = tracks.get(path)!;
+  const date = new Date();
+  const stamp = createHash(algorithm).update(JSON.stringify({
+    date, generator, model, utteranceText,
+  })).digest('hex');
+  // After stamp assignment.
+  const metadata = [
+    '-metadata', `album=${album}`,
+    '-metadata', `album_artist=${siteConfig.title}`,
+    '-metadata', `artist=${siteConfig.title}`,
+    '-metadata', `comment=${oneLine(`Producer: ${siteConfig.url};
+      Provenance: ${createHmac(algorithm, provenance).update(stamp).digest('base64')};
+      Stamp: ${algorithm}:${stamp}`)}`,
+    '-metadata', `composer=${siteConfig.title}`,
+    // YYYY-MM-DD via en-CA.
+    '-metadata', `date=${date.toLocaleDateString('en-CA')}`,
+    '-metadata', `description=${oneLine(`A guided pronunciation of the
+      ${titleLower}, emphasizing syllable clarity, pacing, tone, breath
+      flow, ${description}`)}`,
+    '-metadata', `genre=${genre}`,
+    '-metadata', `title=${properCase(transliteration?.title)} pronunciation`,
+    '-metadata', `track=${track}`,
+  ];
+  // After metadata assignment.
+  const ffmpeg = spawn('ffmpeg', [
+    '-hide_banner',
+    '-i', '-',
+    '-f', 'image2',
+    '-i', fileResolve('#root/cover.jpg', siteDir),
+    '-loglevel', 'quiet',
+    '-map', '0:a',
+    '-map', '1',
+    '-disposition:v', 'attached_pic',
+    ...metadata,
+    '-b:a', '128k',
+    '-c:a', 'aac',
+    '-c:v', 'mjpeg',
+    '-y',
+    target,
+  ]);
+  await new Promise<void>((settle, reject) => {
+    ffmpeg.on('close', (code) => {
+      if (code === 0) {
+        settle();
+      } else {
+        reject(new Error(`ffmpeg exited with ${code}`));
+      }
+    });
+    ffmpeg.on('error', (ex) => reject(new Error('ffmpeg error', ex)));
+    Readable.fromWeb(response.body as unknown as ReadableStream).pipe(ffmpeg.stdin);
+    // eslint-disable-next-line no-console
+  }).catch((ex) => console.error(`\x1b[31mFailed writing ${target}:\x1b[0m`, ex));
+}
+
+/**
  * Get the last modified time of a file in milliseconds.
  * @param {string} path - The file system path to check.
  * @returns {Promise<number>} A promise that resolves to the file's last modified
@@ -114,12 +247,10 @@ export async function lastModified(path: string): Promise<number> {
  * using a glob pattern.
  * @param {string} outDir - The root output directory to search within.
  * @param {string} pattern - A glob pattern used to filter files.
- * @returns { Promise<string[]>} An array of matching file paths.
+ * @returns {Promise<string[]>} An array of matching file paths.
  */
 export async function outputPaths(outDir: string, pattern: string): Promise<string[]> {
-  // eslint-disable-next-line security/detect-non-literal-fs-filename
-  return minimatch.match(await readdir(outDir, { recursive: true }), pattern, { matchBase: true })
-    .map((file) => join(outDir, file));
+  return glob(`**/${pattern}`, { absolute: true, cwd: outDir });
 }
 
 /**
@@ -182,7 +313,7 @@ export async function piperServer(
  */
 export async function stale({
   data, maxAgeDays = 7, model = '', siteDir, target, template = '',
-}: StaleProps): Promise<boolean> {
+}: Stale): Promise<boolean> {
   // Target does not exist.
   if (await access(target).then(() => false).catch(() => true)) {
     return true;
@@ -264,57 +395,7 @@ export async function generateAudio(
     { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
   );
   bars.update();
-
-  const { ports, tracks } = audio.reduce(
-    (accumulator, [model, path]) => {
-      const next = (accumulator.counters.get(model) ?? 0) + 1;
-      accumulator.counters.set(model, next);
-      if (!accumulator.ports.has(model)) {
-        accumulator.ports.set(model, accumulator.meta.get(model)!.port);
-      }
-      accumulator.tracks.set(path, {
-        album: accumulator.meta.get(model)!.album,
-        description: accumulator.meta.get(model)!.description,
-        genre: accumulator.meta.get(model)!.genre,
-        track: next,
-      });
-      return accumulator;
-    },
-    {
-      counters: new Map<string, number>(),
-      meta: new Map([
-        [
-          'id_ID-news_tts-medium',
-          {
-            album: 'Mantra Pronunciations',
-            description: 'and confident and accurate recitation.',
-            genre: 'Mantra',
-            port: 5001,
-          },
-        ],
-        [
-          'en_US-hfc_male-medium',
-          {
-            album: 'Name Pronunciations',
-            description: 'and precise name articulation.',
-            genre: 'Speech',
-            port: 5002,
-          },
-        ],
-      ]),
-      ports: new Map<string, number>(),
-      tracks: new Map<
-        string,
-        {
-          album: string;
-          description: string;
-          genre: string;
-          track: number;
-        }
-      >(),
-    },
-  );
-
+  const { ports, tracks } = generateAudioMetadata();
   bar.increment();
   bars.update();
   bar.setTotal(audio.length);
@@ -325,101 +406,39 @@ export async function generateAudio(
   const audioDir = join(outDir, 'audio');
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   await mkdir(audioDir, { recursive: true });
+  const servers = new Map<string, Promise<ChildProcessWithoutNullStreams>>();
 
-  const servers = Object.fromEntries(await Promise.all(
-    Array.from(ports, async ([model, port]) => ([
-      model.slice(0, model.indexOf('_')).toLowerCase(),
-      await piperServer(siteDir, model, port),
-    ])),
-  )) as Record<string, ChildProcessWithoutNullStreams>;
-
-  await concurrent(audio, async (batch, index) => {
-    // Workload arbritary weight numbers.
-    const weight = index * 75;
-    // Tiny stagger to smooth progress bar display.
-    await sleep(weight);
-    await Promise.all(batch.map(async ([model, path]) => {
-      const target = join(audioDir, `${fileName(path)}.m4a`);
-      if (await stale({
-        data: path, model, siteDir, target,
-      })) {
-        const { default: { transliteration } } = await import(path);
-        const titleLower = transliteration?.title?.toLowerCase();
-        const utteranceText = transliteration?.utterance || utterance(body(transliteration));
-        // After utteranceText assignment.
-        const response = await fetch(`http://127.0.0.1:${ports.get(model)}`, {
-          body: JSON.stringify({ text: utteranceText }),
-          headers: { 'Content-Type': 'application/json' },
-          method: 'POST',
-        });
-        if (!response.ok || !response.body) {
-          // eslint-disable-next-line no-console
-          console.error(`\x1b[31mFailed writing ${target}: Piper responded with ${response.status}\x1b[0m`);
-          return;
-        }
-        const {
-          album, description, genre, track,
-        } = tracks.get(path)!;
-        const date = new Date();
-        const stamp = createHash(algorithm).update(JSON.stringify({
-          date, generator, model, utteranceText,
-        })).digest('hex');
-        // After stamp assignment.
-        const metadata = [
-          '-metadata', `album=${album}`,
-          '-metadata', `album_artist=${siteConfig.title}`,
-          '-metadata', `artist=${siteConfig.title}`,
-          '-metadata', `comment=${oneLine(`Producer: ${siteConfig.url};
-            Provenance: ${createHmac(algorithm, provenance).update(stamp).digest('base64')};
-            Stamp: ${algorithm}:${stamp}`)}`,
-          '-metadata', `composer=${siteConfig.title}`,
-          // YYYY-MM-DD via en-CA.
-          '-metadata', `date=${date.toLocaleDateString('en-CA')}`,
-          '-metadata', `description=${oneLine(`A guided pronunciation of the
-            ${titleLower}, emphasizing syllable clarity, pacing, tone, breath
-            flow, ${description}`)}`,
-          '-metadata', `genre=${genre}`,
-          '-metadata', `title=${properCase(transliteration?.title)} pronunciation`,
-          '-metadata', `track=${track}`,
-        ];
-        // After metadata assignment.
-        const ffmpeg = spawn('ffmpeg', [
-          '-hide_banner',
-          '-i', '-',
-          '-f', 'image2',
-          '-i', fileResolve('#root/cover.jpg', siteDir),
-          '-loglevel', 'quiet',
-          '-map', '0:a',
-          '-map', '1',
-          '-disposition:v', 'attached_pic',
-          ...metadata,
-          '-b:a', '128k',
-          '-c:a', 'aac',
-          '-c:v', 'mjpeg',
-          '-y',
-          target,
-        ]);
-        await new Promise<void>((settle, reject) => {
-          ffmpeg.on('close', (code) => {
-            if (code === 0) {
-              settle();
-            } else {
-              reject(new Error(`ffmpeg exited with ${code}`));
-            }
+  try {
+    await concurrent(audio, async (batch) => {
+      await Promise.all(batch.map(async ([model, path]) => {
+        const target = join(audioDir, `${fileName(path)}.m4a`);
+        if (await stale({
+          data: path, model, siteDir, target,
+        })) {
+          if (!servers.has(model)) {
+            servers.set(model, piperServer(siteDir, model, ports.get(model)!));
+          }
+          await servers.get(model)!;
+          await generateAudioTrack({
+            generator, model, path, ports, siteConfig, siteDir, target, tracks,
           });
-          ffmpeg.on('error', (ex) => reject(new Error('ffmpeg error', ex)));
-          Readable.fromWeb(response.body as unknown as ReadableStream).pipe(ffmpeg.stdin);
-          // eslint-disable-next-line no-console
-        }).catch((ex) => console.error(`\x1b[31mFailed writing ${target}:\x1b[0m`, ex));
-        // Tiny stagger to unblock progress bar display, scaled by workload
-        // weight.
-        await sleep(weight);
-      }
-      bar.increment();
-      bars.update();
-    }));
-  }, 5);
-  Object.values(servers).forEach((server) => server.kill('SIGTERM'));
+        }
+        bar.increment();
+        bars.update();
+      }));
+    }, 5);
+  } finally {
+    await Promise.all(
+      Array.from(servers.values(), async (server) => {
+        try {
+          (await server)?.kill('SIGTERM');
+        } catch {
+          // Ignore failures.
+        }
+      }),
+    );
+    servers.clear();
+  }
   (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bars.update();
   bar.stop();
@@ -441,97 +460,34 @@ export async function generatePdf(
 ): Promise<void> {
   const bar = bars.create(pdf.length, 0, { color: '\x1B[34m', task: 'Make PDF  ' });
   bars.update();
-  const devanagari = join(__dirname, 'font', 'noto', 'NotoSerifDevanagari-Regular.ttf');
-  const devanagariBold = join(__dirname, 'font', 'noto', 'NotoSerifDevanagari-Bold.ttf');
-  const generator = `pdfmake:${dependencies.pdfmake}`;
-  const kokonor = join(__dirname, 'font', 'kokonor', 'Kokonor-Regular.ttf');
   // Ensure the folder exist.
   const pdfDir = join(outDir, 'pdf');
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   await mkdir(pdfDir, { recursive: true });
-  const printer = new PdfMake({
-    Kokonor: {
-      bold: kokonor,
-      bolditalics: kokonor,
-      italics: kokonor,
-      normal: kokonor,
-    },
-    NotoSans: {
-      bold: join(__dirname, 'font', 'noto', 'NotoSans-Bold.ttf'),
-      bolditalics: join(__dirname, 'font', 'noto', 'NotoSans-BoldItalic.ttf'),
-      italics: join(__dirname, 'font', 'noto', 'NotoSans-Italic.ttf'),
-      normal: join(__dirname, 'font', 'noto', 'NotoSans-Regular.ttf'),
-    },
-    NotoSerifDevanagari: {
-      bold: devanagariBold,
-      bolditalics: devanagariBold,
-      italics: devanagari,
-      normal: devanagari,
+  const pool = new Tinypool({
+    execArgv: ['--experimental-worker', '--import', 'tsx'],
+    filename: fileURLToPath(new URL('./workers/generate-pdf.ts', import.meta.url)),
+    workerData: {
+      algorithm,
+      generator: `pdfmake:${devDependencies.pdfmake}`,
+      provenance,
+      siteConfig: { title: siteConfig.title, url: siteConfig.url },
     },
   });
-
-  await concurrent(pdf, async (batch, index) => {
-    // Workload arbritary weight numbers.
-    const weight = index * 75;
-    // Tiny stagger to smooth progress bar display.
-    await sleep(weight);
-    await Promise.all(batch.map(async ([template, path]) => {
+  try {
+    await Promise.all(pdf.map(async ([template, path]) => {
       const target = join(pdfDir, `${fileName(path, template)}.pdf`);
       if (await stale({
-        data: path,
-        siteDir,
-        template,
-        target,
+        data: path, siteDir, template, target,
       })) {
-        const date = new Date();
-        const { definition, options } = await templates[template as keyof Templates](path);
-        const stamp = createHash(algorithm).update(JSON.stringify({
-          date, definition, generator, options,
-        })).digest('hex');
-        // After stamp assignment.
-        const document = printer.createPdfKitDocument({
-          ...definition,
-          displayTitle: true,
-          info: {
-            ...definition.info,
-            author: siteConfig.title,
-            creationDate: date,
-            creator: siteConfig.url,
-            custom: {
-              provenance: createHmac(algorithm, provenance)
-                .update(stamp).digest('base64'),
-            },
-            modDate: date,
-            producer: siteConfig.url,
-            stamp: `${algorithm}:${stamp}`,
-          },
-          watermark: {
-            bold: true,
-            color: 'red',
-            font: 'NotoSans',
-            fontSize: 90,
-            opacity: 0,
-            text: siteConfig.url,
-          },
-        }, options);
-        await new Promise<void>((settle, reject) => {
-          // eslint-disable-next-line security/detect-non-literal-fs-filename
-          const stream = createWriteStream(target);
-          document.on('end', settle);
-          document.on('error', reject);
-          stream.on('error', reject);
-          document.pipe(stream);
-          document.end();
-          // eslint-disable-next-line no-console
-        }).catch((ex) => console.error(`\x1b[31mFailed writing ${target}:\x1b[0m`, ex));
-        // Tiny stagger to unblock progress bar display, scaled by workload
-        // weight.
-        await sleep(weight);
+        await pool.run({ path, target, template });
       }
       bar.increment();
       bars.update();
     }));
-  }, 5);
+  } finally {
+    await pool.destroy();
+  }
   (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bars.update();
   bar.stop();
@@ -551,27 +507,26 @@ export async function inlineAboveFold(outDir: string, bars:MultiBar): Promise<vo
     { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
   );
   bars.update();
-  const beasties = new Beasties({ logLevel: 'warn', path: outDir, preload: 'swap' });
   const paths = await outputPaths(outDir, '*.html');
   bar.increment();
   bars.update();
   bar.setTotal(paths.length);
   (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m';
   bar.update(0, { task: 'Inline CSS' });
-  await concurrent(paths, async (batch, index) => {
-    // Tiny stagger to smooth progress bar display.
-    await sleep(index);
-    await Promise.all(batch.map(async (path) => {
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      const html = await readFile(path, 'utf8');
-      if (!html.includes('data-beasties-container')) {
-        // eslint-disable-next-line security/detect-non-literal-fs-filename
-        await writeFile(path, await beasties.process(html), 'utf8');
-      }
+  const pool = new Tinypool({
+    execArgv: ['--experimental-worker', '--import', 'tsx'],
+    filename: fileURLToPath(new URL('./workers/critical-css.ts', import.meta.url)),
+    workerData: { outDir },
+  });
+  try {
+    await Promise.all(paths.map(async (path) => {
+      await pool.run({ path });
       bar.increment();
       bars.update();
     }));
-  }, 5);
+  } finally {
+    await pool.destroy();
+  }
   (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bars.update();
   bar.stop();

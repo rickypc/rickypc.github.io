@@ -31,3 +31,9 @@ declare module 'cli-progress' {
   export const MultiBar: MultiBarConstructor;
   export type MultiBar = MultiBarInstance;
 }
+
+declare module 'tinypool' {
+  const Tinypool: any;
+  export default Tinypool;
+  export const pools: any;
+}

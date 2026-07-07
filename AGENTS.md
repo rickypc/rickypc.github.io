@@ -2,21 +2,8 @@
 
 ## Rules
 
-1. **Minimize changes.** Prefer 5 lines over 50.
-2. **Reuse first.** Check existing libraries, code, and prior plans before
-introducing anything new. New libraries must be open-source, free, popular, and
-maintained.
-3. **No redundancy.** Prompt info should not duplicate plan info; code logic
-should not be restated in comments.
-4. **NO GIT.** NEVER use git. Ask the user if repository state is needed.
-5. **Batch tool calls.** All independent read/search calls in ONE turn -
-results analyzed in ONE LLM pass. No read→think→read→think ping-pong. If more
-than one tool call is needed and they don't depend on each other's output, fire
-them in parallel in a single message. Single-tool turns are only valid when the
-next call genuinely depends on the prior result (state this dependency in your
-thinking). Include `docusaurus.config.ts` context for workspace-wide queries.
-6. **Environment.** Node.js >= 26 required; path aliases via `package.json`
-"imports".
+1. **Environment.** Node.js >= 26 required; path aliases via `package.json`
+"imports". Include `docusaurus.config.ts` context for workspace-wide queries.
 
 ## Conventions
 
@@ -24,12 +11,24 @@ thinking). Include `docusaurus.config.ts` context for workspace-wide queries.
 `src/components/<component_name>/`. Shared logic lives strictly in
 `src/components/common/`.
 2. **UI & Lint.** Use `clsx` and `a11y` imports exclusively from
-`src/data/common.ts`. Enforce React PropTypes for all components.
-3. **Exports.** Use named exports for utility helpers; default exports for UI
-components.
-4. **Styling.** Sort alphabetically where applicable (methods, properties,
-array items, object attributes, parameters). Occasional out-of-order exceptions
-are acceptable but rare.
+`src/data/common.ts`. Type component props with TypeScript.
+3. **Exports & order.** Use named exports for utility helpers; default
+exports for UI components. Sort exported names alphabetically across the
+whole file. Do NOT create implicit "topic-grouped" sections; the
+alphabetical order itself groups naturally (e.g., `faq` falls between
+`experiences` and `header` without manual grouping).
+4. **Sort & import order.** Sort alphabetically where applicable (methods,
+properties, array items, object attributes, parameters). Occasional
+out-of-order exceptions are acceptable but rare. Within an import line's
+braces, sort identifiers alphabetically, ignoring the `type` keyword
+(`type GeoEntry` sorts as `GeoEntry`, so `{ type GeoEntry, oneLine }` is
+correct: GeoEntry < oneLine). Across import lines, sort by the first identifier
+in each line's braces (also ignoring `type`). Example:
+`{ type GeoEntry, oneLine }` precedes `{ type IntroProps }` precedes
+`{ type LayoutProps }` (GeoEntry < IntroProps < LayoutProps). The type
+section - between imports and code, whether `export type` or local type
+assignments - sorts as one group interleaved by name (export status does not
+split the order). The code section below follows its own sort order.
 5. **Media plugin.** `src/plugins/media/` produces three artifacts:
 font-fallback (from font metrics), PDFs (via `pdfmake`), and M4A audio. Respect
 its constraints when modifying any of these outputs.
@@ -40,8 +39,11 @@ its constraints when modifying any of these outputs.
 `src/css/custom.css`.
 8. **Dependencies.** Docusaurus, React, motion/react, pdfmake, simple-git;
 ESLint (AirBnB, React, Docusaurus).
+9. **Naming.** Identifiers should be clear, short (no abbreviations), and
+sweet. Don't overthink - if a name already fits (e.g., `faqContext`), keep
+it. Conveying the idea clearly in short and sweet form is the bar.
 
-## Page & SEO Conventions
+## Page & SEO/GEO Conventions
 
 1. **Pages.** `src/pages/<page_name>/index.tsx` (or `.mdx`); co-locate
 page-specific components in the same folder; reuse `src/components/common/` for
@@ -51,19 +53,25 @@ new files); binary assets in `static/`.
 3. **SEO/GEO surfaces.** Prerender/metadata via `docusaurus.config.ts`
 (`themeConfig.metadata`, `headTags`); per-page `<Head>` from `@theme Head`;
 sitemap via `src/plugins/sitemap/`; advanced media via `src/plugins/media/`
-(font fallback, PDFs, M4A audio).
+(font fallback, PDFs, M4A audio). Per-page GEO via the `GeoEntry`,
+`GeoSchema` types and `faqContext`/`faqEntries` helpers from
+`src/data/common.ts` (emit FAQ schema in the page or via co-located TS).
 4. **Feedback loop.** `npm start` (hot reload) while editing pages;
 `npm run build` validates static rendering/SEO before commit.
 
-## Output Discipline
+## Docs Conventions
 
-1. **Output cap.** Responses ≤ 150 words by default; ask user before expanding.
-Tables only when comparing ≥3 alternatives.
-2. **No restatement.** Do not echo user answers or re-summarize completed
-edits; the diff is the record.
-3. **No preamble.** Use tool calls directly; skip "Let me check…" hedges.
-4. **Plan-loop discipline.** Plan once → questions → approve → execute. Do not
-re-state the plan after each answer.
+1. **Layout.** Content under `docs/<topic>/`; each topic dir carries a
+`_category_.yml` (label, position, `link.type: generated-index`,
+`collapsed`). Subcategories nest the same pattern.
+2. **Pages & helpers.** `.mdx` content files; co-locate page-specific
+helpers/components with an `_` prefix to exclude them from the sidebar.
+3. **Assets.** Binary media under `docs/<topic>/img/` (prefer `.webp`);
+PDFs and M4A audio under `docs/<topic>/media/{audio,pdf}/`, produced by
+`src/plugins/media/`.
+4. **Routing & search.** `docs` route served by preset-classic;
+docusaurus-search-local indexes `docs` under the "Notes" search context
+(see `docusaurus.config.ts` `searchContextByPaths`).
 
 ---
 

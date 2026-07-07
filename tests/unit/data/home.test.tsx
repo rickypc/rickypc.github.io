@@ -8,8 +8,10 @@
 import { render, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {
-  hats, identity, image, intro, layout, socials,
+  faqItems, hats, identity, image, intro,
+  layout, socials,
 } from '@site/src/data/home';
+import { textContent } from '@site/src/data/common';
 
 describe('data.home', () => {
   test('renders greeting fragment with two spans', () => {
@@ -107,6 +109,37 @@ describe('data.home', () => {
       // Props round-trip.
       const props = JSON.parse(icon.getAttribute('data-props') || '{}');
       expect(props).toMatchObject({ className: 'foo', title: 'bar' });
+    });
+  });
+
+  describe('faqItems', () => {
+    test('has exactly six non-empty Q/A pairs', () => {
+      expect(Array.isArray(faqItems)).toBe(true);
+      expect(faqItems).toHaveLength(6);
+      faqItems.forEach((entry) => {
+        expect(textContent(entry.question).length).toBeGreaterThan(0);
+        expect(textContent(entry.answer).length).toBeGreaterThan(0);
+      });
+    });
+
+    test('includes a stack question and a US-citizen availability answer', () => {
+      const questions = faqItems.map((entry) => textContent(entry.question));
+      expect(questions.some((q) => q.match(/stack.*production/i))).toBe(true);
+      const availabilityAnswer = textContent(
+        faqItems.find((entry) => textContent(entry.question).match(/available/i))!.answer,
+      );
+      expect(availabilityAnswer).toMatch(/US citizen/);
+      expect(availabilityAnswer).not.toMatch(/trade notes/);
+      expect(availabilityAnswer).not.toMatch(/wherever those exchanges lead/);
+    });
+
+    test('losslessly preserves the original intro facts in the rewritten pitch', () => {
+      const pitch = textContent(intro.description);
+      expect(pitch).toMatch(/cloud-native/);
+      expect(pitch).toMatch(/distributed/);
+      expect(pitch).toMatch(/high-volume, business-critical/);
+      expect(pitch).toMatch(/hands-on engineering experience/);
+      expect(pitch).toMatch(/clarity, technical depth/);
     });
   });
 });

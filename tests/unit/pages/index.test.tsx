@@ -46,7 +46,7 @@ describe('pages.index', () => {
     const layoutEl = screen.getByTestId('layout');
     expect(layoutEl).toBeInTheDocument();
     expect(layoutEl).toHaveAttribute('class', 'home');
-    expect(layoutEl.getAttribute('title')).toContain(layout.title);
+    expect(layoutEl.getAttribute('data-title')).toContain(layout.title);
 
     const socials = screen.getByTestId('socials');
     expect(socials).toBeInTheDocument();

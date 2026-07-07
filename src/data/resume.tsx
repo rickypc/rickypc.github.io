@@ -7,6 +7,7 @@ import { catalogMap } from '@site/src/data/portfolio';
 import { type ComponentProps, type ReactElement } from 'react';
 import { type DocusaurusConfig } from '@docusaurus/types';
 import { FaGithub, FaLinkedin } from '@site/src/data/home';
+import { type FaqItems, type SchemaType, oneLine } from '@site/src/data/common';
 import { GenIcon } from 'react-icons/lib';
 import Heading from '@theme/Heading';
 import { type IconBaseProps } from 'react-icons';
@@ -513,6 +514,91 @@ export const experiences = {
   },
 };
 
+export const faqItems: FaqItems[] = [
+  {
+    answer: oneLine(`Principal Engineer in practice - a Senior Software
+      Engineer by title who sets architecture, design, and daily technical
+      direction for an agile delivery team of 4 to 6 engineers, POs, and PMs
+      within a larger business-unit delivery team, and operates AI-native with
+      agentic loops and spec-driven development.`),
+    question: 'What is Ricky\'s actual seniority and scope?',
+  },
+  {
+    answer: oneLine(`30+ years hands-on, including 20+ years at Experian - 7+
+      at Experian CheetahMail (where I received the Pinnacle Award for
+      engineering excellence), followed by 13+ at Experian Consumer
+      Services across three roles. Earlier tenure at AirIQ and RazorGator,
+      with parallel freelance delivery across 9 portfolio projects since
+      1995.`),
+    question: 'How much experience does Ricky have, and is it stable?',
+  },
+  {
+    answer: oneLine(`A Tier-1 essential Experian service I maintain holds 25 ms
+      p99, 50K req/m avg, surges to 1M+/m, 300K-400K records processed per
+      minute, and 5+ years of zero production defects - operating for
+      roughly 5% of what a licensed replacement would cost per year.`),
+    question: 'Can Ricky point to systems with hard production metrics?',
+  },
+  {
+    answer: oneLine(`Yes: in my Experian Consumer Services tenure I turned a
+      service hitting production issues every 2-4 hours into one sustaining
+      multi-day then monthly stability within a month, and earlier at
+      Experian CheetahMail I helped sustain a billion emails a day with
+      minimum error rate.`),
+    question: 'Has Ricky run high-throughput and high-reliability systems before?',
+  },
+  {
+    answer: oneLine(`Both, deliberately: specialist-level depth in
+      cloud-native, event-driven backends (AWS Kinesis, EventBridge, SQS,
+      SNS, plus Go, Python, and C#), generalist breadth across front-end
+      (React), databases (DynamoDB, MySQL, Oracle, SQL Server),
+      observability (Datadog), and AI tooling (Bedrock, agentic loops,
+      spec-driven development). The breadth is what makes the depth useful
+      - one person owns the system end-to-end.`),
+    question: 'Is Ricky a generalist or a specialist?',
+  },
+  {
+    answer: oneLine(`Two clean examples: (1) an internal tool I built ground-up
+      for a tenant grew from under $100K a year in revenue to hundreds of
+      millions of dollars, with my systems still backing the business today;
+      (2) the Tier-1 essential service operates at roughly 5% of the yearly
+      cost of a licensed third-party replacement (licensing alone far higher,
+      operations included).`),
+    question: 'Can Ricky show dollar impact or avoided cost?',
+  },
+  {
+    answer: oneLine(`Yes: on a recent production incident, I designed, tested,
+      and deployed a mitigatory solution in less than two hours (recognized in
+      a 2026 Spot Award), and I've built deep observability into services using
+      Datadog for faster incident detection and resolution.`),
+    question: 'Does Ricky lead incidents and on-call work?',
+  },
+  {
+    answer: oneLine(`Platinum Aspire Award (top 1% performance), plus roughly
+      20 EMF Hero and Spot Awards since. In 2026 alone I received three
+      Collaborate to Win Spot Awards - including for being the heart and brains
+      of the engineering team.`),
+    question: 'What is the recognition track record at Experian?',
+  },
+  {
+    answer: oneLine(`I was the first in my company to set up spec-driven
+      development for my team, running agentic AI loops against specs - making
+      the team likely the first SDD team in the company. I also graduated with
+      Distinction in Stanford Mining Massive Datasets, alongside Machine
+      Learning and Automata coursework, and earned an Outstanding Graduate
+      Project Award for my CSUF MSSE.`),
+    question: 'Is Ricky current with modern AI and tooling?',
+  },
+  {
+    answer: oneLine(`Passively open, not actively interviewing but responsive
+      to strong matches. Prefers full-time W2 over contract, nationwide
+      remote or hybrid, US citizen (clearance-eligible), open to LA-area
+      relocation. Values long-term vision and a solid ROI over jumping between
+      contracts.`),
+    question: 'What is Ricky\'s availability and compensation posture?',
+  },
+];
+
 export const header = ({ siteConfig }: HeaderProps) => {
   const items = (siteConfig.themeConfig as ThemeConfig).navbar?.items || [];
   return {
@@ -560,8 +646,12 @@ export const header = ({ siteConfig }: HeaderProps) => {
   };
 };
 
+// Before layout assignment.
+export const schema: SchemaType = 'ProfilePage';
+
 export const layout: LayoutProps = {
   description: 'Principal Engineer resume with deep experience in cloud systems, backend architecture, and scalable platform design.',
+  faq: { items: faqItems, slug: 'resume' },
   keywords: [
     'principal engineer resume',
     'software engineering leadership',
@@ -592,6 +682,7 @@ export const layout: LayoutProps = {
     />,
   ],
   */
+  schema,
   title: 'Principal Engineer Resume - Cloud & Distributed Systems',
 };
 

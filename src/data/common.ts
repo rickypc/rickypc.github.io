@@ -13,6 +13,12 @@ const below20: string[] = [
   'seventeen', 'eighteen', 'nineteen',
 ];
 
+const FAQ_CONTEXT = {
+  '@context': 'https://schema.org/',
+  '@type': 'FAQPage',
+  inLanguage: 'en-US',
+};
+
 const tens: string[] = [
   '', '', 'twenty', 'thirty', 'forty', 'fifty',
   'sixty', 'seventy', 'eighty', 'ninety',
@@ -22,6 +28,17 @@ const thousands: string[] = [
   '', 'thousand', 'million', 'billion', 'trillion',
   'quadrillion', 'quintillion',
 ];
+
+export type FaqItems = { answer: ReactNode; question: ReactNode };
+
+export type Faq = { items: FaqItems[]; slug: string };
+
+export type SchemaType =
+  | 'CollectionPage'
+  | 'FAQPage'
+  | 'Person'
+  | 'ProfilePage'
+  | 'Review';
 
 export const a11y = (value?: string, rest = {}) => ({ 'aria-label': value, title: value, ...rest });
 
@@ -71,10 +88,11 @@ export const context = ({
     'high quality',
     'master degree',
   ],
+  schema = 'ProfilePage',
   title = 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
 } = {}) => JSON.stringify({
   '@context': 'https://schema.org/',
-  '@type': 'ProfilePage',
+  '@type': schema,
   description,
   headline: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic',
   keywords: keywords.join(','),
@@ -259,3 +277,36 @@ export function textContent(node: ReactNode): string {
   }
   return '';
 }
+
+// After textContent assignment, and before faqContext assignment.
+export const faqEntries = (faq: Faq) => {
+  const url = `https://ricky.one/${faq.slug}`;
+  return faq.items
+    .filter((entry): entry is { answer: string; question: string } => {
+      const q = textContent(entry.question).trim();
+      const a = textContent(entry.answer).trim();
+      return q.length > 0 && a.length > 0;
+    })
+    .map((entry, index) => ({
+      '@id': `${url}#faq-${index + 1}`,
+      '@type': 'Question',
+      acceptedAnswer: {
+        '@id': `${url}#faq-${index + 1}-answer`,
+        '@type': 'Answer',
+        inLanguage: 'en-US',
+        text: textContent(entry.answer).replace(/\s+/g, ' ').trim(),
+      },
+      inLanguage: 'en-US',
+      name: textContent(entry.question).replace(/\s+/g, ' ').trim(),
+    }));
+};
+
+export const faqContext = (faq: Faq) => {
+  const url = `https://ricky.one/${faq.slug}`;
+  return JSON.stringify({
+    ...FAQ_CONTEXT,
+    '@id': `${url}#faq`,
+    mainEntity: faqEntries(faq),
+    url,
+  });
+};

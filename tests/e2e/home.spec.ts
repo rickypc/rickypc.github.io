@@ -5,8 +5,8 @@
 
 import {
   afterAll, band, beforeAll, type BrowserContext, expect,
-  hasMetadatas, hasNavigations, hasPlayback, hasPrint, hasScreenshot,
-  hasUrl, mobile, type Page, test,
+  hasJsonLd, hasMetadatas, hasNavigations, hasPlayback, hasPrint,
+  hasScreenshot, hasUrl, mobile, type Page, test,
 } from './helper';
 
 const url = '/';
@@ -22,6 +22,7 @@ test.describe.serial('shared page tests', () => {
 
   test('has correct URL', async ({ baseURL }) => hasUrl({ baseURL, page, url }));
   test('has correct metadatas', async () => hasMetadatas({ page }));
+  test('has GEO JSON-LD blocks', async () => hasJsonLd({ faqId: '/#faq', page }));
 
   test('has 4 paragraphs', async () => {
     await band(4, async (index) => {

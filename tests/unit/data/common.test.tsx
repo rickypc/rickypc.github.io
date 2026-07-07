@@ -4,9 +4,9 @@
  */
 
 import {
-  a11y, chunkToWords, clsx, context, fetchAsJson,
-  fileName, humanizeYears, key, numberToWords, oneLine,
-  tail, textContent,
+  a11y, chunkToWords, clsx, context, faqContext,
+  faqEntries, fetchAsJson, fileName, humanizeYears, key,
+  numberToWords, oneLine, tail, textContent,
 } from '@site/src/data/common';
 
 describe('data.common', () => {
@@ -106,6 +106,111 @@ describe('data.common', () => {
       expect(parsed.description).toBe('CustomDesc');
       expect(parsed.keywords).toBe('x,y,z');
       expect(parsed.name).toBe('MyTitle');
+    });
+
+    test('accepts a custom schema override', () => {
+      const parsed = JSON.parse(context({ schema: 'CollectionPage' }));
+      expect(parsed['@type']).toBe('CollectionPage');
+    });
+  });
+
+  describe('faqContext()', () => {
+    test('returns a JSON string with FAQPage schema and mainEntity array', () => {
+      const json = JSON.parse(faqContext({ items: [{ answer: 'A', question: 'Q' }], slug: 'about' }));
+      expect(json['@context']).toBe('https://schema.org/');
+      expect(json['@type']).toBe('FAQPage');
+      expect(json.url).toBe('https://ricky.one/about');
+      expect(json['@id']).toBe('https://ricky.one/about#faq');
+      expect(Array.isArray(json.mainEntity)).toBeTruthy();
+      expect(json.mainEntity[0]).toMatchObject({
+        '@type': 'Question',
+        name: 'Q',
+        acceptedAnswer: { '@type': 'Answer', text: 'A' },
+      });
+    });
+
+    test('uses the root slug for the home page', () => {
+      const json = JSON.parse(faqContext({ items: [{ answer: 'A', question: 'Q' }], slug: '' }));
+      expect(json.url).toBe('https://ricky.one/');
+      expect(json['@id']).toBe('https://ricky.one/#faq');
+      expect(json.mainEntity[0]['@id']).toBe('https://ricky.one/#faq-1');
+    });
+
+    test('produces empty mainEntity when all entries are empty', () => {
+      const json = JSON.parse(faqContext({ items: [{ answer: '', question: '' }], slug: 'resume' }));
+      expect(json.mainEntity).toEqual([]);
+    });
+  });
+
+  describe('faqEntries()', () => {
+    test('serializes non-empty Q/A ReactNodes into Question entities', () => {
+      const entries = faqEntries({
+        items: [{ answer: <>Forty-two</>, question: <>Meaning of life?</> }],
+        slug: 'about',
+      });
+      expect(entries).toEqual([{
+        '@id': 'https://ricky.one/about#faq-1',
+        '@type': 'Question',
+        acceptedAnswer: {
+          '@id': 'https://ricky.one/about#faq-1-answer',
+          '@type': 'Answer',
+          inLanguage: 'en-US',
+          text: 'Forty-two',
+        },
+        inLanguage: 'en-US',
+        name: 'Meaning of life?',
+      }]);
+    });
+
+    test('extracts text from nested React elements', () => {
+      const entries = faqEntries({
+        items: [{
+          answer: (
+            <span>
+              Deep
+              <strong>answer</strong>
+            </span>
+          ),
+          question: (
+            <span>
+              Nested
+              <em>question</em>
+            </span>
+          ),
+        }],
+        slug: 'about',
+      });
+      expect(entries[0].name).toBe('Nested question');
+      expect(entries[0].acceptedAnswer.text).toBe('Deep answer');
+    });
+
+    test('collapses internal whitespace and trims', () => {
+      const entries = faqEntries({
+        items: [{
+          answer: '  spaced   out  ',
+          question: '  what   now  ',
+        }],
+        slug: 'about',
+      });
+      expect(entries[0].name).toBe('what now');
+      expect(entries[0].acceptedAnswer.text).toBe('spaced out');
+    });
+
+    test('drops entries whose question or answer is empty', () => {
+      const entries = faqEntries({
+        items: [
+          { answer: '', question: 'Q1' },
+          { answer: 'A2', question: '' },
+          { answer: 'A3', question: 'Q3' },
+        ],
+        slug: 'about',
+      });
+      expect(entries).toHaveLength(1);
+      expect(entries[0].name).toBe('Q3');
+    });
+
+    test('returns empty array when no entry survives filtering', () => {
+      expect(faqEntries({ items: [{ answer: '', question: '' }], slug: 'about' })).toEqual([]);
     });
   });
 

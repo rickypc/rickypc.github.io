@@ -3,9 +3,9 @@
  * All rights reserved.
  */
 
+import { type FaqItems, type SchemaType, oneLine } from '@site/src/data/common';
 import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
-import { oneLine } from '@site/src/data/common';
 
 export type StoryProps = {
   affiliation: {
@@ -31,18 +31,71 @@ export type StoryProps = {
   };
 };
 
+export const faqItems: FaqItems[] = [
+  {
+    answer: oneLine(`Four named peer testimonials - an invested partner, a
+      master of many trades, a problem-solving savior, and a versatile
+      polymath - each backed by a real LinkedIn profile and affiliation,
+      covering clean code, versatility, rescue work, and breadth across
+      stacks.`),
+    question: 'What do former collaborators actually say about working with Ricky?',
+  },
+  {
+    answer: oneLine(`Esteban Chavez, Creative Director at Headhigh Creative -
+      and the most important of the four, because his testimonial spans
+      multiple freelance projects (GigaOm, Rainbow Guitars, Fortini, Exhibit
+      Transport, S&M Bikes, Clipper, AnchorBlue, WheelBuilder).`),
+    question: 'Which testimonial carries the most weight, and why?',
+  },
+  {
+    answer: oneLine(`Phillip Lin (Pacifica Services and Experian CheetahMail
+      coworker), Christos Kakris (Experian CheetahMail coworker), and
+      Vlad Podgurschi (Experian CheetahMail coworker) - the latter three all
+      worked with me at Experian CheetahMail, so their testimonials are
+      Experian CheetahMail-specific, while Esteban's spans the broader
+      freelance body across many portfolio projects.`),
+    question: 'Who are the other recommenders and what is their context?',
+  },
+  {
+    answer: oneLine(`Versatility, reliability, and partnership. Esteban calls
+      out clean, functional, expertly crafted code across multiple projects;
+      Phillip calls me a master of all trades on every side of the stack and
+      says it would be your loss not to hire me; Vlad recalls me rescuing a
+      frontend component with clean, flexible, timely implementation;
+      Christos notes a year of depth across multiple languages, frameworks,
+      and environments.`),
+    question: 'What themes repeat across all four testimonials?',
+  },
+  {
+    answer: oneLine(`They're roughly a decade old, which I note openly - but
+      the relationships and work are genuine, and the underlying performance
+      has compounded since: the same person those recommenders describe now
+      maintains a Tier-1 essential service with 5+ years of zero production
+      defects and received a Platinum Aspire Award (top 1% performance) plus
+      roughly 20 EMF Hero and Spot Awards since.`),
+    question: 'Are these testimonials current, or dated?',
+  },
+];
+
 export const intro: IntroProps = {
   description: oneLine(`Real-world experiences, lessons learned, and
     reflections from my journey as a modern multidisciplinary technologist.
     These stories highlight how I've helped teams and projects thrive - through
-    technology, mentorship, personal growth, and the trust formed along the way.`),
+    technology, mentorship, personal growth, and the trust formed along the way
+    with collaborators like Esteban Chavez, Phillip Lin, Christos Kakris, and
+    Vlad Podgurschi, whose testimonials span freelance work,
+    Experian CheetahMail, and beyond.`),
   title: 'Stories',
 };
+
+// Before layout assignment.
+export const schema: SchemaType = 'Review';
 
 export const layout: LayoutProps = {
   description: oneLine(`Stories and lessons from Ricky Huang's journey as a
     full stack developer and leader - highlighting impact, growth,
     collaboration, and trust.`),
+  faq: { items: faqItems, slug: 'stories' },
   keywords: [
     'developer testimonials',
     'engineering leadership stories',
@@ -73,6 +126,7 @@ export const layout: LayoutProps = {
     />,
   ],
   */
+  schema,
   title: 'Stories, Testimonials & Lessons from the Journey',
 };
 

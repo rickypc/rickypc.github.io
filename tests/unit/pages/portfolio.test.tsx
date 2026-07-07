@@ -30,8 +30,8 @@ describe('pages.portfolio', () => {
     render(<Portfolio />);
     const layoutEl = screen.getByTestId('layout');
     expect(layoutEl.getAttribute('class')).toContain('portfolio');
-    expect(layoutEl.getAttribute('description')).toEqual(layout.description);
-    expect(layoutEl.getAttribute('title')).toEqual(layout.title);
+    expect(layoutEl.getAttribute('data-description')).toEqual(layout.description);
+    expect(layoutEl.getAttribute('data-title')).toEqual(layout.title);
   });
 
   test('renders Preamble with expected props', () => {

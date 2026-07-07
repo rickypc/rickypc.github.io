@@ -22,8 +22,8 @@ describe('pages.timeline', () => {
     const layoutEl = screen.getByTestId('layout');
     expect(layoutEl).toBeInTheDocument();
     expect(layoutEl).toHaveAttribute('class', 'timeline');
-    expect(layoutEl.getAttribute('description')).toContain(layout.description);
-    expect(layoutEl.getAttribute('title')).toContain(layout.title);
+    expect(layoutEl.getAttribute('data-description')).toContain(layout.description);
+    expect(layoutEl.getAttribute('data-title')).toContain(layout.title);
 
     const preambleEl = screen.getByTestId('preamble');
     expect(preambleEl).toBeInTheDocument();

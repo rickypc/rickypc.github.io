@@ -5,13 +5,14 @@
  * @jest-environment jsdom
  */
 
-import { catalog, catalogMap } from '@site/src/data/portfolio';
-import {
-  certifications, educations, experiences, header, layout,
-  leadership, preamble, skills, strengths, testimonials,
-} from '@site/src/data/resume';
 import { type DocusaurusConfig } from '@docusaurus/types';
 import { isValidElement, type ReactElement } from 'react';
+import { catalog, catalogMap } from '@site/src/data/portfolio';
+import {
+  certifications, educations, experiences, faqItems, header,
+  layout, leadership, preamble, schema, skills,
+  strengths, testimonials,
+} from '@site/src/data/resume';
 import { stories, storyMap } from '@site/src/data/stories';
 import { textContent } from '@site/src/data/common';
 import { timelines, timelineMap } from '@site/src/data/timeline';
@@ -90,6 +91,33 @@ describe('data.resume', () => {
           expect(sum.content.length).toBeGreaterThan(0);
         });
       });
+    });
+  });
+
+  describe('faqItems', () => {
+    test('has exactly ten non-empty Q/A pairs', () => {
+      expect(Array.isArray(faqItems)).toBe(true);
+      expect(faqItems).toHaveLength(10);
+      faqItems.forEach((entry) => {
+        expect(textContent(entry.question).length).toBeGreaterThan(0);
+        expect(textContent(entry.answer).length).toBeGreaterThan(0);
+      });
+    });
+
+    test('includes a generalist-vs-specialist question and rewritten availability posture', () => {
+      const questions = faqItems.map((entry) => textContent(entry.question));
+      expect(questions.some((q) => q.match(/generalist or a specialist/i))).toBe(true);
+      const availability = faqItems.find((entry) => textContent(entry.question).match(/availability/i));
+      expect(availability).toBeDefined();
+      const availabilityAnswer = textContent(availability!.answer);
+      expect(availabilityAnswer).toMatch(/US citizen/);
+      expect(availabilityAnswer).toMatch(/full-time W2/);
+      expect(availabilityAnswer).not.toMatch(/trade notes/);
+    });
+
+    test('does not include a stack-list question (removed in favor of the generalist framing)', () => {
+      const questions = faqItems.map((entry) => textContent(entry.question));
+      expect(questions.some((q) => q.match(/stack and skills/i))).toBe(false);
     });
   });
 
@@ -239,6 +267,12 @@ describe('data.resume', () => {
     test('content is a non-empty string', () => {
       expect(typeof preamble.content).toBe('string');
       expect(preamble.content.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('schema', () => {
+    test('is ProfilePage for resume', () => {
+      expect(schema).toBe('ProfilePage');
     });
   });
 

@@ -5,7 +5,9 @@
  * @jest-environment jsdom
  */
 
-import { catalog, intro, layout } from '@site/src/data/portfolio';
+import {
+  catalog, faqItems, intro, layout, schema,
+} from '@site/src/data/portfolio';
 import { textContent } from '@site/src/data/common';
 
 describe('portfolio.index', () => {
@@ -14,6 +16,32 @@ describe('portfolio.index', () => {
     expect(Array.isArray(catalog)).toBeTruthy();
     expect(catalog.length).toBeGreaterThan(0);
     expect(typeof catalog[0]).toBe('object');
+  });
+
+  describe('faqItems', () => {
+    test('has exactly ten non-empty Q/A pairs', () => {
+      expect(Array.isArray(faqItems)).toBe(true);
+      expect(faqItems).toHaveLength(10);
+      faqItems.forEach((entry) => {
+        expect(textContent(entry.question).length).toBeGreaterThan(0);
+        expect(textContent(entry.answer).length).toBeGreaterThan(0);
+      });
+    });
+
+    test('uses CollectionPage schema for portfolio', () => {
+      expect(schema).toBe('CollectionPage');
+    });
+
+    test('losslessly preserves the original intro facts in the rewritten pitch', () => {
+      const pitch = textContent(intro.description);
+      expect(pitch).toMatch(/years of hands-on/);
+      expect(pitch).toMatch(/thoughtful problem-solving/);
+      expect(pitch).toMatch(/commitment to quality/);
+      expect(pitch).toMatch(/technology stack that brought it to/);
+      expect(pitch).toMatch(/impact it delivered/);
+      expect(pitch).toMatch(/continual learning/);
+      expect(pitch).toMatch(/pace of modern technology/);
+    });
   });
 
   // Validate first item's primitive/top-level fields.

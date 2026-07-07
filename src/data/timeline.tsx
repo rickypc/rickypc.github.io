@@ -5,9 +5,9 @@
 
 /* eslint-disable global-require */
 
+import { type FaqItems, type SchemaType, oneLine } from '@site/src/data/common';
 import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
-import { oneLine } from '@site/src/data/common';
 import { type PictureInfo } from '@site/src/components/common/Image';
 
 export type TimelineProps = {
@@ -27,17 +27,77 @@ export type TimelineProps = {
   year: string;
 };
 
+export const faqItems: FaqItems[] = [
+  {
+    answer: oneLine(`Architectural Engineering, by design - I graduated with a
+      Bachelor of Engineering in Architecture from Petra Christian University
+      before earning an MS in Software Engineering from Cal State Fullerton,
+      where my final project received the Outstanding Graduate Project
+      Award.`),
+    question: 'What was Ricky\'s original background before software?',
+  },
+  {
+    answer: oneLine(`20+ years at Experian across two business units - 7+ at
+      Experian CheetahMail and 13+ at Experian Consumer Services across
+      three roles (Automation Engineer, Senior Automation Engineer, and
+      Senior / Principal-level Software Engineer), with recurring
+      recognition including the Platinum Aspire Award (top 1% performance)
+      and roughly 20 EMF Hero and Spot Awards.`),
+    question: 'How long has Ricky been at Experian, and in what roles?',
+  },
+  {
+    answer: oneLine(`I joined as an Automation Engineer with Experian
+      Consumer Services and was promoted twice, then earned a Stanford
+      Distinction in Mining Massive Datasets alongside Machine Learning and
+      Automata coursework - deepening the data-engineering side of my work
+      alongside escalation in scope.`),
+    question: 'What is the cadence of Ricky\'s promotions and continued learning?',
+  },
+  {
+    answer: oneLine(`He wouldn't leave lightly - that continuity is the proof.
+      The search is additive: a role with more design leverage, a wider blast
+      radius for architecture decisions, or an org further along the AI-native,
+      spec-driven path he already leads - not an escape from a bad fit.`),
+    question: 'Why would Ricky leave Experian after 20+ years?',
+  },
+  {
+    answer: oneLine(`Before Experian Consumer Services: a Software Development
+      Lead role at Experian CheetahMail that earned the Pinnacle Award for
+      powering email at the scale of a billion messages a day, real-time GPS
+      asset tracking at AirIQ, and full-stack ticketing at RazorGator
+      (including Yahoo! Tickets). Freelance projects ran in parallel
+      throughout.`),
+    question: 'What did Ricky build before Experian Consumer Services?',
+  },
+  {
+    answer: oneLine(`Continuity, not gaps. I joined Experian Consumer
+      Services in 2013 and have been promoted and wearing multiple hats
+      across roles there ever since. The earlier Experian CheetahMail
+      tenure fed directly into that move. My real-time GPS work at AirIQ
+      taught the telemetry and high-frequency data patterns I now apply to
+      high-volume pipelines.`),
+    question: 'Are there any unexplained gaps in the timeline?',
+  },
+];
+
 export const intro: IntroProps = {
   description: oneLine(`A curated journey through key milestones in my career,
     education, and technical growth. Each moment reflects a step forward -
     building expertise, shaping ideas, and driving impact across industries and
-    technologies.`),
+    technologies, from a Bachelor of Engineering in Architecture to a
+    Master of Science in Software Engineering to 20+ years at Experian
+    across two business units and three roles, with a Platinum Aspire award
+    along the way.`),
   title: 'Timeline',
 };
+
+// Before layout assignment.
+export const schema: SchemaType = 'ProfilePage';
 
 export const layout: LayoutProps = {
   description: oneLine(`Milestones in Ricky Huang's journey - from architecture
     to engineering, startups to global impact, and everything in between.`),
+  faq: { items: faqItems, slug: 'timeline' },
   keywords: [
     'career timeline',
     'software engineering milestones',
@@ -69,6 +129,7 @@ export const layout: LayoutProps = {
     />,
   ],
   */
+  schema,
   title: 'Timeline - Career, Education & Technical Milestones',
 };
 

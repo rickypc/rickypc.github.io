@@ -7,7 +7,7 @@
 
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { context } from '@site/src/data/common';
+import { context, faqContext, type FaqItems } from '@site/src/data/common';
 import Layout from '@site/src/components/common/Layout';
 import { useWelcome } from '@site/src/hooks/observer';
 
@@ -111,5 +111,103 @@ describe('Layout', () => {
     expect(head.querySelector('meta[name="robots"]')).toBeNull();
     // eslint-disable-next-line testing-library/no-node-access
     expect(head.querySelector('meta[name="author"]')).toBeNull();
+  });
+
+  describe('with faq and schema', () => {
+    const items: FaqItems[] = [{ answer: 'The answer', question: 'What is GEO?' }];
+    const faq = { items, slug: 'about' };
+    const schema = 'CollectionPage';
+
+    test('emits FAQPage JSON-LD when faq is provided', () => {
+      render((
+        <Layout
+          description="d"
+          faq={faq}
+          keywords={['k']}
+          title="t"
+        >
+          <p />
+        </Layout>
+      ));
+      // eslint-disable-next-line testing-library/no-node-access
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      const payloads = Array.from(scripts).map((script) => script.textContent);
+      expect(payloads).toContain(faqContext(faq));
+    });
+
+    test('emits page-specific schema block when schema is not ProfilePage', () => {
+      render((
+        <Layout
+          description="d"
+          faq={faq}
+          keywords={['k']}
+          schema={schema}
+          title="t"
+        >
+          <p />
+        </Layout>
+      ));
+      // eslint-disable-next-line testing-library/no-node-access
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      const payloads = Array.from(scripts).map((script) => script.textContent);
+      expect(payloads).toContain(context({
+        description: 'd', keywords: ['k'], schema: 'CollectionPage', title: 't',
+      }));
+    });
+
+    test('omits page-specific schema block when schema is ProfilePage', () => {
+      render((
+        <Layout
+          description="d"
+          faq={faq}
+          keywords={['k']}
+          schema="ProfilePage"
+          title="t"
+        >
+          <p />
+        </Layout>
+      ));
+      // eslint-disable-next-line testing-library/no-node-access
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      // Only ProfilePage + FAQPage: the schema override must not duplicate.
+      expect(scripts).toHaveLength(2);
+    });
+
+    test('omits faq block when faq items is empty', () => {
+      render((
+        <Layout
+          description="d"
+          faq={{ items: [], slug: 'about' }}
+          keywords={['k']}
+          schema="CollectionPage"
+          title="t"
+        >
+          <p />
+        </Layout>
+      ));
+      // eslint-disable-next-line testing-library/no-node-access
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      // ProfilePage + CollectionPage only; no FAQPage for empty faq items.
+      expect(scripts).toHaveLength(2);
+    });
+
+    test('omits geo blocks entirely when faq and schema are omitted', () => {
+      render((
+        <Layout
+          description="d"
+          keywords={['k']}
+          title="t"
+        >
+          <p />
+        </Layout>
+      ));
+      // eslint-disable-next-line testing-library/no-node-access
+      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      expect(scripts).toHaveLength(1);
+      const first = scripts[0];
+      expect(first?.textContent).toBe(context({
+        description: 'd', keywords: ['k'], title: 't',
+      }));
+    });
   });
 });

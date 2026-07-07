@@ -5,7 +5,9 @@
  * @jest-environment jsdom
  */
 
-import { intro, layout, timelines } from '@site/src/data/timeline';
+import {
+  faqItems, intro, layout, schema, timelines, timelineMap,
+} from '@site/src/data/timeline';
 import { textContent } from '@site/src/data/common';
 
 describe('data.timeline', () => {
@@ -14,6 +16,31 @@ describe('data.timeline', () => {
       expect(layout).toBeDefined();
       expect(intro).toBeDefined();
       expect(timelines).toBeDefined();
+    });
+  });
+
+  describe('faqItems', () => {
+    test('has exactly six non-empty Q/A pairs', () => {
+      expect(Array.isArray(faqItems)).toBe(true);
+      expect(faqItems).toHaveLength(6);
+      faqItems.forEach((entry) => {
+        expect(textContent(entry.question).length).toBeGreaterThan(0);
+        expect(textContent(entry.answer).length).toBeGreaterThan(0);
+      });
+    });
+
+    test('includes a why-leave-Experian question', () => {
+      const questions = faqItems.map((entry) => textContent(entry.question));
+      expect(questions.some((q) => q.match(/why would Ricky leave/i))).toBe(true);
+    });
+
+    test('losslessly preserves the original intro facts in the rewritten pitch', () => {
+      const pitch = textContent(intro.description);
+      expect(pitch).toMatch(/key milestones in my career/);
+      expect(pitch).toMatch(/education, and technical growth/);
+      expect(pitch).toMatch(/step forward/);
+      expect(pitch).toMatch(/building expertise, shaping ideas/);
+      expect(pitch).toMatch(/driving impact/);
     });
   });
 
@@ -45,6 +72,27 @@ describe('data.timeline', () => {
 
     test('no metadatas', () => {
       expect(layout.metadatas).toBeUndefined();
+    });
+  });
+
+  describe('schema', () => {
+    test('is ProfilePage for timeline', () => {
+      expect(schema).toBe('ProfilePage');
+    });
+  });
+
+  describe('timelineMap', () => {
+    test('creates a map keyed by prefix', () => {
+      expect(timelineMap).toBeDefined();
+      expect(typeof timelineMap).toBe('object');
+
+      timelines.forEach((item) => {
+        expect(timelineMap[item.prefix]).toEqual(item);
+      });
+    });
+
+    test('contains the same number of entries as timelines', () => {
+      expect(Object.keys(timelineMap)).toHaveLength(timelines.length);
     });
   });
 

@@ -5,9 +5,9 @@
 
 /* eslint-disable global-require */
 
+import { type FaqItems, type SchemaType, oneLine } from '@site/src/data/common';
 import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
-import { oneLine } from '@site/src/data/common';
 
 export const catalog = [
   {
@@ -660,19 +660,112 @@ export const catalog = [
 
 export const catalogMap = Object.fromEntries(catalog.map((item) => [item.prefix, item]));
 
+export const faqItems: FaqItems[] = [
+  {
+    answer: oneLine(`15 production systems across cloud (Experian Credit &
+      Financial Wellness), email marketing (CheetahMail powering Yahoo!,
+      Starbucks, Walgreens, SiriusXM, Carnival), ticketing (Yahoo! Tickets,
+      RazorGator with FOX Sports, Tickets.com, MSN partners), media (GigaOm
+      with millions of monthly visitors), retail (Rainbow Guitars, AnchorBlue,
+      S&M Bikes, WheelBuilder, Fortini Home), logistics (Exhibit Transport),
+      and engineering (Pacifica Services).`),
+    question: 'What breadth of systems has Ricky actually shipped?',
+  },
+  {
+    answer: oneLine(`The largest numbers in the catalog: a billion emails a
+      day at CheetahMail (a decade ago, with minimum error rate), and a
+      Tier-1 essential Experian service I maintain today holding 25 ms p99,
+      processing tens of billions of records monthly, and 5+ years of zero
+      production defects.`),
+    question: 'Can Ricky point to systems that operate at real scale?',
+  },
+  {
+    answer: oneLine(`Eight plus languages in production: Python, Go, C#, PHP,
+      TypeScript, Node.js, SQL Server, MySQL, Oracle, along with cloud
+      infrastructure (AWS Fargate, Lambda, Kinesis, EventBridge, SQS/SNS) and
+      front-end React. I'm also learning Rust for fun.`),
+    question: 'What technology stack does Ricky cover across these projects?',
+  },
+  {
+    answer: oneLine(`End-to-end ownership - the same person who designs the
+      architecture also writes the code and runs the on-call. On the
+      Tier-1 essential Experian service, that meant turning a system hitting
+      production issues every 2-4 hours into one sustaining multi-day then
+      monthly stability within a month.`),
+    question: 'What is Ricky\'s role on each project - lead, IC, or something else?',
+  },
+  {
+    answer: oneLine(`Concrete and recurring. The Tier-1 essential Experian
+      service runs for roughly 5% of what a licensed replacement would cost
+      per year (operations included, licensing alone far higher), and an
+      internal tool I built ground-up for a tenant grew from under $100K a
+      year in revenue to hundreds of millions of dollars - my systems still
+      back that business today.`),
+    question: 'Are there measurable cost or revenue impacts tied to these projects?',
+  },
+  {
+    answer: oneLine(`Catalog entries map directly to companies in my timeline:
+      Experian Consumer Services, Experian CheetahMail, AirIQ, RazorGator,
+      Yahoo! Tickets. The freelance projects (GigaOm, Rainbow Guitars, Fortini,
+      S&M, Clipper, AnchorBlue, WheelBuilder, Pacifica Services) were delivery
+      I ran in partnership with my partners across the same years, not gaps in
+      employment.`),
+    question: 'How do these projects map back to the timeline and companies?',
+  },
+  {
+    answer: oneLine(`Both. The enterprise CheetahMail platform powered Yahoo!,
+      Starbucks, Walgreens, SiriusXM, and Carnival with advanced segmentation,
+      tracking, and reporting - while the WheelBuilder custom wheel platform
+      and GigaOm publishing system show productized thinking across global
+      ordering and multi-channel media (Apple, Clean Tech, Cloud, Mobile,
+      Video, Events, TV).`),
+    question: 'Does Ricky\'s portfolio include both enterprise and consumer work?',
+  },
+  {
+    answer: oneLine(`Tagged on each catalog entry. Tags range from Python,
+      React, AWS, C#, TypeScript, Go, MySQL, PHP, REST
+      (Experian Consumer Services) to Python, Linux, Oracle, Perl
+      (Experian CheetahMail) to C#, SQL Server, ASP.NET, XML (RazorGator) to
+      PHP, TypeScript, MySQL (media and retail).`),
+    question: 'Can I scan the technology stack for each project quickly?',
+  },
+  {
+    answer: oneLine(`Image galleries accompany the projects with images,
+      production screenshots, or both - 7 images for Experian Consumer, 9 for
+      GigaOm, 5 for CheetahMail and RazorGator, 3 for Yahoo! Tickets and
+      AirIQ - so you can see what I shipped, not just read about it.`),
+    question: 'Is there visual proof for each project, not just descriptions?',
+  },
+  {
+    answer: oneLine(`While four catalog items have no live href today (Yahoo!
+      Tickets, Fortini, Exhibit Transport, AnchorBlue), the rest link to live
+      production sites - and the underlying work is verifiable through the
+      testimonial authors in the Stories page who worked on these projects
+      with me.`),
+    question: 'What if a project is no longer live - can I still verify it?',
+  },
+];
+
 export const intro: IntroProps = {
   description: oneLine(`Each project here reflects years of hands-on
     experience, thoughtful problem-solving, and a commitment to quality.
     Alongside every build, you'll find the technology stack that brought it to
     life, the impact it delivered, and the continual learning that keeps my
-    work aligned with the pace of modern technology.`),
+    work aligned with the pace of modern technology - from a billion emails a
+    day at CheetahMail to a Tier-1 essential Experian service holding 25 ms
+    p99 and 5+ years of zero production defects for roughly 5% of what a
+    licensed replacement would cost to run.`),
   title: 'Portfolio',
 };
+
+// Before layout assignment.
+export const schema: SchemaType = 'CollectionPage';
 
 export const layout: LayoutProps = {
   description: oneLine(`Scalable platforms for Yahoo!, GigaOm, & more - Ricky
     Huang's portfolio showcases engineering, media, e-commerce & logistics
     expertise.`),
+  faq: { items: faqItems, slug: 'portfolio' },
   keywords: [
     'software engineering portfolio',
     'Yahoo! Tickets',
@@ -701,5 +794,6 @@ export const layout: LayoutProps = {
     // Image preload won't match the actual loaded image due to screen size.
   ],
   */
+  schema,
   title: 'Scalable Systems - Yahoo!, GigaOm & More',
 };

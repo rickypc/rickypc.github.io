@@ -6,7 +6,8 @@
  */
 
 import {
-  characteristic, headline, intro, layout, paragraphs, quadrants,
+  characteristic, faqItems, headline, intro, layout,
+  paragraphs, quadrants, schema,
 } from '@site/src/data/about';
 import { textContent } from '@site/src/data/common';
 
@@ -21,6 +22,31 @@ describe('data.about', () => {
       });
       expect(typeof characteristic.title).toBe('string');
       expect(characteristic.title).toContain('defines my approach');
+    });
+  });
+
+  describe('faqItems', () => {
+    test('has exactly six non-empty Q/A pairs', () => {
+      expect(Array.isArray(faqItems)).toBe(true);
+      expect(faqItems).toHaveLength(6);
+      faqItems.forEach((entry) => {
+        expect(textContent(entry.question).length).toBeGreaterThan(0);
+        expect(textContent(entry.answer).length).toBeGreaterThan(0);
+      });
+    });
+
+    test('includes a personal-differentiator question', () => {
+      const questions = faqItems.map((entry) => textContent(entry.question));
+      expect(questions.some((q) => q.match(/doesn't show up on a resume/i))).toBe(true);
+    });
+
+    test('losslessly preserves the original intro facts in the rewritten pitch', () => {
+      const pitch = textContent(intro.description);
+      expect(pitch).toMatch(/sharp focus on results/);
+      expect(pitch).toMatch(/thoughtful analysis/);
+      expect(pitch).toMatch(/sound judgment/);
+      expect(pitch).toMatch(/meaningful outcomes/);
+      expect(pitch).toMatch(/strong leadership and human connection/);
     });
   });
 
@@ -101,6 +127,13 @@ describe('data.about', () => {
 
     test('validates the structure of the "task" quadrant', () => {
       expect(() => quadrant('task')).not.toThrow();
+    });
+  });
+
+  describe('schema', () => {
+    test('is a valid SchemaType string', () => {
+      expect(typeof schema).toBe('string');
+      expect(schema.length).toBeGreaterThan(0);
     });
   });
 });

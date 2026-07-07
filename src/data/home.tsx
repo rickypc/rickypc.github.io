@@ -5,13 +5,13 @@
 
 /* eslint-disable global-require */
 
+import { type ComponentType, type ReactElement } from 'react';
+import { type FaqItems, humanizeYears, oneLine } from '@site/src/data/common';
 import { GenIcon } from 'react-icons/lib';
 import { type IconBaseProps } from 'react-icons';
 import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
 import Link from '@site/src/components/common/Link';
-import { type ComponentType, type ReactElement } from 'react';
-import { humanizeYears, oneLine } from '@site/src/data/common';
 import Reveal from '@site/src/components/common/Reveal';
 
 const total = new Date().getFullYear() - 1995;
@@ -45,6 +45,52 @@ export function FaGithub(props: IconBaseProps): ReactElement {
 export function FaLinkedin(props: IconBaseProps): ReactElement {
   return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 448 512' }, child: [{ tag: 'path', attr: { d: 'M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z' }, child: [] }] })(props);
 }
+
+export const faqItems: FaqItems[] = [
+  {
+    answer: oneLine(`A Senior Software Engineer by title, operating as a
+      Principal Engineer in practice: I set architecture and daily technical
+      direction for an agile delivery team of 4 to 6 engineers, POs, and PMs
+      within a larger business-unit delivery team.`),
+    question: 'Who is Ricky and what is his actual scope at Experian?',
+  },
+  {
+    answer: oneLine(`AWS Fargate, Lambda, API Gateway, ALB, Route 53, S3, VPC;
+      event-driven with Kinesis, Firehose, EventBridge, SQS, SNS; DynamoDB,
+      MySQL, Oracle, SQL Server; Python, Go, C#, PHP, TypeScript, Node.js,
+      Perl; AWS Bedrock; Datadog for observability; Docker, CI/CD, Git; React
+      front-end. Currently picking up Rust for fun.`),
+    question: 'What stack does Ricky actually run in production today?',
+  },
+  {
+    answer: oneLine(`${humanizeYears(total, 'plus')} of hands-on engineering,
+      from early web systems to cloud-native, event-driven platforms - most of
+      it continuous tenure at Experian across three roles since 2013.`),
+    question: 'How much experience does Ricky bring, and across what?',
+  },
+  {
+    answer: oneLine(`Engineering Leadership, full-stack delivery,
+      smart-creative product thinking, and a forward-looking Innovator - the
+      same person who owns architecture also ships the code and runs the
+      AI-native, spec-driven development loop with the team.`),
+    question: 'What makes Ricky different from a million other senior engineers?',
+  },
+  {
+    answer: oneLine(`A Tier-1 essential service I maintain holds a 25 ms p99,
+      processes tens of billions of records monthly with 5+ years of zero
+      production defects, and runs for roughly 5% of what a licensed
+      third-party replacement would cost per year (licensing alone far
+      higher, operations included).`),
+    question: 'Can Ricky point to a system he maintains that proves the quality bar?',
+  },
+  {
+    answer: oneLine(`Passively open to senior or principal full-time roles in
+      cloud-native and distributed systems; prefers LA-area but open to
+      remote and hybrid; US citizen (clearance-eligible); values stability
+      and a solid ROI over contract hopping.`),
+    question: 'Is Ricky available, and what is he looking for?',
+  },
+];
 
 export const hats = [
   {
@@ -282,13 +328,20 @@ export const intro: IntroProps = {
     platforms that power high-volume, business-critical products. With
     ${humanizeYears(total, 'plus')} of hands-on engineering experience, I bring
     clarity, technical depth, and strong architectural judgment to complex
-    problems.`),
+    problems - and a measurable track record: a Tier-1 essential service I
+    maintain holds a 25 ms p99, 5+ years of zero production defects, and runs
+    for roughly 5% of what a licensed replacement would cost to run per
+    year. I lead a small delivery team as tech lead, was first in my company
+    to set up spec-driven development, and I'm passively open to senior or
+    principal roles in cloud-native and distributed systems - LA-area,
+    remote, or hybrid; US citizen (clearance-eligible).`),
   title: 'Engineering Leader & Full-Stack Architect Building Scalable, Resilient Systems',
 };
 
 export const layout: LayoutProps = {
   description: oneLine(`Welcome to Ricky Huang's site - engineering leader,
     full stack developer, and innovator with decades of software expertise.`),
+  faq: { items: faqItems, slug: '' },
   keywords: [
     'engineering leader',
     'full stack developer',
@@ -320,6 +373,7 @@ export const layout: LayoutProps = {
       type="image/webp"
     />,
   ],
+  schema: 'ProfilePage',
   title: 'Engineering Leadership & Full Stack Innovation',
 };
 

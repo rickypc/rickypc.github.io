@@ -5,7 +5,9 @@
  * @jest-environment jsdom
  */
 
-import { intro, layout, stories } from '@site/src/data/stories';
+import {
+  faqItems, intro, layout, schema, stories, storyMap,
+} from '@site/src/data/stories';
 import { textContent } from '@site/src/data/common';
 
 describe('data.stories', () => {
@@ -14,6 +16,27 @@ describe('data.stories', () => {
       expect(layout).toBeDefined();
       expect(intro).toBeDefined();
       expect(stories).toBeDefined();
+    });
+  });
+
+  describe('faqItems', () => {
+    test('has exactly five non-empty Q/A pairs', () => {
+      expect(Array.isArray(faqItems)).toBe(true);
+      expect(faqItems).toHaveLength(5);
+      faqItems.forEach((entry) => {
+        expect(textContent(entry.question).length).toBeGreaterThan(0);
+        expect(textContent(entry.answer).length).toBeGreaterThan(0);
+      });
+    });
+
+    test('losslessly preserves the original intro facts in the rewritten pitch', () => {
+      const pitch = textContent(intro.description);
+      expect(pitch).toMatch(/Real-world experiences/);
+      expect(pitch).toMatch(/lessons learned/);
+      expect(pitch).toMatch(/modern multidisciplinary technologist/);
+      expect(pitch).toMatch(/helped teams and projects thrive/);
+      expect(pitch).toMatch(/technology, mentorship, personal growth/);
+      expect(pitch).toMatch(/trust formed along the way/);
     });
   });
 
@@ -45,6 +68,13 @@ describe('data.stories', () => {
 
     test('no metadatas', () => {
       expect(layout.metadatas).toBeUndefined();
+    });
+  });
+
+  describe('schema', () => {
+    test('is a valid SchemaType string', () => {
+      expect(typeof schema).toBe('string');
+      expect(schema.length).toBeGreaterThan(0);
     });
   });
 
@@ -111,6 +141,14 @@ describe('data.stories', () => {
     test('unique authors', () => {
       const names = stories.map((s) => s.author.children);
       expect(new Set(names).size).toEqual(names.length);
+    });
+
+    test('storyMap keys match story prefixes', () => {
+      expect(typeof storyMap).toBe('object');
+      expect(Object.keys(storyMap)).toHaveLength(stories.length);
+      stories.forEach((s) => {
+        expect(storyMap[s.prefix]).toBe(s);
+      });
     });
   });
 });

@@ -20,8 +20,8 @@ describe('pages.about', () => {
     const layoutEl = screen.queryByTestId('layout');
 
     if (!layoutEl) throw new Error('Layout not rendered');
-    expect(layoutEl.getAttribute('description')).toEqual(layout.description);
-    expect(layoutEl.getAttribute('title')).toEqual(layout.title);
+    expect(layoutEl.getAttribute('data-description')).toEqual(layout.description);
+    expect(layoutEl.getAttribute('data-title')).toEqual(layout.title);
   });
 
   test('renders Preamble with normalized props and is placed inside Layout', () => {

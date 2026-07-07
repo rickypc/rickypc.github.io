@@ -18,6 +18,8 @@ export type Options = Partial<PlaywrightTestArgs>
   & {
     browser?: Browser;
     browserName?: string;
+    expected?: string[];
+    faqId?: string;
     file?: string;
     name?: string;
     page?: Page;
@@ -145,6 +147,38 @@ export const hasHeader = async (options: Options) => {
     .toMatchSnapshot('header-headline.txt');
   expect(await options.page!.textContent('main header p'))
     .toMatchSnapshot('header-description.txt');
+};
+
+export const hasJsonLd = async (options: Options) => {
+  const scripts = await options.page!.$$eval(
+    'script[type="application/ld+json"]',
+    (els) => els.map((el) => el.textContent || ''),
+  );
+  expect(scripts.length).toBeGreaterThan(0);
+  const types = new Set<string>();
+  let faqId: string | undefined;
+  scripts.forEach((text) => {
+    try {
+      const parsed = JSON.parse(text);
+      if (parsed['@type']) {
+        if (Array.isArray(parsed['@type'])) {
+          parsed['@type'].forEach((t: string) => types.add(t));
+        } else {
+          types.add(parsed['@type'] as string);
+        }
+      }
+      if (parsed['@type'] === 'FAQPage' && typeof parsed['@id'] === 'string') {
+        faqId = parsed['@id'];
+      }
+    } catch {
+      // ignore non-JSON blocks
+    }
+  });
+  expect(types.has('FAQPage')).toBe(true);
+  if (options.faqId) {
+    expect(faqId).toContain(options.faqId);
+  }
+  (options.expected || []).forEach((type) => expect(types.has(type)).toBe(true));
 };
 
 export const hasMetadatas = async (options: Options) => {

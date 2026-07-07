@@ -3,9 +3,9 @@
  * All rights reserved.
  */
 
+import { type FaqItems, type SchemaType, oneLine } from '@site/src/data/common';
 import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
-import { oneLine } from '@site/src/data/common';
 
 type QuadrantAnchor = 'start' | 'middle' | 'end';
 
@@ -40,18 +40,79 @@ export const characteristic = {
   title: 'Here\'s what defines my approach:',
 };
 
+export const faqItems: FaqItems[] = [
+  {
+    answer: oneLine(`A Transformer on the people axis - high influence and high
+      adaptability - and a Transactor on the task axis - thoughtful analysis
+      combined with the driven pursuit of goals.`),
+    question: 'How does Ricky actually work, in measurable terms?',
+  },
+  {
+    answer: oneLine(`It's a self-assessment across two standard quadrant
+      frameworks - people adaptability vs. influence and task thought vs.
+      delivery - plotted from eight characteristic attributes that span
+      people-task balance, social intuition, clear vision, hands-on
+      coordination, and empathy.`),
+    question: 'Is the Transformer / Transactor framing based on anything real?',
+  },
+  {
+    answer: oneLine(`The clearest evidence is operational: a service I took
+      over used to hit production issues every 2 to 4 hours and, within a
+      month, was sustaining multi-day then monthly stability windows - while
+      costing roughly 5% of what a licensed third-party replacement would
+      run (operations included, licensing alone far higher). Peers describe
+      me as the heart and brains of the team in 2026 Spot Award nominations,
+      and an internal tool I built ground-up now backs a business that grew
+      from under $100K a year to hundreds of millions.`),
+    question: 'What evidence supports the self-assessment beyond the graphs?',
+  },
+  {
+    answer: oneLine(`I lean toward planning and long-term vision - I'd rather
+      take a stable full-time role than jump between contracts - but that
+      preference is a strength in environments that value durable
+      architecture, not a rigidity. I adapt tools, stacks, and process to
+      what the team actually needs, including being the first in my company
+      to set up spec-driven development.`),
+    question: 'Does Ricky adapt, or does the planner preference read as inflexible?',
+  },
+  {
+    answer: oneLine(`He speaks Bahasa Indonesia and Melayu (born and raised in
+      Indonesia), a little Chinese, holds US citizenship (clearance-eligible),
+      is based in the LA area and open to remote and hybrid work, and is
+      currently learning Rust for fun - building a real scheduler and packet
+      IO demo as a personal project.`),
+    question: 'What\'s something about Ricky that doesn\'t show up on a resume?',
+  },
+  {
+    answer: oneLine(`Through eight characteristic attributes, observed both
+      qualitatively and operationally: people-task balance, social intuition,
+      clear vision that translates into action, hands-on coordination,
+      commitment to excellence and follow-through, drawing the best out of
+      people through empathy, attunement to different perspectives, and respect
+      for unique talents.`),
+    question: 'What specifically makes Ricky good with people and teams?',
+  },
+];
+
 export const headline = 'Leading with People, Purpose, and Results';
 
 export const intro: IntroProps = {
   description: oneLine(`I bring together a sharp focus on results with
     thoughtful analysis and sound judgment - always aiming to build meaningful
-    outcomes through strong leadership and human connection.`),
+    outcomes through strong leadership and human connection. Placed as a
+    Transformer on the people axis and a Transactor on the task axis, I pair
+    interpersonal sensitivity with the driven pursuit of goals, and I'm at my
+    best in complex environments where listening and delivering matter equally.`),
   title: 'About Ricky Huang',
 };
+
+// Before layout assignment.
+export const schema: SchemaType = 'ProfilePage';
 
 export const layout: LayoutProps = {
   description: oneLine(`Ricky Huang blends people skills, sharp analysis, and
     results-driven leadership to inspire teams and deliver impact.`),
+  faq: { items: faqItems, slug: 'about' },
   keywords: [
     'leadership',
     'people skills',
@@ -75,6 +136,7 @@ export const layout: LayoutProps = {
     />,
   ],
   */
+  schema,
   title: 'About - Leadership, Insight, and Results',
 };
 

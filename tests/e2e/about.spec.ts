@@ -5,8 +5,8 @@
 
 import {
   afterAll, beforeAll, type BrowserContext, expect, hasActiveNavigation,
-  hasHeader, hasMetadatas, hasNavigations, hasPrint, hasScreenshot,
-  hasUrl, type Page, test,
+  hasHeader, hasJsonLd, hasMetadatas, hasNavigations, hasPrint,
+  hasScreenshot, hasUrl, type Page, test,
 } from './helper';
 
 const url = '/about';
@@ -22,6 +22,7 @@ test.describe.serial('shared page tests', () => {
 
   test('has correct URL', async ({ baseURL }) => hasUrl({ baseURL, page, url }));
   test('has correct metadatas', async () => hasMetadatas({ page }));
+  test('has GEO JSON-LD blocks', async () => hasJsonLd({ faqId: '/about#faq', page }));
   test('has correct header', async () => hasHeader({ page }));
   // eslint-disable-next-line no-empty-pattern
   test('has active navigation', async ({}, testInfo) => hasActiveNavigation({ name: 'About Me', page, testInfo }));

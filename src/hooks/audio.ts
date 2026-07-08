@@ -25,7 +25,7 @@ export type AudioResponse = {
 /**
  * Custom hook for managing audio playback.
  * @param {string} path - The source URL of the audio definition file.
- * @param {number} [volume] - Initial volume level (0–1).
+ * @param {number} [volume] - Initial volume level (0-1).
  * @returns {AudioResponse} Audio controls and state.
  */
 export default function useAudio(path: string, volume = 1): AudioResponse {

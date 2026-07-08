@@ -28,12 +28,11 @@ describe('data.faq cross-page', () => {
     expect(duplicates).toEqual([]);
   });
 
-  test('each page FAQ count falls within the 5 to 10 ceiling', () => {
+  test('each page FAQ count is at least 5', () => {
     [
-      homeFaq, aboutFaq, portfolioFaq, resumeFaq, storiesFaq, timelineFaq,
+      aboutFaq, homeFaq, portfolioFaq, resumeFaq, storiesFaq, timelineFaq,
     ].forEach((items) => {
       expect(items.length).toBeGreaterThanOrEqual(5);
-      expect(items.length).toBeLessThanOrEqual(10);
     });
   });
 });

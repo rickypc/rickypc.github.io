@@ -32,39 +32,39 @@ describe('data.common', () => {
 
   describe('chunkToWords', () => {
     test.each([
-      // 1–19 (below20 cases).
+      // 1-19 (below20 cases).
       [1, 'one'],
       [7, 'seven'],
       [10, 'ten'],
       [13, 'thirteen'],
       [19, 'nineteen'],
 
-      // 20–99 (tens only).
+      // 20-99 (tens only).
       [20, 'twenty'],
       [30, 'thirty'],
       [40, 'forty'],
       [90, 'ninety'],
 
-      // 21–99 (tens + hyphen + ones).
+      // 21-99 (tens + hyphen + ones).
       [21, 'twenty-one'],
       [34, 'thirty-four'],
       [58, 'fifty-eight'],
       [99, 'ninety-nine'],
 
-      // 100–999 (hundreds only).
+      // 100-999 (hundreds only).
       [100, 'one hundred'],
       [300, 'three hundred'],
       [900, 'nine hundred'],
 
-      // 101–199 (hundreds + space + ones).
+      // 101-199 (hundreds + space + ones).
       [101, 'one hundred one'],
       [115, 'one hundred fifteen'],
 
-      // 120–199 (hundreds + space + tens).
+      // 120-199 (hundreds + space + tens).
       [120, 'one hundred twenty'],
       [180, 'one hundred eighty'],
 
-      // 121–999 (hundreds + space + tens + hyphen + ones).
+      // 121-999 (hundreds + space + tens + hyphen + ones).
       [121, 'one hundred twenty-one'],
       [342, 'three hundred forty-two'],
       [519, 'five hundred nineteen'],
@@ -344,7 +344,7 @@ describe('data.common', () => {
       // Zero.
       [0, 'zero'],
 
-      // 1–999 (single chunk, relies on chunkToWords correctness).
+      // 1-999 (single chunk, relies on chunkToWords correctness).
       [1, 'one'],
       [19, 'nineteen'],
       [105, 'one hundred five'],

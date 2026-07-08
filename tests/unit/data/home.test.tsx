@@ -122,15 +122,11 @@ describe('data.home', () => {
       });
     });
 
-    test('includes a stack question and a US-citizen availability answer', () => {
+    test('includes a stack question and no availability Q (replaced with Day 1 value)', () => {
       const questions = faqItems.map((entry) => textContent(entry.question));
       expect(questions.some((q) => q.match(/stack.*production/i))).toBe(true);
-      const availabilityAnswer = textContent(
-        faqItems.find((entry) => textContent(entry.question).match(/available/i))!.answer,
-      );
-      expect(availabilityAnswer).toMatch(/US citizen/);
-      expect(availabilityAnswer).not.toMatch(/trade notes/);
-      expect(availabilityAnswer).not.toMatch(/wherever those exchanges lead/);
+      expect(questions.some((q) => q.match(/90 days/i))).toBe(true);
+      expect(questions.some((q) => q.match(/available/i))).toBe(false);
     });
 
     test('losslessly preserves the original intro facts in the rewritten pitch', () => {

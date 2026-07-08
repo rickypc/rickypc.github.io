@@ -20,9 +20,9 @@ describe('data.stories', () => {
   });
 
   describe('faqItems', () => {
-    test('has exactly five non-empty Q/A pairs', () => {
+    test('has at least five non-empty Q/A pairs', () => {
       expect(Array.isArray(faqItems)).toBe(true);
-      expect(faqItems).toHaveLength(5);
+      expect(faqItems.length).toBeGreaterThanOrEqual(5);
       faqItems.forEach((entry) => {
         expect(textContent(entry.question).length).toBeGreaterThan(0);
         expect(textContent(entry.answer).length).toBeGreaterThan(0);

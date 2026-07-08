@@ -744,6 +744,18 @@ export const faqItems: FaqItems[] = [
       with me.`),
     question: 'What if a project is no longer live - can I still verify it?',
   },
+  {
+    answer: oneLine(`Early in my career, my team built a highly visible data
+      transformation feature. I designed an elegant, decoupled architecture
+      to scale into a long-term roadmap. Shortly after launch, the business
+      shifted direction, rendering the entire feature obsolete - we had to
+      scrap the codebase. We delivered on time, but it was a hard lesson in
+      over-engineering for an unverified future. Since then, I approach
+      architecture with a strict MVP-first mentality: design for immediate
+      requirements while keeping tomorrow's roadmap at arm's length, knowing
+      it may never materialize.`),
+    question: 'What is a project where Ricky\'s judgment turned out to be wrong, and what did he learn?',
+  },
 ];
 
 export const intro: IntroProps = {

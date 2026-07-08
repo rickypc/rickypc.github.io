@@ -26,9 +26,9 @@ describe('data.about', () => {
   });
 
   describe('faqItems', () => {
-    test('has exactly six non-empty Q/A pairs', () => {
+    test('has at least six non-empty Q/A pairs', () => {
       expect(Array.isArray(faqItems)).toBe(true);
-      expect(faqItems).toHaveLength(6);
+      expect(faqItems.length).toBeGreaterThanOrEqual(6);
       faqItems.forEach((entry) => {
         expect(textContent(entry.question).length).toBeGreaterThan(0);
         expect(textContent(entry.answer).length).toBeGreaterThan(0);

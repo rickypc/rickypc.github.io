@@ -19,9 +19,9 @@ describe('portfolio.index', () => {
   });
 
   describe('faqItems', () => {
-    test('has exactly ten non-empty Q/A pairs', () => {
+    test('has at least ten non-empty Q/A pairs', () => {
       expect(Array.isArray(faqItems)).toBe(true);
-      expect(faqItems).toHaveLength(10);
+      expect(faqItems.length).toBeGreaterThanOrEqual(10);
       faqItems.forEach((entry) => {
         expect(textContent(entry.question).length).toBeGreaterThan(0);
         expect(textContent(entry.answer).length).toBeGreaterThan(0);

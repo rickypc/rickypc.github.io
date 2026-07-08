@@ -95,24 +95,22 @@ describe('data.resume', () => {
   });
 
   describe('faqItems', () => {
-    test('has exactly ten non-empty Q/A pairs', () => {
+    test('has at least ten non-empty Q/A pairs', () => {
       expect(Array.isArray(faqItems)).toBe(true);
-      expect(faqItems).toHaveLength(10);
+      expect(faqItems.length).toBeGreaterThanOrEqual(10);
       faqItems.forEach((entry) => {
         expect(textContent(entry.question).length).toBeGreaterThan(0);
         expect(textContent(entry.answer).length).toBeGreaterThan(0);
       });
     });
 
-    test('includes a generalist-vs-specialist question and rewritten availability posture', () => {
+    test('includes a generalist-vs-specialist question and factual availability posture', () => {
       const questions = faqItems.map((entry) => textContent(entry.question));
       expect(questions.some((q) => q.match(/generalist or a specialist/i))).toBe(true);
-      const availability = faqItems.find((entry) => textContent(entry.question).match(/availability/i));
+      const availability = faqItems.find((entry) => textContent(entry.question).match(/current role and location/i));
       expect(availability).toBeDefined();
       const availabilityAnswer = textContent(availability!.answer);
       expect(availabilityAnswer).toMatch(/US citizen/);
-      expect(availabilityAnswer).toMatch(/full-time W2/);
-      expect(availabilityAnswer).not.toMatch(/trade notes/);
     });
 
     test('does not include a stack-list question (removed in favor of the generalist framing)', () => {

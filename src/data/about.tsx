@@ -76,6 +76,19 @@ export const faqItems: FaqItems[] = [
     question: 'Does Ricky adapt, or does the planner preference read as inflexible?',
   },
   {
+    answer: oneLine(`I have a tendency to over-engineer solutions by
+      prioritizing micro-optimizations over immediate business needs -
+      for example, spending extra cycles chasing nanosecond-level precision
+      or designing pipelines that scale to millions of records when the
+      project only needs millisecond responses and a few hundred records.
+      To manage this, I strictly apply a "Value vs. Effort" framework
+      before writing code, explicitly asking stakeholders what "good enough"
+      looks like for the current iteration. This keeps delivery lean while
+      documenting any deep scalability architecture as "Phase 2" notes for
+      the future.`),
+    question: 'What is Ricky actively NOT good at, and how does he manage it?',
+  },
+  {
     answer: oneLine(`He speaks Bahasa Indonesia and Melayu (born and raised in
       Indonesia), a little Chinese, holds US citizenship (clearance-eligible),
       is based in the LA area and open to remote and hybrid work, and is

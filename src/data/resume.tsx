@@ -516,36 +516,64 @@ export const experiences = {
 
 export const faqItems: FaqItems[] = [
   {
-    answer: oneLine(`Principal Engineer in practice - a Senior Software
-      Engineer by title who sets architecture, design, and daily technical
-      direction for an agile delivery team of 4 to 6 engineers, POs, and PMs
-      within a larger business-unit delivery team, and operates AI-native with
-      agentic loops and spec-driven development.`),
-    question: 'What is Ricky\'s actual seniority and scope?',
+    answer: oneLine(`Principal Engineer in practice operating AI-native,
+      spec-driven development loops. Technical footprint spans cloud-native,
+      event-driven backends (AWS Kinesis/EventBridge/SQS/SNS, Go/Python/C#)
+      with specialist-level depth, generalist breadth across React, databases
+      (DynamoDB/MySQL/Oracle/SQL Server), observability (Datadog), and AI
+      tooling (Bedrock, agentic loops, SDD). The breadth makes the depth
+      useful - one person owns the system end-to-end, from architecture to
+      on-call.`),
+    question: 'What is Ricky\'s technical architecture footprint?',
   },
   {
-    answer: oneLine(`30+ years hands-on, including 20+ years at Experian - 7+
-      at Experian CheetahMail (where I received the Pinnacle Award for
-      engineering excellence), followed by 13+ at Experian Consumer
-      Services across three roles. Earlier tenure at AirIQ and RazorGator,
-      with parallel freelance delivery across 9 portfolio projects since
-      1995.`),
-    question: 'How much experience does Ricky have, and is it stable?',
+    answer: oneLine(`I own and maintain mission-critical, Tier-1 enterprise
+      systems backed by rigorous production metrics. Throughput: 50K
+      requests per minute average, surging over 1M per minute. Speed: 25 ms
+      latency at p99. Scale: 300K-400K records processed per minute.
+      Stability: zero production defects for over 5 consecutive years.
+      Previously at Experian CheetahMail, I engineered infrastructure
+      sustaining 1 billion emails per day with minimal error rates. I also
+      specialize in rescuing unstable systems - I inherited an essential
+      service crashing every 2-4 hours and stabilized it to month-long
+      continuous uptime within 30 days.`),
+    question: 'What are Ricky\'s core production metrics and system reliability records?',
   },
   {
-    answer: oneLine(`A Tier-1 essential Experian service I maintain holds 25 ms
-      p99, 50K req/m avg, surges to 1M+/m, 300K-400K records processed per
-      minute, and 5+ years of zero production defects - operating for
-      roughly 5% of what a licensed replacement would cost per year.`),
-    question: 'Can Ricky point to systems with hard production metrics?',
+    answer: oneLine(`I actively leverage modern AI to drive engineering
+      efficiency rather than just using it for basic code generation. I was
+      the first engineer at Experian to establish Spec-Driven Development
+      (SDD) running autonomous, agentic AI loops against technical
+      specifications. This initiative effectively turned my group into the
+      company's pioneer SDD team, shifting us away from manual scaffolding
+      and significantly accelerating our development velocity.`),
+    question: 'How does Ricky actually use AI to improve engineering outcomes?',
   },
   {
-    answer: oneLine(`Yes: in my Experian Consumer Services tenure I turned a
-      service hitting production issues every 2-4 hours into one sustaining
-      multi-day then monthly stability within a month, and earlier at
-      Experian CheetahMail I helped sustain a billion emails a day with
-      minimum error rate.`),
-    question: 'Has Ricky run high-throughput and high-reliability systems before?',
+    answer: oneLine(`Over a 20-year tenure spanning Experian CheetahMail and
+      Consumer Services, my contributions have been consistently recognized
+      with top-tier accolades including the Platinum Aspire Award (top 1%
+      performance), the Pinnacle Award for Engineering Excellence, and over
+      20 Spot Awards. In 2026 alone, I received three Collaborate to Win Spot
+      Awards for serving as the heart and brains of the engineering team.
+      This recognition was driven by delivering measurable business value:
+      (1) Built an internal tool ground-up for a tenant that scaled from
+      under $100K to hundreds of millions in revenue; (2) Designed a Tier-1
+      service operating at just 5% of a licensed third-party replacement
+      cost; (3) Scaled CheetahMail to sustain 1 billion emails daily;
+      (4) Transformed a service crashing every 2-4 hours into month-long
+      stability within 30 days; (5) Recently designed, tested, and deployed
+      an emergency incident fix in under two hours (2026 Spot Award).`),
+    question: 'What is the breadth of Ricky\'s impact and recognition at Experian?',
+  },
+  {
+    answer: oneLine(`Two clean examples: (1) an internal tool I built ground-up
+      for a tenant grew from under $100K a year in revenue to hundreds of
+      millions of dollars, with my systems still backing the business today;
+      (2) the Tier-1 essential service operates at roughly 5% of the yearly
+      cost of a licensed third-party replacement (licensing alone far higher,
+      operations included).`),
+    question: 'Can Ricky show dollar impact or avoided cost?',
   },
   {
     answer: oneLine(`Both, deliberately: specialist-level depth in
@@ -558,13 +586,28 @@ export const faqItems: FaqItems[] = [
     question: 'Is Ricky a generalist or a specialist?',
   },
   {
-    answer: oneLine(`Two clean examples: (1) an internal tool I built ground-up
-      for a tenant grew from under $100K a year in revenue to hundreds of
-      millions of dollars, with my systems still backing the business today;
-      (2) the Tier-1 essential service operates at roughly 5% of the yearly
-      cost of a licensed third-party replacement (licensing alone far higher,
-      operations included).`),
-    question: 'Can Ricky show dollar impact or avoided cost?',
+    answer: oneLine(`Across a US-Hyderabad split (10.5-hour gap), I protect
+      overlapping hours for high-impact Agile ceremonies and Parking Lot
+      sessions, reserving them for complex architectural alignment and
+      blockers rather than basic status updates. Async continuity is
+      non-negotiable: every US evening, we drop detailed context, PR links,
+      and clear priorities into organized Slack threads so the IST team can
+      start immediately without waiting on us. Treating async communication
+      as a core requirement - not an afterthought - creates a predictable
+      follow-the-sun cycle where both sides operate with high autonomy and
+      zero friction.`),
+    question: 'How does Ricky actually build trust and velocity on a distributed team?',
+  },
+  {
+    answer: oneLine(`Yes: we had a greedy data-ingestion service capped at 500
+      records per batch, causing fragmented downstream data. During a tight
+      two-week sprint, the fastest fix would have been a hardcoded second
+      loop - massive tech debt and brittle against volume spikes. I chose a
+      configurable rate-limiter that dynamically maximized intake based
+      on resource availability inside a set window. We more than doubled
+      target capacity, delivered within the sprint, and gave
+      users an uninterrupted customer-journey view.`),
+    question: 'Can Ricky describe a time he had to choose speed over quality?',
   },
   {
     answer: oneLine(`Yes: on a recent production incident, I designed, tested,
@@ -574,28 +617,53 @@ export const faqItems: FaqItems[] = [
     question: 'Does Ricky lead incidents and on-call work?',
   },
   {
-    answer: oneLine(`Platinum Aspire Award (top 1% performance), plus roughly
-      20 EMF Hero and Spot Awards since. In 2026 alone I received three
-      Collaborate to Win Spot Awards - including for being the heart and brains
-      of the engineering team.`),
-    question: 'What is the recognition track record at Experian?',
+    answer: oneLine(`30+ years hands-on, including 20+ years at Experian - 7+
+      at Experian CheetahMail (where I received the Pinnacle Award for
+      engineering excellence), followed by 13+ at Experian Consumer
+      Services across three roles. Earlier tenure at AirIQ and RazorGator,
+      with parallel freelance delivery across 9 portfolio projects since
+      1995.`),
+    question: 'How much experience does Ricky have, and is it stable?',
   },
   {
-    answer: oneLine(`I was the first in my company to set up spec-driven
-      development for my team, running agentic AI loops against specs - making
-      the team likely the first SDD team in the company. I also graduated with
-      Distinction in Stanford Mining Massive Datasets, alongside Machine
-      Learning and Automata coursework, and earned an Outstanding Graduate
-      Project Award for my CSUF MSSE.`),
-    question: 'Is Ricky current with modern AI and tooling?',
+    answer: oneLine(`Yes: in my Experian Consumer Services tenure I turned a
+      service hitting production issues every 2-4 hours into one sustaining
+      multi-day then monthly stability within a month, and earlier at
+      Experian CheetahMail I helped sustain a billion emails a day with
+      minimum error rate.`),
+    question: 'Has Ricky run high-throughput and high-reliability systems before?',
   },
   {
-    answer: oneLine(`Passively open, not actively interviewing but responsive
-      to strong matches. Prefers full-time W2 over contract, nationwide
-      remote or hybrid, US citizen (clearance-eligible), open to LA-area
-      relocation. Values long-term vision and a solid ROI over jumping between
-      contracts.`),
-    question: 'What is Ricky\'s availability and compensation posture?',
+    answer: oneLine(`Senior Software Engineer at Experian Consumer Services,
+      operating as Principal Engineer in practice. Based in Orange County,
+      CA. US citizen (clearance-eligible). Open to relocation for the right
+      opportunity.`),
+    question: 'What is Ricky\'s current role and location?',
+  },
+  {
+    answer: oneLine(`No - stable in current role, no external interviews or
+      internal moves in the past 6-12 months. I keep my profile open to
+      discover unique, high-impact technical challenges that match my
+      expertise.`),
+    question: 'Has Ricky interviewed or changed teams recently?',
+  },
+  {
+    answer: oneLine(`He would not leave lightly - 20+ years at Experian is the
+      proof. The search is additive: a role with more design leverage, a wider
+      blast radius for architecture decisions, or an org further along the
+      AI-native / spec-driven path he already leads - not an escape from a bad
+      fit.`),
+    question: 'Why would Ricky leave his current role?',
+  },
+  {
+    answer: oneLine(`Listen first, ship second. I would start by understanding
+      the existing architecture, observability, and team rituals - then
+      identify the highest-leverage bottleneck (latency, throughput, or
+      reliability) and deliver a measurable fix within the first month. The
+      second month scales that pattern; the third month drives team-wide
+      adoption. Immediate value comes from fixing the biggest pain point, not
+      from re-architecting everything on day one.`),
+    question: 'What would Ricky focus on in his first 90 days at a new company?',
   },
 ];
 

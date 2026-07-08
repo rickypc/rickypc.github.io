@@ -75,6 +75,20 @@ export const faqItems: FaqItems[] = [
       roughly 20 EMF Hero and Spot Awards since.`),
     question: 'Are these testimonials current, or dated?',
   },
+  {
+    answer: oneLine(`Early in my tenure handling high-throughput systems, I
+      integrated a popular open-source dependency to handle a complex data
+      processing component. It looked like the perfect shortcut. Once traffic
+      surged to enterprise scale, the library's architecture proved
+      inefficient - bottleneck latencies and unexpected bugs. To protect
+      uptime, I had to immediately pivot, strip out the dependency, and roll
+      out a much simpler, custom-built internal script tailored exactly to our
+      performance needs. Lesson: never let library popularity substitute for
+      deep architectural validation. Today, I treat external dependencies as a
+      last resort for Tier-1 services, preferring lightweight, highly optimized
+      internal code that we fully control and can scale predictably.`),
+    question: 'Has Ricky ever bet on the wrong technology, and what happened?',
+  },
 ];
 
 export const intro: IntroProps = {

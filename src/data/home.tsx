@@ -84,11 +84,13 @@ export const faqItems: FaqItems[] = [
     question: 'Can Ricky point to a system he maintains that proves the quality bar?',
   },
   {
-    answer: oneLine(`Passively open to senior or principal full-time roles in
-      cloud-native and distributed systems; prefers LA-area but open to
-      remote and hybrid; US citizen (clearance-eligible); values stability
-      and a solid ROI over contract hopping.`),
-    question: 'Is Ricky available, and what is he looking for?',
+    answer: oneLine(`Listen first, ship second. I would start by understanding
+      the existing architecture, observability, and team rituals - then
+      identify the highest-leverage bottleneck (latency, throughput, or
+      reliability) and deliver a measurable fix within the first month.
+      The second month scales that pattern; the third month drives
+      team-wide adoption.`),
+    question: 'What would Ricky focus on in his first 90 days?',
   },
 ];
 
@@ -332,9 +334,7 @@ export const intro: IntroProps = {
     maintain holds a 25 ms p99, 5+ years of zero production defects, and runs
     for roughly 5% of what a licensed replacement would cost to run per
     year. I lead a small delivery team as tech lead, was first in my company
-    to set up spec-driven development, and I'm passively open to senior or
-    principal roles in cloud-native and distributed systems - LA-area,
-    remote, or hybrid; US citizen (clearance-eligible).`),
+    to set up spec-driven development.`),
   title: 'Engineering Leader & Full-Stack Architect Building Scalable, Resilient Systems',
 };
 

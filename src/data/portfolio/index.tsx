@@ -761,12 +761,12 @@ export const faqItems: FaqItems[] = [
 export const intro: IntroProps = {
   description: oneLine(`Each project here reflects years of hands-on
     experience, thoughtful problem-solving, and a commitment to quality.
-    Alongside every build, you'll find the technology stack that brought it to
+    Across 15 production systems spanning cloud, media, commerce, logistics,
+    and ticketing, every build carries the technology stack that brought it to
     life, the impact it delivered, and the continual learning that keeps my
-    work aligned with the pace of modern technology - from a billion emails a
-    day at CheetahMail to a Tier-1 essential Experian service holding 25 ms
-    p99 and 5+ years of zero production defects for roughly 5% of what a
-    licensed replacement would cost to run.`),
+    work aligned with the pace of modern technology - including an internal
+    tool that grew its business from under $100K a year to hundreds of
+    millions in revenue.`),
   title: 'Portfolio',
 };
 

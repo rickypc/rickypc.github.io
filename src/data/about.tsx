@@ -110,12 +110,11 @@ export const faqItems: FaqItems[] = [
 export const headline = 'Leading with People, Purpose, and Results';
 
 export const intro: IntroProps = {
-  description: oneLine(`I bring together a sharp focus on results with
-    thoughtful analysis and sound judgment - always aiming to build meaningful
-    outcomes through strong leadership and human connection. Placed as a
-    Transformer on the people axis and a Transactor on the task axis, I pair
-    interpersonal sensitivity with the driven pursuit of goals, and I'm at my
-    best in complex environments where listening and delivering matter equally.`),
+  description: oneLine(`Engineering leadership rooted in emotional
+    intelligence, clear vision, and the ability to turn ideas into action.
+    The graphs below capture how I work - adaptability, influence, analysis,
+    and execution - grounded in a people-first approach that delivers real
+    results.`),
   title: 'About Ricky Huang',
 };
 

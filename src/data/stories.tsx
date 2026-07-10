@@ -93,12 +93,10 @@ export const faqItems: FaqItems[] = [
 
 export const intro: IntroProps = {
   description: oneLine(`Real-world experiences, lessons learned, and
-    reflections from my journey as a modern multidisciplinary technologist.
-    These stories highlight how I've helped teams and projects thrive - through
-    technology, mentorship, personal growth, and the trust formed along the way
-    with collaborators like Esteban Chavez, Phillip Lin, Christos Kakris, and
-    Vlad Podgurschi, whose testimonials span freelance work,
-    Experian CheetahMail, and beyond.`),
+    reflections from two decades of engineering. These stories highlight how
+    I've helped teams and projects thrive - through technology, mentorship,
+    personal growth, and the trust formed along the way with collaborators
+    across freelance work, enterprise engineering, and beyond.`),
   title: 'Stories',
 };
 

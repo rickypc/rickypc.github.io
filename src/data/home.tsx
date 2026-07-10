@@ -327,10 +327,9 @@ export const image = {
 
 export const intro: IntroProps = {
   description: oneLine(`I design and deliver cloud-native, distributed
-    platforms that power high-volume, business-critical products. With
-    ${humanizeYears(total, 'plus')} of hands-on engineering experience, I bring
+    platforms that power high-volume, business-critical products. I bring
     clarity, technical depth, and strong architectural judgment to complex
-    problems - and a measurable track record: a Tier-1 essential service I
+    problems - with a measurable track record: a Tier-1 essential service I
     maintain holds a 25 ms p99, 5+ years of zero production defects, and runs
     for roughly 5% of what a licensed replacement would cost to run per
     year. I lead a small delivery team as tech lead, was first in my company

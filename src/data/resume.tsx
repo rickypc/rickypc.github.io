@@ -776,7 +776,14 @@ export const leadership = {
 };
 
 export const preamble = {
-  content: 'Principal Engineer with 30+ years of experience architecting, building, and scaling production systems across cloud, distributed, and event-driven environments. I define technical direction, design end-to-end architectures, and deliver systems that are reliable, observable, and built to last. Equally comfortable writing code, designing APIs, reviewing architectures, or debugging complex failures in production. Known for clear technical judgment, deep hands-on expertise, and the ability to turn ambiguous problems into well-engineered solutions.',
+  content: oneLine(`Principal Engineer architecting, building, and scaling
+    production systems across cloud, distributed, and event-driven
+    environments. I define technical direction, design end-to-end
+    architectures, and deliver systems that are reliable, observable, and built
+    to last. Equally comfortable writing code, designing APIs, reviewing
+    architectures, or debugging complex failures in production. Known for clear
+    technical judgment, deep hands-on expertise, and the ability to turn
+    ambiguous problems into well-engineered solutions.`),
   heading: {
     as: 'h2' as HeadingType,
     children: (

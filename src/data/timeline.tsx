@@ -82,12 +82,9 @@ export const faqItems: FaqItems[] = [
 
 export const intro: IntroProps = {
   description: oneLine(`A curated journey through key milestones in my career,
-    education, and technical growth. Each moment reflects a step forward -
-    building expertise, shaping ideas, and driving impact across industries and
-    technologies, from a Bachelor of Engineering in Architecture to a
-    Master of Science in Software Engineering to 20+ years at Experian
-    across two business units and three roles, with a Platinum Aspire award
-    along the way.`),
+    education, and technical growth - each moment a step forward in building
+    expertise, shaping ideas, and driving impact across industries and
+    technologies.`),
   title: 'Timeline',
 };
 

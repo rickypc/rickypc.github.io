@@ -42,11 +42,11 @@ describe('data.about', () => {
 
     test('losslessly preserves the original intro facts in the rewritten pitch', () => {
       const pitch = textContent(intro.description);
-      expect(pitch).toMatch(/sharp focus on results/);
-      expect(pitch).toMatch(/thoughtful analysis/);
-      expect(pitch).toMatch(/sound judgment/);
-      expect(pitch).toMatch(/meaningful outcomes/);
-      expect(pitch).toMatch(/strong leadership and human connection/);
+      expect(pitch).toMatch(/beyond titles and roles/);
+      expect(pitch).toMatch(/teams, projects, and outcomes improve/);
+      expect(pitch).toMatch(/how I read people/);
+      expect(pitch).toMatch(/how I deliver on direction/);
+      expect(pitch).toMatch(/attributes that make both click/);
     });
   });
 

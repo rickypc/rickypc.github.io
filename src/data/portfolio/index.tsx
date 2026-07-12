@@ -674,7 +674,7 @@ export const faqItems: FaqItems[] = [
   {
     answer: oneLine(`The largest numbers in the catalog: a billion emails a
       day at CheetahMail (a decade ago, with minimum error rate), and a
-      Tier-1 essential Experian service I maintain today holding 25 ms p99,
+      Tier-1 essential Experian service I maintain today holding 50 ms p99,
       processing tens of billions of records monthly, and 5+ years of zero
       production defects.`),
     question: 'Can Ricky point to systems that operate at real scale?',

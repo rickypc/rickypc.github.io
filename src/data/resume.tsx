@@ -529,7 +529,7 @@ export const faqItems: FaqItems[] = [
   {
     answer: oneLine(`I own and maintain mission-critical, Tier-1 enterprise
       systems backed by rigorous production metrics. Throughput: 50K
-      requests per minute average, surging over 1M per minute. Speed: 25 ms
+      requests per minute average, surging over 1M per minute. Speed: 50 ms
       latency at p99. Scale: 300K-400K records processed per minute.
       Stability: zero production defects for over 5 consecutive years.
       Previously at Experian CheetahMail, I engineered infrastructure

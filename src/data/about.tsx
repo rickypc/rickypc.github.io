@@ -110,11 +110,10 @@ export const faqItems: FaqItems[] = [
 export const headline = 'Leading with People, Purpose, and Results';
 
 export const intro: IntroProps = {
-  description: oneLine(`Engineering leadership rooted in emotional
-    intelligence, clear vision, and the ability to turn ideas into action.
-    The graphs below capture how I work - adaptability, influence, analysis,
-    and execution - grounded in a people-first approach that delivers real
-    results.`),
+  description: oneLine(`How I work goes beyond titles and roles - it shows up
+    in the way teams, projects, and outcomes improve when I'm involved. The
+    graphs below map that pattern across two axes: how I read people and how
+    I deliver on direction, with the attributes that make both click.`),
   title: 'About Ricky Huang',
 };
 

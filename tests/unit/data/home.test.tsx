@@ -134,7 +134,7 @@ describe('data.home', () => {
       expect(pitch).toMatch(/cloud-native/);
       expect(pitch).toMatch(/distributed/);
       expect(pitch).toMatch(/high-volume, business-critical/);
-      expect(pitch).toMatch(/hands-on engineering experience/);
+      expect(pitch).toMatch(/50 ms p99/);
       expect(pitch).toMatch(/clarity, technical depth/);
     });
   });

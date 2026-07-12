@@ -76,7 +76,7 @@ export const faqItems: FaqItems[] = [
     question: 'What makes Ricky different from a million other senior engineers?',
   },
   {
-    answer: oneLine(`A Tier-1 essential service I maintain holds a 25 ms p99,
+    answer: oneLine(`A Tier-1 essential service I maintain holds a 50 ms p99,
       processes tens of billions of records monthly with 5+ years of zero
       production defects, and runs for roughly 5% of what a licensed
       third-party replacement would cost per year (licensing alone far
@@ -118,17 +118,17 @@ export const hats = [
       content: (
         <>
           <p>
-            I lead&nbsp;
-            <Link href="/timeline" title="engineering organizations">engineering organizations</Link>
-            &nbsp;by creating clarity in environments that are often ambiguous,
-            fast-moving, or technically complex.&nbsp;
-            <Link href="/about" title="My approach">My approach</Link>
-            &nbsp;blends hands-on technical depth with a strong
-            sense of direction, ensuring teams understand not just what
-            they&#39;re building, but why it matters. I focus on establishing
-            architectural standards, improving engineering quality, and
-            creating systems that scale with the business rather than
-            constrain it.
+            My&nbsp;
+            <Link href="/timeline" title="track record">track record</Link>
+            &nbsp;is stepping into teams where delivery is stalled, ownership
+            is unclear, or the architecture no longer fits the business.
+            Within the first weeks I map the bottleneck - usually a mix of
+            technical debt, missing standards, and unclear decision rights -
+            and put draws on the wall: a single technical vision, named owners,
+            and a quality bar the team can self-enforce. The pattern is
+            consistent: ambiguity contracts, direction emerges, and&nbsp;
+            <Link href="/about" title="people-first leadership">people-first leadership</Link>
+            &nbsp;becomes the bridge between intent and shipped.
           </p>
           <p>
             I&#39;m known for stepping into difficult situations - unclear
@@ -174,16 +174,17 @@ export const hats = [
       content: (
         <>
           <p>
-            As a full-stack engineer, I&nbsp;
-            <Link href="/portfolio" title="design and build systems">design and build systems</Link>
-            &nbsp;that span front-end interfaces, backend services, data flows,
-            and cloud infrastructure. I&#39;m comfortable moving between layers
-            - from React components and API design to distributed systems,
-            event-driven architectures, and AWS-managed services. This&nbsp;
+            The&nbsp;
             <Link href="/resume" title="breadth">breadth</Link>
-            &nbsp;allows me to connect disciplines, identify integration risks
-            early, and deliver cohesive solutions that feel seamless to users
-            and maintainable to teams.
+            &nbsp;that matters here is the lot depth: I can hold a React render
+            boundary, a Go event handler, and a DynamoDB access pattern in the
+            same design loop, then ship a fix across every layer without
+            bouncing between owners. That means tighter service boundaries
+            (because I see both sides of the call),&nbsp;
+            <Link href="/portfolio" title="fewer integration surprises">fewer integration surprises</Link>
+            &nbsp;(because I write the contracts I live with), and faster
+            decisions when a production issue moves between front-end,
+            backend, and provider at the same time.
           </p>
           <p>
             My work emphasizes performance, reliability, and long-term
@@ -223,15 +224,18 @@ export const hats = [
       content: (
         <>
           <p>
-            I operate at the intersection of engineering, product strategy, and
-            creative exploration.&nbsp;
-            <Link href="/resume" title="My strength">My strength</Link>
-            &nbsp;lies in taking ambiguous ideas - early concepts, rough
-            sketches, half-formed requirements - and turning them into&nbsp;
-            <Link href="/portfolio" title="well-tested, technically sound solutions">well-tested, technically sound solutions</Link>
-            . I use modern tools, including generative AI, to accelerate
-            ideation, validate assumptions, and explore multiple paths before
-            committing to a direction.
+            The concrete version: when product brings a half-formed idea, I&#39;m
+            usually the one who&nbsp;
+            <Link href="/portfolio" title="prototypes the first cut">prototypes the first cut</Link>
+            , runs it past real data or users, and tells the team what&#39;s
+            load-bearing and what&#39;s decoration. Spec-driven development loops
+            and LLM-assisted exploration let me cover five design paths in the
+            time a team used to spend debating one - so we avoid the trap of
+            shipping something technically impressive that nobody asked for.
+            What&nbsp;
+            <Link href="/resume" title="makes it stick">makes it stick</Link>
+            &nbsp;is the rigor: the AI moves fast, but the validation loop is
+            what turns a guess into a decision.
           </p>
           <p>
             This mindset helps teams move faster without sacrificing quality.
@@ -276,15 +280,15 @@ export const hats = [
       content: (
         <>
           <p>
-            With&nbsp;
+            The waves I&#39;ve shipped through -&nbsp;
             <Link href="/timeline" title={humanizeYears(total, 'decades')}>{humanizeYears(total, 'decades')}</Link>
-            &nbsp;of engineering experience, I&#39;ve seen multiple waves of
-            technology - from early web systems to cloud-native architectures
-            and modern event-driven platforms. This perspective helps me
-            identify what truly matters:&nbsp;
-            <Link href="/about" title="durability, clarity, and the ability to adapt">durability, clarity, and the ability to adapt</Link>
-            . I design systems that stand the test of time, even as
-            tools, frameworks, and best practices evolve.
+            &nbsp;of them - aren&#39;t nostalgia. They&#39;re the reason I
+            stop teams from adopting a framework just because it&#39;s new,
+            and the reason I&#39;ll fight to ship the boring choice that&#39;s
+            going to run five years from now. I&#39;ve seen the patterns that
+            aged well (small boundaries, observable behavior, replaceable
+            parts) and the ones that didn&#39;t - and that pattern memory is
+            the unfair advantage I bring to architecture calls.
           </p>
           <p>
             My work focuses on building resilient platforms, improving
@@ -330,7 +334,7 @@ export const intro: IntroProps = {
     platforms that power high-volume, business-critical products. I bring
     clarity, technical depth, and strong architectural judgment to complex
     problems - with a measurable track record: a Tier-1 essential service I
-    maintain holds a 25 ms p99, 5+ years of zero production defects, and runs
+    maintain holds a 50 ms p99, 5+ years of zero production defects, and runs
     for roughly 5% of what a licensed replacement would cost to run per
     year. I lead a small delivery team as tech lead, was first in my company
     to set up spec-driven development.`),

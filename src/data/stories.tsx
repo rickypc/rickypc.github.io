@@ -3,9 +3,12 @@
  * All rights reserved.
  */
 
-import { type FaqItems, type SchemaType, oneLine } from '@site/src/data/common';
+import {
+  type FaqItems, humanizeYears, oneLine, type SchemaType,
+} from '@site/src/data/common';
 import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
+import { total } from '@site/src/data/home';
 
 export type StoryProps = {
   affiliation: {
@@ -93,10 +96,11 @@ export const faqItems: FaqItems[] = [
 
 export const intro: IntroProps = {
   description: oneLine(`Real-world experiences, lessons learned, and
-    reflections from two decades of engineering. These stories highlight how
-    I've helped teams and projects thrive - through technology, mentorship,
-    personal growth, and the trust formed along the way with collaborators
-    across freelance work, enterprise engineering, and beyond.`),
+    reflections from ${humanizeYears(total, 'decades')} of engineering. These
+    stories highlight how I've helped teams and projects thrive - through
+    technology, mentorship, personal growth, and the trust formed along the way
+    with collaborators across freelance work, enterprise engineering, and
+    beyond.`),
   title: 'Stories',
 };
 

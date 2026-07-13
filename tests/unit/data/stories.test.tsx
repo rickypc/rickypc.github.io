@@ -33,7 +33,7 @@ describe('data.stories', () => {
       const pitch = textContent(intro.description);
       expect(pitch).toMatch(/Real-world experiences/);
       expect(pitch).toMatch(/lessons learned/);
-      expect(pitch).toMatch(/reflections from two decades of engineering/);
+      expect(pitch).toMatch(/reflections from .* decades of engineering/);
       expect(pitch).toMatch(/helped teams and projects thrive/);
       expect(pitch).toMatch(/technology, mentorship, personal growth/);
       expect(pitch).toMatch(/trust formed along the way/);

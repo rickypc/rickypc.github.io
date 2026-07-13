@@ -14,13 +14,13 @@ import { type LayoutProps } from '@site/src/components/common/Layout';
 import Link from '@site/src/components/common/Link';
 import Reveal from '@site/src/components/common/Reveal';
 
-const total = new Date().getFullYear() - 1995;
-
 export type SocialProps = {
   href?: string;
   Icon: ComponentType<IconBaseProps & { className?: string }>;
   title: string;
 };
+
+export const total = new Date().getFullYear() - 1995;
 
 /**
  * Renders the `Github` icon.
@@ -126,7 +126,7 @@ export const hats = [
             technical debt, missing standards, and unclear decision rights -
             and put draws on the wall: a single technical vision, named owners,
             and a quality bar the team can self-enforce. The pattern is
-            consistent: ambiguity contracts, direction emerges, and&nbsp;
+            consistent: ambiguity shrinks, direction emerges, and&nbsp;
             <Link href="/about" title="people-first leadership">people-first leadership</Link>
             &nbsp;becomes the bridge between intent and shipped.
           </p>
@@ -176,11 +176,11 @@ export const hats = [
           <p>
             The&nbsp;
             <Link href="/resume" title="breadth">breadth</Link>
-            &nbsp;that matters here is the lot depth: I can hold a React render
-            boundary, a Go event handler, and a DynamoDB access pattern in the
-            same design loop, then ship a fix across every layer without
-            bouncing between owners. That means tighter service boundaries
-            (because I see both sides of the call),&nbsp;
+            &nbsp;that matters here is depth that spans the stack: I can hold a
+            React render boundary, a Go event handler, and a DynamoDB access
+            pattern in the same design loop, then ship a fix across every layer
+            without bouncing between owners. That means tighter service
+            boundaries (because I see both sides of the call),&nbsp;
             <Link href="/portfolio" title="fewer integration surprises">fewer integration surprises</Link>
             &nbsp;(because I write the contracts I live with), and faster
             decisions when a production issue moves between front-end,
@@ -283,8 +283,8 @@ export const hats = [
             The waves I&#39;ve shipped through -&nbsp;
             <Link href="/timeline" title={humanizeYears(total, 'decades')}>{humanizeYears(total, 'decades')}</Link>
             &nbsp;of them - aren&#39;t nostalgia. They&#39;re the reason I
-            stop teams from adopting a framework just because it&#39;s new,
-            and the reason I&#39;ll fight to ship the boring choice that&#39;s
+            stop teams from adopting a framework just because it&#39;s popular,
+            and the reason I&#39;ll choose to ship the boring choice that&#39;s
             going to run five years from now. I&#39;ve seen the patterns that
             aged well (small boundaries, observable behavior, replaceable
             parts) and the ones that didn&#39;t - and that pattern memory is

@@ -32,15 +32,15 @@ describe('portfolio.index', () => {
       expect(schema).toBe('CollectionPage');
     });
 
-    test('losslessly preserves the original intro facts in the rewritten pitch', () => {
+    test('preserves the canonical facts threaded through the rewritten narrative pitch', () => {
       const pitch = textContent(intro.description);
-      expect(pitch).toMatch(/years of hands-on/);
-      expect(pitch).toMatch(/thoughtful problem-solving/);
-      expect(pitch).toMatch(/commitment to quality/);
+      expect(pitch).toMatch(/15 production systems/);
       expect(pitch).toMatch(/technology stack that brought it to/);
       expect(pitch).toMatch(/impact it delivered/);
-      expect(pitch).toMatch(/continual learning/);
-      expect(pitch).toMatch(/pace of modern technology/);
+      expect(pitch).toMatch(/billion emails a day/);
+      expect(pitch).toMatch(/50 ms p99/);
+      expect(pitch).toMatch(/5% of what a licensed replacement/);
+      expect(pitch).toMatch(/under \$100K a year to hundreds of millions/);
     });
   });
 

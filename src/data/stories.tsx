@@ -40,14 +40,18 @@ export const faqItems: FaqItems[] = [
       master of many trades, a problem-solving savior, and a versatile
       polymath - each backed by a real LinkedIn profile and affiliation,
       covering clean code, versatility, rescue work, and breadth across
-      stacks.`),
+      stacks. Read them as the human residue of the chapters before: the
+      invested partner spans the independent work Portfolio body; the other
+      three map to CheetahMail-era and Pacifica work on the Timeline.`),
     question: 'What do former collaborators actually say about working with Ricky?',
   },
   {
     answer: oneLine(`Esteban Chavez, Creative Director at Headhigh Creative -
       and the most important of the four, because his testimonial spans
-      multiple freelance projects (GigaOm, Rainbow Guitars, Fortini, Exhibit
-      Transport, S&M Bikes, Clipper, AnchorBlue, WheelBuilder).`),
+      multiple independent projects (GigaOm, Rainbow Guitars, Fortini, Exhibit
+      Transport, S&M Bikes, Clipper, AnchorBlue, WheelBuilder). His voice is
+      the trust formed across the independent work sub-arc threaded underneath
+      the Timeline.`),
     question: 'Which testimonial carries the most weight, and why?',
   },
   {
@@ -56,7 +60,8 @@ export const faqItems: FaqItems[] = [
       Vlad Podgurschi (Experian CheetahMail coworker) - the latter three all
       worked with me at Experian CheetahMail, so their testimonials are
       Experian CheetahMail-specific, while Esteban's spans the broader
-      freelance body across many portfolio projects.`),
+      independent work body across many portfolio projects. Together they
+      bracket both halves of the rising action.`),
     question: 'Who are the other recommenders and what is their context?',
   },
   {
@@ -66,7 +71,8 @@ export const faqItems: FaqItems[] = [
       says it would be your loss not to hire me; Vlad recalls me rescuing a
       frontend component with clean, flexible, timely implementation;
       Christos notes a year of depth across multiple languages, frameworks,
-      and environments.`),
+      and environments. These are the same attributes the About page plots on
+      its two axes - in other people's words instead of mine.`),
     question: 'What themes repeat across all four testimonials?',
   },
   {
@@ -75,7 +81,9 @@ export const faqItems: FaqItems[] = [
       has compounded since: the same person those recommenders describe now
       maintains a Tier-1 essential service with 5+ years of zero production
       defects and received a Platinum Aspire Award (top 1% performance) plus
-      roughly 20 EMF Hero and Spot Awards since.`),
+      roughly 20 EMF Hero and Spot Awards since. The trust didn't peak; it
+      kept compounding - which is exactly what makes the horizon ahead worth
+      talking about.`),
     question: 'Are these testimonials current, or dated?',
   },
   {
@@ -89,18 +97,29 @@ export const faqItems: FaqItems[] = [
       performance needs. Lesson: never let library popularity substitute for
       deep architectural validation. Today, I treat external dependencies as a
       last resort for Tier-1 services, preferring lightweight, highly optimized
-      internal code that we fully control and can scale predictably.`),
+      internal code that we fully control and can scale predictably. This is
+      the same essential-vs-decorative instinct that runs through every page
+      of this site - paid for once, learned for good.`),
     question: 'Has Ricky ever bet on the wrong technology, and what happened?',
   },
 ];
 
 export const intro: IntroProps = {
-  description: oneLine(`Real-world experiences, lessons learned, and
-    reflections from ${humanizeYears(total, 'decades')} of engineering. These
-    stories highlight how I've helped teams and projects thrive - through
-    technology, mentorship, personal growth, and the trust formed along the way
-    with collaborators across freelance work, enterprise engineering, and
-    beyond.`),
+  description: oneLine(`This is the horizon - where the story turns forward.
+    ${humanizeYears(total, 'decades')} of engineering leaves two kinds of
+    residue: systems that keep running, and trust that keeps compounding. The
+    four testimonials below are the trust, in human voices - each one earned
+    across a chapter you've already walked through (independent work breadth,
+    CheetahMail scale, rescue work, depth across stacks). Read them as the
+    forward edge of the arc, not its rearview mirror: the same person those
+    recommenders describe now maintains a Tier-1 essential service with 5+
+    years of zero production defects, received a Platinum Aspire Award (top
+    1% performance) and roughly 20 EMF Hero and Spot Awards since, and was
+    first in his company to set up spec-driven development. The call to
+    action is simple - if the themes running through Home, Timeline,
+    Portfolio, and About describe the kind of builder you need, the next
+    chapter is a conversation. The Resume page is the scannable appendix
+    that closes the loop.`),
   title: 'Stories',
 };
 
@@ -108,9 +127,10 @@ export const intro: IntroProps = {
 export const schema: SchemaType = 'Review';
 
 export const layout: LayoutProps = {
-  description: oneLine(`Stories and lessons from Ricky Huang's journey as a
-    full stack developer and leader - highlighting impact, growth,
-    collaboration, and trust.`),
+  description: oneLine(`The horizon - peer testimonials and hard-won lessons
+    that point Ricky Huang's story forward. Trust compounding across
+    independent work, enterprise, and rescue work; the call to action for the
+    next chapter.`),
   faq: { items: faqItems, slug: 'stories' },
   keywords: [
     'developer testimonials',
@@ -165,7 +185,10 @@ export const stories: StoryProps[] = [
       proficient work ethic and a pleasurable attitude. Thank you Ricky for
       everything that you helped us with!`),
     header: { children: 'The Invested Partner', href: undefined },
-    overview: 'An invested partner - delivers clean, expertly crafted solutions.',
+    overview: oneLine(`An invested partner - the trust formed across the
+      independent work sub-arc threaded underneath the Timeline (GigaOm,
+      Rainbow Guitars, Fortini, Exhibit Transport, S&M Bikes, Clipper,
+      AnchorBlue, WheelBuilder). Delivers clean, expertly crafted solutions.`),
     prefix: 'invested-partner',
     title: {
       children: 'Creative Director, Chief Strategist',
@@ -194,7 +217,9 @@ export const stories: StoryProps[] = [
       be your loss if you don't hire him!`),
     header: { children: 'The Master of Many Trades', href: undefined },
     overview: oneLine(`A master of many trades - client-side, server-side,
-    every-side - and one of the kindest people you'll meet.`),
+      every-side - and one of the kindest people you'll meet. The
+      breadth-is-what-makes-depth-useful thesis of the Home page, in a
+      colleague's voice.`),
     prefix: 'master-of-many-trades',
     title: { children: 'Director, Technical Services', href: undefined },
   },
@@ -227,7 +252,9 @@ export const stories: StoryProps[] = [
       href: 'https://en.wikipedia.org/wiki/Savior',
     },
     overview: oneLine(`A problem-solving savior who rescues complex projects
-      with clean, flexible, timely implementations.`),
+      with clean, flexible, timely implementations. The stability pattern
+      that recurs from Home through Portfolio to Resume, in its earliest
+      recorded form.`),
     prefix: 'problem-solving-savior',
     title: {
       children: 'Senior Data Engineer',
@@ -256,7 +283,9 @@ export const stories: StoryProps[] = [
       href: 'https://en.wikipedia.org/wiki/Polymath',
     },
     overview: oneLine(`A versatile polymath with deep knowledge, attention to
-      detail, and unwavering dedication.`),
+      detail, and unwavering dedication - a year of depth across multiple
+      languages, frameworks, and environments. The same depth-versus-breadth
+      balance the About page later plots on its axes.`),
     prefix: 'versatile-polymath',
     title: {
       children: 'Senior Developer',

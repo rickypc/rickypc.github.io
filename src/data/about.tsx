@@ -44,7 +44,10 @@ export const faqItems: FaqItems[] = [
   {
     answer: oneLine(`A Transformer on the people axis - high influence and high
       adaptability - and a Transactor on the task axis - thoughtful analysis
-      combined with the driven pursuit of goals.`),
+      combined with the driven pursuit of goals. That dual position is not a
+      personality test result; it's the operating stance the prior chapters
+      forced into being - influence earned by listening first, adaptability
+      earned by shipping the boring choice that still runs years later.`),
     question: 'How does Ricky actually work, in measurable terms?',
   },
   {
@@ -52,7 +55,8 @@ export const faqItems: FaqItems[] = [
       frameworks - people adaptability vs. influence and task thought vs.
       delivery - plotted from eight characteristic attributes that span
       people-task balance, social intuition, clear vision, hands-on
-      coordination, and empathy.`),
+      coordination, and empathy. The Home page introduces the structural
+      instinct behind it; this page pins it to a measurable position.`),
     question: 'Is the Transformer / Transactor framing based on anything real?',
   },
   {
@@ -63,7 +67,9 @@ export const faqItems: FaqItems[] = [
       run (operations included, licensing alone far higher). Peers describe
       me as the heart and brains of the team in 2026 Spot Award nominations,
       and an internal tool I built ground-up now backs a business that grew
-      from under $100K a year to hundreds of millions.`),
+      from under $100K a year to hundreds of millions. This is the same
+      evidence the Resume page itemizes as a strategic appendix - and the
+      same 5% discipline running through every chapter.`),
     question: 'What evidence supports the self-assessment beyond the graphs?',
   },
   {
@@ -72,7 +78,8 @@ export const faqItems: FaqItems[] = [
       preference is a strength in environments that value durable
       architecture, not a rigidity. I adapt tools, stacks, and process to
       what the team actually needs, including being the first in my company
-      to set up spec-driven development.`),
+      to set up spec-driven development. The Timeline shows the cadence;
+      this page shows the why.`),
     question: 'Does Ricky adapt, or does the planner preference read as inflexible?',
   },
   {
@@ -85,15 +92,18 @@ export const faqItems: FaqItems[] = [
       before writing code, explicitly asking stakeholders what "good enough"
       looks like for the current iteration. This keeps delivery lean while
       documenting any deep scalability architecture as "Phase 2" notes for
-      the future.`),
+      the future. This is the lesson carried over from the over-engineering
+      example on the Portfolio page, codified into a daily discipline.`),
     question: 'What is Ricky actively NOT good at, and how does he manage it?',
   },
   {
-    answer: oneLine(`He speaks Bahasa Indonesia and Melayu (born and raised in
+    answer: oneLine(`I speak Bahasa Indonesia and Melayu (born and raised in
       Indonesia), a little Chinese, holds US citizenship (clearance-eligible),
       is based in the LA area and open to remote and hybrid work, and is
       currently learning Rust for fun - building a real scheduler and packet
-      IO demo as a personal project.`),
+      IO demo as a personal project. The playfulness here is the same impulse
+      that drove me back to Stanford mid-career and that made me first to set
+      up spec-driven development at work.`),
     question: 'What\'s something about Ricky that doesn\'t show up on a resume?',
   },
   {
@@ -102,7 +112,8 @@ export const faqItems: FaqItems[] = [
       clear vision that translates into action, hands-on coordination,
       commitment to excellence and follow-through, drawing the best out of
       people through empathy, attunement to different perspectives, and respect
-      for unique talents.`),
+      for unique talents. The Stories page is where those attributes show up
+      in other people's voices instead of mine.`),
     question: 'What specifically makes Ricky good with people and teams?',
   },
 ];
@@ -110,10 +121,16 @@ export const faqItems: FaqItems[] = [
 export const headline = 'Leading with People, Purpose, and Results';
 
 export const intro: IntroProps = {
-  description: oneLine(`How I work goes beyond titles and roles - it shows up
-    in the way teams, projects, and outcomes improve when I'm involved. The
-    graphs below map that pattern across two axes: how I read people and how
-    I deliver on direction, with the attributes that make both click.`),
+  description: oneLine(`This is the vision - how a career of rising action and
+    core work crystallized into an operating philosophy rather than a happy
+    accident. The two graphs below plot where I land across a people axis and
+    a task axis, and they're not aspirational; they're the observed shape of
+    how I work after decades of shipping. The position - a Transformer on
+    people, a Transactor on tasks - is the product of every chapter before
+    this one: the structural discipline from architecture, the telemetry
+    rigor from AirIQ, the planet-scale ceiling from CheetahMail, the
+    durability bar from the Tier-1 Experian service. Read this page as the
+    codification of instincts the Portfolio proved and the Timeline earned.`),
   title: 'About Ricky Huang',
 };
 
@@ -121,8 +138,10 @@ export const intro: IntroProps = {
 export const schema: SchemaType = 'ProfilePage';
 
 export const layout: LayoutProps = {
-  description: oneLine(`Ricky Huang blends people skills, sharp analysis, and
-    results-driven leadership to inspire teams and deliver impact.`),
+  description: oneLine(`The vision - how Ricky Huang's rising action and
+    core work crystallized into an operating philosophy: people-first
+    leadership and task-side rigor, plotted across two axes and backed by
+    operational evidence.`),
   faq: { items: faqItems, slug: 'about' },
   keywords: [
     'leadership',
@@ -154,13 +173,17 @@ export const layout: LayoutProps = {
 export const paragraphs = [
   oneLine(`On the left, you'll find two graphs that capture how I work: one
     reflects my adaptability and ability to influence, while the other shows
-    how I balance thoughtful analysis with strong execution.`),
+    how I balance thoughtful analysis with strong execution. They're not a
+    personality test taken in an afternoon; they're the observed position
+    after every chapter in this story has had its say.`),
   oneLine(`I bring together emotional intelligence, a broad network, and clear,
     decisive leadership. I thrive in complex environments - digging into
     challenges, analyzing them with care, and moving toward meaningful results.
     At the heart of it all, I'm focused on connecting people, inspiring teams,
     and turning ideas into action, supported by modern tools that help me think
-    and iterate with greater clarity.`),
+    and iterate with greater clarity. The vision codified here is the
+    connective thread between the core work behind me and the horizon ahead
+    on the Stories page.`),
 ];
 
 export const quadrants = {

@@ -11,15 +11,20 @@ import { type LayoutProps } from '@site/src/components/common/Layout';
 
 export const catalog = [
   {
-    description: oneLine(`A consumer-focused system providing individuals with
-      secure, no-cost access to their credit reports, credit scores, and
-      identity monitoring tools. Built as part of one of the nation's major
-      credit bureaus, the platform is engineered for scale and reliability,
-      supporting millions of users across web and mobile channels as they track
-      and improve their financial health. The ecosystem also includes Smart
-      Money, a digital banking extension offering checking and savings
-      accounts, pre-approved credit cards, and personalized loan options,
-      further empowering consumers to manage their financial well-being.`),
+    description: oneLine(`The current flagship of the arc. A consumer-focused
+      system providing individuals with secure, no-cost access to their credit
+      reports, credit scores, and identity monitoring tools, built as part of
+      one of the nation's major credit bureaus. The platform is engineered for
+      scale and reliability, supporting millions of users across web and
+      mobile channels as they track and improve their financial health. The
+      ecosystem also includes Smart Money, a digital banking extension offering
+      checking and savings accounts, pre-approved credit cards, and
+      personalized loan options, further empowering consumers to manage their
+      financial well-being. The Tier-1 essential service inside this ecosystem
+      is where the cost-design discipline running through every chapter
+      converges - 50 ms p99, tens of billions of records monthly, 5+ years of
+      zero production defects, and roughly 5% of a licensed replacement's cost
+      per year.`),
     href: 'https://experian.com',
     images: [
       {
@@ -80,11 +85,13 @@ export const catalog = [
       },
     ],
     prefix: 'experian',
-    summary: oneLine(`A large-scale platform that provides secure access to
-      credit reports, credit scores, identity monitoring, and Smart Money
-      digital banking. Designed for multi-channel delivery across web and
-      mobile, supporting millions of users with high availability, strong
-      security, and real-time financial insights.`),
+    summary: oneLine(`The current flagship - a large-scale, Tier-1 platform
+      that provides secure access to credit reports, credit scores, identity
+      monitoring, and Smart Money digital banking. Designed for multi-channel
+      delivery across web and mobile, supporting millions of users with high
+      availability, strong security, and real-time financial insights. The
+      essential service inside it is where the 50 ms p99, the zero-defect
+      five-year run, and the 5%-of-replacement-cost discipline all converge.`),
     tags: [
       'Python',
       'React',
@@ -100,15 +107,19 @@ export const catalog = [
     title: 'Consumer Credit & Financial Wellness Platform',
   },
   {
-    description: oneLine(`A large-scale email marketing system built for
-      enterprise brands to deliver highly targeted campaigns at massive volume.
-      Designed as a B2B platform, it powered customer engagement for major
-      global companies such as Yahoo!, Starbucks, Walgreens, SiriusXM, and
-      Carnival through personalized, data-driven messaging. Engineered for
-      reliability and throughput, the architecture supported billions of emails
-      per day with advanced segmentation, tracking, and reporting capabilities,
-      giving marketing teams the flexibility to orchestrate campaigns and
-      measure performance across diverse audiences.`),
+    description: oneLine(`The earliest flagship. A large-scale email marketing
+      system built for enterprise brands to deliver highly targeted campaigns
+      at massive volume. Designed as a B2B platform, it powered customer
+      engagement for major global companies such as Yahoo!, Starbucks,
+      Walgreens, SiriusXM, and Carnival through personalized, data-driven
+      messaging. Engineered for reliability and throughput, the architecture
+      supported billions of emails per day with advanced segmentation,
+      tracking, and reporting capabilities, giving marketing teams the
+      flexibility to orchestrate campaigns and measure performance across
+      diverse audiences. The Pinnacle Award that appears on the Timeline was
+      earned here - where the structural-design instinct met planet-scale
+      traffic for the first time. Everything after is measured against this
+      ceiling.`),
     href: 'https://meetmarigold.com',
     images: [
       {
@@ -153,9 +164,10 @@ export const catalog = [
       },
     ],
     prefix: 'cheetahmail',
-    summary: oneLine(`High-throughput system powering targeted campaigns for
-      major global brands, supporting billions of emails per day with advanced
-      segmentation, tracking, and reporting.`),
+    summary: oneLine(`The earliest flagship - high-throughput system powering
+      targeted campaigns for major global brands, supporting billions of
+      emails per day with advanced segmentation, tracking, and reporting. The
+      ceiling that every later system is measured against.`),
     tags: [
       'Python',
       'Linux',
@@ -168,12 +180,15 @@ export const catalog = [
     title: 'Enterprise Email Marketing Platform',
   },
   {
-    description: oneLine(`A scalable ticketing platform enabling sellers to
-      publish live event inventory - sports, concerts, and theater - directly
-      across Yahoo!'s high-traffic ecosystem. Built on a SOAP Web Services
-      architecture, the system supported flexible integrations and sustained
-      millions of user sessions, delivering reliable performance under heavy
-      load while powering event discovery and purchasing for a global audience.`),
+    description: oneLine(`An integration at scale. A scalable ticketing
+      platform enabling sellers to publish live event inventory - sports,
+      concerts, and theater - directly across Yahoo!'s high-traffic ecosystem.
+      Built on a SOAP Web Services architecture, the system supported flexible
+      integrations and sustained millions of user sessions, delivering
+      reliable performance under heavy load while powering event discovery and
+      purchasing for a global audience. The full-stack vision first formed at
+      RazorGator found its public-scale test here - one team owning the call on
+      both sides of the wire.`),
     href: undefined,
     images: [
       {
@@ -202,9 +217,11 @@ export const catalog = [
       },
     ],
     prefix: 'yahoo-tickets',
-    summary: oneLine(`Scalable ticketing platform enabling sellers to publish
-      live event inventory across Yahoo!'s ecosystem, supporting high-traffic
-      volume, flexible integrations, and reliable performance.`),
+    summary: oneLine(`Public-scale ticketing - a scalable platform enabling
+      sellers to publish live event inventory across Yahoo!'s ecosystem,
+      supporting high-traffic volume, flexible integrations, and reliable
+      performance. Where the full-stack vision from RazorGator met a global
+      audience.`),
     tags: [
       'C#',
       'TypeScript',
@@ -216,11 +233,14 @@ export const catalog = [
     title: 'Yahoo! Tickets',
   },
   {
-    description: oneLine(`A pioneering tech media system powering GigaOm's
-      multi-channel coverage of startups, emerging technologies, and industry
-      trends. Built as a custom WordPress plugin, the platform supported
-      scalable content delivery, flexible editorial workflows, and high reader
-      engagement across millions of monthly visitors.`),
+    description: oneLine(`Independent work in productized media. A pioneering
+      tech media system powering GigaOm's multi-channel coverage of startups,
+      emerging technologies, and industry trends. Built as a custom WordPress
+      plugin, the platform supported scalable content delivery, flexible
+      editorial workflows, and high reader engagement across millions of
+      monthly visitors. The committed-partner testimonial from Esteban Chavez
+      on the Stories page was earned across independent work like this and the
+      other retail and logistics entries below, not inside a single employer.`),
     href: 'https://gigaom.com',
     images: [
       {
@@ -297,9 +317,9 @@ export const catalog = [
       },
     ],
     prefix: 'gigaom',
-    summary: oneLine(`Custom publishing engine powering a multi-channel tech
-      media site with scalable content delivery, high engagement, and flexible
-      editorial workflows.`),
+    summary: oneLine(`Independent productized media - a custom publishing
+      engine powering a multi-channel tech media site with scalable content
+      delivery, high engagement, and flexible editorial workflows.`),
     tags: [
       'PHP',
       'TypeScript',
@@ -309,13 +329,15 @@ export const catalog = [
     title: 'GigaOm Publishing Platform',
   },
   {
-    description: oneLine(`An online marketplace for reselling tickets to
-      sports, theater, and concert events, along with curated travel packages
-      for major games. Built to support both B2B and B2C commerce models, the
-      platform handled high-volume search, purchasing flows, and partner
-      integrations. Its diverse technology stack enabled transactional
-      reliability, operational flexibility, and scale across multiple business
-      lines.`),
+    description: oneLine(`The first role in transactional commerce. An online
+      marketplace for reselling tickets to sports, theater, and concert events,
+      along with curated travel packages for major games. Built to support both
+      B2B and B2C commerce models, the platform handled high-volume search,
+      purchasing flows, and partner integrations. Its diverse technology stack
+      enabled transactional reliability, operational flexibility, and scale
+      across multiple business lines. The depth-versus-breadth lesson that
+      later anchored the About philosophy was first pressured here - when the
+      stack is that diverse, the same person has to see all of it.`),
     href: 'https://www.tickpick.com',
     images: [
       {
@@ -360,9 +382,10 @@ export const catalog = [
       },
     ],
     prefix: 'razorgator',
-    summary: oneLine(`B2B/B2C ticket marketplace supporting sports, concerts,
-      theater, and travel packages, engineered for transactional reliability,
-      multi-model commerce, and high-volume search and purchasing flows.`),
+    summary: oneLine(`First transactional commerce role - a B2B/B2C ticket
+      marketplace supporting sports, concerts, theater, and travel packages,
+      engineered for transactional reliability, multi-model commerce, and
+      high-volume search and purchasing flows.`),
     tags: [
       'C#',
       'TypeScript',
@@ -375,11 +398,14 @@ export const catalog = [
     title: 'RazorGator Ticket Marketplace',
   },
   {
-    description: oneLine(`A digital storefront extending a 33-year music
-      retailer's reach to global customers. Built to showcase detailed product
-      information, diverse inventory, and a rich browsing experience, the
-      platform connected musicians worldwide to the shop's passion for
-      instruments and sound.`),
+    description: oneLine(`An independent study in brand-as-architecture. A
+      digital storefront extending a 33-year music retailer's reach to global
+      customers. Built to showcase detailed product information, diverse
+      inventory, and a rich browsing experience, the platform connected
+      musicians worldwide to the shop's passion for instruments and sound.
+      Each independent work retail entry in this catalog taught the same lesson
+      in a different skin: the system serves the brand, not the other way
+      around.`),
     href: 'https://www.rainbowguitars.com',
     images: [
       {
@@ -405,11 +431,14 @@ export const catalog = [
     title: 'Rainbow Guitars E-Commerce Platform',
   },
   {
-    description: oneLine(`A lifestyle-driven commerce experience highlighting
-      handcrafted goods and artisan craftsmanship. Designed to reflect the
-      brand's values and aesthetic, the platform delivered rich visual
-      storytelling and a premium shopping experience for customers seeking
-      authentic, curated products.`),
+    description: oneLine(`Work in aesthetic restraint. A lifestyle-driven
+      commerce experience highlighting handcrafted goods and artisan
+      craftsmanship. Designed to reflect the brand's values and aesthetic, the
+      platform delivered rich visual storytelling and a premium shopping
+      experience for customers seeking authentic, curated products. It's also
+      one of the four catalog entries no longer live today - which is itself a
+      quiet truth of this body of work: businesses change, but the rigor that
+      built them stays (see Stories for the partners who were there).`),
     href: undefined,
     images: [
       {
@@ -434,11 +463,14 @@ export const catalog = [
     title: 'Fortini Home Artisan Retail Platform',
   },
   {
-    description: oneLine(`A global logistics system built for the trade show
-      industry, supporting exhibitors, exhibit houses, and event organizers.
-      Designed for international shipping workflows, operational visibility,
-      and seamless coordination, the platform helped clients manage complex
-      logistics and deliver standout event experiences worldwide.`),
+    description: oneLine(`Work in operational geometry. A global logistics
+      system built for the trade show industry, supporting exhibitors, exhibit
+      houses, and event organizers. Designed for international shipping
+      workflows, operational visibility, and seamless coordination, the
+      platform helped clients manage complex logistics and deliver standout
+      event experiences worldwide. The shape of the problem - many moving
+      parts, tight coordination - is a recurring pattern in this body of work
+      and a direct antecedent of the event-driven architectures on the Resume.`),
     href: undefined,
     images: [
       {
@@ -462,11 +494,13 @@ export const catalog = [
     title: 'Exhibit Transport Logistics Platform',
   },
   {
-    description: oneLine(`A brand-driven e-commerce system showcasing
-      high-performance BMX products. Built to reflect the company's bold
-      identity, the platform highlighted rugged bikes designed for real-world
-      punishment while supporting robust product management and customer
-      engagement.`),
+    description: oneLine(`Work in brand-driven commerce. A brand-driven
+      e-commerce system showcasing high-performance BMX products. Built to
+      reflect the company's bold identity, the platform highlighted rugged
+      bikes designed for real-world demand while supporting robust product
+      management and customer engagement. The point holds up: these systems had
+      to take hard use and keep running, the same durability bar I later
+      applied to Tier-1 essential services.`),
     href: 'https://www.sandmbikes.com',
     images: [
       {
@@ -490,11 +524,14 @@ export const catalog = [
     title: 'S&M Bikes Commerce Platform',
   },
   {
-    description: oneLine(`A service-oriented system enabling Clipper Corp to
-      deliver tailored solutions that increase revenue and reduce operational
-      costs. Built for flexibility and client engagement, the platform
-      supported scalable service delivery and strengthened the company's
-      ability to innovate for a global audience.`),
+    description: oneLine(`Work in service-as-system. A service-oriented system
+      enabling Clipper Corp to deliver tailored solutions that increase
+      revenue and reduce operational costs. Built for flexibility and client
+      engagement, the platform supported scalable service delivery and
+      strengthened the company's ability to innovate for a global audience.
+      The succinct version of the cost-design discipline running through every
+      page of this site: build the thing that increases revenue and reduces
+      cost, then keep it running for years.`),
     href: 'https://www.clippercorp.com',
     images: [
       {
@@ -517,13 +554,17 @@ export const catalog = [
     title: 'Clipper Corp Service Solutions Platform',
   },
   {
-    description: oneLine(`A wireless asset-management system built to provide
-      continuous, real-time tracking of vehicles and high-value equipment.
-      Designed with GPS-based monitoring, internet-enabled telemetry, and a
-      robust backend and user interface layer, the platform delivered reliable
-      location intelligence, alerts, and operational visibility. Its
-      architecture established the groundwork for future advancements in
-      connected mobility and large-scale fleet tracking solutions.`),
+    description: oneLine(`Real-time systems work. A wireless asset-management
+      system built to provide continuous, real-time tracking of vehicles and
+      high-value equipment. Designed with GPS-based monitoring,
+      internet-enabled telemetry, and a robust backend and user interface
+      layer, the platform delivered reliable location intelligence, alerts,
+      and operational visibility. Its architecture established the groundwork
+      for future advancements in connected mobility and large-scale fleet
+      tracking solutions. The telemetry discipline learned here is exactly
+      what let me later take a Tier-1 service with frequent production issues
+      to month-long stability within a month (see Resume). Read this entry as
+      the seed of that later work.`),
     href: 'https://www.airiq.com',
     images: [
       {
@@ -565,11 +606,13 @@ export const catalog = [
     title: 'Real-Time GPS Asset Tracking Platform',
   },
   {
-    description: oneLine(`A digital commerce system launching the online
-      presence of a national youth-focused clothing retailer. Built for
-      product discovery, merchandising, and seamless purchasing, the platform
-      extended the brand's reach beyond physical stores and supported a modern
-      retail experience.`),
+    description: oneLine(`Work in youthful reach. A digital commerce system
+      launching the online presence of a national youth-focused clothing
+      retailer. Built for product discovery, merchandising, and seamless
+      purchasing, the platform extended the brand's reach beyond physical
+      stores and supported a modern retail experience. No longer live today,
+      but the work - like every entry in this catalog - is verifiable through
+      the partners on the Stories page.`),
     href: undefined,
     images: [
       {
@@ -602,11 +645,13 @@ export const catalog = [
     title: 'AnchorBlue E-Commerce Platform',
   },
   {
-    description: oneLine(`A precision-driven product system showcasing
-      WheelBuilder's commitment to high-quality wheel craftsmanship. Built to
-      support custom configuration, meticulous parts selection, and global
-      ordering, the platform connected riders worldwide with performance they
-      could trust.`),
+    description: oneLine(`Work in precision. A precision-driven product system
+      showcasing WheelBuilder's commitment to high-quality wheel craftsmanship.
+      Built to support custom configuration, meticulous parts selection, and
+      global ordering, the platform connected riders worldwide with performance
+      they could trust. Precision, here, was not a slogan - it is the same
+      discipline that later held a Tier-1 service at 50 ms p99 for 5+ years
+      with zero defects.`),
     href: 'https://wheelbuilder.com',
     images: [
       {
@@ -630,11 +675,13 @@ export const catalog = [
     title: 'WheelBuilder Custom Wheel Platform',
   },
   {
-    description: oneLine(`A dynamic services platform extending a respected
-      engineering and management firm into a modern digital marketplace. Built
-      for consistent, responsive client engagement, the system supported
-      scalable operations and evolving industry demands while reinforcing
-      long-term client trust.`),
+    description: oneLine(`Work in service architecture. A dynamic services
+      platform extending a respected engineering and management firm into a
+      modern digital marketplace. Built for consistent, responsive client
+      engagement, the system supported scalable operations and evolving
+      industry demands while reinforcing long-term client trust. Trusted by a
+      colleague whose testimonial sits on the Stories page - the human shape
+      of the rigor this whole catalog demanded.`),
     href: 'https://www.pacificaservices.com',
     images: [
       {
@@ -668,7 +715,9 @@ export const faqItems: FaqItems[] = [
       RazorGator with FOX Sports, Tickets.com, MSN partners), media (GigaOm
       with millions of monthly visitors), retail (Rainbow Guitars, AnchorBlue,
       S&M Bikes, WheelBuilder, Fortini Home), logistics (Exhibit Transport),
-      and engineering (Pacifica Services).`),
+      and engineering (Pacifica Services). Taken together, they are the core
+      body of work where the rising action on the Timeline proved itself under
+      real load.`),
     question: 'What breadth of systems has Ricky actually shipped?',
   },
   {
@@ -676,14 +725,19 @@ export const faqItems: FaqItems[] = [
       day at CheetahMail (a decade ago, with minimum error rate), and a
       Tier-1 essential Experian service I maintain today holding 50 ms p99,
       processing tens of billions of records monthly, and 5+ years of zero
-      production defects.`),
+      production defects. These two are the twin peaks of the arc - the first
+      taught me planet-scale, the second taught me that durability is a design
+      choice (the 5%-of-replacement-cost discipline running through the whole
+      site).`),
     question: 'Can Ricky point to systems that operate at real scale?',
   },
   {
     answer: oneLine(`Eight plus languages in production: Python, Go, C#, PHP,
       TypeScript, Node.js, SQL Server, MySQL, Oracle, along with cloud
       infrastructure (AWS Fargate, Lambda, Kinesis, EventBridge, SQS/SNS) and
-      front-end React. I'm also learning Rust for fun.`),
+      front-end React. I'm also learning Rust for fun. The breadth is what
+      lets one person own end-to-end - the ownership model introduced on the
+      Home page and quantified on the Resume.`),
     question: 'What technology stack does Ricky cover across these projects?',
   },
   {
@@ -691,7 +745,9 @@ export const faqItems: FaqItems[] = [
       architecture also writes the code and runs the on-call. On the
       Tier-1 essential Experian service, that meant turning a system hitting
       production issues every 2-4 hours into one sustaining multi-day then
-      monthly stability within a month.`),
+      monthly stability within a month. The stability and consistency pattern
+      from the Home page is no sales pitch; it is a live architecture with
+      concrete proof inside.`),
     question: 'What is Ricky\'s role on each project - lead, IC, or something else?',
   },
   {
@@ -700,16 +756,18 @@ export const faqItems: FaqItems[] = [
       per year (operations included, licensing alone far higher), and an
       internal tool I built ground-up for a tenant grew from under $100K a
       year in revenue to hundreds of millions of dollars - my systems still
-      back that business today.`),
+      back that business today. This is the dollar shape of the cost-design
+      discipline the Resume page itemizes as a strategic appendix.`),
     question: 'Are there measurable cost or revenue impacts tied to these projects?',
   },
   {
     answer: oneLine(`Catalog entries map directly to companies in my timeline:
       Experian Consumer Services, Experian CheetahMail, AirIQ, RazorGator,
-      Yahoo! Tickets. The freelance projects (GigaOm, Rainbow Guitars, Fortini,
-      S&M, Clipper, AnchorBlue, WheelBuilder, Pacifica Services) were delivery
-      I ran in partnership with my partners across the same years, not gaps in
-      employment.`),
+      Yahoo! Tickets. The independent projects (GigaOm, Rainbow Guitars,
+      Fortini, S&M, Clipper, AnchorBlue, WheelBuilder, Pacifica Services) were
+      delivery I ran in partnership with my partners across the same years, not
+      gaps in employment. Read Timeline and Portfolio as two views of one
+      continuous arc.`),
     question: 'How do these projects map back to the timeline and companies?',
   },
   {
@@ -718,22 +776,25 @@ export const faqItems: FaqItems[] = [
       tracking, and reporting - while the WheelBuilder custom wheel platform
       and GigaOm publishing system show productized thinking across global
       ordering and multi-channel media (Apple, Clean Tech, Cloud, Mobile,
-      Video, Events, TV).`),
+      Video, Events, TV). The span is deliberate: it forces the breadth that
+      later makes the depth useful.`),
     question: 'Does Ricky\'s portfolio include both enterprise and consumer work?',
   },
   {
     answer: oneLine(`Tagged on each catalog entry. Tags range from Python,
-      React, AWS, C#, TypeScript, Go, MySQL, PHP, REST
-      (Experian Consumer Services) to Python, Linux, Oracle, Perl
-      (Experian CheetahMail) to C#, SQL Server, ASP.NET, XML (RazorGator) to
-      PHP, TypeScript, MySQL (media and retail).`),
+      React, AWS, C#, TypeScript, Go, MySQL, PHP, REST (Experian Consumer
+      Services) to Python, Linux, Oracle, Perl (Experian CheetahMail) to C#,
+      SQL Server, ASP.NET, XML (RazorGator) to PHP, TypeScript, MySQL (media
+      and retail).`),
     question: 'Can I scan the technology stack for each project quickly?',
   },
   {
     answer: oneLine(`Image galleries accompany the projects with images,
       production screenshots, or both - 7 images for Experian Consumer, 9 for
       GigaOm, 5 for CheetahMail and RazorGator, 3 for Yahoo! Tickets and
-      AirIQ - so you can see what I shipped, not just read about it.`),
+      AirIQ - so you can see what I shipped, not just read about it. Visual
+      proof is part of the rigor; the trust formed around it shows up, in
+      human voices, on the Stories page.`),
     question: 'Is there visual proof for each project, not just descriptions?',
   },
   {
@@ -753,20 +814,29 @@ export const faqItems: FaqItems[] = [
       over-engineering for an unverified future. Since then, I approach
       architecture with a strict MVP-first mentality: design for immediate
       requirements while keeping tomorrow's roadmap at arm's length, knowing
-      it may never materialize.`),
+      it may never materialize. This is the lesson behind the
+      essential-vs-decorative instinct that runs through the whole site,
+      codified as an operating philosophy on the About page.`),
     question: 'What is a project where Ricky\'s judgment turned out to be wrong, and what did he learn?',
   },
 ];
 
 export const intro: IntroProps = {
-  description: oneLine(`Each project here reflects years of hands-on
-    experience, thoughtful problem-solving, and a commitment to quality.
-    Across 15 production systems spanning cloud, media, commerce, logistics,
-    and ticketing, every build carries the technology stack that brought it to
-    life, the impact it delivered, and the continual learning that keeps my
-    work aligned with the pace of modern technology - including an internal
-    tool that grew its business from under $100K a year to hundreds of
-    millions in revenue.`),
+  description: oneLine(`This is the core body of work. The rising action of the
+    Timeline page culminates here in a catalog of 15 production systems across
+    cloud, media, commerce, logistics, and ticketing - each one a test
+    that demanded a different kind of mastery. The twin peaks of the arc are
+    both in this catalog: a billion emails a day at CheetahMail, and the
+    Tier-1 essential Experian service I maintain today at 50 ms p99, 5+ years
+    of zero production defects, running for roughly 5% of what a licensed
+    replacement would cost per year. Between them sits the rest of the work -
+    each build carrying the technology stack that brought it to life, the
+    impact it delivered, and another lesson that taught me to distinguish
+    essential from decorative. An internal tool here even grew its business
+    from under $100K a year to hundreds of millions in revenue; my systems
+    still back that business today. Read these as the proof behind the
+    promises made on the Home page - and the raw material the Resume later
+    distills into a strategic appendix.`),
   title: 'Portfolio',
 };
 
@@ -774,9 +844,11 @@ export const intro: IntroProps = {
 export const schema: SchemaType = 'CollectionPage';
 
 export const layout: LayoutProps = {
-  description: oneLine(`Scalable platforms for Yahoo!, GigaOm, & more - Ricky
-    Huang's portfolio showcases engineering, media, e-commerce & logistics
-    expertise.`),
+  description: oneLine(`The core body of work - 15 production systems where
+    Ricky Huang's rising action proved itself under load, from a billion
+    emails a day at CheetahMail to a Tier-1 essential Experian service at
+    50 ms p99 and 5% replacement cost. Cloud, media, e-commerce, logistics,
+    ticketing.`),
   faq: { items: faqItems, slug: 'portfolio' },
   keywords: [
     'software engineering portfolio',

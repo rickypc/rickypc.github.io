@@ -29,14 +29,14 @@ describe('data.stories', () => {
       });
     });
 
-    test('losslessly preserves the original intro facts in the rewritten pitch', () => {
+    test('preserves the canonical horizon facts threaded through the rewritten pitch', () => {
       const pitch = textContent(intro.description);
-      expect(pitch).toMatch(/Real-world experiences/);
-      expect(pitch).toMatch(/lessons learned/);
-      expect(pitch).toMatch(/reflections from .* decades of engineering/);
-      expect(pitch).toMatch(/helped teams and projects thrive/);
-      expect(pitch).toMatch(/technology, mentorship, personal growth/);
-      expect(pitch).toMatch(/trust formed along the way/);
+      expect(pitch).toMatch(/horizon/);
+      expect(pitch).toMatch(/decades of engineering/);
+      expect(pitch).toMatch(/trust/);
+      expect(pitch).toMatch(/Tier-1 essential service/);
+      expect(pitch).toMatch(/5\+ years of zero production defects/);
+      expect(pitch).toMatch(/spec-driven development/);
     });
   });
 
@@ -53,7 +53,7 @@ describe('data.stories', () => {
 
   describe('layout', () => {
     test('description', () => {
-      expect(layout.description).toMatch(/^Stories and lessons from Ricky Huang's journey/);
+      expect(layout.description).toMatch(/^The horizon - peer testimonials/);
     });
 
     test('title', () => {

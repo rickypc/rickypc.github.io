@@ -66,7 +66,7 @@ describe('data.home', () => {
   });
 
   test('exports intro with description and title', () => {
-    expect(intro.description).toMatch(/^I design and deliver cloud-native/);
+    expect(intro.description).toMatch(/^I started in architecture/);
     expect(intro.title).toMatch(/^Engineering Leader & Full-Stack/);
   });
 
@@ -76,7 +76,7 @@ describe('data.home', () => {
 
   test('exports layout with description, keywords array, and title', () => {
     expect(typeof layout.description).toBe('string');
-    expect(layout.description).toMatch(/^Welcome to Ricky Huang's site/);
+    expect(layout.description).toMatch(/^The front door to Ricky Huang's site/);
 
     expect(Array.isArray(layout.keywords)).toBeTruthy();
     expect(layout.keywords?.length).toBeGreaterThan(0);

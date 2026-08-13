@@ -26,7 +26,7 @@ describe('resume.Content', () => {
 
     // Strengths.
     expect(screen.getByText('Core Strengths')).toBeInTheDocument();
-    expect(screen.getByText('Architecture & system design for distributed, cloud-native platforms'))
+    expect(screen.getByText(/Architecture & system design for distributed, cloud-native platforms/))
       .toBeInTheDocument();
 
     // Leadership.
@@ -52,7 +52,7 @@ describe('resume.Content', () => {
 
     // Testimonials.
     expect(screen.getByText('Testimonials')).toBeInTheDocument();
-    expect(screen.getByText('A problem-solving savior who rescues complex projects with clean, flexible, timely implementations.'))
+    expect(screen.getByText(/A problem-solving savior who rescues complex projects with clean, flexible, timely implementations/))
       .toBeInTheDocument();
   });
 });

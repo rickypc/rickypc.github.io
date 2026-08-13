@@ -34,13 +34,14 @@ describe('data.timeline', () => {
       expect(questions.some((q) => q.match(/why would Ricky leave/i))).toBe(true);
     });
 
-    test('losslessly preserves the original intro facts in the rewritten pitch', () => {
+    test('preserves the canonical career-arc facts threaded through the rewritten pitch', () => {
       const pitch = textContent(intro.description);
-      expect(pitch).toMatch(/key milestones in my career/);
-      expect(pitch).toMatch(/education, and technical growth/);
-      expect(pitch).toMatch(/step forward/);
-      expect(pitch).toMatch(/building expertise, shaping ideas/);
-      expect(pitch).toMatch(/driving impact/);
+      expect(pitch).toMatch(/milestones/);
+      expect(pitch).toMatch(/Petra Christian University/);
+      expect(pitch).toMatch(/Experian CheetahMail/);
+      expect(pitch).toMatch(/Experian Consumer Services/);
+      expect(pitch).toMatch(/core projects on Portfolio/);
+      expect(pitch).toMatch(/5% of.*licensed replacement/);
     });
   });
 

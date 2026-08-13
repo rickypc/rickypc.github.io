@@ -523,7 +523,8 @@ export const faqItems: FaqItems[] = [
       (DynamoDB/MySQL/Oracle/SQL Server), observability (Datadog), and AI
       tooling (Bedrock, agentic loops, SDD). The breadth makes the depth
       useful - one person owns the system end-to-end, from architecture to
-      on-call.`),
+      on-call. This is the same end-to-end thesis the Home page opens with and
+      the Portfolio proves system by system.`),
     question: 'What is Ricky\'s technical architecture footprint?',
   },
   {
@@ -536,7 +537,9 @@ export const faqItems: FaqItems[] = [
       sustaining 1 billion emails per day with minimal error rates. I also
       specialize in rescuing unstable systems - I inherited an essential
       service crashing every 2-4 hours and stabilized it to month-long
-      continuous uptime within 30 days.`),
+      continuous uptime within 30 days. Every number here is the measurable
+      shape of a theme running through the whole site - durability as a
+      design choice.`),
     question: 'What are Ricky\'s core production metrics and system reliability records?',
   },
   {
@@ -546,16 +549,18 @@ export const faqItems: FaqItems[] = [
       (SDD) running autonomous, agentic AI loops against technical
       specifications. This initiative effectively turned my group into the
       company's pioneer SDD team, shifting us away from manual scaffolding
-      and significantly accelerating our development velocity.`),
+      and significantly accelerating our development velocity. The same
+      learn-the-rigor-then-ship-against-it cadence that took me back to
+      Stanford mid-career, applied to the whole team.`),
     question: 'How does Ricky actually use AI to improve engineering outcomes?',
   },
   {
     answer: oneLine(`Over a 20-year tenure spanning Experian CheetahMail and
-      Consumer Services, my contributions have been consistently recognized
-      with top-tier accolades including the Platinum Aspire Award (top 1%
-      performance), the Pinnacle Award for Engineering Excellence, and over
-      20 Spot Awards. In 2026 alone, I received three Collaborate to Win Spot
-      Awards for serving as the heart and brains of the engineering team.
+      Experian Consumer Services, my contributions have been consistently
+      recognized with top-tier accolades including the Platinum Aspire Award
+      (top 1% performance), the Pinnacle Award for Engineering Excellence, and
+      over 20 Spot Awards. In 2026 alone, I received three Collaborate to Win
+      Spot Awards for serving as the heart and brains of the engineering team.
       This recognition was driven by delivering measurable business value:
       (1) Built an internal tool ground-up for a tenant that scaled from
       under $100K to hundreds of millions in revenue; (2) Designed a Tier-1
@@ -563,7 +568,9 @@ export const faqItems: FaqItems[] = [
       cost; (3) Scaled CheetahMail to sustain 1 billion emails daily;
       (4) Transformed a service crashing every 2-4 hours into month-long
       stability within 30 days; (5) Recently designed, tested, and deployed
-      an emergency incident fix in under two hours (2026 Spot Award).`),
+      an emergency incident fix in under two hours (2026 Spot Award). Read
+      these five as the plot points of the five chapters that precede this
+      appendix.`),
     question: 'What is the breadth of Ricky\'s impact and recognition at Experian?',
   },
   {
@@ -572,7 +579,9 @@ export const faqItems: FaqItems[] = [
       millions of dollars, with my systems still backing the business today;
       (2) the Tier-1 essential service operates at roughly 5% of the yearly
       cost of a licensed third-party replacement (licensing alone far higher,
-      operations included).`),
+      operations included). This is the cost-design discipline of the site -
+      the principle that recurs from Home through Portfolio to this appendix,
+      in dollars.`),
     question: 'Can Ricky show dollar impact or avoided cost?',
   },
   {
@@ -606,7 +615,9 @@ export const faqItems: FaqItems[] = [
       configurable rate-limiter that dynamically maximized intake based
       on resource availability inside a set window. We more than doubled
       target capacity, delivered within the sprint, and gave
-      users an uninterrupted customer-journey view.`),
+      users an uninterrupted customer-journey view. A clean instance of
+      resisting the fashionable shortcut for the boring choice that runs
+      five years out.`),
     question: 'Can Ricky describe a time he had to choose speed over quality?',
   },
   {
@@ -621,8 +632,9 @@ export const faqItems: FaqItems[] = [
       at Experian CheetahMail (where I received the Pinnacle Award for
       engineering excellence), followed by 13+ at Experian Consumer
       Services across three roles. Earlier tenure at AirIQ and RazorGator,
-      with parallel freelance delivery across 9 portfolio projects since
-      1995.`),
+      with parallel independent work delivery across 9 portfolio projects since
+      1995. The Timeline walks the arc in order; this appendix lists it
+      flat.`),
     question: 'How much experience does Ricky have, and is it stable?',
   },
   {
@@ -648,11 +660,11 @@ export const faqItems: FaqItems[] = [
     question: 'Has Ricky interviewed or changed teams recently?',
   },
   {
-    answer: oneLine(`He would not leave lightly - 20+ years at Experian is the
+    answer: oneLine(`I would not leave lightly - 20+ years at Experian is the
       proof. The search is additive: a role with more design leverage, a wider
       blast radius for architecture decisions, or an org further along the
-      AI-native / spec-driven path he already leads - not an escape from a bad
-      fit.`),
+      AI-native / spec-driven path I already leads - not an escape from a bad
+      fit. The horizon sketched on the Stories page, stated plainly.`),
     question: 'Why would Ricky leave his current role?',
   },
   {
@@ -662,7 +674,9 @@ export const faqItems: FaqItems[] = [
       reliability) and deliver a measurable fix within the first month. The
       second month scales that pattern; the third month drives team-wide
       adoption. Immediate value comes from fixing the biggest pain point, not
-      from re-architecting everything on day one.`),
+      from re-architecting everything on day one. The cadence introduced on
+      the Home page, operationalized - and closing the loop on this six-part
+      story.`),
     question: 'What would Ricky focus on in his first 90 days at a new company?',
   },
 ];
@@ -718,7 +732,10 @@ export const header = ({ siteConfig }: HeaderProps) => {
 export const schema: SchemaType = 'ProfilePage';
 
 export const layout: LayoutProps = {
-  description: 'Principal Engineer resume with deep experience in cloud systems, backend architecture, and scalable platform design.',
+  description: oneLine(`The strategic appendix - a Principal Engineer resume
+    mirroring the themes of the five preceding chapters: cloud systems, backend
+    architecture, scalable platform design, durability as a design choice, and
+    end-to-end ownership.`),
   faq: { items: faqItems, slug: 'resume' },
   keywords: [
     'principal engineer resume',
@@ -776,14 +793,20 @@ export const leadership = {
 };
 
 export const preamble = {
-  content: oneLine(`Principal Engineer architecting, building, and scaling
-    production systems across cloud, distributed, and event-driven
-    environments. I define technical direction, design end-to-end
-    architectures, and deliver systems that are reliable, observable, and built
-    to last. Equally comfortable writing code, designing APIs, reviewing
-    architectures, or debugging complex failures in production. Known for clear
-    technical judgment, deep hands-on expertise, and the ability to turn
-    ambiguous problems into well-engineered solutions.`),
+  content: oneLine(`This is the strategic appendix - the resume, distilled to
+    scannable form, mirroring the themes of the five chapters that precede
+    it. Principal Engineer architecting, building, and scaling production
+    systems across cloud, distributed, and event-driven environments. I
+    define technical direction, design end-to-end architectures, and deliver
+    systems that are reliable, observable, and built to last - the same
+    structural instinct that opens the Home page, pressure-tested in the
+    Portfolio body of work, codified on About, and pointed forward from
+    Stories. Equally comfortable writing code, designing APIs, reviewing
+    architectures, or debugging complex failures in production. Known for
+    clear technical judgment, deep hands-on expertise, and the ability to
+    turn ambiguous problems into well-engineered solutions. Every metric
+    below is the dollar and uptime shape of the themes running through the
+    whole site.`),
   heading: {
     as: 'h2' as HeadingType,
     children: (
@@ -852,12 +875,31 @@ export { storyMap } from '@site/src/data/stories';
 export const strengths = {
   children: (
     <ul>
-      <li>Architecture & system design for distributed, cloud-native platforms</li>
-      <li>Hands-on engineering across Python, Go, C#, TypeScript, and Node.js</li>
-      <li>AWS expertise: Fargate, Lambda, DynamoDB, Kinesis, EventBridge, SQS/ SNS</li>
-      <li>Technical ownership: standards, code quality, observability, reliability</li>
-      <li>Cross-functional leadership with clear technical direction</li>
-      <li>Execution under pressure; trusted to deliver critical systems</li>
+      <li>
+        Architecture & system design for distributed, cloud-native platforms
+        - structural discipline carried from the origin story
+      </li>
+      <li>
+        Hands-on engineering across Python, Go, C#, TypeScript, and Node.js
+        - breadth that makes the depth useful
+      </li>
+      <li>
+        AWS expertise: Fargate, Lambda, DynamoDB, Kinesis, EventBridge, SQS/SNS
+        - the stack behind the Portfolio body of work
+      </li>
+      <li>
+        Technical ownership: standards, code quality, observability,
+        reliability - the durability bar proven across five years of zero
+        defects
+      </li>
+      <li>
+        Cross-functional leadership with clear technical direction
+        - the listen-first, ship-second cadence
+      </li>
+      <li>
+        Execution under pressure; trusted to deliver critical systems
+        - a service crashing every 2-4 hours, stabilized within a month
+      </li>
     </ul>
   ),
   heading: {

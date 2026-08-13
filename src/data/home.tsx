@@ -49,9 +49,12 @@ export function FaLinkedin(props: IconBaseProps): ReactElement {
 export const faqItems: FaqItems[] = [
   {
     answer: oneLine(`A Senior Software Engineer by title, operating as a
-      Principal Engineer in practice: I set architecture and daily technical
-      direction for an agile delivery team of 4 to 6 engineers, POs, and PMs
-      within a larger business-unit delivery team.`),
+      Principal Engineer in practice. I set the architecture and the daily
+      technical direction for an agile delivery team of 4 to 6 engineers,
+      POs, and PMs inside a larger business-unit team. The pattern that runs
+      across this whole site - introduced here and carried through About,
+      Portfolio, Timeline, Stories, and Resume - is simple: the same person
+      who designs the system also builds it and runs it in production.`),
     question: 'Who is Ricky and what is his actual scope at Experian?',
   },
   {
@@ -59,20 +62,29 @@ export const faqItems: FaqItems[] = [
       event-driven with Kinesis, Firehose, EventBridge, SQS, SNS; DynamoDB,
       MySQL, Oracle, SQL Server; Python, Go, C#, PHP, TypeScript, Node.js,
       Perl; AWS Bedrock; Datadog for observability; Docker, CI/CD, Git; React
-      front-end. Currently picking up Rust for fun.`),
+      front-end. I'm also picking up Rust for fun - building a real scheduler
+      and packet IO demo. The breadth is deliberate: it's what lets one
+      person own a system end-to-end instead of bouncing the call between
+      owners when production moves.`),
     question: 'What stack does Ricky actually run in production today?',
   },
   {
     answer: oneLine(`${humanizeYears(total, 'plus')} of hands-on engineering,
       from early web systems to cloud-native, event-driven platforms - most of
-      it continuous tenure at Experian across three roles since 2013.`),
+      it continuous tenure at Experian across three roles since 2013. The
+      Timeline page walks that arc in order; one thing to notice is that I
+      tend to stay - architecture ages well when the same hands keep
+      maintaining it.`),
     question: 'How much experience does Ricky bring, and across what?',
   },
   {
     answer: oneLine(`Engineering Leadership, full-stack delivery,
       smart-creative product thinking, and a forward-looking Innovator - the
       same person who owns architecture also ships the code and runs the
-      AI-native, spec-driven development loop with the team.`),
+      AI-native, spec-driven development loop with the team. I'd rather ship
+      the boring choice that's still running five years from now than the
+      fashionable one that needs replacing next quarter. You'll see that
+      instinct pay off concretely across the Portfolio and Resume pages.`),
     question: 'What makes Ricky different from a million other senior engineers?',
   },
   {
@@ -80,7 +92,9 @@ export const faqItems: FaqItems[] = [
       processes tens of billions of records monthly with 5+ years of zero
       production defects, and runs for roughly 5% of what a licensed
       third-party replacement would cost per year (licensing alone far
-      higher, operations included).`),
+      higher, operations included). That cost ratio is a key theme across
+      this site - you'll see it again on the Portfolio page and itemized on
+      the Resume's avoided-cost summary.`),
     question: 'Can Ricky point to a system he maintains that proves the quality bar?',
   },
   {
@@ -89,7 +103,9 @@ export const faqItems: FaqItems[] = [
       identify the highest-leverage bottleneck (latency, throughput, or
       reliability) and deliver a measurable fix within the first month.
       The second month scales that pattern; the third month drives
-      team-wide adoption.`),
+      team-wide adoption. The work behind that cadence - taking a service
+      with frequent production issues to month-long stability within a month
+      - is detailed on the Resume page and referenced across the Portfolio.`),
     question: 'What would Ricky focus on in his first 90 days?',
   },
 ];
@@ -127,8 +143,13 @@ export const hats = [
             and put draws on the wall: a single technical vision, named owners,
             and a quality bar the team can self-enforce. The pattern is
             consistent: ambiguity shrinks, direction emerges, and&nbsp;
-            <Link href="/about" title="people-first leadership">people-first leadership</Link>
-            &nbsp;becomes the bridge between intent and shipped.
+            <Link href="/about" title="people-first leadership">
+              people-first leadership
+            </Link>
+            &nbsp;becomes the bridge between intent and shipped. The work
+            behind that cadence - taking a service with frequent production
+            issues to month-long stability within a month - is detailed, with
+            specifics, on the Resume page.
           </p>
           <p>
             I&#39;m known for stepping into difficult situations - unclear
@@ -138,7 +159,10 @@ export const hats = [
             technical confidence, and ability to deliver under pressure.
             Whether guiding long-term platform strategy or unblocking a team in
             the middle of a release, I bring a steady, pragmatic leadership
-            style that elevates both people and outcomes.
+            style that elevates both people and outcomes. This is where this
+            six-part story begins; the next chapters - About, Portfolio,
+            Timeline, Stories, and Resume - each pressure-test that promise
+            from a different angle.
           </p>
         </>
       ),
@@ -151,10 +175,8 @@ export const hats = [
       <>
         <img alt="Software Engineer" src={require('@site/src/pages/img/technologist.webp').default} />
         <Reveal coeff={2.5}>
-          <>
-            <i aria-hidden="true">Full Stack</i>
-            Developer
-          </>
+          <i aria-hidden="true">Full Stack</i>
+          Developer
         </Reveal>
       </>
     ),
@@ -181,20 +203,27 @@ export const hats = [
             pattern in the same design loop, then ship a fix across every layer
             without bouncing between owners. That means tighter service
             boundaries (because I see both sides of the call),&nbsp;
-            <Link href="/portfolio" title="fewer integration surprises">fewer integration surprises</Link>
+            <Link href="/portfolio" title="fewer integration surprises">
+              fewer integration surprises
+            </Link>
             &nbsp;(because I write the contracts I live with), and faster
             decisions when a production issue moves between front-end,
-            backend, and provider at the same time.
+            backend, and provider at the same time. It&#39;s the same instinct
+            that started with an architecture degree before I ever wrote a
+            service: see every floor, then own the joinery.
           </p>
           <p>
             My work emphasizes performance, reliability, and long-term
             maintainability. I build systems that are observable, testable,
-            and designed to evolve. Whether I&#39;m implementing a new feature,
+            and designed to evolve - the boring choice that&#39;s still running
+            five years from now over the fashionable one that needs replacing
+            next quarter. Whether I&#39;m implementing a new feature,
             designing a service boundary, or debugging a production issue, I
             bring a deep understanding of how each layer affects the others.
             This holistic perspective helps teams ship faster, reduce
             complexity, and avoid the hidden costs that accumulate when systems
-            are built in isolation.
+            are built in isolation - costs you can see measured, in dollars,
+            on the Resume page.
           </p>
         </>
       ),
@@ -224,18 +253,23 @@ export const hats = [
       content: (
         <>
           <p>
-            The concrete version: when product brings a half-formed idea, I&#39;m
-            usually the one who&nbsp;
-            <Link href="/portfolio" title="prototypes the first cut">prototypes the first cut</Link>
+            The concrete version: when product brings a half-formed idea,
+            I&#39;m usually the one who&nbsp;
+            <Link href="/portfolio" title="prototypes the first cut">
+              prototypes the first cut
+            </Link>
             , runs it past real data or users, and tells the team what&#39;s
-            load-bearing and what&#39;s decoration. Spec-driven development loops
+            essential and what&#39;s decoration. Spec-driven development loops
             and LLM-assisted exploration let me cover five design paths in the
             time a team used to spend debating one - so we avoid the trap of
             shipping something technically impressive that nobody asked for.
             What&nbsp;
             <Link href="/resume" title="makes it stick">makes it stick</Link>
             &nbsp;is the rigor: the AI moves fast, but the validation loop is
-            what turns a guess into a decision.
+            what turns a guess into a decision. I was the first engineer at my
+            company to set up spec-driven development, and that loop is the
+            connective tissue between the creativity here and the
+            reliability you&#39;ll see measured on the Resume.
           </p>
           <p>
             This mindset helps teams move faster without sacrificing quality.
@@ -245,7 +279,8 @@ export const hats = [
             architectural tradeoffs, I bring a creative yet grounded approach
             that balances innovation with execution. The result is solutions
             that are not only technically strong but strategically aligned with
-            business goals.
+            business goals - the same alignment the About page later codifies
+            as an operating philosophy rather than a happy accident.
           </p>
         </>
       ),
@@ -281,25 +316,33 @@ export const hats = [
         <>
           <p>
             The waves I&#39;ve shipped through -&nbsp;
-            <Link href="/timeline" title={humanizeYears(total, 'decades')}>{humanizeYears(total, 'decades')}</Link>
+            <Link href="/timeline" title={humanizeYears(total, 'decades')}>
+              {humanizeYears(total, 'decades')}
+            </Link>
             &nbsp;of them - aren&#39;t nostalgia. They&#39;re the reason I
             stop teams from adopting a framework just because it&#39;s popular,
             and the reason I&#39;ll choose to ship the boring choice that&#39;s
             going to run five years from now. I&#39;ve seen the patterns that
             aged well (small boundaries, observable behavior, replaceable
             parts) and the ones that didn&#39;t - and that pattern memory is
-            the unfair advantage I bring to architecture calls.
+            the unfair advantage I bring to architecture calls. It is also why
+            I treat external dependencies as a last resort for Tier-1 systems;
+            the Stories page tells the trade behind that instinct.
           </p>
           <p>
             My work focuses on building resilient platforms, improving
             architectural foundations, and helping organizations modernize
             without losing stability. I bring a&nbsp;
-            <Link href="/stories" title="forward-looking mindset">forward-looking mindset</Link>
+            <Link href="/stories" title="forward-looking mindset">
+              forward-looking mindset
+            </Link>
             &nbsp;grounded in practical experience, enabling teams to adopt new
             technologies thoughtfully rather than reactively. Whether evolving
             legacy systems, introducing new patterns, or shaping long-term
             technical strategy, I help organizations stay ahead of change while
-            maintaining reliability and trust.
+            maintaining reliability and trust - the same trust the Stories page
+            shows, in the voices of the people who worked beside me when the
+            calls were hard.
           </p>
         </>
       ),
@@ -330,20 +373,28 @@ export const image = {
 };
 
 export const intro: IntroProps = {
-  description: oneLine(`I design and deliver cloud-native, distributed
-    platforms that power high-volume, business-critical products. I bring
-    clarity, technical depth, and strong architectural judgment to complex
-    problems - with a measurable track record: a Tier-1 essential service I
-    maintain holds a 50 ms p99, 5+ years of zero production defects, and runs
-    for roughly 5% of what a licensed replacement would cost to run per
-    year. I lead a small delivery team as tech lead, was first in my company
-    to set up spec-driven development.`),
+  description: oneLine(`I started in architecture - the kind with load-bearing
+    walls - and never stopped building that way. Today I design and deliver
+    cloud-native, distributed platforms that power high-volume,
+    business-critical products, and I bring clarity, technical depth, and
+    strong architectural judgment to complex problems. The pattern across
+    ${humanizeYears(total, 'decades')} of hands-on work is a simple one:
+    the same person who designs the system should also build it and run it in
+    production. The measurable result is a Tier-1 essential service I
+    maintain - a 50 ms p99, 5+ years of zero production defects, running for
+    roughly 5% of what a licensed replacement would cost per year. I lead a
+    small delivery team as tech lead and was the first in my company to set
+    up spec-driven development. This page is the front door; the same themes
+    carry through the About, Portfolio, Timeline, Stories, and Resume pages`),
   title: 'Engineering Leader & Full-Stack Architect Building Scalable, Resilient Systems',
 };
 
 export const layout: LayoutProps = {
-  description: oneLine(`Welcome to Ricky Huang's site - engineering leader,
-    full stack developer, and innovator with decades of software expertise.`),
+  description: oneLine(`The front door to Ricky Huang's site - an engineer who
+    started in architecture and never stopped building durable systems.
+    ${humanizeYears(total, 'over')} of engineering leadership, full stack
+    delivery, and resilient cloud-native platforms, told across six
+    interconnected chapters.`),
   faq: { items: faqItems, slug: '' },
   keywords: [
     'engineering leader',

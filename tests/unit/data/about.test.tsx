@@ -40,13 +40,16 @@ describe('data.about', () => {
       expect(questions.some((q) => q.match(/doesn't show up on a resume/i))).toBe(true);
     });
 
-    test('losslessly preserves the original intro facts in the rewritten pitch', () => {
+    test('preserves canonical facts in the rewritten intro', () => {
       const pitch = textContent(intro.description);
-      expect(pitch).toMatch(/beyond titles and roles/);
-      expect(pitch).toMatch(/teams, projects, and outcomes improve/);
-      expect(pitch).toMatch(/how I read people/);
-      expect(pitch).toMatch(/how I deliver on direction/);
-      expect(pitch).toMatch(/attributes that make both click/);
+      expect(pitch).toMatch(/vision/);
+      expect(pitch).toMatch(/rising action and core work/);
+      expect(pitch).toMatch(/operating philosophy/);
+      expect(pitch).toMatch(/Transformer on people/);
+      expect(pitch).toMatch(/Transactor on tasks/);
+      expect(pitch).toMatch(/structural discipline from architecture/);
+      expect(pitch).toMatch(/planet-scale ceiling from CheetahMail/);
+      expect(pitch).toMatch(/durability bar from the Tier-1 Experian service/);
     });
   });
 

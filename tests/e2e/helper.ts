@@ -114,11 +114,11 @@ export const hasActiveNavigation = async (options: Options) => {
   if (mobile(options.testInfo)) {
     await options.page!.locator('nav .navbar__inner button.navbar__toggle')
       .click();
-    await expect(options.page!.getByRole('link', options))
-      .toHaveClass(/menu__link--active/);
+    await expect(options.page!.locator('nav.navbar .navbar-sidebar__items')
+      .getByRole('link', options)).toHaveClass(/menu__link--active/);
   } else {
-    await expect(options.page!.getByRole('link', options))
-      .toHaveClass(/navbar__link--active/);
+    await expect(options.page!.locator('nav.navbar .navbar__items')
+      .getByRole('link', options)).toHaveClass(/navbar__link--active/);
   }
 };
 

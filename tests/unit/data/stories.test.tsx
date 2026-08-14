@@ -53,7 +53,7 @@ describe('data.stories', () => {
 
   describe('layout', () => {
     test('description', () => {
-      expect(layout.description).toMatch(/^The horizon - peer testimonials/);
+      expect(layout.description).toMatch(/^Peer testimonials and hard-won lessons/);
     });
 
     test('title', () => {

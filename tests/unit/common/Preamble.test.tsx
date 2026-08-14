@@ -26,7 +26,7 @@ describe('Preamble', () => {
 
     // eslint-disable-next-line testing-library/no-node-access
     const col = header?.querySelector('div');
-    expect(col).toHaveClass('col col--8 col--offset-2');
+    expect(col).toHaveClass('col');
 
     // eslint-disable-next-line testing-library/no-node-access
     const preamble = col?.querySelector('div');

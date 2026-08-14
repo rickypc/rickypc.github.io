@@ -13,11 +13,109 @@ const below20: string[] = [
   'seventeen', 'eighteen', 'nineteen',
 ];
 
+const DEFAULT_DESCRIPTION = 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator';
+
+const DEFAULT_KEYWORDS: string[] = [
+  'ricky huang',
+  'richard huang',
+  'full stack developer',
+  'professional software engineer',
+  'engineering leader',
+  'value proposition',
+  'technical innovation',
+  'technology foundation',
+  'business strategy',
+  'business objective',
+  'software engineering',
+  'innovator',
+  'smart creative',
+  'secure product',
+  'high quality',
+  'master degree',
+];
+
+const DEFAULT_TITLE = 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator';
+
 const FAQ_CONTEXT = {
   '@context': 'https://schema.org/',
   '@type': 'FAQPage',
   inLanguage: 'en-US',
 };
+
+const PERSON_ENTITY = {
+  '@id': 'https://ricky.one#Person',
+  '@type': 'Person',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Orange County',
+    addressRegion: 'CA',
+  },
+  alumniOf: [
+    {
+      '@type': 'CollegeOrUniversity',
+      name: 'California State University, Fullerton',
+      sameAs: 'https://en.wikipedia.org/wiki/California_State_University,_Fullerton',
+    },
+    {
+      '@type': 'CollegeOrUniversity',
+      name: 'Petra Christian University',
+      sameAs: 'https://en.wikipedia.org/wiki/Petra_Christian_University',
+    },
+  ],
+  familyName: 'Huang',
+  gender: 'Male',
+  givenName: 'Richard',
+  hasCredential: [
+    {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'degree',
+      dateCreated: '1997',
+      name: 'Bachelor of Engineering in Architecture',
+      recognizedBy: {
+        '@type': 'Organization',
+        name: 'Petra Christian University',
+        sameAs: 'https://en.wikipedia.org/wiki/Petra_Christian_University',
+      },
+    },
+    {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'degree',
+      dateCreated: '2007',
+      name: 'Master of Science in Software Engineering',
+      recognizedBy: {
+        '@type': 'Organization',
+        name: 'California State University, Fullerton',
+        sameAs: 'https://en.wikipedia.org/wiki/California_State_University,_Fullerton',
+      },
+    },
+  ],
+  honorificSuffix: 'MSE',
+  image: 'https://ricky.one/img/self.png',
+  jobTitle: 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
+  name: 'Ricky Huang',
+  nationality: {
+    '@type': 'Country',
+    name: 'USA',
+    sameAs: 'https://en.wikipedia.org/wiki/United_States',
+  },
+  sameAs: [
+    'https://hub.docker.com/u/rickypc',
+    'https://github.com/rickypc',
+    'https://keybase.io/rickypc',
+    'https://libraries.io/github/rickypc',
+    'https://www.linkedin.com/in/rihuang',
+    'https://www.npmjs.com/~rickypc',
+  ],
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Experian',
+    sameAs: 'https://en.wikipedia.org/wiki/Experian',
+  },
+};
+
+const REVIEW_AUTHOR = { '@type': 'Person', name: PERSON_ENTITY.name };
+
+const REVIEW_RATING = { '@type': 'Rating', bestRating: 5, ratingValue: 5 };
 
 const tens: string[] = [
   '', '', 'twenty', 'thirty', 'forty', 'fifty',
@@ -69,104 +167,20 @@ export const chunkToWords = (input: number): string => {
 export const clsx = (...classes: (boolean | null | number | string | undefined)[]) => classes.filter((cls) => cls && typeof (cls) === 'string').join(' ');
 
 export const context = ({
-  description = 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
-  keywords = [
-    'ricky huang',
-    'richard huang',
-    'full stack developer',
-    'professional software engineer',
-    'engineering leader',
-    'value proposition',
-    'technical innovation',
-    'technology foundation',
-    'business strategy',
-    'business objective',
-    'software engineering',
-    'innovator',
-    'smart creative',
-    'secure product',
-    'high quality',
-    'master degree',
-  ],
+  description = DEFAULT_DESCRIPTION,
+  keywords = DEFAULT_KEYWORDS,
   schema = 'ProfilePage',
-  title = 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
+  title = DEFAULT_TITLE,
 } = {}) => JSON.stringify({
   '@context': 'https://schema.org/',
   '@type': schema,
+  ...schema === 'Review' ? { author: REVIEW_AUTHOR } : {},
   description,
   headline: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic',
   keywords: keywords.join(','),
-  mainEntity: {
-    '@id': 'https://ricky.one#Person',
-    '@type': 'Person',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Orange County',
-      addressRegion: 'CA',
-    },
-    alumniOf: [
-      {
-        '@type': 'CollegeOrUniversity',
-        name: 'California State University, Fullerton',
-        sameAs: 'https://en.wikipedia.org/wiki/California_State_University,_Fullerton',
-      },
-      {
-        '@type': 'CollegeOrUniversity',
-        name: 'Petra Christian University',
-        sameAs: 'https://en.wikipedia.org/wiki/Petra_Christian_University',
-      },
-    ],
-    familyName: 'Huang',
-    gender: 'Male',
-    givenName: 'Richard',
-    hasCredential: [
-      {
-        '@type': 'EducationalOccupationalCredential',
-        credentialCategory: 'degree',
-        dateCreated: '1997',
-        name: 'Bachelor of Engineering in Architecture',
-        recognizedBy: {
-          '@type': 'Organization',
-          name: 'Petra Christian University',
-          sameAs: 'https://en.wikipedia.org/wiki/Petra_Christian_University',
-        },
-      },
-      {
-        '@type': 'EducationalOccupationalCredential',
-        credentialCategory: 'degree',
-        dateCreated: '2007',
-        name: 'Master of Science in Software Engineering',
-        recognizedBy: {
-          '@type': 'Organization',
-          name: 'California State University, Fullerton',
-          sameAs: 'https://en.wikipedia.org/wiki/California_State_University,_Fullerton',
-        },
-      },
-    ],
-    honorificSuffix: 'MSE',
-    image: 'https://ricky.one/img/self.png',
-    jobTitle: 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
-    name: 'Ricky Huang',
-    nationality: {
-      '@type': 'Country',
-      name: 'USA',
-      sameAs: 'https://en.wikipedia.org/wiki/United_States',
-    },
-    sameAs: [
-      'https://hub.docker.com/u/rickypc',
-      'https://github.com/rickypc',
-      'https://keybase.io/rickypc',
-      'https://libraries.io/github/rickypc',
-      'https://www.linkedin.com/in/rihuang',
-      'https://www.npmjs.com/~rickypc',
-    ],
-    worksFor: {
-      '@type': 'Organization',
-      name: 'Experian',
-      sameAs: 'https://en.wikipedia.org/wiki/Experian',
-    },
-  },
+  mainEntity: PERSON_ENTITY,
   name: title,
+  ...schema === 'Review' ? { reviewRating: REVIEW_RATING } : {},
   url: 'https://ricky.one',
 });
 

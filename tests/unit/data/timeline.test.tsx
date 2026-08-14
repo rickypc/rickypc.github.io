@@ -58,7 +58,7 @@ describe('data.timeline', () => {
 
   describe('layout', () => {
     test('description', () => {
-      expect(layout.description).toMatch(/^Milestones in Ricky Huang's journey/);
+      expect(layout.description).toMatch(/^Milestones across Ricky Huang's career arc/);
     });
 
     test('title', () => {

@@ -112,6 +112,23 @@ describe('data.common', () => {
       const parsed = JSON.parse(context({ schema: 'CollectionPage' }));
       expect(parsed['@type']).toBe('CollectionPage');
     });
+
+    test('includes author and reviewRating only when schema is Review', () => {
+      const reviewParsed = JSON.parse(context({ schema: 'Review' }));
+      expect(reviewParsed['@type']).toBe('Review');
+      expect(reviewParsed.author).toEqual({ '@type': 'Person', name: 'Ricky Huang' });
+      expect(reviewParsed.reviewRating).toEqual({
+        '@type': 'Rating', bestRating: 5, ratingValue: 5,
+      });
+
+      const profileParsed = JSON.parse(context({ schema: 'ProfilePage' }));
+      expect(profileParsed.author).toBeUndefined();
+      expect(profileParsed.reviewRating).toBeUndefined();
+
+      const collectionParsed = JSON.parse(context({ schema: 'CollectionPage' }));
+      expect(collectionParsed.author).toBeUndefined();
+      expect(collectionParsed.reviewRating).toBeUndefined();
+    });
   });
 
   describe('faqContext()', () => {

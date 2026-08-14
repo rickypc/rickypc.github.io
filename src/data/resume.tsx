@@ -732,9 +732,8 @@ export const header = ({ siteConfig }: HeaderProps) => {
 export const schema: SchemaType = 'ProfilePage';
 
 export const layout: LayoutProps = {
-  description: oneLine(`The strategic appendix - a Principal Engineer resume
-    mirroring the themes of the five preceding chapters: cloud systems, backend
-    architecture, scalable platform design, durability as a design choice, and
+  description: oneLine(`A Principal Engineer resume for Ricky Huang: cloud
+    systems, backend architecture, scalable platform design, durability, and
     end-to-end ownership.`),
   faq: { items: faqItems, slug: 'resume' },
   keywords: [

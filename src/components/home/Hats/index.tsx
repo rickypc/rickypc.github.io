@@ -40,7 +40,7 @@ function FaPlus(props: IconBaseProps): ReactElement {
 }
 
 const Details = memo(function Details({ content, title }: DetailsProps) {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(true);
   const animate = { height: 'auto', opacity: 1 };
   const exit = { height: 0, opacity: 0 };
   const onClick = () => setActive((previous) => !previous);

@@ -31,11 +31,11 @@
 .preamble {
   margin: 1.5rem 0 1rem 0;
   padding: 0 2rem;
-  text-align: left;
 }
 
 .preamble h1 {
   font-size: 1.9rem;
+  text-align: left;
 }
 
 [data-theme='dark'] :global(.theme-layout-main):has(>.home)+footer:global(.footer) {

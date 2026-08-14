@@ -113,8 +113,9 @@ export const intro: IntroProps = {
 export const schema: SchemaType = 'ProfilePage';
 
 export const layout: LayoutProps = {
-  description: oneLine(`Milestones in Ricky Huang's journey - from architecture
-    to engineering, startups to global impact, and everything in between.`),
+  description: oneLine(`Milestones across Ricky Huang's career arc - from
+    architectural engineering roots to software leadership, startups to global
+    enterprise impact at Experian.`),
   faq: { items: faqItems, slug: 'timeline' },
   keywords: [
     'career timeline',

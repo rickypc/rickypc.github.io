@@ -18,7 +18,6 @@ export default memo(function Home() {
   return (
     <Layout className={styles.home} {...layout}>
       <Preamble
-        col="col"
         intro={{ before: (<Greeting />), className: styles.preamble, ...intro }}
         row="row row--no-gutters"
       />

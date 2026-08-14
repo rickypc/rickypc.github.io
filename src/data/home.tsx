@@ -390,11 +390,9 @@ export const intro: IntroProps = {
 };
 
 export const layout: LayoutProps = {
-  description: oneLine(`The front door to Ricky Huang's site - an engineer who
-    started in architecture and never stopped building durable systems.
-    ${humanizeYears(total, 'over')} of engineering leadership, full stack
-    delivery, and resilient cloud-native platforms, told across six
-    interconnected chapters.`),
+  description: oneLine(`Ricky Huang - an engineer who started in architecture,
+    delivering durable cloud-native full-stack platforms and
+    ${humanizeYears(total, 'over')} of engineering leadership.`),
   faq: { items: faqItems, slug: '' },
   keywords: [
     'engineering leader',

@@ -43,7 +43,7 @@ export const Intro = memo(function Intro({
 export default memo(function Preamble({ col, intro, row }: PreambleProps): ReactElement {
   return (
     <header aria-label={textContent(intro.title)} className={row || 'row'} role="banner">
-      <div className={col || clsx('col', 'col--8', 'col--offset-2')}>
+      <div className={col || 'col'}>
         <Intro {...intro} />
       </div>
     </header>

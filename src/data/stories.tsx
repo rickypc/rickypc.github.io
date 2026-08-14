@@ -127,10 +127,9 @@ export const intro: IntroProps = {
 export const schema: SchemaType = 'Review';
 
 export const layout: LayoutProps = {
-  description: oneLine(`The horizon - peer testimonials and hard-won lessons
-    that point Ricky Huang's story forward. Trust compounding across
-    independent work, enterprise, and rescue work; the call to action for the
-    next chapter.`),
+  description: oneLine(`Peer testimonials and hard-won lessons that point
+    Ricky Huang's story forward - trust compounding across independent,
+    enterprise, and rescue engineering work.`),
   faq: { items: faqItems, slug: 'stories' },
   keywords: [
     'developer testimonials',

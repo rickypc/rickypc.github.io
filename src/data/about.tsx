@@ -138,10 +138,9 @@ export const intro: IntroProps = {
 export const schema: SchemaType = 'ProfilePage';
 
 export const layout: LayoutProps = {
-  description: oneLine(`The vision - how Ricky Huang's rising action and
-    core work crystallized into an operating philosophy: people-first
-    leadership and task-side rigor, plotted across two axes and backed by
-    operational evidence.`),
+  description: oneLine(`How Ricky Huang's rising action became a people-first,
+    task-rigorous engineering philosophy - a Transformer-Transactor profile
+    backed by operational evidence.`),
   faq: { items: faqItems, slug: 'about' },
   keywords: [
     'leadership',

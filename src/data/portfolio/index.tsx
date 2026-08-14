@@ -844,11 +844,9 @@ export const intro: IntroProps = {
 export const schema: SchemaType = 'CollectionPage';
 
 export const layout: LayoutProps = {
-  description: oneLine(`The core body of work - 15 production systems where
-    Ricky Huang's rising action proved itself under load, from a billion
-    emails a day at CheetahMail to a Tier-1 essential Experian service at
-    50 ms p99 and 5% replacement cost. Cloud, media, e-commerce, logistics,
-    ticketing.`),
+  description: oneLine(`Ricky Huang's software portfolio - 15 systems across
+    cloud, media, e-commerce, logistics, and ticketing, from billion-email
+    scale to a Tier-1 Experian service.`),
   faq: { items: faqItems, slug: 'portfolio' },
   keywords: [
     'software engineering portfolio',

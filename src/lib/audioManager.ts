@@ -24,7 +24,7 @@ class AudioManager {
    *   fade.
    * @param {number} duration - Number of incremental steps used to reach
    *   the original volume.
-   * @returns {Promise<void>} A promise that resolves once the fade‑in
+   * @returns {Promise<void>} A promise that resolves once the fade-in
    *   completes.
    */
   private static fadeIn(audio: HTMLAudioElement, volume: number, duration: number): Promise<void> {
@@ -86,7 +86,7 @@ class AudioManager {
   }
 
   /**
-   * Plays an audio with a smooth fade‑in. If another audio element is
+   * Plays an audio with a smooth fade-in. If another audio element is
    * currently active, it is faded out and paused first. The method sets the
    * active audio, starts playback at zero volume, and fades it up to its
    * original volume.
@@ -94,7 +94,7 @@ class AudioManager {
    *   null/undefined.
    * @param {number} [duration] - Number of incremental steps used to fade in
    *   the volume.
-   * @returns {Promise<void>} A promise that resolves once playback and fade‑in
+   * @returns {Promise<void>} A promise that resolves once playback and fade-in
    *   are complete.
    */
   async play(audio: MaybeAudio, duration = 30) {

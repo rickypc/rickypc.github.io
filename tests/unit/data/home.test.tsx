@@ -66,7 +66,9 @@ describe('data.home', () => {
   });
 
   test('exports intro with description and title', () => {
-    expect(intro.description).toMatch(/^I started in architecture/);
+    // eslint-disable-next-line testing-library/no-node-access
+    expect((intro.description as any).props.children).toHaveLength(15);
+    expect(textContent(intro.description)).toMatch(/^I started in architecture/);
     expect(intro.title).toMatch(/^Engineering Leader & Full-Stack/);
   });
 

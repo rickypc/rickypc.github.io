@@ -263,8 +263,8 @@ describe('data.resume', () => {
     });
 
     test('content is a non-empty string', () => {
-      expect(typeof preamble.content).toBe('string');
-      expect(preamble.content.length).toBeGreaterThan(0);
+      expect(typeof preamble.content).toBe('object');
+      expect(preamble.content.props.children).toHaveLength(9);
     });
   });
 

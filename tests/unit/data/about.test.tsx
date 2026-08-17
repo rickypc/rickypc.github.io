@@ -65,8 +65,8 @@ describe('data.about', () => {
     test('has description and title', () => {
       expect(typeof intro).toBe('object');
 
-      expect(typeof intro.description).toBe('string');
-      expect(textContent(intro.description).length).toBeGreaterThan(0);
+      expect(typeof intro.description).toBe('object');
+      expect((intro.description as any).props.children).toHaveLength(5);
 
       expect(typeof intro.title).toBe('string');
       expect(intro.title).toMatch(/^About Ricky Huang/);

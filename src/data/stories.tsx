@@ -8,6 +8,7 @@ import {
 } from '@site/src/data/common';
 import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
+import Link from '@site/src/components/common/Link';
 import { total } from '@site/src/data/home';
 
 export type StoryProps = {
@@ -105,21 +106,33 @@ export const faqItems: FaqItems[] = [
 ];
 
 export const intro: IntroProps = {
-  description: oneLine(`This is the horizon - where the story turns forward.
-    ${humanizeYears(total, 'decades')} of engineering leaves two kinds of
-    residue: systems that keep running, and trust that keeps compounding. The
-    four testimonials below are the trust, in human voices - each one earned
-    across a chapter you've already walked through (independent work breadth,
-    CheetahMail scale, rescue work, depth across stacks). Read them as the
-    forward edge of the arc, not its rearview mirror: the same person those
-    recommenders describe now maintains a Tier-1 essential service with 5+
-    years of zero production defects, received a Platinum Aspire Award (top
-    1% performance) and roughly 20 EMF Hero and Spot Awards since, and was
-    first in his company to set up spec-driven development. The call to
-    action is simple - if the themes running through Home, Timeline,
-    Portfolio, and About describe the kind of builder you need, the next
-    chapter is a conversation. The Resume page is the scannable appendix
-    that closes the loop.`),
+  description:
+  <>
+    This is the horizon - where the story turns forward.
+    {humanizeYears(total, 'decades')}
+    of engineering leaves two kinds of residue: systems that keep running, and
+    trust that keeps compounding. The four testimonials below are the trust, in
+    human voices - each one earned across a chapter you&#39;ve already walked
+    through (independent work breadth, CheetahMail scale, rescue work, depth
+    across stacks). Read them as the forward edge of the arc, not its rearview
+    mirror: the same person those recommenders describe now maintains a Tier-1
+    essential service with 5+ years of zero production defects, received a
+    Platinum Aspire Award (top 1% performance) and roughly 20 EMF Hero and Spot
+    Awards since, and was first in his company to set up&nbsp;
+    <Link href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/#what-is-spec-driven-development">spec-driven development</Link>
+    . The call to action is simple - if the themes running through&nbsp;
+    <Link href="/" title="Home">Home</Link>
+    ,&nbsp;
+    <Link href="/timeline" title="Timeline">Timeline</Link>
+    ,&nbsp;
+    <Link href="/portfolio" title="Portfolio">Portfolio</Link>
+    , and&nbsp;
+    <Link href="/about" title="About">About</Link>
+    &nbsp;describe the kind of builder you need, the next chapter is a conversation.
+    The&nbsp;
+    <Link href="/resume" title="Resume">Resume</Link>
+    &nbsp;page is the scannable appendix that closes the loop.
+  </>,
   title: 'Stories',
 };
 

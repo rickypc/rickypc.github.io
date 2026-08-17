@@ -101,8 +101,8 @@ describe('portfolio.index', () => {
   test('intro export has description and title', () => {
     expect(typeof intro).toBe('object');
 
-    expect(typeof intro.description).toBe('string');
-    expect(textContent(intro.description).length).toBeGreaterThan(0);
+    expect(typeof intro.description).toBe('object');
+    expect((intro.description as any).props.children).toHaveLength(7);
 
     expect(intro.title).toBe('Portfolio');
   });

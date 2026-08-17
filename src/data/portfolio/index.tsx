@@ -8,6 +8,7 @@
 import { type FaqItems, type SchemaType, oneLine } from '@site/src/data/common';
 import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
+import Link from '@site/src/components/common/Link';
 
 export const catalog = [
   {
@@ -822,8 +823,11 @@ export const faqItems: FaqItems[] = [
 ];
 
 export const intro: IntroProps = {
-  description: oneLine(`This is the core body of work. The rising action of the
-    Timeline page culminates here in a catalog of 15 production systems across
+  description:
+  <>
+    This is the core body of work. The rising action of the&nbsp;
+    <Link href="/timeline" title="Timeline">Timeline</Link>
+    &nbsp;page culminates here in a catalog of 15 production systems across
     cloud, media, commerce, logistics, and ticketing - each one a test
     that demanded a different kind of mastery. The twin peaks of the arc are
     both in this catalog: a billion emails a day at CheetahMail, and the
@@ -835,8 +839,12 @@ export const intro: IntroProps = {
     essential from decorative. An internal tool here even grew its business
     from under $100K a year to hundreds of millions in revenue; my systems
     still back that business today. Read these as the proof behind the
-    promises made on the Home page - and the raw material the Resume later
-    distills into a strategic appendix.`),
+    promises made on the&nbsp;
+    <Link href="/" title="Home">Home</Link>
+    &nbsp;page - and the raw material the&nbsp;
+    <Link href="/resume" title="Resume">Resume</Link>
+    &nbsp;later distills into a strategic appendix.
+  </>,
   title: 'Portfolio',
 };
 

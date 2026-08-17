@@ -792,20 +792,29 @@ export const leadership = {
 };
 
 export const preamble = {
-  content: oneLine(`This is the strategic appendix - the resume, distilled to
-    scannable form, mirroring the themes of the five chapters that precede
-    it. Principal Engineer architecting, building, and scaling production
-    systems across cloud, distributed, and event-driven environments. I
-    define technical direction, design end-to-end architectures, and deliver
-    systems that are reliable, observable, and built to last - the same
-    structural instinct that opens the Home page, pressure-tested in the
-    Portfolio body of work, codified on About, and pointed forward from
-    Stories. Equally comfortable writing code, designing APIs, reviewing
+  content:
+  <>
+    This is the strategic appendix - the resume, distilled to scannable form,
+    mirroring the themes of the five chapters that precede it. Principal
+    Engineer architecting, building, and scaling production systems across
+    cloud, distributed, and event-driven environments. I define technical
+    direction, design end-to-end architectures, and deliver systems that are
+    reliable, observable, and built to last - the same structural instinct that
+    opens the&nbsp;
+    <Link href="/" title="Home">Home</Link>
+    &nbsp;page, pressure-tested in the&nbsp;
+    <Link href="/portfolio" title="Portfolio">Portfolio</Link>
+    &nbsp;body of work, codified on&nbsp;
+    <Link href="/about" title="About">About</Link>
+    , and pointed forward from&nbsp;
+    <Link href="/stories" title="Stories">Stories</Link>
+    . Equally comfortable writing code, designing APIs, reviewing
     architectures, or debugging complex failures in production. Known for
     clear technical judgment, deep hands-on expertise, and the ability to
     turn ambiguous problems into well-engineered solutions. Every metric
     below is the dollar and uptime shape of the themes running through the
-    whole site.`),
+    whole site.
+  </>,
   heading: {
     as: 'h2' as HeadingType,
     children: (

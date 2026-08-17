@@ -8,6 +8,7 @@
 import { render, screen } from '@testing-library/react';
 import About from '@site/src/pages/about';
 import { intro, layout } from '@site/src/data/about';
+import { textContent } from '@site/src/data/common';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 describe('pages.about', () => {
@@ -30,7 +31,9 @@ describe('pages.about', () => {
     const preambleEl = screen.queryByTestId('preamble');
 
     if (!preambleEl) throw new Error('Preamble not rendered');
-    expect(JSON.parse(preambleEl.dataset.intro!)).toEqual(expect.objectContaining(intro));
+    const introJson = JSON.parse(preambleEl.dataset.intro!);
+    expect(introJson.description).toEqual(textContent(intro.description));
+    expect(introJson.title).toEqual(intro.title);
     expect(layoutEl?.contains(preambleEl)).toBeTruthy();
   });
 

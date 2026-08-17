@@ -9,6 +9,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { intro, layout } from '@site/src/data/stories';
 import Stories from '@site/src/pages/stories';
+import { textContent } from '@site/src/data/common';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 describe('pages.stories', () => {
@@ -31,7 +32,9 @@ describe('pages.stories', () => {
 
     const preambleEl = screen.getByTestId('preamble');
     expect(preambleEl).toBeInTheDocument();
-    expect(JSON.parse(preambleEl.dataset.intro!)).toEqual(expect.objectContaining(intro));
+    const introJson = JSON.parse(preambleEl.dataset.intro!);
+    expect(introJson.description).toEqual(textContent(intro.description));
+    expect(introJson.title).toEqual(intro.title);
   });
 
   test('renders a section with combined classes and includes Content inside it', () => {

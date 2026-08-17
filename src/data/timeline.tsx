@@ -8,6 +8,7 @@
 import { type FaqItems, type SchemaType, oneLine } from '@site/src/data/common';
 import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
+import Link from '@site/src/components/common/Link';
 import { type PictureInfo } from '@site/src/components/common/Image';
 
 export type TimelineProps = {
@@ -94,18 +95,24 @@ export const faqItems: FaqItems[] = [
 ];
 
 export const intro: IntroProps = {
-  description: oneLine(`These are the milestones - the years between the
-    opening on the Home page and the core projects on Portfolio. Read them
-    in the order they're shown (earliest roots first) and one career arc
-    emerges: an engineering background rooted in how to plan, design, and
-    construct physical structures at Petra Christian University, then
-    carried into software - as an independent professional in 1995, through
-    RazorGator, AirIQ, Experian CheetahMail, and into Experian Consumer
+  description:
+  <>
+    These are the milestones - the years between the opening on the&nbsp;
+    <Link href="/" title="Home">Home</Link>
+    &nbsp;page and the core projects on&nbsp;
+    <Link href="/portfolio" title="Portfolio">Portfolio</Link>
+    . Read them in the order they&#39;re shown (earliest roots first) and one
+    career arc emerges: an engineering background rooted in how to plan,
+    design, and construct physical structures at Petra Christian University,
+    then carried into software - as an independent professional in 1995,
+    through RazorGator, AirIQ, Experian CheetahMail, and into Experian Consumer
     Services where the work continues. Each step widened the scope of what I
-    could build, and each one built capabilities you'll see applied later - the
-    telemetry discipline from AirIQ, the billion-message scale of CheetahMail,
-    the cost-design discipline that shows up on the Resume page as 5% of a
-    licensed replacement.`),
+    could build, and each one built capabilities you&#39;ll see applied later -
+    the telemetry discipline from AirIQ, the billion-message scale of
+    CheetahMail, the cost-design discipline that shows up on the&nbsp;
+    <Link href="/resume" title="Resume">Resume</Link>
+    &nbsp;page as 5% of a licensed replacement.
+  </>,
   title: 'Timeline',
 };
 

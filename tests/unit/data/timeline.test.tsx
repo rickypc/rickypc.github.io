@@ -40,7 +40,7 @@ describe('data.timeline', () => {
       expect(pitch).toMatch(/Petra Christian University/);
       expect(pitch).toMatch(/Experian CheetahMail/);
       expect(pitch).toMatch(/Experian Consumer Services/);
-      expect(pitch).toMatch(/core projects on Portfolio/);
+      expect(pitch).toMatch(/core projects on/);
       expect(pitch).toMatch(/5% of.*licensed replacement/);
     });
   });
@@ -49,8 +49,8 @@ describe('data.timeline', () => {
     test('has description and title', () => {
       expect(typeof intro).toBe('object');
 
-      expect(typeof intro.description).toBe('string');
-      expect(textContent(intro.description).length).toBeGreaterThan(0);
+      expect(typeof intro.description).toBe('object');
+      expect((intro.description as any).props.children).toHaveLength(7);
 
       expect(intro.title).toBe('Timeline');
     });

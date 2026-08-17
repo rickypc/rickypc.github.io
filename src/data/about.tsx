@@ -6,6 +6,7 @@
 import { type FaqItems, type SchemaType, oneLine } from '@site/src/data/common';
 import { type IntroProps } from '@site/src/components/common/Preamble';
 import { type LayoutProps } from '@site/src/components/common/Layout';
+import Link from '@site/src/components/common/Link';
 
 type QuadrantAnchor = 'start' | 'middle' | 'end';
 
@@ -121,16 +122,23 @@ export const faqItems: FaqItems[] = [
 export const headline = 'Leading with People, Purpose, and Results';
 
 export const intro: IntroProps = {
-  description: oneLine(`This is the vision - how a career of rising action and
-    core work crystallized into an operating philosophy rather than a happy
-    accident. The two graphs below plot where I land across a people axis and
-    a task axis, and they're not aspirational; they're the observed shape of
-    how I work after decades of shipping. The position - a Transformer on
-    people, a Transactor on tasks - is the product of every chapter before
-    this one: the structural discipline from architecture, the telemetry
-    rigor from AirIQ, the planet-scale ceiling from CheetahMail, the
-    durability bar from the Tier-1 Experian service. Read this page as the
-    codification of instincts the Portfolio proved and the Timeline earned.`),
+  description:
+  <>
+    This is the vision - how a career of rising action and core work
+    crystallized into an operating philosophy rather than a happy accident. The
+    two graphs below plot where I land across a people axis and a task axis,
+    and they&#39;re not aspirational; they&#39;re the observed shape of how I
+    work after decades of shipping. The position - a Transformer on people, a
+    Transactor on tasks - is the product of every chapter before this one: the
+    structural discipline from architecture, the telemetry rigor from AirIQ,
+    the planet-scale ceiling from CheetahMail, the durability bar from the
+    Tier-1 Experian service. Read this page as the codification of instincts
+    the&nbsp;
+    <Link href="/portfolio" title="Portfolio">Portfolio</Link>
+    &nbsp;proved and the&nbsp;
+    <Link href="/timeline" title="Timeline">Timeline</Link>
+    &nbsp;earned.
+  </>,
   title: 'About Ricky Huang',
 };
 

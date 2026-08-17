@@ -373,19 +373,34 @@ export const image = {
 };
 
 export const intro: IntroProps = {
-  description: oneLine(`I started in architecture - the kind with load-bearing
+  description:
+  <>
+    I started in architecture - the kind with load-bearing
     walls - and never stopped building that way. Today I design and deliver
     cloud-native, distributed platforms that power high-volume,
     business-critical products, and I bring clarity, technical depth, and
     strong architectural judgment to complex problems. The pattern across
-    ${humanizeYears(total, 'decades')} of hands-on work is a simple one:
+    {humanizeYears(total, 'decades')}
+    of hands-on work is a simple one:
     the same person who designs the system should also build it and run it in
     production. The measurable result is a Tier-1 essential service I
     maintain - a 50 ms p99, 5+ years of zero production defects, running for
     roughly 5% of what a licensed replacement would cost per year. I lead a
-    small delivery team as tech lead and was the first in my company to set
-    up spec-driven development. This page is the front door; the same themes
-    carry through the About, Portfolio, Timeline, Stories, and Resume pages`),
+    small delivery team as tech lead and was the first in my company to set up&nbsp;
+    <Link href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/#what-is-spec-driven-development">spec-driven development</Link>
+    . This page is the front door; the same themes
+    carry through the&nbsp;
+    <Link href="/about" title="About">About</Link>
+    ,&nbsp;
+    <Link href="/portfolio" title="Portfolio">Portfolio</Link>
+    ,&nbsp;
+    <Link href="/timeline" title="Timeline">Timeline</Link>
+    ,&nbsp;
+    <Link href="/stories" title="Stories">Stories</Link>
+    , and&nbsp;
+    <Link href="/resume" title="Resume">Resume</Link>
+    &nbsp;pages
+  </>,
   title: 'Engineering Leader & Full-Stack Architect Building Scalable, Resilient Systems',
 };
 

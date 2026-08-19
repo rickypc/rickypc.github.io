@@ -81,7 +81,7 @@
 
 @media print {
   .content {
-    margin: 0 1.75rem;
+    margin: 0;
     opacity: 1 !important;
     padding: 0;
     transform: none !important;
@@ -99,16 +99,18 @@
   }
 
   .content h2 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
 
   .content h3 {
     font-size: 1rem;
+    margin-top: 1rem;
   }
 
   .content p,
   .content ul li {
     font-size: 0.85rem;
+    line-height: 1rem;
   }
 
   .content p {

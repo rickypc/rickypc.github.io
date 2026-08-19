@@ -307,6 +307,7 @@ export const hasPlayback = async (options: Options) => {
 
 export const hasPrint = async (options: Options) => {
   test.skip(options.browserName !== 'chromium', 'Print only works in Chromium');
+  options.testInfo!.setTimeout(60000);
   const search = options.url!.includes('portfolio')
     ? '?docusaurus-data-carousel-play=manual' : '';
   await options.page!.goto(

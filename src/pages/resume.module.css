@@ -71,5 +71,11 @@
       font-size: 0.81rem;
       line-height: 1.05rem;
     }
+
+    .resume :global(.container) svg[class^="qr"] {
+      height: 4.5rem;
+      margin-bottom: 1.125rem;
+      width: 4.5rem;
+    }
   }
 }

@@ -161,14 +161,18 @@
   .content {
     column-count: auto;
     column-gap: 0;
-    margin: 1rem 0 0 0;
+    margin: 0.5rem 0 0 0;
+  }
+
+  [data-theme] .content .story {
+    border: 0;
+    box-shadow: none;
   }
 
   .content .story {
-    box-shadow: none;
-    margin-bottom: 1rem;
+    margin-bottom: 0.25rem;
     opacity: 1 !important;
-    padding: 0.5rem 0.75rem 0.15rem 0.75rem;
+    padding: 0.5rem 0.9rem 0.15rem 0.9rem;
     transform: none !important;
   }
 
@@ -228,17 +232,15 @@
 @supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
   @media print {
     .content .story {
-      padding: 0.5rem 0.75rem 0 0.75rem;
+      margin-bottom: 0.25rem;
+      padding: 0.5rem 0.9rem 0 0.9rem;
     }
 
     .content .story h2 {
       line-height: 1.15rem;
     }
 
-    .content .story p {
-      font-size: 0.81rem;
-    }
-
+    .content .story p,
     .content .story address p {
       font-size: 0.75rem;
     }

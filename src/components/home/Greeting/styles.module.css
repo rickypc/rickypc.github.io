@@ -109,6 +109,10 @@
     print-color-adjust: exact;
   }
 
+  [data-theme] .greeting .pronunciation {
+    background: none;
+  }
+
   .greeting span[class*='reaction_'] span[class*='heart_'] {
     font-size: 1rem;
     line-height: 1rem;

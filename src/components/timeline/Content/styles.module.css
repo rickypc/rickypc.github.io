@@ -230,7 +230,7 @@
 
   .timeline {
     break-inside: avoid;
-    margin: 0 0 1rem 0;
+    margin: 0 0 0.695rem 0;
     width: 100%;
   }
 
@@ -239,6 +239,7 @@
   }
 
   .timeline .inner {
+    margin: 0 0.7rem;
     opacity: 1 !important;
     transform: none !important;
     width: calc(100% - 5rem);
@@ -255,19 +256,20 @@
   }
 
   .timeline .inner h2 {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
 
   .timeline .inner h3 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
 
   .timeline .inner h4 {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .timeline .inner p {
-    font-size: 0.8rem;
+    font-size: 0.795rem;
+    line-height: 1rem;
     margin-bottom: 0;
     text-align: justify;
   }
@@ -302,7 +304,8 @@
     }
 
     .timeline .inner p {
-      line-height: 1.15rem;
+      font-size: 0.725rem;
+      line-height: 1rem;
     }
   }
 }

@@ -121,7 +121,9 @@ export const hats = [
     description: (
       <>
         <span>I lead engineering teams with clarity, direction, and </span>
-        <Link href="/about" title="strong technical judgement">strong technical judgement</Link>
+        <Link href="/about" title="strong technical judgement">
+          strong technical judgement
+        </Link>
         <span>. I guide organizations </span>
         <Link href="/stories" title="through complexity">through complexity</Link>
         <span>
@@ -183,9 +185,13 @@ export const hats = [
     description: (
       <>
         <span>I </span>
-        <Link href="/about" title="bridge front-end and back-end development">bridge front-end and back-end development</Link>
+        <Link href="/about" title="bridge front-end and back-end development">
+          bridge front-end and back-end development
+        </Link>
         <span> to build </span>
-        <Link href="/portfolio" title="scalable, high-performing applications">scalable, high-performing applications</Link>
+        <Link href="/portfolio" title="scalable, high-performing applications">
+          scalable, high-performing applications
+        </Link>
         <span>
           . My work connects systems, teams, and modern tooling to deliver fast
           iteration and real-world impact.
@@ -220,6 +226,8 @@ export const hats = [
             next quarter. Whether I&#39;m implementing a new feature,
             designing a service boundary, or debugging a production issue, I
             bring a deep understanding of how each layer affects the others.
+          </p>
+          <p>
             This holistic perspective helps teams ship faster, reduce
             complexity, and avoid the hidden costs that accumulate when systems
             are built in isolation - costs you can see measured, in dollars,
@@ -241,7 +249,9 @@ export const hats = [
     description: (
       <>
         <span>I combine </span>
-        <Link href="/about" title="engineering depth, creative thinking, and business strategy">engineering depth, creative thinking, and business strategy</Link>
+        <Link href="/about" title="engineering depth, creative thinking, and business strategy">
+          engineering depth, creative thinking, and business strategy
+        </Link>
         <span>
           &nbsp;to turn ideas into well-tested solutions. I work at the
           intersection of innovation and execution, using modern tools to
@@ -302,9 +312,13 @@ export const hats = [
           {humanizeYears(total, 'over')}
           &nbsp;of&nbsp;
         </span>
-        <Link href="/timeline" title="experience and a deep foundation">experience and a deep foundation</Link>
+        <Link href="/timeline" title="experience and a deep foundation">
+          experience and a deep foundation
+        </Link>
         <span> in software engineering, I help organizations build resilient </span>
-        <Link href="/portfolio" title="platforms and forward-looking solutions">platforms and forward-looking solutions</Link>
+        <Link href="/portfolio" title="platforms and forward-looking solutions">
+          platforms and forward-looking solutions
+        </Link>
         <span>
           . I evolve with modern technology to deliver systems that stand the
           test of time.
@@ -387,7 +401,9 @@ export const intro: IntroProps = {
     maintain - a 50 ms p99, 5+ years of zero production defects, running for
     roughly 5% of what a licensed replacement would cost per year. I lead a
     small delivery team as tech lead and was the first in my company to set up&nbsp;
-    <Link href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/#what-is-spec-driven-development">spec-driven development</Link>
+    <Link href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/#what-is-spec-driven-development">
+      spec-driven development
+    </Link>
     . This page is the front door; the same themes
     carry through the&nbsp;
     <Link href="/about" title="About">About</Link>

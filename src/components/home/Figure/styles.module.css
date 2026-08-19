@@ -52,5 +52,9 @@
     :global(.col--2):has(.figure) {
       --ifm-col-width: 100%;
     }
+
+    .figure {
+      margin-top: 9.5rem;
+    }
   }
 }

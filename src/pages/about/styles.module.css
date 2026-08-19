@@ -10,15 +10,6 @@
 
 @media print {
   .row {
-    margin-top: 3rem;
-  }
-}
-
-/* Safari only */
-@supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
-  @media print {
-    .row {
-      margin-top: 1.75rem;
-    }
+    margin-top: 1rem;
   }
 }

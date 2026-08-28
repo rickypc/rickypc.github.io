@@ -9,8 +9,8 @@ import {
 import { clsx, key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
 import {
-  Fragment, memo, type ReactElement, type ReactEventHandler, type RefObject,
-  type SyntheticEvent, useCallback, useEffect, useRef, useState,
+  CSSProperties, Fragment, memo, type ReactElement, type ReactEventHandler,
+  type RefObject, type SyntheticEvent, useCallback, useEffect, useRef, useState,
 } from 'react';
 import { useVisibility } from '@site/src/hooks/observer';
 import styles from './styles.module.css';
@@ -42,6 +42,16 @@ export type ImageSource = {
   };
 };
 
+type PictureContentProps = {
+  alt?: string;
+  fit: ImageInfo;
+  live?: boolean;
+  loaded: boolean;
+  onFallbackLoad: (_: SyntheticEvent<HTMLImageElement, Event>) => void;
+  picture: PictureInfo | undefined;
+  rest: any;
+};
+
 export type PictureInfo = {
   avif?: string;
   fallback?: ImageSource;
@@ -58,16 +68,86 @@ type PictureProps = {
   ref?: RefObject<HTMLPictureElement>;
 };
 
+type PictureSourcesProps = {
+  picture?: PictureInfo;
+};
+
+const findFittingImage = (
+  images: ImageInfo[] | undefined,
+  fallback: ImageSource | undefined,
+  width: number,
+): ImageInfo => {
+  let responsive = images;
+  if (!Array.isArray(responsive) && typeof fallback === 'string') {
+    responsive = [{ path: fallback, width }];
+  }
+  return responsive?.find((image) => image.width >= width)
+    || responsive?.slice(-1)?.[0] || { width: 0 };
+};
+
+const pictureClassName = (
+  className: string | undefined,
+  background: boolean,
+  preSrc: boolean,
+): string => clsx(className, styles.picture, background && !preSrc && styles.shimmer);
+
+const pictureStyle = (
+  background: boolean,
+  preSrc: string | undefined,
+): CSSProperties => (background && preSrc ? { backgroundImage: `url(${preSrc})` } : {});
+
+const pictureImages = (picture: PictureInfo | undefined) => picture?.fallback?.src?.images;
+const picturePreSrc = (picture: PictureInfo | undefined) => picture?.fallback?.preSrc;
+const pictureSrcSet = (picture: PictureInfo | undefined) => picture?.fallback?.src?.srcSet;
+
+const PictureSources = memo(function PictureSources({ picture }: PictureSourcesProps) {
+  return (
+    <>
+      {picture?.avif && <source srcSet={picture.avif} type="image/avif" />}
+      {picture?.webp && <source srcSet={picture.webp} type="image/webp" />}
+    </>
+  );
+});
+
+// After PictureSources assignment.
+const PictureContent = memo(function PictureContent({
+  alt, fit, live, loaded, onFallbackLoad, picture, rest,
+}: PictureContentProps): ReactElement {
+  return (
+    <Fragment key={key(alt, 'fragment')}>
+      <PictureSources picture={picture} />
+      {picture?.fallback && (
+        <motion.img
+          {...rest}
+          alt={loaded ? alt : undefined}
+          animate={{ opacity: live || loaded ? 1 : 0 }}
+          draggable={false}
+          height={fit.height}
+          initial={{ opacity: live ? 1 : 0 }}
+          key={key(alt, 'picture')}
+          onLoad={onFallbackLoad}
+          src={fit.path}
+          srcSet={pictureSrcSet(picture)}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          width={fit.width}
+        />
+      )}
+    </Fragment>
+  );
+});
+
+// After PictureContent assignment.
 const Picture = memo(function Picture({
   alt, className, live, onLoad, picture, ref, ...rest
 }: PictureProps): ReactElement {
   const [background, setBackground] = useState(true);
-  const { images } = picture?.fallback?.src || {};
+  const images = pictureImages(picture);
   // After images assignment.
   const [fit, setFit] = useState<ImageInfo>(images?.[0] || { width: 0 });
   const [loaded, setLoaded] = useState(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const pictureRef = ref || useRef<HTMLPictureElement | null>(null);
+  const preSrc = picturePreSrc(picture);
   const [show, setShow] = useState(false);
   const { visible } = useVisibility({ ref: pictureRef, threshold: 0.1 });
 
@@ -80,14 +160,9 @@ const Picture = memo(function Picture({
   useEffect(() => {
     // istanbul ignore else
     if (pictureRef?.current) {
-      let responsive = images;
       const width = pictureRef.current.clientWidth
         || pictureRef.current.parentElement?.clientWidth || 0;
-      if (!Array.isArray(responsive) && typeof (picture?.fallback) === 'string') {
-        responsive = [{ path: picture.fallback, width }];
-      }
-      const found = responsive?.find((image) => image.width >= width)
-        || responsive?.slice(-1)?.[0] || { width: 0 };
+      const found = findFittingImage(images, picture?.fallback, width);
       if (fit?.path !== found.path) {
         setFit(found);
       }
@@ -105,38 +180,21 @@ const Picture = memo(function Picture({
   return (
     <LazyMotion features={domAnimation}>
       <picture
-        className={clsx(
-          className,
-          styles.picture,
-          (background && !picture?.fallback?.preSrc) && styles.shimmer,
-        )}
+        className={pictureClassName(className, background, !!preSrc)}
         ref={pictureRef}
-        style={background && picture?.fallback?.preSrc ? {
-          backgroundImage: `url(${picture?.fallback?.preSrc})`,
-        } : {}}
+        style={pictureStyle(background, preSrc)}
       >
         <AnimatePresence>
           {show && (
-            <Fragment key={key(alt, 'fragment')}>
-              {picture?.avif && <source srcSet={picture.avif} type="image/avif" />}
-              {picture?.webp && <source srcSet={picture.webp} type="image/webp" />}
-              {picture?.fallback && (
-                <motion.img
-                  {...rest}
-                  alt={loaded ? alt : undefined}
-                  animate={{ opacity: live || loaded ? 1 : 0 }}
-                  draggable={false}
-                  height={fit.height}
-                  initial={{ opacity: live ? 1 : 0 }}
-                  key={key(alt, 'picture')}
-                  onLoad={onFallbackLoad}
-                  src={fit.path}
-                  srcSet={picture.fallback?.src?.srcSet}
-                  transition={{ duration: 0.5, ease: 'easeInOut' }}
-                  width={fit.width}
-                />
-              )}
-            </Fragment>
+            <PictureContent
+              alt={alt}
+              fit={fit}
+              live={live}
+              loaded={loaded}
+              onFallbackLoad={onFallbackLoad}
+              picture={picture}
+              rest={rest}
+            />
           )}
         </AnimatePresence>
       </picture>

@@ -38,18 +38,14 @@ type PictureProps = {
 function Picture({
   alt, live, picture, ...rest
 }: PictureProps): ReactElement {
+  const fallback = picture?.fallback;
+  const imgAlt = alt || 'alt';
   return (
-    <picture data-live={String(live)} data-testid="picture" style={{ backgroundImage: `url(${picture?.fallback})` }}>
+    <picture data-live={String(live)} data-testid="picture" style={{ backgroundImage: `url(${fallback})` }}>
       {picture?.avif && <source srcSet={picture.avif} type="image/avif" />}
       {picture?.webp && <source srcSet={picture.webp} type="image/webp" />}
-      {picture?.fallback && (
-        <img
-          alt={alt || 'alt'}
-          data-testid={`img-${alt || 'alt'}`}
-          src={picture?.fallback}
-          srcSet={picture.fallback}
-          {...rest}
-        />
+      {fallback && (
+        <img alt={imgAlt} data-testid={`img-${imgAlt}`} src={fallback} srcSet={fallback} {...rest} />
       )}
     </picture>
   );

@@ -374,7 +374,7 @@ describe('useVisibility (Browser)', () => {
   });
 });
 
-describe('useWelcome', () => {
+describe('useWelcome.default', () => {
   beforeEach(() => {
     // Minimal DOM expected by the hook.
     document.body.innerHTML = `
@@ -472,6 +472,21 @@ describe('useWelcome', () => {
     const title = document.querySelector('nav .navbar__brand .navbar__title');
     expect(title!.getAttribute('translate')).toBeNull();
     expect(root!.className).toBe('docusaurus-root');
+  });
+});
+
+describe('useWelcome.navigation', () => {
+  beforeEach(() => {
+    // Minimal DOM expected by the hook.
+    document.body.innerHTML = `
+    <nav>
+      <a class="navbar__item navbar__item--translate" href="#translate">translate</a>
+      <div class="navbar__brand">
+        <span class="navbar__title">Title</span>
+      </div>
+    </nav>
+    <div id="__docusaurus" class="docusaurus-root"></div>
+    `;
   });
 
   test('navigation = false (zh-CN)', () => {

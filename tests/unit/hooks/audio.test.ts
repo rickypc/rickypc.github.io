@@ -22,7 +22,7 @@ let rafCallback: Parameters<typeof requestAnimationFrame>[0] | null = null;
   return 1;
 };
 
-describe('useAudio', () => {
+describe('useAudio.states', () => {
   test('initial state is 404', async () => {
     const { result } = renderHook(() => useAudio(''));
 
@@ -91,7 +91,9 @@ describe('useAudio', () => {
     expect(audioManager.pause).toHaveBeenCalledTimes(1);
     expect(result.current.status).toBe('paused');
   });
+});
 
+describe('useAudio.progress', () => {
   test('onStop resets time, progress, and sets status to idle', async () => {
     const { result } = renderHook(() => useAudio(path));
 
@@ -142,7 +144,9 @@ describe('useAudio', () => {
     act(() => rafCallback?.(3000));
     expect(result.current.progress.get()).toBeCloseTo(0);
   });
+});
 
+describe('useAudio.pause & stop', () => {
   test('pause event sets status to paused or idle depending on currentTime', async () => {
     const { result } = renderHook(() => useAudio(path));
 

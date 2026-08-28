@@ -3,34 +3,12 @@
  * All rights reserved.
  */
 
-import { body, type Substance, substance } from '#buddhism/media/pdf/_strip';
+import {
+  body, languageGeometry, type LanguageProps, type Languages, type Repeat,
+  subsequentBody, type Substance, type Typography,
+} from '#buddhism/media/pdf/_strip';
 import { oneLine } from '#root/src/data/common';
 import { properCase } from '#buddhism/media/_common';
-import { type PropsWithChildren } from 'react';
-
-type Language = {
-  repeat: Repeat;
-  title: string;
-  typography?: {
-    roll?: Typography;
-    wheel?: Typography;
-  };
-};
-
-type Languages = {
-  default: {
-    lang: string;
-    sanskrit: PropsWithChildren<Language>;
-    tibetan: PropsWithChildren<Language>;
-    total: number;
-    transliteration: PropsWithChildren<Language>;
-  };
-};
-
-type Repeat = {
-  roll ?: number;
-  wheel ?: number;
-};
 
 type Table = {
   body?: any[];
@@ -39,10 +17,44 @@ type Table = {
   widths?: any[];
 };
 
-type Typography = {
-  default: number;
-  title: number;
-};
+const firstBody = (
+  fontSizes: Typography,
+  infix: string,
+  prefix: string,
+  repeat: Repeat,
+  suffix: string,
+  text: Substance,
+  transliteration: LanguageProps,
+) => ([
+  [
+    { margin: [0, 5, 0, -5], style: 'intro', text: 'ༀ' },
+    {
+      rowSpan: 3,
+      text: [
+        {
+          fontSize: fontSizes.title,
+          text: `${transliteration?.title?.toUpperCase()} ${repeat?.wheel || 1}x `,
+        },
+        body(infix, (repeat?.wheel || 1) - 1, prefix, repeat?.wheel || 1, suffix, text),
+      ],
+    },
+  ],
+  [{ style: 'intro', text: 'ཨཱཿ' }],
+  [{ margin: [0, 1, 0, -1], style: 'intro', text: 'ཧཱུྃ' }],
+]);
+
+const trimMarker = (index: number, lastRoll: number) => (index === lastRoll
+  ? { canvas: [] } : {
+    canvas: [
+      {
+        lineWidth: 0.25, type: 'line', x1: -5, x2: -0.5, y1: 0, y2: 0,
+      },
+      {
+        lineWidth: 0.25, type: 'line', x1: 777.5, x2: 782, y1: 0, y2: 0,
+      },
+    ],
+    margin: [0, 0, 0, 7.5],
+  });
 
 /**
  * Generates a pdfMake object for `prayer wheel mantra roll`.
@@ -55,61 +67,11 @@ export default async function wheel(path: string) {
       lang = 'bo-CN', sanskrit, tibetan, total = 6, transliteration,
     },
   }: Languages = await import(path);
-  let fontSizes = { default: 6, title: 4 };
-  // Geometric box height:
-  //   H_geom = (612                 // page height (8.5" * 72pt)
-  //     - (7.5 + 0)                 // page margins (top + bottom)
-  //     - (6 * (1 + 1))             // box borders (6 boxes, top + bottom)
-  //     - (5 * (7.5 + 0.25 + 7.5))  // gaps between boxes: margin + guide line + margin
-  //   ) / 6                         // 6 boxes
-  // Actual box height used (pdfmake page overhead):
-  //   H = H_geom - offset           // offset ≈ 2.2916pt
-  let height = 83.75;
-  let infix = '|';
+  const {
+    fontSizes, height, infix, lineHeight, paddingBottom,
+    paddingTop, prefix, prefixFont, repeat, rollFont, suffix, text,
+  } = languageGeometry('wheel', lang, sanskrit, tibetan, transliteration);
   const lastRoll = total - 1;
-  let lineHeight = 0.71;
-  let paddingBottom = 2.5;
-  let paddingTop = 0;
-  // Siddhaṃ sign.
-  let prefix = '꣼ ';
-  let prefixFont = 'NotoSerifDevanagari';
-  let repeat: Repeat = {};
-  let rollFont = 'NotoSans';
-  let suffix = '||';
-  let text: Substance = '';
-
-  switch (lang) {
-    case 'bo-CN':
-      fontSizes = tibetan?.typography?.wheel || fontSizes;
-      infix = '།';
-      lineHeight = 0.84;
-      paddingBottom = 1;
-      paddingTop = 0.25;
-      prefix = '༄༅། ';
-      prefixFont = 'Kokonor';
-      repeat = tibetan?.repeat;
-      rollFont = 'Kokonor';
-      suffix = '༎';
-      text = substance(tibetan);
-      break;
-    case 'sa-IN':
-      fontSizes = sanskrit?.typography?.wheel || fontSizes;
-      // height - padding delta.
-      height = 83.175;
-      infix = '।';
-      lineHeight = 0.81;
-      paddingBottom = 0.825;
-      paddingTop = 1;
-      repeat = sanskrit?.repeat;
-      rollFont = 'NotoSerifDevanagari';
-      suffix = '॥';
-      text = substance(sanskrit);
-      break;
-    default:
-      fontSizes = transliteration?.typography?.wheel || fontSizes;
-      repeat = transliteration?.repeat;
-      text = substance(transliteration);
-  }
   // After height & paddings re-assignment.
   // paddings + border + offset (0.0125).
   const rowHeight = ((height - ((paddingBottom + paddingTop + 1 + 0.0125) * 2)) / 3);
@@ -117,65 +79,17 @@ export default async function wheel(path: string) {
   const content = Array.from({ length: total }, (_total, index) => {
     const table: Table = {};
     if (index === 0) {
-      table.body = [
-        [
-          { margin: [0, 5, 0, -5], style: 'intro', text: 'ༀ' },
-          {
-            rowSpan: 3,
-            text: [
-              {
-                fontSize: fontSizes.title,
-                text: `${transliteration?.title?.toUpperCase()} ${repeat?.wheel || 1}x `,
-              },
-              body(infix, (repeat?.wheel || 1) - 1, prefix, repeat?.wheel || 1, suffix, text),
-            ],
-          },
-        ],
-        [{ style: 'intro', text: 'ཨཱཿ' }],
-        [{ margin: [0, 1, 0, -1], style: 'intro', text: 'ཧཱུྃ' }],
-      ];
+      table.body = firstBody(fontSizes, infix, prefix, repeat, suffix, text, transliteration);
       table.heights = [rowHeight, rowHeight, rowHeight];
       table.widths = [18, '*'];
     } else {
-      table.body = [
-        [
-          {
-            text: [
-              {
-                fontSize: fontSizes.title,
-                text: `${transliteration?.title?.toUpperCase()} ${repeat?.roll || 1}x `,
-              },
-              body(infix, (repeat?.roll || 1) - 1, prefix, repeat?.roll || 1, suffix, text),
-            ],
-          },
-        ],
-      ];
+      table.body = subsequentBody(fontSizes, infix, prefix, repeat, 'roll', suffix, text, transliteration);
       table.dontBreakRows = true;
       table.heights = [height];
     }
     return [
       { layout: 'roll', margin: [0, 0, 0, index === lastRoll ? 0 : 7.5], table },
-      index === lastRoll ? { canvas: [] } : {
-        canvas: [
-          {
-            lineWidth: 0.25,
-            type: 'line',
-            x1: -5,
-            x2: -0.5,
-            y1: 0,
-            y2: 0,
-          },
-          {
-            lineWidth: 0.25,
-            type: 'line',
-            x1: 777.5,
-            x2: 782,
-            y1: 0,
-            y2: 0,
-          },
-        ],
-        margin: [0, 0, 0, 7.5],
-      },
+      trimMarker(index, lastRoll),
     ];
   });
 

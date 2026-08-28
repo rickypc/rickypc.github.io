@@ -33,6 +33,23 @@ const coverMargin = (coverHeight / 2) - 5;
 //   H = H_geom - offset           // offset ≈ 2.3333pt
 const height = 188;
 const imageWidth = (height * 0.75) - 18;
+const leftChapter = (page: Page) => (page?.contents?.length ? {
+  margin: [0, 0, 0, -5],
+  svg: `
+    <svg height="${height}" width="${chapterWidth}">
+      <text
+        dominant-baseline="central"
+        font-size="8pt"
+        text-anchor="middle"
+        transform="rotate(90, ${chapterWidth / 2}, ${height / 2})"
+        x="${chapterWidth / 2}"
+        y="${height / 2}"
+      >
+        ${page?.chapters?.[0] || ''}
+      </text>
+    </svg>
+  `,
+} : ' ');
 const pageLayout = {
   hLineWidth: () => 0.5,
   paddingBottom: () => 0,
@@ -41,9 +58,111 @@ const pageLayout = {
   paddingTop: () => 0,
   vLineWidth: () => 0.5,
 };
+const rightChapter = (page: Page) => (page?.contents?.length ? [
+  {
+    margin: [0, 0, 0, -5],
+    svg: `
+      <svg height="${height - 16}" width="${chapterWidth}">
+        <text
+          dominant-baseline="central"
+          font-size="8pt"
+          text-anchor="middle"
+          transform="rotate(-90, ${chapterWidth / 2}, ${(height - 16) / 2})"
+          x="${chapterWidth / 2}"
+          y="${(height - 16) / 2}"
+        >
+          ${page?.chapters?.[1] || ''}
+        </text>
+      </svg>
+    `,
+  },
+  {
+    svg: `
+      <svg height="16" width="${chapterWidth}">
+        <text
+          dominant-baseline="central"
+          font-size="8pt"
+          text-anchor="start"
+          transform="rotate(-90, ${chapterWidth / 2}, 16)"
+          x="${chapterWidth / 2}"
+          y="16"
+        >
+          ${page?.number || ''}
+        </text>
+      </svg>
+    `,
+  },
+] : null);
 const unalomeWidth = 44.375;
 // After unalomeWidth assignment.
 const unalomeMargin = (unalomeWidth * 2) + 5;
+// After unalomeMargin assignment.
+const pageWithoutTitle = async (page: Page) => {
+  const contents = page?.contents || [];
+  const { left = {}, middle = {}, right = {} } = page?.images || {};
+  const leftContent = contents.length ? contents[0] : null;
+  const rightContent = contents.length === 2 ? contents[1] : null;
+  const [leftImage, middleImage, rightImage] = await Promise.all([
+    image({ ...left, height }),
+    image({ ...middle, height }),
+    image({ ...right, height }),
+  ]);
+  return [
+    leftChapter(page), leftImage, leftContent, middleImage, rightContent,
+    rightImage, rightChapter(page),
+  ].filter(Boolean);
+};
+const pageWithTitle = async (page: Page) => ([
+  {
+    layout: 'noBorders',
+    margin: [unalomeMargin, coverMargin, unalomeMargin, 0],
+    table: {
+      body: [
+        [
+          await image({ height, path: '#buddhism/img/unalome-male.webp', width: unalomeWidth }),
+          {
+            margin: [15, ((height - (coverMargin * 2) - coverHeight) / 2) - 5, 15, 0],
+            table: { body: [[page.title]], heights: [coverHeight], widths: ['100%'] },
+          },
+          await image({ height, path: '#buddhism/img/unalome-female.webp', width: unalomeWidth }),
+        ],
+      ],
+      heights: [height - coverHeight],
+      widths: [unalomeWidth, '*', unalomeWidth],
+    },
+  },
+]);
+const trimMarker = (index: number, lastPage: number) => ((index % 3 === 2 || index === lastPage)
+  ? { canvas: [] } : {
+    canvas: [
+      {
+        lineWidth: 0.25, type: 'line', x1: -5, x2: -0.5, y1: 0, y2: 0,
+      },
+      {
+        lineWidth: 0.25, type: 'line', x1: 777.5, x2: 782, y1: 0, y2: 0,
+      },
+    ],
+    margin: [0, 0, 0, 7.5],
+  });
+const widths = (page: Page) => {
+  const images = page?.images || {};
+  const { length } = page?.contents || [];
+  const netImageWidth = imageWidth - 10;
+  // After netImageWidth assignment.
+  const leftImageWidth = images.left ? netImageWidth : null;
+  const middleImageWidth = images.middle ? netImageWidth : null;
+  const rightImageWidth = images.right ? netImageWidth : null;
+  if (length) {
+    return [
+      chapterWidth, leftImageWidth, '*', middleImageWidth,
+      length === 2 ? '*' : null, rightImageWidth, chapterWidth,
+    ].filter(Boolean);
+  }
+  return [
+    '100%', leftImageWidth, null, middleImageWidth, null,
+    rightImageWidth, null,
+  ].filter(Boolean);
+};
 
 /**
  * Generates a pdfMake object for `prayer book`.
@@ -62,120 +181,13 @@ export default async function book(path: string) {
       margin: [0, 0, 0, index === lastPage ? 0 : 7.5],
       // pageBreak: index % 3 === 2 && index !== lastPage ? 'after' : null,
       table: {
-        body: [
-          page?.title ? [
-            {
-              layout: 'noBorders',
-              margin: [unalomeMargin, coverMargin, unalomeMargin, 0],
-              table: {
-                body: [
-                  [
-                    await image({ height, path: '#buddhism/img/unalome-male.webp', width: unalomeWidth }),
-                    {
-                      margin: [15, ((height - (coverMargin * 2) - coverHeight) / 2) - 5, 15, 0],
-                      table: { body: [[page.title]], heights: [coverHeight], widths: ['100%'] },
-                    },
-                    await image({ height, path: '#buddhism/img/unalome-female.webp', width: unalomeWidth }),
-                  ],
-                ],
-                heights: [height - coverHeight],
-                widths: [unalomeWidth, '*', unalomeWidth],
-              },
-            },
-          ] : [
-            page?.contents?.length ? {
-              margin: [0, 0, 0, -5],
-              svg: `
-                <svg height="${height}" width="${chapterWidth}">
-                  <text
-                    dominant-baseline="central"
-                    font-size="8pt"
-                    text-anchor="middle"
-                    transform="rotate(90, ${chapterWidth / 2}, ${height / 2})"
-                    x="${chapterWidth / 2}"
-                    y="${height / 2}"
-                  >
-                    ${page?.chapters?.[0] || ''}
-                  </text>
-                </svg>
-              `,
-            } : ' ',
-            await image({ ...page?.images?.left, height }),
-            page?.contents?.length ? page.contents[0] : null,
-            await image({ ...page?.images?.middle, height }),
-            page?.contents?.length === 2 ? page.contents[1] : null,
-            await image({ ...page?.images?.right, height }),
-            page?.contents?.length ? [
-              {
-                margin: [0, 0, 0, -5],
-                svg: `
-                  <svg height="${height - 16}" width="${chapterWidth}">
-                    <text
-                      dominant-baseline="central"
-                      font-size="8pt"
-                      text-anchor="middle"
-                      transform="rotate(-90, ${chapterWidth / 2}, ${(height - 16) / 2})"
-                      x="${chapterWidth / 2}"
-                      y="${(height - 16) / 2}"
-                    >
-                      ${page?.chapters?.[1] || ''}
-                    </text>
-                  </svg>
-                `,
-              },
-              {
-                svg: `
-                  <svg height="16" width="${chapterWidth}">
-                    <text
-                      dominant-baseline="central"
-                      font-size="8pt"
-                      text-anchor="start"
-                      transform="rotate(-90, ${chapterWidth / 2}, 16)"
-                      x="${chapterWidth / 2}"
-                      y="16"
-                    >
-                      ${page?.number || ''}
-                    </text>
-                  </svg>
-                `,
-              },
-            ] : null,
-          ].filter(Boolean),
-        ],
+        body: [page?.title ? await pageWithTitle(page) : await pageWithoutTitle(page)],
         dontBreakRows: true,
         heights: [height],
-        widths: [
-          page?.contents?.length ? chapterWidth : '100%',
-          page?.images?.left ? imageWidth - 10 : null,
-          page?.contents?.length ? '*' : null,
-          page?.images?.middle ? imageWidth - 10 : null,
-          page?.contents?.length === 2 ? '*' : null,
-          page?.images?.right ? imageWidth - 10 : null,
-          page?.contents?.length ? chapterWidth : null,
-        ].filter(Boolean),
+        widths: widths(page),
       },
     },
-    (index % 3 === 2 || index === lastPage) ? { canvas: [] } : {
-      canvas: [
-        {
-          lineWidth: 0.25,
-          type: 'line',
-          x1: -5,
-          x2: -0.5,
-          y1: 0,
-          y2: 0,
-        },
-        {
-          lineWidth: 0.25,
-          type: 'line',
-          x1: 777.5,
-          x2: 782,
-          y1: 0,
-          y2: 0,
-        },
-      ],
-      margin: [0, 0, 0, 7.5],
-    },
+    trimMarker(index, lastPage),
   ])));
 
   return {

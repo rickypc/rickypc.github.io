@@ -26,7 +26,6 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
     expect(consecration).toHaveProperty('pages');
     expect(consecration).toHaveProperty('path');
     expect(consecration).toHaveProperty('title');
-
     expect(Array.isArray(consecration.pages)).toBeTruthy();
     expect(consecration.title).toBe('Consecration of Stupas, Statues, Tsatsas, and Other Sacred Images');
   });
@@ -43,7 +42,6 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
 
     expect(page.chapters).toEqual(['Maṅgala', 'Abhiṣeka']);
     expect(page.number).toBe('3');
-
     expect(phraseCalls[0]).toEqual([
       '#buddhism/practice-daily-life/phrases/_mala.ts',
       ' (recite the prayer, gently blow on the mālā and rub it lightly)',
@@ -57,7 +55,6 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
     expect(phraseCalls[3]).toEqual([
       '#buddhism/practice-daily-life/phrases/_namaskara.ts',
     ]);
-
     expect(phraseCalls[4]).toEqual([
       '#buddhism/practice-daily-life/phrases/_saranagamana_cittotpada.ts',
     ]);
@@ -65,9 +62,7 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
       '#buddhism/practice-daily-life/phrases/_catvary_apramanani.ts',
     ]);
     expect(phraseCalls[6]).toEqual([
-      '#buddhism/practice-daily-life/phrases/_prajna_paramita.ts',
-      '',
-      7,
+      '#buddhism/practice-daily-life/phrases/_prajna_paramita.ts', '', 7,
     ]);
     expect(phraseCalls[7]).toEqual([
       '#buddhism/practice-daily-life/phrases/_sunyata.ts',
@@ -95,7 +90,6 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
     expect(phraseCalls[9]).toEqual([
       '#buddhism/practice-daily-life/phrases/_pratityasamutpada.ts',
     ]);
-
     expect(phraseCalls[10]).toEqual([
       '#buddhism/practice-daily-life/phrases/_vairocana_sarvakata_danavidhih.ts',
     ]);
@@ -112,7 +106,6 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
 
     expect(page.chapters).toEqual(['Abhiṣeka']);
     expect(page.number).toBe('4');
-
     expect(headerCalls[0]).toEqual(['Āhvāna [Invitation]']);
   });
 

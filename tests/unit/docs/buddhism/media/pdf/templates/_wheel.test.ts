@@ -6,8 +6,62 @@
 import { body, substance } from '#buddhism/media/pdf/_strip';
 import wheel from '#buddhism/media/pdf/templates/_wheel';
 
+const geometries = {
+  'bo-CN': {
+    lineHeight: 0.84,
+    paddingBottom: 1,
+    paddingTop: 0.25,
+    prefixFont: 'Kokonor',
+    rollFont: 'Kokonor',
+  },
+  'sa-IN': {
+    lineHeight: 0.81,
+    paddingBottom: 0.825,
+    paddingTop: 1,
+    prefixFont: 'NotoSerifDevanagari',
+    rollFont: 'NotoSerifDevanagari',
+  },
+};
+
+type GeometryKey = keyof typeof geometries;
+
 jest.mock('#buddhism/media/pdf/_strip', () => ({
   body: jest.fn(() => 'BODY_RESULT'),
+  languageGeometry: jest.fn((_, lang, sanskrit, tibetan, transliteration) => {
+    const geometry = geometries[lang as GeometryKey] || {};
+    const phrases = { 'bo-CN': tibetan, 'sa-IN': sanskrit };
+    return {
+      fontSizes: { default: lang === 'bo-CN' ? 9 : 6, title: 4 },
+      height: 83.75,
+      infix: '།',
+      lineHeight: geometry.lineHeight || 0.71,
+      paddingBottom: geometry.paddingBottom || 2.5,
+      paddingTop: geometry.paddingTop || 0,
+      prefix: '༄༅། ',
+      prefixFont: geometry.prefixFont || 'NotoSerifDevanagari',
+      rollFont: geometry.rollFont || 'NotoSerifDevanagari',
+      suffix: '༎',
+      text: substance(phrases[lang as GeometryKey] || transliteration),
+    };
+  }),
+  subsequentBody: jest.fn(
+    (fontSizes, infix, prefix, repeat, repeatKey, suffix, text, transliteration) => {
+      const count = repeat?.[repeatKey as keyof typeof repeat] || 1;
+      return [
+        [
+          {
+            text: [
+              {
+                fontSize: fontSizes?.title,
+                text: `${transliteration?.title?.toUpperCase()} ${count}x `,
+              },
+              body(infix, count - 1, prefix, count, suffix, text),
+            ],
+          },
+        ],
+      ];
+    },
+  ),
   substance: jest.fn(() => 'SUBSTANCE_RESULT'),
 }));
 
@@ -40,9 +94,7 @@ describe('docs.buddhism.media.pdf.templates._wheel', () => {
 
     // Tibetan settings applied.
     expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 9,
-      lineHeight: 0.84,
+      font: 'NotoSans', fontSize: 9, lineHeight: 0.84,
     });
 
     // Prefix/roll fonts.
@@ -51,15 +103,16 @@ describe('docs.buddhism.media.pdf.templates._wheel', () => {
 
     // 1st page special table.
     const [firstPage] = definition.content[0];
-    const { table } = firstPage;
+    const { table } = firstPage as any;
+    const tableBody = table?.body || [];
 
-    expect(table?.body).toHaveLength(3);
-    expect(table?.body?.[0][0].text).toBe('ༀ');
-    expect(table?.body?.[1][0].text).toBe('ཨཱཿ');
-    expect(table?.body?.[2][0].text).toBe('ཧཱུྃ');
+    expect(tableBody).toHaveLength(3);
+    expect(tableBody[0][0].text).toBe('ༀ');
+    expect(tableBody[1][0].text).toBe('ཨཱཿ');
+    expect(tableBody[2][0].text).toBe('ཧཱུྃ');
 
     // RowSpan cell.
-    expect(table?.body?.[0][1].rowSpan).toBe(3);
+    expect(tableBody[0][1].rowSpan).toBe(3);
 
     // Widths & heights.
     expect(table?.heights).toHaveLength(3);
@@ -91,9 +144,7 @@ describe('docs.buddhism.media.pdf.templates._wheel', () => {
     const { definition } = result;
 
     expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 6,
-      lineHeight: 0.81,
+      font: 'NotoSans', fontSize: 6, lineHeight: 0.81,
     });
 
     expect(definition.styles.prefix.font).toBe('NotoSerifDevanagari');
@@ -117,9 +168,7 @@ describe('docs.buddhism.media.pdf.templates._wheel', () => {
     const { definition } = result;
 
     expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 6,
-      lineHeight: 0.71,
+      font: 'NotoSans', fontSize: 6, lineHeight: 0.71,
     });
 
     expect(definition.info.title).toBe('Om mani padme hum prayer roll');
@@ -138,9 +187,7 @@ describe('docs.buddhism.media.pdf.templates._wheel', () => {
 
     // Default font sizes + lineHeight.
     expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 6,
-      lineHeight: 0.84,
+      font: 'NotoSans', fontSize: 9, lineHeight: 0.84,
     });
 
     // Default repeat = {} -> wheel=1, roll=1.

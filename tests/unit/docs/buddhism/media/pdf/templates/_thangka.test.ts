@@ -4,7 +4,7 @@
  */
 
 import { body } from '#buddhism/media/_common';
-import thangka from '#buddhism/media/pdf/templates/_thangka';
+import thangka, { BASE_GEOMETRY, languageFontSizes, languageGeometry } from '#buddhism/media/pdf/templates/_thangka';
 
 jest.mock('#buddhism/media/_common', () => {
   const actual = jest.requireActual('#buddhism/media/_common');
@@ -13,6 +13,72 @@ jest.mock('#buddhism/media/_common', () => {
     body: jest.fn((phrase) => (phrase?.title === 'Dhāraṇī'
       ? 'BODY_RESULT_WITH_LONG_TEXT_ON_IT_BEYOND_THRESHOLD' : 'BODY_RESULT')),
   };
+});
+
+describe('docs.buddhism.media.pdf.templates._thangka.languageFontSizes()', () => {
+  test('should return thangka typography from context when it exists', () => {
+    const mockContext = {
+      typography: { thangka: { default: 10, double: 30, single: 52.5 } },
+    };
+    const result = languageFontSizes(mockContext as any);
+
+    expect(result).toEqual({ default: 10, double: 30, single: 52.5 });
+  });
+
+  test('should fall back to BASE_GEOMETRY.fontSizes when thangka typography is missing from context', () => {
+    const mockContext = { typography: {} };
+    const result = languageFontSizes(mockContext as any);
+
+    expect(result).toEqual(BASE_GEOMETRY.fontSizes);
+  });
+
+  test('should safely fall back to BASE_GEOMETRY.fontSizes if the context parameter itself is undefined', () => {
+    const result = languageFontSizes(undefined as any);
+    expect(result).toEqual(BASE_GEOMETRY.fontSizes);
+  });
+});
+
+describe('docs.buddhism.media.pdf.templates._thangka.languageGeometry()', () => {
+  const mockSanskrit = { typography: { thangka: { default: 11, double: 31, single: 51 } } } as any;
+  const mockTibetan = { typography: { thangka: { default: 12, double: 32, single: 52 } } } as any;
+  const mockTransliteration = {
+    typography: { thangka: { default: 13, double: 33, single: 53 } },
+  } as any;
+
+  test('should return combined Tibetan geometry configurations when lang parameter matches bo-CN', () => {
+    const result = languageGeometry('bo-CN', mockSanskrit, mockTibetan, mockTransliteration);
+
+    expect(result).toEqual({
+      ...BASE_GEOMETRY,
+      delimiter: '་',
+      font: 'Kokonor',
+      fontSizes: { default: 12, double: 32, single: 52 },
+      infix: '།',
+      phrase: mockTibetan,
+    });
+  });
+
+  test('should return combined Sanskrit geometry configurations when lang parameter matches sa-IN', () => {
+    const result = languageGeometry('sa-IN', mockSanskrit, mockTibetan, mockTransliteration);
+
+    expect(result).toEqual({
+      ...BASE_GEOMETRY,
+      font: 'NotoSerifDevanagari',
+      fontSizes: { default: 11, double: 31, single: 51 },
+      infix: '।',
+      phrase: mockSanskrit,
+    });
+  });
+
+  test('should gracefully return default transliteration configurations when lang is an unrecognized language variant', () => {
+    const result = languageGeometry('en-US', mockSanskrit, mockTibetan, mockTransliteration);
+
+    expect(result).toEqual({
+      ...BASE_GEOMETRY,
+      fontSizes: { default: 13, double: 33, single: 53 },
+      phrase: mockTransliteration,
+    });
+  });
 });
 
 describe('docs.buddhism.media.pdf.templates._thangka', () => {
@@ -78,10 +144,7 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
   test('handles default (transliteration) branch correctly', async () => {
     jest.mock('#buddhism/default', () => ({
       __esModule: true,
-      default: {
-        lang: 'en-US',
-        transliteration: { title: 'OM MANI PADME HUM' },
-      },
+      default: { lang: 'en-US', transliteration: { title: 'OM MANI PADME HUM' } },
     }), { virtual: true });
 
     const result = await thangka('#buddhism/default');

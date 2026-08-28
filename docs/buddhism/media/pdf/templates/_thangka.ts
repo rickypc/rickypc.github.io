@@ -4,7 +4,87 @@
  */
 
 import { body, properCase } from '#buddhism/media/_common';
+import { type Repeat } from '#buddhism/media/pdf/_strip';
 import { oneLine } from '#root/src/data/common';
+import { type PropsWithChildren } from 'react';
+
+type Geometry = {
+  delimiter: string;
+  font: string;
+  fontSizes: Typography;
+  infix: string;
+  lineHeight: number;
+  phrase: LanguageProps;
+};
+
+type GeometryFactory = () => Partial<Geometry>;
+
+type Language = {
+  repeat: Repeat;
+  title: string;
+  typography?: {
+    thangka?: Typography;
+  };
+};
+
+type LanguageProps = PropsWithChildren<Language>;
+
+type Languages = {
+  default: {
+    lang: string;
+    sanskrit: LanguageProps;
+    tibetan: LanguageProps;
+    total: number;
+    transliteration: LanguageProps;
+  };
+};
+
+type Typography = {
+  default: number;
+  double: number;
+  single: number;
+};
+
+export const BASE_GEOMETRY = Object.freeze({
+  delimiter: ' ',
+  font: 'NotoSans',
+  fontSizes: { default: 10, double: 30, single: 52.5 },
+  infix: '|',
+  lineHeight: 0.85,
+});
+
+export const languageFontSizes = (
+  context: LanguageProps,
+): Typography => context?.typography?.thangka || BASE_GEOMETRY.fontSizes;
+
+export const languageGeometry = (
+  lang: string,
+  sanskrit: LanguageProps,
+  tibetan: LanguageProps,
+  transliteration: LanguageProps,
+) => {
+  const fallback: GeometryFactory = () => ({
+    fontSizes: languageFontSizes(transliteration),
+    phrase: transliteration,
+  });
+  const geometries = new Map<string, GeometryFactory>([
+    ['bo-CN', () => ({
+      delimiter: '་',
+      font: 'Kokonor',
+      fontSizes: languageFontSizes(tibetan),
+      infix: '།',
+      phrase: tibetan,
+    })],
+    ['sa-IN', () => ({
+      font: 'NotoSerifDevanagari',
+      fontSizes: languageFontSizes(sanskrit),
+      infix: '।',
+      phrase: sanskrit,
+    })],
+  ]);
+  const geometry = (geometries.get(lang) || fallback)();
+  return { ...BASE_GEOMETRY, ...geometry };
+};
 
 /**
  * Generates a pdfMake object for `thangka backside mantra`.
@@ -16,32 +96,11 @@ export default async function thangka(path: string) {
     default: {
       lang = 'bo-CN', sanskrit, tibetan, transliteration,
     },
-  } = await import(path);
-  let delimiter = ' ';
-  let font = 'NotoSans';
-  let fontSizes = { default: 10, double: 30, single: 52.5 };
-  let infix = '|';
-  let phrase = transliteration;
-
-  switch (lang) {
-    case 'bo-CN':
-      delimiter = '་';
-      font = 'Kokonor';
-      fontSizes = tibetan?.typography?.thangka || fontSizes;
-      infix = '།';
-      phrase = tibetan;
-      break;
-    case 'sa-IN':
-      font = 'NotoSerifDevanagari';
-      fontSizes = sanskrit?.typography?.thangka || fontSizes;
-      infix = '।';
-      phrase = sanskrit;
-      break;
-    default:
-      fontSizes = transliteration?.typography?.thangka || fontSizes;
-  }
-
-  const text = `${body(phrase, infix)}${infix}`;
+  }: Languages = await import(path);
+  const {
+    delimiter, font, fontSizes, infix, lineHeight, phrase,
+  } = languageGeometry(lang, sanskrit, tibetan, transliteration);
+  const text = `${body(phrase as PropsWithChildren, infix)}${infix}`;
   // After text assignment.
   // eslint-disable-next-line security/detect-non-literal-regexp
   const style = (text.replace(new RegExp(`[${delimiter}${infix}]`, 'g'), '').length / 2) >= 15 ? 'double' : 'single';
@@ -67,7 +126,7 @@ export default async function thangka(path: string) {
         color: '#cc0000',
         font: 'Kokonor',
         fontSize: fontSizes.default,
-        lineHeight: 0.85,
+        lineHeight,
       },
       info: {
         keywords: oneLine(`This document is about the

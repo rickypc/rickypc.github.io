@@ -17,10 +17,7 @@ export default async function base(path: string) {
       pageSize: 'LETTER',
       // Overrides.
       ...definition,
-      info: {
-        ...(definition.info || {}),
-        keywords: definition.info?.keywords,
-      },
+      info: { ...(definition.info || {}), keywords: definition.info?.keywords },
     },
     options,
   };

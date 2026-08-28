@@ -6,8 +6,62 @@
 import { body, substance } from '#buddhism/media/pdf/_strip';
 import roll from '#buddhism/media/pdf/templates/_roll';
 
+const geometries = {
+  'bo-CN': {
+    lineHeight: 0.84,
+    paddingBottom: 1,
+    paddingTop: 0.25,
+    prefixFont: 'Kokonor',
+    rollFont: 'Kokonor',
+  },
+  'sa-IN': {
+    lineHeight: 0.81,
+    paddingBottom: 0.825,
+    paddingTop: 1,
+    prefixFont: 'NotoSerifDevanagari',
+    rollFont: 'NotoSerifDevanagari',
+  },
+};
+
+type GeometryKey = keyof typeof geometries;
+
 jest.mock('#buddhism/media/pdf/_strip', () => ({
   body: jest.fn(() => 'BODY_RESULT'),
+  languageGeometry: jest.fn((_, lang, sanskrit, tibetan, transliteration) => {
+    const geometry = geometries[lang as GeometryKey] || {};
+    const phrases = { 'bo-CN': tibetan, 'sa-IN': sanskrit };
+    return {
+      fontSizes: { default: lang === 'bo-CN' ? 9 : 6, title: 4 },
+      height: 83.75,
+      infix: '།',
+      lineHeight: geometry.lineHeight || 0.71,
+      paddingBottom: geometry.paddingBottom || 2.5,
+      paddingTop: geometry.paddingTop || 0,
+      prefix: '༄༅། ',
+      prefixFont: geometry.prefixFont || 'NotoSerifDevanagari',
+      rollFont: geometry.rollFont || 'NotoSerifDevanagari',
+      suffix: '༎',
+      text: substance(phrases[lang as GeometryKey] || transliteration),
+    };
+  }),
+  subsequentBody: jest.fn(
+    (fontSizes, infix, prefix, repeat, repeatKey, suffix, text, transliteration) => {
+      const count = repeat?.[repeatKey as keyof typeof repeat] || 1;
+      return [
+        [
+          {
+            text: [
+              {
+                fontSize: fontSizes?.title,
+                text: `${transliteration?.title?.toUpperCase()} ${count}x `,
+              },
+              body(infix, count - 1, prefix, count, suffix, text),
+            ],
+          },
+        ],
+      ];
+    },
+  ),
   substance: jest.fn(() => 'SUBSTANCE_RESULT'),
 }));
 
@@ -40,9 +94,7 @@ describe('docs.buddhism.media.pdf.templates._roll', () => {
 
     // Tibetan settings applied.
     expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 9,
-      lineHeight: 0.84,
+      font: 'NotoSans', fontSize: 9, lineHeight: 0.84,
     });
 
     // Prefix/roll fonts.
@@ -75,9 +127,7 @@ describe('docs.buddhism.media.pdf.templates._roll', () => {
     const { definition } = result;
 
     expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 6,
-      lineHeight: 0.81,
+      font: 'NotoSans', fontSize: 6, lineHeight: 0.81,
     });
 
     expect(definition.styles.prefix.font).toBe('NotoSerifDevanagari');
@@ -101,9 +151,7 @@ describe('docs.buddhism.media.pdf.templates._roll', () => {
     const { definition } = result;
 
     expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 6,
-      lineHeight: 0.71,
+      font: 'NotoSans', fontSize: 6, lineHeight: 0.71,
     });
 
     // Title formatting.
@@ -124,9 +172,7 @@ describe('docs.buddhism.media.pdf.templates._roll', () => {
 
     // Default font sizes + lineHeight.
     expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 6,
-      lineHeight: 0.84,
+      font: 'NotoSans', fontSize: 9, lineHeight: 0.84,
     });
 
     // Default repeat = 1 -> lastPhrase = 0.

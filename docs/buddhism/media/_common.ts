@@ -56,16 +56,17 @@ export const phrases = (path: string, commentaries: Commentaries = '', repetitio
   /* eslint-disable global-require,import/no-dynamic-require,security/detect-non-literal-require */
   const { default: { sanskrit, translation, transliteration } } = require(path);
   /* eslint-enable global-require,import/no-dynamic-require,security/detect-non-literal-require */
+  const translationTitle = translation?.title ? ` [${translation.title}]` : '';
   return [
     [
-      header(title || `${transliteration.title}${translation?.title ? ` [${translation.title}]` : ''}`, commentaries),
+      header(title || `${transliteration.title}${translationTitle}`, commentaries),
       ...main(
         `${body({ children: sanskrit.children.slice(0, sanskrit.children.indexOf('')) })}।`,
         `${body({ children: transliteration.children.slice(0, transliteration.children.indexOf('')) })}।`,
       ),
     ],
     [
-      header(title || `${transliteration.title}${translation?.title ? ` [${translation.title}]` : ''}`, ' (continued)'),
+      header(title || `${transliteration.title}${translationTitle}`, ' (continued)'),
       ...main(
         `${body({ children: sanskrit.children.slice(sanskrit.children.indexOf('') + 1) })}॥`,
         `${body({ children: transliteration.children.slice(transliteration.children.indexOf('') + 1) })}॥`,
@@ -81,5 +82,5 @@ export const phrases = (path: string, commentaries: Commentaries = '', repetitio
  * @returns {string} The properly cased string.
  */
 export function properCase(value: string) {
-  return `${value.length ? value?.[0]?.toUpperCase() : ''}${value?.slice(1)?.toLowerCase()}`;
+  return `${value?.length ? value?.[0]?.toUpperCase() : ''}${value?.slice(1)?.toLowerCase()}`;
 }

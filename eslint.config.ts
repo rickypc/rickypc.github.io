@@ -54,14 +54,14 @@ const config: Linter.Config[] = [
     },
     plugins: { 'no-secrets': noSecrets },
     rules: {
-      complexity: ['warn', 10],
+      complexity: ['error', 10],
       'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
       'import/no-extraneous-dependencies': ['error', { devDependencies: true, optionalDependencies: true }],
       'import/no-unresolved': ['error', { ignore: ['^[@#].+$'] }],
       'max-classes-per-file': ['error', 1],
       'max-depth': ['error', 4],
       'max-lines': ['error', { max: 1000, skipBlankLines: true, skipComments: true }],
-      'max-lines-per-function': ['warn', {
+      'max-lines-per-function': ['error', {
         IIFEs: true,
         max: 100,
         skipBlankLines: true,

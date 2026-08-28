@@ -56,15 +56,21 @@ const body = (
   const group = Array.isArray(phrase.children) ? phrase.children : [phrase.children];
   const last = group.length - 1;
   const multi = group.length > 1;
+  const showInfix = (words: any, index: number) => words && phrase.unify && index !== last;
+  const showPrefix = (words: any) => words && !phrase.unify && multi;
+  const showSuffix = (
+    words: any,
+    index: number,
+  ) => words && ((phrase.unify && index === last) || !phrase.unify);
   return (
     <>
       {
         group.map((words, index) => (
           <Fragment key={key(`${index}`, `${last}`)}>
-            {(words && !phrase.unify && multi) && prefix}
+            {showPrefix(words) && prefix}
             {words}
-            {(words && phrase.unify && index !== last) && infix}
-            {(words && ((phrase.unify && index === last) || !phrase.unify)) && suffix}
+            {showInfix(words, index) && infix}
+            {showSuffix(words, index) && suffix}
             {multi && '\n'}
           </Fragment>
         ))

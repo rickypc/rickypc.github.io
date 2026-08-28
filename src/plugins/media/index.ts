@@ -57,6 +57,18 @@ type Stale = {
   target: string;
 };
 
+type StaleModel = {
+  model?: string;
+  siteDir: string;
+  targetModified: number;
+};
+
+type StaleTemplate = {
+  siteDir: string;
+  template?: string;
+  targetModified: number;
+};
+
 type Track = {
   album: string;
   description: string;
@@ -287,6 +299,67 @@ export async function piperServer(
 }
 
 /**
+ * Determine whether a target file is considered stale based on the
+ * modification time of its associated model file.
+ * @param {object} options - Options for the model staleness check.
+ * @param {string} options.model - Model name used to generate the target.
+ * @param {string} options.siteDir - Root directory of the site.
+ * @param {number} options.targetModified - Last modified timestamp of the
+ *   target file.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if the model
+ *   is newer than the target, otherwise `false`.
+ * @example
+ * const isModelStale = await staleModel({
+ *   model: 'en_US-model_name',
+ *   siteDir: '/root',
+ *   targetModified: 1718049600000,
+ * });
+ * // -> true if the resolved model file is newer than the target timestamp.
+ */
+async function staleModel({ model, siteDir, targetModified }: StaleModel): Promise<boolean> {
+  if (!model) {
+    return false;
+  }
+  // Extract prefix before first `_`.
+  const prefix = model.split('_')[0].toLowerCase();
+  const modelModified = await lastModified(
+    fileResolve(`#root/models/${prefix}/${model}.onnx`, siteDir),
+  );
+  return modelModified >= targetModified;
+}
+
+/**
+ * Determine whether a target file is considered stale based on the
+ * modification time of its associated template file.
+ * @param {object} options - Options for the template staleness check.
+ * @param {string} options.siteDir - Root directory of the site.
+ * @param {number} options.targetModified - Last modified timestamp of the
+ *   target file.
+ * @param {string} options.template - Template name used to generate the
+ *   target.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if the
+ *   template is newer than the target, otherwise `false`.
+ * @example
+ * const isTemplateStale = await staleTemplate({
+ *   siteDir: '/root',
+ *   targetModified: 1718049600000,
+ *   template: 'article',
+ * });
+ * // -> true if the resolved template file is newer than the target timestamp.
+ */
+async function staleTemplate({
+  siteDir, targetModified, template,
+}: StaleTemplate): Promise<boolean> {
+  if (!template) {
+    return false;
+  }
+  const templateModified = await lastModified(
+    fileResolve(`#buddhism/_${template}.ts`, siteDir),
+  );
+  return templateModified >= targetModified;
+}
+
+/**
  * Determine whether a target file is considered stale based on its existence,
  * modification times of related files, and a maximum age threshold.
  * @param {object} options - Options for staleness check.
@@ -318,38 +391,20 @@ export async function stale({
   if (await access(target).then(() => false).catch(() => true)) {
     return true;
   }
-
   const dataModified = await lastModified(fileResolve(data, siteDir));
   const targetModified = await lastModified(target);
   // Data recently modified.
   if (dataModified >= targetModified) {
     return true;
   }
-
-  // Model check (optional)
-  if (model) {
-    // Extract prefix before first `_`.
-    const prefix = model.split('_')[0].toLowerCase();
-    const modelModified = await lastModified(
-      fileResolve(`#root/models/${prefix}/${model}.onnx`, siteDir),
-    );
-    // Model recently modified.
-    if (modelModified >= targetModified) {
-      return true;
-    }
+  // Model check (optional).
+  if (await staleModel({ model, siteDir, targetModified })) {
+    return true;
   }
-
-  // Template check (optional)
-  if (template) {
-    const templateModified = await lastModified(
-      fileResolve(`#buddhism/_${template}.ts`, siteDir),
-    );
-    // Template recently modified.
-    if (templateModified >= targetModified) {
-      return true;
-    }
+  // Template check (optional).
+  if (await staleTemplate({ siteDir, targetModified, template })) {
+    return true;
   }
-
   // Stale due to age cutoff.
   const cutoff = Date.now() - maxAgeDays * MS_PER_DAY;
   if (cutoff >= targetModified) {

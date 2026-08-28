@@ -243,12 +243,15 @@ const key = (
 ) => {
   const begin = prefix ? `${prefix}${prefixSeparator}` : '';
   const end = suffix ? `${suffixSeparator}${suffix}` : '';
+  if (typeof value !== 'string' || !value.normalize) {
+    return `${begin}${end}`;
+  }
   const str = (value as string)
-    ?.normalize?.('NFD')
-    ?.replace(/[\u0300-\u036f]/g, '')
-    ?.toLowerCase?.()
-    ?.replace(/\s+/, '-')
-    ?.replace(/\.[^/.]+$/, '');
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase?.()
+    .replace(/\s+/, '-')
+    .replace(/\.[^/.]+$/, '');
   return `${begin}${str}${end}`;
 };
 

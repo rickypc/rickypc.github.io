@@ -3,23 +3,11 @@
  * All rights reserved.
  */
 
-import { Writable } from 'node:stream';
+export const write = jest.fn(() => Promise.resolve());
 
-let piped: Writable | null = null;
-
-export default jest.fn(() => ({
-  createPdfKitDocument() {
-    return {
-      end() {
-        if (piped) {
-          process.nextTick(() => piped!.emit('finish'));
-        }
-      },
-      on() {},
-      pipe(stream: Writable) {
-        piped = stream;
-        return stream;
-      },
-    };
-  },
-}));
+export default {
+  addFonts: jest.fn(),
+  createPdf: jest.fn(() => ({ write })),
+  setLocalAccessPolicy: jest.fn((callback) => callback()),
+  setUrlAccessPolicy: jest.fn((callback) => callback()),
+};

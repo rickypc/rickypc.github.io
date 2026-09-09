@@ -3,22 +3,11 @@
  * All rights reserved.
  */
 
-import { createWriteStream } from 'node:fs';
+// import { createWriteStream } from 'node:fs';
+
+import pdfmake, { write } from 'pdfmake';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { Writable } from 'node:stream';
-
-const createWriteStreamMock = jest.mocked(createWriteStream);
-
-jest.mock('node:fs', () => {
-  const original = jest.requireActual('node:fs');
-  return {
-    ...original,
-    createWriteStream: jest.fn(() => new Writable({
-      write(_chunk, _enc, cb) { cb(); },
-    })),
-  };
-});
 
 jest.mock('node:worker_threads', () => {
   const original = jest.requireActual('node:worker_threads');
@@ -61,17 +50,17 @@ describe('plugins.media.workers.generate-pdf', () => {
       template: 'base',
     });
 
-    expect(createWriteStreamMock.mock.calls).toHaveLength(1);
+    expect(pdfmake.addFonts.mock.calls).toHaveLength(1);
+    expect(pdfmake.createPdf.mock.calls).toHaveLength(1);
+    expect(pdfmake.setLocalAccessPolicy.mock.calls).toHaveLength(1);
+    expect(pdfmake.setUrlAccessPolicy.mock.calls).toHaveLength(1);
+    expect(write.mock.calls).toHaveLength(1);
   });
 
   test('logs an error when PDF writing fails', async () => {
     const consoleMock = jest.spyOn(console, 'error')
       .mockImplementation(() => {});
-    createWriteStreamMock.mockImplementationOnce(() => {
-      throw new Error('error');
-    }).mockImplementationOnce(() => {
-      throw new Error('error');
-    });
+    write.mockRejectedValueOnce(new Error('error'));
 
     await expect(() => Worker({
       path: '#lib/path/one.md',

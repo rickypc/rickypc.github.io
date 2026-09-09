@@ -55,6 +55,7 @@ const config: Linter.Config[] = [
     plugins: { 'no-secrets': noSecrets },
     rules: {
       complexity: ['error', 10],
+      'css/font-family-fallbacks': 'off',
       'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
       'import/no-extraneous-dependencies': ['error', { devDependencies: true, optionalDependencies: true }],
       'import/no-unresolved': ['error', { ignore: ['^[@#].+$'] }],

@@ -32,6 +32,14 @@ declare module 'cli-progress' {
   export type MultiBar = MultiBarInstance;
 }
 
+declare module 'pdfmake' {
+  export const addFonts: any;
+  export const createPdf: any;
+  export const setLocalAccessPolicy: any;
+  export const setUrlAccessPolicy: any;
+  export const write: any;
+}
+
 declare module 'tinypool' {
   const Tinypool: any;
   export default Tinypool;

@@ -4,9 +4,8 @@
  */
 
 import { createHash, createHmac } from 'node:crypto';
-import { createWriteStream } from 'node:fs';
 import { join } from 'node:path';
-import PdfMake from 'pdfmake';
+import pdfmake from 'pdfmake';
 import { workerData } from 'node:worker_threads';
 // Templates.
 import base from '#buddhism/media/pdf/templates/_base';
@@ -34,7 +33,6 @@ type Templates = {
 const [, {
   algorithm, generator, provenance, siteConfig,
 }] = workerData;
-let printer: PdfMake | null = null;
 const templates = {
   base, book, condensed, roll, thangka, wheel,
 };
@@ -47,35 +45,36 @@ const templates = {
  * @param {string} options.template - Template name.
  */
 export default async function run({ path, target, template }: Options) {
-  if (!printer) {
-    const devanagari = join(import.meta.dirname, '..', 'font', 'noto', 'NotoSerifDevanagari-Regular.ttf');
-    const devanagariBold = join(import.meta.dirname, '..', 'font', 'noto', 'NotoSerifDevanagari-Bold.ttf');
-    const kokonor = join(import.meta.dirname, '..', 'font', 'kokonor', 'Kokonor-Regular.ttf');
-    printer = new PdfMake({
-      Kokonor: {
-        bold: kokonor, bolditalics: kokonor, italics: kokonor, normal: kokonor,
-      },
-      NotoSans: {
-        bold: join(import.meta.dirname, '..', 'font', 'noto', 'NotoSans-Bold.ttf'),
-        bolditalics: join(import.meta.dirname, '..', 'font', 'noto', 'NotoSans-BoldItalic.ttf'),
-        italics: join(import.meta.dirname, '..', 'font', 'noto', 'NotoSans-Italic.ttf'),
-        normal: join(import.meta.dirname, '..', 'font', 'noto', 'NotoSans-Regular.ttf'),
-      },
-      NotoSerifDevanagari: {
-        bold: devanagariBold,
-        bolditalics: devanagariBold,
-        italics: devanagari,
-        normal: devanagari,
-      },
-    });
-  }
+  // if (!printer) {
+  const devanagari = join(import.meta.dirname, '..', 'font', 'noto', 'NotoSerifDevanagari-Regular.ttf');
+  const devanagariBold = join(import.meta.dirname, '..', 'font', 'noto', 'NotoSerifDevanagari-Bold.ttf');
+  const kokonor = join(import.meta.dirname, '..', 'font', 'kokonor', 'Kokonor-Regular.ttf');
+  pdfmake.addFonts({
+    Kokonor: {
+      bold: kokonor, bolditalics: kokonor, italics: kokonor, normal: kokonor,
+    },
+    NotoSans: {
+      bold: join(import.meta.dirname, '..', 'font', 'noto', 'NotoSans-Bold.ttf'),
+      bolditalics: join(import.meta.dirname, '..', 'font', 'noto', 'NotoSans-BoldItalic.ttf'),
+      italics: join(import.meta.dirname, '..', 'font', 'noto', 'NotoSans-Italic.ttf'),
+      normal: join(import.meta.dirname, '..', 'font', 'noto', 'NotoSans-Regular.ttf'),
+    },
+    NotoSerifDevanagari: {
+      bold: devanagariBold,
+      bolditalics: devanagariBold,
+      italics: devanagari,
+      normal: devanagari,
+    },
+  });
+  pdfmake.setLocalAccessPolicy(() => true);
+  pdfmake.setUrlAccessPolicy(() => false);
   const date = new Date();
   const { definition } = await templates[template as keyof Templates](path);
   const stamp = createHash(algorithm).update(JSON.stringify({
     date, definition, generator,
   })).digest('hex');
   // After stamp assignment.
-  const document = printer.createPdfKitDocument({
+  const document = pdfmake.createPdf({
     ...definition,
     displayTitle: true,
     info: {
@@ -100,15 +99,7 @@ export default async function run({ path, target, template }: Options) {
       text: siteConfig.url,
     },
   });
-  await new Promise<void>((settle, reject) => {
-    // eslint-disable-next-line security/detect-non-literal-fs-filename
-    const stream = createWriteStream(target);
-    document.on('error', reject);
-    stream.on('error', reject);
-    stream.on('finish', settle);
-    document.pipe(stream);
-    document.end();
-  }).catch((ex) => {
+  await document.write(target).catch((ex: Error) => {
     // eslint-disable-next-line no-console
     console.error(`\x1b[31mFailed writing ${target}:\x1b[0m`, ex);
     // Re-throw so the worker/pool knows the task actually failed.

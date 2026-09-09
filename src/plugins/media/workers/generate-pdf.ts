@@ -100,7 +100,7 @@ export default async function run({ path, target, template }: Options) {
       text: siteConfig.url,
     },
   });
-  await new Promise((settle, reject) => {
+  await new Promise<void>((settle, reject) => {
     // eslint-disable-next-line security/detect-non-literal-fs-filename
     const stream = createWriteStream(target);
     document.on('error', reject);

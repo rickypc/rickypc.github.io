@@ -70,9 +70,9 @@ export default async function run({ path, target, template }: Options) {
     });
   }
   const date = new Date();
-  const { definition, options } = await templates[template as keyof Templates](path);
+  const { definition } = await templates[template as keyof Templates](path);
   const stamp = createHash(algorithm).update(JSON.stringify({
-    date, definition, generator, options,
+    date, definition, generator,
   })).digest('hex');
   // After stamp assignment.
   const document = printer.createPdfKitDocument({
@@ -99,7 +99,7 @@ export default async function run({ path, target, template }: Options) {
       opacity: 0,
       text: siteConfig.url,
     },
-  }, options);
+  });
   await new Promise((settle, reject) => {
     // eslint-disable-next-line security/detect-non-literal-fs-filename
     const stream = createWriteStream(target);

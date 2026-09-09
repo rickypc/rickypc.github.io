@@ -26,45 +26,24 @@ describe('docs.buddhism.media.pdf.templates._book: non-empty', () => {
     expect(result.definition.content).toHaveLength(1);
     const [page] = result.definition.content[0];
 
-    expect(page.layout).toBe('page');
+    expect(page.layout).toStrictEqual({
+      hLineWidth: expect.any(Function),
+      paddingBottom: expect.any(Function),
+      paddingLeft: expect.any(Function),
+      paddingRight: expect.any(Function),
+      paddingTop: expect.any(Function),
+      vLineWidth: expect.any(Function),
+    });
     expect(page.table.body[0][0].table.body[0]).toHaveLength(3);
     expect(mockImage).toHaveBeenCalledTimes(2);
     expect(result.definition.info.title).toBe('Mybook prayer book');
 
-    expect(result.options.tableLayouts.empty).toEqual(expect.objectContaining({
-      hLineColor: expect.any(Function),
-      hLineWidth: expect.any(Function),
-      paddingBottom: expect.any(Function),
-      paddingLeft: expect.any(Function),
-      paddingRight: expect.any(Function),
-      paddingTop: expect.any(Function),
-      vLineColor: expect.any(Function),
-      vLineWidth: expect.any(Function),
-    }));
-    expect(result.options.tableLayouts.page).toEqual(expect.objectContaining({
-      hLineWidth: expect.any(Function),
-      paddingBottom: expect.any(Function),
-      paddingLeft: expect.any(Function),
-      paddingRight: expect.any(Function),
-      paddingTop: expect.any(Function),
-      vLineWidth: expect.any(Function),
-    }));
-
-    expect(result.options.tableLayouts.empty.hLineColor()).toBe('#ffffff');
-    expect(result.options.tableLayouts.empty.hLineWidth()).toBe(0.5);
-    expect(result.options.tableLayouts.empty.paddingBottom()).toBe(0);
-    expect(result.options.tableLayouts.empty.paddingLeft()).toBe(5);
-    expect(result.options.tableLayouts.empty.paddingRight()).toBe(5);
-    expect(result.options.tableLayouts.empty.paddingTop()).toBe(0);
-    expect(result.options.tableLayouts.empty.vLineColor()).toBe('#ffffff');
-    expect(result.options.tableLayouts.empty.vLineWidth()).toBe(0.5);
-
-    expect(result.options.tableLayouts.page.hLineWidth()).toBe(0.5);
-    expect(result.options.tableLayouts.page.paddingBottom()).toBe(0);
-    expect(result.options.tableLayouts.page.paddingLeft()).toBe(5);
-    expect(result.options.tableLayouts.page.paddingRight()).toBe(5);
-    expect(result.options.tableLayouts.page.paddingTop()).toBe(0);
-    expect(result.options.tableLayouts.page.vLineWidth()).toBe(0.5);
+    expect(page.layout.hLineWidth()).toBe(0.5);
+    expect(page.layout.paddingBottom()).toBe(0);
+    expect(page.layout.paddingLeft()).toBe(5);
+    expect(page.layout.paddingRight()).toBe(5);
+    expect(page.layout.paddingTop()).toBe(0);
+    expect(page.layout.vLineWidth()).toBe(0.5);
   });
 
   test('builds a content page with chapters and contents', async () => {
@@ -78,7 +57,14 @@ describe('docs.buddhism.media.pdf.templates._book: non-empty', () => {
     const result = await book('#buddhism/book-content');
     const [page, canvas] = result.definition.content[0];
 
-    expect(page.layout).toBe('page');
+    expect(page.layout).toStrictEqual({
+      hLineWidth: expect.any(Function),
+      paddingBottom: expect.any(Function),
+      paddingLeft: expect.any(Function),
+      paddingRight: expect.any(Function),
+      paddingTop: expect.any(Function),
+      vLineWidth: expect.any(Function),
+    });
     // Left chapter SVG exists.
     expect(page.table.body[0][0].svg).toContain('<svg');
     // Contents placed correctly.
@@ -131,7 +117,16 @@ describe('docs.buddhism.media.pdf.templates._book: empty', () => {
 
     expect(result.definition.content).toEqual([[
       {
-        layout: 'empty',
+        layout: {
+          hLineColor: expect.any(Function),
+          hLineWidth: expect.any(Function),
+          paddingBottom: expect.any(Function),
+          paddingLeft: expect.any(Function),
+          paddingRight: expect.any(Function),
+          paddingTop: expect.any(Function),
+          vLineColor: expect.any(Function),
+          vLineWidth: expect.any(Function),
+        },
         margin: [0, 0, 0, 0],
         table: {
           body: [[' ', { mocked: true }, { mocked: true }, { mocked: true }]],
@@ -142,5 +137,14 @@ describe('docs.buddhism.media.pdf.templates._book: empty', () => {
       },
       { canvas: [] },
     ]]);
+
+    expect(result.definition.content[0][0].layout.hLineColor()).toBe('#ffffff');
+    expect(result.definition.content[0][0].layout.hLineWidth()).toBe(0.5);
+    expect(result.definition.content[0][0].layout.paddingBottom()).toBe(0);
+    expect(result.definition.content[0][0].layout.paddingLeft()).toBe(5);
+    expect(result.definition.content[0][0].layout.paddingRight()).toBe(5);
+    expect(result.definition.content[0][0].layout.paddingTop()).toBe(0);
+    expect(result.definition.content[0][0].layout.vLineColor()).toBe('#ffffff');
+    expect(result.definition.content[0][0].layout.vLineWidth()).toBe(0.5);
   });
 });

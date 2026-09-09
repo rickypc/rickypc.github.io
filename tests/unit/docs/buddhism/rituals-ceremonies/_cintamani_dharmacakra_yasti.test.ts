@@ -16,9 +16,8 @@ describe('docs.buddhism.rituals-ceremonies._cintamani_dharmacakra_yasti', () => 
 
     // Top-level structure.
     expect(result).toHaveProperty('definition');
-    expect(result).toHaveProperty('options');
 
-    const { definition, options } = result;
+    const { definition } = result;
 
     // Content block.
     expect(definition.content).toHaveLength(2);
@@ -26,7 +25,12 @@ describe('docs.buddhism.rituals-ceremonies._cintamani_dharmacakra_yasti', () => 
     const [rollSection, dividerSection] = definition.content;
 
     // Roll section.
-    expect(rollSection.layout).toBe('roll');
+    expect(rollSection.layout).toStrictEqual({
+      paddingBottom: expect.any(Function),
+      paddingLeft: expect.any(Function),
+      paddingRight: expect.any(Function),
+      paddingTop: expect.any(Function),
+    });
     expect(rollSection.margin).toEqual([0, 0, 0, 7.5]);
 
     const { table } = rollSection;
@@ -94,21 +98,11 @@ describe('docs.buddhism.rituals-ceremonies._cintamani_dharmacakra_yasti', () => 
       }),
     );
 
-    // Options/table layouts.
-    expect(options.tableLayouts.roll).toEqual(
-      expect.objectContaining({
-        paddingBottom: expect.any(Function),
-        paddingLeft: expect.any(Function),
-        paddingRight: expect.any(Function),
-        paddingTop: expect.any(Function),
-      }),
-    );
-
     // Validate layout functions.
-    expect(options.tableLayouts.roll.paddingBottom()).toBe(1);
-    expect(options.tableLayouts.roll.paddingLeft()).toBe(2.5);
-    expect(options.tableLayouts.roll.paddingRight()).toBe(2.5);
-    expect(options.tableLayouts.roll.paddingTop()).toBe(0.25);
+    expect(rollSection.layout!.paddingBottom()).toBe(1);
+    expect(rollSection.layout!.paddingLeft()).toBe(2.5);
+    expect(rollSection.layout!.paddingRight()).toBe(2.5);
+    expect(rollSection.layout!.paddingTop()).toBe(0.25);
 
     // body() should be called once per Tibetan line.
     expect(body).toHaveBeenCalledTimes(3);

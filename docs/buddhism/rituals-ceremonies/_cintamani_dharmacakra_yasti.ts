@@ -56,7 +56,12 @@ export default async function cintamaniDharmacakraYasti() {
     definition: {
       content: [
         {
-          layout: 'roll',
+          layout: {
+            paddingBottom: () => 1,
+            paddingLeft: () => 2.5,
+            paddingRight: () => 2.5,
+            paddingTop: () => 0.25,
+          },
           margin: [0, 0, 0, 7.5],
           table: {
             body: phrase.tibetan.children.map((text, index) => {
@@ -120,15 +125,6 @@ export default async function cintamaniDharmacakraYasti() {
         roll: { font: 'Kokonor' },
       },
     },
-    options: {
-      tableLayouts: {
-        roll: {
-          paddingBottom: () => 1,
-          paddingLeft: () => 2.5,
-          paddingRight: () => 2.5,
-          paddingTop: () => 0.25,
-        },
-      },
-    },
+    options: {},
   };
 }

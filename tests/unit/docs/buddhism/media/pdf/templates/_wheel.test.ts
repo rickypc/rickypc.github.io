@@ -81,7 +81,7 @@ describe('docs.buddhism.media.pdf.templates._wheel', () => {
     }), { virtual: true });
 
     const result = await wheel('#buddhism/bo');
-    const { definition, options } = result;
+    const { definition } = result;
 
     // 3 rolls.
     expect(definition.content).toHaveLength(3);
@@ -123,7 +123,7 @@ describe('docs.buddhism.media.pdf.templates._wheel', () => {
     expect(lastCanvas).toEqual({ canvas: [] });
 
     // Table layout functions.
-    const layout = options.tableLayouts.roll;
+    const { layout } = definition.content[0][0] as any;
     expect(layout.paddingBottom()).toBe(1);
     expect(layout.paddingLeft()).toBe(2.5);
     expect(layout.paddingRight()).toBe(2.5);

@@ -16,9 +16,8 @@ describe('docs.buddhism.rituals-ceremonies._mandala_wheels_strip', () => {
     const result = await mandalaWheelsStrip();
 
     expect(result).toHaveProperty('definition');
-    expect(result).toHaveProperty('options');
 
-    const { definition, options } = result;
+    const { definition } = result;
 
     // Content.
     expect(definition.content).toHaveLength(2);
@@ -27,7 +26,14 @@ describe('docs.buddhism.rituals-ceremonies._mandala_wheels_strip', () => {
     const secondTable = definition.content[1];
 
     // 1st table.
-    expect(firstTable.layout).toBe('table');
+    expect(firstTable.layout).toStrictEqual({
+      hLineWidth: expect.any(Function),
+      paddingBottom: expect.any(Function),
+      paddingLeft: expect.any(Function),
+      paddingRight: expect.any(Function),
+      paddingTop: expect.any(Function),
+      vLineWidth: expect.any(Function),
+    });
     expect(firstTable.table.body).toHaveLength(1);
     expect(firstTable.table.body[0]).toHaveLength(5);
 
@@ -59,7 +65,15 @@ describe('docs.buddhism.rituals-ceremonies._mandala_wheels_strip', () => {
     });
 
     // 2nd table.
-    expect(secondTable.layout).toBe('table');
+    expect(secondTable.layout).toStrictEqual({
+      hLineWidth: expect.any(Function),
+      paddingBottom: expect.any(Function),
+      paddingLeft: expect.any(Function),
+      paddingRight: expect.any(Function),
+      paddingTop: expect.any(Function),
+      vLineWidth: expect.any(Function),
+    });
+
     expect(secondTable.pageBreak).toBe('before');
     expect(secondTable.table.body).toHaveLength(1);
     expect(secondTable.table.body[0]).toHaveLength(5);
@@ -92,8 +106,7 @@ describe('docs.buddhism.rituals-ceremonies._mandala_wheels_strip', () => {
     expect(definition.pageOrientation).toBe('landscape');
 
     // Table layout functions.
-    const layout = options.tableLayouts.table;
-
+    const { layout } = secondTable;
     expect(layout.hLineWidth()).toBe(0.25);
     expect(layout.paddingBottom()).toBe(2.5);
     expect(layout.paddingLeft()).toBe(5);

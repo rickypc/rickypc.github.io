@@ -151,6 +151,5 @@ export default async function thangka(path: string) {
         single: { font, fontSize: fontSizes.single, margin: [0, 25, 0, -10] },
       },
     },
-    options: {},
   };
 }

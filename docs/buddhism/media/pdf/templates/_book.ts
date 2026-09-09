@@ -177,7 +177,11 @@ export default async function book(path: string) {
 
   const content = await Promise.all(pages.map(async (page: Page, index: number) => ([
     {
-      layout: (page?.contents?.length || page?.title) ? 'page' : 'empty',
+      layout: (page?.contents?.length || page?.title) ? pageLayout : {
+        ...pageLayout,
+        hLineColor: () => '#ffffff',
+        vLineColor: () => '#ffffff',
+      },
       margin: [0, 0, 0, index === lastPage ? 0 : 7.5],
       // pageBreak: index % 3 === 2 && index !== lastPage ? 'after' : null,
       table: {
@@ -217,16 +221,6 @@ export default async function book(path: string) {
         section: { bold: true, fontSize: 8 },
         'section-set': { lineHeight: 0.85, margin: [0, 2.75, 0, 1.5] },
         tibetan: { font: 'Kokonor', fontSize: 7.5, lineHeight: 0.85 },
-      },
-    },
-    options: {
-      tableLayouts: {
-        empty: {
-          ...pageLayout,
-          hLineColor: () => '#ffffff',
-          vLineColor: () => '#ffffff',
-        },
-        page: pageLayout,
       },
     },
   };

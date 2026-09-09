@@ -9,7 +9,7 @@
  * @returns {object} A pdfMake compatible object.
  */
 export default async function base(path: string) {
-  const { definition = {}, options = {} } = await (await import(path)).default();
+  const { definition = {} } = await (await import(path)).default();
   return {
     definition: {
       defaultStyle: { font: 'NotoSans', fontSize: 10 },
@@ -19,6 +19,5 @@ export default async function base(path: string) {
       ...definition,
       info: { ...(definition.info || {}), keywords: definition.info?.keywords },
     },
-    options,
   };
 }

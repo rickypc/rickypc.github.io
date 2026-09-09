@@ -39,7 +39,14 @@ export default async function condensed(path: string) {
   // After lastPhrase assignment.
   const content = Array.from({ length: total }, (_total, index) => ([
     {
-      layout: 'condensed',
+      layout: {
+        hLineWidth: () => 0.25,
+        paddingBottom: () => paddingBottom,
+        paddingLeft: () => 1.5,
+        paddingRight: () => 1,
+        paddingTop: () => paddingTop,
+        vLineWidth: () => 0.25,
+      },
       margin: [0, 0, 0, index === lastRoll ? 0 : 2.5],
       table: {
         body: subsequentBody(fontSizes, infix, prefix, repeat, 'condensed', suffix, text, transliteration),
@@ -72,18 +79,6 @@ export default async function condensed(path: string) {
       pageOrientation: 'portrait',
       pageSize: 'LETTER',
       styles: { prefix: { font: prefixFont }, roll: { font: rollFont } },
-    },
-    options: {
-      tableLayouts: {
-        condensed: {
-          hLineWidth: () => 0.25,
-          paddingBottom: () => paddingBottom,
-          paddingLeft: () => 1.5,
-          paddingRight: () => 1,
-          paddingTop: () => paddingTop,
-          vLineWidth: () => 0.25,
-        },
-      },
     },
   };
 }

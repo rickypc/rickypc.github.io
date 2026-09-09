@@ -39,7 +39,12 @@ export default async function roll(path: string) {
   // After lastRoll assignment.
   const content = Array.from({ length: total }, (_total, index) => ([
     {
-      layout: 'roll',
+      layout: {
+        paddingBottom: () => paddingBottom,
+        paddingLeft: () => 2.5,
+        paddingRight: () => 2.5,
+        paddingTop: () => paddingTop,
+      },
       margin: [0, 0, 0, index === lastRoll ? 0 : 7.5],
       table: {
         body: subsequentBody(fontSizes, infix, prefix, repeat, 'roll', suffix, text, transliteration),
@@ -72,16 +77,6 @@ export default async function roll(path: string) {
       pageOrientation: 'landscape',
       pageSize: 'LETTER',
       styles: { prefix: { font: prefixFont }, roll: { font: rollFont } },
-    },
-    options: {
-      tableLayouts: {
-        roll: {
-          paddingBottom: () => paddingBottom,
-          paddingLeft: () => 2.5,
-          paddingRight: () => 2.5,
-          paddingTop: () => paddingTop,
-        },
-      },
     },
   };
 }

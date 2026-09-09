@@ -13,11 +13,19 @@ const width = 155.4;
  * @returns {object} A pdfMake compatible object.
  */
 export default async function mandalaWheelsStrip() {
+  const layout = {
+    hLineWidth: () => 0.25,
+    paddingBottom: () => 2.5,
+    paddingLeft: () => 5,
+    paddingRight: () => 5,
+    paddingTop: () => 0,
+    vLineWidth: () => 0.25,
+  };
   return {
     definition: {
       content: [
         {
-          layout: 'table',
+          layout,
           table: {
             body: [
               [
@@ -43,7 +51,7 @@ export default async function mandalaWheelsStrip() {
           },
         },
         {
-          layout: 'table',
+          layout,
           pageBreak: 'before',
           table: {
             body: [
@@ -80,17 +88,6 @@ export default async function mandalaWheelsStrip() {
       },
       pageOrientation: 'landscape',
     },
-    options: {
-      tableLayouts: {
-        table: {
-          hLineWidth: () => 0.25,
-          paddingBottom: () => 2.5,
-          paddingLeft: () => 5,
-          paddingRight: () => 5,
-          paddingTop: () => 0,
-          vLineWidth: () => 0.25,
-        },
-      },
-    },
+    options: {},
   };
 }

@@ -88,7 +88,16 @@ export default async function wheel(path: string) {
       table.heights = [height];
     }
     return [
-      { layout: 'roll', margin: [0, 0, 0, index === lastRoll ? 0 : 7.5], table },
+      {
+        layout: {
+          paddingBottom: () => paddingBottom,
+          paddingLeft: () => 2.5,
+          paddingRight: () => 2.5,
+          paddingTop: () => paddingTop,
+        },
+        margin: [0, 0, 0, index === lastRoll ? 0 : 7.5],
+        table,
+      },
       trimMarker(index, lastRoll),
     ];
   });
@@ -116,16 +125,6 @@ export default async function wheel(path: string) {
         intro: { alignment: 'center', font: 'Kokonor', fontSize: 16 },
         prefix: { font: prefixFont },
         roll: { font: rollFont },
-      },
-    },
-    options: {
-      tableLayouts: {
-        roll: {
-          paddingBottom: () => paddingBottom,
-          paddingLeft: () => 2.5,
-          paddingRight: () => 2.5,
-          paddingTop: () => paddingTop,
-        },
       },
     },
   };

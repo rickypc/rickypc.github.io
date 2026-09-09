@@ -12,7 +12,6 @@ describe('docs.buddhism.media.pdf.templates._base', () => {
         info: { keywords: ['a', 'b'] },
         pageSize: 'A4',
       },
-      options: { debug: true },
     }), { virtual: true });
 
     const result = await base('#buddhism/default');
@@ -24,7 +23,6 @@ describe('docs.buddhism.media.pdf.templates._base', () => {
         pageMargins: [7.5, 7.5, 7.5, 7.5],
         pageSize: 'A4', // overridden
       },
-      options: { debug: true },
     });
   });
 
@@ -40,7 +38,6 @@ describe('docs.buddhism.media.pdf.templates._base', () => {
         pageMargins: [7.5, 7.5, 7.5, 7.5],
         pageSize: 'LETTER',
       },
-      options: {},
     });
   });
 });

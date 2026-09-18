@@ -406,7 +406,9 @@ describe(`plugins.${name}.generateAudio: piper failed`, () => {
     for (let i = 1; i <= length; i++) {
       expect(consoleMock).toHaveBeenNthCalledWith(
         i,
-        expect.stringMatching(/Failed writing .*\.m4a: Piper exited with 1: Address already in use/),
+        expect.stringMatching(
+          /Failed writing .*\.m4a: Piper exited with 1: Address already in use/,
+        ),
       );
     }
     expect(create).toHaveBeenCalledWith(
@@ -863,9 +865,9 @@ describe(`plugins.${name}.piperServer`, () => {
     spawnMock.mockImplementation(() => piper(port, 'close'));
     const siteDir = '/root';
 
-    await expect(
-      Plugin.piperServer(siteDir, model, port)
-    ).rejects.toThrow('Piper exited with 1: Address already in use');
+    await expect(Plugin.piperServer(siteDir, model, port)).rejects.toThrow(
+      'Piper exited with 1: Address already in use',
+    );
   });
 
   test('spawns piper server and reject on error', async () => {
@@ -874,9 +876,9 @@ describe(`plugins.${name}.piperServer`, () => {
     spawnMock.mockImplementation(() => piper(port, 'error'));
     const siteDir = '/root';
 
-    await expect(
-      Plugin.piperServer(siteDir, model, port)
-    ).rejects.toThrow('Piper encountered an error: Spawn failed');
+    await expect(Plugin.piperServer(siteDir, model, port)).rejects.toThrow(
+      'Piper encountered an error: Spawn failed',
+    );
   });
 });
 

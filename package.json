@@ -97,7 +97,7 @@
     "deploy": "docusaurus deploy",
     "docusaurus": "docusaurus",
     "prestart": "npm run build:media",
-    "serve": "docusaurus serve",
+    "serve": "docusaurus serve --no-open",
     "start": "docusaurus start --no-open",
     "swizzle": "docusaurus swizzle",
     "test": "npm run test:deps:ci && npm run test:lint && npm run test:type && npm run test:unit",

@@ -196,7 +196,7 @@ export async function generateAudioTrack({
   const titleLower = transliteration?.title?.toLowerCase();
   const utteranceText = transliteration?.utterance || utterance(body(transliteration));
   // After utteranceText assignment.
-  const response = await fetch(`http://127.0.0.1:${ports.get(model)}`, {
+  const response = await fetch(`http://127.0.0.1:${ports.get(model)}/synthesize`, {
     body: JSON.stringify({ text: utteranceText }),
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
@@ -335,14 +335,33 @@ export async function piperServer(
     '--port',
     String(port),
   ]);
-  await new Promise<void>((settle) => {
-    const onData = (data: Buffer) => {
-      if (data.toString().includes(`Running on http://127.0.0.1:${port}`)) {
-        server.stderr.off('data', onData);
-        settle();
-      }
+  await new Promise<void>((resolve, reject) => {
+    const datas: string[] = [];
+    const onClose = (code: number | null) => {
+      cleanup();
+      reject(new Error(`Piper exited with ${code}: ${datas.join('').trim()}`));
     };
+    const onData = (data: Buffer) => {
+      const dataStr = data.toString();
+      if (dataStr.includes(`Running on http://127.0.0.1:${port}`)) {
+        cleanup();
+        resolve();
+      }
+      datas.push(dataStr);
+    };
+    const onError = (ex: Error) => {
+      cleanup();
+      reject(new Error(`Piper encountered an error: ${ex.message}`));
+    };
+    // After onClose, onData, and onError assignments.
+    const cleanup = () => {
+      server.off('close', onClose);
+      server.stderr.off('data', onData);
+      server.off('error', onError);
+    };
+    server.on('close', onClose);
     server.stderr.on('data', onData);
+    server.on('error', onError);
   });
   return server;
 }
@@ -539,7 +558,10 @@ export async function generateAudio(
               if (!servers.has(model)) {
                 servers.set(model, piperServer(siteDir, model, ports.get(model) as number));
               }
-              (await servers.get(model)) as ChildProcessWithoutNullStreams;
+              await servers.get(model)?.catch((ex: Error) => {
+                servers.delete(model);
+                console.error(`\x1b[31mFailed writing ${target}: ${ex.message}\x1b[0m`);
+              });
               await generateAudioTrack({
                 generator,
                 model,

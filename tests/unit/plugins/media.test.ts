@@ -44,15 +44,25 @@ const ffmpeg = (error = 0) => {
   return emitter;
 };
 const globMock = jest.mocked(glob);
-const piper = (port: number, wildcard = 0) => {
+const piper = (port: number, action: 'close' | 'error' | 'success' | 'wildcard' = 'success') => {
   const emitter = new EventEmitter() as any;
   emitter.kill = jest.fn();
   emitter.stderr = emitter;
   setImmediate(() => {
-    if (wildcard) {
+    if (action === 'close') {
+      emitter.emit('data', Buffer.from('Address already in use'));
+      emitter.emit('close', 1);
+    }
+    if (action === 'error') {
+      emitter.emit('error', new Error('Spawn failed'));
+    }
+    // Emit wildcard first, before success.
+    if (action === 'wildcard') {
       emitter.emit('data', Buffer.from('Running on all addresses (0.0.0.0)'));
     }
-    emitter.emit('data', Buffer.from(`Running on http://127.0.0.1:${port}`));
+    if (action === 'success' || action === 'wildcard') {
+      emitter.emit('data', Buffer.from(`Running on http://127.0.0.1:${port}`));
+    }
   });
   return emitter;
 };
@@ -205,7 +215,7 @@ const audio = require('#buddhism/media/audio/_index');
 const pdf = require('#buddhism/media/pdf/_index');
 const piperRequests = expect.arrayContaining([
   [
-    'http://127.0.0.1:5001',
+    'http://127.0.0.1:5001/synthesize',
     {
       body: JSON.stringify({ text: 'one' }),
       headers: { 'Content-Type': 'application/json' },
@@ -213,7 +223,7 @@ const piperRequests = expect.arrayContaining([
     },
   ],
   [
-    'http://127.0.0.1:5002',
+    'http://127.0.0.1:5002/synthesize',
     {
       body: JSON.stringify({ text: 'two' }),
       headers: { 'Content-Type': 'application/json' },
@@ -221,7 +231,7 @@ const piperRequests = expect.arrayContaining([
     },
   ],
   [
-    'http://127.0.0.1:5001',
+    'http://127.0.0.1:5001/synthesize',
     {
       body: JSON.stringify({ text: 'thr-ee' }),
       headers: { 'Content-Type': 'application/json' },
@@ -373,6 +383,45 @@ describe(`plugins.${name}.generateAudio: piper failed`, () => {
     expect(spawnMock).not.toHaveBeenCalled();
   });
 
+  test('logs error and returns early when Piper failed to start', async () => {
+    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const pipers: Piper[] = [];
+    let port = 5001;
+    execSyncMock.mockReturnValueOnce('1.2.3');
+    spawnMock.mockImplementation((cmd) => {
+      if (cmd.endsWith('python')) {
+        const server = piper(port, 'close');
+        pipers.push(server);
+        port += 1;
+        return server;
+      }
+      return ffmpeg();
+    });
+
+    await Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
+
+    expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
+    expect(barsUpdate).toHaveBeenCalledTimes(length + 3);
+    expect(consoleMock).toHaveBeenCalledTimes(length);
+    for (let i = 1; i <= length; i++) {
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        i,
+        expect.stringMatching(/Failed writing .*\.m4a: Piper exited with 1: Address already in use/),
+      );
+    }
+    expect(create).toHaveBeenCalledWith(
+      1,
+      0,
+      { color: '\x1B[35m', task: 'Map Tracks' },
+      { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
+    );
+    expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
+    expect(global.fetch).toHaveBeenCalledTimes(length);
+    expect((global.fetch as jest.Mock).mock.calls).toEqual(piperRequests);
+    expect(setTotal).toHaveBeenCalledWith(length);
+    expect(stop).toHaveBeenCalledTimes(1);
+  });
+
   test('logs error when piper responded with failure', async () => {
     const beforeIncrements = increment.mock.calls.length;
     const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -395,18 +444,12 @@ describe(`plugins.${name}.generateAudio: piper failed`, () => {
     expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
     expect(barsUpdate).toHaveBeenCalledTimes(length + 3);
     expect(consoleMock).toHaveBeenCalledTimes(length);
-    expect(consoleMock).toHaveBeenNthCalledWith(
-      1,
-      expect.stringMatching(/Failed writing .*\.m4a: Piper responded with 400/),
-    );
-    expect(consoleMock).toHaveBeenNthCalledWith(
-      2,
-      expect.stringMatching(/Failed writing .*\.m4a: Piper responded with 400/),
-    );
-    expect(consoleMock).toHaveBeenNthCalledWith(
-      3,
-      expect.stringMatching(/Failed writing .*\.m4a: Piper responded with 400/),
-    );
+    for (let i = 1; i <= length; i++) {
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        i,
+        expect.stringMatching(/Failed writing .*\.m4a: Piper responded with 400/),
+      );
+    }
     expect(create).toHaveBeenCalledWith(
       1,
       0,
@@ -464,21 +507,13 @@ describe(`plugins.${name}.generateAudio: exits error`, () => {
     expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
     expect(barsUpdate).toHaveBeenCalledTimes(length + 3);
     expect(consoleMock).toHaveBeenCalledTimes(length);
-    expect(consoleMock).toHaveBeenNthCalledWith(
-      1,
-      expect.stringMatching(/Failed writing .*\.m4a:/),
-      expect.objectContaining({ message: 'ffmpeg error' }),
-    );
-    expect(consoleMock).toHaveBeenNthCalledWith(
-      2,
-      expect.stringMatching(/Failed writing .*\.m4a:/),
-      expect.objectContaining({ message: 'ffmpeg error' }),
-    );
-    expect(consoleMock).toHaveBeenNthCalledWith(
-      3,
-      expect.stringMatching(/Failed writing .*\.m4a:/),
-      expect.objectContaining({ message: 'ffmpeg error' }),
-    );
+    for (let i = 1; i <= length; i++) {
+      expect(consoleMock).toHaveBeenNthCalledWith(
+        i,
+        expect.stringMatching(/Failed writing .*\.m4a:/),
+        expect.objectContaining({ message: 'ffmpeg error' }),
+      );
+    }
     expect(create).toHaveBeenCalledWith(
       1,
       0,
@@ -569,7 +604,7 @@ describe(`plugins.${name}.generateAudioTrack`, () => {
     });
 
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenNthCalledWith(1, 'http://127.0.0.1:5001', {
+    expect(global.fetch).toHaveBeenNthCalledWith(1, 'http://127.0.0.1:5001/synthesize', {
       body: JSON.stringify({ text: 'one' }),
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
@@ -598,7 +633,7 @@ describe(`plugins.${name}.generateAudioTrack`, () => {
       expect.stringMatching(/Failed writing .*\.m4a: Piper responded with 400/),
     );
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenNthCalledWith(1, 'http://127.0.0.1:5001', {
+    expect(global.fetch).toHaveBeenNthCalledWith(1, 'http://127.0.0.1:5001/synthesize', {
       body: JSON.stringify({ text: 'one' }),
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
@@ -627,7 +662,7 @@ describe(`plugins.${name}.generateAudioTrack`, () => {
       expect.objectContaining({ message: 'ffmpeg error' }),
     );
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenNthCalledWith(1, 'http://127.0.0.1:5001', {
+    expect(global.fetch).toHaveBeenNthCalledWith(1, 'http://127.0.0.1:5001/synthesize', {
       body: JSON.stringify({ text: 'one' }),
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
@@ -651,7 +686,7 @@ describe(`plugins.${name}.generateAudioTrack`, () => {
     });
 
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenNthCalledWith(1, 'http://127.0.0.1:5001', {
+    expect(global.fetch).toHaveBeenNthCalledWith(1, 'http://127.0.0.1:5001/synthesize', {
       body: JSON.stringify({ text: 'two' }),
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
@@ -801,7 +836,7 @@ describe(`plugins.${name}.piperServer`, () => {
     const pipers: Piper[] = [];
     const port = 5002;
     spawnMock.mockImplementation(() => {
-      const server = piper(port, 1);
+      const server = piper(port, 'wildcard');
       pipers.push(server);
       return server;
     });
@@ -820,6 +855,28 @@ describe(`plugins.${name}.piperServer`, () => {
     ]);
 
     expect(result).toBe(pipers[0]);
+  });
+
+  test('spawns piper server and reject on close', async () => {
+    const model = 'en_US-model2';
+    const port = 5002;
+    spawnMock.mockImplementation(() => piper(port, 'close'));
+    const siteDir = '/root';
+
+    await expect(
+      Plugin.piperServer(siteDir, model, port)
+    ).rejects.toThrow('Piper exited with 1: Address already in use');
+  });
+
+  test('spawns piper server and reject on error', async () => {
+    const model = 'en_US-model2';
+    const port = 5002;
+    spawnMock.mockImplementation(() => piper(port, 'error'));
+    const siteDir = '/root';
+
+    await expect(
+      Plugin.piperServer(siteDir, model, port)
+    ).rejects.toThrow('Piper encountered an error: Spawn failed');
   });
 });
 

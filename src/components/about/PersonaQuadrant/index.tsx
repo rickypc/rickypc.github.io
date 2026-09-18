@@ -34,7 +34,6 @@ export default memo(function PersonaQuadrant({
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* biome-ignore lint/correctness/useUniqueElementIds: - */}
           <marker
             id="arrow"
             markerHeight="11"
@@ -45,7 +44,6 @@ export default memo(function PersonaQuadrant({
           >
             <path d="M0 0v6l9-3z" />
           </marker>
-          {/* biome-ignore lint/correctness/useUniqueElementIds: - */}
           <radialGradient id="radial" cx="38%" cy="30%" r="78%">
             <stop offset="0%" />
             <stop offset="16%" />

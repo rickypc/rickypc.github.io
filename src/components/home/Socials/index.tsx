@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
-import { memo, type ReactElement } from 'react';
-import { key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
+import { key } from '@site/src/data/common';
 import { type SocialProps, socials } from '@site/src/data/home';
+import { memo, type ReactElement } from 'react';
 import styles from './styles.module.css';
 
 const Social = memo(function Social({ href, Icon, title }: SocialProps): ReactElement {

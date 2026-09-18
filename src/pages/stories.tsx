@@ -3,13 +3,13 @@
  * All rights reserved.
  */
 
-import { clsx } from '@site/src/data/common';
-import Content from '@site/src/components/stories/Content';
-import { intro, layout } from '@site/src/data/stories';
 import Layout from '@site/src/components/common/Layout';
-import { memo } from 'react';
 import Preamble from '@site/src/components/common/Preamble';
 import QRCode from '@site/src/components/common/QRCode';
+import Content from '@site/src/components/stories/Content';
+import { clsx } from '@site/src/data/common';
+import { intro, layout } from '@site/src/data/stories';
+import { memo } from 'react';
 import styles from './stories.module.css';
 
 export default memo(function Stories() {

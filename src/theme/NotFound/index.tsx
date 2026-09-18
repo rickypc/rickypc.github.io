@@ -3,18 +3,19 @@
  * All rights reserved.
  */
 
-import Layout from '@theme/Layout';
-import { memo, type ReactElement } from 'react';
-import NotFoundContent from '@theme/NotFound/Content';
-import NotFound from '@theme-original/NotFound';
 import { translate } from '@docusaurus/Translate';
-import { type WrapperProps } from '@docusaurus/types';
+import type { WrapperProps } from '@docusaurus/types';
+import Layout from '@theme/Layout';
+import NotFoundContent from '@theme/NotFound/Content';
+import type NotFound from '@theme-original/NotFound';
+import { memo, type ReactElement } from 'react';
 
 type Props = WrapperProps<typeof NotFound>;
 
 export default memo(function NotFoundWrapper(props: Props): ReactElement {
   const layout = {
-    description: 'Page not found - the resource you requested doesn\'t exist. Try searching the site, visit the homepage, or browse the tags and sitemap to find what you need.',
+    description:
+      "Page not found - the resource you requested doesn't exist. Try searching the site, visit the homepage, or browse the tags and sitemap to find what you need.",
     keywords: [
       '404',
       'page not found',

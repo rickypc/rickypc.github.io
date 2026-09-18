@@ -3,13 +3,13 @@
  * All rights reserved.
  */
 
-import { a11y, clsx } from '@site/src/data/common';
 import Button from '@site/src/components/common/Button';
-import { GenIcon } from 'react-icons/lib';
-import { type IconBaseProps } from 'react-icons';
+import { a11y, clsx } from '@site/src/data/common';
 import useAudio from '@site/src/hooks/audio';
-import { memo, type ReactElement, useState } from 'react';
 import { motion, useSpring, useTransform } from 'motion/react';
+import { memo, type ReactElement, useState } from 'react';
+import type { IconBaseProps } from 'react-icons';
+import { GenIcon } from 'react-icons/lib';
 import styles from './styles.module.css';
 
 export type PlaybackProps = {
@@ -29,15 +29,17 @@ export type PlaybackProps = {
 function GrPause(props: IconBaseProps): ReactElement {
   return GenIcon({
     attr: { viewBox: '0 0 24 24' },
-    child: [{
-      attr: {
-        d: 'M3,21 L9,21 L9,3 L3,3 L3,21 Z M15,21 L21,21 L21,3 L15,3 L15,21 Z',
-        fill: 'none',
-        strokeWidth: '2',
+    child: [
+      {
+        attr: {
+          d: 'M3,21 L9,21 L9,3 L3,3 L3,21 Z M15,21 L21,21 L21,3 L15,3 L15,21 Z',
+          fill: 'none',
+          strokeWidth: '2',
+        },
+        child: [],
+        tag: 'path',
       },
-      child: [],
-      tag: 'path',
-    }],
+    ],
     tag: 'svg',
   })(props);
 }
@@ -53,15 +55,17 @@ function GrPause(props: IconBaseProps): ReactElement {
 function GrPlay(props: IconBaseProps): ReactElement {
   return GenIcon({
     attr: { viewBox: '0 0 24 24' },
-    child: [{
-      attr: {
-        fill: 'none',
-        points: '5 22 23 12 5 2',
-        strokeWidth: '2',
+    child: [
+      {
+        attr: {
+          fill: 'none',
+          points: '5 22 23 12 5 2',
+          strokeWidth: '2',
+        },
+        child: [],
+        tag: 'polygon',
       },
-      child: [],
-      tag: 'polygon',
-    }],
+    ],
     tag: 'svg',
   })(props);
 }
@@ -77,15 +81,17 @@ function GrPlay(props: IconBaseProps): ReactElement {
 function GrResume(props: IconBaseProps): ReactElement {
   return GenIcon({
     attr: { viewBox: '0 0 24 24' },
-    child: [{
-      attr: {
-        d: 'M1,20 L6,20 L6,4 L1,4 L1,20 Z M11,19.0000002 L22,12 L11,5 L11,19.0000002 Z',
-        fill: 'none',
-        strokeWidth: '2',
+    child: [
+      {
+        attr: {
+          d: 'M1,20 L6,20 L6,4 L1,4 L1,20 Z M11,19.0000002 L22,12 L11,5 L11,19.0000002 Z',
+          fill: 'none',
+          strokeWidth: '2',
+        },
+        child: [],
+        tag: 'path',
       },
-      child: [],
-      tag: 'path',
-    }],
+    ],
     tag: 'svg',
   })(props);
 }
@@ -101,18 +107,20 @@ function GrResume(props: IconBaseProps): ReactElement {
 function GrStop(props: IconBaseProps): ReactElement {
   return GenIcon({
     attr: { viewBox: '0 0 24 24' },
-    child: [{
-      attr: {
-        fill: 'none',
-        height: '16',
-        strokeWidth: '2',
-        width: '16',
-        x: '4',
-        y: '4',
+    child: [
+      {
+        attr: {
+          fill: 'none',
+          height: '16',
+          strokeWidth: '2',
+          width: '16',
+          x: '4',
+          y: '4',
+        },
+        child: [],
+        tag: 'rect',
       },
-      child: [],
-      tag: 'rect',
-    }],
+    ],
     tag: 'svg',
   })(props);
 }
@@ -121,11 +129,11 @@ const radius = 16;
 const strokeDasharray = 2 * Math.PI * radius;
 
 export default memo(function Playback({
-  className, path, volume = 1,
+  className,
+  path,
+  volume = 1,
 }: PlaybackProps): ReactElement | null {
-  const {
-    onPause, onPlay, onStop, progress, status,
-  } = useAudio(path, volume);
+  const { onPause, onPlay, onStop, progress, status } = useAudio(path, volume);
   const [pressed, setPressed] = useState(false);
   const opacity = useTransform(progress, (value) => (value < 0.01 ? 0 : 1));
   const strokeDashoffset = useSpring(

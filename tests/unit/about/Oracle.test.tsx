@@ -5,11 +5,11 @@
  * @jest-environment jsdom
  */
 
+import Oracle from '@site/src/components/about/Oracle';
+import { useVisibility } from '@site/src/hooks/observer';
 import { render, renderHook } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Oracle from '@site/src/components/about/Oracle';
 import { useRef } from 'react';
-import { useVisibility } from '@site/src/hooks/observer';
 
 const useVisibilityMock = jest.mocked(useVisibility);
 

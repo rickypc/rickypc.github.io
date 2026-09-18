@@ -3,13 +3,11 @@
  * All rights reserved.
  */
 
-/* eslint-disable global-require */
-
-import { type FaqItems, type SchemaType, oneLine } from '@site/src/data/common';
-import { type IntroProps } from '@site/src/components/common/Preamble';
-import { type LayoutProps } from '@site/src/components/common/Layout';
+import type { PictureInfo } from '@site/src/components/common/Image';
+import type { LayoutProps } from '@site/src/components/common/Layout';
 import Link from '@site/src/components/common/Link';
-import { type PictureInfo } from '@site/src/components/common/Image';
+import type { IntroProps } from '@site/src/components/common/Preamble';
+import { type FaqItems, oneLine, type SchemaType } from '@site/src/data/common';
 
 export type TimelineProps = {
   affiliation: {
@@ -38,7 +36,7 @@ export const faqItems: FaqItems[] = [
       structural discipline that opens the Home page was trained first; this
       Timeline is the record of how that training crossed over into building
       systems that bear a different kind of load.`),
-    question: 'What was Ricky\'s original background before software?',
+    question: "What was Ricky's original background before software?",
   },
   {
     answer: oneLine(`20+ years at Experian across two business units - 7+ at
@@ -61,7 +59,7 @@ export const faqItems: FaqItems[] = [
       learn the theory, then widen the territory it can be applied to. That
       same cadence is what later made spec-driven development a natural
       first inside my company, as you'll see on the Home page.`),
-    question: 'What is the cadence of Ricky\'s promotions and continued learning?',
+    question: "What is the cadence of Ricky's promotions and continued learning?",
   },
   {
     answer: oneLine(`I wouldn't leave lightly - that continuity is the proof.
@@ -95,24 +93,29 @@ export const faqItems: FaqItems[] = [
 ];
 
 export const intro: IntroProps = {
-  description:
-  <>
-    These are the milestones - the years between the opening on the&nbsp;
-    <Link href="/" title="Home">Home</Link>
-    &nbsp;page and the core projects on&nbsp;
-    <Link href="/portfolio" title="Portfolio">Portfolio</Link>
-    . Read them in the order they&#39;re shown (earliest roots first) and one
-    career arc emerges: an engineering background rooted in how to plan,
-    design, and construct physical structures at Petra Christian University,
-    then carried into software - as an independent professional in 1995,
-    through RazorGator, AirIQ, Experian CheetahMail, and into Experian Consumer
-    Services where the work continues. Each step widened the scope of what I
-    could build, and each one built capabilities you&#39;ll see applied later -
-    the telemetry discipline from AirIQ, the billion-message scale of
-    CheetahMail, the cost-design discipline that shows up on the&nbsp;
-    <Link href="/resume" title="Resume">Resume</Link>
-    &nbsp;page as 5% of a licensed replacement.
-  </>,
+  description: (
+    <>
+      These are the milestones - the years between the opening on the&nbsp;
+      <Link href="/" title="Home">
+        Home
+      </Link>
+      &nbsp;page and the core projects on&nbsp;
+      <Link href="/portfolio" title="Portfolio">
+        Portfolio
+      </Link>
+      . Read them in the order they&#39;re shown (earliest roots first) and one career arc emerges:
+      an engineering background rooted in how to plan, design, and construct physical structures at
+      Petra Christian University, then carried into software - as an independent professional in
+      1995, through RazorGator, AirIQ, Experian CheetahMail, and into Experian Consumer Services
+      where the work continues. Each step widened the scope of what I could build, and each one
+      built capabilities you&#39;ll see applied later - the telemetry discipline from AirIQ, the
+      billion-message scale of CheetahMail, the cost-design discipline that shows up on the&nbsp;
+      <Link href="/resume" title="Resume">
+        Resume
+      </Link>
+      &nbsp;page as 5% of a licensed replacement.
+    </>
+  ),
   title: 'Timeline',
 };
 

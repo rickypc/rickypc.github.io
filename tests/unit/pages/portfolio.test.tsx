@@ -5,20 +5,20 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, render, screen } from '@testing-library/react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { catalog, intro, layout } from '@site/src/data/portfolio';
 import Portfolio from '@site/src/pages/portfolio';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 jest.mock('@site/src/data/portfolio', () => ({
   __esModule: true,
   // Deterministic catalog: one item matches Tag1, one does not.
   catalog: [
-    { id: 1, title: 'HasTag1', tags: ['Tag1', 'Common'] },
-    { id: 2, title: 'NoTag1', tags: ['Other', 'Common'] },
+    { id: 1, tags: ['Tag1', 'Common'], title: 'HasTag1' },
+    { id: 2, tags: ['Other', 'Common'], title: 'NoTag1' },
   ],
-  intro: { title: 'Preamble Title', description: 'Preamble Desc' },
-  layout: { title: 'Portfolio Title', description: 'Portfolio Desc' },
+  intro: { description: 'Preamble Desc', title: 'Preamble Title' },
+  layout: { description: 'Portfolio Desc', title: 'Portfolio Title' },
 }));
 
 describe('pages.portfolio', () => {
@@ -37,13 +37,15 @@ describe('pages.portfolio', () => {
   test('renders Preamble with expected props', () => {
     render(<Portfolio />);
     const pre = screen.getByTestId('preamble');
-    expect(JSON.parse(pre.dataset.intro!)).toEqual(expect.objectContaining(intro));
+    expect(JSON.parse(pre.dataset.intro as string)).toEqual(expect.objectContaining(intro));
   });
 
   test('initial state: Filter current All, Projects full catalog, Zoom closed', () => {
     render(<Portfolio />);
     expect(screen.getByTestId('filter').getAttribute('data-current')).toBe('All');
-    expect(screen.getByTestId('projects').getAttribute('data-count')).toEqual(String(catalog.length));
+    expect(screen.getByTestId('projects').getAttribute('data-count')).toEqual(
+      String(catalog.length),
+    );
     expect(screen.getByTestId('zoom').getAttribute('data-open')).toBe('false');
   });
 
@@ -51,7 +53,9 @@ describe('pages.portfolio', () => {
     render(<Portfolio />);
     fireEvent.click(screen.getByTestId('filter-all'));
     expect(screen.getByTestId('filter').getAttribute('data-current')).toBe('All');
-    expect(screen.getByTestId('projects').getAttribute('data-count')).toEqual(String(catalog.length));
+    expect(screen.getByTestId('projects').getAttribute('data-count')).toEqual(
+      String(catalog.length),
+    );
   });
 
   test('clicking filter-tag invokes filtering branch and reduces Projects', () => {

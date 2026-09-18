@@ -4,7 +4,7 @@
  */
 
 import { catalog } from '@site/src/data/portfolio';
-import { type ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 type FilterProps = {
   current: boolean;
@@ -27,7 +27,7 @@ export default function PortfolioFilter({ current, onClick }: FilterProps): Reac
       ),
     ),
   ];
-  const tags = ['All', ...(combine.sort((a, b) => a.localeCompare(b)))];
+  const tags = ['All', ...combine.sort((a, b) => a.localeCompare(b))];
   return (
     <div data-current={String(current)} data-testid="filter">
       {tags.map((tag) => (

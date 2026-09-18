@@ -3,16 +3,23 @@
  * All rights reserved.
  */
 
-import {
-  AnimatePresence, domAnimation, LazyMotion, motion,
-} from 'motion/react';
-import { clsx, key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
-import {
-  CSSProperties, Fragment, memo, type ReactElement, type ReactEventHandler,
-  type RefObject, type SyntheticEvent, useCallback, useEffect, useRef, useState,
-} from 'react';
+import { clsx, key } from '@site/src/data/common';
 import { useVisibility } from '@site/src/hooks/observer';
+import { AnimatePresence, domAnimation, LazyMotion, motion } from 'motion/react';
+import {
+  type CSSProperties,
+  Fragment,
+  memo,
+  type ReactElement,
+  type ReactEventHandler,
+  type RefObject,
+  type SyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import styles from './styles.module.css';
 
 type ImageInfo = {
@@ -81,8 +88,9 @@ const findFittingImage = (
   if (!Array.isArray(responsive) && typeof fallback === 'string') {
     responsive = [{ path: fallback, width }];
   }
-  return responsive?.find((image) => image.width >= width)
-    || responsive?.slice(-1)?.[0] || { width: 0 };
+  return (
+    responsive?.find((image) => image.width >= width) || responsive?.slice(-1)?.[0] || { width: 0 }
+  );
 };
 
 const pictureClassName = (
@@ -91,10 +99,8 @@ const pictureClassName = (
   preSrc: boolean,
 ): string => clsx(className, styles.picture, background && !preSrc && styles.shimmer);
 
-const pictureStyle = (
-  background: boolean,
-  preSrc: string | undefined,
-): CSSProperties => (background && preSrc ? { backgroundImage: `url(${preSrc})` } : {});
+const pictureStyle = (background: boolean, preSrc: string | undefined): CSSProperties =>
+  background && preSrc ? { backgroundImage: `url(${preSrc})` } : {};
 
 const pictureImages = (picture: PictureInfo | undefined) => picture?.fallback?.src?.images;
 const picturePreSrc = (picture: PictureInfo | undefined) => picture?.fallback?.preSrc;
@@ -111,7 +117,13 @@ const PictureSources = memo(function PictureSources({ picture }: PictureSourcesP
 
 // After PictureSources assignment.
 const PictureContent = memo(function PictureContent({
-  alt, fit, live, loaded, onFallbackLoad, picture, rest,
+  alt,
+  fit,
+  live,
+  loaded,
+  onFallbackLoad,
+  picture,
+  rest,
 }: PictureContentProps): ReactElement {
   return (
     <Fragment key={key(alt, 'fragment')}>
@@ -138,30 +150,39 @@ const PictureContent = memo(function PictureContent({
 
 // After PictureContent assignment.
 const Picture = memo(function Picture({
-  alt, className, live, onLoad, picture, ref, ...rest
+  alt,
+  className,
+  live,
+  onLoad,
+  picture,
+  ref,
+  ...rest
 }: PictureProps): ReactElement {
   const [background, setBackground] = useState(true);
   const images = pictureImages(picture);
   // After images assignment.
   const [fit, setFit] = useState<ImageInfo>(images?.[0] || { width: 0 });
   const [loaded, setLoaded] = useState(false);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const pictureRef = ref || useRef<HTMLPictureElement | null>(null);
+  const localRef = useRef<HTMLPictureElement | null>(null);
+  const pictureRef = ref || localRef;
   const preSrc = picturePreSrc(picture);
   const [show, setShow] = useState(false);
   const { visible } = useVisibility({ ref: pictureRef, threshold: 0.1 });
 
-  const onFallbackLoad = useCallback((evt: SyntheticEvent<HTMLImageElement, Event>) => {
-    setLoaded(true);
-    onLoad?.(evt);
-    setTimeout(() => setBackground(false), 450);
-  }, [onLoad]);
+  const onFallbackLoad = useCallback(
+    (evt: SyntheticEvent<HTMLImageElement, Event>) => {
+      setLoaded(true);
+      onLoad?.(evt);
+      setTimeout(() => setBackground(false), 450);
+    },
+    [onLoad],
+  );
 
   useEffect(() => {
     // istanbul ignore else
     if (pictureRef?.current) {
-      const width = pictureRef.current.clientWidth
-        || pictureRef.current.parentElement?.clientWidth || 0;
+      const width =
+        pictureRef.current.clientWidth || pictureRef.current.parentElement?.clientWidth || 0;
       const found = findFittingImage(images, picture?.fallback, width);
       if (fit?.path !== found.path) {
         setFit(found);
@@ -203,5 +224,11 @@ const Picture = memo(function Picture({
 });
 
 export default memo(function Image({ link, ...rest }: ImageProps): ReactElement {
-  return link ? <Link {...link}><Picture {...rest} /></Link> : <Picture {...rest} />;
+  return link ? (
+    <Link {...link}>
+      <Picture {...rest} />
+    </Link>
+  ) : (
+    <Picture {...rest} />
+  );
 });

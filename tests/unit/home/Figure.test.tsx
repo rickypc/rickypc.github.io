@@ -5,11 +5,11 @@
  * @jest-environment jsdom
  */
 
+import Figure from '@site/src/components/home/Figure';
+import { useVisibility } from '@site/src/hooks/observer';
 import { render, renderHook } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Figure from '@site/src/components/home/Figure';
 import { useRef } from 'react';
-import { useVisibility } from '@site/src/hooks/observer';
 
 const useVisibilityMock = jest.mocked(useVisibility);
 

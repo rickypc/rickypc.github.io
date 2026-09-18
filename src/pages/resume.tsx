@@ -3,14 +3,14 @@
  * All rights reserved.
  */
 
-import { clsx } from '@site/src/data/common';
-import Content from '@site/src/components/resume/Content';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@site/src/components/common/Layout';
-import { header, layout } from '@site/src/data/resume';
-import { memo, useMemo } from 'react';
 import Preamble from '@site/src/components/common/Preamble';
 import QRCode from '@site/src/components/common/QRCode';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Content from '@site/src/components/resume/Content';
+import { clsx } from '@site/src/data/common';
+import { header, layout } from '@site/src/data/resume';
+import { memo, useMemo } from 'react';
 import styles from './resume.module.css';
 
 export default memo(function Resume() {

@@ -8,7 +8,7 @@ export default class Audio implements Partial<HTMLAudioElement> {
 
   duration = 10;
 
-  private listeners: Record<string, Function[]> = {};
+  private listeners: Record<string, (() => void)[]> = {};
 
   paused = false;
 
@@ -33,7 +33,9 @@ export default class Audio implements Partial<HTMLAudioElement> {
 
   emit(event: string) {
     // eslint-disable-next-line security/detect-object-injection
-    (this.listeners[event] || []).forEach((fn) => fn());
+    (this.listeners[event] || []).forEach((fn) => {
+      fn();
+    });
   }
 
   pause = jest.fn(() => {
@@ -48,7 +50,6 @@ export default class Audio implements Partial<HTMLAudioElement> {
 
   removeEventListener(event: string, listener: any) {
     // eslint-disable-next-line security/detect-object-injection
-    this.listeners[event] = (this.listeners[event] || [])
-      .filter((fn) => fn !== listener);
+    this.listeners[event] = (this.listeners[event] || []).filter((fn) => fn !== listener);
   }
 }

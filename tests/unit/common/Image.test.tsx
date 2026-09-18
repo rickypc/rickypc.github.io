@@ -5,13 +5,11 @@
  * @jest-environment jsdom
  */
 
-import {
-  act, fireEvent, render, renderHook, screen,
-} from '@testing-library/react';
-import '@testing-library/jest-dom';
 import Image from '@site/src/components/common/Image';
-import { useRef } from 'react';
 import { useVisibility } from '@site/src/hooks/observer';
+import { act, fireEvent, render, renderHook, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { useRef } from 'react';
 
 const useVisibilityMock = jest.mocked(useVisibility);
 
@@ -74,14 +72,7 @@ describe('Image.sources and fallback', () => {
 
 describe('Image.link wrapper', () => {
   test('wraps picture in an anchor when link prop is provided', () => {
-    render((
-      <Image
-        alt="Alt"
-        link={{ href: '/test', title: 'Test' }}
-        live
-        picture={basePicture}
-      />
-    ));
+    render(<Image alt="Alt" link={{ href: '/test', title: 'Test' }} live picture={basePicture} />);
     const anchor = screen.getByTestId('link-Test');
     expect(anchor).toHaveAttribute('href', '/test');
     expect(anchor).toHaveAttribute('title', 'Test');
@@ -93,9 +84,7 @@ describe('Image.link wrapper', () => {
 describe('Image.preSrc background and load behavior', () => {
   test('applies preSrc background, sets alt on load, and clears preSrc after delay', () => {
     const onLoad = jest.fn();
-    const { container } = render((
-      <Image alt="Alt text" onLoad={onLoad} picture={basePicture} />
-    ));
+    const { container } = render(<Image alt="Alt text" onLoad={onLoad} picture={basePicture} />);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const pic = container.querySelector('picture');
     expect(pic).toHaveStyle('background-image: url(preSrc.jpg)');
@@ -103,7 +92,7 @@ describe('Image.preSrc background and load behavior', () => {
     const img = container.querySelector('img');
     expect(img).not.toHaveAttribute('alt');
 
-    fireEvent.load(img!);
+    fireEvent.load(img as HTMLImageElement);
     expect(onLoad).toHaveBeenCalledTimes(1);
     expect(img).toHaveAttribute('alt', 'Alt text');
 
@@ -113,17 +102,15 @@ describe('Image.preSrc background and load behavior', () => {
 
   test('invokes onLoad again on subsequent loads without restoring preSrc', async () => {
     const onLoad = jest.fn();
-    const { container } = render((
-      <Image alt="Alt" onLoad={onLoad} picture={basePicture} />
-    ));
+    const { container } = render(<Image alt="Alt" onLoad={onLoad} picture={basePicture} />);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const img = container.querySelector('img');
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const pic = container.querySelector('picture');
 
-    fireEvent.load(img!);
+    fireEvent.load(img as HTMLImageElement);
     act(() => jest.advanceTimersByTime(450));
-    fireEvent.load(img!);
+    fireEvent.load(img as HTMLImageElement);
     expect(onLoad).toHaveBeenCalledTimes(2);
     expect(pic).not.toHaveStyle('background-image: url(preSrc.jpg)');
   });
@@ -173,22 +160,20 @@ describe('Image.responsive fallback selection', () => {
   ];
 
   test.each(scenarios)('$name', ({ expected, images, width }) => {
-    const original = Object.getOwnPropertyDescriptor(
-      HTMLElement.prototype,
-      'clientWidth',
-    );
+    const original = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'clientWidth');
     Object.defineProperty(HTMLElement.prototype, 'clientWidth', {
       configurable: true,
       get: () => width,
     });
 
-    const picObj = typeof images === 'string'
-      ? { fallback: images }
-      : {
-        avif: basePicture.avif,
-        fallback: { preSrc: '', src: { images, srcSet: '' } },
-        webp: basePicture.webp,
-      };
+    const picObj =
+      typeof images === 'string'
+        ? { fallback: images }
+        : {
+            avif: basePicture.avif,
+            fallback: { preSrc: '', src: { images, srcSet: '' } },
+            webp: basePicture.webp,
+          };
 
     const { container } = render(<Image alt="Alt" picture={picObj as any} />);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access

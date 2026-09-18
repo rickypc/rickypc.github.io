@@ -3,5 +3,8 @@
  * All rights reserved.
  */
 
-export const process = jest.fn((html) => Promise.resolve(html.replace('<html', '<html data-beasties-container')));
+export const process = jest.fn((html) =>
+  Promise.resolve(html.replace('<html', '<html data-beasties-container')),
+);
+
 export default jest.fn(() => ({ options: {}, process }));

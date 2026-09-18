@@ -11,7 +11,7 @@ import Heart from '@site/src/components/common/Heart';
 
 jest.unmock('@site/src/components/common/Heart');
 
-type Cases = [string, { className?: string; }, string[]];
+type Cases = [string, { className?: string }, string[]];
 
 describe('Heart', () => {
   const cases: Cases[] = [
@@ -20,6 +20,7 @@ describe('Heart', () => {
   ];
 
   test.each(cases)('%s', (_desc, extraProps, expectedClasses) => {
+    // biome-ignore lint/correctness/useUniqueElementIds: -
     const { container } = render(<Heart id="heart1" {...extraProps} />);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const span = container.querySelector('span');

@@ -3,19 +3,20 @@
  * All rights reserved.
  */
 
-import { join } from 'node:path';
 import { readdirSync } from 'node:fs';
+import { join } from 'node:path';
 import { expect, hasPdf, test } from './helper';
 
 test.describe('pdf isolated tests', () => {
   const pdfDir = join(__dirname, '..', '..', 'build', 'pdf');
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
   const files = readdirSync(pdfDir).filter((file) => file.endsWith('.pdf'));
   const pages: Record<string, number> = {
     'arya-tara-atiyoga.pdf': 6,
     'consecration-statue-stupa.pdf': 4,
     'consecration-supplies.pdf': 2,
-    'mandala-wheels.pdf': 5,
     'mandala-wheels-strip.pdf': 2,
+    'mandala-wheels.pdf': 5,
     'prayer-wheels.pdf': 2,
   };
 
@@ -24,7 +25,7 @@ test.describe('pdf isolated tests', () => {
   });
 
   files.forEach((file) => {
-    // eslint-disable-next-line no-empty-pattern
+    // biome-ignore lint/correctness/noEmptyPattern: -
     test(`validates PDF: ${file}`, async ({}, testInfo) => {
       await hasPdf({
         file,

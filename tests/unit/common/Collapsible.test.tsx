@@ -17,14 +17,7 @@ describe('Collapsible', () => {
 
   const renderComponent = (active: string, extraProps = {}) => {
     onClick = jest.fn();
-    render((
-      <Collapsible
-        active={active}
-        items={items}
-        onClick={onClick}
-        {...extraProps}
-      />
-    ));
+    render(<Collapsible active={active} items={items} onClick={onClick} {...extraProps} />);
   };
 
   describe('rendering', () => {
@@ -51,12 +44,16 @@ describe('Collapsible', () => {
 
     test.each([
       ['clicking an item', (span: HTMLElement) => fireEvent.click(span)],
-      ['pressing Enter on an item', (span: HTMLElement) => fireEvent.keyDown(span, {
-        charCode: 13,
-        code: 'Enter',
-        key: 'Enter',
-        keyCode: 13,
-      })],
+      [
+        'pressing Enter on an item',
+        (span: HTMLElement) =>
+          fireEvent.keyDown(span, {
+            charCode: 13,
+            code: 'Enter',
+            key: 'Enter',
+            keyCode: 13,
+          }),
+      ],
     ])('calls onClick when %s', (_desc, action) => {
       renderComponent('Item 1');
       const span = screen.getByRole('menuitem', { name: 'Item 2' });
@@ -73,7 +70,9 @@ describe('Collapsible', () => {
       expect(button).toHaveAttribute('data-testid', 'collapsible');
 
       const spans = screen.getAllByRole('menuitem');
-      spans.forEach((span) => expect(span).toHaveAttribute('data-testid', 'collapsible'));
+      spans.forEach((span) => {
+        expect(span).toHaveAttribute('data-testid', 'collapsible');
+      });
     });
   });
 });

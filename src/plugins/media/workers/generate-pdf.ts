@@ -5,8 +5,8 @@
 
 import { createHash, createHmac } from 'node:crypto';
 import { join } from 'node:path';
-import pdfmake from 'pdfmake';
 import { workerData } from 'node:worker_threads';
+import pdfmake from 'pdfmake';
 // Templates.
 import base from '#buddhism/media/pdf/templates/_base';
 import book from '#buddhism/media/pdf/templates/_book';
@@ -30,11 +30,14 @@ type Templates = {
   wheel: typeof wheel;
 };
 
-const [, {
-  algorithm, generator, provenance, siteConfig,
-}] = workerData;
+const [, { algorithm, generator, provenance, siteConfig }] = workerData;
 const templates = {
-  base, book, condensed, roll, thangka, wheel,
+  base,
+  book,
+  condensed,
+  roll,
+  thangka,
+  wheel,
 };
 
 /**
@@ -46,12 +49,27 @@ const templates = {
  */
 export default async function run({ path, target, template }: Options) {
   // if (!printer) {
-  const devanagari = join(import.meta.dirname, '..', 'font', 'noto', 'NotoSerifDevanagari-Regular.ttf');
-  const devanagariBold = join(import.meta.dirname, '..', 'font', 'noto', 'NotoSerifDevanagari-Bold.ttf');
+  const devanagari = join(
+    import.meta.dirname,
+    '..',
+    'font',
+    'noto',
+    'NotoSerifDevanagari-Regular.ttf',
+  );
+  const devanagariBold = join(
+    import.meta.dirname,
+    '..',
+    'font',
+    'noto',
+    'NotoSerifDevanagari-Bold.ttf',
+  );
   const kokonor = join(import.meta.dirname, '..', 'font', 'kokonor', 'Kokonor-Regular.ttf');
   pdfmake.addFonts({
     Kokonor: {
-      bold: kokonor, bolditalics: kokonor, italics: kokonor, normal: kokonor,
+      bold: kokonor,
+      bolditalics: kokonor,
+      italics: kokonor,
+      normal: kokonor,
     },
     NotoSans: {
       bold: join(import.meta.dirname, '..', 'font', 'noto', 'NotoSans-Bold.ttf'),
@@ -70,9 +88,15 @@ export default async function run({ path, target, template }: Options) {
   pdfmake.setUrlAccessPolicy(() => false);
   const date = new Date();
   const { definition } = await templates[template as keyof Templates](path);
-  const stamp = createHash(algorithm).update(JSON.stringify({
-    date, definition, generator,
-  })).digest('hex');
+  const stamp = createHash(algorithm)
+    .update(
+      JSON.stringify({
+        date,
+        definition,
+        generator,
+      }),
+    )
+    .digest('hex');
   // After stamp assignment.
   const document = pdfmake.createPdf({
     ...definition,
@@ -83,8 +107,7 @@ export default async function run({ path, target, template }: Options) {
       creationDate: date,
       creator: siteConfig.url,
       custom: {
-        provenance: createHmac(algorithm, provenance)
-          .update(stamp).digest('base64'),
+        provenance: createHmac(algorithm, provenance).update(stamp).digest('base64'),
       },
       modDate: date,
       producer: siteConfig.url,
@@ -100,7 +123,6 @@ export default async function run({ path, target, template }: Options) {
     },
   });
   await document.write(target).catch((ex: Error) => {
-    // eslint-disable-next-line no-console
     console.error(`\x1b[31mFailed writing ${target}:\x1b[0m`, ex);
     // Re-throw so the worker/pool knows the task actually failed.
     throw ex;

@@ -32,7 +32,10 @@ export default {
         guhyadhatuKaranda.sanskrit.siddham.children,
         bodhiGarbhalamkaraLaksa.sanskrit.siddham.children,
         pratityasamutpada.core.sanskrit.siddham.children,
-        [rasmiVimalaDharani.sanskrit.siddham.children, rasmiVimalaHrdaya.sanskrit.siddham.children].join(' 𑗂 '),
+        [
+          rasmiVimalaDharani.sanskrit.siddham.children,
+          rasmiVimalaHrdaya.sanskrit.siddham.children,
+        ].join(' 𑗂 '),
       ],
       title: '𑖬𑖘𑖿 𑖠𑖨𑖿𑖦𑖎𑖯𑖧 𑖫𑖨𑖱𑖨𑖯𑖾',
     },
@@ -62,7 +65,10 @@ export default {
       guhyadhatuKaranda.transliteration.children,
       bodhiGarbhalamkaraLaksa.transliteration.children,
       pratityasamutpada.core.transliteration.children,
-      [rasmiVimalaDharani.transliteration.children, rasmiVimalaHrdaya.transliteration.children].join(' । '),
+      [
+        rasmiVimalaDharani.transliteration.children,
+        rasmiVimalaHrdaya.transliteration.children,
+      ].join(' । '),
     ],
     // The Six Dharmakāya Relics.
     title: 'Ṣáṭ Dharmakāya Śarīrāḥ',

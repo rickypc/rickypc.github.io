@@ -20,7 +20,10 @@ export default {
   sanskrit: {
     children: [
       [ekadasaMukhaLokesvara.sanskrit.children, avalokitesvara.sanskrit.children].join(' । '),
-      [usnisaVijaya.sanskrit.children, 'ॐ अमृते । अमृत उद्भवे । अमृत विक्रान्ते । अमृत गात्रे । अमृत गामिने । अमृत आयुर्ददे । गगन कृतिकरे । सर्व क्लेश क्षयंकरीये स्वाहा'].join(' । '),
+      [
+        usnisaVijaya.sanskrit.children,
+        'ॐ अमृते । अमृत उद्भवे । अमृत विक्रान्ते । अमृत गात्रे । अमृत गामिने । अमृत आयुर्ददे । गगन कृतिकरे । सर्व क्लेश क्षयंकरीये स्वाहा',
+      ].join(' । '),
       milarepa.sanskrit.children,
       mahavairocanaSarvadurgatiParisodhana.sanskrit.children,
       bhaisajyaguru.sanskrit.children,
@@ -35,7 +38,10 @@ export default {
   tibetan: {
     children: [
       [ekadasaMukhaLokesvara.tibetan.children, avalokitesvara.tibetan.children].join('། '),
-      [usnisaVijaya.tibetan.children, 'ༀ་ཨ་མྲྀ་ཏེ། ཨ་མྲྀ་ཏ་ཨུ་དྦྷ་བེ། ཨ་མྲྀ་ཏ་བི་ཀྲཱ་ནྟེ། ཨ་མྲྀ་ཏ་གཱ་ཏྲེ། ཨ་མྲྀ་ཏ་གཱ་མི་ནེ། ཨ་མྲྀ་ཏ་ཨཱ་ཡུ་རྡ་དེ། ག་ག་ན་ཀྲྀ་ཏི་ཀ་རེ། སརྦ་ཀླེ་ཤ་ཀྵ་ཡཾ་ཀ་རཱི་ཡེ་སྭཱ་ཧཱ'].join('། '),
+      [
+        usnisaVijaya.tibetan.children,
+        'ༀ་ཨ་མྲྀ་ཏེ། ཨ་མྲྀ་ཏ་ཨུ་དྦྷ་བེ། ཨ་མྲྀ་ཏ་བི་ཀྲཱ་ནྟེ། ཨ་མྲྀ་ཏ་གཱ་ཏྲེ། ཨ་མྲྀ་ཏ་གཱ་མི་ནེ། ཨ་མྲྀ་ཏ་ཨཱ་ཡུ་རྡ་དེ། ག་ག་ན་ཀྲྀ་ཏི་ཀ་རེ། སརྦ་ཀླེ་ཤ་ཀྵ་ཡཾ་ཀ་རཱི་ཡེ་སྭཱ་ཧཱ',
+      ].join('། '),
       milarepa.tibetan.children,
       mahavairocanaSarvadurgatiParisodhana.tibetan.children,
       bhaisajyaguru.tibetan.children,
@@ -49,8 +55,14 @@ export default {
   },
   transliteration: {
     children: [
-      [ekadasaMukhaLokesvara.transliteration.children, avalokitesvara.transliteration.children].join(' । '),
-      [usnisaVijaya.transliteration.children, 'oṃ amṛte । amṛta udbhave । amṛta vikrānte । amṛta gātre । amṛta gāmine । amṛta āyurdade । gagana kṛtikare । sarva kleśa kṣayaṃkarīye svāhā'].join(' । '),
+      [
+        ekadasaMukhaLokesvara.transliteration.children,
+        avalokitesvara.transliteration.children,
+      ].join(' । '),
+      [
+        usnisaVijaya.transliteration.children,
+        'oṃ amṛte । amṛta udbhave । amṛta vikrānte । amṛta gātre । amṛta gāmine । amṛta āyurdade । gagana kṛtikare । sarva kleśa kṣayaṃkarīye svāhā',
+      ].join(' । '),
       milarepa.transliteration.children,
       mahavairocanaSarvadurgatiParisodhana.transliteration.children,
       bhaisajyaguru.transliteration.children,

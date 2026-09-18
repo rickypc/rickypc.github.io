@@ -5,9 +5,7 @@
 
 import { clsx, textContent } from '@site/src/data/common';
 import Heading from '@theme/Heading';
-import {
-  memo, type PropsWithChildren, type ReactElement, type ReactNode,
-} from 'react';
+import { memo, type PropsWithChildren, type ReactElement, type ReactNode } from 'react';
 import styles from './styles.module.css';
 
 export type IntroProps = {
@@ -25,7 +23,12 @@ export type PreambleProps = {
 };
 
 export const Intro = memo(function Intro({
-  after, before, children, className, description, title,
+  after,
+  before,
+  children,
+  className,
+  description,
+  title,
 }: PropsWithChildren<IntroProps>): ReactElement {
   return (
     <>
@@ -42,10 +45,13 @@ export const Intro = memo(function Intro({
 
 export default memo(function Preamble({ col, intro, row }: PreambleProps): ReactElement {
   return (
-    <header aria-label={textContent(intro.title)} className={row || 'row'} role="banner">
-      <div className={col || 'col'}>
-        <Intro {...intro} />
-      </div>
-    </header>
+    <>
+      {/* biome-ignore lint/a11y/useAriaPropsSupportedByRole: - */}
+      <header aria-label={textContent(intro.title)} className={row || 'row'}>
+        <div className={col || 'col'}>
+          <Intro {...intro} />
+        </div>
+      </header>
+    </>
   );
 });

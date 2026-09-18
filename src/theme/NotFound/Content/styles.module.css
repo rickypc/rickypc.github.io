@@ -8,73 +8,73 @@
 }
 
 .row svg {
+  position: absolute;
   inset: 0;
   margin: 0 10rem;
-  position: absolute;
   opacity: 0.75;
 }
 
-[data-theme='dark'] .row svg {
+[data-theme="dark"] .row svg {
   color: #2e2e2e;
 }
 
-[data-theme='light'] .row svg {
+[data-theme="light"] .row svg {
   color: #f3f4f6;
 }
 
 .content {
-  padding-top: 16.5rem;
   position: relative;
-  text-align: center;
   z-index: 1;
+  padding-top: 16.5rem;
+  text-align: center;
 }
 
 .content a {
-  border: 0.0625rem solid transparent;
-  border-radius: 0.25rem;
-  color: #fff;
   display: inline-block;
-  font-weight: 600;
   padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: #fff;
   text-decoration: none;
   user-select: none;
+  border: 0.0625rem solid transparent;
+  border-radius: 0.25rem;
 }
 
-[data-theme='dark'] .content a {
+[data-theme="dark"] .content a {
   background: #1971c2;
 }
 
-[data-theme='light'] .content a {
+[data-theme="light"] .content a {
   background: #228be6;
 }
 
-[data-theme='dark'] .content a:hover {
+[data-theme="dark"] .content a:hover {
   background: #1864ab;
 }
 
-[data-theme='light'] .content a:hover {
+[data-theme="light"] .content a:hover {
   background: #1c7ed6;
 }
 
 .content h1 {
-  font-size: 2.25rem;
   margin: 0;
+  font-size: 2.25rem;
 }
 
-[data-theme='dark'] .content h1 {
+[data-theme="dark"] .content h1 {
   color: #c9c9c9;
 }
 
 .content p {
-  font-size: 1.15rem;
   margin: 2.25rem 2.25rem 2.75rem 2.25rem;
+  font-size: 1.15rem;
 }
 
-[data-theme='dark'] .content p {
+[data-theme="dark"] .content p {
   color: #828282;
 }
 
-[data-theme='light'] .content p {
+[data-theme="light"] .content p {
   color: #868e96;
 }
 

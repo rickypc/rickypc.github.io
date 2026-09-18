@@ -4,9 +4,9 @@
  */
 
 .figure {
-  border-radius: 1.25rem;
-  margin: auto;
   max-width: 31.25rem;
+  margin: auto;
+  border-radius: 1.25rem;
 }
 
 .figure picture {
@@ -14,31 +14,33 @@
   will-change: filter;
 }
 
-[data-theme='dark'] .figure picture {
+[data-theme="dark"] .figure picture {
   filter: drop-shadow(0 0.5rem 0.75rem rgba(255, 255, 255, 0.08));
 }
 
-[data-theme='light'] .figure picture {
+[data-theme="light"] .figure picture {
   filter: drop-shadow(0 0.5rem 0.75rem rgba(0, 0, 0, 0.35));
 }
 
 .figure picture img {
-  filter: drop-shadow(0.1875rem 0.3rem 0.125rem rgb(0 0 0 / 0.4));
-  height: auto;
   width: 100%;
+  height: auto;
+  filter: drop-shadow(0.1875rem 0.3rem 0.125rem rgb(0 0 0 / 0.4));
 }
 
 @media print {
   .figure {
-    margin: 0 auto;
     max-width: 50%;
+    margin: 0 auto;
+    /* biome-ignore lint/complexity/noImportantStyles: - */
     opacity: 1 !important;
+    /* biome-ignore lint/complexity/noImportantStyles: - */
     transform: none !important;
   }
 
   [data-theme] .figure picture {
-    filter: none;
     margin: 0;
+    filter: none;
   }
 
   .figure picture img {
@@ -46,7 +48,7 @@
   }
 }
 
-/* Safari only */
+/* biome-ignore format: Safari only */
 @supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
   @media print {
     :global(.col--2):has(.figure) {

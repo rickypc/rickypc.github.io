@@ -3,13 +3,11 @@
  * All rights reserved.
  */
 
-import audio from '#buddhism/media/audio/_index';
-import audioManager from '@site/src/lib/audioManager';
 import { fileName, key, tail } from '@site/src/data/common';
+import audioManager from '@site/src/lib/audioManager';
 import { type MotionValue, useMotionValue } from 'motion/react';
-import {
-  type RefObject, useCallback, useEffect, useMemo, useRef, useState,
-} from 'react';
+import { type RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import audio from '#buddhism/media/audio/_index';
 
 type AudioState = '404' | 'idle' | 'paused' | 'playing';
 
@@ -22,6 +20,13 @@ export type AudioResponse = {
   status: AudioState;
 };
 
+const getCurrentTime = (ref: RefObject<HTMLAudioElement | null>) => ref.current?.currentTime || 0;
+
+const getDuration = (ref: RefObject<HTMLAudioElement | null>) => {
+  const duration = ref.current?.duration;
+  return Number.isFinite(duration) ? duration : 0;
+};
+
 /**
  * Custom hook for managing audio playback.
  * @param {string} path - The source URL of the audio definition file.
@@ -30,24 +35,31 @@ export type AudioResponse = {
  */
 export default function useAudio(path: string, volume = 1): AudioResponse {
   const alias = `#${tail(path, '/buddhism')}`;
-  const hasAudio = audio.some(([/* ignore */, source]) => source === alias);
+  const hasAudio = audio.some(([/* ignore */ , source]) => source === alias);
   const progress = useMotionValue(0);
   const ref = useRef<HTMLAudioElement | null>(null);
   const src = hasAudio ? key(fileName(path), '/audio', '/', 'm4a', '.') : '';
   const [status, setStatus] = useState<AudioState>(hasAudio ? 'idle' : '404');
 
-  const onStateChange = useCallback((next: AudioState) => {
-    if (!ref.current) {
-      return;
-    }
-    if (next === 'idle' || ref.current.ended || (!['404', 'playing'].includes(next) && !ref.current.currentTime)) {
-      ref.current.currentTime = 0;
-      progress.set(0);
-      setStatus('idle');
-      return;
-    }
-    setStatus(next);
-  }, [progress]);
+  const onStateChange = useCallback(
+    (next: AudioState) => {
+      if (!ref.current) {
+        return;
+      }
+      if (
+        next === 'idle'
+        || ref.current.ended
+        || (!['404', 'playing'].includes(next) && !ref.current.currentTime)
+      ) {
+        ref.current.currentTime = 0;
+        progress.set(0);
+        setStatus('idle');
+        return;
+      }
+      setStatus(next);
+    },
+    [progress],
+  );
 
   useEffect(() => {
     if (!ref.current && src) {
@@ -75,9 +87,9 @@ export default function useAudio(path: string, volume = 1): AudioResponse {
     }
     const frame = { id: 0, offset: 0, time: 0 };
     const tick = (now: number) => {
-      const duration = Number.isFinite(ref.current?.duration) ? ref.current?.duration : 0;
+      const duration = getDuration(ref);
       if (duration) {
-        const currentTime = ref.current?.currentTime || 0;
+        const currentTime = getCurrentTime(ref);
         if (!frame.time) {
           // Align synthetic start with real position.
           frame.offset = currentTime;
@@ -129,8 +141,13 @@ export default function useAudio(path: string, volume = 1): AudioResponse {
 
   return useMemo(
     () => ({
-      onPause, onPlay, onStop, progress, ref, status,
+      onPause,
+      onPlay,
+      onStop,
+      progress,
+      ref,
+      status,
     }),
-    [onPause, onPlay, onStop, progress, ref, status],
+    [onPause, onPlay, onStop, progress, status],
   );
 }

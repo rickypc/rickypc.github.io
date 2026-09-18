@@ -4,4 +4,5 @@
  */
 
 export const collectLink = jest.fn();
+
 export default () => ({ collectLink });

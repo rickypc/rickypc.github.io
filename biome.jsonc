@@ -1,0 +1,204 @@
+{
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedInterfaceMembers": "on",
+        "useSortedKeys": "on",
+        "useSortedProperties": "on"
+      }
+    }
+  },
+  "files": {
+    "includes": ["**", "!!{build,.docusaurus,coverage,node_modules,supports}"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "javascript": {
+    "formatter": {
+      "arrowParentheses": "always",
+      "delimiterSpacing": false,
+      "jsxQuoteStyle": "double",
+      "lineEnding": "lf",
+      "lineWidth": 100,
+      "operatorLinebreak": "before",
+      "quoteStyle": "single",
+      "semicolons": "always"
+    }
+  },
+  "linter": {
+    "rules": {
+      "a11y": {
+        "noSvgWithoutTitle": "error",
+        "useAnchorContent": "error",
+        "useButtonType": "error",
+        "useKeyWithClickEvents": "error",
+        "useKeyWithMouseEvents": "error",
+        "useValidAnchor": "error"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": {
+          "level": "error",
+          "options": { "maxAllowedComplexity": 10 }
+        },
+        "noExcessiveLinesPerFunction": {
+          "level": "error",
+          "options": {
+            "maxLines": 100,
+            "skipBlankLines": true,
+            "skipIifes": true
+          }
+        },
+        "noUselessSwitchCase": "warn",
+        "useMaxParams": {
+          "level": "error",
+          "options": { "max": 10 }
+        }
+      },
+      "correctness": {
+        "noChildrenProp": "off",
+        "noNestedComponentDefinitions": "warn",
+        "useExhaustiveDependencies": "warn",
+        "useHookAtTopLevel": "error",
+        "useJsxKeyInIterable": "error",
+        "useUniqueElementIds": "warn"
+      },
+      "nursery": {
+        "noConditionalExpect": "error",
+        "noExcessiveNestedCallbacks": {
+          "level": "error",
+          "options": { "max": 5 }
+        },
+        "noIdenticalTestTitle": "error",
+        "noImpliedEval": "error",
+        "noLoopFunc": "error",
+        "noReactStringRefs": "error",
+        "useExpect": "error",
+        "useImportsFirst": "error",
+        "useThisInClassMethods": {
+          "level": "error",
+          "options": { "ignoreOverrideMethods": false }
+        },
+        "useVarsOnTop": "error"
+      },
+      "preset": "recommended",
+      "security": {
+        "noDangerouslySetInnerHtml": "error",
+        "noDangerouslySetInnerHtmlWithChildren": "error"
+      },
+      "style": {
+        "noExcessiveClassesPerFile": {
+          "level": "error",
+          "options": { "maxClasses": 1 }
+        },
+        "noExcessiveLinesPerFile": {
+          "level": "error",
+          "options": { "maxLines": 1000, "skipBlankLines": true }
+        },
+        "noRestrictedGlobals": {
+          "level": "error",
+          "options": {
+            "deniedGlobals": {
+              "addEventListener": "Avoid the implicit browser global `addEventListener`; use `window.addEventListener` explicitly when intentional.",
+              "confirm": "Avoid the implicit browser global `confirm`; use `window.confirm` explicitly when intentional.",
+              "event": "Pass the event to the handler explicitly; do not rely on the global `event`.",
+              "history": "Avoid the implicit browser global `history`; use `window.history` explicitly when intentional.",
+              "isFinite": "Use Number.isFinite instead https://github.com/airbnb/javascript#standard-library--isfinite",
+              "isNaN": "Use Number.isNaN instead https://github.com/airbnb/javascript#standard-library--isnan",
+              "location": "Avoid the implicit browser global `location`; use `window.location` explicitly when intentional.",
+              "name": "Avoid the implicit browser global `name`; use `window.name` explicitly when intentional.",
+              "open": "Avoid the implicit browser global `open`; use `window.open` explicitly when intentional.",
+              "parent": "Avoid the implicit browser global `parent`; use `window.parent` explicitly when intentional.",
+              "print": "Avoid the implicit browser global `print`; use `window.print` explicitly when intentional.",
+              "screen": "Avoid the implicit browser global `screen`; use `window.screen` explicitly when intentional.",
+              "scroll": "Avoid the implicit browser global `scroll`; use `window.scroll` explicitly when intentional.",
+              "scrollTo": "Avoid the implicit browser global `scrollTo`; use `window.scrollTo` explicitly when intentional.",
+              "self": "Avoid the implicit browser global `self`; use `window.self` explicitly when intentional.",
+              "status": "Avoid the implicit browser global `status`; use `window.status` explicitly when intentional.",
+              "stop": "Avoid the implicit browser global `stop`; use `window.stop` explicitly when intentional.",
+              "top": "Avoid the implicit browser global `top`; use `window.top` explicitly when intentional."
+            }
+          }
+        },
+        "useBlockStatements": "error",
+        "useDefaultSwitchClause": "error"
+      },
+      "suspicious": {
+        "noBitwiseOperators": {
+          "level": "error",
+          "options": { "allow": ["~"] }
+        },
+        "noExplicitAny": "off",
+        "noSparseArray": "error",
+        "useDefaultSwitchClauseLast": "error"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.css"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnknownPseudoClass": {
+              "level": "error",
+              "options": {
+                "ignore": ["global"]
+              }
+            }
+          },
+          "style": {
+            "noDescendingSpecificity": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.{json,jsonc}"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/e2e/*.spec.ts"],
+      "javascript": {
+        "globals": ["test"]
+      },
+      "linter": {
+        "rules": {
+          "nursery": {
+            "useExpect": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/unit/*.test.{ts,tsx}"],
+      "javascript": {
+        "globals": [
+          "afterEach",
+          "beforeAll",
+          "beforeEach",
+          "Bun",
+          "describe",
+          "expect",
+          "it",
+          "jest",
+          "test"
+        ]
+      }
+    }
+  ],
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true
+  }
+}

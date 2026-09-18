@@ -25,7 +25,9 @@ export default {
     title: 'Amoghapāśa Jewels Offering',
   },
   transliteration: {
-    children: [core.transliteration.children, amoghapasaPadmaUsnisa.transliteration.children].join(' । '),
+    children: [core.transliteration.children, amoghapasaPadmaUsnisa.transliteration.children].join(
+      ' । ',
+    ),
     repetition: 3,
     title: 'Amoghapāśa Maṇi Pūja',
   },

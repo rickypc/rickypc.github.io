@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 /**
  * Minimal mock home/Figure component that renders children.
@@ -13,5 +13,9 @@ import { type PropsWithChildren, type ReactElement } from 'react';
  *   The home/Figure component.
  */
 export default function HomeFigure({ children, ...rest }: PropsWithChildren): ReactElement {
-  return <div data-testid="figure" {...rest}>{children}</div>;
+  return (
+    <div data-testid="figure" {...rest}>
+      {children}
+    </div>
+  );
 }

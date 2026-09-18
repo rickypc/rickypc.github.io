@@ -5,10 +5,8 @@
  * @jest-environment jsdom
  */
 
-import {
-  catalog, faqItems, intro, layout, schema,
-} from '@site/src/data/portfolio';
 import { textContent } from '@site/src/data/common';
+import { catalog, faqItems, intro, layout, schema } from '@site/src/data/portfolio';
 
 describe('portfolio.index', () => {
   // Verify container and capture first item once.
@@ -85,7 +83,7 @@ describe('portfolio.index', () => {
 
       expect(typeof img.picture).toBe('object');
       const { picture } = img;
-      const expectedPicKeys: ('avif'|'fallback'|'webp')[] = ['avif', 'fallback', 'webp'];
+      const expectedPicKeys: ('avif' | 'fallback' | 'webp')[] = ['avif', 'fallback', 'webp'];
       expect(Object.keys(picture)).toEqual(expect.arrayContaining(expectedPicKeys));
 
       expectedPicKeys.forEach((k) => {

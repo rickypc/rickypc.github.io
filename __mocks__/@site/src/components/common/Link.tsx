@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 type LinkProps = {
   title?: string;
@@ -21,7 +21,11 @@ type LinkProps = {
  *   The common/Link component.
  */
 export default function Link({
-  children, title, validate, whileTap, ...rest
+  children,
+  title,
+  validate,
+  whileTap,
+  ...rest
 }: PropsWithChildren<LinkProps>): ReactElement {
   return (
     // eslint-disable-next-line @docusaurus/no-html-links

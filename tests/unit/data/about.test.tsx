@@ -6,8 +6,14 @@
  */
 
 import {
-  characteristic, faqItems, headline, intro, layout,
-  paragraphs, quadrants, schema,
+  characteristic,
+  faqItems,
+  headline,
+  intro,
+  layout,
+  paragraphs,
+  quadrants,
+  schema,
 } from '@site/src/data/about';
 import { textContent } from '@site/src/data/common';
 

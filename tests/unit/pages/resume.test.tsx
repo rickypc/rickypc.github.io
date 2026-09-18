@@ -5,11 +5,11 @@
  * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { layout } from '@site/src/data/resume';
 import Resume from '@site/src/pages/resume';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 jest.unmock('@site/src/components/common/Preamble');
 

@@ -5,15 +5,15 @@
  * @jest-environment jsdom
  */
 
+import { context } from '@site/src/data/common';
+import { useWelcome } from '@site/src/hooks/observer';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { context } from '@site/src/data/common';
-import DocCategoryGeneratedIndexPage from '@theme-original/DocCategoryGeneratedIndexPage';
 import DocCategoryGeneratedIndexPageWrapper from '@theme/DocCategoryGeneratedIndexPage';
-import { useWelcome } from '@site/src/hooks/observer';
+import DocCategoryGeneratedIndexPage from '@theme-original/DocCategoryGeneratedIndexPage';
 
 jest.mock('@site/src/data/common', () => ({
-  context: jest.fn((props: {}) => JSON.stringify({ ld: 'test', props })),
+  context: jest.fn((props: Record<string, unknown>) => JSON.stringify({ ld: 'test', props })),
 }));
 
 describe('theme.DocCategoryGeneratedIndexPage', () => {
@@ -32,13 +32,17 @@ describe('theme.DocCategoryGeneratedIndexPage', () => {
     render(<DocCategoryGeneratedIndexPageWrapper {...props} />);
 
     expect(context).toHaveBeenCalledTimes(1);
-    expect(context).toHaveBeenNthCalledWith(1, expect.objectContaining({
-      description: props.categoryGeneratedIndex.description,
-      keywords: props.categoryGeneratedIndex.keywords,
-      title: props.categoryGeneratedIndex.title,
-    }));
+    expect(context).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        description: props.categoryGeneratedIndex.description,
+        keywords: props.categoryGeneratedIndex.keywords,
+        title: props.categoryGeneratedIndex.title,
+      }),
+    );
 
-    const script = screen.getByTestId('metadata')
+    const script = screen
+      .getByTestId('metadata')
       // eslint-disable-next-line testing-library/no-node-access
       .querySelector('script[type="application/ld+json"]');
     expect(script).toBeInTheDocument();
@@ -53,18 +57,25 @@ describe('theme.DocCategoryGeneratedIndexPage', () => {
 
     const { head } = document;
     // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="twitter:description"]'))
-      .toHaveAttribute('content', props.categoryGeneratedIndex.description);
+    expect(head.querySelector('meta[name="twitter:description"]')).toHaveAttribute(
+      'content',
+      props.categoryGeneratedIndex.description,
+    );
     // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="twitter:title"]'))
-      .toHaveAttribute('content', props.categoryGeneratedIndex.title);
+    expect(head.querySelector('meta[name="twitter:title"]')).toHaveAttribute(
+      'content',
+      props.categoryGeneratedIndex.title,
+    );
 
     expect(useWelcome).toHaveBeenCalledTimes(1);
     expect(useWelcome).toHaveBeenCalledWith({ navigation: false });
 
     expect(DocCategoryGeneratedIndexPage).toHaveBeenCalledTimes(1);
-    expect(DocCategoryGeneratedIndexPage)
-      .toHaveBeenNthCalledWith(1, expect.objectContaining(props), undefined);
+    expect(DocCategoryGeneratedIndexPage).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining(props),
+      undefined,
+    );
 
     const list = screen.getByTestId('doc-category-generated-index-page');
     expect(list).toBeInTheDocument();

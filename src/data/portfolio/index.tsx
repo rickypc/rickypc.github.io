@@ -3,12 +3,10 @@
  * All rights reserved.
  */
 
-/* eslint-disable global-require */
-
-import { type FaqItems, type SchemaType, oneLine } from '@site/src/data/common';
-import { type IntroProps } from '@site/src/components/common/Preamble';
-import { type LayoutProps } from '@site/src/components/common/Layout';
+import type { LayoutProps } from '@site/src/components/common/Layout';
 import Link from '@site/src/components/common/Link';
+import type { IntroProps } from '@site/src/components/common/Preamble';
+import { type FaqItems, oneLine, type SchemaType } from '@site/src/data/common';
 
 export const catalog = [
   {
@@ -93,18 +91,7 @@ export const catalog = [
       availability, strong security, and real-time financial insights. The
       essential service inside it is where the 50 ms p99, the zero-defect
       five-year run, and the 5%-of-replacement-cost discipline all converge.`),
-    tags: [
-      'Python',
-      'React',
-      'AWS',
-      'Linux',
-      'C#',
-      'TypeScript',
-      'Go',
-      'MySQL',
-      'PHP',
-      'REST',
-    ],
+    tags: ['Python', 'React', 'AWS', 'Linux', 'C#', 'TypeScript', 'Go', 'MySQL', 'PHP', 'REST'],
     title: 'Consumer Credit & Financial Wellness Platform',
   },
   {
@@ -169,15 +156,7 @@ export const catalog = [
       targeted campaigns for major global brands, supporting billions of
       emails per day with advanced segmentation, tracking, and reporting. The
       ceiling that every later system is measured against.`),
-    tags: [
-      'Python',
-      'Linux',
-      'Oracle',
-      'C#',
-      'TypeScript',
-      'Perl',
-      'REST',
-    ],
+    tags: ['Python', 'Linux', 'Oracle', 'C#', 'TypeScript', 'Perl', 'REST'],
     title: 'Enterprise Email Marketing Platform',
   },
   {
@@ -223,14 +202,7 @@ export const catalog = [
       supporting high-traffic volume, flexible integrations, and reliable
       performance. Where the full-stack vision from RazorGator met a global
       audience.`),
-    tags: [
-      'C#',
-      'TypeScript',
-      'SQL Server',
-      'PHP',
-      'REST',
-      'XML',
-    ],
+    tags: ['C#', 'TypeScript', 'SQL Server', 'PHP', 'REST', 'XML'],
     title: 'Yahoo! Tickets',
   },
   {
@@ -321,12 +293,7 @@ export const catalog = [
     summary: oneLine(`Independent productized media - a custom publishing
       engine powering a multi-channel tech media site with scalable content
       delivery, high engagement, and flexible editorial workflows.`),
-    tags: [
-      'PHP',
-      'TypeScript',
-      'MySQL',
-      'REST',
-    ],
+    tags: ['PHP', 'TypeScript', 'MySQL', 'REST'],
     title: 'GigaOm Publishing Platform',
   },
   {
@@ -387,15 +354,7 @@ export const catalog = [
       marketplace supporting sports, concerts, theater, and travel packages,
       engineered for transactional reliability, multi-model commerce, and
       high-volume search and purchasing flows.`),
-    tags: [
-      'C#',
-      'TypeScript',
-      'SQL Server',
-      'MySQL',
-      'ASP.NET',
-      'REST',
-      'XML',
-    ],
+    tags: ['C#', 'TypeScript', 'SQL Server', 'MySQL', 'ASP.NET', 'REST', 'XML'],
     title: 'RazorGator Ticket Marketplace',
   },
   {
@@ -422,13 +381,7 @@ export const catalog = [
     summary: oneLine(`Rainbow Guitars E-Commerce Platform - Online retail
       system supporting rich product detail, diverse inventory, and a smooth
       purchasing experience for a long-standing music retailer.`),
-    tags: [
-      'C#',
-      'TypeScript',
-      'SQL Server',
-      'ASP.NET',
-      'REST',
-    ],
+    tags: ['C#', 'TypeScript', 'SQL Server', 'ASP.NET', 'REST'],
     title: 'Rainbow Guitars E-Commerce Platform',
   },
   {
@@ -454,13 +407,7 @@ export const catalog = [
     prefix: 'fortini-home',
     summary: oneLine(`Lifestyle-focused retail system showcasing handcrafted
       products with rich visual storytelling and a premium shopping experience.`),
-    tags: [
-      'C#',
-      'TypeScript',
-      'SQL Server',
-      'ASP.NET',
-      'REST',
-    ],
+    tags: ['C#', 'TypeScript', 'SQL Server', 'ASP.NET', 'REST'],
     title: 'Fortini Home Artisan Retail Platform',
   },
   {
@@ -487,11 +434,7 @@ export const catalog = [
     summary: oneLine(`Global logistics system supporting international shipping
       workflows, operational visibility, and seamless coordination for the
       trade show industry.`),
-    tags: [
-      'PHP',
-      'TypeScript',
-      'MySQL',
-    ],
+    tags: ['PHP', 'TypeScript', 'MySQL'],
     title: 'Exhibit Transport Logistics Platform',
   },
   {
@@ -517,11 +460,7 @@ export const catalog = [
     summary: oneLine(`Brand-driven commerce system showcasing high-performance
       BMX products with strong product management and customer engagement
       capabilities.`),
-    tags: [
-      'PHP',
-      'TypeScript',
-      'MySQL',
-    ],
+    tags: ['PHP', 'TypeScript', 'MySQL'],
     title: 'S&M Bikes Commerce Platform',
   },
   {
@@ -547,11 +486,7 @@ export const catalog = [
     prefix: 'clipper-corp',
     summary: oneLine(`Service-oriented system enabling tailored solutions,
       scalable delivery, and improved operational efficiency.`),
-    tags: [
-      'PHP',
-      'TypeScript',
-      'MySQL',
-    ],
+    tags: ['PHP', 'TypeScript', 'MySQL'],
     title: 'Clipper Corp Service Solutions Platform',
   },
   {
@@ -597,13 +532,7 @@ export const catalog = [
     summary: oneLine(`System supporting continuous vehicle and equipment
       tracking with GPS monitoring, telemetry, alerts, and location
       intelligence.`),
-    tags: [
-      'C#',
-      'TypeScript',
-      'SQL Server',
-      'ASP.NET',
-      'REST',
-    ],
+    tags: ['C#', 'TypeScript', 'SQL Server', 'ASP.NET', 'REST'],
     title: 'Real-Time GPS Asset Tracking Platform',
   },
   {
@@ -637,12 +566,7 @@ export const catalog = [
     summary: oneLine(`Online retail platform supporting product discovery,
       merchandising, and seamless purchasing for a national youth clothing
       brand.`),
-    tags: [
-      'PHP',
-      'TypeScript',
-      'MySQL',
-      'REST',
-    ],
+    tags: ['PHP', 'TypeScript', 'MySQL', 'REST'],
     title: 'AnchorBlue E-Commerce Platform',
   },
   {
@@ -667,12 +591,7 @@ export const catalog = [
     prefix: 'wheelbuilder',
     summary: oneLine(`Precision-driven product system supporting custom wheel
       configuration, accurate ordering, and high-quality product presentation.`),
-    tags: [
-      'PHP',
-      'TypeScript',
-      'MySQL',
-      'REST',
-    ],
+    tags: ['PHP', 'TypeScript', 'MySQL', 'REST'],
     title: 'WheelBuilder Custom Wheel Platform',
   },
   {
@@ -697,11 +616,7 @@ export const catalog = [
     prefix: 'pacifica-services',
     summary: oneLine(`Dynamic services system enabling consistent client
       engagement, scalable operations, and support for evolving industry needs.`),
-    tags: [
-      'PHP',
-      'TypeScript',
-      'MySQL',
-    ],
+    tags: ['PHP', 'TypeScript', 'MySQL'],
     title: 'Pacifica Services Engineering Platform',
   },
 ];
@@ -749,7 +664,7 @@ export const faqItems: FaqItems[] = [
       monthly stability within a month. The stability and consistency pattern
       from the Home page is no sales pitch; it is a live architecture with
       concrete proof inside.`),
-    question: 'What is Ricky\'s role on each project - lead, IC, or something else?',
+    question: "What is Ricky's role on each project - lead, IC, or something else?",
   },
   {
     answer: oneLine(`Concrete and recurring. The Tier-1 essential Experian
@@ -779,7 +694,7 @@ export const faqItems: FaqItems[] = [
       ordering and multi-channel media (Apple, Clean Tech, Cloud, Mobile,
       Video, Events, TV). The span is deliberate: it forces the breadth that
       later makes the depth useful.`),
-    question: 'Does Ricky\'s portfolio include both enterprise and consumer work?',
+    question: "Does Ricky's portfolio include both enterprise and consumer work?",
   },
   {
     answer: oneLine(`Tagged on each catalog entry. Tags range from Python,
@@ -818,33 +733,38 @@ export const faqItems: FaqItems[] = [
       it may never materialize. This is the lesson behind the
       essential-vs-decorative instinct that runs through the whole site,
       codified as an operating philosophy on the About page.`),
-    question: 'What is a project where Ricky\'s judgment turned out to be wrong, and what did he learn?',
+    question:
+      "What is a project where Ricky's judgment turned out to be wrong, and what did he learn?",
   },
 ];
 
 export const intro: IntroProps = {
-  description:
-  <>
-    This is the core body of work. The rising action of the&nbsp;
-    <Link href="/timeline" title="Timeline">Timeline</Link>
-    &nbsp;page culminates here in a catalog of 15 production systems across
-    cloud, media, commerce, logistics, and ticketing - each one a test
-    that demanded a different kind of mastery. The twin peaks of the arc are
-    both in this catalog: a billion emails a day at CheetahMail, and the
-    Tier-1 essential Experian service I maintain today at 50 ms p99, 5+ years
-    of zero production defects, running for roughly 5% of what a licensed
-    replacement would cost per year. Between them sits the rest of the work -
-    each build carrying the technology stack that brought it to life, the
-    impact it delivered, and another lesson that taught me to distinguish
-    essential from decorative. An internal tool here even grew its business
-    from under $100K a year to hundreds of millions in revenue; my systems
-    still back that business today. Read these as the proof behind the
-    promises made on the&nbsp;
-    <Link href="/" title="Home">Home</Link>
-    &nbsp;page - and the raw material the&nbsp;
-    <Link href="/resume" title="Resume">Resume</Link>
-    &nbsp;later distills into a strategic appendix.
-  </>,
+  description: (
+    <>
+      This is the core body of work. The rising action of the&nbsp;
+      <Link href="/timeline" title="Timeline">
+        Timeline
+      </Link>
+      &nbsp;page culminates here in a catalog of 15 production systems across cloud, media,
+      commerce, logistics, and ticketing - each one a test that demanded a different kind of
+      mastery. The twin peaks of the arc are both in this catalog: a billion emails a day at
+      CheetahMail, and the Tier-1 essential Experian service I maintain today at 50 ms p99, 5+ years
+      of zero production defects, running for roughly 5% of what a licensed replacement would cost
+      per year. Between them sits the rest of the work - each build carrying the technology stack
+      that brought it to life, the impact it delivered, and another lesson that taught me to
+      distinguish essential from decorative. An internal tool here even grew its business from under
+      $100K a year to hundreds of millions in revenue; my systems still back that business today.
+      Read these as the proof behind the promises made on the&nbsp;
+      <Link href="/" title="Home">
+        Home
+      </Link>
+      &nbsp;page - and the raw material the&nbsp;
+      <Link href="/resume" title="Resume">
+        Resume
+      </Link>
+      &nbsp;later distills into a strategic appendix.
+    </>
+  ),
   title: 'Portfolio',
 };
 

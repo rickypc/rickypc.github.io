@@ -4,14 +4,21 @@
  */
 
 import { body } from '#buddhism/media/_common';
-import thangka, { BASE_GEOMETRY, languageFontSizes, languageGeometry } from '#buddhism/media/pdf/templates/_thangka';
+import thangka, {
+  BASE_GEOMETRY,
+  languageFontSizes,
+  languageGeometry,
+} from '#buddhism/media/pdf/templates/_thangka';
 
 jest.mock('#buddhism/media/_common', () => {
   const actual = jest.requireActual('#buddhism/media/_common');
   return {
     ...actual,
-    body: jest.fn((phrase) => (phrase?.title === 'Dhāraṇī'
-      ? 'BODY_RESULT_WITH_LONG_TEXT_ON_IT_BEYOND_THRESHOLD' : 'BODY_RESULT')),
+    body: jest.fn((phrase) =>
+      phrase?.title === 'Dhāraṇī'
+        ? 'BODY_RESULT_WITH_LONG_TEXT_ON_IT_BEYOND_THRESHOLD'
+        : 'BODY_RESULT',
+    ),
   };
 });
 
@@ -83,17 +90,21 @@ describe('docs.buddhism.media.pdf.templates._thangka.languageGeometry()', () => 
 
 describe('docs.buddhism.media.pdf.templates._thangka', () => {
   test('handles Tibetan (bo-CN) branch correctly', async () => {
-    jest.mock('#buddhism/bo', () => ({
-      __esModule: true,
-      default: {
-        lang: 'bo-CN',
-        tibetan: {
-          title: 'Tibetan',
-          typography: { thangka: { default: 9, double: 40, single: 60 } },
+    jest.mock(
+      '#buddhism/bo',
+      () => ({
+        __esModule: true,
+        default: {
+          lang: 'bo-CN',
+          tibetan: {
+            title: 'Tibetan',
+            typography: { thangka: { default: 9, double: 40, single: 60 } },
+          },
+          transliteration: { title: 'Translit' },
         },
-        transliteration: { title: 'Translit' },
-      },
-    }), { virtual: true });
+      }),
+      { virtual: true },
+    );
 
     const result = await thangka('#buddhism/bo');
     const { definition } = result;
@@ -118,14 +129,18 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
   });
 
   test('handles Sanskrit (sa-IN) branch correctly', async () => {
-    jest.mock('#buddhism/sa', () => ({
-      __esModule: true,
-      default: {
-        lang: 'sa-IN',
-        sanskrit: { title: 'Dhāraṇī' },
-        transliteration: { title: 'Translit' },
-      },
-    }), { virtual: true });
+    jest.mock(
+      '#buddhism/sa',
+      () => ({
+        __esModule: true,
+        default: {
+          lang: 'sa-IN',
+          sanskrit: { title: 'Dhāraṇī' },
+          transliteration: { title: 'Translit' },
+        },
+      }),
+      { virtual: true },
+    );
 
     const result = await thangka('#buddhism/sa');
     const { definition } = result;
@@ -142,10 +157,14 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
   });
 
   test('handles default (transliteration) branch correctly', async () => {
-    jest.mock('#buddhism/default', () => ({
-      __esModule: true,
-      default: { lang: 'en-US', transliteration: { title: 'OM MANI PADME HUM' } },
-    }), { virtual: true });
+    jest.mock(
+      '#buddhism/default',
+      () => ({
+        __esModule: true,
+        default: { lang: 'en-US', transliteration: { title: 'OM MANI PADME HUM' } },
+      }),
+      { virtual: true },
+    );
 
     const result = await thangka('#buddhism/default');
     const { definition } = result;
@@ -162,10 +181,14 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
   });
 
   test('uses fallback defaults when fields are missing', async () => {
-    jest.mock('#buddhism/fallback', () => ({
-      __esModule: true,
-      default: { transliteration: { title: 'Fallback' } },
-    }), { virtual: true });
+    jest.mock(
+      '#buddhism/fallback',
+      () => ({
+        __esModule: true,
+        default: { transliteration: { title: 'Fallback' } },
+      }),
+      { virtual: true },
+    );
 
     const result = await thangka('#buddhism/fallback');
     const { definition } = result;

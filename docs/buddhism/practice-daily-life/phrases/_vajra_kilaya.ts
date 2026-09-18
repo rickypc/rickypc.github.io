@@ -21,7 +21,8 @@ export default {
     title: 'Diamond Dagger Essence (Heart)',
   },
   transliteration: {
-    children: 'oṃ vajra kīli kīlāya sarva vighnān vaṃ hūṃ phaṭ । oṃ chinda bhiṇḍa hana daha dīptacakra hūṃ',
+    children:
+      'oṃ vajra kīli kīlāya sarva vighnān vaṃ hūṃ phaṭ । oṃ chinda bhiṇḍa hana daha dīptacakra hūṃ',
     title: 'Vajrakīlāya Hṛdaya',
   },
 };

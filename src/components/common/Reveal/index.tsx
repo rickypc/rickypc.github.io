@@ -3,16 +3,25 @@
  * All rights reserved.
  */
 
-import {
-  Children, cloneElement, Fragment, isValidElement, type JSX,
-  memo, type PropsWithChildren, type ReactElement, type ReactNode,
-} from 'react';
 import { clsx, key } from '@site/src/data/common';
-import { domAnimation, LazyMotion, motion } from 'motion/react';
 import { useVisibility } from '@site/src/hooks/observer';
+import { domAnimation, LazyMotion, motion } from 'motion/react';
+import {
+  Children,
+  cloneElement,
+  Fragment,
+  isValidElement,
+  type JSX,
+  memo,
+  type PropsWithChildren,
+  type ReactElement,
+  type ReactNode,
+} from 'react';
 import styles from './styles.module.css';
 
-type NestedElement<P = {}> = ReactElement<P & { children?: JSX.Element[] | string }>;
+type NestedElement<P = Record<string, unknown>> = ReactElement<
+  P & { children?: JSX.Element[] | string }
+>;
 
 type PhraseProps = RevealProps & {
   delays?: string[];
@@ -76,9 +85,15 @@ const Word = memo(function Word({ children, delay }: WordProps): ReactElement {
 const Phrase = memo(function Phrase({ children, coeff = 0, delays }: PhraseProps): ReactNode {
   const prefix = delays?.join(' ');
 
-  const words = (text: string) => text.split(' ').filter((word) => word).map((word) => (
-    <Word delay={coeff + (delays?.indexOf(word) || 0)} key={key(`${prefix}-${word}`)}>{word}</Word>
-  ));
+  const words = (text: string) =>
+    text
+      .split(' ')
+      .filter((word) => word)
+      .map((word) => (
+        <Word delay={coeff + (delays?.indexOf(word) || 0)} key={key(`${prefix}-${word}`)}>
+          {word}
+        </Word>
+      ));
 
   return Children.map(children, (child) => {
     if (isValidElement(child)) {
@@ -101,25 +116,42 @@ export default memo(function Reveal({ children, coeff }: RevealProps): ReactElem
       const fragment = child as NestedElement;
       if (Array.isArray(fragment.props.children)) {
         return fragment.props.children.map((grand, index) => {
-          const text = typeof (grand) === 'string' ? grand : grand.props.children;
+          const text = typeof grand === 'string' ? grand : grand.props.children;
           label.push(text);
-          return <Phrase coeff={coeff} key={key(text, String(index))}>{grand}</Phrase>;
+          return (
+            <Phrase coeff={coeff} key={key(text, String(index))}>
+              {grand}
+            </Phrase>
+          );
         });
       }
       const text = fragment.props.children;
       label.push(text);
-      return <Phrase coeff={coeff} key={key(text, '0')}>{text}</Phrase>;
+      return (
+        <Phrase coeff={coeff} key={key(text, '0')}>
+          {text}
+        </Phrase>
+      );
     }
     const text = child;
     label.push(text);
-    return <Phrase coeff={coeff} key={key(text, '0')}>{text}</Phrase>;
+    return (
+      <Phrase coeff={coeff} key={key(text, '0')}>
+        {text}
+      </Phrase>
+    );
   }) as NestedElement<{ delays: string[] }>[];
   // After processing above completed.
   const delays = label.join('').split(' ');
   const { ref, visible } = useVisibility<HTMLSpanElement | null>();
 
   return (
-    <span aria-hidden className={clsx(styles.phrases, visible && styles.play)} ref={ref} translate="no">
+    <span
+      aria-hidden
+      className={clsx(styles.phrases, visible && styles.play)}
+      ref={ref}
+      translate="no"
+    >
       {phrases.map((phrase) => cloneElement(phrase, { ...phrase.props, delays }))}
     </span>
   );

@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
+import type { PluginOptions } from '@docusaurus/plugin-sitemap';
 import { getFileCommitDate } from '@docusaurus/utils';
-import { type PluginOptions } from '@docusaurus/plugin-sitemap';
 
 type CreateSitemapItemsFn = NonNullable<PluginOptions['createSitemapItems']>;
 type SitemapItems = Awaited<ReturnType<CreateSitemapItemsFn>>;
@@ -20,24 +20,36 @@ jest.mock('#buddhism/media/pdf/_index', () => [
   ['base', '#lib/path/one.md'],
   ['book', '#lib/path/_ricky_huang.md'],
 ]);
-jest.mock('#lib/path/one.md', () => ({
-  transliteration: {
-    children: 'One',
-    title: 'One',
-  },
-}), { virtual: true });
-jest.mock('#lib/path/_ricky_huang.md', () => ({
-  transliteration: {
-    children: 'Two',
-    title: 'Two',
-  },
-}), { virtual: true });
-jest.mock('#lib/path/three.md', () => ({
-  transliteration: {
-    children: 'Three',
-    title: 'Three',
-  },
-}), { virtual: true });
+jest.mock(
+  '#lib/path/one.md',
+  () => ({
+    transliteration: {
+      children: 'One',
+      title: 'One',
+    },
+  }),
+  { virtual: true },
+);
+jest.mock(
+  '#lib/path/_ricky_huang.md',
+  () => ({
+    transliteration: {
+      children: 'Two',
+      title: 'Two',
+    },
+  }),
+  { virtual: true },
+);
+jest.mock(
+  '#lib/path/three.md',
+  () => ({
+    transliteration: {
+      children: 'Three',
+      title: 'Three',
+    },
+  }),
+  { virtual: true },
+);
 
 // Sync.
 const audio = require('#buddhism/media/audio/_index');
@@ -47,7 +59,7 @@ const Plugin = require('@site/src/plugins/sitemap');
 describe('plugins.sitemap', () => {
   describe('createSitemapItems', () => {
     test('appends pdf entries using git lastmod when available', async () => {
-      const spy = jest.spyOn(console, 'error').mockImplementation(() => { });
+      const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
       const defaultItems = [{ url: '/a' }];
       const defaultCreateSitemapItems = jest.fn(async () => defaultItems);
@@ -93,7 +105,7 @@ describe('plugins.sitemap', () => {
     test('falls back to today and prints summary when git throws', async () => {
       const defaultCreateSitemapItems = jest.fn(async () => []);
       (getFileCommitDate as jest.Mock).mockRejectedValue(new Error('no commit'));
-      const spy = jest.spyOn(console, 'error').mockImplementation(() => { });
+      const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
       const result = await Plugin.createSitemapItems({
         defaultCreateSitemapItems,
@@ -102,11 +114,19 @@ describe('plugins.sitemap', () => {
 
       const today = new Date().toISOString().split('T')[0];
       expect(result.length).toBeGreaterThan(0);
-      result.forEach((item: SitemapItem) => expect(item.lastmod).toBe(today));
+      result.forEach((item: SitemapItem) => {
+        expect(item.lastmod).toBe(today);
+      });
 
       expect(spy).toHaveBeenCalledTimes(3);
-      expect(spy).toHaveBeenNthCalledWith(1, '\x1B[31mPlease commit these files so lastmod dates can be generated correctly:');
-      expect(spy).toHaveBeenNthCalledWith(2, '- audio: #lib/path/one.md\n- audio: #lib/path/_ricky_huang.md\n- audio: #lib/path/three.md\n- pdf: #lib/path/one.md\n- pdf: #lib/path/_ricky_huang.md');
+      expect(spy).toHaveBeenNthCalledWith(
+        1,
+        '\x1B[31mPlease commit these files so lastmod dates can be generated correctly:',
+      );
+      expect(spy).toHaveBeenNthCalledWith(
+        2,
+        '- audio: #lib/path/one.md\n- audio: #lib/path/_ricky_huang.md\n- audio: #lib/path/three.md\n- pdf: #lib/path/one.md\n- pdf: #lib/path/_ricky_huang.md',
+      );
       expect(spy).toHaveBeenNthCalledWith(3, '');
 
       spy.mockRestore();
@@ -118,7 +138,7 @@ describe('plugins.sitemap', () => {
       });
 
       const defaultCreateSitemapItems = jest.fn(async () => []);
-      const spy = jest.spyOn(console, 'error').mockImplementation(() => { });
+      const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
       const result = await Plugin.createSitemapItems({
         defaultCreateSitemapItems,

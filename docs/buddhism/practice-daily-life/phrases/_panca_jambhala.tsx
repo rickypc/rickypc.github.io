@@ -41,7 +41,9 @@ export default {
       <>
         <span style={{ color: '#ffd814' }}>oṃ jambhala jalendraye svāhā॥</span>
         <span>&nbsp;</span>
-        <span style={{ color: 'red' }}>oṃ jambhala jalendraye dhanam medhī hrīḥ ḍākinī jambhala sambhara svāhā॥</span>
+        <span style={{ color: 'red' }}>
+          oṃ jambhala jalendraye dhanam medhī hrīḥ ḍākinī jambhala sambhara svāhā॥
+        </span>
         <span>&nbsp;</span>
         <span>oṃ jambhala jalendraye vasudhāriṇī svāhā॥</span>
         <span>&nbsp;</span>

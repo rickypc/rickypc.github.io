@@ -5,11 +5,11 @@
  * @jest-environment jsdom
  */
 
-import { type ReactElement } from 'react';
-import { render, screen, within } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import NotFoundContent from '@theme/NotFound/Content';
 import { useWelcome } from '@site/src/hooks/observer';
+import '@testing-library/jest-dom';
+import { render, screen, within } from '@testing-library/react';
+import NotFoundContent from '@theme/NotFound/Content';
+import type { ReactElement } from 'react';
 
 type Props = {
   className?: string;
@@ -35,9 +35,7 @@ describe('theme.NotFound.Content', () => {
     expect(
       withinMain.getByRole('heading', { name: /You have found a secret place./i }),
     ).toBeInTheDocument();
-    expect(
-      withinMain.getByText(/this is only a 404 page/i),
-    ).toBeInTheDocument();
+    expect(withinMain.getByText(/this is only a 404 page/i)).toBeInTheDocument();
     const link = withinMain.getByRole('link', { name: /Take me back to home page/i });
     expect(link).toHaveAttribute('href', '/');
     expect(link).toHaveAttribute('title', 'Back to home page');
@@ -59,9 +57,7 @@ describe('theme.NotFound.Content', () => {
     expect(
       withinMain.getByRole('heading', { name: /You have found a secret place./i }),
     ).toBeInTheDocument();
-    expect(
-      withinMain.getByText(/this is only a 404 page/i),
-    ).toBeInTheDocument();
+    expect(withinMain.getByText(/this is only a 404 page/i)).toBeInTheDocument();
     const link = withinMain.getByRole('link', { name: /Take me back to home page/i });
     expect(link).toHaveAttribute('href', '/');
     expect(link).toHaveAttribute('title', 'Back to home page');

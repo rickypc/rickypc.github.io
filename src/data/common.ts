@@ -3,14 +3,29 @@
  * All rights reserved.
  */
 
-import {
-  isValidElement, type PropsWithChildren, type ReactElement, type ReactNode,
-} from 'react';
+import { isValidElement, type PropsWithChildren, type ReactElement, type ReactNode } from 'react';
 
 const below20: string[] = [
-  '', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
-  'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen',
-  'seventeen', 'eighteen', 'nineteen',
+  '',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+  'eleven',
+  'twelve',
+  'thirteen',
+  'fourteen',
+  'fifteen',
+  'sixteen',
+  'seventeen',
+  'eighteen',
+  'nineteen',
 ];
 
 const DEFAULT_DESCRIPTION = 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator';
@@ -118,25 +133,33 @@ const REVIEW_AUTHOR = { '@type': 'Person', name: PERSON_ENTITY.name };
 const REVIEW_RATING = { '@type': 'Rating', bestRating: 5, ratingValue: 5 };
 
 const tens: string[] = [
-  '', '', 'twenty', 'thirty', 'forty', 'fifty',
-  'sixty', 'seventy', 'eighty', 'ninety',
+  '',
+  '',
+  'twenty',
+  'thirty',
+  'forty',
+  'fifty',
+  'sixty',
+  'seventy',
+  'eighty',
+  'ninety',
 ];
 
 const thousands: string[] = [
-  '', 'thousand', 'million', 'billion', 'trillion',
-  'quadrillion', 'quintillion',
+  '',
+  'thousand',
+  'million',
+  'billion',
+  'trillion',
+  'quadrillion',
+  'quintillion',
 ];
 
 export type FaqItems = { answer: ReactNode; question: ReactNode };
 
 export type Faq = { items: FaqItems[]; slug: string };
 
-export type SchemaType =
-  | 'CollectionPage'
-  | 'FAQPage'
-  | 'Person'
-  | 'ProfilePage'
-  | 'Review';
+export type SchemaType = 'CollectionPage' | 'FAQPage' | 'Person' | 'ProfilePage' | 'Review';
 
 export const a11y = (value?: string, rest = {}) => ({ 'aria-label': value, title: value, ...rest });
 
@@ -164,27 +187,31 @@ export const chunkToWords = (input: number): string => {
   return response.join('');
 };
 
-export const clsx = (...classes: (boolean | null | number | string | undefined)[]) => classes.filter((cls) => cls && typeof (cls) === 'string').join(' ');
+export const clsx = (...classes: (boolean | null | number | string | undefined)[]) =>
+  classes.filter((cls) => cls && typeof cls === 'string').join(' ');
 
 export const context = ({
   description = DEFAULT_DESCRIPTION,
   keywords = DEFAULT_KEYWORDS,
   schema = 'ProfilePage',
   title = DEFAULT_TITLE,
-} = {}) => JSON.stringify({
-  '@context': 'https://schema.org/',
-  '@type': schema,
-  ...schema === 'Review' ? { author: REVIEW_AUTHOR } : {},
-  description,
-  headline: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic',
-  keywords: keywords.join(','),
-  mainEntity: PERSON_ENTITY,
-  name: title,
-  ...schema === 'Review' ? { reviewRating: REVIEW_RATING } : {},
-  url: 'https://ricky.one',
-});
+} = {}) =>
+  JSON.stringify({
+    '@context': 'https://schema.org/',
+    '@type': schema,
+    ...(schema === 'Review' ? { author: REVIEW_AUTHOR } : {}),
+    description,
+    headline: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic',
+    keywords: keywords.join(','),
+    mainEntity: PERSON_ENTITY,
+    name: title,
+    ...(schema === 'Review' ? { reviewRating: REVIEW_RATING } : {}),
+    url: 'https://ricky.one',
+  });
 
-export const fetchAsJson = async (...args: Parameters<typeof fetch>): Promise<Response | {}> => {
+export const fetchAsJson = async (
+  ...args: Parameters<typeof fetch>
+): Promise<Response | Record<string, unknown>> => {
   const result = await fetch(...args);
   try {
     return await result.json();
@@ -257,7 +284,8 @@ const key = (
 
 export const oneLine = (text: string) => text.replace(/\n\s*/g, ' ');
 
-const tail = (path: string, keyword: string) => (path?.slice((path?.lastIndexOf(keyword) || -1) + 1) || '');
+const tail = (path: string, keyword: string) =>
+  path?.slice((path?.lastIndexOf(keyword) || -1) + 1) || '';
 
 // After key & tail assignments.
 const fileName = (path: string, template?: string) => {
@@ -283,7 +311,7 @@ export { fileName, key, tail };
  *   within the node.
  */
 export function textContent(node: ReactNode): string {
-  if (['number', 'string'].includes(typeof (node))) {
+  if (['number', 'string'].includes(typeof node)) {
     return String(node);
   }
   if (Array.isArray(node)) {

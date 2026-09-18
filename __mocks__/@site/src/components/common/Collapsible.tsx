@@ -3,11 +3,11 @@
  * All rights reserved.
  */
 
-import { type ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 type CollapsibleProps = {
   active: boolean;
-  items: string[],
+  items: string[];
   onClick: (_: string) => void;
   translate: string;
 };
@@ -20,7 +20,10 @@ type CollapsibleProps = {
  *   The common/Collapsible component.
  */
 export default function Collapsible({
-  active, items, onClick, translate,
+  active,
+  items,
+  onClick,
+  translate,
 }: CollapsibleProps): ReactElement {
   return (
     <div data-active={active} data-testid="collapsible" data-translate={translate}>

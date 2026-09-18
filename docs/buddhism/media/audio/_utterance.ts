@@ -7,6 +7,7 @@ const lexemes = {
   a: 'a- .',
 };
 
+// biome-ignore assist/source/useSortedKeys: -
 const pronounces = {
   // Order Matters™.
   'bha ': 'ba, ',
@@ -48,6 +49,7 @@ const pronounces = {
   'krt-e': 'krte',
 };
 
+// biome-ignore assist/source/useSortedKeys: -
 const transliterations = {
   // Order Matters™.
   ' ।': ',',

@@ -4,51 +4,51 @@
  */
 
 .oracle {
-  contain: layout paint size style;
-  inset: -7.5rem 0 0 0;
-  margin: 0;
-  max-height: 45rem;
-  min-height: 45rem;
-  opacity: 0;
-  overflow: hidden;
-  padding: 0;
   position: absolute;
+  inset: -7.5rem 0 0 0;
+  z-index: -1;
+  min-height: 45rem;
+  max-height: 45rem;
+  padding: 0;
+  margin: 0;
+  contain: layout paint size style;
+  overflow: hidden;
+  opacity: 0;
   transition: opacity 0.5s ease-out 0.25s;
   will-change: opacity;
-  z-index: -1;
 }
 
 .oracle .oraculares {
-  height: 100%;
-  left: -12.5rem;
-  opacity: 0.5;
   position: relative;
   top: -12.5rem;
+  left: -12.5rem;
   width: 100%;
+  height: 100%;
+  opacity: 0.5;
 }
 
 .oracle .oracular1,
 .oracle .oracular2,
 .oracle .oracular3 {
+  position: absolute;
+  inset: 60% auto auto 48%;
   aspect-ratio: 1 / 1;
+  overflow: visible;
   border-radius: 31.25rem;
   filter: blur(4rem) brightness(0.65);
-  inset: 60% auto auto 48%;
-  overflow: visible;
-  position: absolute;
   transform: rotate(0deg) scale(0.86);
   will-change: filter, transform;
 }
 
 .oracle .oracular1 {
-  height: 25rem;
   width: 25rem;
+  height: 25rem;
 }
 
 .oracle .oracular2,
 .oracle .oracular3 {
-  height: 18.75rem;
   width: 18.75rem;
+  height: 18.75rem;
 }
 
 .oracle .oracular3 {
@@ -58,64 +58,76 @@
 .oracle .oracular1::before,
 .oracle .oracular2::before,
 .oracle .oracular3::before {
-  border-radius: 50%;
-  content: '';
-  inset: 0;
-  opacity: 0.25;
-  overflow: hidden;
   position: absolute;
+  inset: 0;
+  overflow: hidden;
+  content: "";
+  border-radius: 50%;
+  opacity: 0.25;
   transform: scale(1);
   will-change: opacity, transform;
 }
 
-[data-theme='dark'] .oracle .oracular1::before {
-  background: conic-gradient(from 140deg,
+[data-theme="dark"] .oracle .oracular1::before {
+  background: conic-gradient(
+    from 140deg,
     rgba(255, 0, 128, 1) 0%,
     rgba(210, 0, 230, 0.95) 15%,
     rgba(0, 140, 230, 0.9) 35%,
     rgba(40, 120, 255, 0.9) 55%,
     rgba(0, 55, 210, 0.95) 75%,
     rgba(255, 110, 0, 1) 90%,
-    rgba(255, 0, 204, 1) 100%);
+    rgba(255, 0, 204, 1) 100%
+  );
 }
 
-[data-theme='dark'] .oracle .oracular2::before {
-  background: conic-gradient(from 140deg,
+[data-theme="dark"] .oracle .oracular2::before {
+  background: conic-gradient(
+    from 140deg,
     rgba(255, 255, 255, 1) 0%,
     rgba(18, 180, 230, 0.95) 40%,
-    rgba(220, 76, 252, 1) 100%);
+    rgba(220, 76, 252, 1) 100%
+  );
 }
 
-[data-theme='dark'] .oracle .oracular3::before {
-  background: conic-gradient(from 140deg,
+[data-theme="dark"] .oracle .oracular3::before {
+  background: conic-gradient(
+    from 140deg,
     rgba(166, 239, 255, 1) 0%,
     rgba(18, 173, 230, 0.95) 40%,
-    rgba(76, 99, 252, 1) 100%);
+    rgba(76, 99, 252, 1) 100%
+  );
 }
 
-[data-theme='light'] .oracle .oracular1::before {
-  background: conic-gradient(from 140deg,
+[data-theme="light"] .oracle .oracular1::before {
+  background: conic-gradient(
+    from 140deg,
     rgba(255, 0, 110, 1) 0%,
     rgba(200, 0, 255, 1) 20%,
     rgba(0, 110, 255, 1) 40%,
     rgba(0, 80, 220, 1) 60%,
     rgba(0, 40, 160, 1) 80%,
     rgba(255, 90, 0, 1) 95%,
-    rgba(255, 0, 180, 1) 100%);
+    rgba(255, 0, 180, 1) 100%
+  );
 }
 
-[data-theme='light'] .oracle .oracular2::before {
-  background: conic-gradient(from 140deg,
+[data-theme="light"] .oracle .oracular2::before {
+  background: conic-gradient(
+    from 140deg,
     rgba(255, 255, 255, 1) 0%,
     rgba(0, 160, 255, 1) 40%,
-    rgba(210, 60, 255, 1) 100%);
+    rgba(210, 60, 255, 1) 100%
+  );
 }
 
-[data-theme='light'] .oracle .oracular3::before {
-  background: conic-gradient(from 140deg,
+[data-theme="light"] .oracle .oracular3::before {
+  background: conic-gradient(
+    from 140deg,
     rgba(150, 230, 255, 1) 0%,
     rgba(0, 160, 255, 1) 40%,
-    rgba(70, 90, 255, 1) 100%);
+    rgba(70, 90, 255, 1) 100%
+  );
 }
 
 .oracle.play {
@@ -125,7 +137,8 @@
 .oracle.play .oracular1,
 .oracle.play .oracular2,
 .oracle.play .oracular3 {
-  animation: oracle-motion 22s cubic-bezier(0.33, 0, 0.2, 1) 0.1s forwards,
+  animation:
+    oracle-motion 22s cubic-bezier(0.33, 0, 0.2, 1) 0.1s forwards,
     oracle-glow 22s ease-in-out 0.1s forwards;
 }
 
@@ -209,7 +222,7 @@
   }
 
   65% {
-    transform: rotate(300deg) scale(1.00);
+    transform: rotate(300deg) scale(1);
   }
 
   85% {

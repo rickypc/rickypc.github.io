@@ -15,20 +15,20 @@
 }
 
 .portfolio::before {
+  position: absolute;
+  inset: -3.75rem 0 -5.65rem 0;
+  z-index: -1;
+  display: block;
+  content: "";
   background-attachment: fixed;
   background-size: cover;
-  content: '';
-  display: block;
-  inset: -3.75rem 0 -5.65rem 0;
-  position: absolute;
-  z-index: -1;
 }
 
-[data-theme='dark'] .portfolio::before {
+[data-theme="dark"] .portfolio::before {
   background-image: linear-gradient(45deg, #062540, #797979);
 }
 
-[data-theme='light'] .portfolio::before {
+[data-theme="light"] .portfolio::before {
   background-image: linear-gradient(45deg, #fefefe, #e5f2fd);
 }
 
@@ -46,7 +46,7 @@
   }
 
   [data-theme] .portfolio::before {
-    background: transparent;
     inset: 0;
+    background: transparent;
   }
 }

@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 /**
  * Minimal mock common/Reveal component that renders children.
@@ -13,5 +13,9 @@ import { type PropsWithChildren, type ReactElement } from 'react';
  *   The common/Reveal component.
  */
 export default function Reveal({ children, ...rest }: PropsWithChildren): ReactElement {
-  return <div data-testid="reveal" {...rest}>{children}</div>;
+  return (
+    <div data-testid="reveal" {...rest}>
+      {children}
+    </div>
+  );
 }

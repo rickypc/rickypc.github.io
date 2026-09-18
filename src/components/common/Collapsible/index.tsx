@@ -5,9 +5,7 @@
 
 import Button from '@site/src/components/common/Button';
 import { clsx, key } from '@site/src/data/common';
-import {
-  memo, type ReactElement, useCallback, useState,
-} from 'react';
+import { memo, type ReactElement, useCallback, useState } from 'react';
 import styles from './styles.module.css';
 
 export type CollapsibleProps = {
@@ -23,13 +21,14 @@ type ItemProps = {
   onClick: (_: string) => void;
 };
 
-const Item = memo(function Item({
-  current, item, onClick, ...rest
-}: ItemProps): ReactElement {
+const Item = memo(function Item({ current, item, onClick, ...rest }: ItemProps): ReactElement {
   return (
     <dt>
       <span
-        className={clsx('table-of-contents__link', current && `${styles.active} table-of-contents__link--active`)}
+        className={clsx(
+          'table-of-contents__link',
+          current && `${styles.active} table-of-contents__link--active`,
+        )}
         onClick={() => onClick(item)}
         onKeyDown={() => onClick(item)}
         role="menuitem"
@@ -43,21 +42,24 @@ const Item = memo(function Item({
 });
 
 export default memo(function Collapsible({
-  active, items, onClick, ...rest
+  active,
+  items,
+  onClick,
+  ...rest
 }: CollapsibleProps): ReactElement {
   const [expanded, setExpanded] = useState(false);
 
-  const onItemClick = useCallback((value: string) => {
-    setExpanded(false);
-    onClick(value);
-  }, [onClick]);
+  const onItemClick = useCallback(
+    (value: string) => {
+      setExpanded(false);
+      onClick(value);
+    },
+    [onClick],
+  );
 
   return (
     <div className={clsx(styles.collapsible, expanded && styles.expanded)}>
-      <Button
-        onClick={() => setExpanded((previous) => !previous)}
-        {...rest}
-      >
+      <Button onClick={() => setExpanded((previous) => !previous)} {...rest}>
         {active}
       </Button>
       <div className={styles.items}>

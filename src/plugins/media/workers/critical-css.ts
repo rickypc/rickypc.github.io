@@ -3,9 +3,9 @@
  * All rights reserved.
  */
 
-import Beasties from 'beasties';
 import { readFile, writeFile } from 'node:fs/promises';
 import { workerData } from 'node:worker_threads';
+import Beasties from 'beasties';
 
 type Options = {
   path: string;

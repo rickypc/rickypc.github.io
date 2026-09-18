@@ -5,8 +5,8 @@
  * @jest-environment jsdom
  */
 
-import Audio from '#root/tests/unit/helper/Audio';
 import audioManager from '@site/src/lib/audioManager';
+import Audio from '#root/tests/unit/helper/Audio';
 
 jest.unmock('@site/src/lib/audioManager');
 
@@ -34,27 +34,27 @@ describe('audioManager', () => {
     const audio = new Audio();
     await audioManager.pause(audio as unknown as HTMLAudioElement);
 
-    expect(audio!.pause).toHaveBeenCalledTimes(1);
-    expect(audio!.volume).toBe(1);
+    expect((audio as Audio).pause).toHaveBeenCalledTimes(1);
+    expect((audio as Audio).volume).toBe(1);
   });
 
   test('pause() does nothing when audio is already paused', async () => {
     const audio = new Audio();
     audio?.pause();
-    (audio?.pause as jest.Mock).mockClear();
+    ((audio as Audio).pause as jest.Mock).mockClear();
     await audioManager.pause(audio as unknown as HTMLAudioElement, 10);
 
-    expect(audio!.pause).not.toHaveBeenCalled();
+    expect((audio as Audio).pause).not.toHaveBeenCalled();
   });
 
   test('play() calls play(), fades in, and ends at original volume', async () => {
     const audio = new Audio();
     audio?.pause();
-    audio!.volume = 0.8;
+    (audio as Audio).volume = 0.8;
     await audioManager.play(audio as unknown as HTMLAudioElement, 10);
 
-    expect(audio!.play).toHaveBeenCalledTimes(1);
-    expect(audio!.volume).toBeCloseTo(0.8);
+    expect((audio as Audio).play).toHaveBeenCalledTimes(1);
+    expect((audio as Audio).volume).toBeCloseTo(0.8);
   });
 
   test('play() pauses previously active audio before playing new one', async () => {

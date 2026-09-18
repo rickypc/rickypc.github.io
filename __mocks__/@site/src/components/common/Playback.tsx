@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
-import { type Transliteration } from '@site/src/components/common/MultiLingual';
+import type { Transliteration } from '@site/src/components/common/MultiLingual';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 type PlaybackProps = {
   path: string;
@@ -19,7 +19,10 @@ type PlaybackProps = {
  *   The common/Playback component.
  */
 export default function Playback({
-  children, path, transliteration, ...rest
+  children,
+  path,
+  transliteration,
+  ...rest
 }: PropsWithChildren<PlaybackProps>): ReactElement {
   return (
     <div

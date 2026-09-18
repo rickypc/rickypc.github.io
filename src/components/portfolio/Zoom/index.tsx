@@ -3,13 +3,11 @@
  * All rights reserved.
  */
 
-import { a11y, clsx } from '@site/src/data/common';
-import { domMax, LazyMotion, motion } from 'motion/react';
 import Image, { type ImageProps } from '@site/src/components/common/Image';
-import {
-  memo, type ReactElement, useCallback, useEffect, useRef,
-} from 'react';
+import { a11y, clsx } from '@site/src/data/common';
 import transition from '@site/src/data/portfolio/common';
+import { domMax, LazyMotion, motion } from 'motion/react';
+import { memo, type ReactElement, useCallback, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
 
 export type ZoomProps = {
@@ -18,30 +16,30 @@ export type ZoomProps = {
 };
 
 export default memo(function Zoom({ onClick, open }: ZoomProps): ReactElement {
-  const opened = typeof (open?.picture) === 'object';
+  const opened = typeof open?.picture === 'object';
   const ref = useRef<HTMLElement | null>(null);
 
-  const onEsc = useCallback((evt: KeyboardEvent) => {
-    if (evt.key === 'Escape' && opened) {
-      onClick();
-    }
-  }, [onClick, opened]);
-
-  useEffect(
-    () => {
-      document.body.classList.toggle('no-scroll', opened);
-      if (opened) {
-        const overlay = ref.current;
-        // istanbul ignore else
-        if (overlay) {
-          overlay.scrollTop = 0;
-          overlay.focus();
-        }
+  const onEsc = useCallback(
+    (evt: KeyboardEvent) => {
+      if (evt.key === 'Escape' && opened) {
+        onClick();
       }
-      // return none.
     },
-    [opened, ref],
+    [onClick, opened],
   );
+
+  useEffect(() => {
+    document.body.classList.toggle('no-scroll', opened);
+    if (opened) {
+      const overlay = ref.current;
+      // istanbul ignore else
+      if (overlay) {
+        overlay.scrollTop = 0;
+        overlay.focus();
+      }
+    }
+    // return none.
+  }, [opened]);
 
   useEffect(() => {
     document.addEventListener('keyup', onEsc, false);

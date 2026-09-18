@@ -3,20 +3,18 @@
  * All rights reserved.
  */
 
-import { access, mkdir, stat } from 'node:fs/promises';
-import {
-  barUpdate, barsUpdate, create, increment, MultiBar, setTotal, stop,
-} from 'cli-progress';
-import { DEFAULT_CONFIG_FILE_NAME, loadFreshModule } from '@docusaurus/utils';
 import { execSync, spawn } from 'node:child_process';
 import { EventEmitter } from 'node:events';
-import { glob } from 'fast-glob';
-import { join } from 'node:path';
-import { pools } from 'tinypool';
-import { ReadableStream } from 'node:stream/web';
-import { type Stats } from 'node:fs';
+import type { Stats } from 'node:fs';
+import { access, mkdir, stat } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { Writable } from 'node:stream';
+import { ReadableStream } from 'node:stream/web';
+import { DEFAULT_CONFIG_FILE_NAME, loadFreshModule } from '@docusaurus/utils';
+import { barsUpdate, barUpdate, create, increment, MultiBar, setTotal, stop } from 'cli-progress';
+import { glob } from 'fast-glob';
+import { pools } from 'tinypool';
 
 type ActionFn = (_arg: unknown, _opts: Record<string, unknown> | undefined) => unknown;
 
@@ -61,12 +59,19 @@ const piper = (port: number, wildcard = 0) => {
 const siteConfig = { title: 'site-title', url: 'https://example.com' };
 const spawnMock = jest.mocked(spawn);
 const statMock = jest.mocked(stat);
-const stream = () => new ReadableStream({
-  start(controller) {
-    controller.enqueue(new Uint8Array([]));
-    controller.close();
-  },
-});
+const stream = () =>
+  new ReadableStream({
+    start(controller) {
+      controller.enqueue(new Uint8Array([]));
+      controller.close();
+    },
+  });
+const successFetch = () =>
+  Promise.resolve({
+    body: stream(),
+    ok: true,
+    status: 200,
+  });
 
 jest.mock('node:child_process', () => ({
   execSync: jest.fn(),
@@ -78,7 +83,11 @@ jest.mock('node:fs', () => {
   return {
     ...original,
     createWriteStream: jest.fn(() => {
-      const w = new Writable({ write(chunk, enc, cb) { cb(); } });
+      const w = new Writable({
+        write(_, __, cb) {
+          cb();
+        },
+      });
       w.pipe = () => w as any;
       return w;
     }),
@@ -135,12 +144,10 @@ jest.mock('#root/package.json', () => ({
 function makeCli(actions: CliActions) {
   return {
     action: jest.fn(function action(fn) {
-      // eslint-disable-next-line no-param-reassign
       actions.action = fn;
       return this;
     }),
     command: jest.fn(function command(name) {
-      // eslint-disable-next-line no-param-reassign
       actions.command = name;
       return this;
     }),
@@ -153,10 +160,11 @@ function makeCli(actions: CliActions) {
   };
 }
 
-const makeTemplate = (title: string) => jest.fn(async (path) => ({
-  definition: { content: [{ text: `${title}:${path}` }], info: { title } },
-  options: { compress: false },
-}));
+const makeTemplate = (title: string) =>
+  jest.fn(async (path) => ({
+    definition: { content: [{ text: `${title}:${path}` }], info: { title } },
+    options: { compress: false },
+  }));
 
 const name = 'media';
 
@@ -169,31 +177,58 @@ jest.mock('#buddhism/media/pdf/_index', () => [
   ['base', '#lib/path/one.md'],
   ['book', '#lib/path/_ricky_huang.md'],
 ]);
-['base', 'book', 'condensed', 'roll', 'thangka', 'wheel']
-  .forEach((template) => jest.mock(`#buddhism/media/pdf/templates/_${template}`, () => makeTemplate(template)));
-jest.mock('#lib/path/one.md', () => ({
-  transliteration: {
-    children: 'One',
-    title: 'One',
-  },
-}), { virtual: true });
-jest.mock('#lib/path/_ricky_huang.md', () => ({
-  transliteration: {
-    children: 'Two',
-    title: 'Two',
-  },
-}), { virtual: true });
-jest.mock('#lib/path/three.md', () => ({
-  transliteration: {
-    children: 'Three',
-    title: 'Three',
-  },
-}), { virtual: true });
+['base', 'book', 'condensed', 'roll', 'thangka', 'wheel'].forEach((template) => {
+  jest.mock(`#buddhism/media/pdf/templates/_${template}`, () => makeTemplate(template));
+});
+
+const phrases = [
+  { content: 'One', path: '#lib/path/one.md' },
+  { content: 'Two', path: '#lib/path/_ricky_huang.md' },
+  { content: 'Three', path: '#lib/path/three.md' },
+];
+
+for (const phrase of phrases) {
+  jest.mock(
+    phrase.path,
+    () => ({
+      transliteration: {
+        children: phrase.content,
+        title: phrase.content,
+      },
+    }),
+    { virtual: true },
+  );
+}
 
 // Sync.
 const audio = require('#buddhism/media/audio/_index');
 const pdf = require('#buddhism/media/pdf/_index');
-// eslint-disable-next-line import/no-dynamic-require
+const piperRequests = expect.arrayContaining([
+  [
+    'http://127.0.0.1:5001',
+    {
+      body: JSON.stringify({ text: 'one' }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    },
+  ],
+  [
+    'http://127.0.0.1:5002',
+    {
+      body: JSON.stringify({ text: 'two' }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    },
+  ],
+  [
+    'http://127.0.0.1:5001',
+    {
+      body: JSON.stringify({ text: 'thr-ee' }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    },
+  ],
+]);
 const Plugin = require(`@site/src/plugins/${name}`);
 
 describe(`plugins.${name}.fileResolve`, () => {
@@ -208,7 +243,7 @@ describe(`plugins.${name}.fileResolve`, () => {
   });
 });
 
-describe(`plugins.${name}.generateAudio: progress bar`, () => {
+describe(`plugins.${name}.generateAudio: progress bar on update`, () => {
   const { length } = audio;
   const out = `${name}-test-out`;
   const siteDir = tmpdir();
@@ -218,9 +253,7 @@ describe(`plugins.${name}.generateAudio: progress bar`, () => {
   test('writes audio files and updates progress bar once per m4a', async () => {
     const beforeIncrements = increment.mock.calls.length;
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      body: stream(), ok: true, status: 200,
-    }));
+    global.fetch = jest.fn().mockImplementation(successFetch);
     const pipers: Piper[] = [];
     let port = 5001;
     spawnMock.mockImplementation((cmd) => {
@@ -245,31 +278,39 @@ describe(`plugins.${name}.generateAudio: progress bar`, () => {
     );
     expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
     expect(global.fetch).toHaveBeenCalledTimes(length);
-    expect((global.fetch as jest.Mock).mock.calls).toEqual(
-      expect.arrayContaining([
-        ['http://127.0.0.1:5001', { body: JSON.stringify({ text: 'one' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' }],
-        ['http://127.0.0.1:5002', { body: JSON.stringify({ text: 'two' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' }],
-        ['http://127.0.0.1:5001', { body: JSON.stringify({ text: 'thr-ee' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' }],
-      ]),
-    );
+    expect((global.fetch as jest.Mock).mock.calls).toEqual(piperRequests);
     expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
     expect(pipers[0].kill).toHaveBeenCalledTimes(1);
     expect(pipers[1].kill).toHaveBeenCalledTimes(1);
     expect(setTotal).toHaveBeenCalledWith(length);
     expect(spawnMock).toHaveBeenCalledTimes(length + 2);
-    expect(spawnMock).toHaveBeenNthCalledWith(1, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
-    expect(spawnMock).toHaveBeenNthCalledWith(2, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
+    expect(spawnMock).toHaveBeenNthCalledWith(
+      1,
+      `${process.env.HOME}/.venv/default/bin/python`,
+      expect.any(Array),
+    );
+    expect(spawnMock).toHaveBeenNthCalledWith(
+      2,
+      `${process.env.HOME}/.venv/default/bin/python`,
+      expect.any(Array),
+    );
     expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
     expect(spawnMock).toHaveBeenNthCalledWith(4, 'ffmpeg', expect.any(Array));
     expect(spawnMock).toHaveBeenNthCalledWith(5, 'ffmpeg', expect.any(Array));
     expect(stop).toHaveBeenCalledTimes(1);
   });
+});
+
+describe(`plugins.${name}.generateAudio: progress bar on skipped`, () => {
+  const { length } = audio;
+  const out = `${name}-test-out`;
+  const siteDir = tmpdir();
+  // After siteDir assignment.
+  const outDir = join(siteDir, out);
 
   test('skip recent audio files, but updates progress bar once per m4a', async () => {
     const beforeIncrements = increment.mock.calls.length;
-    global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      body: stream(), ok: true, status: 200,
-    }));
+    global.fetch = jest.fn().mockImplementation(successFetch);
     const now = Date.now();
     const pipers: Piper[] = [];
     let port = 5001;
@@ -285,9 +326,11 @@ describe(`plugins.${name}.generateAudio: progress bar`, () => {
       }
       return ffmpeg();
     });
-    statMock.mockImplementation((path) => Promise.resolve({
-      mtimeMs: String(path).includes('/audio/') ? now : 50,
-    } as Stats));
+    statMock.mockImplementation((path) =>
+      Promise.resolve({
+        mtimeMs: String(path).includes('/audio/') ? now : 50,
+      } as Stats),
+    );
 
     await Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
 
@@ -319,24 +362,20 @@ describe(`plugins.${name}.generateAudio: piper failed`, () => {
   const outDir = join(siteDir, out);
 
   test('logs error and returns early when Piper is missing', async () => {
-    const consoleMock = jest.spyOn(console, 'error')
-      .mockImplementation(() => { });
+    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
     execSyncMock.mockReturnValueOnce('');
 
     await Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
 
     expect(barUpdate).not.toHaveBeenCalled();
-    expect(consoleMock).toHaveBeenCalledWith(
-      expect.stringContaining('Piper not found'),
-    );
+    expect(consoleMock).toHaveBeenCalledWith(expect.stringContaining('Piper not found'));
     expect(create).not.toHaveBeenCalled();
     expect(spawnMock).not.toHaveBeenCalled();
   });
 
   test('logs error when piper responded with failure', async () => {
     const beforeIncrements = increment.mock.calls.length;
-    const consoleMock = jest.spyOn(console, 'error')
-      .mockImplementation(() => { });
+    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
     execSyncMock.mockReturnValueOnce('1.2.3');
     global.fetch = jest.fn().mockResolvedValue({ body: null, ok: false, status: 400 });
     const pipers: Piper[] = [];
@@ -376,20 +415,22 @@ describe(`plugins.${name}.generateAudio: piper failed`, () => {
     );
     expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
     expect(global.fetch).toHaveBeenCalledTimes(length);
-    expect((global.fetch as jest.Mock).mock.calls).toEqual(
-      expect.arrayContaining([
-        ['http://127.0.0.1:5001', { body: JSON.stringify({ text: 'one' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' }],
-        ['http://127.0.0.1:5002', { body: JSON.stringify({ text: 'two' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' }],
-        ['http://127.0.0.1:5001', { body: JSON.stringify({ text: 'thr-ee' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' }],
-      ]),
-    );
+    expect((global.fetch as jest.Mock).mock.calls).toEqual(piperRequests);
     expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
     expect(pipers[0].kill).toHaveBeenCalledTimes(1);
     expect(pipers[1].kill).toHaveBeenCalledTimes(1);
     expect(setTotal).toHaveBeenCalledWith(length);
     expect(spawnMock).toHaveBeenCalledTimes(2);
-    expect(spawnMock).toHaveBeenNthCalledWith(1, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
-    expect(spawnMock).toHaveBeenNthCalledWith(2, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
+    expect(spawnMock).toHaveBeenNthCalledWith(
+      1,
+      `${process.env.HOME}/.venv/default/bin/python`,
+      expect.any(Array),
+    );
+    expect(spawnMock).toHaveBeenNthCalledWith(
+      2,
+      `${process.env.HOME}/.venv/default/bin/python`,
+      expect.any(Array),
+    );
     expect(stop).toHaveBeenCalledTimes(1);
   });
 });
@@ -403,12 +444,9 @@ describe(`plugins.${name}.generateAudio: exits error`, () => {
 
   test('logs error when ffmpeg exits non-zero', async () => {
     const beforeIncrements = increment.mock.calls.length;
-    const consoleMock = jest.spyOn(console, 'error')
-      .mockImplementation(() => { });
+    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      body: stream(), ok: true, status: 200,
-    }));
+    global.fetch = jest.fn().mockImplementation(successFetch);
     const pipers: Piper[] = [];
     let port = 5001;
     spawnMock.mockImplementation((cmd) => {
@@ -449,20 +487,22 @@ describe(`plugins.${name}.generateAudio: exits error`, () => {
     );
     expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
     expect(global.fetch).toHaveBeenCalledTimes(length);
-    expect((global.fetch as jest.Mock).mock.calls).toEqual(
-      expect.arrayContaining([
-        ['http://127.0.0.1:5001', { body: JSON.stringify({ text: 'one' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' }],
-        ['http://127.0.0.1:5002', { body: JSON.stringify({ text: 'two' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' }],
-        ['http://127.0.0.1:5001', { body: JSON.stringify({ text: 'thr-ee' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' }],
-      ]),
-    );
+    expect((global.fetch as jest.Mock).mock.calls).toEqual(piperRequests);
     expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
     expect(pipers[0].kill).toHaveBeenCalledTimes(1);
     expect(pipers[1].kill).toHaveBeenCalledTimes(1);
     expect(setTotal).toHaveBeenCalledWith(length);
     expect(spawnMock).toHaveBeenCalledTimes(length + 2);
-    expect(spawnMock).toHaveBeenNthCalledWith(1, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
-    expect(spawnMock).toHaveBeenNthCalledWith(2, `${process.env.HOME}/.venv/default/bin/python`, expect.any(Array));
+    expect(spawnMock).toHaveBeenNthCalledWith(
+      1,
+      `${process.env.HOME}/.venv/default/bin/python`,
+      expect.any(Array),
+    );
+    expect(spawnMock).toHaveBeenNthCalledWith(
+      2,
+      `${process.env.HOME}/.venv/default/bin/python`,
+      expect.any(Array),
+    );
     expect(spawnMock).toHaveBeenNthCalledWith(3, 'ffmpeg', expect.any(Array));
     expect(spawnMock).toHaveBeenNthCalledWith(4, 'ffmpeg', expect.any(Array));
     expect(stop).toHaveBeenCalledTimes(1);
@@ -511,44 +551,45 @@ describe(`plugins.${name}.generateAudioTrack`, () => {
   const siteDir = tmpdir();
   const target = join(siteDir, `${name}-test-out`, 'audio', 'one.m4a');
   const tracks = new Map([
-    [
-      path,
-      {
-        album: 'album',
-        description: 'description',
-        genre: 'genre',
-        track: 1,
-      },
-    ],
+    [path, { album: 'album', description: 'description', genre: 'genre', track: 1 }],
   ]);
 
   test('writes audio file', async () => {
-    global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      body: stream(), ok: true, status: 200,
-    }));
+    global.fetch = jest.fn().mockImplementation(successFetch);
     spawnMock.mockReturnValue(ffmpeg());
-
     await Plugin.generateAudioTrack({
-      generator, model, path, ports, siteConfig, siteDir, target, tracks,
+      generator,
+      model,
+      path,
+      ports,
+      siteConfig,
+      siteDir,
+      target,
+      tracks,
     });
 
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenNthCalledWith(
-      1,
-      'http://127.0.0.1:5001',
-      { body: JSON.stringify({ text: 'one' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' },
-    );
+    expect(global.fetch).toHaveBeenNthCalledWith(1, 'http://127.0.0.1:5001', {
+      body: JSON.stringify({ text: 'one' }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    });
     expect(spawnMock).toHaveBeenCalledTimes(1);
     expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
   });
 
   test('logs error when piper responded with failure', async () => {
-    const consoleMock = jest.spyOn(console, 'error')
-      .mockImplementation(() => {});
+    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
     global.fetch = jest.fn().mockResolvedValue({ body: null, ok: false, status: 400 });
-
     await Plugin.generateAudioTrack({
-      generator, model, path, ports, siteConfig, siteDir, target, tracks,
+      generator,
+      model,
+      path,
+      ports,
+      siteConfig,
+      siteDir,
+      target,
+      tracks,
     });
 
     expect(consoleMock).toHaveBeenCalledTimes(1);
@@ -557,23 +598,26 @@ describe(`plugins.${name}.generateAudioTrack`, () => {
       expect.stringMatching(/Failed writing .*\.m4a: Piper responded with 400/),
     );
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenNthCalledWith(
-      1,
-      'http://127.0.0.1:5001',
-      { body: JSON.stringify({ text: 'one' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' },
-    );
+    expect(global.fetch).toHaveBeenNthCalledWith(1, 'http://127.0.0.1:5001', {
+      body: JSON.stringify({ text: 'one' }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    });
   });
 
   test('logs error when ffmpeg exits non-zero', async () => {
-    const consoleMock = jest.spyOn(console, 'error')
-      .mockImplementation(() => {});
-    global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      body: stream(), ok: true, status: 200,
-    }));
+    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
+    global.fetch = jest.fn().mockImplementation(successFetch);
     spawnMock.mockReturnValue(ffmpeg(1));
-
     await Plugin.generateAudioTrack({
-      generator, model, path, ports, siteConfig, siteDir, target, tracks,
+      generator,
+      model,
+      path,
+      ports,
+      siteConfig,
+      siteDir,
+      target,
+      tracks,
     });
 
     expect(consoleMock).toHaveBeenCalledTimes(1);
@@ -583,11 +627,35 @@ describe(`plugins.${name}.generateAudioTrack`, () => {
       expect.objectContaining({ message: 'ffmpeg error' }),
     );
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenNthCalledWith(
-      1,
-      'http://127.0.0.1:5001',
-      { body: JSON.stringify({ text: 'one' }), headers: { 'Content-Type': 'application/json' }, method: 'POST' },
-    );
+    expect(global.fetch).toHaveBeenNthCalledWith(1, 'http://127.0.0.1:5001', {
+      body: JSON.stringify({ text: 'one' }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    });
+    expect(spawnMock).toHaveBeenCalledTimes(1);
+    expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
+  });
+
+  test('should handle a missing track gracefully using the fallback object', async () => {
+    global.fetch = jest.fn().mockImplementation(successFetch);
+    spawnMock.mockReturnValue(ffmpeg());
+    await Plugin.generateAudioTrack({
+      generator,
+      model,
+      path: '#lib/path/_ricky_huang.md',
+      ports,
+      siteConfig,
+      siteDir,
+      target,
+      tracks,
+    });
+
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(global.fetch).toHaveBeenNthCalledWith(1, 'http://127.0.0.1:5001', {
+      body: JSON.stringify({ text: 'two' }),
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    });
     expect(spawnMock).toHaveBeenCalledTimes(1);
     expect(spawnMock).toHaveBeenNthCalledWith(1, 'ffmpeg', expect.any(Array));
   });
@@ -630,9 +698,11 @@ describe(`plugins.${name}.generatePdf`, () => {
     const beforeIncrements = increment.mock.calls.length;
     const now = Date.now();
     accessMock.mockResolvedValueOnce(undefined);
-    statMock.mockImplementation((path) => Promise.resolve({
-      mtimeMs: String(path).includes('/pdf/') ? now : 50,
-    } as Stats));
+    statMock.mockImplementation((path) =>
+      Promise.resolve({
+        mtimeMs: String(path).includes('/pdf/') ? now : 50,
+      } as Stats),
+    );
 
     await Plugin.generatePdf({ outDir, siteConfig, siteDir }, MultiBar());
 
@@ -665,7 +735,9 @@ describe(`plugins.${name}.inlineAboveFold`, () => {
       1,
       0,
       expect.objectContaining({ task: 'Find HTML ' }),
-      expect.objectContaining({ format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' }),
+      expect.objectContaining({
+        format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m',
+      }),
     );
     const pool = pools['critical-css.ts'];
     expect(pool.destroy).toHaveBeenCalledTimes(1);
@@ -685,7 +757,9 @@ describe(`plugins.${name}.lastModified`, () => {
     ['file-success', 123456789, { mtimeMs: 123456789 }],
     ['file-failure', 0, new Error('ENOENT')],
   ])('path=%s -> expected=%s', async (path, expected, statReturn) => {
-    statMock[`mock${statReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](statReturn as Stats);
+    statMock[`mock${statReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](
+      statReturn as Stats,
+    );
 
     await expect(Plugin.lastModified(path)).resolves.toBe(expected);
   });
@@ -735,16 +809,15 @@ describe(`plugins.${name}.piperServer`, () => {
 
     const result = await Plugin.piperServer(siteDir, model, port);
 
-    expect(spawnMock).toHaveBeenCalledWith(
-      `${process.env.HOME}/.venv/default/bin/python`,
-      [
-        '-m', 'piper.http_server',
-        '--data-dir=/root/models/en',
-        '--model', model,
-        '--port',
-        String(port),
-      ],
-    );
+    expect(spawnMock).toHaveBeenCalledWith(`${process.env.HOME}/.venv/default/bin/python`, [
+      '-m',
+      'piper.http_server',
+      '--data-dir=/root/models/en',
+      '--model',
+      model,
+      '--port',
+      String(port),
+    ]);
 
     expect(result).toBe(pipers[0]);
   });
@@ -756,9 +829,7 @@ describe(`plugins.${name}.postBuild`, () => {
   test('runs generators and inlineAboveFold concurrently when trailingSlash is true', async () => {
     const ctx = { ...base, siteConfig: { trailingSlash: true } };
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      body: stream(), ok: true, status: 200,
-    }));
+    global.fetch = jest.fn().mockImplementation(successFetch);
     globMock.mockResolvedValue([`${ctx.outDir}/file1.html`, `${ctx.outDir}/file2.html`]);
     let port = 5000;
     spawnMock.mockImplementation((cmd) => {
@@ -800,9 +871,7 @@ describe(`plugins.${name}.postBuild`, () => {
 
   test('skips inlineAboveFold when trailingSlash is false', async () => {
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      body: stream(), ok: true, status: 200,
-    }));
+    global.fetch = jest.fn().mockImplementation(successFetch);
     let port = 5000;
     spawnMock.mockImplementation((cmd) => {
       if (cmd.endsWith('python')) {
@@ -855,8 +924,10 @@ describe(`plugins.${name}.stale`, () => {
     ['target older than cutoff', true, undefined, [50, Date.now() - 8 * Plugin.MS_PER_DAY, 50, 50]],
     // Target fresh -> not stale.
     ['target fresh', false, undefined, [50, Date.now(), 50, 50]],
-  ])('%s -> expected=%s', async (scenario, expected, accessReturn, stats) => {
-    accessMock[`mock${accessReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](accessReturn);
+  ])('%s -> expected=%s', async (_, expected, accessReturn, stats) => {
+    accessMock[`mock${accessReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](
+      accessReturn,
+    );
     // Mock stat results in order: data, target, template.
     statMock.mockImplementation(() => {
       const mtimeMs = stats.shift();
@@ -866,13 +937,15 @@ describe(`plugins.${name}.stale`, () => {
       return Promise.resolve({ mtimeMs } as Stats);
     });
 
-    await expect(Plugin.stale({
-      data: '@data/file.txt',
-      model: 'modelName',
-      siteDir,
-      template: 'templateName',
-      target: 'target.pdf',
-    })).resolves.toBe(expected);
+    await expect(
+      Plugin.stale({
+        data: '@data/file.txt',
+        model: 'modelName',
+        siteDir,
+        target: 'target.pdf',
+        template: 'templateName',
+      }),
+    ).resolves.toBe(expected);
 
     statMock.mockImplementation(() => Promise.resolve(undefined as any));
   });
@@ -884,9 +957,13 @@ describe(`plugins.${name}.plugin API (default export)`, () => {
     const cw = plugin.configureWebpack({}, false);
     expect(cw.devServer.static[0].publicPath).toBe('/audio');
     expect(cw.devServer.static[1].publicPath).toBe('/pdf');
-    expect(cw.plugins).toEqual(expect.arrayContaining([expect.objectContaining({
-      __fontaine_opts: expect.any(Object),
-    })]));
+    expect(cw.plugins).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          __fontaine_opts: expect.any(Object),
+        }),
+      ]),
+    );
     expect(plugin.name).toBe(name);
   });
 
@@ -909,9 +986,7 @@ describe(`plugins.${name}.plugin API (default export)`, () => {
 
     plugin.extendCli(cli);
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      body: stream(), ok: true, status: 200,
-    }));
+    global.fetch = jest.fn().mockImplementation(successFetch);
     let port = 5000;
     spawnMock.mockImplementation((cmd) => {
       if (cmd.endsWith('python')) {
@@ -950,9 +1025,7 @@ describe(`plugins.${name}.plugin API (default export): error handling`, () => {
     pluginA.extendCli(cliA);
 
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
-      body: stream(), ok: true, status: 200,
-    }));
+    global.fetch = jest.fn().mockImplementation(successFetch);
     let port = 5000;
     spawnMock.mockImplementation((cmd) => {
       if (cmd.endsWith('python')) {

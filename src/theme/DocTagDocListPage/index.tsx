@@ -3,38 +3,39 @@
  * All rights reserved.
  */
 
+import { translate } from '@docusaurus/Translate';
+import { PageMetadata, usePluralForm } from '@docusaurus/theme-common';
+import type { WrapperProps } from '@docusaurus/types';
 import { context } from '@site/src/data/common';
+import { useWelcome } from '@site/src/hooks/observer';
 import DocTagDocListPage from '@theme-original/DocTagDocListPage';
 import { memo, type ReactElement } from 'react';
-import { PageMetadata, usePluralForm } from '@docusaurus/theme-common';
-import { translate } from '@docusaurus/Translate';
-import { useWelcome } from '@site/src/hooks/observer';
-import { type WrapperProps } from '@docusaurus/types';
 
 type Props = WrapperProps<typeof DocTagDocListPage>;
 
 const useNDocsTaggedPlural = () => {
   const { selectMessage } = usePluralForm();
-  return (count: number) => selectMessage(
-    count,
-    translate(
-      {
-        id: 'theme.docs.tagDocListPageTitle.nDocsTagged',
-        description:
-          'Pluralized label for "{count} docs tagged". Use as much plural forms (separated by "|") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)',
-        message: 'One doc tagged|{count} docs tagged',
-      },
-      { count },
-    ),
-  );
+  return (count: number) =>
+    selectMessage(
+      count,
+      translate(
+        {
+          description:
+            'Pluralized label for "{count} docs tagged". Use as much plural forms (separated by "|") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)',
+          id: 'theme.docs.tagDocListPageTitle.nDocsTagged',
+          message: 'One doc tagged|{count} docs tagged',
+        },
+        { count },
+      ),
+    );
 };
 
 const usePageTitle = (props: Props): string => {
   const nDocsTaggedPlural = useNDocsTaggedPlural();
   return translate(
     {
-      id: 'theme.docs.tagDocListPageTitle',
       description: 'The title of the page for a docs tag',
+      id: 'theme.docs.tagDocListPageTitle',
       message: '{nDocsTagged} with "{tagName}"',
     },
     { nDocsTagged: nDocsTaggedPlural(props.tag.count), tagName: props.tag.label },

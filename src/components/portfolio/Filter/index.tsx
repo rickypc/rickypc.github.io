@@ -3,11 +3,11 @@
  * All rights reserved.
  */
 
-import { catalog } from '@site/src/data/portfolio';
 import Collapsible from '@site/src/components/common/Collapsible';
-import { memo, type ReactElement, useMemo } from 'react';
 import Pills from '@site/src/components/common/Pills';
+import { catalog } from '@site/src/data/portfolio';
 import { useMedia } from '@site/src/hooks/observer';
+import { memo, type ReactElement, useMemo } from 'react';
 
 export type FilterProps = {
   current: string;
@@ -18,22 +18,17 @@ export default memo(function Filter({ current, onClick }: FilterProps): ReactEle
   const [collapsible] = useMedia('screen and (max-width: 62rem)');
 
   const tags = useMemo(() => {
-    const combine = [...new Set(catalog.reduce<string[]>(
-      (accumulator, project) => accumulator.concat(project.tags),
-      [],
-    ))];
-    return ['All', ...(combine.sort((a, b) => a.localeCompare(b)))];
+    const combine = [
+      ...new Set(
+        catalog.reduce<string[]>((accumulator, project) => accumulator.concat(project.tags), []),
+      ),
+    ];
+    return ['All', ...combine.sort((a, b) => a.localeCompare(b))];
   }, []);
 
-  return collapsible
-    ? <Collapsible active={current} items={tags} onClick={onClick} translate="no" />
-    : (
-      <Pills
-        active={current}
-        items={tags}
-        onClick={onClick}
-        prefix="portfolio"
-        translate="no"
-      />
-    );
+  return collapsible ? (
+    <Collapsible active={current} items={tags} onClick={onClick} translate="no" />
+  ) : (
+    <Pills active={current} items={tags} onClick={onClick} prefix="portfolio" translate="no" />
+  );
 });

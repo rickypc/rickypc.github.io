@@ -67,13 +67,13 @@ export default async function cintamaniDharmacakraYasti() {
             body: phrase.tibetan.children.map((text, index) => {
               const intro = phrase.tibetan.intros.at(index);
               const margin = phrase.tibetan.margins.at(index);
-              const repeat = phrase.tibetan.repeats.at(index);
+              const repeat = phrase.tibetan.repeats.at(index) as number;
               return [
                 { margin, style: 'intro', text: intro },
                 {
                   text: [
                     { fontSize: 4, text: `${repeat}x ` },
-                    body(infix, repeat! - 1, prefix, repeat!, suffix, text),
+                    body(infix, repeat - 1, prefix, repeat, suffix, text),
                   ],
                 },
               ];
@@ -125,6 +125,5 @@ export default async function cintamaniDharmacakraYasti() {
         roll: { font: 'Kokonor' },
       },
     },
-    options: {},
   };
 }

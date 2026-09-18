@@ -4,15 +4,16 @@
  */
 
 import { readFile, writeFile } from 'node:fs/promises';
-import { process as beastiesProcess } from 'beasties';
 import Worker from '@site/src/plugins/media/workers/critical-css';
+import { process as beastiesProcess } from 'beasties';
 
 jest.mock('node:fs/promises', () => {
   const original = jest.requireActual('node:fs/promises');
   return {
     ...original,
-    readFile: jest.fn((path) => Promise.resolve(`<html ${path.includes('2')
-      ? 'data-beasties-container ' : ''}/>`)),
+    readFile: jest.fn((path) =>
+      Promise.resolve(`<html ${path.includes('2') ? 'data-beasties-container ' : ''}/>`),
+    ),
     writeFile: jest.fn(() => Promise.resolve()),
   };
 });

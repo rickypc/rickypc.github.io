@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 type MetadataProps = {
   code: string;
@@ -22,7 +22,8 @@ export function CodeBlockContextProvider({ children }: PropsWithChildren): React
 }
 
 export const createCodeBlockMetadata = jest.fn((meta: MetadataProps) => ({
-  code: meta.code, title: meta.title,
+  code: meta.code,
+  title: meta.title,
 }));
 
 export const useCodeWordWrap = () => ({ codeBlockRef: { current: null } });

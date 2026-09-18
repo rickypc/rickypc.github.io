@@ -5,10 +5,10 @@
  * @jest-environment jsdom
  */
 
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import QRCode from '@site/src/components/common/QRCode';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import QRCode from '@site/src/components/common/QRCode';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 describe('QRCode', () => {
   jest.mocked<any>(useDocusaurusContext).mockReturnValue({

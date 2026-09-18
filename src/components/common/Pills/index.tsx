@@ -4,9 +4,7 @@
  */
 
 import { clsx, key } from '@site/src/data/common';
-import {
-  AnimatePresence, domMax, LayoutGroup, LazyMotion, motion,
-} from 'motion/react';
+import { AnimatePresence, domMax, LayoutGroup, LazyMotion, motion } from 'motion/react';
 import { memo, type ReactElement } from 'react';
 import styles from './styles.module.css';
 
@@ -26,23 +24,30 @@ export type PillsProps = {
 };
 
 const Item = memo(function Item({
-  active, item, onClick, prefix, ...rest
+  active,
+  item,
+  onClick,
+  prefix,
+  ...rest
 }: ItemProps): ReactElement {
   const current = active === item;
   return (
     <motion.dt
       className={clsx(current && styles.active, styles.item)}
       onClick={() => onClick(item)}
+      onKeyDown={(evt) => {
+        if ([' ', 'Enter'].includes(evt.key)) {
+          evt.preventDefault();
+          onClick(item);
+        }
+      }}
+      role="button"
       whileTap={{ scale: 0.85 }}
       {...rest}
     >
       <span {...rest}>{item}</span>
       {current && (
-        <motion.span
-          className={styles.indicator}
-          layoutId={`pill-indicator-${prefix}`}
-          {...rest}
-        >
+        <motion.span className={styles.indicator} layoutId={`pill-indicator-${prefix}`} {...rest}>
           {item}
         </motion.span>
       )}
@@ -51,7 +56,11 @@ const Item = memo(function Item({
 });
 
 export default memo(function Pills({
-  active, items, onClick, prefix, ...rest
+  active,
+  items,
+  onClick,
+  prefix,
+  ...rest
 }: PillsProps): ReactElement {
   return (
     <LazyMotion features={domMax}>

@@ -3,22 +3,34 @@
  * All rights reserved.
  */
 
-import { languageGeometry, type Languages, subsequentBody } from '#buddhism/media/pdf/_strip';
-import { oneLine } from '#root/src/data/common';
 import { properCase } from '#buddhism/media/_common';
+import { type Languages, languageGeometry, subsequentBody } from '#buddhism/media/pdf/_strip';
+import { oneLine } from '#root/src/data/common';
 
-const trimMarker = (index: number, lastRoll: number) => (index === lastRoll
-  ? { canvas: [] } : {
-    canvas: [
-      {
-        lineWidth: 0.25, type: 'line', x1: 0, x2: 4.5, y1: 0, y2: 0,
-      },
-      {
-        lineWidth: 0.25, type: 'line', x1: 592.5, x2: 597, y1: 0, y2: 0,
-      },
-    ],
-    margin: [0, 0, 0, 2.5],
-  });
+const trimMarker = (index: number, lastRoll: number) =>
+  index === lastRoll
+    ? { canvas: [] }
+    : {
+        canvas: [
+          {
+            lineWidth: 0.25,
+            type: 'line',
+            x1: 0,
+            x2: 4.5,
+            y1: 0,
+            y2: 0,
+          },
+          {
+            lineWidth: 0.25,
+            type: 'line',
+            x1: 592.5,
+            x2: 597,
+            y1: 0,
+            y2: 0,
+          },
+        ],
+        margin: [0, 0, 0, 2.5],
+      };
 
 /**
  * Generates a pdfMake object for `condensed mantra roll`.
@@ -27,17 +39,25 @@ const trimMarker = (index: number, lastRoll: number) => (index === lastRoll
  */
 export default async function condensed(path: string) {
   const {
-    default: {
-      lang = 'bo-CN', sanskrit, tibetan, total = 18, transliteration,
-    },
+    default: { lang = 'bo-CN', sanskrit, tibetan, total = 18, transliteration },
   }: Languages = await import(path);
   const {
-    fontSizes, height, infix, lineHeight, paddingBottom,
-    paddingTop, prefix, prefixFont, repeat, rollFont, suffix, text,
+    fontSizes,
+    height,
+    infix,
+    lineHeight,
+    paddingBottom,
+    paddingTop,
+    prefix,
+    prefixFont,
+    repeat,
+    rollFont,
+    suffix,
+    text,
   } = languageGeometry('condensed', lang, sanskrit, tibetan, transliteration);
   const lastRoll = total - 1;
   // After lastPhrase assignment.
-  const content = Array.from({ length: total }, (_total, index) => ([
+  const content = Array.from({ length: total }, (_total, index) => [
     {
       layout: {
         hLineWidth: () => 0.25,
@@ -49,13 +69,22 @@ export default async function condensed(path: string) {
       },
       margin: [0, 0, 0, index === lastRoll ? 0 : 2.5],
       table: {
-        body: subsequentBody(fontSizes, infix, prefix, repeat, 'condensed', suffix, text, transliteration),
+        body: subsequentBody(
+          fontSizes,
+          infix,
+          prefix,
+          repeat,
+          'condensed',
+          suffix,
+          text,
+          transliteration,
+        ),
         dontBreakRows: true,
         heights: [height],
       },
     },
     trimMarker(index, lastRoll),
-  ]));
+  ]);
 
   return {
     definition: {

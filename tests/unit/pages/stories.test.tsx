@@ -5,12 +5,12 @@
  * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { textContent } from '@site/src/data/common';
 import { intro, layout } from '@site/src/data/stories';
 import Stories from '@site/src/pages/stories';
-import { textContent } from '@site/src/data/common';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 describe('pages.stories', () => {
   jest.mocked<any>(useDocusaurusContext).mockReturnValue({
@@ -32,7 +32,7 @@ describe('pages.stories', () => {
 
     const preambleEl = screen.getByTestId('preamble');
     expect(preambleEl).toBeInTheDocument();
-    const introJson = JSON.parse(preambleEl.dataset.intro!);
+    const introJson = JSON.parse(preambleEl.dataset.intro as string);
     expect(introJson.description).toEqual(textContent(intro.description));
     expect(introJson.title).toEqual(intro.title);
   });

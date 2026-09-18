@@ -15,7 +15,11 @@ export const stop = jest.fn();
 
 // After the above assignments.
 export const create = jest.fn(() => ({
-  increment, options: {}, setTotal, stop, update: barUpdate,
+  increment,
+  options: {},
+  setTotal,
+  stop,
+  update: barUpdate,
 }));
 
 export const MultiBar = jest.fn(() => ({ create, stop, update: barsUpdate }));

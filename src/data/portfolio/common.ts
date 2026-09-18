@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type Transition } from 'motion/react';
+import type { Transition } from 'motion/react';
 
 const transition: Transition = {
   damping: 25,

@@ -12,7 +12,10 @@ class AudioManager {
 
   constructor() {
     this.active = null;
-    this.volume = typeof (document) !== 'undefined' && document.documentElement.dataset.volume === 'silent' ? 0 : 1;
+    this.volume =
+      typeof document !== 'undefined' && document.documentElement.dataset.volume === 'silent'
+        ? 0
+        : 1;
   }
 
   /**
@@ -31,11 +34,9 @@ class AudioManager {
     const step = volume / duration;
     return new Promise<void>((resolve) => {
       const id = setInterval(() => {
-        // eslint-disable-next-line no-param-reassign
         audio.volume = Math.min(volume, audio.volume + step);
         if (audio.volume >= volume) {
           clearInterval(id);
-          // eslint-disable-next-line no-param-reassign
           audio.volume = volume;
           resolve();
         }
@@ -55,7 +56,6 @@ class AudioManager {
     const step = volume / duration;
     return new Promise<void>((resolve) => {
       const id = setInterval(() => {
-        // eslint-disable-next-line no-param-reassign
         audio.volume = Math.max(0, audio.volume - step);
         if (audio.volume <= 0) {
           clearInterval(id);
@@ -73,7 +73,7 @@ class AudioManager {
    * @param {number} [duration] - Number of steps used to fade out the volume.
    * @returns {Promise<void>} Resolves once fading and pausing are complete.
    */
-  // eslint-disable-next-line class-methods-use-this
+  // biome-ignore lint/nursery/useThisInClassMethods: -
   async pause(audio: MaybeAudio, duration = 30) {
     if (!audio || audio.paused) {
       return;
@@ -81,7 +81,6 @@ class AudioManager {
     const { volume } = audio;
     await AudioManager.fadeOut(audio, volume, duration);
     audio.pause();
-    // eslint-disable-next-line no-param-reassign
     audio.volume = volume;
   }
 

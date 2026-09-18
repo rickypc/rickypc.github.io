@@ -3,16 +3,14 @@
  * All rights reserved.
  */
 
-/* eslint-disable global-require */
-
-import { type ComponentType, type ReactElement } from 'react';
-import { type FaqItems, humanizeYears, oneLine } from '@site/src/data/common';
-import { GenIcon } from 'react-icons/lib';
-import { type IconBaseProps } from 'react-icons';
-import { type IntroProps } from '@site/src/components/common/Preamble';
-import { type LayoutProps } from '@site/src/components/common/Layout';
+import type { LayoutProps } from '@site/src/components/common/Layout';
 import Link from '@site/src/components/common/Link';
+import type { IntroProps } from '@site/src/components/common/Preamble';
 import Reveal from '@site/src/components/common/Reveal';
+import { type FaqItems, humanizeYears, oneLine } from '@site/src/data/common';
+import type { ComponentType, ReactElement } from 'react';
+import type { IconBaseProps } from 'react-icons';
+import { GenIcon } from 'react-icons/lib';
 
 export type SocialProps = {
   href?: string;
@@ -31,7 +29,19 @@ export const total = new Date().getFullYear() - 1995;
  * @returns {object} The icon.
  */
 export function FaGithub(props: IconBaseProps): ReactElement {
-  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 496 512' }, child: [{ tag: 'path', attr: { d: 'M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z' }, child: [] }] })(props);
+  return GenIcon({
+    attr: { viewBox: '0 0 496 512' },
+    child: [
+      {
+        attr: {
+          d: 'M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z',
+        },
+        child: [],
+        tag: 'path',
+      },
+    ],
+    tag: 'svg',
+  })(props);
 }
 
 /**
@@ -43,7 +53,19 @@ export function FaGithub(props: IconBaseProps): ReactElement {
  * @returns {object} The icon.
  */
 export function FaLinkedin(props: IconBaseProps): ReactElement {
-  return GenIcon({ tag: 'svg', attr: { viewBox: '0 0 448 512' }, child: [{ tag: 'path', attr: { d: 'M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z' }, child: [] }] })(props);
+  return GenIcon({
+    attr: { viewBox: '0 0 448 512' },
+    child: [
+      {
+        attr: {
+          d: 'M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z',
+        },
+        child: [],
+        tag: 'path',
+      },
+    ],
+    tag: 'svg',
+  })(props);
 }
 
 export const faqItems: FaqItems[] = [
@@ -125,10 +147,12 @@ export const hats = [
           strong technical judgement
         </Link>
         <span>. I guide organizations </span>
-        <Link href="/stories" title="through complexity">through complexity</Link>
+        <Link href="/stories" title="through complexity">
+          through complexity
+        </Link>
         <span>
-          , aligning architecture, execution, and long-term strategy to
-          reliable, meaningful results.
+          , aligning architecture, execution, and long-term strategy to reliable, meaningful
+          results.
         </span>
       </>
     ),
@@ -137,34 +161,31 @@ export const hats = [
         <>
           <p>
             My&nbsp;
-            <Link href="/timeline" title="track record">track record</Link>
-            &nbsp;is stepping into teams where delivery is stalled, ownership
-            is unclear, or the architecture no longer fits the business.
-            Within the first weeks I map the bottleneck - usually a mix of
-            technical debt, missing standards, and unclear decision rights -
-            and put draws on the wall: a single technical vision, named owners,
-            and a quality bar the team can self-enforce. The pattern is
-            consistent: ambiguity shrinks, direction emerges, and&nbsp;
+            <Link href="/timeline" title="track record">
+              track record
+            </Link>
+            &nbsp;is stepping into teams where delivery is stalled, ownership is unclear, or the
+            architecture no longer fits the business. Within the first weeks I map the bottleneck -
+            usually a mix of technical debt, missing standards, and unclear decision rights - and
+            put draws on the wall: a single technical vision, named owners, and a quality bar the
+            team can self-enforce. The pattern is consistent: ambiguity shrinks, direction emerges,
+            and&nbsp;
             <Link href="/about" title="people-first leadership">
               people-first leadership
             </Link>
-            &nbsp;becomes the bridge between intent and shipped. The work
-            behind that cadence - taking a service with frequent production
-            issues to month-long stability within a month - is detailed, with
-            specifics, on the Resume page.
+            &nbsp;becomes the bridge between intent and shipped. The work behind that cadence -
+            taking a service with frequent production issues to month-long stability within a month
+            - is detailed, with specifics, on the Resume page.
           </p>
           <p>
-            I&#39;m known for stepping into difficult situations - unclear
-            requirements, legacy systems, production issues, or cross-team
-            conflicts - and bringing structure, calm, and a path forward. I
-            mentor engineers at all levels, helping them grow their judgment,
-            technical confidence, and ability to deliver under pressure.
-            Whether guiding long-term platform strategy or unblocking a team in
-            the middle of a release, I bring a steady, pragmatic leadership
-            style that elevates both people and outcomes. This is where this
-            six-part story begins; the next chapters - About, Portfolio,
-            Timeline, Stories, and Resume - each pressure-test that promise
-            from a different angle.
+            I&#39;m known for stepping into difficult situations - unclear requirements, legacy
+            systems, production issues, or cross-team conflicts - and bringing structure, calm, and
+            a path forward. I mentor engineers at all levels, helping them grow their judgment,
+            technical confidence, and ability to deliver under pressure. Whether guiding long-term
+            platform strategy or unblocking a team in the middle of a release, I bring a steady,
+            pragmatic leadership style that elevates both people and outcomes. This is where this
+            six-part story begins; the next chapters - About, Portfolio, Timeline, Stories, and
+            Resume - each pressure-test that promise from a different angle.
           </p>
         </>
       ),
@@ -175,7 +196,10 @@ export const hats = [
   {
     children: (
       <>
-        <img alt="Software Engineer" src={require('@site/src/pages/img/technologist.webp').default} />
+        <img
+          alt="Software Engineer"
+          src={require('@site/src/pages/img/technologist.webp').default}
+        />
         <Reveal coeff={2.5}>
           <i aria-hidden="true">Full Stack</i>
           Developer
@@ -193,8 +217,8 @@ export const hats = [
           scalable, high-performing applications
         </Link>
         <span>
-          . My work connects systems, teams, and modern tooling to deliver fast
-          iteration and real-world impact.
+          . My work connects systems, teams, and modern tooling to deliver fast iteration and
+          real-world impact.
         </span>
       </>
     ),
@@ -203,35 +227,33 @@ export const hats = [
         <>
           <p>
             The&nbsp;
-            <Link href="/resume" title="breadth">breadth</Link>
-            &nbsp;that matters here is depth that spans the stack: I can hold a
-            React render boundary, a Go event handler, and a DynamoDB access
-            pattern in the same design loop, then ship a fix across every layer
-            without bouncing between owners. That means tighter service
-            boundaries (because I see both sides of the call),&nbsp;
+            <Link href="/resume" title="breadth">
+              breadth
+            </Link>
+            &nbsp;that matters here is depth that spans the stack: I can hold a React render
+            boundary, a Go event handler, and a DynamoDB access pattern in the same design loop,
+            then ship a fix across every layer without bouncing between owners. That means tighter
+            service boundaries (because I see both sides of the call),&nbsp;
             <Link href="/portfolio" title="fewer integration surprises">
               fewer integration surprises
             </Link>
-            &nbsp;(because I write the contracts I live with), and faster
-            decisions when a production issue moves between front-end,
-            backend, and provider at the same time. It&#39;s the same instinct
-            that started with an architecture degree before I ever wrote a
-            service: see every floor, then own the joinery.
+            &nbsp;(because I write the contracts I live with), and faster decisions when a
+            production issue moves between front-end, backend, and provider at the same time.
+            It&#39;s the same instinct that started with an architecture degree before I ever wrote
+            a service: see every floor, then own the joinery.
           </p>
           <p>
-            My work emphasizes performance, reliability, and long-term
-            maintainability. I build systems that are observable, testable,
-            and designed to evolve - the boring choice that&#39;s still running
-            five years from now over the fashionable one that needs replacing
-            next quarter. Whether I&#39;m implementing a new feature,
-            designing a service boundary, or debugging a production issue, I
-            bring a deep understanding of how each layer affects the others.
+            My work emphasizes performance, reliability, and long-term maintainability. I build
+            systems that are observable, testable, and designed to evolve - the boring choice
+            that&#39;s still running five years from now over the fashionable one that needs
+            replacing next quarter. Whether I&#39;m implementing a new feature, designing a service
+            boundary, or debugging a production issue, I bring a deep understanding of how each
+            layer affects the others.
           </p>
           <p>
-            This holistic perspective helps teams ship faster, reduce
-            complexity, and avoid the hidden costs that accumulate when systems
-            are built in isolation - costs you can see measured, in dollars,
-            on the Resume page.
+            This holistic perspective helps teams ship faster, reduce complexity, and avoid the
+            hidden costs that accumulate when systems are built in isolation - costs you can see
+            measured, in dollars, on the Resume page.
           </p>
         </>
       ),
@@ -253,9 +275,8 @@ export const hats = [
           engineering depth, creative thinking, and business strategy
         </Link>
         <span>
-          &nbsp;to turn ideas into well-tested solutions. I work at the
-          intersection of innovation and execution, using modern tools to
-          accelerate exploration and sharpen product direction.
+          &nbsp;to turn ideas into well-tested solutions. I work at the intersection of innovation
+          and execution, using modern tools to accelerate exploration and sharpen product direction.
         </span>
       </>
     ),
@@ -263,34 +284,31 @@ export const hats = [
       content: (
         <>
           <p>
-            The concrete version: when product brings a half-formed idea,
-            I&#39;m usually the one who&nbsp;
+            The concrete version: when product brings a half-formed idea, I&#39;m usually the one
+            who&nbsp;
             <Link href="/portfolio" title="prototypes the first cut">
               prototypes the first cut
             </Link>
-            , runs it past real data or users, and tells the team what&#39;s
-            essential and what&#39;s decoration. Spec-driven development loops
-            and LLM-assisted exploration let me cover five design paths in the
-            time a team used to spend debating one - so we avoid the trap of
-            shipping something technically impressive that nobody asked for.
-            What&nbsp;
-            <Link href="/resume" title="makes it stick">makes it stick</Link>
-            &nbsp;is the rigor: the AI moves fast, but the validation loop is
-            what turns a guess into a decision. I was the first engineer at my
-            company to set up spec-driven development, and that loop is the
-            connective tissue between the creativity here and the
+            , runs it past real data or users, and tells the team what&#39;s essential and
+            what&#39;s decoration. Spec-driven development loops and LLM-assisted exploration let me
+            cover five design paths in the time a team used to spend debating one - so we avoid the
+            trap of shipping something technically impressive that nobody asked for. What&nbsp;
+            <Link href="/resume" title="makes it stick">
+              makes it stick
+            </Link>
+            &nbsp;is the rigor: the AI moves fast, but the validation loop is what turns a guess
+            into a decision. I was the first engineer at my company to set up spec-driven
+            development, and that loop is the connective tissue between the creativity here and the
             reliability you&#39;ll see measured on the Resume.
           </p>
           <p>
-            This mindset helps teams move faster without sacrificing quality.
-            I challenge assumptions, simplify complexity, and uncover
-            opportunities that might otherwise be missed. Whether brainstorming
-            with product teams, prototyping new features, or evaluating
-            architectural tradeoffs, I bring a creative yet grounded approach
-            that balances innovation with execution. The result is solutions
-            that are not only technically strong but strategically aligned with
-            business goals - the same alignment the About page later codifies
-            as an operating philosophy rather than a happy accident.
+            This mindset helps teams move faster without sacrificing quality. I challenge
+            assumptions, simplify complexity, and uncover opportunities that might otherwise be
+            missed. Whether brainstorming with product teams, prototyping new features, or
+            evaluating architectural tradeoffs, I bring a creative yet grounded approach that
+            balances innovation with execution. The result is solutions that are not only
+            technically strong but strategically aligned with business goals - the same alignment
+            the About page later codifies as an operating philosophy rather than a happy accident.
           </p>
         </>
       ),
@@ -320,8 +338,7 @@ export const hats = [
           platforms and forward-looking solutions
         </Link>
         <span>
-          . I evolve with modern technology to deliver systems that stand the
-          test of time.
+          . I evolve with modern technology to deliver systems that stand the test of time.
         </span>
       </>
     ),
@@ -333,30 +350,25 @@ export const hats = [
             <Link href="/timeline" title={humanizeYears(total, 'decades')}>
               {humanizeYears(total, 'decades')}
             </Link>
-            &nbsp;of them - aren&#39;t nostalgia. They&#39;re the reason I
-            stop teams from adopting a framework just because it&#39;s popular,
-            and the reason I&#39;ll choose to ship the boring choice that&#39;s
-            going to run five years from now. I&#39;ve seen the patterns that
-            aged well (small boundaries, observable behavior, replaceable
-            parts) and the ones that didn&#39;t - and that pattern memory is
-            the unfair advantage I bring to architecture calls. It is also why
-            I treat external dependencies as a last resort for Tier-1 systems;
-            the Stories page tells the trade behind that instinct.
+            &nbsp;of them - aren&#39;t nostalgia. They&#39;re the reason I stop teams from adopting
+            a framework just because it&#39;s popular, and the reason I&#39;ll choose to ship the
+            boring choice that&#39;s going to run five years from now. I&#39;ve seen the patterns
+            that aged well (small boundaries, observable behavior, replaceable parts) and the ones
+            that didn&#39;t - and that pattern memory is the unfair advantage I bring to
+            architecture calls. It is also why I treat external dependencies as a last resort for
+            Tier-1 systems; the Stories page tells the trade behind that instinct.
           </p>
           <p>
-            My work focuses on building resilient platforms, improving
-            architectural foundations, and helping organizations modernize
-            without losing stability. I bring a&nbsp;
+            My work focuses on building resilient platforms, improving architectural foundations,
+            and helping organizations modernize without losing stability. I bring a&nbsp;
             <Link href="/stories" title="forward-looking mindset">
               forward-looking mindset
             </Link>
-            &nbsp;grounded in practical experience, enabling teams to adopt new
-            technologies thoughtfully rather than reactively. Whether evolving
-            legacy systems, introducing new patterns, or shaping long-term
-            technical strategy, I help organizations stay ahead of change while
-            maintaining reliability and trust - the same trust the Stories page
-            shows, in the voices of the people who worked beside me when the
-            calls were hard.
+            &nbsp;grounded in practical experience, enabling teams to adopt new technologies
+            thoughtfully rather than reactively. Whether evolving legacy systems, introducing new
+            patterns, or shaping long-term technical strategy, I help organizations stay ahead of
+            change while maintaining reliability and trust - the same trust the Stories page shows,
+            in the voices of the people who worked beside me when the calls were hard.
           </p>
         </>
       ),
@@ -370,7 +382,9 @@ export const identity = {
   children: (
     <>
       <span>Hello, I&#39;m </span>
-      <span className="name" translate="no">Ricky Huang</span>
+      <span className="name" translate="no">
+        Ricky Huang
+      </span>
     </>
   ),
   ipa: '/ˈɹɪki ˈhwɑːŋ/',
@@ -387,36 +401,43 @@ export const image = {
 };
 
 export const intro: IntroProps = {
-  description:
-  <>
-    I started in architecture - the kind with load-bearing
-    walls - and never stopped building that way. Today I design and deliver
-    cloud-native, distributed platforms that power high-volume,
-    business-critical products, and I bring clarity, technical depth, and
-    strong architectural judgment to complex problems. The pattern across
-    {humanizeYears(total, 'decades')}
-    of hands-on work is a simple one:
-    the same person who designs the system should also build it and run it in
-    production. The measurable result is a Tier-1 essential service I
-    maintain - a 50 ms p99, 5+ years of zero production defects, running for
-    roughly 5% of what a licensed replacement would cost per year. I lead a
-    small delivery team as tech lead and was the first in my company to set up&nbsp;
-    <Link href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/#what-is-spec-driven-development">
-      spec-driven development
-    </Link>
-    . This page is the front door; the same themes
-    carry through the&nbsp;
-    <Link href="/about" title="About">About</Link>
-    ,&nbsp;
-    <Link href="/portfolio" title="Portfolio">Portfolio</Link>
-    ,&nbsp;
-    <Link href="/timeline" title="Timeline">Timeline</Link>
-    ,&nbsp;
-    <Link href="/stories" title="Stories">Stories</Link>
-    , and&nbsp;
-    <Link href="/resume" title="Resume">Resume</Link>
-    &nbsp;pages
-  </>,
+  description: (
+    <>
+      I started in architecture - the kind with load-bearing walls - and never stopped building that
+      way. Today I design and deliver cloud-native, distributed platforms that power high-volume,
+      business-critical products, and I bring clarity, technical depth, and strong architectural
+      judgment to complex problems. The pattern across {humanizeYears(total, 'decades')} of hands-on
+      work is a simple one: the same person who designs the system should also build it and run it
+      in production. The measurable result is a Tier-1 essential service I maintain - a 50 ms p99,
+      5+ years of zero production defects, running for roughly 5% of what a licensed replacement
+      would cost per year. I lead a small delivery team as tech lead and was the first in my company
+      to set up&nbsp;
+      <Link href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/#what-is-spec-driven-development">
+        spec-driven development
+      </Link>
+      . This page is the front door; the same themes carry through the&nbsp;
+      <Link href="/about" title="About">
+        About
+      </Link>
+      ,&nbsp;
+      <Link href="/portfolio" title="Portfolio">
+        Portfolio
+      </Link>
+      ,&nbsp;
+      <Link href="/timeline" title="Timeline">
+        Timeline
+      </Link>
+      ,&nbsp;
+      <Link href="/stories" title="Stories">
+        Stories
+      </Link>
+      , and&nbsp;
+      <Link href="/resume" title="Resume">
+        Resume
+      </Link>
+      &nbsp;pages
+    </>
+  ),
   title: 'Engineering Leader & Full-Stack Architect Building Scalable, Resilient Systems',
 };
 

@@ -3,21 +3,25 @@
  * All rights reserved.
  */
 
-import { clsx, key } from '@site/src/data/common';
-import {
-  domAnimation, LazyMotion, motion, useScroll, useSpring,
-} from 'motion/react';
-import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
 import Image from '@site/src/components/common/Image';
 import Link from '@site/src/components/common/Link';
-import { memo, type ReactElement, useCallback } from 'react';
+import { clsx, key } from '@site/src/data/common';
 import { type TimelineProps, timelines } from '@site/src/data/timeline';
 import { useMedia, usePrint } from '@site/src/hooks/observer';
+import Heading from '@theme/Heading';
+import { domAnimation, LazyMotion, motion, useScroll, useSpring } from 'motion/react';
+import { memo, type ReactElement, useCallback } from 'react';
 import styles from './styles.module.css';
 
 const Timeline = memo(function Timeline({
-  affiliation, className, description, picture, prefix, title, year,
+  affiliation,
+  className,
+  description,
+  picture,
+  prefix,
+  title,
+  year,
 }: TimelineProps): ReactElement {
   const alt = `${affiliation.children} Logo`;
   const id = key(title.children, 'timeline');
@@ -52,7 +56,9 @@ const Timeline = memo(function Timeline({
             <Link {...title} />
             {className === styles.right && <Heart id={id} />}
           </Heading>
-          <Heading as="h4"><Link {...affiliation} /></Heading>
+          <Heading as="h4">
+            <Link {...affiliation} />
+          </Heading>
           <p>{description}</p>
         </motion.article>
       </LazyMotion>

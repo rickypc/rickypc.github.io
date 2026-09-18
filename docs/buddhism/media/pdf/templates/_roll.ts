@@ -3,22 +3,34 @@
  * All rights reserved.
  */
 
-import { languageGeometry, type Languages, subsequentBody } from '#buddhism/media/pdf/_strip';
-import { oneLine } from '#root/src/data/common';
 import { properCase } from '#buddhism/media/_common';
+import { type Languages, languageGeometry, subsequentBody } from '#buddhism/media/pdf/_strip';
+import { oneLine } from '#root/src/data/common';
 
-const trimMarker = (index: number, lastRoll: number) => (index === lastRoll
-  ? { canvas: [] } : {
-    canvas: [
-      {
-        lineWidth: 0.25, type: 'line', x1: 0, x2: 4.5, y1: 0, y2: 0,
-      },
-      {
-        lineWidth: 0.25, type: 'line', x1: 772.5, x2: 777, y1: 0, y2: 0,
-      },
-    ],
-    margin: [0, 0, 0, 7.5],
-  });
+const trimMarker = (index: number, lastRoll: number) =>
+  index === lastRoll
+    ? { canvas: [] }
+    : {
+        canvas: [
+          {
+            lineWidth: 0.25,
+            type: 'line',
+            x1: 0,
+            x2: 4.5,
+            y1: 0,
+            y2: 0,
+          },
+          {
+            lineWidth: 0.25,
+            type: 'line',
+            x1: 772.5,
+            x2: 777,
+            y1: 0,
+            y2: 0,
+          },
+        ],
+        margin: [0, 0, 0, 7.5],
+      };
 
 /**
  * Generates a pdfMake object for `mantra roll`.
@@ -27,17 +39,25 @@ const trimMarker = (index: number, lastRoll: number) => (index === lastRoll
  */
 export default async function roll(path: string) {
   const {
-    default: {
-      lang = 'bo-CN', sanskrit, tibetan, total = 6, transliteration,
-    },
+    default: { lang = 'bo-CN', sanskrit, tibetan, total = 6, transliteration },
   }: Languages = await import(path);
   const {
-    fontSizes, height, infix, lineHeight, paddingBottom,
-    paddingTop, prefix, prefixFont, repeat, rollFont, suffix, text,
+    fontSizes,
+    height,
+    infix,
+    lineHeight,
+    paddingBottom,
+    paddingTop,
+    prefix,
+    prefixFont,
+    repeat,
+    rollFont,
+    suffix,
+    text,
   } = languageGeometry('roll', lang, sanskrit, tibetan, transliteration);
   const lastRoll = total - 1;
   // After lastRoll assignment.
-  const content = Array.from({ length: total }, (_total, index) => ([
+  const content = Array.from({ length: total }, (_total, index) => [
     {
       layout: {
         paddingBottom: () => paddingBottom,
@@ -47,13 +67,22 @@ export default async function roll(path: string) {
       },
       margin: [0, 0, 0, index === lastRoll ? 0 : 7.5],
       table: {
-        body: subsequentBody(fontSizes, infix, prefix, repeat, 'roll', suffix, text, transliteration),
+        body: subsequentBody(
+          fontSizes,
+          infix,
+          prefix,
+          repeat,
+          'roll',
+          suffix,
+          text,
+          transliteration,
+        ),
         dontBreakRows: true,
         heights: [height],
       },
     },
     trimMarker(index, lastRoll),
-  ]));
+  ]);
 
   return {
     definition: {

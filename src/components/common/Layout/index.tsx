@@ -3,15 +3,11 @@
  * All rights reserved.
  */
 
-import {
-  Children, memo, type PropsWithChildren, type ReactElement, type ReactNode,
-} from 'react';
-import {
-  context, type Faq, faqContext, type SchemaType,
-} from '@site/src/data/common';
 import { PageMetadata } from '@docusaurus/theme-common';
-import ThemeLayout from '@theme/Layout';
+import { context, type Faq, faqContext, type SchemaType } from '@site/src/data/common';
 import { useWelcome } from '@site/src/hooks/observer';
+import ThemeLayout from '@theme/Layout';
+import { Children, memo, type PropsWithChildren, type ReactElement, type ReactNode } from 'react';
 
 export type LayoutProps = {
   className?: string;
@@ -24,15 +20,25 @@ export type LayoutProps = {
 };
 
 export default memo(function Layout({
-  children, className, description, faq, keywords,
-  metadatas, schema, title,
+  children,
+  className,
+  description,
+  faq,
+  keywords,
+  metadatas,
+  schema,
+  title,
 }: PropsWithChildren<LayoutProps>): ReactElement {
   useWelcome();
-  const pageSchema = schema && schema !== 'ProfilePage'
-    ? context({
-      description, keywords, schema, title,
-    })
-    : null;
+  const pageSchema =
+    schema && schema !== 'ProfilePage'
+      ? context({
+          description,
+          keywords,
+          schema,
+          title,
+        })
+      : null;
   return (
     <ThemeLayout>
       <PageMetadata description={description} keywords={keywords} title={title}>
@@ -44,9 +50,7 @@ export default memo(function Layout({
         <meta name="twitter:title" content={title} />
       </PageMetadata>
       <main className={className}>
-        <div className="container">
-          {children}
-        </div>
+        <div className="container">{children}</div>
       </main>
     </ThemeLayout>
   );

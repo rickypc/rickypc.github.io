@@ -5,11 +5,11 @@
  * @jest-environment jsdom
  */
 
+import Reveal from '@site/src/components/common/Reveal';
+import { useVisibility } from '@site/src/hooks/observer';
 import { render, renderHook, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Reveal from '@site/src/components/common/Reveal';
 import { useRef } from 'react';
-import { useVisibility } from '@site/src/hooks/observer';
 
 const useVisibilityMock = jest.mocked(useVisibility);
 
@@ -47,11 +47,11 @@ describe('Reveal', () => {
 
   describe('child type handling', () => {
     test('handles a React element child (cloneElement branch)', () => {
-      render((
+      render(
         <Reveal coeff={1}>
           <span>foo bar</span>
-        </Reveal>
-      ));
+        </Reveal>,
+      );
 
       const spans = screen.getAllByTestId('span');
       expect(spans).toHaveLength(8);
@@ -74,23 +74,20 @@ describe('Reveal', () => {
           6,
         ],
         ['single text child', singleText, 10, 2, 8],
-      ])(
-        '%s -> total spans: %i, words: %i, chars: %i',
-        (_desc, children, total, words, chars) => {
-          const { container } = render(<Reveal coeff={0}>{children}</Reveal>);
-          const spans = screen.getAllByTestId('span');
-          expect(spans).toHaveLength(total);
+      ])('%s -> total spans: %i, words: %i, chars: %i', (_desc, children, total, words, chars) => {
+        const { container } = render(<Reveal coeff={0}>{children}</Reveal>);
+        const spans = screen.getAllByTestId('span');
+        expect(spans).toHaveLength(total);
 
-          const wordCount = spans.filter((s) => s.classList.contains('word')).length;
-          const charCount = spans.filter((s) => s.classList.contains('character')).length;
-          expect(wordCount).toEqual(words);
-          expect(charCount).toEqual(chars);
+        const wordCount = spans.filter((s) => s.classList.contains('word')).length;
+        const charCount = spans.filter((s) => s.classList.contains('character')).length;
+        expect(wordCount).toEqual(words);
+        expect(charCount).toEqual(chars);
 
-          // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
-          const root = container.querySelector('span[aria-hidden]');
-          expect(root).toHaveClass('phrases');
-        },
-      );
+        // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
+        const root = container.querySelector('span[aria-hidden]');
+        expect(root).toHaveClass('phrases');
+      });
 
       test('processes a Fragment whose children are raw strings', () => {
         render(<Reveal coeff={0}>{rawStrings}</Reveal>);

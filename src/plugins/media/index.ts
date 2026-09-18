@@ -3,49 +3,58 @@
  * All rights reserved.
  */
 
+import { type ChildProcessWithoutNullStreams, execSync, spawn } from 'node:child_process';
+import { createHash, createHmac } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { access, mkdir, stat } from 'node:fs/promises';
 import { basename, join, resolve } from 'node:path';
-import {
-  type ChildProcessWithoutNullStreams, execSync, spawn,
-} from 'node:child_process';
-import concurrent from 'timeable-promise/concurrent';
-import { createHash, createHmac } from 'node:crypto';
-import {
-  DEFAULT_BUILD_DIR_NAME, DEFAULT_CONFIG_FILE_NAME, loadFreshModule,
-} from '@docusaurus/utils';
-import { devDependencies, imports } from '#root/package.json';
-import {
-  type DocusaurusConfig, type LoadContext, type Plugin,
-} from '@docusaurus/types';
-import { fileURLToPath } from 'node:url';
-import { FontaineTransform } from 'fontaine';
-import { glob } from 'fast-glob';
-import { MultiBar } from 'cli-progress';
 import { Readable } from 'node:stream';
-import { type ReadableStream } from 'node:stream/web';
-import { readFileSync } from 'node:fs';
+import type { ReadableStream } from 'node:stream/web';
+import { fileURLToPath } from 'node:url';
 import sharpAdapter from '@docusaurus/responsive-loader/sharp';
+import type { DocusaurusConfig, LoadContext, Plugin } from '@docusaurus/types';
+import {
+  DEFAULT_BUILD_DIR_NAME,
+  DEFAULT_CONFIG_FILE_NAME,
+  loadFreshModule,
+} from '@docusaurus/utils';
+import { MultiBar } from 'cli-progress';
+import { glob } from 'fast-glob';
+import { FontaineTransform } from 'fontaine';
+import concurrent from 'timeable-promise/concurrent';
+// eslint-disable-next-line import/no-named-as-default
 import Tinypool from 'tinypool';
 import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
+
 // Templates & definitions.
-import audio from '#buddhism/media/audio/_index';
 import { body, properCase } from '#buddhism/media/_common';
-import { fileName, oneLine } from '#root/src/data/common';
-import pdf from '#buddhism/media/pdf/_index';
+import audio from '#buddhism/media/audio/_index';
 import utterance from '#buddhism/media/audio/_utterance';
+import pdf from '#buddhism/media/pdf/_index';
+import { devDependencies, imports } from '#root/package.json';
+import { fileName, oneLine } from '#root/src/data/common';
+
+type AudioDetails = {
+  album: string;
+  description: string;
+  genre: string;
+  port: number;
+};
 
 type AudioMetadata = {
+  counters?: Map<string, number>;
+  meta?: Map<string, AudioDetails>;
   ports: Map<string, number>;
   tracks: Map<string, Track>;
 };
 
 type AudioTrack = AudioMetadata & {
-  generator: string,
-  model: string,
-  path: string,
-  siteConfig: DocusaurusConfig,
-  siteDir: string,
-  target: string,
+  generator: string;
+  model: string;
+  path: string;
+  siteConfig: DocusaurusConfig;
+  siteDir: string;
+  target: string;
 };
 
 type Stale = {
@@ -118,20 +127,22 @@ export function generateAudioMetadata(): AudioMetadata {
     (accumulator, [model, path]) => {
       const next = (accumulator.counters.get(model) ?? 0) + 1;
       accumulator.counters.set(model, next);
+      // After counters.set.
+      const details = accumulator.meta.get(model) as AudioDetails;
       if (!accumulator.ports.has(model)) {
-        accumulator.ports.set(model, accumulator.meta.get(model)!.port);
+        accumulator.ports.set(model, details.port);
       }
       accumulator.tracks.set(path, {
-        album: accumulator.meta.get(model)!.album,
-        description: accumulator.meta.get(model)!.description,
-        genre: accumulator.meta.get(model)!.genre,
+        album: details.album,
+        description: details.description,
+        genre: details.genre,
         track: next,
       });
       return accumulator;
     },
     {
       counters: new Map<string, number>(),
-      meta: new Map([
+      meta: new Map<string, AudioDetails>([
         [
           'id_ID-news_tts-medium',
           {
@@ -170,9 +181,18 @@ export function generateAudioMetadata(): AudioMetadata {
  * @param {object} options.tracks - Tracks map.
  */
 export async function generateAudioTrack({
-  generator, model, path, ports, siteConfig, siteDir, target, tracks,
+  generator,
+  model,
+  path,
+  ports,
+  siteConfig,
+  siteDir,
+  target,
+  tracks,
 }: AudioTrack): Promise<void> {
-  const { default: { transliteration } } = await import(path);
+  const {
+    default: { transliteration },
+  } = await import(path);
   const titleLower = transliteration?.title?.toLowerCase();
   const utteranceText = transliteration?.utterance || utterance(body(transliteration));
   // After utteranceText assignment.
@@ -182,49 +202,74 @@ export async function generateAudioTrack({
     method: 'POST',
   });
   if (!response.ok || !response.body) {
-    // eslint-disable-next-line no-console
-    console.error(`\x1b[31mFailed writing ${target}: Piper responded with ${response.status}\x1b[0m`);
+    console.error(
+      `\x1b[31mFailed writing ${target}: Piper responded with ${response.status}\x1b[0m`,
+    );
     return;
   }
-  const {
-    album, description, genre, track,
-  } = tracks.get(path)!;
+  const { album, description, genre, track } = tracks.get(path) ?? {};
   const date = new Date();
-  const stamp = createHash(algorithm).update(JSON.stringify({
-    date, generator, model, utteranceText,
-  })).digest('hex');
+  const stamp = createHash(algorithm)
+    .update(
+      JSON.stringify({
+        date,
+        generator,
+        model,
+        utteranceText,
+      }),
+    )
+    .digest('hex');
   // After stamp assignment.
   const metadata = [
-    '-metadata', `album=${album}`,
-    '-metadata', `album_artist=${siteConfig.title}`,
-    '-metadata', `artist=${siteConfig.title}`,
-    '-metadata', `comment=${oneLine(`Producer: ${siteConfig.url};
+    '-metadata',
+    `album=${album}`,
+    '-metadata',
+    `album_artist=${siteConfig.title}`,
+    '-metadata',
+    `artist=${siteConfig.title}`,
+    '-metadata',
+    `comment=${oneLine(`Producer: ${siteConfig.url};
       Provenance: ${createHmac(algorithm, provenance).update(stamp).digest('base64')};
       Stamp: ${algorithm}:${stamp}`)}`,
-    '-metadata', `composer=${siteConfig.title}`,
+    '-metadata',
+    `composer=${siteConfig.title}`,
     // YYYY-MM-DD via en-CA.
-    '-metadata', `date=${date.toLocaleDateString('en-CA')}`,
-    '-metadata', `description=${oneLine(`A guided pronunciation of the
-      ${titleLower}, emphasizing syllable clarity, pacing, tone, breath
-      flow, ${description}`)}`,
-    '-metadata', `genre=${genre}`,
-    '-metadata', `title=${properCase(transliteration?.title)} pronunciation`,
-    '-metadata', `track=${track}`,
+    '-metadata',
+    `date=${date.toLocaleDateString('en-CA')}`,
+    '-metadata',
+    `description=${oneLine(`A guided pronunciation of the ${titleLower}, emphasizing syllable
+      clarity, pacing, tone, breath flow, ${description}`)}`,
+    '-metadata',
+    `genre=${genre}`,
+    '-metadata',
+    `title=${properCase(transliteration?.title)} pronunciation`,
+    '-metadata',
+    `track=${track}`,
   ];
   // After metadata assignment.
   const ffmpeg = spawn('ffmpeg', [
     '-hide_banner',
-    '-i', '-',
-    '-f', 'image2',
-    '-i', fileResolve('#root/cover.jpg', siteDir),
-    '-loglevel', 'quiet',
-    '-map', '0:a',
-    '-map', '1',
-    '-disposition:v', 'attached_pic',
+    '-i',
+    '-',
+    '-f',
+    'image2',
+    '-i',
+    fileResolve('#root/cover.jpg', siteDir),
+    '-loglevel',
+    'quiet',
+    '-map',
+    '0:a',
+    '-map',
+    '1',
+    '-disposition:v',
+    'attached_pic',
     ...metadata,
-    '-b:a', '128k',
-    '-c:a', 'aac',
-    '-c:v', 'mjpeg',
+    '-b:a',
+    '128k',
+    '-c:a',
+    'aac',
+    '-c:v',
+    'mjpeg',
     '-y',
     target,
   ]);
@@ -238,7 +283,6 @@ export async function generateAudioTrack({
     });
     ffmpeg.on('error', (ex) => reject(new Error('ffmpeg error', ex)));
     Readable.fromWeb(response.body as unknown as ReadableStream).pipe(ffmpeg.stdin);
-    // eslint-disable-next-line no-console
   }).catch((ex) => console.error(`\x1b[31mFailed writing ${target}:\x1b[0m`, ex));
 }
 
@@ -251,7 +295,9 @@ export async function generateAudioTrack({
  */
 export async function lastModified(path: string): Promise<number> {
   // eslint-disable-next-line security/detect-non-literal-fs-filename
-  return stat(path).then((sts) => sts.mtimeMs).catch(() => 0);
+  return stat(path)
+    .then((sts) => sts.mtimeMs)
+    .catch(() => 0);
 }
 
 /**
@@ -281,10 +327,13 @@ export async function piperServer(
   // Language identifier.
   const prefix = model.split('_')[0].toLowerCase();
   const server = spawn(`${process.env.HOME}/.venv/default/bin/python`, [
-    '-m', 'piper.http_server',
+    '-m',
+    'piper.http_server',
     `--data-dir=${fileResolve(`#root/models/${prefix}/`, siteDir)}`,
-    '--model', model,
-    '--port', String(port),
+    '--model',
+    model,
+    '--port',
+    String(port),
   ]);
   await new Promise<void>((settle) => {
     const onData = (data: Buffer) => {
@@ -348,14 +397,14 @@ async function staleModel({ model, siteDir, targetModified }: StaleModel): Promi
  * // -> true if the resolved template file is newer than the target timestamp.
  */
 async function staleTemplate({
-  siteDir, targetModified, template,
+  siteDir,
+  targetModified,
+  template,
 }: StaleTemplate): Promise<boolean> {
   if (!template) {
     return false;
   }
-  const templateModified = await lastModified(
-    fileResolve(`#buddhism/_${template}.ts`, siteDir),
-  );
+  const templateModified = await lastModified(fileResolve(`#buddhism/_${template}.ts`, siteDir));
   return templateModified >= targetModified;
 }
 
@@ -385,10 +434,19 @@ async function staleTemplate({
  * // -> true if target is missing, older than data/template, or past cutoff.
  */
 export async function stale({
-  data, maxAgeDays = 7, model = '', siteDir, target, template = '',
+  data,
+  maxAgeDays = 7,
+  model = '',
+  siteDir,
+  target,
+  template = '',
 }: Stale): Promise<boolean> {
   // Target does not exist.
-  if (await access(target).then(() => false).catch(() => true)) {
+  if (
+    await access(target)
+      .then(() => false)
+      .catch(() => true)
+  ) {
     return true;
   }
   const dataModified = await lastModified(fileResolve(data, siteDir));
@@ -438,7 +496,6 @@ export async function generateAudio(
   )?.trim()}`;
 
   if (generator === 'piper:') {
-    // eslint-disable-next-line no-console
     console.error('\x1B[31mPiper not found - activate the correct venv.\x1B[0m');
     return;
   }
@@ -454,7 +511,8 @@ export async function generateAudio(
   bar.increment();
   bars.update();
   bar.setTotal(audio.length);
-  (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m';
+  (bar as any).options.format =
+    '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m';
   bar.update(0, { task: 'Make Audio' });
 
   // Ensure the folder exist.
@@ -464,24 +522,42 @@ export async function generateAudio(
   const servers = new Map<string, Promise<ChildProcessWithoutNullStreams>>();
 
   try {
-    await concurrent(audio, async (batch) => {
-      await Promise.all(batch.map(async ([model, path]) => {
-        const target = join(audioDir, `${fileName(path)}.m4a`);
-        if (await stale({
-          data: path, model, siteDir, target,
-        })) {
-          if (!servers.has(model)) {
-            servers.set(model, piperServer(siteDir, model, ports.get(model)!));
-          }
-          await servers.get(model)!;
-          await generateAudioTrack({
-            generator, model, path, ports, siteConfig, siteDir, target, tracks,
-          });
-        }
-        bar.increment();
-        bars.update();
-      }));
-    }, 5);
+    await concurrent(
+      audio,
+      async (batch) => {
+        await Promise.all(
+          batch.map(async ([model, path]) => {
+            const target = join(audioDir, `${fileName(path)}.m4a`);
+            if (
+              await stale({
+                data: path,
+                model,
+                siteDir,
+                target,
+              })
+            ) {
+              if (!servers.has(model)) {
+                servers.set(model, piperServer(siteDir, model, ports.get(model) as number));
+              }
+              (await servers.get(model)) as ChildProcessWithoutNullStreams;
+              await generateAudioTrack({
+                generator,
+                model,
+                path,
+                ports,
+                siteConfig,
+                siteDir,
+                target,
+                tracks,
+              });
+            }
+            bar.increment();
+            bars.update();
+          }),
+        );
+      },
+      5,
+    );
   } finally {
     await Promise.all(
       Array.from(servers.values(), async (server) => {
@@ -494,7 +570,8 @@ export async function generateAudio(
     );
     servers.clear();
   }
-  (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
+  (bar as any).options.format =
+    '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bars.update();
   bar.stop();
 }
@@ -530,20 +607,21 @@ export async function generatePdf(
     },
   });
   try {
-    await Promise.all(pdf.map(async ([template, path]) => {
-      const target = join(pdfDir, `${fileName(path, template)}.pdf`);
-      if (await stale({
-        data: path, siteDir, template, target,
-      })) {
-        await pool.run({ path, target, template });
-      }
-      bar.increment();
-      bars.update();
-    }));
+    await Promise.all(
+      pdf.map(async ([template, path]) => {
+        const target = join(pdfDir, `${fileName(path, template)}.pdf`);
+        if (await stale({ data: path, siteDir, target, template })) {
+          await pool.run({ path, target, template });
+        }
+        bar.increment();
+        bars.update();
+      }),
+    );
   } finally {
     await pool.destroy();
   }
-  (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
+  (bar as any).options.format =
+    '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bars.update();
   bar.stop();
 }
@@ -554,7 +632,7 @@ export async function generatePdf(
  * @param {MultiBar} bars - A MultiBar instance used to render progress bars.
  * @returns {Promise<void>} Resolves when all HTML files have been processed.
  */
-export async function inlineAboveFold(outDir: string, bars:MultiBar): Promise<void> {
+export async function inlineAboveFold(outDir: string, bars: MultiBar): Promise<void> {
   const bar = bars.create(
     1,
     0,
@@ -566,7 +644,8 @@ export async function inlineAboveFold(outDir: string, bars:MultiBar): Promise<vo
   bar.increment();
   bars.update();
   bar.setTotal(paths.length);
-  (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m';
+  (bar as any).options.format =
+    '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m';
   bar.update(0, { task: 'Inline CSS' });
   const pool = new Tinypool({
     execArgv: ['--experimental-worker', '--import', 'tsx'],
@@ -574,15 +653,18 @@ export async function inlineAboveFold(outDir: string, bars:MultiBar): Promise<vo
     workerData: { outDir },
   });
   try {
-    await Promise.all(paths.map(async (path) => {
-      await pool.run({ path });
-      bar.increment();
-      bars.update();
-    }));
+    await Promise.all(
+      paths.map(async (path) => {
+        await pool.run({ path });
+        bar.increment();
+        bars.update();
+      }),
+    );
   } finally {
     await pool.destroy();
   }
-  (bar as any).options.format = '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
+  (bar as any).options.format =
+    '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bars.update();
   bar.stop();
 }
@@ -599,7 +681,8 @@ export async function postBuild({ outDir, siteConfig, siteDir }: LoadContext): P
     barCompleteChar: '█',
     barIncompleteChar: '░',
     emptyOnZero: true,
-    format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m',
+    format:
+      '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m',
     hideCursor: true,
     // It doesn't support length === 0.
     stopOnComplete: true,
@@ -695,7 +778,7 @@ export default function plugin(context: LoadContext): Plugin {
           const outDir = join(siteDir, options.outDir || DEFAULT_BUILD_DIR_NAME);
           const siteConfigPath = join(siteDir, options.config || DEFAULT_CONFIG_FILE_NAME);
           // After siteConfigPath assignment.
-          const siteConfig = await loadFreshModule(siteConfigPath) as DocusaurusConfig;
+          const siteConfig = (await loadFreshModule(siteConfigPath)) as DocusaurusConfig;
           await postBuild({ outDir, siteConfig, siteDir } as LoadContext);
         });
     },

@@ -3,9 +3,9 @@
  * All rights reserved.
  */
 
+import { properCase } from '#buddhism/media/_common';
 import image, { type Image } from '#buddhism/media/pdf/_image';
 import { oneLine } from '#root/src/data/common';
-import { properCase } from '#buddhism/media/_common';
 
 type Page = {
   chapters?: string[];
@@ -21,7 +21,7 @@ type Page = {
 
 const chapterWidth = 12;
 const coverHeight = 70;
-const coverMargin = (coverHeight / 2) - 5;
+const coverMargin = coverHeight / 2 - 5;
 
 // Geometric box height:
 //   H_geom = (612                 // page height (8.5" * 72pt)
@@ -32,24 +32,27 @@ const coverMargin = (coverHeight / 2) - 5;
 // Actual box height used (pdfmake page overhead):
 //   H = H_geom - offset           // offset ≈ 2.3333pt
 const height = 188;
-const imageWidth = (height * 0.75) - 18;
-const leftChapter = (page: Page) => (page?.contents?.length ? {
-  margin: [0, 0, 0, -5],
-  svg: `
-    <svg height="${height}" width="${chapterWidth}">
-      <text
-        dominant-baseline="central"
-        font-size="8pt"
-        text-anchor="middle"
-        transform="rotate(90, ${chapterWidth / 2}, ${height / 2})"
-        x="${chapterWidth / 2}"
-        y="${height / 2}"
-      >
-        ${page?.chapters?.[0] || ''}
-      </text>
-    </svg>
-  `,
-} : ' ');
+const imageWidth = height * 0.75 - 18;
+const leftChapter = (page: Page) =>
+  page?.contents?.length
+    ? {
+        margin: [0, 0, 0, -5],
+        svg: `
+          <svg height="${height}" width="${chapterWidth}">
+            <text
+              dominant-baseline="central"
+              font-size="8pt"
+              text-anchor="middle"
+              transform="rotate(90, ${chapterWidth / 2}, ${height / 2})"
+              x="${chapterWidth / 2}"
+              y="${height / 2}"
+            >
+              ${page?.chapters?.[0] || ''}
+            </text>
+          </svg>
+        `,
+      }
+    : ' ';
 const pageLayout = {
   hLineWidth: () => 0.5,
   paddingBottom: () => 0,
@@ -58,44 +61,47 @@ const pageLayout = {
   paddingTop: () => 0,
   vLineWidth: () => 0.5,
 };
-const rightChapter = (page: Page) => (page?.contents?.length ? [
-  {
-    margin: [0, 0, 0, -5],
-    svg: `
-      <svg height="${height - 16}" width="${chapterWidth}">
-        <text
-          dominant-baseline="central"
-          font-size="8pt"
-          text-anchor="middle"
-          transform="rotate(-90, ${chapterWidth / 2}, ${(height - 16) / 2})"
-          x="${chapterWidth / 2}"
-          y="${(height - 16) / 2}"
-        >
-          ${page?.chapters?.[1] || ''}
-        </text>
-      </svg>
-    `,
-  },
-  {
-    svg: `
-      <svg height="16" width="${chapterWidth}">
-        <text
-          dominant-baseline="central"
-          font-size="8pt"
-          text-anchor="start"
-          transform="rotate(-90, ${chapterWidth / 2}, 16)"
-          x="${chapterWidth / 2}"
-          y="16"
-        >
-          ${page?.number || ''}
-        </text>
-      </svg>
-    `,
-  },
-] : null);
+const rightChapter = (page: Page) =>
+  page?.contents?.length
+    ? [
+        {
+          margin: [0, 0, 0, -5],
+          svg: `
+            <svg height="${height - 16}" width="${chapterWidth}">
+              <text
+                dominant-baseline="central"
+                font-size="8pt"
+                text-anchor="middle"
+                transform="rotate(-90, ${chapterWidth / 2}, ${(height - 16) / 2})"
+                x="${chapterWidth / 2}"
+                y="${(height - 16) / 2}"
+              >
+                ${page?.chapters?.[1] || ''}
+              </text>
+            </svg>
+          `,
+        },
+        {
+          svg: `
+            <svg height="16" width="${chapterWidth}">
+              <text
+                dominant-baseline="central"
+                font-size="8pt"
+                text-anchor="start"
+                transform="rotate(-90, ${chapterWidth / 2}, 16)"
+                x="${chapterWidth / 2}"
+                y="16"
+              >
+                ${page?.number || ''}
+              </text>
+            </svg>
+          `,
+        },
+      ]
+    : null;
 const unalomeWidth = 44.375;
 // After unalomeWidth assignment.
-const unalomeMargin = (unalomeWidth * 2) + 5;
+const unalomeMargin = unalomeWidth * 2 + 5;
 // After unalomeMargin assignment.
 const pageWithoutTitle = async (page: Page) => {
   const contents = page?.contents || [];
@@ -108,11 +114,16 @@ const pageWithoutTitle = async (page: Page) => {
     image({ ...right, height }),
   ]);
   return [
-    leftChapter(page), leftImage, leftContent, middleImage, rightContent,
-    rightImage, rightChapter(page),
+    leftChapter(page),
+    leftImage,
+    leftContent,
+    middleImage,
+    rightContent,
+    rightImage,
+    rightChapter(page),
   ].filter(Boolean);
 };
-const pageWithTitle = async (page: Page) => ([
+const pageWithTitle = async (page: Page) => [
   {
     layout: 'noBorders',
     margin: [unalomeMargin, coverMargin, unalomeMargin, 0],
@@ -121,7 +132,7 @@ const pageWithTitle = async (page: Page) => ([
         [
           await image({ height, path: '#buddhism/img/unalome-male.webp', width: unalomeWidth }),
           {
-            margin: [15, ((height - (coverMargin * 2) - coverHeight) / 2) - 5, 15, 0],
+            margin: [15, (height - coverMargin * 2 - coverHeight) / 2 - 5, 15, 0],
             table: { body: [[page.title]], heights: [coverHeight], widths: ['100%'] },
           },
           await image({ height, path: '#buddhism/img/unalome-female.webp', width: unalomeWidth }),
@@ -131,19 +142,31 @@ const pageWithTitle = async (page: Page) => ([
       widths: [unalomeWidth, '*', unalomeWidth],
     },
   },
-]);
-const trimMarker = (index: number, lastPage: number) => ((index % 3 === 2 || index === lastPage)
-  ? { canvas: [] } : {
-    canvas: [
-      {
-        lineWidth: 0.25, type: 'line', x1: -5, x2: -0.5, y1: 0, y2: 0,
-      },
-      {
-        lineWidth: 0.25, type: 'line', x1: 777.5, x2: 782, y1: 0, y2: 0,
-      },
-    ],
-    margin: [0, 0, 0, 7.5],
-  });
+];
+const trimMarker = (index: number, lastPage: number) =>
+  index % 3 === 2 || index === lastPage
+    ? { canvas: [] }
+    : {
+        canvas: [
+          {
+            lineWidth: 0.25,
+            type: 'line',
+            x1: -5,
+            x2: -0.5,
+            y1: 0,
+            y2: 0,
+          },
+          {
+            lineWidth: 0.25,
+            type: 'line',
+            x1: 777.5,
+            x2: 782,
+            y1: 0,
+            y2: 0,
+          },
+        ],
+        margin: [0, 0, 0, 7.5],
+      };
 const widths = (page: Page) => {
   const images = page?.images || {};
   const { length } = page?.contents || [];
@@ -154,14 +177,18 @@ const widths = (page: Page) => {
   const rightImageWidth = images.right ? netImageWidth : null;
   if (length) {
     return [
-      chapterWidth, leftImageWidth, '*', middleImageWidth,
-      length === 2 ? '*' : null, rightImageWidth, chapterWidth,
+      chapterWidth,
+      leftImageWidth,
+      '*',
+      middleImageWidth,
+      length === 2 ? '*' : null,
+      rightImageWidth,
+      chapterWidth,
     ].filter(Boolean);
   }
-  return [
-    '100%', leftImageWidth, null, middleImageWidth, null,
-    rightImageWidth, null,
-  ].filter(Boolean);
+  return ['100%', leftImageWidth, null, middleImageWidth, null, rightImageWidth, null].filter(
+    Boolean,
+  );
 };
 
 /**
@@ -170,29 +197,36 @@ const widths = (page: Page) => {
  * @returns {object} A pdfMake compatible object.
  */
 export default async function book(path: string) {
-  const { default: { pages = [], title } } = await import(path);
+  const {
+    default: { pages = [], title },
+  } = await import(path);
   const { length } = pages;
   // After length assignment.
   const lastPage = length - 1;
 
-  const content = await Promise.all(pages.map(async (page: Page, index: number) => ([
-    {
-      layout: (page?.contents?.length || page?.title) ? pageLayout : {
-        ...pageLayout,
-        hLineColor: () => '#ffffff',
-        vLineColor: () => '#ffffff',
+  const content = await Promise.all(
+    pages.map(async (page: Page, index: number) => [
+      {
+        layout:
+          page?.contents?.length || page?.title
+            ? pageLayout
+            : {
+                ...pageLayout,
+                hLineColor: () => '#ffffff',
+                vLineColor: () => '#ffffff',
+              },
+        margin: [0, 0, 0, index === lastPage ? 0 : 7.5],
+        // pageBreak: index % 3 === 2 && index !== lastPage ? 'after' : null,
+        table: {
+          body: [page?.title ? await pageWithTitle(page) : await pageWithoutTitle(page)],
+          dontBreakRows: true,
+          heights: [height],
+          widths: widths(page),
+        },
       },
-      margin: [0, 0, 0, index === lastPage ? 0 : 7.5],
-      // pageBreak: index % 3 === 2 && index !== lastPage ? 'after' : null,
-      table: {
-        body: [page?.title ? await pageWithTitle(page) : await pageWithoutTitle(page)],
-        dontBreakRows: true,
-        heights: [height],
-        widths: widths(page),
-      },
-    },
-    trimMarker(index, lastPage),
-  ])));
+      trimMarker(index, lastPage),
+    ]),
+  );
 
   return {
     definition: {

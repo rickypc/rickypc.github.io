@@ -4,50 +4,50 @@
  */
 
 .content {
-  border-radius: 1.25rem;
-  box-shadow: 0.3rem 0.25rem 1.25rem rgba(29, 142, 238, 0.32);
-  margin: 0 auto 3rem auto;
-  max-width: 42.75rem;
-  padding: 3.5rem;
   position: relative;
   z-index: 1;
+  max-width: 42.75rem;
+  padding: 3.5rem;
+  margin: 0 auto 3rem auto;
+  border-radius: 1.25rem;
+  box-shadow: 0.3rem 0.25rem 1.25rem rgba(29, 142, 238, 0.32);
 }
 
-[data-theme='dark'] .content {
+[data-theme="dark"] .content {
   background: #082f51;
 }
 
-[data-theme='light'] .content {
+[data-theme="light"] .content {
   background: #c1dff9;
 }
 
 .content h2 {
-  font-family: 'Yeseva One', cursive;
+  margin-bottom: 1rem;
+  font-family: "Yeseva One", cursive;
   font-size: 2rem;
   font-weight: 400;
-  margin-bottom: 1rem;
 }
 
 /* [class] can contain multiple classes, reaction_ or heart_ may not be the first. */
-.content h2 span[class*='reaction_'] span[class*='heart_'] {
+.content h2 span[class*="reaction_"] span[class*="heart_"] {
+  margin-left: 0.75rem;
   font-size: 1.6rem;
   line-height: 1.6rem;
-  margin-left: 0.75rem;
 }
 
 .content h3 {
-  font-family: 'Yeseva One', cursive;
+  margin: 1.5rem 0 1rem;
+  font-family: "Yeseva One", cursive;
   font-size: 1.5rem;
   font-weight: 400;
-  margin: 1.5rem 0 1rem;
 }
 
 .content p {
+  margin-bottom: 1.15rem;
   font-family: Poppins, sans-serif;
   font-size: 1.15rem;
   font-weight: 400;
   line-height: 1.5rem;
-  margin-bottom: 1.15rem;
   text-align: justify;
 }
 
@@ -62,17 +62,17 @@
   line-height: 1.55rem;
 }
 
-[data-theme='dark'] .content h2,
-[data-theme='dark'] .content p {
+[data-theme="dark"] .content h2,
+[data-theme="dark"] .content p {
   color: #d3d3d3;
 }
 
-[data-theme='light'] .content h2,
-[data-theme='light'] .content p {
+[data-theme="light"] .content h2,
+[data-theme="light"] .content p {
   color: #282f49;
 }
 
-/* FF specific as 2024. */
+/* biome-ignore format: FF specific as 2024 */
 @supports (-moz-appearance:none) {
   .content ul li {
     line-height: 1.475rem;
@@ -81,9 +81,11 @@
 
 @media print {
   .content {
-    margin: 0;
-    opacity: 1 !important;
     padding: 0;
+    margin: 0;
+    /* biome-ignore lint/complexity/noImportantStyles: - */
+    opacity: 1 !important;
+    /* biome-ignore lint/complexity/noImportantStyles: - */
     transform: none !important;
   }
 
@@ -94,8 +96,8 @@
 
   .content h2,
   .content h3 {
-    line-height: 1;
     margin-bottom: 0.5rem;
+    line-height: 1;
   }
 
   .content h2 {
@@ -103,8 +105,8 @@
   }
 
   .content h3 {
-    font-size: 1rem;
     margin-top: 1rem;
+    font-size: 1rem;
   }
 
   .content p,
@@ -118,7 +120,7 @@
   }
 }
 
-/* Safari only */
+/* biome-ignore format: Safari only */
 @supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
   @media print {
     :global(.col--6):has(.content) {

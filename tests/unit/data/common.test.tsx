@@ -4,19 +4,30 @@
  */
 
 import {
-  a11y, chunkToWords, clsx, context, faqContext,
-  faqEntries, fetchAsJson, fileName, humanizeYears, key,
-  numberToWords, oneLine, tail, textContent,
+  a11y,
+  chunkToWords,
+  clsx,
+  context,
+  faqContext,
+  faqEntries,
+  fetchAsJson,
+  fileName,
+  humanizeYears,
+  key,
+  numberToWords,
+  oneLine,
+  tail,
+  textContent,
 } from '@site/src/data/common';
 
 describe('data.common.a11y()', () => {
   test('returns aria-label and title props, merging additional attributes', () => {
-    const result = a11y('Label', { role: 'img', id: 'elem' });
+    const result = a11y('Label', { id: 'elem', role: 'img' });
     expect(result).toEqual({
       'aria-label': 'Label',
-      title: 'Label',
-      role: 'img',
       id: 'elem',
+      role: 'img',
+      title: 'Label',
     });
   });
 
@@ -117,7 +128,9 @@ describe('data.common.context()', () => {
     expect(reviewParsed['@type']).toBe('Review');
     expect(reviewParsed.author).toEqual({ '@type': 'Person', name: 'Ricky Huang' });
     expect(reviewParsed.reviewRating).toEqual({
-      '@type': 'Rating', bestRating: 5, ratingValue: 5,
+      '@type': 'Rating',
+      bestRating: 5,
+      ratingValue: 5,
     });
 
     const profileParsed = JSON.parse(context({ schema: 'ProfilePage' }));
@@ -140,8 +153,8 @@ describe('data.common.faqContext()', () => {
     expect(Array.isArray(json.mainEntity)).toBeTruthy();
     expect(json.mainEntity[0]).toMatchObject({
       '@type': 'Question',
-      name: 'Q',
       acceptedAnswer: { '@type': 'Answer', text: 'A' },
+      name: 'Q',
     });
   });
 
@@ -164,36 +177,40 @@ describe('data.common.faqEntries()', () => {
       items: [{ answer: <>Forty-two</>, question: <>Meaning of life?</> }],
       slug: 'about',
     });
-    expect(entries).toEqual([{
-      '@id': 'https://ricky.one/about#faq-1',
-      '@type': 'Question',
-      acceptedAnswer: {
-        '@id': 'https://ricky.one/about#faq-1-answer',
-        '@type': 'Answer',
+    expect(entries).toEqual([
+      {
+        '@id': 'https://ricky.one/about#faq-1',
+        '@type': 'Question',
+        acceptedAnswer: {
+          '@id': 'https://ricky.one/about#faq-1-answer',
+          '@type': 'Answer',
+          inLanguage: 'en-US',
+          text: 'Forty-two',
+        },
         inLanguage: 'en-US',
-        text: 'Forty-two',
+        name: 'Meaning of life?',
       },
-      inLanguage: 'en-US',
-      name: 'Meaning of life?',
-    }]);
+    ]);
   });
 
   test('extracts text from nested React elements', () => {
     const entries = faqEntries({
-      items: [{
-        answer: (
-          <span>
-            Deep
-            <strong>answer</strong>
-          </span>
-        ),
-        question: (
-          <span>
-            Nested
-            <em>question</em>
-          </span>
-        ),
-      }],
+      items: [
+        {
+          answer: (
+            <span>
+              Deep
+              <strong>answer</strong>
+            </span>
+          ),
+          question: (
+            <span>
+              Nested
+              <em>question</em>
+            </span>
+          ),
+        },
+      ],
       slug: 'about',
     });
     expect(entries[0].name).toBe('Nested question');
@@ -202,10 +219,12 @@ describe('data.common.faqEntries()', () => {
 
   test('collapses internal whitespace and trims', () => {
     const entries = faqEntries({
-      items: [{
-        answer: '  spaced   out  ',
-        question: '  what   now  ',
-      }],
+      items: [
+        {
+          answer: '  spaced   out  ',
+          question: '  what   now  ',
+        },
+      ],
       slug: 'about',
     });
     expect(entries[0].name).toBe('what now');
@@ -380,7 +399,10 @@ describe('data.common.numberToWords()', () => {
     // Billions.
     [1_000_000_000, 'one billion'],
     [1_000_000_001, 'one billion one'],
-    [2_147_483_647, 'two billion one hundred forty-seven million four hundred eighty-three thousand six hundred forty-seven'],
+    [
+      2_147_483_647,
+      'two billion one hundred forty-seven million four hundred eighty-three thousand six hundred forty-seven',
+    ],
 
     // Mixed multi-chunk with zeros in the middle.
     [1_000_020, 'one million twenty'],
@@ -388,7 +410,10 @@ describe('data.common.numberToWords()', () => {
     [10_000_010, 'ten million ten'],
 
     // Large but within safe integer range.
-    [999_999_999_999, 'nine hundred ninety-nine billion nine hundred ninety-nine million nine hundred ninety-nine thousand nine hundred ninety-nine'],
+    [
+      999_999_999_999,
+      'nine hundred ninety-nine billion nine hundred ninety-nine million nine hundred ninety-nine thousand nine hundred ninety-nine',
+    ],
   ])('numberToWords(%i) -> %s', (input, expected) => {
     expect(numberToWords(input)).toBe(expected);
   });
@@ -397,32 +422,32 @@ describe('data.common.numberToWords()', () => {
 describe('data.common.oneLine()', () => {
   test.each([
     {
-      name: 'removes newlines and indentation',
+      expected: ' hello world ',
       input: `
       hello
         world
     `,
-      expected: ' hello world ',
+      name: 'removes newlines and indentation',
     },
     {
-      name: 'handles strings with no newlines',
+      expected: 'hello world',
       input: 'hello world',
-      expected: 'hello world',
+      name: 'handles strings with no newlines',
     },
     {
-      name: 'handles empty string',
-      input: '',
       expected: '',
+      input: '',
+      name: 'handles empty string',
     },
     {
-      name: 'handles multiple consecutive newlines',
-      input: 'hello\n\n\nworld',
       expected: 'hello world',
+      input: 'hello\n\n\nworld',
+      name: 'handles multiple consecutive newlines',
     },
     {
-      name: 'preserves internal spaces',
-      input: 'hello   world',
       expected: 'hello   world',
+      input: 'hello   world',
+      name: 'preserves internal spaces',
     },
   ])('$name', ({ input, expected }) => {
     expect(oneLine(input)).toBe(expected);
@@ -487,7 +512,9 @@ describe('data.common.textContent()', () => {
         <div>
           <span>can</span>
           <p>confused</p>
-          <ul><li>people</li></ul>
+          <ul>
+            <li>people</li>
+          </ul>
         </div>
       </>
     );
@@ -514,9 +541,7 @@ describe('data.common.textContent()', () => {
   test('handles fragments correctly', () => {
     const node = (
       <>
-        A
-        <span>B</span>
-        C
+        A<span>B</span>C
       </>
     );
     expect(textContent(node)).toBe('A B C');

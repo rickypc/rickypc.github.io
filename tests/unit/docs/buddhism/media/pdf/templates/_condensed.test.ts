@@ -54,18 +54,22 @@ jest.mock('#buddhism/media/pdf/_strip', () => ({
 
 describe('docs.buddhism.media.pdf.templates._condensed', () => {
   test('handles Tibetan (bo-CN) branch correctly', async () => {
-    jest.mock('#buddhism/bo', () => ({
-      __esModule: true,
-      default: {
-        lang: 'bo-CN',
-        tibetan: {
-          repeat: { condensed: 3 },
-          typography: { condensed: { default: 9, title: 7 } },
+    jest.mock(
+      '#buddhism/bo',
+      () => ({
+        __esModule: true,
+        default: {
+          lang: 'bo-CN',
+          tibetan: {
+            repeat: { condensed: 3 },
+            typography: { condensed: { default: 9, title: 7 } },
+          },
+          total: 3,
+          transliteration: { title: 'Mantra' },
         },
-        transliteration: { title: 'Mantra' },
-        total: 3,
-      },
-    }), { virtual: true });
+      }),
+      { virtual: true },
+    );
 
     const result = await condensed('#buddhism/bo');
     const { definition } = result;
@@ -81,7 +85,9 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
 
     // Tibetan settings applied.
     expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans', fontSize: 9, lineHeight: 0.895,
+      font: 'NotoSans',
+      fontSize: 9,
+      lineHeight: 0.895,
     });
 
     // Prefix/roll fonts.
@@ -103,20 +109,26 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
   });
 
   test('handles Sanskrit (sa-IN) branch correctly', async () => {
-    jest.mock('#buddhism/sa', () => ({
-      __esModule: true,
-      default: {
-        lang: 'sa-IN',
-        transliteration: { title: 'Dhāraṇī' },
-        total: 2,
-      },
-    }), { virtual: true });
+    jest.mock(
+      '#buddhism/sa',
+      () => ({
+        __esModule: true,
+        default: {
+          lang: 'sa-IN',
+          total: 2,
+          transliteration: { title: 'Dhāraṇī' },
+        },
+      }),
+      { virtual: true },
+    );
 
     const result = await condensed('#buddhism/sa');
     const { definition } = result;
 
     expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans', fontSize: 2, lineHeight: 0.86,
+      font: 'NotoSans',
+      fontSize: 2,
+      lineHeight: 0.86,
     });
 
     expect(definition.styles.prefix.font).toBe('NotoSerifDevanagari');
@@ -127,20 +139,26 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
   });
 
   test('handles default (transliteration) branch correctly', async () => {
-    jest.mock('#buddhism/default', () => ({
-      __esModule: true,
-      default: {
-        lang: 'en-US',
-        transliteration: { title: 'OM MANI PADME HUM' },
-        total: 1,
-      },
-    }), { virtual: true });
+    jest.mock(
+      '#buddhism/default',
+      () => ({
+        __esModule: true,
+        default: {
+          lang: 'en-US',
+          total: 1,
+          transliteration: { title: 'OM MANI PADME HUM' },
+        },
+      }),
+      { virtual: true },
+    );
 
     const result = await condensed('#buddhism/default');
     const { definition } = result;
 
     expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans', fontSize: 2, lineHeight: 0.71,
+      font: 'NotoSans',
+      fontSize: 2,
+      lineHeight: 0.71,
     });
 
     // Title formatting.
@@ -151,17 +169,23 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
   });
 
   test('uses all fallback defaults when fields are missing', async () => {
-    jest.mock('#buddhism/fallback', () => ({
-      __esModule: true,
-      default: { transliteration: { title: 'Fallback' } },
-    }), { virtual: true });
+    jest.mock(
+      '#buddhism/fallback',
+      () => ({
+        __esModule: true,
+        default: { transliteration: { title: 'Fallback' } },
+      }),
+      { virtual: true },
+    );
 
     const result = await condensed('#buddhism/fallback');
     const { definition } = result;
 
     // Default font sizes + lineHeight.
     expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans', fontSize: 9, lineHeight: 0.895,
+      font: 'NotoSans',
+      fontSize: 9,
+      lineHeight: 0.895,
     });
 
     // Default repeat = 1 -> lastPhrase = 0.

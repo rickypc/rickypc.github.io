@@ -31,6 +31,7 @@ export default {
       'च महाभोगश्च महायशश्च भवंतु मे',
       'निर्वाणस्य प्रत्ययः भवतु',
     ].join(' । '),
+    repeat: { condensed: 81, roll: 29, wheel: 28 },
     siddham: {
       children: [
         '𑖤𑖳𑖟𑖿𑖠𑖺 𑖦𑖮𑖯𑖦𑖜𑖰𑖨𑖝𑖡 𑖢𑖘𑖰𑖦𑖯𑖎𑖨 𑖢𑖳𑖕𑖸𑖦𑖰',
@@ -40,7 +41,6 @@ export default {
       ].join(' 𑗂 '),
       title: '𑖦𑖮𑖯𑖦𑖜𑖰𑖨𑖝𑖡𑖢𑖘𑖰𑖦𑖯𑖎𑖨',
     },
-    repeat: { condensed: 81, roll: 29, wheel: 28 },
     title: 'महामणिरत्नप्रतिमाकार',
     transliteration: [
       'buddho mahāmaṇiratna pratimākāra pūjayāmi',

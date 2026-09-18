@@ -3,16 +3,16 @@
  * All rights reserved.
  */
 
-import { catalog, intro, layout } from '@site/src/data/portfolio';
-import { clsx } from '@site/src/data/common';
-import Filter from '@site/src/components/portfolio/Filter';
-import { type ImageProps } from '@site/src/components/common/Image';
+import type { ImageProps } from '@site/src/components/common/Image';
 import Layout from '@site/src/components/common/Layout';
-import { memo, useCallback, useState } from 'react';
 import Preamble from '@site/src/components/common/Preamble';
-import Projects from '@site/src/components/portfolio/Projects';
 import QRCode from '@site/src/components/common/QRCode';
+import Filter from '@site/src/components/portfolio/Filter';
+import Projects from '@site/src/components/portfolio/Projects';
 import Zoom from '@site/src/components/portfolio/Zoom';
+import { clsx } from '@site/src/data/common';
+import { catalog, intro, layout } from '@site/src/data/portfolio';
+import { memo, useCallback, useState } from 'react';
 import styles from './styles.module.css';
 
 export default memo(function Portfolio() {

@@ -4,36 +4,40 @@
  */
 
 .background {
-  font-family: 'Courier New', monospace;
-  font-size: 1rem;
-  height: auto;
-  left: 0;
-  line-height: 1.25;
-  mask-image: linear-gradient(to right,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.85) 12.5%,
-      rgba(0, 0, 0, 0.25) 25%,
-      rgba(0, 0, 0, 0) 100%);
-  overflow: hidden;
-  pointer-events: none;
   position: absolute;
   top: 5rem;
-  user-select: none;
-  -webkit-mask-image: linear-gradient(to right,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.85) 12.5%,
-      rgba(0, 0, 0, 0.25) 25%,
-      rgba(0, 0, 0, 0) 100%);
-  white-space: pre;
-  width: 100%;
+  left: 0;
   z-index: -1;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  font-family: "Courier New", monospace;
+  font-size: 1rem;
+  line-height: 1.25;
+  white-space: pre;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.85) 12.5%,
+    rgba(0, 0, 0, 0.25) 25%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.85) 12.5%,
+    rgba(0, 0, 0, 0.25) 25%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
 
-[data-theme='dark'] .background {
+[data-theme="dark"] .background {
   color: #dcd2ff24;
 }
 
-[data-theme='light'] .background {
+[data-theme="light"] .background {
   color: #dcd2ff;
 }
 
@@ -42,8 +46,8 @@ section.block:last-of-type {
 }
 
 .block .col {
-  line-height: 1.5;
   padding: 0 6rem;
+  line-height: 1.5;
 }
 
 .block .col article,
@@ -55,15 +59,15 @@ section.block:last-of-type {
 
 .block .col h2,
 .block .col h3 {
-  font-family: 'Yeseva One', cursive;
-  font-weight: 400;
   margin: 2rem 0 0.5rem 0;
+  font-family: "Yeseva One", cursive;
+  font-weight: 400;
 }
 
 .block .col h2,
 .block .col h3 {
-  align-items: center;
   display: flex;
+  align-items: center;
 }
 
 .block .col h2 {
@@ -75,26 +79,26 @@ section.block:last-of-type {
 }
 
 .block .col h3 {
-  font-size: 1.2rem;
   justify-content: space-between;
   margin-top: 1.5rem;
+  font-size: 1.2rem;
 }
 
-[data-theme='dark'] .block .col h3 .affiliation {
+[data-theme="dark"] .block .col h3 .affiliation {
   color: #9c9ea6;
   text-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, 0.18);
 }
 
-[data-theme='dark'] .block .col h3 .year {
+[data-theme="dark"] .block .col h3 .year {
   color: #81838a;
 }
 
-[data-theme='light'] .block .col h3 .affiliation {
+[data-theme="light"] .block .col h3 .affiliation {
   color: #6f7680;
   text-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, 0.06);
 }
 
-[data-theme='light'] .block .col h3 .year {
+[data-theme="light"] .block .col h3 .year {
   color: #868e96;
 }
 
@@ -104,8 +108,8 @@ section.block:last-of-type {
 }
 
 .block .col ul {
-  margin: 0;
   padding: 0 0 0 1.5rem;
+  margin: 0;
 }
 
 .block.educations .col article,
@@ -123,19 +127,19 @@ section.block:last-of-type {
 }
 
 .block.testimonials .col ul {
-  column-gap: 1.5rem;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  list-style: none;
-  margin-top: 0.25rem;
-  padding: 0;
   row-gap: 0.75rem;
+  column-gap: 1.5rem;
+  padding: 0;
+  margin-top: 0.25rem;
+  list-style: none;
 }
 
 .block:not(.testimonials) .col ul li::marker {
-  content: '» ';
   font-size: 1.175rem;
   line-height: 0;
+  content: "» ";
 }
 
 @media screen and (max-width: 48rem) {
@@ -159,10 +163,10 @@ section.block:last-of-type {
 
   .block .col {
     flex: 0 0 100%;
-    line-height: 1;
-    margin-left: 0;
     max-width: 100%;
     padding: 0;
+    margin-left: 0;
+    line-height: 1;
   }
 
   .block .col a,
@@ -184,8 +188,8 @@ section.block:last-of-type {
   }
 
   .block .col h2 {
-    font-size: 1.1rem;
     margin: 0.5rem 0 0.15rem 0;
+    font-size: 1.1rem;
   }
 
   .block .col h3 {
@@ -233,7 +237,7 @@ section.block:last-of-type {
   }
 }
 
-/* Safari only */
+/* biome-ignore format: Safari only */
 @supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
   .block .col ul {
     list-style: none;
@@ -244,10 +248,10 @@ section.block:last-of-type {
   }
 
   .block:not(.testimonials) .col ul li::before {
-    content: '»';
+    position: absolute;
     left: -1.15rem;
     line-height: 1.35rem;
-    position: absolute;
+    content: "»";
   }
 
   @media print {

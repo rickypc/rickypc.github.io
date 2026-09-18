@@ -4,24 +4,24 @@
  */
 
 .home {
-  max-height: 100%;
-  min-height: calc(100vh - 9.4rem);
   position: relative;
+  min-height: calc(100vh - 9.4rem);
+  max-height: 100%;
 }
 
 .home::before {
-  backface-visibility: hidden;
-  background-attachment: fixed;
-  background-image: url(/src/pages/img/hero.webp);
-  background-position: 0;
-  background-repeat: no-repeat;
-  background-size: cover;
-  content: '';
-  display: block;
-  inset: -3.75rem 0 -5.65rem 0;
-  opacity: 0.35;
   position: absolute;
+  inset: -3.75rem 0 -5.65rem 0;
   z-index: -1;
+  display: block;
+  content: "";
+  background-image: url(/src/pages/img/hero.webp);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 0;
+  background-size: cover;
+  opacity: 0.35;
+  backface-visibility: hidden;
 }
 
 .home a {
@@ -29,8 +29,8 @@
 }
 
 .preamble {
-  margin: 1.5rem 0 1rem 0;
   padding: 0 2rem;
+  margin: 1.5rem 0 1rem 0;
 }
 
 .preamble h1 {
@@ -38,19 +38,26 @@
   text-align: left;
 }
 
-[data-theme='dark'] :global(.theme-layout-main):has(>.home)+footer:global(.footer) {
-  background-color: color-mix(in oklab, var(--ifm-footer-background-color) 65%, transparent);
-  border-bottom: 0.0625rem solid color-mix(in oklab, var(--ifm-footer-background-color) 65%, transparent);
+[data-theme="dark"]
+  :global(.theme-layout-main):has(> .home)
+  + footer:global(.footer) {
+  background-color: color-mix(
+    in oklab,
+    var(--ifm-footer-background-color) 65%,
+    transparent
+  );
+  border-bottom: 0.0625rem solid
+    color-mix(in oklab, var(--ifm-footer-background-color) 65%, transparent);
 }
 
 @media print {
   .home::before {
-    background: transparent;
     inset: 0;
+    background: transparent;
   }
 
   .preamble {
-    margin: 0 0 0.5rem 0;
     padding: 0 0.75rem;
+    margin: 0 0 0.5rem 0;
   }
 }

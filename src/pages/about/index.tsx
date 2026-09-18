@@ -3,15 +3,15 @@
  * All rights reserved.
  */
 
-import { clsx } from '@site/src/data/common';
 import Content from '@site/src/components/about/Content';
 import Figure from '@site/src/components/about/Figure';
-import { intro, layout } from '@site/src/data/about';
-import Layout from '@site/src/components/common/Layout';
-import { memo } from 'react';
 import Oracle from '@site/src/components/about/Oracle';
+import Layout from '@site/src/components/common/Layout';
 import Preamble from '@site/src/components/common/Preamble';
 import QRCode from '@site/src/components/common/QRCode';
+import { intro, layout } from '@site/src/data/about';
+import { clsx } from '@site/src/data/common';
+import { memo } from 'react';
 import styles from './styles.module.css';
 
 export default memo(function About() {

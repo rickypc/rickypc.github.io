@@ -5,10 +5,10 @@
  * @jest-environment jsdom
  */
 
+import PersonaQuadrant from '@site/src/components/about/PersonaQuadrant';
+import type { QuadrantAxis, QuadrantLabel } from '@site/src/data/about';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import PersonaQuadrant from '@site/src/components/about/PersonaQuadrant';
-import { type QuadrantAxis, type QuadrantLabel } from '@site/src/data/about';
 
 describe('about.PersonaQuadrant', () => {
   const axes: QuadrantAxis[] = [
@@ -62,15 +62,15 @@ describe('about.PersonaQuadrant', () => {
   ];
 
   test('renders an accessible SVG with all the children', () => {
-    const { container } = render((
+    const { container } = render(
       <PersonaQuadrant
         alt="Quadrant Diagram"
         axes={axes}
         circle={circle}
         className="test-class"
         labels={labels}
-      />
-    ));
+      />,
+    );
 
     const svg = screen.getByRole('img', { name: 'Quadrant Diagram' });
     expect(svg).toBeInTheDocument();

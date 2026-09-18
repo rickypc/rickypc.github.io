@@ -26,10 +26,7 @@ describe('docs.buddhism._sukhavativyuha', () => {
     expect(sukhavativyuha.sanskrit.title).toBe('सुखावतीव्यूह धारणी');
 
     expect(sukhavativyuha.sanskrit.children).toBe(
-      [
-        sukhavativyuha.core.sanskrit.children,
-        amitabha.sanskrit.children,
-      ].join(' । '),
+      [sukhavativyuha.core.sanskrit.children, amitabha.sanskrit.children].join(' । '),
     );
 
     expect(sukhavativyuha.sanskrit.repeat).toEqual({
@@ -47,10 +44,7 @@ describe('docs.buddhism._sukhavativyuha', () => {
     expect(sukhavativyuha.transliteration.title).toBe('Sukhāvatīvyūha Dhāraṇī');
 
     expect(sukhavativyuha.transliteration.children).toBe(
-      [
-        sukhavativyuha.core.transliteration.children,
-        amitabha.transliteration.children,
-      ].join(' । '),
+      [sukhavativyuha.core.transliteration.children, amitabha.transliteration.children].join(' । '),
     );
   });
 

@@ -5,11 +5,11 @@
  * @jest-environment jsdom
  */
 
-import { createRef } from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import Playback from '@site/src/components/common/Playback';
 import useAudio, { type AudioResponse } from '@site/src/hooks/audio';
+import { fireEvent, render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { createRef } from 'react';
 
 jest.unmock('@site/src/components/common/Playback');
 jest.mock('@site/src/hooks/audio');

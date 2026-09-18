@@ -3,12 +3,12 @@
  * All rights reserved.
  */
 
-import { type ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 type PillsProps = {
   active: boolean;
   'aria-hidden': string;
-  items: string[],
+  items: string[];
   onClick: (_: string) => void;
   prefix: string;
   translate: string;
@@ -22,7 +22,12 @@ type PillsProps = {
  *   The common/Pills component.
  */
 export default function Pills({
-  active, 'aria-hidden': ariaHidden, items, onClick, prefix, translate,
+  active,
+  'aria-hidden': ariaHidden,
+  items,
+  onClick,
+  prefix,
+  translate,
 }: PillsProps): ReactElement {
   return (
     <div

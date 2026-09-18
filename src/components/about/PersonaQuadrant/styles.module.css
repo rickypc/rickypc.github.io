@@ -50,21 +50,21 @@
 
 .quadrant :global(#radial) stop:nth-child(10) {
   stop-color: #258a55;
-  stop-opacity: 0.90;
+  stop-opacity: 0.9;
 }
 
 .quadrant rect:global(.inner) {
+  width: 12.5rem;
   height: 12.5rem;
   stroke-width: 0.0625rem;
-  width: 12.5rem;
 }
 
-[data-theme='dark'] .quadrant rect:global(.inner) {
+[data-theme="dark"] .quadrant rect:global(.inner) {
   fill: rgba(255, 255, 255, 0.08);
-  stroke: rgba(255, 255, 255, 0.20);
+  stroke: rgba(255, 255, 255, 0.2);
 }
 
-[data-theme='light'] .quadrant rect:global(.inner) {
+[data-theme="light"] .quadrant rect:global(.inner) {
   fill: rgba(255, 255, 255, 0.12);
   stroke: rgba(0, 0, 0, 0.12);
 }
@@ -73,22 +73,22 @@
   stroke-width: 0.125rem;
 }
 
-[data-theme='dark'] .quadrant :global(#arrow) path,
-[data-theme='dark'] .quadrant path:global(.arrow) {
-  stroke: #7cd4c3;
+[data-theme="dark"] .quadrant :global(#arrow) path,
+[data-theme="dark"] .quadrant path:global(.arrow) {
   fill: #6bcab8;
+  stroke: #7cd4c3;
 }
 
-[data-theme='light'] .quadrant :global(#arrow) path,
-[data-theme='light'] .quadrant path:global(.arrow) {
-  stroke: #279e8d;
+[data-theme="light"] .quadrant :global(#arrow) path,
+[data-theme="light"] .quadrant path:global(.arrow) {
   fill: #1f8f7f;
+  stroke: #279e8d;
 }
 
 .quadrant text {
-  fill: currentColor;
   font-family: Poppins, sans-serif;
   font-weight: 400;
+  fill: currentColor;
 }
 
 .quadrant text:global(.axis) {
@@ -99,25 +99,25 @@
   font-size: 0.825rem;
 }
 
-[data-theme='dark'] .quadrant text:global(.axis) {
+[data-theme="dark"] .quadrant text:global(.axis) {
   fill: #9fe8d8;
 }
 
-[data-theme='dark'] .quadrant text:global(.label) {
+[data-theme="dark"] .quadrant text:global(.label) {
   fill: #b8d0e4;
 }
 
-[data-theme='light'] .quadrant text:global(.axis) {
+[data-theme="light"] .quadrant text:global(.axis) {
   fill: #2fae9b;
 }
 
-[data-theme='light'] .quadrant text:global(.label) {
+[data-theme="light"] .quadrant text:global(.label) {
   fill: #5a6f80;
 }
 
 .quadrant path:global(.axis),
 .quadrant path:global(.grid) {
-  stroke: #777
+  stroke: #777;
 }
 
 .quadrant path:global(.axis) {
@@ -125,11 +125,11 @@
   stroke-width: 0.085rem;
 }
 
-[data-theme='dark'] .quadrant path:global(.axis) {
+[data-theme="dark"] .quadrant path:global(.axis) {
   stroke: rgba(220, 240, 255, 0.65);
 }
 
-[data-theme='light'] .quadrant path:global(.axis) {
+[data-theme="light"] .quadrant path:global(.axis) {
   stroke: rgba(60, 90, 120, 0.75);
 }
 
@@ -137,11 +137,11 @@
   stroke-width: 0.03125rem;
 }
 
-[data-theme='dark'] .quadrant path:global(.grid) {
+[data-theme="dark"] .quadrant path:global(.grid) {
   stroke: rgba(220, 240, 255, 0.18);
 }
 
-[data-theme='light'] .quadrant path:global(.grid) {
+[data-theme="light"] .quadrant path:global(.grid) {
   stroke: rgba(60, 90, 120, 0.25);
 }
 
@@ -168,8 +168,8 @@
 
   [data-theme] .quadrant :global(#arrow) path,
   [data-theme] .quadrant path:global(.arrow) {
-    stroke: #279e8d;
     fill: #1f8f7f;
+    stroke: #279e8d;
   }
 
   [data-theme] .quadrant path:global(.axis) {

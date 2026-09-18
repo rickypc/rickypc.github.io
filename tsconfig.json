@@ -6,24 +6,12 @@
     "ignoreDeprecations": "6.0",
     "noEmit": true,
     "paths": {
-      "#buddhism/*": [
-        "./docs/buddhism/*"
-      ],
-      "#root/*": [
-        "./*"
-      ],
-      "@site/*": [
-        "./*"
-      ]
+      "@site/*": ["./*"],
+      "#buddhism/*": ["./docs/buddhism/*"],
+      "#root/*": ["./*"]
     },
     "strict": true
   },
   "extends": "@docusaurus/tsconfig",
-  "include": [
-    "*.config.ts",
-    "docs",
-    "__mocks__",
-    "src",
-    "tests"
-  ]
+  "include": ["*.config.ts", "docs", "__mocks__", "src", "tests"]
 }

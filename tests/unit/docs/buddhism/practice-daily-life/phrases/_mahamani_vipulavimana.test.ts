@@ -26,10 +26,7 @@ describe('docs.buddhism._mahamani_vipulavimana', () => {
     expect(mahamani.sanskrit.title).toBe('महामणि विपुलविमान');
 
     expect(mahamani.sanskrit.children).toBe(
-      [
-        mahamani.core.sanskrit.children,
-        darsanaMukta.sanskrit.children,
-      ].join(' । '),
+      [mahamani.core.sanskrit.children, darsanaMukta.sanskrit.children].join(' । '),
     );
   });
 
@@ -37,10 +34,7 @@ describe('docs.buddhism._mahamani_vipulavimana', () => {
     expect(mahamani.tibetan.title).toBe('ནོར་བུ་ཆེན་པོ་རྒྱས་པའི་གཞལ་མེད་ཁང');
 
     expect(mahamani.tibetan.children).toBe(
-      [
-        mahamani.core.tibetan.children,
-        darsanaMukta.tibetan.children,
-      ].join('། '),
+      [mahamani.core.tibetan.children, darsanaMukta.tibetan.children].join('། '),
     );
 
     expect(mahamani.tibetan.repeat).toEqual({
@@ -59,10 +53,7 @@ describe('docs.buddhism._mahamani_vipulavimana', () => {
     expect(mahamani.transliteration.repetition).toBe(3);
 
     expect(mahamani.transliteration.children).toBe(
-      [
-        mahamani.core.transliteration.children,
-        darsanaMukta.transliteration.children,
-      ].join(' । '),
+      [mahamani.core.transliteration.children, darsanaMukta.transliteration.children].join(' । '),
     );
   });
 });

@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-import { useEffect } from 'react';
 import { useSafeLayoutEffect } from '@site/src/hooks/observer';
+import { useEffect } from 'react';
 
 jest.unmock('@site/src/hooks/observer');
 

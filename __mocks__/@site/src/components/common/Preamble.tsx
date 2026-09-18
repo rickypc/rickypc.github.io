@@ -3,9 +3,9 @@
  * All rights reserved.
  */
 
-import { type PreambleProps } from '@site/src/components/common/Preamble';
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { PreambleProps } from '@site/src/components/common/Preamble';
 import { textContent } from '@site/src/data/common';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 /**
  * Minimal mock common/Intro component that renders children.
@@ -30,7 +30,9 @@ export function Intro({ children, ...rest }: PropsWithChildren): ReactElement {
  *   The common/Preamble component.
  */
 export default function Preamble({
-  children, intro, ...rest
+  children,
+  intro,
+  ...rest
 }: PropsWithChildren<PreambleProps>): ReactElement {
   return (
     <div

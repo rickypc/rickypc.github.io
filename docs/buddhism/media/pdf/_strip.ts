@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 type Geometry = {
   fontSizes: Typography;
@@ -97,13 +97,10 @@ export const body = (
   text: (Array.isArray(text) ? text : [text]).flatMap((phrase, index) => [
     { style: 'prefix', text: index === 0 ? prefix : ` ${prefix}` },
     {
-      text: Array.from(
-        { length: repeat },
-        (_repeat, idx) => ({
-          style: 'roll',
-          text: `${infix}${phrase}${idx === lastPhrase ? '' : `${infix} `}`,
-        }),
-      ),
+      text: Array.from({ length: repeat }, (_repeat, idx) => ({
+        style: 'roll',
+        text: `${infix}${phrase}${idx === lastPhrase ? '' : `${infix} `}`,
+      })),
     },
     { style: 'roll', text: suffix },
   ]),
@@ -123,10 +120,7 @@ export const CONDENSED_GEOMETRY = Object.freeze({
   height: 36.7925,
 });
 
-export const languageFontSizes = (
-  context: LanguageProps,
-  key: TypographyKey,
-): Typography => {
+export const languageFontSizes = (context: LanguageProps, key: TypographyKey): Typography => {
   const fallback = key === 'condensed' ? CONDENSED_GEOMETRY : BASE_GEOMETRY;
   return context?.typography?.[key as TypographyKey] || fallback.fontSizes;
 };
@@ -157,10 +151,10 @@ export const subsequentBody = (
   ];
 };
 
-export const substance = ({ children }: PropsWithChildren): Substance => (
-  Array.isArray(children) || typeof (children) === 'string'
-    ? children : (children as ReactElement<{ children: Substance }>)?.props?.children
-);
+export const substance = ({ children }: PropsWithChildren): Substance =>
+  Array.isArray(children) || typeof children === 'string'
+    ? children
+    : (children as ReactElement<{ children: Substance }>)?.props?.children;
 
 // After substance assignment.
 export const languageGeometry = (
@@ -179,31 +173,37 @@ export const languageGeometry = (
     text: substance(transliteration),
   });
   const geometries = new Map<string, GeometryFactory>([
-    ['bo-CN', () => ({
-      fontSizes: languageFontSizes(tibetan, fontSizesKey),
-      infix: '།',
-      lineHeight: condensed ? 0.895 : 0.84,
-      paddingBottom: condensed ? 0 : 1,
-      paddingTop: condensed ? 1.15 : 0.25,
-      prefix: '༄༅། ',
-      prefixFont: 'Kokonor',
-      repeat: tibetan?.repeat,
-      rollFont: 'Kokonor',
-      suffix: '༎',
-      text: substance(tibetan),
-    })],
-    ['sa-IN', () => ({
-      fontSizes: languageFontSizes(sanskrit, fontSizesKey),
-      height: condensed ? 36.7925 : 83.175,
-      infix: '।',
-      lineHeight: condensed ? 0.86 : 0.81,
-      paddingBottom: condensed ? 0 : 0.825,
-      paddingTop: condensed ? 1.15 : 1,
-      repeat: sanskrit?.repeat,
-      rollFont: 'NotoSerifDevanagari',
-      suffix: '॥',
-      text: substance(sanskrit),
-    })],
+    [
+      'bo-CN',
+      () => ({
+        fontSizes: languageFontSizes(tibetan, fontSizesKey),
+        infix: '།',
+        lineHeight: condensed ? 0.895 : 0.84,
+        paddingBottom: condensed ? 0 : 1,
+        paddingTop: condensed ? 1.15 : 0.25,
+        prefix: '༄༅། ',
+        prefixFont: 'Kokonor',
+        repeat: tibetan?.repeat,
+        rollFont: 'Kokonor',
+        suffix: '༎',
+        text: substance(tibetan),
+      }),
+    ],
+    [
+      'sa-IN',
+      () => ({
+        fontSizes: languageFontSizes(sanskrit, fontSizesKey),
+        height: condensed ? 36.7925 : 83.175,
+        infix: '।',
+        lineHeight: condensed ? 0.86 : 0.81,
+        paddingBottom: condensed ? 0 : 0.825,
+        paddingTop: condensed ? 1.15 : 1,
+        repeat: sanskrit?.repeat,
+        rollFont: 'NotoSerifDevanagari',
+        suffix: '॥',
+        text: substance(sanskrit),
+      }),
+    ],
   ]);
   const geometry = (geometries.get(lang) || fallback)();
   return { ...base, ...geometry };

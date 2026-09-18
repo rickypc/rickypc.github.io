@@ -7,14 +7,16 @@
 
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { context } from '@site/src/data/common';
-import DocTagsListPage from '@theme-original/DocTagsListPage';
-import DocTagsListPageWrapper from '@theme/DocTagsListPage';
 import { translateTagsPageTitle } from '@docusaurus/theme-common';
+import { context } from '@site/src/data/common';
 import { useWelcome } from '@site/src/hooks/observer';
+import DocTagsListPageWrapper from '@theme/DocTagsListPage';
+import DocTagsListPage from '@theme-original/DocTagsListPage';
 
 jest.mock('@site/src/data/common', () => ({
-  context: jest.fn((metadata: {}) => JSON.stringify({ ld: 'test', meta: metadata })),
+  context: jest.fn((metadata: Record<string, string>) =>
+    JSON.stringify({ ld: 'test', meta: metadata }),
+  ),
 }));
 
 describe('theme.DocTagsListPage', () => {
@@ -27,13 +29,17 @@ describe('theme.DocTagsListPage', () => {
     expect(translateTagsPageTitle).toHaveBeenCalled();
 
     expect(context).toHaveBeenCalledTimes(1);
-    expect(context).toHaveBeenNthCalledWith(1, expect.objectContaining({
-      description: expect.stringContaining('Practical notes on Buddhism'),
-      keywords: expect.arrayContaining(['mindfulness']),
-      title: 'Tags',
-    }));
+    expect(context).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        description: expect.stringContaining('Practical notes on Buddhism'),
+        keywords: expect.arrayContaining(['mindfulness']),
+        title: 'Tags',
+      }),
+    );
 
-    const script = screen.getByTestId('metadata')
+    const script = screen
+      .getByTestId('metadata')
       // eslint-disable-next-line testing-library/no-node-access
       .querySelector('script[type="application/ld+json"]');
     expect(script).toBeInTheDocument();
@@ -48,18 +54,18 @@ describe('theme.DocTagsListPage', () => {
 
     const { head } = document;
     // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="twitter:description"]'))
-      .toHaveAttribute('content', description);
+    expect(head.querySelector('meta[name="twitter:description"]')).toHaveAttribute(
+      'content',
+      description,
+    );
     // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="twitter:title"]'))
-      .toHaveAttribute('content', 'Tags');
+    expect(head.querySelector('meta[name="twitter:title"]')).toHaveAttribute('content', 'Tags');
 
     expect(useWelcome).toHaveBeenCalledTimes(1);
     expect(useWelcome).toHaveBeenCalledWith({ navigation: false });
 
     expect(DocTagsListPage).toHaveBeenCalledTimes(1);
-    expect(DocTagsListPage)
-      .toHaveBeenNthCalledWith(1, expect.objectContaining(props), undefined);
+    expect(DocTagsListPage).toHaveBeenNthCalledWith(1, expect.objectContaining(props), undefined);
 
     const list = screen.getByTestId('doc-tags-list-page');
     expect(list).toBeInTheDocument();

@@ -3,17 +3,22 @@
  * All rights reserved.
  */
 
-import { domAnimation, LazyMotion, motion } from 'motion/react';
-import Heading from '@theme/Heading';
 import Heart from '@site/src/components/common/Heart';
-import { key } from '@site/src/data/common';
 import Link from '@site/src/components/common/Link';
+import { key } from '@site/src/data/common';
+import { type StoryProps, stories } from '@site/src/data/stories';
+import Heading from '@theme/Heading';
+import { domAnimation, LazyMotion, motion } from 'motion/react';
 import { memo, type ReactElement } from 'react';
-import { stories, type StoryProps } from '@site/src/data/stories';
 import styles from './styles.module.css';
 
 const Story = memo(function Story({
-  affiliation, author, content, header, prefix, title,
+  affiliation,
+  author,
+  content,
+  header,
+  prefix,
+  title,
 }: StoryProps): ReactElement {
   return (
     <LazyMotion features={domAnimation}>
@@ -40,11 +45,24 @@ const Story = memo(function Story({
             <Link validate {...author} />
           </p>
           <div className={styles.affiliation}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" height="16" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="16">
+            {/* biome-ignore lint/a11y/noSvgWithoutTitle: - */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              height="16"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.5"
+              viewBox="0 0 24 24"
+              width="16"
+            >
               <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
               <path d="M16 12v1.5a2.5 2.5 0 0 0 5 0v-1.5a9 9 0 1 0 -5.5 8.28" />
             </svg>
-            <p><Link validate {...affiliation} /></p>
+            <p>
+              <Link validate {...affiliation} />
+            </p>
           </div>
         </address>
       </motion.article>
@@ -56,11 +74,7 @@ export default memo(function Content() {
   return (
     <div className={styles.content}>
       {stories.map(({ header, ...rest }) => (
-        <Story
-          header={header}
-          key={key(header.children, 'story')}
-          {...rest}
-        />
+        <Story header={header} key={key(header.children, 'story')} {...rest} />
       ))}
     </div>
   );

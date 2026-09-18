@@ -5,13 +5,10 @@
  * @jest-environment jsdom
  */
 
+import { textContent } from '@site/src/data/common';
+import { faqItems, hats, identity, image, intro, layout, socials } from '@site/src/data/home';
 import { render, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import {
-  faqItems, hats, identity, image, intro,
-  layout, socials,
-} from '@site/src/data/home';
-import { textContent } from '@site/src/data/common';
 
 describe('data.home', () => {
   test('renders greeting fragment with two spans', () => {
@@ -98,9 +95,7 @@ describe('data.home', () => {
       expect(typeof title).toBe('string');
 
       // Render and scope the <svg data-testid="icon"> to this icon’s own container.
-      const { container } = render((
-        <Icon className="foo" style={{}} title="bar" />
-      ));
+      const { container } = render(<Icon className="foo" style={{}} title="bar" />);
       const icon = within(container).getByTestId('icon-svg');
       expect(icon).toBeInTheDocument();
 

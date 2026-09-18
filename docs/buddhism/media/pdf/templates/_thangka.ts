@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
+import type { PropsWithChildren } from 'react';
 import { body, properCase } from '#buddhism/media/_common';
-import { type Repeat } from '#buddhism/media/pdf/_strip';
+import type { Repeat } from '#buddhism/media/pdf/_strip';
 import { oneLine } from '#root/src/data/common';
-import { type PropsWithChildren } from 'react';
 
 type Geometry = {
   delimiter: string;
@@ -53,9 +53,8 @@ export const BASE_GEOMETRY = Object.freeze({
   lineHeight: 0.85,
 });
 
-export const languageFontSizes = (
-  context: LanguageProps,
-): Typography => context?.typography?.thangka || BASE_GEOMETRY.fontSizes;
+export const languageFontSizes = (context: LanguageProps): Typography =>
+  context?.typography?.thangka || BASE_GEOMETRY.fontSizes;
 
 export const languageGeometry = (
   lang: string,
@@ -68,19 +67,25 @@ export const languageGeometry = (
     phrase: transliteration,
   });
   const geometries = new Map<string, GeometryFactory>([
-    ['bo-CN', () => ({
-      delimiter: '་',
-      font: 'Kokonor',
-      fontSizes: languageFontSizes(tibetan),
-      infix: '།',
-      phrase: tibetan,
-    })],
-    ['sa-IN', () => ({
-      font: 'NotoSerifDevanagari',
-      fontSizes: languageFontSizes(sanskrit),
-      infix: '।',
-      phrase: sanskrit,
-    })],
+    [
+      'bo-CN',
+      () => ({
+        delimiter: '་',
+        font: 'Kokonor',
+        fontSizes: languageFontSizes(tibetan),
+        infix: '།',
+        phrase: tibetan,
+      }),
+    ],
+    [
+      'sa-IN',
+      () => ({
+        font: 'NotoSerifDevanagari',
+        fontSizes: languageFontSizes(sanskrit),
+        infix: '।',
+        phrase: sanskrit,
+      }),
+    ],
   ]);
   const geometry = (geometries.get(lang) || fallback)();
   return { ...BASE_GEOMETRY, ...geometry };
@@ -93,31 +98,38 @@ export const languageGeometry = (
  */
 export default async function thangka(path: string) {
   const {
-    default: {
-      lang = 'bo-CN', sanskrit, tibetan, transliteration,
-    },
+    default: { lang = 'bo-CN', sanskrit, tibetan, transliteration },
   }: Languages = await import(path);
-  const {
-    delimiter, font, fontSizes, infix, lineHeight, phrase,
-  } = languageGeometry(lang, sanskrit, tibetan, transliteration);
+  const { delimiter, font, fontSizes, infix, lineHeight, phrase } = languageGeometry(
+    lang,
+    sanskrit,
+    tibetan,
+    transliteration,
+  );
   const text = `${body(phrase as PropsWithChildren, infix)}${infix}`;
   // After text assignment.
-  // eslint-disable-next-line security/detect-non-literal-regexp
-  const style = (text.replace(new RegExp(`[${delimiter}${infix}]`, 'g'), '').length / 2) >= 15 ? 'double' : 'single';
+  const style =
+    // eslint-disable-next-line security/detect-non-literal-regexp
+    text.replace(new RegExp(`[${delimiter}${infix}]`, 'g'), '').length / 2 >= 15
+      ? 'double'
+      : 'single';
 
   return {
     definition: {
       content: [
         { style: 'bija', text: 'ༀ' },
-        { style: 'prayer', margin: [0, -15, 0, 0], text: 'ༀ་སརྦ་བི་དྱཱ་སྭཱ་ཧཱ། ༀ་སརྦ་བི་དྱཱ་སྭཱ་ཧཱ།' },
+        { margin: [0, -15, 0, 0], style: 'prayer', text: 'ༀ་སརྦ་བི་དྱཱ་སྭཱ་ཧཱ། ༀ་སརྦ་བི་དྱཱ་སྭཱ་ཧཱ།' },
         { style: 'bija', text: 'ཨཱཿ' },
         { style: 'prayer', text: 'ཨ་ཨཱ། ཨི་ཨཱི། ཨུ་ཨཱུ། རྀ་རཱྀ། ལྀ་ལཱྀ། ཨེ་ཨཻ། ཨོ་ཨཽ། ཨཾ་ཨཿ ཀ་ཁ་ག་གྷ་ང།' },
         { fontSize: 21, text: 'ཙ་ཚ་ཛ་ཛྷ་ཉ། ཊ་ཋ་ཌ་ཌྷ་ཎ། ཏ་ཐ་ད་དྷ་ན། པ་ཕ་བ་བྷ་མ། ཡ་ར་ལ་ཝ། ཤ་ཥ་ས་ཧ་ཀྵ།' },
-        { style: 'bija', margin: [0, 30, 0, 0], text: 'ཧཱུྃ' },
+        { margin: [0, 30, 0, 0], style: 'bija', text: 'ཧཱུྃ' },
         { style: 'prayer', text: 'ༀ་བ་ཛྲཱ་ཡུ་ཥེ་སྭཱ་ཧཱ།' },
         { style, text },
         { style: 'bija', text: 'སྭཱ' },
-        { style: 'prayer', text: 'ཡེ་དྷ་རྨཱ་ཧེ་ཏུ་པྲ་བྷ་བཱ་ཧེ་ཏུཾ་ཏེ་ཥཱཾ་ཏ་ཐཱ་ག་ཏ་ཨུ་བཱ་ཙ། ཏེ་ཥཱཾ་ཙ་ཡོ་ནི་རོ་དྷ་ཨེ་བཾ་བཱ་དཱི་མ་ཧཱ་ཤྲ་མ་ཎཿ།' },
+        {
+          style: 'prayer',
+          text: 'ཡེ་དྷ་རྨཱ་ཧེ་ཏུ་པྲ་བྷ་བཱ་ཧེ་ཏུཾ་ཏེ་ཥཱཾ་ཏ་ཐཱ་ག་ཏ་ཨུ་བཱ་ཙ། ཏེ་ཥཱཾ་ཙ་ཡོ་ནི་རོ་དྷ་ཨེ་བཾ་བཱ་དཱི་མ་ཧཱ་ཤྲ་མ་ཎཿ།',
+        },
         { style: 'bija', text: 'ཧཱ།' },
         { style: 'prayer', text: 'ཨོཾ་སུ་པྲ་ཏིཥྛ་བཛྲ་ཡེ་སྭཱ་ཧཱ།' },
       ],

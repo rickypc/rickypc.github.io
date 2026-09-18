@@ -31,9 +31,8 @@ import { basename, extname } from 'node:path';
  * @returns {{ code: string }} - A string of JavaScript code exporting
  *   the mocked asset.
  */
-// eslint-disable-next-line import/prefer-default-export
 export function process(_: string, path: string) {
-  let code;
+  let code: string;
   switch (extname(path).toLowerCase()) {
     case '.css':
       code = `module.exports = new Proxy({}, {

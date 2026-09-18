@@ -13,7 +13,8 @@ export default {
     title: 'Prayer',
   },
   transliteration: {
-    children: 'oṃ sambhara sambhara vimānasara mahājapa hūṃ । oṃ smara smara vimānaskara mahājapa hūṃ',
+    children:
+      'oṃ sambhara sambhara vimānasara mahājapa hūṃ । oṃ smara smara vimānaskara mahājapa hūṃ',
     repetition: 3,
     // The prayer blessing.
     title: 'Japa',

@@ -17,7 +17,8 @@ export default {
     title: 'Perfect Consecration',
   },
   transliteration: {
-    children: 'oṃ guru buddha bodhisattva dharmapāla saparivāra ejati jaḥ hūṃ baṃ hoḥ । oṃ supratiṣṭha vajraye svāhā',
+    children:
+      'oṃ guru buddha bodhisattva dharmapāla saparivāra ejati jaḥ hūṃ baṃ hoḥ । oṃ supratiṣṭha vajraye svāhā',
     repetition: 3,
     title: 'Supratiṣṭha',
   },

@@ -5,10 +5,8 @@
  * @jest-environment jsdom
  */
 
-import {
-  faqItems, intro, layout, schema, stories, storyMap,
-} from '@site/src/data/stories';
 import { textContent } from '@site/src/data/common';
+import { faqItems, intro, layout, schema, stories, storyMap } from '@site/src/data/stories';
 
 describe('data.stories.exports', () => {
   test('has layout, intro, stories', () => {

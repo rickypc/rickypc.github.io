@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 type AdmonitionProps = {
   type?: string;
@@ -17,7 +17,12 @@ type AdmonitionProps = {
  *   The \@theme/Admonition component.
  */
 export default function Admonition({
-  children, type,
+  children,
+  type,
 }: PropsWithChildren<AdmonitionProps>): ReactElement {
-  return <div data-testid="admonition" data-type={type}>{children}</div>;
+  return (
+    <div data-testid="admonition" data-type={type}>
+      {children}
+    </div>
+  );
 }

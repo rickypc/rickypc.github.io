@@ -3,12 +3,18 @@
  * All rights reserved.
  */
 
+import { properCase } from '#buddhism/media/_common';
 import {
-  body, languageGeometry, type LanguageProps, type Languages, type Repeat,
-  subsequentBody, type Substance, type Typography,
+  body,
+  type LanguageProps,
+  type Languages,
+  languageGeometry,
+  type Repeat,
+  type Substance,
+  subsequentBody,
+  type Typography,
 } from '#buddhism/media/pdf/_strip';
 import { oneLine } from '#root/src/data/common';
-import { properCase } from '#buddhism/media/_common';
 
 type Table = {
   body?: any[];
@@ -25,7 +31,7 @@ const firstBody = (
   suffix: string,
   text: Substance,
   transliteration: LanguageProps,
-) => ([
+) => [
   [
     { margin: [0, 5, 0, -5], style: 'intro', text: 'ༀ' },
     {
@@ -41,20 +47,32 @@ const firstBody = (
   ],
   [{ style: 'intro', text: 'ཨཱཿ' }],
   [{ margin: [0, 1, 0, -1], style: 'intro', text: 'ཧཱུྃ' }],
-]);
+];
 
-const trimMarker = (index: number, lastRoll: number) => (index === lastRoll
-  ? { canvas: [] } : {
-    canvas: [
-      {
-        lineWidth: 0.25, type: 'line', x1: -5, x2: -0.5, y1: 0, y2: 0,
-      },
-      {
-        lineWidth: 0.25, type: 'line', x1: 777.5, x2: 782, y1: 0, y2: 0,
-      },
-    ],
-    margin: [0, 0, 0, 7.5],
-  });
+const trimMarker = (index: number, lastRoll: number) =>
+  index === lastRoll
+    ? { canvas: [] }
+    : {
+        canvas: [
+          {
+            lineWidth: 0.25,
+            type: 'line',
+            x1: -5,
+            x2: -0.5,
+            y1: 0,
+            y2: 0,
+          },
+          {
+            lineWidth: 0.25,
+            type: 'line',
+            x1: 777.5,
+            x2: 782,
+            y1: 0,
+            y2: 0,
+          },
+        ],
+        margin: [0, 0, 0, 7.5],
+      };
 
 /**
  * Generates a pdfMake object for `prayer wheel mantra roll`.
@@ -63,18 +81,26 @@ const trimMarker = (index: number, lastRoll: number) => (index === lastRoll
  */
 export default async function wheel(path: string) {
   const {
-    default: {
-      lang = 'bo-CN', sanskrit, tibetan, total = 6, transliteration,
-    },
+    default: { lang = 'bo-CN', sanskrit, tibetan, total = 6, transliteration },
   }: Languages = await import(path);
   const {
-    fontSizes, height, infix, lineHeight, paddingBottom,
-    paddingTop, prefix, prefixFont, repeat, rollFont, suffix, text,
+    fontSizes,
+    height,
+    infix,
+    lineHeight,
+    paddingBottom,
+    paddingTop,
+    prefix,
+    prefixFont,
+    repeat,
+    rollFont,
+    suffix,
+    text,
   } = languageGeometry('wheel', lang, sanskrit, tibetan, transliteration);
   const lastRoll = total - 1;
   // After height & paddings re-assignment.
   // paddings + border + offset (0.0125).
-  const rowHeight = ((height - ((paddingBottom + paddingTop + 1 + 0.0125) * 2)) / 3);
+  const rowHeight = (height - (paddingBottom + paddingTop + 1 + 0.0125) * 2) / 3;
 
   const content = Array.from({ length: total }, (_total, index) => {
     const table: Table = {};
@@ -83,7 +109,16 @@ export default async function wheel(path: string) {
       table.heights = [rowHeight, rowHeight, rowHeight];
       table.widths = [18, '*'];
     } else {
-      table.body = subsequentBody(fontSizes, infix, prefix, repeat, 'roll', suffix, text, transliteration);
+      table.body = subsequentBody(
+        fontSizes,
+        infix,
+        prefix,
+        repeat,
+        'roll',
+        suffix,
+        text,
+        transliteration,
+      );
       table.dontBreakRows = true;
       table.heights = [height];
     }

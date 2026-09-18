@@ -15,20 +15,21 @@
 }
 
 .timeline::before {
+  position: absolute;
+  inset: -3.75rem 0 -5.65rem 0;
+
+  z-index: -1;
+  display: block;
+  content: "";
   background-attachment: fixed;
   background-size: cover;
-  content: '';
-  display: block;
-  inset: -3.75rem 0 -5.65rem 0;
-  position: absolute;
-  z-index: -1;
 }
 
-[data-theme='dark'] .timeline::before {
+[data-theme="dark"] .timeline::before {
   background-image: radial-gradient(#9ca9dc, #1a244b);
 }
 
-[data-theme='light'] .timeline::before {
+[data-theme="light"] .timeline::before {
   background-image: radial-gradient(#fff, #b9c3e6);
 }
 
@@ -42,7 +43,7 @@
   }
 
   [data-theme] .timeline::before {
-    background: transparent;
     inset: 0;
+    background: transparent;
   }
 }

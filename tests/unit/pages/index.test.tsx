@@ -5,11 +5,11 @@
  * @jest-environment jsdom
  */
 
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { layout } from '@site/src/data/home';
+import Home from '@site/src/pages/index';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Home from '@site/src/pages/index';
-import { layout } from '@site/src/data/home';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 describe('pages.index', () => {
   jest.mocked<any>(useDocusaurusContext).mockReturnValue({

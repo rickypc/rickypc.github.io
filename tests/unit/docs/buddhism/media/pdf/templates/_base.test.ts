@@ -7,12 +7,16 @@ import base from '#buddhism/media/pdf/templates/_base';
 
 describe('docs.buddhism.media.pdf.templates._base', () => {
   test('loads definition and options from required module', async () => {
-    jest.mock('#buddhism/default', () => () => ({
-      definition: {
-        info: { keywords: ['a', 'b'] },
-        pageSize: 'A4',
-      },
-    }), { virtual: true });
+    jest.mock(
+      '#buddhism/default',
+      () => () => ({
+        definition: {
+          info: { keywords: ['a', 'b'] },
+          pageSize: 'A4',
+        },
+      }),
+      { virtual: true },
+    );
 
     const result = await base('#buddhism/default');
 

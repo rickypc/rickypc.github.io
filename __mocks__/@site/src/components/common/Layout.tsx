@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 type LayoutProps = PropsWithChildren<{
   className?: string;
@@ -23,7 +23,11 @@ type LayoutProps = PropsWithChildren<{
  *   The common/Layout component.
  */
 export default function Layout({
-  children, className, description, keywords, title,
+  children,
+  className,
+  description,
+  keywords,
+  title,
 }: LayoutProps): ReactElement {
   return (
     <div

@@ -3,15 +3,19 @@
  * All rights reserved.
  */
 
-import {
-  type MouseEventHandler, type PropsWithChildren, type ReactElement, type Ref,
+import type {
+  ComponentPropsWithoutRef,
+  MouseEventHandler,
+  PropsWithChildren,
+  ReactElement,
+  Ref,
 } from 'react';
 
 type ArticleProps = {
   className?: string;
   layout?: boolean;
-  onHoverEnd: () => void,
-  onHoverStart: () => void,
+  onHoverEnd: () => void;
+  onHoverStart: () => void;
   onLayoutAnimationComplete?: () => void;
   onLayoutAnimationStart?: () => void;
   whileInView?: {
@@ -35,7 +39,8 @@ type DivProps = {
 
 type DtProps = {
   className?: string;
-  onClick?: MouseEventHandler<HTMLElement>;
+  item: string;
+  onClick: MouseEventHandler<HTMLElement>;
   whileTap?: {
     scale?: number;
   };
@@ -101,8 +106,15 @@ export const motion = {
   // eslint-disable-next-line @docusaurus/no-html-links
   a: ({ children, ...props }: PropsWithChildren) => <a {...props}>{children}</a>,
   article: ({
-    children, className, layout, onHoverEnd, onHoverStart,
-    onLayoutAnimationComplete, onLayoutAnimationStart, whileInView, ...props
+    children,
+    className,
+    layout,
+    onHoverEnd,
+    onHoverStart,
+    onLayoutAnimationComplete,
+    onLayoutAnimationStart,
+    whileInView,
+    ...props
   }: PropsWithChildren<ArticleProps>) => {
     if (onLayoutAnimationStart) {
       onLayoutAnimationStart();
@@ -125,13 +137,21 @@ export const motion = {
     );
   },
   aside: ({ children, ...props }: PropsWithChildren) => <aside {...props}>{children}</aside>,
-  button: ({
-    children, ref, ...props
-  }: PropsWithChildren<ButtonProps>) => <button ref={ref} {...props} type="button">{children}</button>,
+  button: ({ children, ref, ...props }: PropsWithChildren<ButtonProps>) => (
+    <button ref={ref} {...props} type="button">
+      {children}
+    </button>
+  ),
   circle: ({ children, ...props }: PropsWithChildren) => <circle {...props}>{children}</circle>,
   div: ({
-    children, className, dragElastic, dragMomentum, layout,
-    onDragEnd, onDragStart, ...props
+    children,
+    className,
+    dragElastic,
+    dragMomentum,
+    layout,
+    onDragEnd,
+    onDragStart,
+    ...props
   }: PropsWithChildren<DivProps>) => {
     listeners[`${className}-onDragEnd`] = onDragEnd;
     listeners[`${className}-onDragStart`] = onDragStart;
@@ -148,25 +168,33 @@ export const motion = {
       </div>
     );
   },
-  dt: ({
-    children, className, onClick, whileTap, ...rest
-  }: PropsWithChildren<DtProps>) => (
-    /*
-      eslint-disable-next-line
-        jsx-a11y/click-events-have-key-events,
-        jsx-a11y/no-noninteractive-element-interactions
-    */
+  dt: ({ children, className, item, onClick, whileTap, ...rest }: PropsWithChildren<DtProps>) => (
+    /* biome-ignore lint/a11y/useSemanticElements: - */
     <dt
       className={className}
       data-whiletap={JSON.stringify(whileTap || {})}
       onClick={onClick}
+      onKeyDown={(evt) => {
+        if ([' ', 'Enter'].includes(evt.key)) {
+          evt.preventDefault();
+          onClick(item as any);
+        }
+      }}
+      /* biome-ignore lint/a11y/noNoninteractiveElementToInteractiveRole: - */
+      role="button"
+      tabIndex={0}
       {...rest}
     >
       {children}
     </dt>
   ),
   figure: ({
-    children, className, layout, ref, whileInView, ...props
+    children,
+    className,
+    layout,
+    ref,
+    whileInView,
+    ...props
   }: PropsWithChildren<FigureProps>) => (
     <figure
       className={className}
@@ -179,21 +207,18 @@ export const motion = {
       {children}
     </figure>
   ),
-  // eslint-disable-next-line jsx-a11y/alt-text
-  img: (props: {}) => <img {...props} />,
-  span: ({
-    children, className, layoutId, ...rest
-  }: PropsWithChildren<SpanProps>) => (
-    <span
-      className={className}
-      data-layoutid={layoutId}
-      data-testid="span"
-      {...rest}
-    >
+  img: ({ alt, ...props }: ComponentPropsWithoutRef<'img'>) => <img alt={alt} {...props} />,
+  span: ({ children, className, layoutId, ...rest }: PropsWithChildren<SpanProps>) => (
+    <span className={className} data-layoutid={layoutId} data-testid="span" {...rest}>
       {children}
     </span>
   ),
-  svg: ({ children, ...props }: PropsWithChildren) => <svg {...props}>{children}</svg>,
+  svg: ({ children, ...props }: PropsWithChildren) => (
+    <svg {...props}>
+      <title> </title>
+      {children}
+    </svg>
+  ),
 };
 
 export const useMotionValue = jest.fn((value) => {
@@ -210,8 +235,8 @@ export const useMotionValue = jest.fn((value) => {
 export const useScroll = jest.fn(() => ({ scrollYProgress: 0 }));
 export const useSpring = jest.fn(() => ({ y: 0 }));
 export const useTransform = jest.fn((value, cb) => {
-  if (typeof (cb) === 'function') {
-    const val = typeof (value.get) === 'function' ? value.get() : value;
+  if (typeof cb === 'function') {
+    const val = typeof value.get === 'function' ? value.get() : value;
     cb(val);
   }
 });

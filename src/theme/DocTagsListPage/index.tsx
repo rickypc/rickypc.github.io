@@ -3,18 +3,19 @@
  * All rights reserved.
  */
 
+import { PageMetadata, translateTagsPageTitle } from '@docusaurus/theme-common';
+import type { WrapperProps } from '@docusaurus/types';
 import { context } from '@site/src/data/common';
+import { useWelcome } from '@site/src/hooks/observer';
 import DocTagsListPage from '@theme-original/DocTagsListPage';
 import { memo, type ReactElement } from 'react';
-import { PageMetadata, translateTagsPageTitle } from '@docusaurus/theme-common';
-import { useWelcome } from '@site/src/hooks/observer';
-import { type WrapperProps } from '@docusaurus/types';
 
 type Props = WrapperProps<typeof DocTagsListPage>;
 
 export default memo(function DocTagsListPageWrapper(props: Props): ReactElement {
   const metadata = {
-    description: 'Practical notes on Buddhism, mindfulness, meditation, and mindful living, plus concise tech insights and innovation reflections for curious readers.',
+    description:
+      'Practical notes on Buddhism, mindfulness, meditation, and mindful living, plus concise tech insights and innovation reflections for curious readers.',
     keywords: [
       'buddhism',
       'mindfulness',

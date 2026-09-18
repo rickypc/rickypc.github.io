@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
-import { extname } from 'node:path';
-import image from '#buddhism/media/pdf/_image';
 import { readFileSync } from 'node:fs';
+import { extname } from 'node:path';
 import sharp from 'sharp';
+import image from '#buddhism/media/pdf/_image';
 
 jest.mock('node:fs');
 jest.mock('node:path');
@@ -33,13 +33,13 @@ describe('docs.buddhism.media.pdf._image', () => {
   });
 
   test('returns a pdfMake image object for PNG', async () => {
-    const result = await image({ path: './img.png', width: 100 }, mockResolver);
+    const result = await image({ path: './img.png' }, mockResolver);
 
     expect(readFileSync).toHaveBeenCalled();
     expect(result).toEqual([
       {
         alignment: 'center',
-        fit: [100, (100 * 1.345 + 18) - 10],
+        fit: [-18, 8],
         image: expect.stringContaining('data:image/png;base64,'),
         margin: [0, 0, 0, 1.5],
       },
@@ -47,11 +47,14 @@ describe('docs.buddhism.media.pdf._image', () => {
   });
 
   test('adds alt text when provided', async () => {
-    const result = await image({
-      alt: 'Caption',
-      path: './img.png',
-      width: 100,
-    }, mockResolver);
+    const result = await image(
+      {
+        alt: 'Caption',
+        path: './img.png',
+        width: 100,
+      },
+      mockResolver,
+    );
 
     expect(result?.[1]).toEqual({
       alignment: 'center',
@@ -63,11 +66,14 @@ describe('docs.buddhism.media.pdf._image', () => {
   });
 
   test('uses custom margin when provided', async () => {
-    const result = await image({
-      height: 100,
-      path: './img.png',
-      margin: [1, 2, 3, 4],
-    }, mockResolver);
+    const result = await image(
+      {
+        height: 100,
+        margin: [1, 2, 3, 4],
+        path: './img.png',
+      },
+      mockResolver,
+    );
 
     expect(result?.[0]?.margin).toEqual([1, 2, 3, 4]);
   });

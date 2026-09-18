@@ -7,10 +7,10 @@
 
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { translate } from '@docusaurus/Translate';
 import Layout from '@theme/Layout';
 import NotFound from '@theme/NotFound';
 import NotFoundContent from '@theme/NotFound/Content';
-import { translate } from '@docusaurus/Translate';
 
 describe('theme.NotFound', () => {
   test('calls translate, passes result to Layout, and renders content', () => {

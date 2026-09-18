@@ -3,15 +3,22 @@
  * All rights reserved.
  */
 
-import { a11y, clsx, key } from '@site/src/data/common';
-import { animate, motion, useMotionValue } from 'motion/react';
 import Button from '@site/src/components/common/Button';
 import Image, { type ImageProps } from '@site/src/components/common/Image';
-import {
-  memo, type ReactElement, type Ref, type RefObject, useCallback,
-  useEffect, useImperativeHandle, useRef, useState,
-} from 'react';
+import { a11y, clsx, key } from '@site/src/data/common';
 import { usePrint, useResize, useVisibility } from '@site/src/hooks/observer';
+import { animate, motion, useMotionValue } from 'motion/react';
+import {
+  memo,
+  type ReactElement,
+  type Ref,
+  type RefObject,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import styles from './styles.module.css';
 
 export type CarouselHandles = {
@@ -62,39 +69,51 @@ type SliderProps = {
 };
 
 const Indicators = memo(function Indicators({
-  active, cycle, duration, images, onClick, prefix, stopped,
+  active,
+  cycle,
+  duration,
+  images,
+  onClick,
+  prefix,
+  stopped,
 }: IndicatorsProps): false | ReactElement {
-  return images.length > 1 && (
-    <div className={styles.indicators}>
-      {images.map(({ alt }, index) => {
-        const current = active === index;
-        return (
-          <Button
-            {...a11y(`Slide ${index + 1}${alt ? `: ${alt}` : ''}${current ? ' (current slide)' : ''}`)}
-            className={clsx(current && styles.active, styles.indicator)}
-            key={`indicator-${prefix}-${alt || index}`}
-            onClick={() => onClick(index)}
+  return (
+    images.length > 1 && (
+      <div className={styles.indicators}>
+        {images.map(({ alt }, index) => {
+          const current = active === index;
+          return (
+            <Button
+              {...a11y(
+                `Slide ${index + 1}${alt ? `: ${alt}` : ''}${current ? ' (current slide)' : ''}`,
+              )}
+              className={clsx(current && styles.active, styles.indicator)}
+              key={`indicator-${prefix}-${alt || index}`}
+              onClick={() => onClick(index)}
+            />
+          );
+        })}
+        <div className={styles.progress}>
+          <motion.div
+            animate={stopped ? { opacity: 0, width: '0%' } : { opacity: 1, width: ['0%', '100%'] }}
+            className={styles.bar}
+            initial={{ opacity: 1, width: '0%' }}
+            key={cycle}
+            transition={{
+              opacity: { duration: 0.25, ease: 'easeOut' },
+              width: { duration: duration / 1000, ease: 'linear' },
+            }}
           />
-        );
-      })}
-      <div className={styles.progress}>
-        <motion.div
-          animate={stopped ? { opacity: 0, width: '0%' } : { opacity: 1, width: ['0%', '100%'] }}
-          className={styles.bar}
-          initial={{ opacity: 1, width: '0%' }}
-          key={cycle}
-          transition={{
-            opacity: { duration: 0.25, ease: 'easeOut' },
-            width: { duration: duration / 1000, ease: 'linear' },
-          }}
-        />
+        </div>
       </div>
-    </div>
+    )
   );
 });
 
 const Next = memo(function Next({
-  active, images, onClick,
+  active,
+  images,
+  onClick,
 }: NavigationProps): false | ReactElement {
   if (images.length < 2) {
     return false;
@@ -110,6 +129,7 @@ const Next = memo(function Next({
       disabled={disabled}
       onClick={() => onClick((current: number) => Math.min(last, current + 1))}
     >
+      {/* biome-ignore lint/a11y/noSvgWithoutTitle: - */}
       <svg fill="none" viewBox="0 0 24 24">
         <path
           d="M9 5l7 7-7 7"
@@ -124,7 +144,9 @@ const Next = memo(function Next({
 });
 
 const Previous = memo(function Previous({
-  active, images, onClick,
+  active,
+  images,
+  onClick,
 }: NavigationProps): false | ReactElement {
   if (images.length < 2) {
     return false;
@@ -138,6 +160,7 @@ const Previous = memo(function Previous({
       disabled={disabled}
       onClick={() => onClick((current: number) => Math.max(0, current - 1))}
     >
+      {/* biome-ignore lint/a11y/noSvgWithoutTitle: - */}
       <svg fill="none" viewBox="0 0 24 24">
         <path
           d="M15 19l-7-7 7-7"
@@ -153,31 +176,45 @@ const Previous = memo(function Previous({
 
 const Slide = memo(function Slide({ image, live, onClick }: SlideProps): ReactElement {
   return (
-    <div
-      aria-label={image.alt}
-      className={styles.slide}
-      onClick={onClick}
-      onKeyDown={onClick}
-      role="button"
-      tabIndex={0}
-    >
-      <Image live={live} {...image} />
-    </div>
+    <>
+      {/* biome-ignore lint/a11y/useSemanticElements: - */}
+      <div
+        aria-label={image.alt}
+        className={styles.slide}
+        onClick={onClick}
+        onKeyDown={onClick}
+        role="button"
+        tabIndex={0}
+      >
+        <Image live={live} {...image} />
+      </div>
+    </>
   );
 });
 
 const Slider = memo(function Slider({
-  active, images, onClick, prefix, printing, resizing, setActive, viewport,
+  active,
+  images,
+  onClick,
+  prefix,
+  printing,
+  resizing,
+  setActive,
+  viewport,
 }: SliderProps): ReactElement {
   const [dragging, setDragging] = useState(false);
-  const onSlideClick = useCallback((handler: () => void) => () => {
-    if (dragging) {
-      return;
-    }
-    handler();
-  }, [dragging]);
+  const onSlideClick = useCallback(
+    (handler: () => void) => () => {
+      if (dragging) {
+        return;
+      }
+      handler();
+    },
+    [dragging],
+  );
   const x = useMotionValue(0);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: resizing is required.
   useEffect(() => {
     if (!dragging && viewport.current) {
       const targetX = -active * (viewport.current.offsetWidth || 1);
@@ -192,18 +229,14 @@ const Slider = memo(function Slider({
       dragElastic={0.2}
       dragMomentum={false}
       onDragEnd={(_, info) => {
-        let newActive = active;
-        const offset = info.offset.x;
-        const velocity = info.velocity.x;
-        // istanbul ignore else
-        if (Math.abs(velocity) > 500) {
-          // Fast swipe.
-          newActive = velocity > 0 ? active - 1 : active + 1;
-        } else if (Math.abs(offset) > (viewport.current?.offsetWidth || 1) * 0.3) {
-          // Use offset threshold (30% of container width).
-          newActive = offset > 0 ? active - 1 : active + 1;
-        }
-        setActive(Math.max(0, Math.min(images.length - 1, newActive)));
+        const { x: offset } = info.offset;
+        const threshold = (viewport.current?.offsetWidth || 1) * 0.3;
+        const { x: velocity } = info.velocity;
+        // After velocity assignment.
+        const swiped = Math.abs(velocity) > 500 || Math.abs(offset) > threshold;
+        // Math.sign returns 1 or -1 based on positive/negative value.
+        const step = swiped ? -Math.sign(velocity || offset) : 0;
+        setActive(Math.max(0, Math.min(images.length - 1, active + step)));
         setDragging(false);
       }}
       onDragStart={() => setDragging(true)}
@@ -224,11 +257,17 @@ const Slider = memo(function Slider({
 });
 
 export default memo(function Carousel({
-  duration = 5000, images, onClick, open, prefix, ref, title,
+  duration = 5000,
+  images,
+  onClick,
+  open,
+  prefix,
+  ref,
+  title,
 }: CarouselProps) {
   const [active, setActive] = useState(0);
   const [cycle, setCycle] = useState(0);
-  const opened = typeof (open?.picture) === 'object';
+  const opened = typeof open?.picture === 'object';
   const [paused, setPaused] = useState(false);
   const [printing] = usePrint();
   const [resizing] = useResize();
@@ -245,10 +284,16 @@ export default memo(function Carousel({
 
   useImperativeHandle(ref, () => ({ setPaused }), []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: onCycle is always recreated.
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
-    if (document.documentElement.dataset.carouselPlay !== 'manual'
-      && images.length && !paused && !opened && visible) {
+    if (
+      document.documentElement.dataset.carouselPlay !== 'manual'
+      && images.length
+      && !paused
+      && !opened
+      && visible
+    ) {
       // Initial.
       onCycle();
       interval = setInterval(() => {

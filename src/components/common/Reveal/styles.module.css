@@ -22,6 +22,7 @@
 @media print {
   .word,
   .word .character {
+    /* biome-ignore lint/complexity/noImportantStyles: - */
     opacity: 1 !important;
   }
 }

@@ -3,10 +3,8 @@
  * All rights reserved.
  */
 
-import {
-  memo, type ReactElement, useEffect, useRef,
-} from 'react';
 import { usePrint, useReadingTime, useWelcome } from '@site/src/hooks/observer';
+import { memo, type ReactElement, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
 
 type Props = {
@@ -20,9 +18,7 @@ const ReadingTime = memo(function ReadingTime(): ReactElement | null {
   const text = minutes
     ? `🕒 ${minutes}:${seconds.toString().padStart(2, '0')} min read`
     : `🕒 ${seconds} sec read`;
-  return minutes || seconds ? (
-    <span className={styles.readingTime}>{text}</span>
-  ) : null;
+  return minutes || seconds ? <span className={styles.readingTime}>{text}</span> : null;
 });
 
 export default memo(function Metadata({ navigation = false }: Props): ReactElement | null {
@@ -35,9 +31,7 @@ export default memo(function Metadata({ navigation = false }: Props): ReactEleme
     if (printing) {
       snapshots.current = details.map((el) => el.open);
       details.forEach((el) => {
-        // eslint-disable-next-line no-param-reassign
         el.dataset.collapsed = 'false';
-        // eslint-disable-next-line no-param-reassign
         el.open = true;
         Object.assign((el.querySelector(':scope > div') as HTMLElement).style, {
           display: 'block',
@@ -49,9 +43,7 @@ export default memo(function Metadata({ navigation = false }: Props): ReactEleme
       details.forEach((el, index) => {
         // eslint-disable-next-line security/detect-object-injection
         if (!snapshots.current[index]) {
-          // eslint-disable-next-line no-param-reassign
           el.dataset.collapsed = 'true';
-          // eslint-disable-next-line no-param-reassign
           el.open = false;
           Object.assign((el.querySelector(':scope > div') as HTMLElement).style, {
             display: 'none',

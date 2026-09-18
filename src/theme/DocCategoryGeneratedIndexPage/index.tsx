@@ -3,12 +3,12 @@
  * All rights reserved.
  */
 
+import { PageMetadata } from '@docusaurus/theme-common';
+import type { WrapperProps } from '@docusaurus/types';
 import { context } from '@site/src/data/common';
+import { useWelcome } from '@site/src/hooks/observer';
 import DocCategoryGeneratedIndexPage from '@theme-original/DocCategoryGeneratedIndexPage';
 import { memo, type ReactElement } from 'react';
-import { PageMetadata } from '@docusaurus/theme-common';
-import { useWelcome } from '@site/src/hooks/observer';
-import { type WrapperProps } from '@docusaurus/types';
 
 type Props = WrapperProps<typeof DocCategoryGeneratedIndexPage>;
 

@@ -4,38 +4,35 @@
  */
 
 .figure {
-  margin: 0 auto 3rem auto;
   max-width: 25rem;
+  margin: 0 auto 3rem auto;
 }
 
-[data-theme='dark'] .figure {
+[data-theme="dark"] .figure {
   filter: drop-shadow(0.3rem 0.25rem 0.5rem rgba(29, 142, 238, 0.52));
 }
 
-[data-theme='light'] .figure {
+[data-theme="light"] .figure {
   filter: drop-shadow(0.3rem 0.25rem 0.5rem rgba(29, 142, 238, 0.32));
 }
 
 .figure .shape {
-  mask: url(/src/pages/about/img/mask.svg);
-  mask-position: center center;
-  mask-repeat: no-repeat;
-  mask-size: contain;
   padding-top: 1rem;
+  mask: url(/src/pages/about/img/mask.svg) no-repeat center center / contain;
 }
 
-[data-theme='dark'] .figure .shape {
+[data-theme="dark"] .figure .shape {
   background: #0c5a9c;
 }
 
-[data-theme='light'] .figure .shape {
+[data-theme="light"] .figure .shape {
   background: #e5f2fd;
 }
 
 .figure .shape svg {
+  width: 80%;
   height: 80%;
   margin-left: 2.5rem;
-  width: 80%;
 }
 
 .figure .shape svg:global(.people) {
@@ -48,9 +45,11 @@
 
 @media print {
   [data-theme] .figure {
-    filter: none;
     max-width: 80%;
+    /* biome-ignore lint/complexity/noImportantStyles: - */
     opacity: 1 !important;
+    filter: none;
+    /* biome-ignore lint/complexity/noImportantStyles: - */
     transform: none !important;
   }
 
@@ -65,8 +64,8 @@
   }
 
   .figure .shape svg {
-    height: 100%;
     width: 100%;
+    height: 100%;
   }
 
   .figure .shape svg:global(.people),
@@ -79,7 +78,7 @@
   }
 }
 
-/* Safari only */
+/* biome-ignore format: Safari only */
 @supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
   @media print {
     :global(.col--4):has(.figure) {

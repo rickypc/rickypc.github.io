@@ -13,7 +13,8 @@ export default {
     title: 'Four Immeasurables',
   },
   transliteration: {
-    children: 'sattvāḥ sukhena samprayujyeran । sattvā duḥkhena viyujyeran । sattvāḥ sukhena na viyujyeran । sattvāḥ hitaṁ labheran',
+    children:
+      'sattvāḥ sukhena samprayujyeran । sattvā duḥkhena viyujyeran । sattvāḥ sukhena na viyujyeran । sattvāḥ hitaṁ labheran',
     repetition: 3,
     title: 'Catvāry Apramāṇāni',
   },

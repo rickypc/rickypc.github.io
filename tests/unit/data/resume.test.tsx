@@ -5,17 +5,26 @@
  * @jest-environment jsdom
  */
 
-import { type DocusaurusConfig } from '@docusaurus/types';
-import { isValidElement, type ReactElement } from 'react';
+import type { DocusaurusConfig } from '@docusaurus/types';
+import { type FaqItems, textContent } from '@site/src/data/common';
 import { catalog, catalogMap } from '@site/src/data/portfolio';
 import {
-  certifications, educations, experiences, faqItems, header,
-  layout, leadership, preamble, schema, skills,
-  strengths, testimonials,
+  certifications,
+  educations,
+  experiences,
+  faqItems,
+  header,
+  layout,
+  leadership,
+  preamble,
+  schema,
+  skills,
+  strengths,
+  testimonials,
 } from '@site/src/data/resume';
 import { stories, storyMap } from '@site/src/data/stories';
-import { textContent } from '@site/src/data/common';
-import { timelines, timelineMap } from '@site/src/data/timeline';
+import { timelineMap, timelines } from '@site/src/data/timeline';
+import { isValidElement, type ReactElement } from 'react';
 
 describe('data.resume.catalogMap', () => {
   test('creates a map keyed by prefix', () => {
@@ -106,9 +115,11 @@ describe('data.resume.faqItems', () => {
   test('includes a generalist-vs-specialist question and factual availability posture', () => {
     const questions = faqItems.map((entry) => textContent(entry.question));
     expect(questions.some((q) => q.match(/generalist or a specialist/i))).toBe(true);
-    const availability = faqItems.find((entry) => textContent(entry.question).match(/current role and location/i));
+    const availability = faqItems.find((entry) =>
+      textContent(entry.question).match(/current role and location/i),
+    );
     expect(availability).toBeDefined();
-    const availabilityAnswer = textContent(availability!.answer);
+    const availabilityAnswer = textContent((availability as FaqItems).answer);
     expect(availabilityAnswer).toMatch(/US citizen/);
   });
 
@@ -155,8 +166,12 @@ describe('data.resume.header', () => {
     expect(child.props.href).toBe(mockSiteConfig.url);
     expect(child.props.children).toBe(mockSiteConfig.title);
 
-    const github = contacts.find((item): item is ReactElement<any> => isValidElement(item) && item.key === 'github');
-    const linkedin = contacts.find((item): item is ReactElement<any> => isValidElement(item) && item.key === 'linkedin');
+    const github = contacts.find(
+      (item): item is ReactElement<any> => isValidElement(item) && item.key === 'github',
+    );
+    const linkedin = contacts.find(
+      (item): item is ReactElement<any> => isValidElement(item) && item.key === 'linkedin',
+    );
 
     expect(github?.props.href).toBe('https://github.com/me');
     expect(linkedin?.props.href).toBe('https://linkedin.com/in/me');
@@ -196,8 +211,12 @@ describe('data.resume.header', () => {
     expect(child.props.href).toBe(mockSiteConfig.url);
     expect(child.props.children).toBe(mockSiteConfig.title);
 
-    const github = contacts.find((item): item is ReactElement<any> => isValidElement(item) && item.key === 'github');
-    const linkedin = contacts.find((item): item is ReactElement<any> => isValidElement(item) && item.key === 'linkedin');
+    const github = contacts.find(
+      (item): item is ReactElement<any> => isValidElement(item) && item.key === 'github',
+    );
+    const linkedin = contacts.find(
+      (item): item is ReactElement<any> => isValidElement(item) && item.key === 'linkedin',
+    );
 
     expect(github?.props.href).toBeUndefined();
     expect(linkedin?.props.href).toBeUndefined();

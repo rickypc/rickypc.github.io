@@ -3,14 +3,14 @@
  * All rights reserved.
  */
 
-import { extname } from 'node:path';
 import { readFileSync } from 'node:fs';
+import { extname } from 'node:path';
 import sharp from 'sharp';
 
 export type Image = {
   alt?: string;
   height?: number;
-  margin?: [number, number, number, number],
+  margin?: [number, number, number, number];
   path?: string;
   width?: number;
 };
@@ -37,8 +37,8 @@ export default async function image(img: Image, resolver: ImageResolver = requir
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   let buffer: Buffer = Buffer.from(readFileSync(resolver(img.path)));
   const ext = extname(img.path);
-  const height = img.height || (img.width! * 1.345) + 18;
-  const width = img.width || (img.height! * 0.75) - 18;
+  const height = img.height || (img.width ?? 0) * 1.345 + 18;
+  const width = img.width || (img.height ?? 0) * 0.75 - 18;
   if (ext === '.webp') {
     buffer = await sharp(buffer)
       .resize({ width: Math.ceil(width * pixels) })
@@ -54,12 +54,14 @@ export default async function image(img: Image, resolver: ImageResolver = requir
       image: `data:${mime};base64,${buffer.toString('base64')}`,
       margin: Array.isArray(img.margin) ? img.margin : [0, 0, 0, 1.5],
     },
-    img.alt ? {
-      alignment: 'center',
-      fontSize: 8,
-      lineHeight: 0.85,
-      margin: [-5, 0, -5, 0],
-      text: img.alt,
-    } : null,
+    img.alt
+      ? {
+          alignment: 'center',
+          fontSize: 8,
+          lineHeight: 0.85,
+          margin: [-5, 0, -5, 0],
+          text: img.alt,
+        }
+      : null,
   ].filter(Boolean);
 }

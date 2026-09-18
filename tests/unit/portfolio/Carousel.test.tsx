@@ -5,14 +5,12 @@
  * @jest-environment jsdom
  */
 
-import {
-  act, fireEvent, render, screen,
-} from '@testing-library/react';
-import '@testing-library/jest-dom';
 import Carousel from '@site/src/components/portfolio/Carousel';
-import { createRef } from 'react';
-import { listeners } from 'motion/react';
 import { usePrint, useResize, useVisibility } from '@site/src/hooks/observer';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { listeners } from 'motion/react';
+import { createRef } from 'react';
 
 const images = [{ alt: 'A' }, { alt: 'B' }, {}, {}];
 const usePrintMock = jest.mocked(usePrint);
@@ -64,9 +62,7 @@ describe('portfolio.Carousel.Next and Previous', () => {
 describe('portfolio.Carousel.Slide', () => {
   test('fires onClick and onKeyDown', () => {
     const onClick = jest.fn();
-    const { container } = render(
-      <Carousel images={images} onClick={onClick} prefix="p" />,
-    );
+    const { container } = render(<Carousel images={images} onClick={onClick} prefix="p" />);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const firstSlide = container.querySelector('div.slide:first-of-type') as Element;
     fireEvent.click(firstSlide);
@@ -80,9 +76,7 @@ describe('portfolio.Carousel.Slider drag logic', () => {
     const onClick = jest.fn();
     usePrintMock.mockReturnValue([true]);
     useResizeMock.mockReturnValue([false]);
-    const { container } = render(
-      <Carousel images={images} onClick={onClick} prefix="p" />,
-    );
+    const { container } = render(<Carousel images={images} onClick={onClick} prefix="p" />);
     act(() => listeners['slider-onDragStart']());
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     fireEvent.click(container.querySelector('div.slide:first-of-type') as Element);
@@ -93,31 +87,26 @@ describe('portfolio.Carousel.Slider drag logic', () => {
   test('updates active on dragEnd with velocity', () => {
     render(<Carousel images={images} onClick={jest.fn()} prefix="p" />);
     const buttons = screen.getAllByRole('button', { name: /Slide/ });
-    act(() => listeners['slider-onDragEnd'](
-      {},
-      { offset: { x: 0 }, velocity: { x: 501 } },
-    ));
+    act(() => listeners['slider-onDragEnd']({}, { offset: { x: 0 }, velocity: { x: 501 } }));
     expect(buttons[0]).toHaveAccessibleName('Slide 1: A (current slide)');
-    act(() => listeners['slider-onDragEnd'](
-      {},
-      { offset: { x: 0 }, velocity: { x: -501 } },
-    ));
+    act(() => listeners['slider-onDragEnd']({}, { offset: { x: 0 }, velocity: { x: -501 } }));
     expect(buttons[1]).toHaveAccessibleName('Slide 2: B (current slide)');
   });
 
   test('updates active on dragEnd with offset', () => {
     render(<Carousel images={images} onClick={jest.fn()} prefix="p" />);
     const buttons = screen.getAllByRole('button', { name: /Slide/ });
-    act(() => listeners['slider-onDragEnd'](
-      {},
-      { offset: { x: 501 }, velocity: { x: 0 } },
-    ));
+    act(() => listeners['slider-onDragEnd']({}, { offset: { x: 501 }, velocity: { x: 0 } }));
     expect(buttons[0]).toHaveAccessibleName('Slide 1: A (current slide)');
-    act(() => listeners['slider-onDragEnd'](
-      {},
-      { offset: { x: -501 }, velocity: { x: 0 } },
-    ));
+    act(() => listeners['slider-onDragEnd']({}, { offset: { x: -501 }, velocity: { x: 0 } }));
     expect(buttons[1]).toHaveAccessibleName('Slide 2: B (current slide)');
+  });
+
+  test('retains active slide on dragEnd if thresholds are not met', () => {
+    render(<Carousel images={images} onClick={jest.fn()} prefix="p" />);
+    const buttons = screen.getAllByRole('button', { name: /Slide/ });
+    act(() => listeners['slider-onDragEnd']({}, { offset: { x: 0 }, velocity: { x: 0 } }));
+    expect(buttons[0]).toHaveAccessibleName('Slide 1: A (current slide)');
   });
 });
 

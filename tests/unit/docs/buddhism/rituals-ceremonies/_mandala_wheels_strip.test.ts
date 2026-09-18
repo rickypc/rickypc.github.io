@@ -52,8 +52,8 @@ describe('docs.buddhism.rituals-ceremonies._mandala_wheels_strip', () => {
 
     expect(image).toHaveBeenCalledWith({
       alt: 'Aṣṭamaṅgala Maṇḍala',
-      path: '#buddhism/img/mandala-asta-mangala.webp',
       margin: [0, 1.5, 0, 1.5],
+      path: '#buddhism/img/mandala-asta-mangala.webp',
       width: 155.4 - 1.5,
     });
 

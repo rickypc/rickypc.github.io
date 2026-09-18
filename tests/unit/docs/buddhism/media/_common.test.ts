@@ -3,58 +3,80 @@
  * All rights reserved.
  */
 
-import {
-  body, header, instruction, main, phrase, phrases, properCase,
-} from '#buddhism/media/_common';
 import { createElement } from 'react';
+import {
+  body,
+  header,
+  instruction,
+  main,
+  phrase,
+  phrases,
+  properCase,
+} from '#buddhism/media/_common';
 
-jest.mock('#buddhism/mock-default', () => ({
-  default: {
-    sanskrit: { children: ['A', 'B'] },
-    translation: { title: 'Eng' },
-    transliteration: {
-      title: 'Trans',
-      repetition: 5,
-      children: ['X', 'Y'],
+jest.mock(
+  '#buddhism/mock-default',
+  () => ({
+    default: {
+      sanskrit: { children: ['A', 'B'] },
+      translation: { title: 'Eng' },
+      transliteration: {
+        children: ['X', 'Y'],
+        repetition: 5,
+        title: 'Trans',
+      },
     },
-  },
-}), { virtual: true });
+  }),
+  { virtual: true },
+);
 
-jest.mock('#buddhism/mock-default-empty', () => ({
-  default: {
-    sanskrit: { children: ['A', 'B'] },
-    translation: { title: '' },
-    transliteration: {
-      title: 'Trans',
-      repetition: 5,
-      children: ['X', 'Y'],
+jest.mock(
+  '#buddhism/mock-default-empty',
+  () => ({
+    default: {
+      sanskrit: { children: ['A', 'B'] },
+      translation: { title: '' },
+      transliteration: {
+        children: ['X', 'Y'],
+        repetition: 5,
+        title: 'Trans',
+      },
     },
-  },
-}), { virtual: true });
+  }),
+  { virtual: true },
+);
 
-jest.mock('#buddhism/mock-split', () => ({
-  default: {
-    sanskrit: { children: ['A', '', 'B', 'C'] },
-    translation: { title: 'Eng' },
-    transliteration: {
-      title: 'Trans',
-      repetition: 2,
-      children: ['X', '', 'Y', 'Z'],
+jest.mock(
+  '#buddhism/mock-split',
+  () => ({
+    default: {
+      sanskrit: { children: ['A', '', 'B', 'C'] },
+      translation: { title: 'Eng' },
+      transliteration: {
+        children: ['X', '', 'Y', 'Z'],
+        repetition: 2,
+        title: 'Trans',
+      },
     },
-  },
-}), { virtual: true });
+  }),
+  { virtual: true },
+);
 
-jest.mock('#buddhism/mock-split-empty', () => ({
-  default: {
-    sanskrit: { children: ['A', '', 'B', 'C'] },
-    translation: { title: '' },
-    transliteration: {
-      title: 'Trans',
-      repetition: 2,
-      children: ['X', '', 'Y', 'Z'],
+jest.mock(
+  '#buddhism/mock-split-empty',
+  () => ({
+    default: {
+      sanskrit: { children: ['A', '', 'B', 'C'] },
+      translation: { title: '' },
+      transliteration: {
+        children: ['X', '', 'Y', 'Z'],
+        repetition: 2,
+        title: 'Trans',
+      },
     },
-  },
-}), { virtual: true });
+  }),
+  { virtual: true },
+);
 
 describe('docs.buddhism.media._common.body()', () => {
   test('handles a single string child', () => {
@@ -70,12 +92,12 @@ describe('docs.buddhism.media._common.body()', () => {
   });
 
   test('extracts nested React element children', () => {
-    const result = body({
-      children: [
-        createElement('span', null, 'X'),
-        createElement('span', null, 'Y'),
-      ],
-    }, '।');
+    const result = body(
+      {
+        children: [createElement('span', null, 'X'), createElement('span', null, 'Y')],
+      },
+      '।',
+    );
 
     expect(result).toBe('X।\nY');
   });
@@ -115,11 +137,7 @@ describe('docs.buddhism.media._common.instruction()', () => {
   });
 
   test('mixes strings and objects correctly', () => {
-    const input = [
-      'Alpha',
-      { style: 'instruction', text: 'Beta' },
-      'Gamma',
-    ];
+    const input = ['Alpha', { style: 'instruction', text: 'Beta' }, 'Gamma'];
 
     const result = instruction(input);
 
@@ -139,10 +157,7 @@ describe('docs.buddhism.media._common.header()', () => {
 
     expect(result).toEqual({
       style: 'section-set',
-      text: [
-        { style: 'section', text: 'My Title' },
-        instruction('Some commentary'),
-      ],
+      text: [{ style: 'section', text: 'My Title' }, instruction('Some commentary')],
     });
   });
 
@@ -160,10 +175,7 @@ describe('docs.buddhism.media._common.header()', () => {
 
     expect(result).toEqual({
       style: 'section-set',
-      text: [
-        { style: 'section', text: 'Title' },
-        instruction(['A', 'B']),
-      ],
+      text: [{ style: 'section', text: 'Title' }, instruction(['A', 'B'])],
     });
   });
 });
@@ -209,11 +221,7 @@ describe('docs.buddhism.media._common.phrase()', () => {
 
     expect(result).toEqual([
       header('Trans [Eng]', 'Note'),
-      ...main(
-        `${body({ children: ['A', 'B'] })}॥`,
-        `${body({ children: ['X', 'Y'] })}॥`,
-        3,
-      ),
+      ...main(`${body({ children: ['A', 'B'] })}॥`, `${body({ children: ['X', 'Y'] })}॥`, 3),
     ]);
   });
 
@@ -222,11 +230,7 @@ describe('docs.buddhism.media._common.phrase()', () => {
 
     expect(result).toEqual([
       header('Trans', ''),
-      ...main(
-        `${body({ children: ['A', 'B'] })}॥`,
-        `${body({ children: ['X', 'Y'] })}॥`,
-        5,
-      ),
+      ...main(`${body({ children: ['A', 'B'] })}॥`, `${body({ children: ['X', 'Y'] })}॥`, 5),
     ]);
   });
 
@@ -244,18 +248,11 @@ describe('docs.buddhism.media._common.phrases()', () => {
     expect(result).toEqual([
       [
         header('Trans [Eng]', 'Note'),
-        ...main(
-          `${body({ children: ['A'] })}।`,
-          `${body({ children: ['X'] })}।`,
-        ),
+        ...main(`${body({ children: ['A'] })}।`, `${body({ children: ['X'] })}।`),
       ],
       [
         header('Trans [Eng]', ' (continued)'),
-        ...main(
-          `${body({ children: ['B', 'C'] })}॥`,
-          `${body({ children: ['Y', 'Z'] })}॥`,
-          2,
-        ),
+        ...main(`${body({ children: ['B', 'C'] })}॥`, `${body({ children: ['Y', 'Z'] })}॥`, 2),
       ],
     ]);
   });
@@ -266,18 +263,11 @@ describe('docs.buddhism.media._common.phrases()', () => {
     expect(result).toEqual([
       [
         header('Trans', 'Note'),
-        ...main(
-          `${body({ children: ['A'] })}।`,
-          `${body({ children: ['X'] })}।`,
-        ),
+        ...main(`${body({ children: ['A'] })}।`, `${body({ children: ['X'] })}।`),
       ],
       [
         header('Trans', ' (continued)'),
-        ...main(
-          `${body({ children: ['B', 'C'] })}॥`,
-          `${body({ children: ['Y', 'Z'] })}॥`,
-          2,
-        ),
+        ...main(`${body({ children: ['B', 'C'] })}॥`, `${body({ children: ['Y', 'Z'] })}॥`, 2),
       ],
     ]);
   });

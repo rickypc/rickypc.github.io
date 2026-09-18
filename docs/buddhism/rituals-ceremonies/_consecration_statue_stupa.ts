@@ -5,7 +5,9 @@
 
 import { header, phrase, phrases } from '#buddhism/media/_common';
 
-const pratityasamutpadaSamudayaNirodha = phrases('#buddhism/practice-daily-life/phrases/_pratityasamutpada_samudaya_nirodha.ts');
+const pratityasamutpadaSamudayaNirodha = phrases(
+  '#buddhism/practice-daily-life/phrases/_pratityasamutpada_samudaya_nirodha.ts',
+);
 
 export default {
   pages: [
@@ -23,7 +25,10 @@ export default {
       chapters: ['Maṅgala', 'Abhiṣeka'],
       contents: [
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_mala.ts', ' (recite the prayer, gently blow on the mālā and rub it lightly)'),
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_mala.ts',
+            ' (recite the prayer, gently blow on the mālā and rub it lightly)',
+          ),
           ...phrase('#buddhism/practice-daily-life/phrases/_japa.ts'),
           ...phrase('#buddhism/practice-daily-life/phrases/_dharma.ts'),
           ...phrase('#buddhism/practice-daily-life/phrases/_namaskara.ts'),
@@ -62,17 +67,41 @@ export default {
       contents: [
         [
           header('Āhvāna [Invitation]'),
-          { style: 'tibetan', text: 'ཕྱོགས་བཅུ་ན་བཞུགས་པའི་སངས་རྒྱས་དང་བྱང་ཆུབ་སེམས་དཔའ་ཐམས་ཅད་བདག་ལ་དགོངས་སུ་གསོལ།' },
-          { style: 'tibetan', text: 'ཇི་སྲིད་ནམ་མཁའི་མཐའ་དང་མཉམ་པའི་སེམས་ཅན་ཐམས་ཅད་མི་གནས་པའི་མྱ་ངན་ལས་འདས་པའི་ས་ལ་མ་བཞག་གི་བར་དུ་རྒྱལ་བ་རྣམས་མྱ་ངན་ལས་མི་འདའ་བར་བརྟན་པར་བཞུགས་སུ་གསོལ།' },
-          { style: 'tibetan', text: 'ཁྱད་པར་དུ་ཡང་སྐུ་གསུང་ཐུགས་ཀྱི་རྟེན་འདི་རྣམས་ལ་ཇི་སྲིད་འབྱུང་བ་བཞིའི་གནོད་པས་མ་ཞིག་གི་བར་དུ་བརྟན་པར་བཞུགས་སུ་གསོལ།' },
-          { style: 'tibetan', text: 'བརྟན་པར་བཞུགས་ནས་ཀྱང་བདག་དང་སེམས་ཅན་ཐམས་ཅད་ལ་མཆོག་དང་ཐུན་མོང་གི་དངོས་གྲུབ་མ་ལུས་པ་སྩལ་དུ་གསོལ༎' },
-          { style: ['phrase', 'phrase-set'], text: 'chok chu na zhukpé sangyé dang chang chub sempa tamché dak la gong su sol।' },
-          { style: ['phrase', 'phrase-set'], text: 'ji si namkhé ta dang nyampé semchen tamché mi népé nya ngen lé dépé sa la ma zhak gi bar du gyalwa nam nya ngen lé mi dawar tenpar zhuk su sol।' },
-          { style: ['phrase', 'phrase-set'], text: 'khyepar du yang ku sung tuk kyi ten di nam ji si jungwa zhi\'i nöpé ma zhik gi bar du tenpar zhuk su sol।' },
+          {
+            style: 'tibetan',
+            text: 'ཕྱོགས་བཅུ་ན་བཞུགས་པའི་སངས་རྒྱས་དང་བྱང་ཆུབ་སེམས་དཔའ་ཐམས་ཅད་བདག་ལ་དགོངས་སུ་གསོལ།',
+          },
+          {
+            style: 'tibetan',
+            text: 'ཇི་སྲིད་ནམ་མཁའི་མཐའ་དང་མཉམ་པའི་སེམས་ཅན་ཐམས་ཅད་མི་གནས་པའི་མྱ་ངན་ལས་འདས་པའི་ས་ལ་མ་བཞག་གི་བར་དུ་རྒྱལ་བ་རྣམས་མྱ་ངན་ལས་མི་འདའ་བར་བརྟན་པར་བཞུགས་སུ་གསོལ།',
+          },
+          {
+            style: 'tibetan',
+            text: 'ཁྱད་པར་དུ་ཡང་སྐུ་གསུང་ཐུགས་ཀྱི་རྟེན་འདི་རྣམས་ལ་ཇི་སྲིད་འབྱུང་བ་བཞིའི་གནོད་པས་མ་ཞིག་གི་བར་དུ་བརྟན་པར་བཞུགས་སུ་གསོལ།',
+          },
+          {
+            style: 'tibetan',
+            text: 'བརྟན་པར་བཞུགས་ནས་ཀྱང་བདག་དང་སེམས་ཅན་ཐམས་ཅད་ལ་མཆོག་དང་ཐུན་མོང་གི་དངོས་གྲུབ་མ་ལུས་པ་སྩལ་དུ་གསོལ༎',
+          },
+          {
+            style: ['phrase', 'phrase-set'],
+            text: 'chok chu na zhukpé sangyé dang chang chub sempa tamché dak la gong su sol।',
+          },
+          {
+            style: ['phrase', 'phrase-set'],
+            text: 'ji si namkhé ta dang nyampé semchen tamché mi népé nya ngen lé dépé sa la ma zhak gi bar du gyalwa nam nya ngen lé mi dawar tenpar zhuk su sol।',
+          },
+          {
+            style: ['phrase', 'phrase-set'],
+            text: "khyepar du yang ku sung tuk kyi ten di nam ji si jungwa zhi'i nöpé ma zhik gi bar du tenpar zhuk su sol।",
+          },
           {
             style: 'phrase-set',
             text: [
-              { style: 'phrase', text: 'tenpar zhuk né kyang dak dang sem chen tamché la chok dang tün mong gi ngö drup ma lü pa tsal du sol॥' },
+              {
+                style: 'phrase',
+                text: 'tenpar zhuk né kyang dak dang sem chen tamché la chok dang tün mong gi ngö drup ma lü pa tsal du sol॥',
+              },
               { style: 'repetition', text: ' [3x]' },
             ],
           },
@@ -86,12 +115,32 @@ export default {
       chapters: ['Abhiṣeka'],
       contents: [
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_caksu_unmilana.ts', '', 3, 'Cakṣu Unmīlana [Eye-Opening]'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_panca_jnana.ts', '', 3, 'Pañcajñāna [Five Wisdoms]'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_abhiseka_puja.ts', '', 3, 'Abhiṣekapūjā [Empowerement Offering]'),
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_caksu_unmilana.ts',
+            '',
+            3,
+            'Cakṣu Unmīlana [Eye-Opening]',
+          ),
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_panca_jnana.ts',
+            '',
+            3,
+            'Pañcajñāna [Five Wisdoms]',
+          ),
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_abhiseka_puja.ts',
+            '',
+            3,
+            'Abhiṣekapūjā [Empowerement Offering]',
+          ),
         ],
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_supratistha.ts', ' (perfect consecration mudrā: left hand above the items, palm down with the thumb pressing the little finger; right hand below the items, palm up with the thumb pressing the little finger)', 3, 'Supratiṣṭha [Perfect Consecration]'),
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_supratistha.ts',
+            ' (perfect consecration mudrā: left hand above the items, palm down with the thumb pressing the little finger; right hand below the items, palm up with the thumb pressing the little finger)',
+            3,
+            'Supratiṣṭha [Perfect Consecration]',
+          ),
           header('Puṇya Pariṇāmanā [Merit Dedication]', ' (in our own words)'),
           { margin: [0, 7.5, 0, 7.5], text: '' },
         ],
@@ -111,9 +160,9 @@ export default {
           { style: 'tibetan', text: 'རྣམ་མང་རིན་ཆེན་ཚོགས་ཀྱི་ཕྲ་བཀོད་ལྟར།' },
           { style: 'tibetan', text: 'ལྟ་བས་མི་ངོམས་སྐུ་གཟུགས་མཆོག་འདི་ལ།' },
           { style: 'tibetan', text: 'སྲིད་མཐའི་བར་དུ་བརྟན་པར་བཞུགས་སུ་གསོལ།' },
-          { style: ['phrase', 'phrase-set'], text: 'rab dze ser zhun tzeg pä\'i lhun po la।' },
-          { style: ['phrase', 'phrase-set'], text: 'nam mang rin ch\'en tsog kyi tr\'a kö tar।' },
-          { style: ['phrase', 'phrase-set'], text: 'ta wä mi ngom ku zug ch\'og di d\'ag।' },
+          { style: ['phrase', 'phrase-set'], text: "rab dze ser zhun tzeg pä'i lhun po la।" },
+          { style: ['phrase', 'phrase-set'], text: "nam mang rin ch'en tsog kyi tr'a kö tar।" },
+          { style: ['phrase', 'phrase-set'], text: "ta wä mi ngom ku zug ch'og di d'ag।" },
           { style: ['phrase', 'phrase-set'], text: 'si thäi bar du tän par zhug su söl।' },
         ],
         [
@@ -123,10 +172,15 @@ export default {
           { style: 'tibetan', text: 'མཐའ་བྲལ་དོན་དམ་གས་ཀི་བཀྲ་ཤིས་ཤོག།' },
           { style: 'tibetan', text: 'རྒྱལ་བའི་སྐུ་གསུང་ཐུགས་ཀི་བཀྲ་ཤིས་ཤོག༎' },
           { style: ['phrase', 'phrase-set'], text: 'mi gyur lhun po ku yi tra shi shog।' },
-          { style: ['phrase', 'phrase-set'], text: 'yan lag dr\'ug chu sung gi tra shi shog।' },
-          { style: ['phrase', 'phrase-set'], text: 'tha\' dr\'äl d\'on d\'am thug kyi tra shi shog।' },
-          { style: ['phrase', 'phrase-set'], text: 'gyäl wa\'i ku sung thug kyi tra shi shog॥' },
-          ...phrase('#buddhism/practice-daily-life/phrases/_prarthanasiddhih.ts', '', 0, 'Prārthanāsiddhiḥ [Fulfillment of Aspiration]'),
+          { style: ['phrase', 'phrase-set'], text: "yan lag dr'ug chu sung gi tra shi shog।" },
+          { style: ['phrase', 'phrase-set'], text: "tha' dr'äl d'on d'am thug kyi tra shi shog।" },
+          { style: ['phrase', 'phrase-set'], text: "gyäl wa'i ku sung thug kyi tra shi shog॥" },
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_prarthanasiddhih.ts',
+            '',
+            0,
+            'Prārthanāsiddhiḥ [Fulfillment of Aspiration]',
+          ),
         ],
       ],
       number: '8',

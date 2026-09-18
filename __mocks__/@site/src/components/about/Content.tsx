@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 /**
  * Minimal mock about/Content component that renders children.
@@ -13,5 +13,9 @@ import { type PropsWithChildren, type ReactElement } from 'react';
  *   The about/Content component.
  */
 export default function AboutContent({ children, ...rest }: PropsWithChildren): ReactElement {
-  return <div data-testid="content" {...rest}>{children}</div>;
+  return (
+    <div data-testid="content" {...rest}>
+      {children}
+    </div>
+  );
 }

@@ -5,12 +5,12 @@
  * @jest-environment jsdom
  */
 
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { textContent } from '@site/src/data/common';
+import { intro, layout } from '@site/src/data/timeline';
+import Timeline from '@site/src/pages/timeline';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { intro, layout } from '@site/src/data/timeline';
-import { textContent } from '@site/src/data/common';
-import Timeline from '@site/src/pages/timeline';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 describe('pages.timeline', () => {
   jest.mocked<any>(useDocusaurusContext).mockReturnValue({
@@ -28,7 +28,7 @@ describe('pages.timeline', () => {
 
     const preambleEl = screen.getByTestId('preamble');
     expect(preambleEl).toBeInTheDocument();
-    const introJson = JSON.parse(preambleEl.dataset.intro!);
+    const introJson = JSON.parse(preambleEl.dataset.intro as string);
     expect(introJson.description).toEqual(textContent(intro.description));
     expect(introJson.title).toEqual(intro.title);
 

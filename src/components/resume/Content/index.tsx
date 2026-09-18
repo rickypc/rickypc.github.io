@@ -3,20 +3,26 @@
  * All rights reserved.
  */
 
+import Link from '@site/src/components/common/Link';
 import { clsx, textContent } from '@site/src/data/common';
 import {
-  catalogMap, certifications, codeBackground, educations, experiences,
-  type HeadingProps, leadership, preamble, skills, storyMap,
-  strengths, testimonials, timelineMap,
+  catalogMap,
+  certifications,
+  codeBackground,
+  educations,
+  experiences,
+  type HeadingProps,
+  leadership,
+  preamble,
+  skills,
+  storyMap,
+  strengths,
+  testimonials,
+  timelineMap,
 } from '@site/src/data/resume';
-import {
-  Fragment, memo, type PropsWithChildren, type ReactElement,
-} from 'react';
 import Heading from '@theme/Heading';
-import Link from '@site/src/components/common/Link';
-import {
-  motion, useScroll, useSpring, useTransform,
-} from 'motion/react';
+import { motion, useScroll, useSpring, useTransform } from 'motion/react';
+import { Fragment, memo, type PropsWithChildren, type ReactElement } from 'react';
 import styles from './styles.module.css';
 
 type ActivityProps = {
@@ -62,10 +68,15 @@ const Activity = memo(function Activity({ entry }: ActivityProps) {
 });
 
 const Block = memo(function Block({
-  children, className, heading,
+  children,
+  className,
+  heading,
 }: PropsWithChildren<BlockProps>): ReactElement {
   return (
-    <section aria-label={textContent(heading.children)} className={clsx(className, 'row', styles.block)}>
+    <section
+      aria-label={textContent(heading.children)}
+      className={clsx(className, 'row', styles.block)}
+    >
       <div className={clsx('col', styles.col, 'col--10', 'col--offset-1')}>
         <Heading {...heading}>{heading.children}</Heading>
         {children}
@@ -89,10 +100,11 @@ const Certifications = memo(function Certifications() {
 
 const CodeBackground = memo(function CodeBackground() {
   const { scrollYProgress } = useScroll();
-  const y = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -250]),
-    { damping: 30, mass: 0.1, stiffness: 500 },
-  );
+  const y = useSpring(useTransform(scrollYProgress, [0, 1], [0, -250]), {
+    damping: 30,
+    mass: 0.1,
+    stiffness: 500,
+  });
   return (
     <motion.aside className={styles.background} style={{ y }}>
       {codeBackground.content}
@@ -129,11 +141,7 @@ const Experience = memo(function Experience({ summary }: ExperienceProps) {
       &nbsp;-&nbsp;
       {summary.content}
       &nbsp;
-      <em className={styles.tags}>
-        (
-        {tags}
-        )
-      </em>
+      <em className={styles.tags}>({tags})</em>
     </article>
   );
 });
@@ -190,9 +198,7 @@ const Testimonial = memo(function Testimonial({ testimonial }: TestimonialProps)
   return (
     <li>
       &#34;
-      <Link href={`/stories#${testimonial.key}`}>
-        {storyMap[testimonial.key].overview}
-      </Link>
+      <Link href={`/stories#${testimonial.key}`}>{storyMap[testimonial.key].overview}</Link>
       &#34;
     </li>
   );

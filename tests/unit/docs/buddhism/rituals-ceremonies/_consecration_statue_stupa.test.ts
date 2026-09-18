@@ -3,17 +3,27 @@
  * All rights reserved.
  */
 
-import consecration from '#buddhism/rituals-ceremonies/_consecration_statue_stupa';
 import { header, phrase, phrases } from '#buddhism/media/_common';
+import consecration from '#buddhism/rituals-ceremonies/_consecration_statue_stupa';
 
 jest.mock('#buddhism/media/_common', () => ({
   header: jest.fn((title, note) => ({ mockedHeader: true, note, title })),
-  main: jest.fn((a, b, n) => [{
-    a, b, mockedMain: true, n,
-  }]),
-  phrase: jest.fn((path, note, n) => [{
-    mockedPhrase: true, n, note, path,
-  }]),
+  main: jest.fn((a, b, n) => [
+    {
+      a,
+      b,
+      mockedMain: true,
+      n,
+    },
+  ]),
+  phrase: jest.fn((path, note, n) => [
+    {
+      mockedPhrase: true,
+      n,
+      note,
+      path,
+    },
+  ]),
   phrases: jest.fn(() => ['P1', 'P2', 'P3']),
 }));
 
@@ -27,7 +37,9 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
     expect(consecration).toHaveProperty('path');
     expect(consecration).toHaveProperty('title');
     expect(Array.isArray(consecration.pages)).toBeTruthy();
-    expect(consecration.title).toBe('Consecration of Stupas, Statues, Tsatsas, and Other Sacred Images');
+    expect(consecration.title).toBe(
+      'Consecration of Stupas, Statues, Tsatsas, and Other Sacred Images',
+    );
   });
 
   test('calls phrases() once for pratityasamutpadaSamudayaNirodha', () => {
@@ -46,15 +58,9 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
       '#buddhism/practice-daily-life/phrases/_mala.ts',
       ' (recite the prayer, gently blow on the mālā and rub it lightly)',
     ]);
-    expect(phraseCalls[1]).toEqual([
-      '#buddhism/practice-daily-life/phrases/_japa.ts',
-    ]);
-    expect(phraseCalls[2]).toEqual([
-      '#buddhism/practice-daily-life/phrases/_dharma.ts',
-    ]);
-    expect(phraseCalls[3]).toEqual([
-      '#buddhism/practice-daily-life/phrases/_namaskara.ts',
-    ]);
+    expect(phraseCalls[1]).toEqual(['#buddhism/practice-daily-life/phrases/_japa.ts']);
+    expect(phraseCalls[2]).toEqual(['#buddhism/practice-daily-life/phrases/_dharma.ts']);
+    expect(phraseCalls[3]).toEqual(['#buddhism/practice-daily-life/phrases/_namaskara.ts']);
     expect(phraseCalls[4]).toEqual([
       '#buddhism/practice-daily-life/phrases/_saranagamana_cittotpada.ts',
     ]);
@@ -62,11 +68,11 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
       '#buddhism/practice-daily-life/phrases/_catvary_apramanani.ts',
     ]);
     expect(phraseCalls[6]).toEqual([
-      '#buddhism/practice-daily-life/phrases/_prajna_paramita.ts', '', 7,
+      '#buddhism/practice-daily-life/phrases/_prajna_paramita.ts',
+      '',
+      7,
     ]);
-    expect(phraseCalls[7]).toEqual([
-      '#buddhism/practice-daily-life/phrases/_sunyata.ts',
-    ]);
+    expect(phraseCalls[7]).toEqual(['#buddhism/practice-daily-life/phrases/_sunyata.ts']);
   });
 
   test('third page uses phrases() result correctly', () => {
@@ -84,21 +90,15 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
     expect(page.chapters).toEqual(['Abhiṣeka']);
     expect(page.number).toBe('6');
 
-    expect(phraseCalls[8]).toEqual([
-      '#buddhism/practice-daily-life/phrases/_anekajati.ts',
-    ]);
-    expect(phraseCalls[9]).toEqual([
-      '#buddhism/practice-daily-life/phrases/_pratityasamutpada.ts',
-    ]);
+    expect(phraseCalls[8]).toEqual(['#buddhism/practice-daily-life/phrases/_anekajati.ts']);
+    expect(phraseCalls[9]).toEqual(['#buddhism/practice-daily-life/phrases/_pratityasamutpada.ts']);
     expect(phraseCalls[10]).toEqual([
       '#buddhism/practice-daily-life/phrases/_vairocana_sarvakata_danavidhih.ts',
     ]);
     expect(phraseCalls[11]).toEqual([
       '#buddhism/practice-daily-life/phrases/_ratnadhvaja_parikrama.ts',
     ]);
-    expect(phraseCalls[12]).toEqual([
-      '#buddhism/practice-daily-life/phrases/_vimala_usnisa.ts',
-    ]);
+    expect(phraseCalls[12]).toEqual(['#buddhism/practice-daily-life/phrases/_vimala_usnisa.ts']);
   });
 
   test('fifth page uses header() and phrase-set blocks', () => {

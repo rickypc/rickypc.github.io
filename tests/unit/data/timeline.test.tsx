@@ -5,10 +5,8 @@
  * @jest-environment jsdom
  */
 
-import {
-  faqItems, intro, layout, schema, timelines, timelineMap,
-} from '@site/src/data/timeline';
 import { textContent } from '@site/src/data/common';
+import { faqItems, intro, layout, schema, timelineMap, timelines } from '@site/src/data/timeline';
 
 describe('data.timeline.exports', () => {
   test('exports layout, intro, timelines', () => {

@@ -45,8 +45,8 @@ describe('docs.buddhism.rituals-ceremonies._cintamani_dharmacakra_yasti', () => 
       // intro cell
       expect(row[0]).toEqual(
         expect.objectContaining({
-          style: 'intro',
           margin: expect.any(Array),
+          style: 'intro',
           text: expect.any(String),
         }),
       );
@@ -54,10 +54,7 @@ describe('docs.buddhism.rituals-ceremonies._cintamani_dharmacakra_yasti', () => 
       // Text cell.
       expect(row[1]).toEqual(
         expect.objectContaining({
-          text: [
-            { fontSize: 4, text: expect.stringMatching(/x /) },
-            'BODY_RESULT',
-          ],
+          text: [{ fontSize: 4, text: expect.stringMatching(/x /) }, 'BODY_RESULT'],
         }),
       );
     });
@@ -69,8 +66,8 @@ describe('docs.buddhism.rituals-ceremonies._cintamani_dharmacakra_yasti', () => 
     dividerSection.canvas?.forEach((line) => {
       expect(line).toEqual(
         expect.objectContaining({
-          type: 'line',
           lineWidth: 0.25,
+          type: 'line',
           y1: 0,
           y2: 0,
         }),
@@ -99,10 +96,10 @@ describe('docs.buddhism.rituals-ceremonies._cintamani_dharmacakra_yasti', () => 
     );
 
     // Validate layout functions.
-    expect(rollSection.layout!.paddingBottom()).toBe(1);
-    expect(rollSection.layout!.paddingLeft()).toBe(2.5);
-    expect(rollSection.layout!.paddingRight()).toBe(2.5);
-    expect(rollSection.layout!.paddingTop()).toBe(0.25);
+    expect(rollSection.layout?.paddingBottom()).toBe(1);
+    expect(rollSection.layout?.paddingLeft()).toBe(2.5);
+    expect(rollSection.layout?.paddingRight()).toBe(2.5);
+    expect(rollSection.layout?.paddingTop()).toBe(0.25);
 
     // body() should be called once per Tibetan line.
     expect(body).toHaveBeenCalledTimes(3);

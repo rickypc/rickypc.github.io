@@ -3,12 +3,7 @@
  * All rights reserved.
  */
 
-import {
-  header,
-  instruction,
-  main,
-  phrase,
-} from '#buddhism/media/_common';
+import { header, instruction, main, phrase } from '#buddhism/media/_common';
 
 export default {
   pages: [
@@ -32,7 +27,10 @@ export default {
       chapters: ['Maṅgala', 'Viśuddhi'],
       contents: [
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_mala.ts', ' (recite the prayer, gently blow on the mālā and rub it lightly)'),
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_mala.ts',
+            ' (recite the prayer, gently blow on the mālā and rub it lightly)',
+          ),
           ...phrase('#buddhism/practice-daily-life/phrases/_japa.ts'),
           ...phrase('#buddhism/practice-daily-life/phrases/_dharma.ts'),
           ...phrase('#buddhism/practice-daily-life/phrases/_namaskara.ts'),
@@ -137,7 +135,12 @@ export default {
       chapters: ['Viśuddhi'],
       contents: [
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_aksara.ts', ' (bindu at our heart)', 0, 'Śūnyatā [Primordial State]'),
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_aksara.ts',
+            ' (bindu at our heart)',
+            0,
+            'Śūnyatā [Primordial State]',
+          ),
           header('Pañcabhūta [Five Elements]', [
             ' (bindu at our heart radiates out these infinite lights one by one: ',
             { style: 'sanskrit', text: 'ए' },
@@ -229,15 +232,20 @@ export default {
           },
         ],
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_aksara.ts', [
-            ' (bindu at our heart radiates out infinite rainbow lights to all the dimensions of: ',
-            { color: 'gray', style: 'sanskrit', text: 'ॐ' },
-            ' dharmakāya, ',
-            { color: 'red', style: 'sanskrit', text: 'आः' },
-            ' saṃbhogakāya, and ',
-            { color: 'blue', style: 'sanskrit', text: 'हूँ' },
-            ' nirmāṇakāya. In which there are all the manifestations of enlightened beings. We communicate with them, manifest infinite offerings to them, and accumulate merits through these lights. We will receive their light, wisdom, and empowerment)',
-          ], 0, 'Śūnyatā [Primordial State]'),
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_aksara.ts',
+            [
+              ' (bindu at our heart radiates out infinite rainbow lights to all the dimensions of: ',
+              { color: 'gray', style: 'sanskrit', text: 'ॐ' },
+              ' dharmakāya, ',
+              { color: 'red', style: 'sanskrit', text: 'आः' },
+              ' saṃbhogakāya, and ',
+              { color: 'blue', style: 'sanskrit', text: 'हूँ' },
+              ' nirmāṇakāya. In which there are all the manifestations of enlightened beings. We communicate with them, manifest infinite offerings to them, and accumulate merits through these lights. We will receive their light, wisdom, and empowerment)',
+            ],
+            0,
+            'Śūnyatā [Primordial State]',
+          ),
         ],
       ],
       images: {
@@ -252,22 +260,37 @@ export default {
       chapters: ['Āryatārā'],
       contents: [
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_arya_tara.ts', [
-            ' (receive their light, wisdom, and empowerment, which dissolves into Noble Tārā above our ',
-            { color: '#ee82ee', style: 'instruction', text: 'sahasrāra' },
-            ')',
-          ], 108, 'Āryatārā Hṛdaya Japa [Noble Tārā Essence (Heart) Recitation]'),
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_arya_tara.ts',
+            [
+              ' (receive their light, wisdom, and empowerment, which dissolves into Noble Tārā above our ',
+              { color: '#ee82ee', style: 'instruction', text: 'sahasrāra' },
+              ')',
+            ],
+            108,
+            'Āryatārā Hṛdaya Japa [Noble Tārā Essence (Heart) Recitation]',
+          ),
           ...phrase('#buddhism/practice-daily-life/phrases/_arya_tara_astaghora_tarani_sutra.ts'),
         ],
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_arya_tara_nama.ts', ' (directly invoking and addressing Noble Tārā)', 0, 'Āryatārā Āghoṣa [Invocation]'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_arya_tara_bijaksara.ts', [
-            ' (Noble Tārā above our head descends through our ',
-            { color: '#ee82ee', style: 'instruction', text: 'sahasrāra' },
-            ' and sits inside the open lotus bindu at our heart, radiates infinite Noble Tārā\'s ',
-            { color: 'green', style: 'instruction', text: 'green' },
-            ' lights and communicates with all enlightened beings to activate and receive their wisdom)',
-          ], 0, 'Āryatārā Ātma Utpatti [Self-Generation]'),
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_arya_tara_nama.ts',
+            ' (directly invoking and addressing Noble Tārā)',
+            0,
+            'Āryatārā Āghoṣa [Invocation]',
+          ),
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_arya_tara_bijaksara.ts',
+            [
+              ' (Noble Tārā above our head descends through our ',
+              { color: '#ee82ee', style: 'instruction', text: 'sahasrāra' },
+              " and sits inside the open lotus bindu at our heart, radiates infinite Noble Tārā's ",
+              { color: 'green', style: 'instruction', text: 'green' },
+              ' lights and communicates with all enlightened beings to activate and receive their wisdom)',
+            ],
+            0,
+            'Āryatārā Ātma Utpatti [Self-Generation]',
+          ),
         ],
       ],
       images: {
@@ -281,14 +304,14 @@ export default {
       contents: [
         [
           ...phrase('#buddhism/practice-daily-life/phrases/_arya_tara.ts', [
-            ' (bindu at our heart radiates infinite Noble Tārā\'s ',
+            " (bindu at our heart radiates infinite Noble Tārā's ",
             { color: 'green', style: 'instruction', text: 'green' },
             ' lights and communicates with all enlightened beings to activate and receive their wisdom)',
           ]),
         ],
         [
           ...phrase('#buddhism/practice-daily-life/phrases/_sita_tara.ts', [
-            ' (bindu at our heart radiates infinite White Tārā\'s ',
+            " (bindu at our heart radiates infinite White Tārā's ",
             { color: 'gray', style: 'instruction', text: 'white' },
             ' lights and communicates with all enlightened beings to activate and receive their wisdom)',
           ]),
@@ -314,19 +337,25 @@ export default {
     },
     {
       chapters: ['Mahāmaṇi Vipulavimāna'],
-      contents: [
-        [...phrase('#buddhism/practice-daily-life/phrases/_mahamani_vipulavimana.ts')],
-      ],
+      contents: [[...phrase('#buddhism/practice-daily-life/phrases/_mahamani_vipulavimana.ts')]],
       images: {
         left: { alt: 'Avalokiteśvara', path: '#buddhism/img/guan-yin.webp' },
-        right: { alt: 'Mahāmaṇi Vipulavimāna Maṇḍala', path: '#buddhism/img/mandala-mahamani-vipulavimana.webp' },
+        right: {
+          alt: 'Mahāmaṇi Vipulavimāna Maṇḍala',
+          path: '#buddhism/img/mandala-mahamani-vipulavimana.webp',
+        },
       },
       number: '12',
     },
     {
       chapters: ['Vajragītā'],
       contents: [
-        [...phrase('#buddhism/practice-daily-life/phrases/_vajra_gita.ts', ' (remain within the all-pervasive expanse of the mind\'s nature)')],
+        [
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_vajra_gita.ts',
+            " (remain within the all-pervasive expanse of the mind's nature)",
+          ),
+        ],
       ],
       images: { left: { alt: 'Samantabhadra', path: '#buddhism/img/samantabhadra.webp' } },
       number: '10',
@@ -344,20 +373,33 @@ export default {
             { color: 'blue', style: 'sanskrit', text: 'हूँ' },
             ' at our heart)',
           ]),
-          ...main([
-            { color: 'gray', text: 'ॐ' }, ' ',
-            { color: 'red', text: 'आः' }, ' ',
-            { color: 'blue', text: 'हूँ' }, '॥',
-          ], [
-            { color: 'gray', text: 'oṃ' }, ' ',
-            { color: 'red', text: 'āḥ' }, ' ',
-            { color: 'blue', text: 'hūṃ' }, '॥',
-          ], 3),
-          ...phrase('#buddhism/practice-daily-life/phrases/_mandala_puja.ts', ' (maṇḍala arpaṇa mudrā with the sun behind our back and the moon in front of us. Offering self-generated and pure land to all enlightened beings)'),
+          ...main(
+            [
+              { color: 'gray', text: 'ॐ' },
+              ' ',
+              { color: 'red', text: 'आः' },
+              ' ',
+              { color: 'blue', text: 'हूँ' },
+              '॥',
+            ],
+            [
+              { color: 'gray', text: 'oṃ' },
+              ' ',
+              { color: 'red', text: 'āḥ' },
+              ' ',
+              { color: 'blue', text: 'hūṃ' },
+              '॥',
+            ],
+            3,
+          ),
+          ...phrase(
+            '#buddhism/practice-daily-life/phrases/_mandala_puja.ts',
+            ' (maṇḍala arpaṇa mudrā with the sun behind our back and the moon in front of us. Offering self-generated and pure land to all enlightened beings)',
+          ),
         ],
         [
           ...phrase('#buddhism/practice-daily-life/phrases/_rakta_tara.ts', [
-            ' (bindu at our heart radiates infinite Red Tārā\'s ',
+            " (bindu at our heart radiates infinite Red Tārā's ",
             { color: 'red', style: 'instruction', text: 'red' },
             ' lights and communicates with all enlightened beings to activate and receive their wisdom)',
           ]),
@@ -365,7 +407,10 @@ export default {
       ],
       images: {
         left: { alt: 'Maṇḍala Arpaṇa Mudrā', path: '#buddhism/img/mudra-mandala-arpana.webp' },
-        middle: { alt: 'Maṇḍala Arpaṇa Ātma Utpatti', path: '#buddhism/img/self-generation-mandala.webp' },
+        middle: {
+          alt: 'Maṇḍala Arpaṇa Ātma Utpatti',
+          path: '#buddhism/img/self-generation-mandala.webp',
+        },
         right: { alt: 'Raktatārā Ātṃa Utpatti', path: '#buddhism/img/self-generation-red.webp' },
       },
       number: '8',
@@ -396,15 +441,25 @@ export default {
             { color: 'blue', style: 'sanskrit', text: 'हूँ' },
             ' at our heart, then back to our glabella. Bow with palm and head down on the ground to pay homage and then palm up to receive their wisdom and empowerment)',
           ]),
-          ...main([
-            { color: 'gray', text: 'ॐ' }, ' ',
-            { color: 'red', text: 'आः' }, ' ',
-            { color: 'blue', text: 'हूँ' }, '॥',
-          ], [
-            { color: 'gray', text: 'oṃ' }, ' ',
-            { color: 'red', text: 'āḥ' }, ' ',
-            { color: 'blue', text: 'hūṃ' }, '॥',
-          ], 3),
+          ...main(
+            [
+              { color: 'gray', text: 'ॐ' },
+              ' ',
+              { color: 'red', text: 'आः' },
+              ' ',
+              { color: 'blue', text: 'हूँ' },
+              '॥',
+            ],
+            [
+              { color: 'gray', text: 'oṃ' },
+              ' ',
+              { color: 'red', text: 'āḥ' },
+              ' ',
+              { color: 'blue', text: 'hūṃ' },
+              '॥',
+            ],
+            3,
+          ),
         ],
         [
           header('Devás (Dharmas, Saṃbhogakāya) of all times and directions', [
@@ -416,15 +471,25 @@ export default {
             { color: 'blue', style: 'sanskrit', text: 'हूँ' },
             ' at our heart, then back to our glabella. Bow with palm and head down on the ground to pay homage and then palm up to receive their wisdom and empowerment)',
           ]),
-          ...main([
-            { color: 'gray', text: 'ॐ' }, ' ',
-            { color: 'red', text: 'आः' }, ' ',
-            { color: 'blue', text: 'हूँ' }, '॥',
-          ], [
-            { color: 'gray', text: 'oṃ' }, ' ',
-            { color: 'red', text: 'āḥ' }, ' ',
-            { color: 'blue', text: 'hūṃ' }, '॥',
-          ], 3),
+          ...main(
+            [
+              { color: 'gray', text: 'ॐ' },
+              ' ',
+              { color: 'red', text: 'आः' },
+              ' ',
+              { color: 'blue', text: 'हूँ' },
+              '॥',
+            ],
+            [
+              { color: 'gray', text: 'oṃ' },
+              ' ',
+              { color: 'red', text: 'āḥ' },
+              ' ',
+              { color: 'blue', text: 'hūṃ' },
+              '॥',
+            ],
+            3,
+          ),
         ],
       ],
       images: {
@@ -448,18 +513,31 @@ export default {
             { color: 'blue', style: 'sanskrit', text: 'हूँ' },
             ' at our heart, then back to our glabella. Bow with palm and head down on the ground to pay homage and then palm up to receive their wisdom and empowerment)',
           ]),
-          ...main([
-            { color: 'gray', text: 'ॐ' }, ' ',
-            { color: 'red', text: 'आः' }, ' ',
-            { color: 'blue', text: 'हूँ' }, '॥',
-          ], [
-            { color: 'gray', text: 'oṃ' }, ' ',
-            { color: 'red', text: 'āḥ' }, ' ',
-            { color: 'blue', text: 'hūṃ' }, '॥',
-          ], 3),
+          ...main(
+            [
+              { color: 'gray', text: 'ॐ' },
+              ' ',
+              { color: 'red', text: 'आः' },
+              ' ',
+              { color: 'blue', text: 'हूँ' },
+              '॥',
+            ],
+            [
+              { color: 'gray', text: 'oṃ' },
+              ' ',
+              { color: 'red', text: 'āḥ' },
+              ' ',
+              { color: 'blue', text: 'hūṃ' },
+              '॥',
+            ],
+            3,
+          ),
         ],
         [
-          header('All enlightened beings of all times and directions', ' (kneel with uttarabodhi mudrā at our glabella, half bow, then back to our glabella)'),
+          header(
+            'All enlightened beings of all times and directions',
+            ' (kneel with uttarabodhi mudrā at our glabella, half bow, then back to our glabella)',
+          ),
         ],
       ],
       images: {

@@ -3,12 +3,14 @@
  * All rights reserved.
  */
 
-import Buttons from '@theme/CodeBlock/Buttons';
-import { clsx, key } from '@site/src/data/common';
-import { CodeBlockContextProvider, createCodeBlockMetadata, useCodeWordWrap } from '@docusaurus/theme-common/internal';
 import {
-  Fragment, isValidElement, memo, type PropsWithChildren, type ReactElement,
-} from 'react';
+  CodeBlockContextProvider,
+  createCodeBlockMetadata,
+  useCodeWordWrap,
+} from '@docusaurus/theme-common/internal';
+import { clsx, key } from '@site/src/data/common';
+import Buttons from '@theme/CodeBlock/Buttons';
+import { Fragment, isValidElement, memo, type PropsWithChildren, type ReactElement } from 'react';
 import styles from './styles.module.css';
 
 type Content = ReactElement & { props?: { children?: Content } };
@@ -58,23 +60,19 @@ const body = (
   const multi = group.length > 1;
   const showInfix = (words: any, index: number) => words && phrase.unify && index !== last;
   const showPrefix = (words: any) => words && !phrase.unify && multi;
-  const showSuffix = (
-    words: any,
-    index: number,
-  ) => words && ((phrase.unify && index === last) || !phrase.unify);
+  const showSuffix = (words: any, index: number) =>
+    words && ((phrase.unify && index === last) || !phrase.unify);
   return (
     <>
-      {
-        group.map((words, index) => (
-          <Fragment key={key(`${index}`, `${last}`)}>
-            {showPrefix(words) && prefix}
-            {words}
-            {showInfix(words, index) && infix}
-            {showSuffix(words, index) && suffix}
-            {multi && '\n'}
-          </Fragment>
-        ))
-      }
+      {group.map((words, index) => (
+        <Fragment key={key(`${index}`, `${last}`)}>
+          {showPrefix(words) && prefix}
+          {words}
+          {showInfix(words, index) && infix}
+          {showSuffix(words, index) && suffix}
+          {multi && '\n'}
+        </Fragment>
+      ))}
     </>
   );
 };
@@ -86,25 +84,30 @@ const text = (content: Content): string => {
   if (Array.isArray(content)) {
     return content.map((child) => text(child)).join('');
   }
-  if (typeof (content) === 'string') {
+  if (typeof content === 'string') {
     return content;
   }
   return '';
 };
 
-const useMetadata = (props: MetadataProps) => createCodeBlockMetadata({
-  className: props.className || '',
-  code: props.code || '',
-  defaultLanguage: props.defaultLanguage || 'plain',
-  language: props.language || 'plain',
-  magicComments: props.magicComments || [],
-  metastring: props.metastring || '',
-  showLineNumbers: props.showLineNumbers || false,
-  title: props.title || '',
-});
+const useMetadata = (props: MetadataProps) =>
+  createCodeBlockMetadata({
+    className: props.className || '',
+    code: props.code || '',
+    defaultLanguage: props.defaultLanguage || 'plain',
+    language: props.language || 'plain',
+    magicComments: props.magicComments || [],
+    metastring: props.metastring || '',
+    showLineNumbers: props.showLineNumbers || false,
+    title: props.title || '',
+  });
 
 export default memo(function PhraseBlock({
-  className = '', infix, phrase, prefix, suffix,
+  className = '',
+  infix,
+  phrase,
+  prefix,
+  suffix,
 }: PhraseBlockProps): ReactElement {
   const content = body(phrase, prefix, infix, suffix);
   const metadata = useMetadata({ className, code: text(content), title: phrase.title });
@@ -113,15 +116,16 @@ export default memo(function PhraseBlock({
   return (
     <CodeBlockContextProvider metadata={metadata} wordWrap={wordWrap}>
       <div className={clsx(className, styles.container, 'theme-code-block')}>
-        {phrase.title && <div className={styles.title} translate="no">{phrase.title}</div>}
+        {phrase.title && (
+          <div className={styles.title} translate="no">
+            {phrase.title}
+          </div>
+        )}
         <div className={styles.content}>
-          <pre
-            className={clsx(styles.standalone, 'thin-scrollbar')}
-            ref={wordWrap.codeBlockRef}
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={0}
-          >
-            <code className={clsx(styles.lines, phrase.className)} translate="no">{content}</code>
+          <pre className={clsx(styles.standalone, 'thin-scrollbar')} ref={wordWrap.codeBlockRef}>
+            <code className={clsx(styles.lines, phrase.className)} translate="no">
+              {content}
+            </code>
           </pre>
           {metadata.code && <Buttons />}
         </div>

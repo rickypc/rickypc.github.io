@@ -5,11 +5,11 @@
  * @jest-environment jsdom
  */
 
+import type { Transliteration } from '@site/src/components/common/MultiLingual';
+import Phrase, { GrPrint, Instruction } from '@site/src/components/common/Phrase';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Phrase, { GrPrint, Instruction } from '@site/src/components/common/Phrase';
-import { type ReactElement, type ReactNode } from 'react';
-import { type Transliteration } from '@site/src/components/common/MultiLingual';
+import type { ReactElement, ReactNode } from 'react';
 
 type Props = {
   image?: any;
@@ -31,7 +31,11 @@ describe('GrPrint', () => {
 
 describe('Instruction', () => {
   test('renders MDXDetails and Image when image prop is provided', () => {
-    const props = { image: 'path/to/img.png', text: null, transliteration: { title: 'MyTitle' } } as any;
+    const props = {
+      image: 'path/to/img.png',
+      text: null,
+      transliteration: { title: 'MyTitle' },
+    } as any;
     render(<Instruction {...props} />);
 
     expect(screen.getByTestId('mdx-details')).toBeInTheDocument();
@@ -44,7 +48,11 @@ describe('Instruction', () => {
   });
 
   test('renders a div with instruction text when only text prop is provided', () => {
-    const props = { image: undefined, text: 'Please read carefully', transliteration: { title: 'IgnoredTitle' } };
+    const props = {
+      image: undefined,
+      text: 'Please read carefully',
+      transliteration: { title: 'IgnoredTitle' },
+    };
     render(<Instruction {...props} />);
     const div = screen.getByText('Please read carefully');
     expect(div).toHaveClass('instruction');
@@ -62,9 +70,7 @@ describe('Phrase', () => {
 
   describe('basic rendering without playback or repetition', () => {
     test('renders only PhraseBlock with default Sanskrit markers', () => {
-      render((
-        <PhraseMock transliteration={{ ...transliteration, repetition: 0 }} />
-      ));
+      render(<PhraseMock transliteration={{ ...transliteration, repetition: 0 }} />);
       const block = screen.getByTestId('phrase-block-transliteration');
       expect(block).toHaveAttribute('data-infix', '।');
       expect(block).toHaveAttribute('data-prefix', '꣼ ');
@@ -73,18 +79,16 @@ describe('Phrase', () => {
     });
 
     test('does not include Details, Playback, or PDF links', () => {
-      render((
-        <PhraseMock transliteration={{ ...transliteration, repetition: 0 }} />
-      ));
+      render(<PhraseMock transliteration={{ ...transliteration, repetition: 0 }} />);
       expect(screen.queryByTestId(/^link-/)).toBeNull();
       expect(screen.queryByTestId('mdx-details')).toBeNull();
     });
   });
 
   test('renders Playback and support wrapper when audio exists', () => {
-    const { container } = render((
-      <PhraseMock transliteration={{ ...transliteration, repetition: 0 }} />
-    ));
+    const { container } = render(
+      <PhraseMock transliteration={{ ...transliteration, repetition: 0 }} />,
+    );
     expect(screen.queryByTestId(/^link-/)).toBeNull();
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     expect(container.querySelector('.support [data-testid="playback"]')).toBeInTheDocument();
@@ -92,17 +96,20 @@ describe('Phrase', () => {
 
   describe('repetition badge', () => {
     test('does not render badge when repetition is 0', () => {
-      const { container } = render((
-        <PhraseMock path="/docs/buddhism/practice-daily-life/phrases/_arya_tara.ts" transliteration={transliteration as any} />
-      ));
+      const { container } = render(
+        <PhraseMock
+          path="/docs/buddhism/practice-daily-life/phrases/_arya_tara.ts"
+          transliteration={transliteration as any}
+        />,
+      );
       // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       expect(container.querySelector('.badge')).toBeNull();
     });
 
     test('renders badge when repetition > 1', () => {
-      const { container } = render((
-        <PhraseMock transliteration={{ ...transliteration, repetition: 5 }} />
-      ));
+      const { container } = render(
+        <PhraseMock transliteration={{ ...transliteration, repetition: 5 }} />,
+      );
       // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const badge = container.querySelector('.badge');
       expect(badge).toBeInTheDocument();
@@ -113,9 +120,12 @@ describe('Phrase', () => {
 
   describe('PDF links generation', () => {
     test('renders all four PDF links with correct hrefs and testids', () => {
-      render((
-        <PhraseMock path="/docs/buddhism/practice-daily-life/phrases/_arya_tara.ts" transliteration={{ ...transliteration, title: 'MyPrayer' }} />
-      ));
+      render(
+        <PhraseMock
+          path="/docs/buddhism/practice-daily-life/phrases/_arya_tara.ts"
+          transliteration={{ ...transliteration, title: 'MyPrayer' }}
+        />,
+      );
       [
         ['link-Open MyPrayer condensed prayer roll', '/pdf/arya-tara-condensed.pdf'],
         ['link-Open MyPrayer prayer roll', '/pdf/arya-tara.pdf'],
@@ -131,17 +141,24 @@ describe('Phrase', () => {
 
   describe('inline Instruction rendering', () => {
     test('renders Instruction when image prop is provided on Phrase', () => {
-      render((
-        <PhraseMock image="img.png" path="/docs/buddhism/practice-daily-life/phrases/_arya_tara.ts" transliteration={{ ...transliteration, title: 'ImgTest' }} />
-      ));
+      render(
+        <PhraseMock
+          image="img.png"
+          path="/docs/buddhism/practice-daily-life/phrases/_arya_tara.ts"
+          transliteration={{ ...transliteration, title: 'ImgTest' }}
+        />,
+      );
       expect(screen.getByTestId('mdx-details')).toBeInTheDocument();
       expect(screen.getByTestId('img-ImgTest')).toHaveAttribute('src', 'img.png');
     });
 
     test('renders Instruction when instruction prop is provided on Phrase', () => {
-      render((
-        <PhraseMock instruction="Read this" transliteration={{ ...transliteration, title: 'NoImg' }} />
-      ));
+      render(
+        <PhraseMock
+          instruction="Read this"
+          transliteration={{ ...transliteration, title: 'NoImg' }}
+        />,
+      );
       const div = screen.getByText('Read this');
       expect(div).toHaveClass('instruction');
     });

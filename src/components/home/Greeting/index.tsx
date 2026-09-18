@@ -4,9 +4,9 @@
  */
 
 import Heart from '@site/src/components/common/Heart';
+import Playback from '@site/src/components/common/Playback';
 import { identity } from '@site/src/data/home';
 import { memo } from 'react';
-import Playback from '@site/src/components/common/Playback';
 import phrase from '#buddhism/practice-daily-life/phrases/_ricky_huang';
 import styles from './styles.module.css';
 
@@ -20,6 +20,7 @@ export default memo(function Greeting() {
       <div className={styles.pronunciation}>
         <span className={styles.ipa}>{identity.ipa}</span>
         <Playback {...phrase} />
+        {/* biome-ignore lint/correctness/useUniqueElementIds: - */}
         <Heart className={styles.reaction} id="home-landing" />
       </div>
     </div>

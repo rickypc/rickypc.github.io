@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-import amoghapasaPadmaUsnisa from '#buddhism/practice-daily-life/phrases/_amoghapasa_padma_usnisa';
 import puja from '#buddhism/practice-daily-life/phrases/_amoghapasa_mani_puja';
+import amoghapasaPadmaUsnisa from '#buddhism/practice-daily-life/phrases/_amoghapasa_padma_usnisa';
 
 jest.mock('#buddhism/practice-daily-life/phrases/_amoghapasa_padma_usnisa', () => ({
   __esModule: true,
@@ -21,8 +21,7 @@ describe('docs.buddhism.phrases._amoghapasa_mani_puja', () => {
         children: 'ॐ अमोघ पूजा मणिपद्म वज्रे तथागत विलोकिते समन्त प्रसर हूँ',
       },
       transliteration: {
-        children:
-          'oṃ amogha pūja maṇipadma vajre tathāgata vilokite samanta prasara hūṃ',
+        children: 'oṃ amogha pūja maṇipadma vajre tathāgata vilokite samanta prasara hūṃ',
       },
     });
   });
@@ -31,10 +30,7 @@ describe('docs.buddhism.phrases._amoghapasa_mani_puja', () => {
     expect(puja.sanskrit.title).toBe('अमोघपाश मणि पूजा');
 
     expect(puja.sanskrit.children).toBe(
-      [
-        puja.core.sanskrit.children,
-        amoghapasaPadmaUsnisa.sanskrit.children,
-      ].join(' । '),
+      [puja.core.sanskrit.children, amoghapasaPadmaUsnisa.sanskrit.children].join(' । '),
     );
   });
 
@@ -43,10 +39,9 @@ describe('docs.buddhism.phrases._amoghapasa_mani_puja', () => {
     expect(puja.transliteration.repetition).toBe(3);
 
     expect(puja.transliteration.children).toBe(
-      [
-        puja.core.transliteration.children,
-        amoghapasaPadmaUsnisa.transliteration.children,
-      ].join(' । '),
+      [puja.core.transliteration.children, amoghapasaPadmaUsnisa.transliteration.children].join(
+        ' । ',
+      ),
     );
   });
 

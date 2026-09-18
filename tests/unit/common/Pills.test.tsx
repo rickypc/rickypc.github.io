@@ -13,7 +13,6 @@ jest.unmock('@site/src/components/common/Pills');
 
 describe('Pills', () => {
   let container: HTMLElement;
-  // eslint-disable-next-line no-undef
   let dtElements: NodeListOf<HTMLDListElement>;
   let onClick: jest.MockedFunction<any>;
   const items = ['apple', 'banana', 'cherry'];
@@ -21,14 +20,9 @@ describe('Pills', () => {
 
   const renderComponent = (active: string) => {
     onClick = jest.fn();
-    ({ container } = render((
-      <Pills
-        active={active}
-        items={items}
-        onClick={onClick}
-        prefix={prefix}
-      />
-    )));
+    ({ container } = render(
+      <Pills active={active} items={items} onClick={onClick} prefix={prefix} />,
+    ));
     // eslint-disable-next-line testing-library/no-node-access
     dtElements = container.querySelectorAll<HTMLDListElement>('dt');
   };
@@ -57,6 +51,16 @@ describe('Pills', () => {
       fireEvent.click(dtElements[0]);
       expect(onClick).toHaveBeenCalledWith('apple');
     });
+
+    test('calls onKeyDown with the clicked item', () => {
+      fireEvent.keyDown(dtElements[0], { key: 'Enter' });
+      expect(onClick).toHaveBeenCalledWith('apple');
+    });
+
+    test('calls onKeyDown without the clicked item', () => {
+      fireEvent.keyDown(dtElements[0], { key: 'A' });
+      expect(onClick).not.toHaveBeenCalledWith('apple');
+    });
   });
 
   describe('active state', () => {
@@ -64,7 +68,7 @@ describe('Pills', () => {
     beforeEach(() => renderComponent('cherry'));
 
     test('applies active class and renders indicator on active item', () => {
-      const [appleDt, /* ignore */, cherryDt] = dtElements;
+      const [appleDt, /* ignore */ , cherryDt] = dtElements;
       expect(appleDt).not.toHaveClass('active');
       expect(cherryDt).toHaveClass('active');
 

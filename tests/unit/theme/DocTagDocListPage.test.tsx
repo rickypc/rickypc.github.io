@@ -7,14 +7,16 @@
 
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { context } from '@site/src/data/common';
-import DocTagDocListPage from '@theme-original/DocTagDocListPage';
-import DocTagDocListPageWrapper from '@theme/DocTagDocListPage';
 import { usePluralForm } from '@docusaurus/theme-common';
+import { context } from '@site/src/data/common';
 import { useWelcome } from '@site/src/hooks/observer';
+import DocTagDocListPageWrapper from '@theme/DocTagDocListPage';
+import DocTagDocListPage from '@theme-original/DocTagDocListPage';
 
 jest.mock('@site/src/data/common', () => ({
-  context: jest.fn((metadata: {}) => JSON.stringify({ ld: 'test', meta: metadata })),
+  context: jest.fn((metadata: Record<string, string>) =>
+    JSON.stringify({ ld: 'test', meta: metadata }),
+  ),
 }));
 
 describe('theme.DocTagDocListPage', () => {
@@ -37,13 +39,17 @@ describe('theme.DocTagDocListPage', () => {
     expect(usePluralForm).toHaveBeenCalled();
 
     expect(context).toHaveBeenCalledTimes(1);
-    expect(context).toHaveBeenNthCalledWith(1, expect.objectContaining({
-      description: expect.stringContaining(props.tag.label),
-      keywords: expect.arrayContaining(['mindfulness']),
-      title: 'translated:theme.docs.tagDocListPageTitle:{nDocsTagged} with "{tagName}"',
-    }));
+    expect(context).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        description: expect.stringContaining(props.tag.label),
+        keywords: expect.arrayContaining(['mindfulness']),
+        title: 'translated:theme.docs.tagDocListPageTitle:{nDocsTagged} with "{tagName}"',
+      }),
+    );
 
-    const script = screen.getByTestId('metadata')
+    const script = screen
+      .getByTestId('metadata')
       // eslint-disable-next-line testing-library/no-node-access
       .querySelector('script[type="application/ld+json"]');
     expect(script).toBeInTheDocument();
@@ -58,21 +64,21 @@ describe('theme.DocTagDocListPage', () => {
 
     const { head } = document;
     // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="twitter:description"]'))
-      .toHaveAttribute('content', expect.stringContaining(props.tag.label));
+    expect(head.querySelector('meta[name="twitter:description"]')).toHaveAttribute(
+      'content',
+      expect.stringContaining(props.tag.label),
+    );
     // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="twitter:title"]'))
-      .toHaveAttribute(
-        'content',
-        'translated:theme.docs.tagDocListPageTitle:{nDocsTagged} with "{tagName}"',
-      );
+    expect(head.querySelector('meta[name="twitter:title"]')).toHaveAttribute(
+      'content',
+      'translated:theme.docs.tagDocListPageTitle:{nDocsTagged} with "{tagName}"',
+    );
 
     expect(useWelcome).toHaveBeenCalledTimes(1);
     expect(useWelcome).toHaveBeenCalledWith({ navigation: false });
 
     expect(DocTagDocListPage).toHaveBeenCalledTimes(1);
-    expect(DocTagDocListPage)
-      .toHaveBeenNthCalledWith(1, expect.objectContaining(props), undefined);
+    expect(DocTagDocListPage).toHaveBeenNthCalledWith(1, expect.objectContaining(props), undefined);
 
     const list = screen.getByTestId('doc-tag-doc-list-page');
     expect(list).toBeInTheDocument();

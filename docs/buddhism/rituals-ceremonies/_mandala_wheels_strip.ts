@@ -29,13 +29,21 @@ export default async function mandalaWheelsStrip() {
           table: {
             body: [
               [
-                await image({ alt: 'Jambhala Maṇḍala', path: '#buddhism/img/mandala-jambhala.webp', width }),
-                await image({ alt: 'Vasudhārā Maṇḍala', path: '#buddhism/img/mandala-vasudhara.webp', width }),
+                await image({
+                  alt: 'Jambhala Maṇḍala',
+                  path: '#buddhism/img/mandala-jambhala.webp',
+                  width,
+                }),
+                await image({
+                  alt: 'Vasudhārā Maṇḍala',
+                  path: '#buddhism/img/mandala-vasudhara.webp',
+                  width,
+                }),
                 '',
                 await image({
                   alt: 'Aṣṭamaṅgala Maṇḍala',
-                  path: '#buddhism/img/mandala-asta-mangala.webp',
                   margin: [0, 1.5, 0, 1.5],
+                  path: '#buddhism/img/mandala-asta-mangala.webp',
                   width: width - 1.5,
                 }),
                 await image({
@@ -58,7 +66,11 @@ export default async function mandalaWheelsStrip() {
               [
                 '',
                 '',
-                await image({ alt: 'Ganapati Maṇḍala', path: '#buddhism/img/mandala-ganapati.webp', width }),
+                await image({
+                  alt: 'Ganapati Maṇḍala',
+                  path: '#buddhism/img/mandala-ganapati.webp',
+                  width,
+                }),
                 '',
                 {
                   alignment: 'center',
@@ -88,6 +100,5 @@ export default async function mandalaWheelsStrip() {
       },
       pageOrientation: 'landscape',
     },
-    options: {},
   };
 }

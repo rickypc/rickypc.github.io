@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-import book from '#buddhism/media/pdf/templates/_book';
 import mockImage from '#buddhism/media/pdf/_image';
+import book from '#buddhism/media/pdf/templates/_book';
 
 jest.mock('#buddhism/media/pdf/_image', () => ({
   __esModule: true,
@@ -18,10 +18,14 @@ describe('docs.buddhism.media.pdf.templates._book: non-empty', () => {
     right: { path: 'R', width: 10 },
   };
   test('builds a title page correctly', async () => {
-    jest.mock('#buddhism/book-title', () => ({
-      __esModule: true,
-      default: { pages: [{ images, number: 1, title: 'Cover Title' }], title: 'MyBook' },
-    }), { virtual: true });
+    jest.mock(
+      '#buddhism/book-title',
+      () => ({
+        __esModule: true,
+        default: { pages: [{ images, number: 1, title: 'Cover Title' }], title: 'MyBook' },
+      }),
+      { virtual: true },
+    );
     const result = await book('#buddhism/book-title');
     expect(result.definition.content).toHaveLength(1);
     const [page] = result.definition.content[0];
@@ -47,13 +51,17 @@ describe('docs.buddhism.media.pdf.templates._book: non-empty', () => {
   });
 
   test('builds a content page with chapters and contents', async () => {
-    jest.mock('#buddhism/book-content', () => ({
-      __esModule: true,
-      default: {
-        pages: [{ chapters: [], contents: ['LeftContent', 'RightContent'], images: {} }],
-        title: 'Chants',
-      },
-    }), { virtual: true });
+    jest.mock(
+      '#buddhism/book-content',
+      () => ({
+        __esModule: true,
+        default: {
+          pages: [{ chapters: [], contents: ['LeftContent', 'RightContent'], images: {} }],
+          title: 'Chants',
+        },
+      }),
+      { virtual: true },
+    );
     const result = await book('#buddhism/book-content');
     const [page, canvas] = result.definition.content[0];
 
@@ -77,13 +85,20 @@ describe('docs.buddhism.media.pdf.templates._book: non-empty', () => {
   });
 
   test('creates divider canvas for non-final pages', async () => {
-    jest.mock('#buddhism/book-multi', () => ({
-      __esModule: true,
-      default: {
-        pages: [{ contents: [1], images, number: 1 }, { contents: [], images, number: 2 }],
-        title: 'Multi',
-      },
-    }), { virtual: true });
+    jest.mock(
+      '#buddhism/book-multi',
+      () => ({
+        __esModule: true,
+        default: {
+          pages: [
+            { contents: [1], images, number: 1 },
+            { contents: [], images, number: 2 },
+          ],
+          title: 'Multi',
+        },
+      }),
+      { virtual: true },
+    );
     const result = await book('#buddhism/book-multi');
     const [, canvas1] = result.definition.content[0];
     const [, canvas2] = result.definition.content[1];
@@ -108,35 +123,35 @@ describe('docs.buddhism.media.pdf.templates._book: empty', () => {
   });
 
   test('handles empty page object', async () => {
-    jest.mock(
-      '#buddhism/book-empty-page',
-      () => ({ __esModule: true, default: { pages: [{}] } }),
-      { virtual: true },
-    );
+    jest.mock('#buddhism/book-empty-page', () => ({ __esModule: true, default: { pages: [{}] } }), {
+      virtual: true,
+    });
     const result = await book('#buddhism/book-empty-page');
 
-    expect(result.definition.content).toEqual([[
-      {
-        layout: {
-          hLineColor: expect.any(Function),
-          hLineWidth: expect.any(Function),
-          paddingBottom: expect.any(Function),
-          paddingLeft: expect.any(Function),
-          paddingRight: expect.any(Function),
-          paddingTop: expect.any(Function),
-          vLineColor: expect.any(Function),
-          vLineWidth: expect.any(Function),
+    expect(result.definition.content).toEqual([
+      [
+        {
+          layout: {
+            hLineColor: expect.any(Function),
+            hLineWidth: expect.any(Function),
+            paddingBottom: expect.any(Function),
+            paddingLeft: expect.any(Function),
+            paddingRight: expect.any(Function),
+            paddingTop: expect.any(Function),
+            vLineColor: expect.any(Function),
+            vLineWidth: expect.any(Function),
+          },
+          margin: [0, 0, 0, 0],
+          table: {
+            body: [[' ', { mocked: true }, { mocked: true }, { mocked: true }]],
+            dontBreakRows: true,
+            heights: [188],
+            widths: ['100%'],
+          },
         },
-        margin: [0, 0, 0, 0],
-        table: {
-          body: [[' ', { mocked: true }, { mocked: true }, { mocked: true }]],
-          dontBreakRows: true,
-          heights: [188],
-          widths: ['100%'],
-        },
-      },
-      { canvas: [] },
-    ]]);
+        { canvas: [] },
+      ],
+    ]);
 
     expect(result.definition.content[0][0].layout.hLineColor()).toBe('#ffffff');
     expect(result.definition.content[0][0].layout.hLineWidth()).toBe(0.5);

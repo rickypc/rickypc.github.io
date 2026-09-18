@@ -5,17 +5,17 @@
  * @jest-environment jsdom
  */
 
+import Layout from '@site/src/components/common/Layout';
+import { context, type FaqItems, faqContext } from '@site/src/data/common';
+import { useWelcome } from '@site/src/hooks/observer';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { context, faqContext, type FaqItems } from '@site/src/data/common';
-import Layout from '@site/src/components/common/Layout';
-import { useWelcome } from '@site/src/hooks/observer';
 
 jest.unmock('@site/src/components/common/Layout');
 
 describe('Layout.useWelcome', () => {
   test('calls useWelcome once on mount', () => {
-    render((
+    render(
       <Layout
         className="whatever"
         description="my desc"
@@ -24,8 +24,8 @@ describe('Layout.useWelcome', () => {
         title="my title"
       >
         <div>child</div>
-      </Layout>
-    ));
+      </Layout>,
+    );
     expect(useWelcome).toHaveBeenCalledTimes(1);
   });
 });
@@ -56,25 +56,26 @@ describe('Layout.with extra metadatas', () => {
 
     const { head } = document;
     // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="author"]'))
-      .toHaveAttribute('content', 'rick');
+    expect(head.querySelector('meta[name="author"]')).toHaveAttribute('content', 'rick');
     // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="robots"]'))
-      .toHaveAttribute('content', 'noindex');
+    expect(head.querySelector('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
   });
 
   test('includes JSON-LD script with page metadata', () => {
     render(<Layout {...props} />);
 
-    const script = screen.getByTestId('metadata')
+    const script = screen
+      .getByTestId('metadata')
       // eslint-disable-next-line testing-library/no-node-access
       .querySelector('script[type="application/ld+json"]');
     expect(script).toBeInTheDocument();
-    expect(script?.textContent).toEqual(context({
-      description: 'desc text',
-      keywords: ['one', 'two'],
-      title: 'Page Title',
-    }));
+    expect(script?.textContent).toEqual(
+      context({
+        description: 'desc text',
+        keywords: ['one', 'two'],
+        title: 'Page Title',
+      }),
+    );
   });
 
   test('renders twitter metas', () => {
@@ -82,11 +83,15 @@ describe('Layout.with extra metadatas', () => {
 
     const { head } = document;
     // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="twitter:description"]'))
-      .toHaveAttribute('content', 'desc text');
+    expect(head.querySelector('meta[name="twitter:description"]')).toHaveAttribute(
+      'content',
+      'desc text',
+    );
     // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="twitter:title"]'))
-      .toHaveAttribute('content', 'Page Title');
+    expect(head.querySelector('meta[name="twitter:title"]')).toHaveAttribute(
+      'content',
+      'Page Title',
+    );
   });
 
   test('renders children', () => {
@@ -98,16 +103,11 @@ describe('Layout.with extra metadatas', () => {
 
 describe('Layout.without metadatas', () => {
   test('omits extra metas when metadatas is undefined', () => {
-    render((
-      <Layout
-        className="c"
-        description="d"
-        keywords={['x']}
-        title="t"
-      >
+    render(
+      <Layout className="c" description="d" keywords={['x']} title="t">
         <p />
-      </Layout>
-    ));
+      </Layout>,
+    );
     const { head } = document;
     // eslint-disable-next-line testing-library/no-node-access
     expect(head.querySelector('meta[name="robots"]')).toBeNull();
@@ -122,16 +122,11 @@ describe('Layout.with faq and schema', () => {
   const schema = 'CollectionPage';
 
   test('emits FAQPage JSON-LD when faq is provided', () => {
-    render((
-      <Layout
-        description="d"
-        faq={faq}
-        keywords={['k']}
-        title="t"
-      >
+    render(
+      <Layout description="d" faq={faq} keywords={['k']} title="t">
         <p />
-      </Layout>
-    ));
+      </Layout>,
+    );
     // eslint-disable-next-line testing-library/no-node-access
     const scripts = document.querySelectorAll('script[type="application/ld+json"]');
     const payloads = Array.from(scripts).map((script) => script.textContent);
@@ -139,37 +134,30 @@ describe('Layout.with faq and schema', () => {
   });
 
   test('emits page-specific schema block when schema is not ProfilePage', () => {
-    render((
-      <Layout
-        description="d"
-        faq={faq}
-        keywords={['k']}
-        schema={schema}
-        title="t"
-      >
+    render(
+      <Layout description="d" faq={faq} keywords={['k']} schema={schema} title="t">
         <p />
-      </Layout>
-    ));
+      </Layout>,
+    );
     // eslint-disable-next-line testing-library/no-node-access
     const scripts = document.querySelectorAll('script[type="application/ld+json"]');
     const payloads = Array.from(scripts).map((script) => script.textContent);
-    expect(payloads).toContain(context({
-      description: 'd', keywords: ['k'], schema: 'CollectionPage', title: 't',
-    }));
+    expect(payloads).toContain(
+      context({
+        description: 'd',
+        keywords: ['k'],
+        schema: 'CollectionPage',
+        title: 't',
+      }),
+    );
   });
 
   test('omits page-specific schema block when schema is ProfilePage', () => {
-    render((
-      <Layout
-        description="d"
-        faq={faq}
-        keywords={['k']}
-        schema="ProfilePage"
-        title="t"
-      >
+    render(
+      <Layout description="d" faq={faq} keywords={['k']} schema="ProfilePage" title="t">
         <p />
-      </Layout>
-    ));
+      </Layout>,
+    );
     // eslint-disable-next-line testing-library/no-node-access
     const scripts = document.querySelectorAll('script[type="application/ld+json"]');
     // Only ProfilePage + FAQPage: the schema override must not duplicate.
@@ -177,7 +165,7 @@ describe('Layout.with faq and schema', () => {
   });
 
   test('omits faq block when faq items is empty', () => {
-    render((
+    render(
       <Layout
         description="d"
         faq={{ items: [], slug: 'about' }}
@@ -186,8 +174,8 @@ describe('Layout.with faq and schema', () => {
         title="t"
       >
         <p />
-      </Layout>
-    ));
+      </Layout>,
+    );
     // eslint-disable-next-line testing-library/no-node-access
     const scripts = document.querySelectorAll('script[type="application/ld+json"]');
     // ProfilePage + CollectionPage only; no FAQPage for empty faq items.
@@ -195,21 +183,21 @@ describe('Layout.with faq and schema', () => {
   });
 
   test('omits geo blocks entirely when faq and schema are omitted', () => {
-    render((
-      <Layout
-        description="d"
-        keywords={['k']}
-        title="t"
-      >
+    render(
+      <Layout description="d" keywords={['k']} title="t">
         <p />
-      </Layout>
-    ));
+      </Layout>,
+    );
     // eslint-disable-next-line testing-library/no-node-access
     const scripts = document.querySelectorAll('script[type="application/ld+json"]');
     expect(scripts).toHaveLength(1);
     const first = scripts[0];
-    expect(first?.textContent).toBe(context({
-      description: 'd', keywords: ['k'], title: 't',
-    }));
+    expect(first?.textContent).toBe(
+      context({
+        description: 'd',
+        keywords: ['k'],
+        title: 't',
+      }),
+    );
   });
 });

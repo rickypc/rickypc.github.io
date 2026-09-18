@@ -3,13 +3,13 @@
  * All rights reserved.
  */
 
-import { type ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 /**
  * Minimal mock home/Greeting component that renders children.
  * @returns {ReactElement}
  *   The home/Greeting component.
  */
-export default function HomeGreeting(props: {}): ReactElement {
-  return <div data-testid="greeting" {...props}>home.greeting</div>;
+export default function HomeGreeting(): ReactElement {
+  return <div data-testid="greeting">home.greeting</div>;
 }

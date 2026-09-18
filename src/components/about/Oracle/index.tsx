@@ -4,8 +4,8 @@
  */
 
 import { clsx } from '@site/src/data/common';
-import { memo } from 'react';
 import { useVisibility } from '@site/src/hooks/observer';
+import { memo } from 'react';
 import styles from './styles.module.css';
 
 export default memo(function Oracle() {
@@ -13,8 +13,8 @@ export default memo(function Oracle() {
   return (
     <div className={clsx(visible && styles.play, styles.oracle)}>
       <div className={styles.oraculares} ref={ref}>
-        {Array.from({ length: 3 }, (_, index) => (
-          <div className={styles[`oracular${index + 1}`]} key={index} />
+        {['1', '2', '3'].map((key) => (
+          <div className={styles[`oracular${key}`]} key={`oracular-${key}`} />
         ))}
       </div>
     </div>

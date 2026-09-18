@@ -11,8 +11,8 @@
 }
 
 .header .col h1 {
-  font-size: 4.7rem;
   margin: 2rem 0 0.5rem 0;
+  font-size: 4.7rem;
 }
 
 .header .col h1 a:hover {
@@ -27,8 +27,8 @@
 }
 
 .header .col p.contacts {
-  align-items: center;
   display: flex;
+  align-items: center;
   justify-content: center;
 }
 
@@ -64,7 +64,7 @@
   }
 }
 
-/* Safari only */
+/* biome-ignore format: Safari only */
 @supports (not (-webkit-text-size-adjust:none)) and (font: -apple-system-body) {
   @media print {
     .header .col p {
@@ -73,9 +73,9 @@
     }
 
     .resume :global(.container) svg[class^="qr"] {
+      width: 4.5rem;
       height: 4.5rem;
       margin-bottom: 1.125rem;
-      width: 4.5rem;
     }
   }
 }

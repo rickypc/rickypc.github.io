@@ -24,7 +24,7 @@ declare module 'cli-progress' {
   }
 
   export interface MultiBarConstructor {
-    new(..._args: any[]): MultiBarInstance;
+    new (..._args: any[]): MultiBarInstance;
     (..._args: any[]): MultiBarInstance;
   }
 

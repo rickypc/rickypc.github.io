@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
-import { domAnimation, LazyMotion, motion } from 'motion/react';
-import { memo } from 'react';
 import PersonaQuadrant from '@site/src/components/about/PersonaQuadrant';
 import { quadrants } from '@site/src/data/about';
+import { domAnimation, LazyMotion, motion } from 'motion/react';
+import { memo } from 'react';
 import styles from './styles.module.css';
 
 export default memo(function Figure() {

@@ -15,7 +15,11 @@ export default async function prayerWheel() {
     definition: {
       content: [
         await image({ alt: 'Sky (Top) Wheel', path: '#buddhism/img/sky-wheel.webp', width: 612 }),
-        await image({ alt: 'Earth (Bottom) Wheel', path: '#buddhism/img/earth-wheel.webp', width: 612 }),
+        await image({
+          alt: 'Earth (Bottom) Wheel',
+          path: '#buddhism/img/earth-wheel.webp',
+          width: 612,
+        }),
       ],
       info: {
         keywords: oneLine(`This document is about the prayer wheels and its

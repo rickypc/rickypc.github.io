@@ -21,7 +21,8 @@ export default {
     title: 'One Plait Lady Essence (Heart)',
   },
   transliteration: {
-    children: 'samaya hoḥ । oṃ mama rulu rulu hūṃ bhyō hūṃ । mahā amṛta rakta baliṃta pūja hoḥ dharmadhātu evaṃ',
+    children:
+      'samaya hoḥ । oṃ mama rulu rulu hūṃ bhyō hūṃ । mahā amṛta rakta baliṃta pūja hoḥ dharmadhātu evaṃ',
     title: 'Ekajaṭī Hṛdaya',
   },
 };

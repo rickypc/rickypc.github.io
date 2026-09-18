@@ -5,22 +5,17 @@
  * @jest-environment jsdom
  */
 
-import {
-  fireEvent, render, screen, within,
-} from '@testing-library/react';
-import '@testing-library/jest-dom';
 import Filter from '@site/src/components/portfolio/Filter';
 import { useMedia } from '@site/src/hooks/observer';
+import { fireEvent, render, screen, within } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 const useMediaMock = jest.mocked(useMedia);
 
 jest.unmock('@site/src/components/portfolio/Filter');
 
 jest.mock('@site/src/data/portfolio', () => ({
-  catalog: [
-    { tags: ['beta', 'alpha'] },
-    { tags: ['gamma', 'alpha'] },
-  ],
+  catalog: [{ tags: ['beta', 'alpha'] }, { tags: ['gamma', 'alpha'] }],
 }));
 
 describe('portfolio.Filter', () => {
@@ -41,8 +36,10 @@ describe('portfolio.Filter', () => {
     // Items in sorted order, with unique tags.
     const buttons = withinColl.getAllByRole('button');
     expect(buttons).toHaveLength(expectedTags.length);
-    // eslint-disable-next-line security/detect-object-injection
-    buttons.forEach((btn, i) => expect(btn).toHaveTextContent(expectedTags[i]));
+    buttons.forEach((btn, i) => {
+      // eslint-disable-next-line security/detect-object-injection
+      expect(btn).toHaveTextContent(expectedTags[i]);
+    });
 
     // Clicking a tag invokes onClick with that tag.
     fireEvent.click(withinColl.getByText('beta'));
@@ -66,8 +63,9 @@ describe('portfolio.Filter', () => {
     // Items rendered in same sorted order.
     const buttons = withinPills.getAllByRole('button');
     expect(buttons).toHaveLength(expectedTags.length);
-    expectedTags.forEach((tag) => expect(withinPills.getByText(tag))
-      .toBeInTheDocument());
+    expectedTags.forEach((tag) => {
+      expect(withinPills.getByText(tag)).toBeInTheDocument();
+    });
 
     // Clicking the 'gamma' pill invokes onClick.
     fireEvent.click(withinPills.getByText('gamma'));

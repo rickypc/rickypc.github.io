@@ -9,7 +9,7 @@ export default {
     title: '舜若多',
   },
   pali: {
-    children: 'oṃ svabhāva śuddhā sarva dharmāḥ svabhāva śuddho \'ham',
+    children: "oṃ svabhāva śuddhā sarva dharmāḥ svabhāva śuddho 'ham",
     sinhala: {
       children: 'ඕං ස්වභාව ශුද්ධාඃ සර්ව ධර්මාඃ ස්වභාව ශුද්ධෝ (අ)හං',
       title: 'ශූන්යතා',
@@ -33,7 +33,7 @@ export default {
     title: 'Buddha Nature',
   },
   transliteration: {
-    children: 'oṃ svabhāva śuddhā sarva dharmāḥ svabhāva śuddho \'ham',
+    children: "oṃ svabhāva śuddhā sarva dharmāḥ svabhāva śuddho 'ham",
     repetition: 7,
     title: 'Śūnyatā',
   },

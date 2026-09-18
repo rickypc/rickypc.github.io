@@ -5,10 +5,10 @@
  * @jest-environment jsdom
  */
 
+import useAudio from '@site/src/hooks/audio';
+import audioManager from '@site/src/lib/audioManager';
 import { act, renderHook } from '@testing-library/react';
 import Audio from '#root/tests/unit/helper/Audio';
-import audioManager from '@site/src/lib/audioManager';
-import useAudio from '@site/src/hooks/audio';
 
 const path = '/docs/buddhism/practice-daily-life/phrases/_arya_tara.ts';
 let rafCallback: Parameters<typeof requestAnimationFrame>[0] | null = null;
@@ -49,7 +49,7 @@ describe('useAudio.states', () => {
   test('onPlay calls audioManager.play and sets status to playing', async () => {
     const { result } = renderHook(() => useAudio(path));
 
-    result.current.ref.current!.currentTime = 1;
+    (result.current.ref.current as HTMLAudioElement).currentTime = 1;
     await act(async () => result.current.onPlay());
 
     expect(audioManager.play).toHaveBeenCalledTimes(1);
@@ -62,7 +62,7 @@ describe('useAudio.states', () => {
     );
     const { result } = renderHook(() => useAudio(path));
 
-    result.current.ref.current!.currentTime = 1;
+    (result.current.ref.current as HTMLAudioElement).currentTime = 1;
     await act(async () => result.current.onPlay());
 
     expect(audioManager.play).toHaveBeenCalledTimes(1);
@@ -75,7 +75,7 @@ describe('useAudio.states', () => {
     );
     const { result } = renderHook(() => useAudio(path));
 
-    result.current.ref.current!.currentTime = 1;
+    (result.current.ref.current as HTMLAudioElement).currentTime = 1;
     await act(async () => result.current.onPlay());
 
     expect(audioManager.play).toHaveBeenCalledTimes(1);
@@ -85,7 +85,7 @@ describe('useAudio.states', () => {
   test('onPause calls audioManager.pause and sets status to paused', async () => {
     const { result } = renderHook(() => useAudio(path));
 
-    result.current.ref.current!.currentTime = 1;
+    (result.current.ref.current as HTMLAudioElement).currentTime = 1;
     await act(async () => result.current.onPause());
 
     expect(audioManager.pause).toHaveBeenCalledTimes(1);
@@ -97,7 +97,7 @@ describe('useAudio.progress', () => {
   test('onStop resets time, progress, and sets status to idle', async () => {
     const { result } = renderHook(() => useAudio(path));
 
-    result.current.ref.current!.currentTime = 5;
+    (result.current.ref.current as HTMLAudioElement).currentTime = 5;
     await act(async () => result.current.onStop());
 
     expect(audioManager.pause).toHaveBeenCalledTimes(1);
@@ -109,7 +109,7 @@ describe('useAudio.progress', () => {
   test('RAF tick updates progress MotionValue', async () => {
     const { result } = renderHook(() => useAudio(path));
 
-    result.current.ref.current!.currentTime = 0;
+    (result.current.ref.current as HTMLAudioElement).currentTime = 0;
     Object.defineProperty(result.current.ref.current, 'duration', {
       value: NaN,
       writable: true,
@@ -130,17 +130,17 @@ describe('useAudio.progress', () => {
     act(() => rafCallback?.(2));
     expect(result.current.progress.get()).toBeCloseTo(0);
 
-    result.current.ref.current!.currentTime = 1;
+    (result.current.ref.current as HTMLAudioElement).currentTime = 1;
     act(() => rafCallback?.(1000));
     expect(result.current.progress.get()).toBeCloseTo(0.1);
 
-    result.current.ref.current!.currentTime = 2;
+    (result.current.ref.current as HTMLAudioElement).currentTime = 2;
     act(() => rafCallback?.(2000));
     expect(result.current.progress.get()).toBeCloseTo(0.2);
 
     await act(async () => result.current.onStop());
 
-    result.current.ref.current!.currentTime = 3;
+    (result.current.ref.current as HTMLAudioElement).currentTime = 3;
     act(() => rafCallback?.(3000));
     expect(result.current.progress.get()).toBeCloseTo(0);
   });
@@ -150,7 +150,7 @@ describe('useAudio.pause & stop', () => {
   test('pause event sets status to paused or idle depending on currentTime', async () => {
     const { result } = renderHook(() => useAudio(path));
 
-    const audio = result.current.ref.current!;
+    const audio = result.current.ref.current as HTMLAudioElement;
     audio.currentTime = 5;
 
     await act(async () => (audio as any).emit('pause'));
@@ -165,7 +165,7 @@ describe('useAudio.pause & stop', () => {
   test('ended event resets progress and sets idle', () => {
     const { result } = renderHook(() => useAudio(path));
 
-    const audio = result.current.ref.current!;
+    const audio = result.current.ref.current as HTMLAudioElement;
     audio.currentTime = 5;
 
     act(() => (audio as any).emit('ended'));
@@ -177,7 +177,7 @@ describe('useAudio.pause & stop', () => {
   test('error event sets idle', () => {
     const { result } = renderHook(() => useAudio(path));
 
-    const audio = result.current.ref.current!;
+    const audio = result.current.ref.current as HTMLAudioElement;
     audio.currentTime = 5;
 
     act(() => (audio as any).emit('error'));

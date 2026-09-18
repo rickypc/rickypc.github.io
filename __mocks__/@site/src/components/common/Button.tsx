@@ -3,10 +3,7 @@
  * All rights reserved.
  */
 
-import {
-  type PropsWithChildren, type ReactElement, type ReactEventHandler,
-  type Ref, type RefCallback,
-} from 'react';
+import type { PropsWithChildren, ReactElement, ReactEventHandler, Ref, RefCallback } from 'react';
 
 type ButtonProps = {
   'aria-label': string;
@@ -27,17 +24,20 @@ type ButtonRefHandler = HTMLButtonElement & { _handler?: ReactEventHandler<HTMLB
  *   The common/Button component.
  */
 export default function Button({
-  'aria-label': ariaLabel, children, onClick, ref, whileTap, ...rest
+  'aria-label': ariaLabel,
+  children,
+  onClick,
+  ref,
+  whileTap,
+  ...rest
 }: PropsWithChildren<ButtonProps>): ReactElement {
   const refHandler: RefCallback<ButtonRefHandler> = (node) => {
     if (node) {
-      // eslint-disable-next-line no-param-reassign,no-underscore-dangle
       node._handler = onClick;
     }
     if (typeof ref === 'function') {
       ref(node);
     } else if (ref) {
-      // eslint-disable-next-line no-param-reassign
       ref.current = node;
     }
   };

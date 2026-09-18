@@ -4,30 +4,32 @@
  */
 
 .container {
+  margin-bottom: var(--ifm-leading);
+  color: var(--prism-color);
   background: var(--prism-background-color);
   border-radius: var(--ifm-code-border-radius);
   box-shadow: var(--ifm-global-shadow-lw);
-  color: var(--prism-color);
-  margin-bottom: var(--ifm-leading);
 }
 
 .content {
+  position: relative;
   border-radius: inherit;
   direction: ltr;
-  position: relative;
 }
 
 .lines {
   display: flex;
-  font-family: 'Noto Serif Devanagari',SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
-  font-size: inherit;
   min-width: 100%;
   padding: 1.35rem 1rem 1rem 1rem;
+  font-family:
+    "Noto Serif Devanagari", SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: inherit;
 }
 
 .lines::after {
-  content: '';
   flex: 0 0 1.25rem;
+  content: "";
 }
 
 .lines:global(.phrase--gray) {
@@ -59,28 +61,28 @@
 }
 
 .title {
+  padding: 0.75rem var(--ifm-pre-padding);
+  font-size: var(--ifm-code-font-size);
+  font-weight: 500;
   border-bottom: 1px solid var(--ifm-color-emphasis-300);
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
-  font-size: var(--ifm-code-font-size);
-  font-weight: 500;
-  padding: 0.75rem var(--ifm-pre-padding);
 }
 
-[data-theme='dark'] .container {
-  --prism-background-color: #282A36;
-  --prism-color: #F8F8F2;
+[data-theme="dark"] .container {
+  --prism-background-color: #282a36;
+  --prism-color: #f8f8f2;
 }
 
-[data-theme='light'] .container {
-  --prism-background-color: #F6F8FA;
-  --prism-color: #393A34;
+[data-theme="light"] .container {
+  --prism-background-color: #f6f8fa;
+  --prism-color: #393a34;
 }
 
 @media print {
   .container {
-    break-inside: avoid;
     margin-bottom: 0.5rem;
+    break-inside: avoid;
   }
 
   .lines,

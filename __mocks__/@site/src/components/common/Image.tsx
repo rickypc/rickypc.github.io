@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 type ImageProps = PictureProps & {
   link?: {
@@ -35,17 +35,25 @@ type PictureProps = {
  * @returns {ReactElement}
  *   The common/Picture component.
  */
-function Picture({
-  alt, live, picture, ...rest
-}: PictureProps): ReactElement {
+function Picture({ alt, live, picture, ...rest }: PictureProps): ReactElement {
   const fallback = picture?.fallback;
   const imgAlt = alt || 'alt';
   return (
-    <picture data-live={String(live)} data-testid="picture" style={{ backgroundImage: `url(${fallback})` }}>
+    <picture
+      data-live={String(live)}
+      data-testid="picture"
+      style={{ backgroundImage: `url(${fallback})` }}
+    >
       {picture?.avif && <source srcSet={picture.avif} type="image/avif" />}
       {picture?.webp && <source srcSet={picture.webp} type="image/webp" />}
       {fallback && (
-        <img alt={imgAlt} data-testid={`img-${imgAlt}`} src={fallback} srcSet={fallback} {...rest} />
+        <img
+          alt={imgAlt}
+          data-testid={`img-${imgAlt}`}
+          src={fallback}
+          srcSet={fallback}
+          {...rest}
+        />
       )}
     </picture>
   );
@@ -58,9 +66,7 @@ function Picture({
  * @returns {ReactElement}
  *   The common/Image component.
  */
-export default function Image({
-  link, picture, whileTap, ...rest
-}: ImageProps): ReactElement {
+export default function Image({ link, picture, whileTap, ...rest }: ImageProps): ReactElement {
   if (link) {
     const { whileTap: linkWhileTap, ...linkRest } = link;
     return (

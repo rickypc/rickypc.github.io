@@ -5,20 +5,20 @@
  * @jest-environment jsdom
  */
 
-import { createRef } from 'react';
+import Button from '@site/src/components/common/Button';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Button from '@site/src/components/common/Button';
+import { createRef } from 'react';
 
 jest.unmock('@site/src/components/common/Button');
 
 describe('Button', () => {
   test('renders children, applies className, and spreads extra props', () => {
-    render((
+    render(
       <Button className="test-class" data-testid="my-btn">
         Click me
-      </Button>
-    ));
+      </Button>,
+    );
     const btn = screen.getByRole('button', { name: 'Click me' });
     expect(btn).toHaveClass('test-class');
     expect(btn).toHaveAttribute('data-testid', 'my-btn');

@@ -3,16 +3,19 @@
  * All rights reserved.
  */
 
-import { clsx } from '@site/src/data/common';
-import {
-  useEffect, useLayoutEffect, useMemo, useRef, useState,
-} from 'react';
-import useIsBrowser from '@docusaurus/useIsBrowser';
 import { useLocation } from '@docusaurus/router';
+import useIsBrowser from '@docusaurus/useIsBrowser';
+import { clsx } from '@site/src/data/common';
+import { type RefObject, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 const docusaurus = 'docusaurus';
 
 type Granularity = 'grapheme' | 'sentence' | 'word';
+
+type Visibility<T> = {
+  ref?: RefObject<T | null>;
+  threshold?: number;
+};
 
 /**
  * Tracks media query change status using matchMedia and useState.
@@ -79,15 +82,17 @@ export function useReadingTime(
   );
 
   useEffect(() => {
-    if (!segmenter) {
+    if (!browser || !segmenter) {
       return;
     }
     const text = (document.querySelector(selector) as HTMLElement)?.textContent;
     if (!text) {
       return;
     }
-    setReadingTime(Array.from(segmenter.segment(text))
-      .filter((segment) => segment.isWordLike).length / wordPerMinute);
+    setReadingTime(
+      Array.from(segmenter.segment(text)).filter((segment) => segment.isWordLike).length
+        / wordPerMinute,
+    );
     // return none.
   }, [browser, segmenter, selector, wordPerMinute]);
 
@@ -123,8 +128,7 @@ export function useResize(delay = 250) {
   return [resizing];
 }
 
-export const useSafeLayoutEffect = typeof (window) !== 'undefined'
-  ? useLayoutEffect : useEffect;
+export const useSafeLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 /**
  * Detects if a DOM ref is visible using IntersectionObserver.
@@ -134,12 +138,15 @@ export const useSafeLayoutEffect = typeof (window) !== 'undefined'
  * @returns {{ref: object, visible: boolean}} Object with ref and visibility
  *   state.
  */
-// eslint-disable-next-line react-hooks/rules-of-hooks
-export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...rest } = {}) {
+export function useVisibility<T>({ ref, threshold = 1.0, ...rest }: Visibility<T> = {}) {
   // Element is visible.
   const [inView, setInView] = useState(false);
+  const localRef = useRef<T>(null);
   // Page is visible.
   const [pageVisible, setPageVisible] = useState(true);
+  // Memoized the props.
+  const options = JSON.stringify({ threshold, ...rest });
+  ref = ref && typeof ref === 'object' && 'current' in ref ? ref : localRef;
   // Window has focus.
   const [windowFocused, setWindowFocused] = useState(false);
 
@@ -149,7 +156,7 @@ export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...re
     if (current instanceof Element) {
       observer = new IntersectionObserver(
         ([entry]) => setInView(entry.isIntersecting),
-        { threshold, ...rest },
+        JSON.parse(options),
       );
       observer.observe(current);
     }
@@ -158,7 +165,7 @@ export function useVisibility<T>({ ref = useRef<T>(null), threshold = 1.0, ...re
         observer?.unobserve(current);
       }
     };
-  }, [ref, rest, threshold]);
+  }, [options, ref]);
 
   // Listen once.
   useSafeLayoutEffect(() => {
@@ -194,12 +201,16 @@ export function useWelcome({ navigation = true } = {}) {
   const location = useLocation();
 
   useEffect(() => {
-    const anchor = document.querySelector<HTMLAnchorElement>('nav .navbar__item.navbar__item--translate');
+    const anchor = document.querySelector<HTMLAnchorElement>(
+      'nav .navbar__item.navbar__item--translate',
+    );
     // istanbul ignore else
     if (anchor) {
       const path = `${location.pathname}/`.replace(/\/\//g, '/');
-      const target = (['mni-Mtei', 'zh-CN', 'zh-TW'].includes(navigator.language)
-        ? navigator.language : navigator.language?.split?.('-')?.[0]) || 'en';
+      const target =
+        (['mni-Mtei', 'zh-CN', 'zh-TW'].includes(navigator.language)
+          ? navigator.language
+          : navigator.language?.split?.('-')?.[0]) || 'en';
       // After target assignment.
       const source = target === 'en' ? 'auto' : 'en';
       anchor.href = `https://rickypc-github-io.translate.goog${path}?_x_tr_sl=${source}&_x_tr_tl=${target}`;
@@ -209,11 +220,11 @@ export function useWelcome({ navigation = true } = {}) {
 
   useEffect(() => {
     if (browser) {
-      document.querySelector('nav .navbar__brand .navbar__title')
+      document
+        .querySelector('nav .navbar__brand .navbar__title')
         ?.setAttribute?.('translate', 'no');
       // istanbul ignore else
-      // eslint-disable-next-line no-restricted-globals
-      if (top === window) {
+      if (window.top === window) {
         const root = document.getElementById(`__${docusaurus}`);
         // istanbul ignore else
         if (root) {

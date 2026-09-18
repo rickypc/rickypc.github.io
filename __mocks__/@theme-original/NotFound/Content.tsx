@@ -3,4 +3,8 @@
  * All rights reserved.
  */
 
-export default jest.fn((props) => <div data-testid="content" {...props}>notfound.content</div>);
+export default jest.fn((props) => (
+  <div data-testid="content" {...props}>
+    notfound.content
+  </div>
+));

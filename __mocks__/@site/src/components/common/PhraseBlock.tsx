@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 type PhraseBlockProps = {
   infix?: string;
@@ -26,7 +26,10 @@ type PhraseProps = {
  *   The common/PhraseBlock component.
  */
 export default function PhraseBlock({
-  infix, phrase, prefix, suffix,
+  infix,
+  phrase,
+  prefix,
+  suffix,
 }: PhraseBlockProps): ReactElement {
   return (
     <div

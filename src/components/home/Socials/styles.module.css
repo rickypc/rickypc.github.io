@@ -5,33 +5,33 @@
 
 .social {
   display: flex;
-  list-style: none;
   padding: 2rem 0 0 0;
+  list-style: none;
 }
 
-.social li>a {
+.social li > a {
   display: inline-block;
-  font-size: 2.5rem;
   padding-right: 1.5rem;
+  font-size: 2.5rem;
   text-decoration: none;
   text-shadow: 0.125rem 0.125rem 0.1875rem rgba(255, 255, 255, 0.1);
-  transition: color var(--ifm-transition-fast) ease-in-out;
   user-select: none;
+  transition: color var(--ifm-transition-fast) ease-in-out;
 }
 
-[data-theme='dark'] .social li>a {
+[data-theme="dark"] .social li > a {
   color: #d3d3d3;
 }
 
-[data-theme='light'] .social li>a {
+[data-theme="light"] .social li > a {
   color: #282f49;
 }
 
-.social li>a:hover {
+.social li > a:hover {
   color: #248aaa;
 }
 
-.social li>a svg {
+.social li > a svg {
   filter: drop-shadow(0.1875rem 0.3rem 0.125rem rgb(0 0 0 / 0.4));
 }
 

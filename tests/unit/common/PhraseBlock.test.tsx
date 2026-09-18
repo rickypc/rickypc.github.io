@@ -21,15 +21,7 @@ describe('PhraseBlock', () => {
       unify: false,
     };
 
-    render((
-      <PhraseBlock
-        className="extra"
-        infix="*"
-        prefix="+"
-        suffix="-"
-        phrase={phrase}
-      />
-    ));
+    render(<PhraseBlock className="extra" infix="*" prefix="+" suffix="-" phrase={phrase} />);
 
     const context = screen.getByTestId('codeblock-context');
     // eslint-disable-next-line testing-library/no-node-access
@@ -52,14 +44,14 @@ describe('PhraseBlock', () => {
   test.each([
     [
       'unify multiple children',
-      { children: ['a', 'b'], unify: true, className: 'cls2' },
-      { prefix: 'P', infix: '=', suffix: ';' },
+      { children: ['a', 'b'], className: 'cls2', unify: true },
+      { infix: '=', prefix: 'P', suffix: ';' },
       'a=\nb;\n',
     ],
     [
       'non-unify multiple children',
-      { children: ['foo', 'bar'], unify: false, className: 'cls' },
-      { prefix: '+', infix: '=', suffix: '-' },
+      { children: ['foo', 'bar'], className: 'cls', unify: false },
+      { infix: '=', prefix: '+', suffix: '-' },
       '+foo-\n+bar-\n',
     ],
   ])('renders code for %s', (_desc, phrase, opts, expected) => {

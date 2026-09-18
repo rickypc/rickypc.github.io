@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
-import { a11y } from '@site/src/data/common';
-import { domAnimation, LazyMotion, motion } from 'motion/react';
 import Image from '@site/src/components/common/Image';
+import { a11y } from '@site/src/data/common';
 import { image } from '@site/src/data/home';
+import { domAnimation, LazyMotion, motion } from 'motion/react';
 import { memo } from 'react';
 import styles from './styles.module.css';
 

@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 type ProjectsProps = {
   filtered: string[];
@@ -17,7 +17,9 @@ type ProjectsProps = {
  *   The portfolio/Projects component.
  */
 export default function PortfolioProjects({
-  children, filtered, ...rest
+  children,
+  filtered,
+  ...rest
 }: PropsWithChildren<ProjectsProps>): ReactElement {
   return (
     <div

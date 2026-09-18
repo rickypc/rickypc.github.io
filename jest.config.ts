@@ -13,16 +13,18 @@ module.exports = {
   errorOnDeprecated: true,
   logHeapUsage: true,
   moduleNameMapper: {
-    '@docusaurus/(BrowserOnly|ComponentCreator|constants|ExecutionEnvironment|Head|Interpolate|isInternalUrl|Link|Noop|renderRoutes|router|Translate|use.*)': '@docusaurus/core/lib/client/exports/$1',
+    '@docusaurus/(BrowserOnly|ComponentCreator|constants|ExecutionEnvironment|Head|Interpolate|isInternalUrl|Link|Noop|renderRoutes|router|Translate|use.*)':
+      '@docusaurus/core/lib/client/exports/$1',
     '@docusaurus/plugin-content-docs/client': '@docusaurus/plugin-content-docs/src/client/index.ts',
     '@site/(.*)': '<rootDir>/$1',
-    '@theme/(.*)': '<rootDir>/src/theme/$1',
     '@theme-original/(.*)': '@docusaurus/theme-classic/src/theme/$1',
+    '@theme/(.*)': '<rootDir>/src/theme/$1',
   },
   testEnvironment: 'node',
   testPathIgnorePatterns: ['<rootDir>/supports/'],
   testRegex: 'tests/unit/.*.test.[jt]sx?$',
   transform: {
+    '\\.(avif|css|jpe?g|png|svg|webp)$': '<rootDir>/tests/unit/transformer.ts',
     '^.+\\.[jt]sx?$': [
       '@swc/jest',
       {
@@ -33,7 +35,6 @@ module.exports = {
         },
       },
     ],
-    '\\.(avif|css|jpe?g|png|svg|webp)$': '<rootDir>/tests/unit/transformer.ts',
   },
   transformIgnorePatterns: ['node_modules/(?!@docusaurus/.*)'],
 };

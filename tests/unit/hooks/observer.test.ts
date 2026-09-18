@@ -5,13 +5,18 @@
  * @jest-environment jsdom
  */
 
-import { act, renderHook, waitFor } from '@testing-library/react';
-import { type Location } from 'history';
-import useIsBrowser from '@docusaurus/useIsBrowser';
 import { useLocation } from '@docusaurus/router';
+import useIsBrowser from '@docusaurus/useIsBrowser';
 import {
-  useMedia, usePrint, useReadingTime, useResize, useVisibility, useWelcome,
+  useMedia,
+  usePrint,
+  useReadingTime,
+  useResize,
+  useVisibility,
+  useWelcome,
 } from '@site/src/hooks/observer';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import type { Location } from 'history';
 
 const useIsBrowserMock = jest.mocked(useIsBrowser);
 const useLocationMock = jest.mocked(useLocation);
@@ -40,12 +45,12 @@ describe('useMedia', () => {
     // Stub window.matchMedia fresh each test.
     window.matchMedia = jest.fn((query): MediaQueryList => {
       const mql = {
-        addEventListener: jest.fn((event, cb) => {
+        addEventListener: jest.fn((_, cb) => {
           mediaQueryListeners.set(query, cb);
         }),
         matches: query.includes('min-width'),
         media: query,
-        removeEventListener: jest.fn((event, cb) => {
+        removeEventListener: jest.fn((_, cb) => {
           if (mediaQueryListeners.get(query) === cb) {
             mediaQueryListeners.delete(query);
           }
@@ -87,13 +92,13 @@ describe('useMedia', () => {
 
     // Wait until addEventListener has definitely run.
     const mql = mediaQueryLists[0];
-    await waitFor(() => expect(mql.addEventListener)
-      .toHaveBeenCalledWith('change', expect.any(Function)));
+    await waitFor(() =>
+      expect(mql.addEventListener).toHaveBeenCalledWith('change', expect.any(Function)),
+    );
 
     unmount();
 
-    expect(mql.removeEventListener)
-      .toHaveBeenCalledWith('change', expect.any(Function));
+    expect(mql.removeEventListener).toHaveBeenCalledWith('change', expect.any(Function));
     expect(mediaQueryListeners.has(query)).toBeFalsy();
   });
 
@@ -101,10 +106,9 @@ describe('useMedia', () => {
     const query1 = '(min-width: 400px)';
     const query2 = '(max-width: 500px)';
 
-    const { result, rerender } = renderHook(
-      ({ q }) => useMedia(q),
-      { initialProps: { q: query1 } },
-    );
+    const { result, rerender } = renderHook(({ q }) => useMedia(q), {
+      initialProps: { q: query1 },
+    });
 
     // Initial effect.
     await waitFor(() => {
@@ -119,14 +123,12 @@ describe('useMedia', () => {
     // Now the old listener cleanup + new subscription + state update should all fire.
     await waitFor(() => {
       // Old cleanup.
-      expect(mql1.removeEventListener)
-        .toHaveBeenCalledWith('change', expect.any(Function));
+      expect(mql1.removeEventListener).toHaveBeenCalledWith('change', expect.any(Function));
 
       // New subscription was added.
       const mql2 = mediaQueryLists[1];
       expect(window.matchMedia).toHaveBeenLastCalledWith(query2);
-      expect(mql2.addEventListener)
-        .toHaveBeenCalledWith('change', expect.any(Function));
+      expect(mql2.addEventListener).toHaveBeenCalledWith('change', expect.any(Function));
 
       // New state reflects matches for max-width -> false.
       expect(result.current[0]).toBeFalsy();
@@ -188,10 +190,9 @@ describe('useReadingTime', () => {
       <div id="b">one two three four five six</div>
     `;
     useIsBrowserMock.mockReturnValue(true);
-    const { result, rerender } = renderHook(
-      ({ sel }) => useReadingTime(sel, 'en', 'word', 3),
-      { initialProps: { sel: '#a' } },
-    );
+    const { result, rerender } = renderHook(({ sel }) => useReadingTime(sel, 'en', 'word', 3), {
+      initialProps: { sel: '#a' },
+    });
 
     await waitFor(() => expect(result.current[0]).toBeCloseTo(3 / 3));
 
@@ -253,10 +254,7 @@ describe('useResize', () => {
     const { unmount } = renderHook(() => useResize(500));
     unmount();
 
-    expect(spies.win.remove).toHaveBeenCalledWith(
-      'resize',
-      expect.any(Function),
-    );
+    expect(spies.win.remove).toHaveBeenCalledWith('resize', expect.any(Function));
   });
 });
 
@@ -339,17 +337,21 @@ describe('useVisibility (Browser)', () => {
     expect(result.current.visible).toBeFalsy();
 
     // Fire an intersection entry = true.
-    act(() => onIntersect(
-      [{ isIntersecting: true } as IntersectionObserverEntry],
-      {} as IntersectionObserver,
-    ));
+    act(() =>
+      onIntersect(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      ),
+    );
     expect(result.current.visible).toBeTruthy();
 
     // Then out of view.
-    act(() => onIntersect(
-      [{ isIntersecting: false } as IntersectionObserverEntry],
-      {} as IntersectionObserver,
-    ));
+    act(() =>
+      onIntersect(
+        [{ isIntersecting: false } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      ),
+    );
     expect(result.current.visible).toBeFalsy();
 
     // Also listens to visibilitychange.
@@ -398,14 +400,15 @@ describe('useWelcome.default', () => {
 
     // eslint-disable-next-line testing-library/no-node-access
     let root = document.getElementById('__docusaurus');
-    root!.className = 'docusaurus-root';
+    (root as HTMLElement).className = 'docusaurus-root';
 
     renderHook(() => useWelcome());
 
     // eslint-disable-next-line testing-library/no-node-access
     let translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
-    expect((translateLink as HTMLAnchorElement).href)
-      .toContain('https://rickypc-github-io.translate.goog/missing/?_x_tr_sl=auto&_x_tr_tl=en');
+    expect((translateLink as HTMLAnchorElement).href).toContain(
+      'https://rickypc-github-io.translate.goog/missing/?_x_tr_sl=auto&_x_tr_tl=en',
+    );
 
     // Empty-string case.
     Object.defineProperty(window.navigator, 'language', {
@@ -416,14 +419,15 @@ describe('useWelcome.default', () => {
 
     // eslint-disable-next-line testing-library/no-node-access
     root = document.getElementById('__docusaurus');
-    root!.className = 'docusaurus-root';
+    (root as HTMLElement).className = 'docusaurus-root';
 
     renderHook(() => useWelcome());
 
     // eslint-disable-next-line testing-library/no-node-access
     translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
-    expect((translateLink as HTMLAnchorElement).href)
-      .toContain('https://rickypc-github-io.translate.goog/missing-empty/?_x_tr_sl=auto&_x_tr_tl=en');
+    expect((translateLink as HTMLAnchorElement).href).toContain(
+      'https://rickypc-github-io.translate.goog/missing-empty/?_x_tr_sl=auto&_x_tr_tl=en',
+    );
   });
 
   test('default object and navigation = true (en-US)', () => {
@@ -436,22 +440,23 @@ describe('useWelcome.default', () => {
 
     // eslint-disable-next-line testing-library/no-node-access
     const root = document.getElementById('__docusaurus');
-    root!.className = 'docusaurus-root';
+    (root as HTMLElement).className = 'docusaurus-root';
 
     renderHook(() => useWelcome());
 
     // eslint-disable-next-line testing-library/no-node-access
     const translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
     expect(translateLink).not.toBeNull();
-    expect((translateLink as HTMLAnchorElement).href)
-      .toContain('https://rickypc-github-io.translate.goog/docs/intro/?_x_tr_sl=auto&_x_tr_tl=en');
+    expect((translateLink as HTMLAnchorElement).href).toContain(
+      'https://rickypc-github-io.translate.goog/docs/intro/?_x_tr_sl=auto&_x_tr_tl=en',
+    );
 
-    expect(root!.className).not.toMatch(/--exclusive/);
-    expect(root!.className).toMatch(/--welcome/);
+    expect((root as HTMLElement).className).not.toMatch(/--exclusive/);
+    expect((root as HTMLElement).className).toMatch(/--welcome/);
 
     // eslint-disable-next-line testing-library/no-node-access
     const title = document.querySelector('nav .navbar__brand .navbar__title');
-    expect(title!.getAttribute('translate')).toBe('no');
+    expect((title as Element).getAttribute('translate')).toBe('no');
   });
 
   test('default object and navigation = true (en-US) - non-browser', () => {
@@ -464,14 +469,14 @@ describe('useWelcome.default', () => {
 
     // eslint-disable-next-line testing-library/no-node-access
     const root = document.getElementById('__docusaurus');
-    root!.className = 'docusaurus-root';
+    (root as HTMLElement).className = 'docusaurus-root';
 
     renderHook(() => useWelcome());
 
     // eslint-disable-next-line testing-library/no-node-access
     const title = document.querySelector('nav .navbar__brand .navbar__title');
-    expect(title!.getAttribute('translate')).toBeNull();
-    expect(root!.className).toBe('docusaurus-root');
+    expect((title as Element).getAttribute('translate')).toBeNull();
+    expect((root as HTMLElement).className).toBe('docusaurus-root');
   });
 });
 
@@ -499,23 +504,24 @@ describe('useWelcome.navigation', () => {
 
     // eslint-disable-next-line testing-library/no-node-access
     const root = document.getElementById('__docusaurus');
-    root!.className = 'docusaurus-root';
+    (root as HTMLElement).className = 'docusaurus-root';
 
     renderHook(() => useWelcome({ navigation: false }));
 
     // eslint-disable-next-line testing-library/no-node-access
     const translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
     expect(translateLink).not.toBeNull();
-    expect((translateLink as HTMLAnchorElement).href)
-      .toContain('https://rickypc-github-io.translate.goog/zh/?_x_tr_sl=en&_x_tr_tl=zh-CN');
+    expect((translateLink as HTMLAnchorElement).href).toContain(
+      'https://rickypc-github-io.translate.goog/zh/?_x_tr_sl=en&_x_tr_tl=zh-CN',
+    );
 
     // Navigation false should add exclusive and welcome classes.
-    expect(root!.className).toMatch(/--exclusive/);
-    expect(root!.className).toMatch(/--welcome/);
+    expect((root as HTMLElement).className).toMatch(/--exclusive/);
+    expect((root as HTMLElement).className).toMatch(/--welcome/);
 
     // eslint-disable-next-line testing-library/no-node-access
     const title = document.querySelector('nav .navbar__brand .navbar__title');
-    expect(title!.getAttribute('translate')).toBe('no');
+    expect((title as Element).getAttribute('translate')).toBe('no');
   });
 
   test('navigation = true (fr)', () => {
@@ -528,15 +534,16 @@ describe('useWelcome.navigation', () => {
 
     // eslint-disable-next-line testing-library/no-node-access
     const root = document.getElementById('__docusaurus');
-    root!.className = 'docusaurus-root';
+    (root as HTMLElement).className = 'docusaurus-root';
 
     renderHook(() => useWelcome({ navigation: true }));
 
     // eslint-disable-next-line testing-library/no-node-access
     const translateLink = document.querySelector('nav .navbar__item.navbar__item--translate');
-    expect((translateLink as HTMLAnchorElement).href)
-      .toContain('https://rickypc-github-io.translate.goog/fr/?_x_tr_sl=en&_x_tr_tl=fr');
+    expect((translateLink as HTMLAnchorElement).href).toContain(
+      'https://rickypc-github-io.translate.goog/fr/?_x_tr_sl=en&_x_tr_tl=fr',
+    );
 
-    expect(root!.className).toMatch(/--welcome/);
+    expect((root as HTMLElement).className).toMatch(/--welcome/);
   });
 });

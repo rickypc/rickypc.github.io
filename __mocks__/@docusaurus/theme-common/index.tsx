@@ -3,9 +3,11 @@
  * All rights reserved.
  */
 
-export const PageMetadata = jest.fn(({
-  children, ...rest
-}) => <div data-testid="metadata" {...rest}>{children}</div>);
+export const PageMetadata = jest.fn(({ children, ...rest }) => (
+  <div data-testid="metadata" {...rest}>
+    {children}
+  </div>
+));
 
 export const translateTagsPageTitle = jest.fn(() => 'Tags');
 

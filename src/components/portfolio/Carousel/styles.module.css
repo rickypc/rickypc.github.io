@@ -10,25 +10,25 @@
 }
 
 .carousel .viewport {
-  border-radius: 0.5rem;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  position: relative;
   margin: 0 -2rem;
   overflow: hidden;
-  position: relative;
+  border-radius: 0.5rem;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .carousel .slider {
-  backface-visibility: hidden;
   display: flex;
-  transition: transform;
   user-select: none;
+  backface-visibility: hidden;
+  transition: transform;
 }
 
 .carousel .slide {
   flex-shrink: 0;
-  height: 25rem;
   width: 100%;
+  height: 25rem;
 }
 
 .carousel .slide:hover {
@@ -40,33 +40,35 @@
 }
 
 .carousel .button {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  display: flex;
   align-items: center;
-  backdrop-filter: blur(0.5rem);
+  justify-content: center;
+
+  width: 2.25rem;
+  height: 2.25rem;
+  overflow: hidden;
+  cursor: pointer;
   background: color-mix(in oklab, #fff 10%, transparent);
   border: 0.0625rem solid color-mix(in oklab, #fff 15%, transparent);
   border-radius: 50%;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.18),
+  box-shadow:
+    0 0.25rem 0.75rem rgba(0, 0, 0, 0.18),
     0 0 1rem rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  display: flex;
-  height: 2.25rem;
-  justify-content: center;
-  overflow: hidden;
-  position: absolute;
-  top: 50%;
+  backdrop-filter: blur(0.5rem);
   transform: translateY(-50%);
   transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.4);
-  width: 2.25rem;
-  z-index: 1;
 }
 
 .carousel .button::after {
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 0.03125rem rgba(0, 0, 0, 0.18);
-  content: '';
+  position: absolute;
   inset: 0;
   pointer-events: none;
-  position: absolute;
+  content: "";
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 0.03125rem rgba(0, 0, 0, 0.18);
 }
 
 .carousel .button:hover {
@@ -75,9 +77,9 @@
 }
 
 .carousel .button.disabled {
+  cursor: not-allowed;
   background: color-mix(in oklab, #fff 6%, transparent);
   border-color: color-mix(in oklab, #fff 10%, transparent);
-  cursor: not-allowed;
   opacity: 0.35;
 }
 
@@ -90,15 +92,18 @@
 }
 
 .carousel .button svg {
-  height: 1.25rem;
   width: 1.25rem;
+  height: 1.25rem;
 }
 
 .carousel .button svg path {
   filter: drop-shadow(0 0 0.03125rem rgba(0, 0, 0, 0.45));
   stroke: color-mix(in oklab, #fff 85%, transparent);
   stroke-width: 2;
-  transition: filter 0.25s ease, stroke 0.25s ease, stroke-width 0.25s ease;
+  transition:
+    filter 0.25s ease,
+    stroke 0.25s ease,
+    stroke-width 0.25s ease;
 }
 
 .carousel .button:hover svg path {
@@ -113,85 +118,86 @@
 }
 
 .carousel .indicators {
-  backdrop-filter: blur(0.5rem);
-  background: color-mix(in oklab, #fff 10%, transparent);
-  border-top: 0.0625rem solid color-mix(in oklab, #fff 15%, transparent);
-  box-shadow: inset 0 0 0.5rem rgba(0, 0, 0, 0.08);
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
   bottom: 0;
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
-  inset-inline-end: 0;
-  inset-inline-start: 0;
   justify-content: center;
   padding: 0.725rem 0.6rem 0.6rem 0.6rem;
   pointer-events: auto;
-  position: absolute;
+  background: color-mix(in oklab, #fff 10%, transparent);
+  border-top: 0.0625rem solid color-mix(in oklab, #fff 15%, transparent);
+  box-shadow: inset 0 0 0.5rem rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(0.5rem);
 }
 
 .carousel .indicator {
-  backdrop-filter: blur(0.25rem) saturate(1.1);
+  width: 0.625rem;
+  height: 0.625rem;
+  cursor: pointer;
   background: color-mix(in oklab, #fff 70%, #0d6bdc 30%);
   border: 0.0625rem solid color-mix(in oklab, #fff 12%, #0d6bdc 20%);
   border-radius: 50%;
   box-shadow:
     0 0.18rem 0.55rem rgba(0, 0, 0, 0.18),
-    0 0 0.25rem rgba(255, 255, 255, 0.10);
-  cursor: pointer;
-  height: 0.625rem;
+    0 0 0.25rem rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(0.25rem) saturate(1.1);
   transition: all 0.25s ease;
-  width: 0.625rem;
 }
 
 .carousel .indicator:hover {
   background: color-mix(in oklab, #fff 60%, #0d6bdc 40%);
   border: 0.0625rem solid color-mix(in oklab, #fff 18%, #0d6bdc 25%);
   box-shadow:
-    0 0.20rem 0.60rem rgba(0, 0, 0, 0.20),
-    0 0 0.30rem rgba(255, 255, 255, 0.14);
+    0 0.2rem 0.6rem rgba(0, 0, 0, 0.2),
+    0 0 0.3rem rgba(255, 255, 255, 0.14);
   transform: scale(1.15);
 }
 
 .carousel .active.indicator {
-  backdrop-filter: blur(0.25rem) saturate(1.1);
+  width: 2.25rem;
+  height: 0.625rem;
   background: color-mix(in oklab, #fff 50%, #0d6bdc 50%);
   border: 0.0625rem solid color-mix(in oklab, #fff 28%, #0d6bdc 30%);
   border-radius: 1rem;
   box-shadow:
     0 0.22rem 0.65rem rgba(0, 0, 0, 0.22),
-    0 0 0.30rem rgba(255, 255, 255, 0.18);
-  height: 0.625rem;
+    0 0 0.3rem rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(0.25rem) saturate(1.1);
   transition: all 0.25s ease;
-  width: 2.25rem;
 }
 
 .carousel .indicators .progress {
-  border-radius: 1rem;
-  height: 0.1875rem;
-  left: 0;
-  overflow: hidden;
-  pointer-events: none;
   position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
+  height: 0.1875rem;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 1rem;
 }
 
 .carousel .indicators .progress::before {
-  background: color-mix(in oklab, #fff 18%, transparent);
-  content: '';
-  inset: 0;
-  opacity: 0.35;
   position: absolute;
+  inset: 0;
+  content: "";
+  background: color-mix(in oklab, #fff 18%, transparent);
+  opacity: 0.35;
 }
 
 .carousel .indicators .progress .bar {
-  backdrop-filter: blur(0.25rem) saturate(1.1);
-  background: color-mix(in oklab, #fff 63%, #0d6bdc 37%);
-  box-shadow: 0 0.12rem 0.35rem rgba(0, 0, 0, 0.18),
-    0 0 0.25rem rgba(255, 255, 255, 0.18);
-  height: 100%;
   position: absolute;
   width: 0;
+  height: 100%;
+  background: color-mix(in oklab, #fff 63%, #0d6bdc 37%);
+  box-shadow:
+    0 0.12rem 0.35rem rgba(0, 0, 0, 0.18),
+    0 0 0.25rem rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(0.25rem) saturate(1.1);
 }
 
 @media print {
@@ -206,6 +212,7 @@
   }
 
   .carousel .slider {
+    /* biome-ignore lint/complexity/noImportantStyles: - */
     transform: none !important;
   }
 }

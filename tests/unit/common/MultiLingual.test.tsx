@@ -19,28 +19,62 @@ describe('MultiLingual', () => {
 
   describe('when all language props are provided', () => {
     test.each([
-      ['chinese', {
-        id: 'ch', infix: '·', prefix: '꣼ ', suffix: '。',
-      }],
-      ['pali', {
-        id: 'si', infix: '.', prefix: '꣼ ', suffix: '෴',
-      }],
-      ['sanskrit', {
-        id: 'sa', infix: '।', prefix: '꣼ ', suffix: '॥',
-      }],
-      ['siddham', {
-        id: 'sid', infix: '𑗂', prefix: '꣼ ', suffix: '𑗃',
-      }],
-      ['thai', {
-        id: 'th', infix: 'ฯ', prefix: '꣼ ', suffix: '๚',
-      }],
-      ['tibetan', {
-        id: 'ti', infix: '།', prefix: '༄༅། །', suffix: '༎',
-      }],
-    ])('%s phrase block has correct markers', (_lang, {
-      id, infix, prefix, suffix,
-    }) => {
-      render((
+      [
+        'chinese',
+        {
+          id: 'ch',
+          infix: '·',
+          prefix: '꣼ ',
+          suffix: '。',
+        },
+      ],
+      [
+        'pali',
+        {
+          id: 'si',
+          infix: '.',
+          prefix: '꣼ ',
+          suffix: '෴',
+        },
+      ],
+      [
+        'sanskrit',
+        {
+          id: 'sa',
+          infix: '।',
+          prefix: '꣼ ',
+          suffix: '॥',
+        },
+      ],
+      [
+        'siddham',
+        {
+          id: 'sid',
+          infix: '𑗂',
+          prefix: '꣼ ',
+          suffix: '𑗃',
+        },
+      ],
+      [
+        'thai',
+        {
+          id: 'th',
+          infix: 'ฯ',
+          prefix: '꣼ ',
+          suffix: '๚',
+        },
+      ],
+      [
+        'tibetan',
+        {
+          id: 'ti',
+          infix: '།',
+          prefix: '༄༅། །',
+          suffix: '༎',
+        },
+      ],
+    ])('%s phrase block has correct markers', (_lang, { id, infix, prefix, suffix }) => {
+      render(
         <MultiLingual
           chinese={chinese}
           pali={pali}
@@ -48,8 +82,8 @@ describe('MultiLingual', () => {
           thai={thai}
           tibetan={tibetan}
           transliteration={transliteration}
-        />
-      ));
+        />,
+      );
       const el = screen.queryByTestId(`phrase-block-${id}`);
       expect(el).toBeInTheDocument();
       expect(el).toHaveAttribute('class', transliteration.className);

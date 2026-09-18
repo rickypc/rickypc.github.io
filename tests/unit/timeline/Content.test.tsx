@@ -7,8 +7,8 @@
 
 import { render, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { clsx } from '@site/src/data/common';
 import Content from '@site/src/components/timeline/Content';
+import { clsx } from '@site/src/data/common';
 import { timelines } from '@site/src/data/timeline';
 import { useMedia, usePrint } from '@site/src/hooks/observer';
 
@@ -79,11 +79,15 @@ describe('timeline.Content', () => {
       expect(imgLink).toHaveAttribute('href', timeline.affiliation.href);
       const picture = within(w).getByTestId('picture');
       // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.querySelector('source[type="image/avif"]'))
-        .toHaveAttribute('srcSet', timeline.picture.avif);
+      expect(picture.querySelector('source[type="image/avif"]')).toHaveAttribute(
+        'srcSet',
+        timeline.picture.avif,
+      );
       // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.querySelector('source[type="image/webp"]'))
-        .toHaveAttribute('srcSet', timeline.picture.webp);
+      expect(picture.querySelector('source[type="image/webp"]')).toHaveAttribute(
+        'srcSet',
+        timeline.picture.webp,
+      );
 
       // Article & inner class.
       const article = within(w).getByTestId('article');
@@ -124,6 +128,8 @@ describe('timeline.Content', () => {
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const wrappers = container.querySelectorAll('.timeline');
 
-    wrappers.forEach((w) => expect(w).toHaveClass('right'));
+    wrappers.forEach((w) => {
+      expect(w).toHaveClass('right');
+    });
   });
 });

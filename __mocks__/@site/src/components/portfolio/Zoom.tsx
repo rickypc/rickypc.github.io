@@ -3,10 +3,11 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { ImageProps } from '@site/src/components/common/Image';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 type ZoomProps = {
-  open: {};
+  open: ImageProps;
 };
 
 /**
@@ -17,14 +18,12 @@ type ZoomProps = {
  *   The portfolio/Zoom component.
  */
 export default function PortfolioZoom({
-  children, open, ...rest
+  children,
+  open,
+  ...rest
 }: PropsWithChildren<ZoomProps>): ReactElement {
   return (
-    <div
-      data-open={String(!!Object.keys(open || {}).length)}
-      data-testid="zoom"
-      {...rest}
-    >
+    <div data-open={String(!!Object.keys(open || {}).length)} data-testid="zoom" {...rest}>
       {children}
     </div>
   );

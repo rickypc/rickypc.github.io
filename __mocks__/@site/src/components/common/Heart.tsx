@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-import { type PropsWithChildren, type ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 /**
  * Minimal mock common/Heart component that renders children.
@@ -13,5 +13,9 @@ import { type PropsWithChildren, type ReactElement } from 'react';
  *   The common/Heart component.
  */
 export default function Heart({ children, ...rest }: PropsWithChildren): ReactElement {
-  return <div data-testid="heart" {...rest}>{children}</div>;
+  return (
+    <div data-testid="heart" {...rest}>
+      {children}
+    </div>
+  );
 }

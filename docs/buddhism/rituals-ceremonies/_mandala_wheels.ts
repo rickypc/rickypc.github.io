@@ -14,11 +14,31 @@ export default async function mandalaWheels() {
   return {
     definition: {
       content: [
-        await image({ alt: 'Jambhala Maṇḍala', path: '#buddhism/img/mandala-jambhala.webp', width: 624 }),
-        await image({ alt: 'Vasudhārā Maṇḍala', path: '#buddhism/img/mandala-vasudhara.webp', width: 612 }),
-        await image({ alt: 'Ganapati Maṇḍala', path: '#buddhism/img/mandala-ganapati.webp', width: 612 }),
-        await image({ alt: 'Aṣṭamaṅgala Maṇḍala', path: '#buddhism/img/mandala-asta-mangala.webp', width: 612 }),
-        await image({ alt: 'Viśvavajra Maṇḍala', path: '#buddhism/img/mandala-visva-vajra.webp', width: 587 }),
+        await image({
+          alt: 'Jambhala Maṇḍala',
+          path: '#buddhism/img/mandala-jambhala.webp',
+          width: 624,
+        }),
+        await image({
+          alt: 'Vasudhārā Maṇḍala',
+          path: '#buddhism/img/mandala-vasudhara.webp',
+          width: 612,
+        }),
+        await image({
+          alt: 'Ganapati Maṇḍala',
+          path: '#buddhism/img/mandala-ganapati.webp',
+          width: 612,
+        }),
+        await image({
+          alt: 'Aṣṭamaṅgala Maṇḍala',
+          path: '#buddhism/img/mandala-asta-mangala.webp',
+          width: 612,
+        }),
+        await image({
+          alt: 'Viśvavajra Maṇḍala',
+          path: '#buddhism/img/mandala-visva-vajra.webp',
+          width: 587,
+        }),
       ],
       info: {
         keywords: oneLine(`This document is about the maṇḍala wheels and its

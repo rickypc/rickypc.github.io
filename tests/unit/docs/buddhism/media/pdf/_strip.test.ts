@@ -3,11 +3,16 @@
  * All rights reserved.
  */
 
-import {
-  BASE_GEOMETRY, body, CONDENSED_GEOMETRY, languageFontSizes, languageGeometry,
-  subsequentBody, substance,
-} from '#buddhism/media/pdf/_strip';
 import { createElement } from 'react';
+import {
+  BASE_GEOMETRY,
+  body,
+  CONDENSED_GEOMETRY,
+  languageFontSizes,
+  languageGeometry,
+  subsequentBody,
+  substance,
+} from '#buddhism/media/pdf/_strip';
 
 describe('docs.buddhism.media.pdf._strip.body()', () => {
   test('wraps a single phrase into the expected structure', () => {
@@ -78,7 +83,13 @@ describe('docs.buddhism.media.pdf._strip.languageGeometry()', () => {
   const mockTransliteration = { repeat: { roll: 3 }, text: 'translit-text' } as any;
 
   test('should return standard Tibetan metrics when lang is bo-CN and key is not condensed', () => {
-    const result = languageGeometry('roll', 'bo-CN', mockSanskrit, mockTibetan, mockTransliteration);
+    const result = languageGeometry(
+      'roll',
+      'bo-CN',
+      mockSanskrit,
+      mockTibetan,
+      mockTransliteration,
+    );
 
     expect(result).toEqual({
       ...BASE_GEOMETRY,
@@ -97,7 +108,13 @@ describe('docs.buddhism.media.pdf._strip.languageGeometry()', () => {
   });
 
   test('should return condensed Tibetan metrics when lang is bo-CN and key is condensed', () => {
-    const result = languageGeometry('condensed', 'bo-CN', mockSanskrit, mockTibetan, mockTransliteration);
+    const result = languageGeometry(
+      'condensed',
+      'bo-CN',
+      mockSanskrit,
+      mockTibetan,
+      mockTransliteration,
+    );
 
     expect(result).toEqual({
       ...CONDENSED_GEOMETRY,
@@ -116,7 +133,13 @@ describe('docs.buddhism.media.pdf._strip.languageGeometry()', () => {
   });
 
   test('should return standard Sanskrit metrics when lang is sa-IN and key is not condensed', () => {
-    const result = languageGeometry('roll', 'sa-IN', mockSanskrit, mockTibetan, mockTransliteration);
+    const result = languageGeometry(
+      'roll',
+      'sa-IN',
+      mockSanskrit,
+      mockTibetan,
+      mockTransliteration,
+    );
 
     expect(result).toEqual({
       ...BASE_GEOMETRY,
@@ -134,7 +157,13 @@ describe('docs.buddhism.media.pdf._strip.languageGeometry()', () => {
   });
 
   test('should return condensed Sanskrit metrics when lang is sa-IN and key is condensed', () => {
-    const result = languageGeometry('condensed', 'sa-IN', mockSanskrit, mockTibetan, mockTransliteration);
+    const result = languageGeometry(
+      'condensed',
+      'sa-IN',
+      mockSanskrit,
+      mockTibetan,
+      mockTransliteration,
+    );
 
     expect(result).toEqual({
       ...CONDENSED_GEOMETRY,
@@ -152,7 +181,13 @@ describe('docs.buddhism.media.pdf._strip.languageGeometry()', () => {
   });
 
   test('should return fallback transliteration metrics when lang matches no known configs', () => {
-    const result = languageGeometry('roll', 'en-US', mockSanskrit, mockTibetan, mockTransliteration);
+    const result = languageGeometry(
+      'roll',
+      'en-US',
+      mockSanskrit,
+      mockTibetan,
+      mockTransliteration,
+    );
 
     expect(result).toEqual({
       ...BASE_GEOMETRY,
@@ -164,13 +199,22 @@ describe('docs.buddhism.media.pdf._strip.languageGeometry()', () => {
 });
 
 describe('docs.buddhism.media.pdf._strip.subsequentBody()', () => {
-  const mockFontSizes = { title: '16px', default: '12px' } as any;
+  const mockFontSizes = { default: '12px', title: '16px' } as any;
   const mockText = 'om mani padme hum' as any;
   const mockTransliteration = { title: 'mantra' } as any;
 
   test('should format structure correctly and convert transliteration title to uppercase', () => {
     const mockRepeat = { roll: 3 };
-    const result = subsequentBody(mockFontSizes, '|', '[', mockRepeat, 'roll', ']', mockText, mockTransliteration);
+    const result = subsequentBody(
+      mockFontSizes,
+      '|',
+      '[',
+      mockRepeat,
+      'roll',
+      ']',
+      mockText,
+      mockTransliteration,
+    );
 
     // Matches the actual production output from the body method.
     expect(result).toEqual([
@@ -198,7 +242,16 @@ describe('docs.buddhism.media.pdf._strip.subsequentBody()', () => {
   });
 
   test('should fallback to a count of 1 when repeat configuration or key is completely missing', () => {
-    const result = subsequentBody(mockFontSizes, '|', '[', undefined as any, 'roll', ']', mockText, mockTransliteration);
+    const result = subsequentBody(
+      mockFontSizes,
+      '|',
+      '[',
+      undefined as any,
+      'roll',
+      ']',
+      mockText,
+      mockTransliteration,
+    );
 
     // Directly access nested output array to avoid deep template matching.
     expect(result[0][0].text[0].text).toBe('MANTRA 1x ');
@@ -210,7 +263,16 @@ describe('docs.buddhism.media.pdf._strip.subsequentBody()', () => {
 
   test('should dynamically access correct properties when swapping to a non-default repeatKey parameter', () => {
     const mockRepeat = { thangka: 5 };
-    const result = subsequentBody(mockFontSizes, '|', '[', mockRepeat as any, 'thangka' as any, ']', mockText, mockTransliteration);
+    const result = subsequentBody(
+      mockFontSizes,
+      '|',
+      '[',
+      mockRepeat as any,
+      'thangka' as any,
+      ']',
+      mockText,
+      mockTransliteration,
+    );
 
     expect(result[0][0].text[0].text).toBe('MANTRA 5x ');
     // Check that the body function loops exactly 5 times (count minus one loops with dividers).

@@ -87,6 +87,22 @@
   background: rgba(34, 139, 230, 0.1);
 }
 
+.portfolio figcaption h2 {
+  margin-bottom: 1rem;
+  font-family: "Yeseva One", cursive;
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.portfolio figcaption p {
+  margin-bottom: 0.5rem;
+  font-family: Poppins, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-align: justify;
+}
+
 [data-theme="dark"] .portfolio figcaption h2,
 [data-theme="dark"] .portfolio figcaption h2 > a[class*="link_"],
 [data-theme="dark"] .portfolio figcaption span > span[class*="heart_"],
@@ -111,26 +127,10 @@
   color: #000;
 }
 
-.portfolio figcaption h2 {
-  margin-bottom: 1rem;
-  font-family: "Yeseva One", cursive;
-  font-size: 1.5rem;
-  font-weight: 400;
-  text-align: center;
-}
-
 .portfolio figcaption h2 span[class*="reaction_"] span[class*="heart_"] {
   margin-left: 1rem;
   font-size: 1.2rem;
   line-height: 1.2rem;
-}
-
-.portfolio figcaption p {
-  margin-bottom: 0.5rem;
-  font-family: Poppins, sans-serif;
-  font-size: 0.9rem;
-  font-weight: 400;
-  text-align: justify;
 }
 
 .portfolio figcaption p:last-of-type {

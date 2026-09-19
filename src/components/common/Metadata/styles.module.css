@@ -13,12 +13,12 @@
     margin: 0.5rem 0;
   }
 
-  :global(.markdown) header h1 {
-    margin-top: 0;
-  }
-
   :global(.markdown) h1 {
     font-size: 1.65rem;
+  }
+
+  :global(.markdown) header h1 {
+    margin-top: 0;
   }
 
   :global(.markdown) h2 {

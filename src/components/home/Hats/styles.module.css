@@ -23,6 +23,23 @@
   text-shadow: 0.125rem 0.125rem 0.1875rem rgba(255, 255, 255, 0.1);
 }
 
+.hats .hat h2 i {
+  display: inline-block;
+  color: transparent;
+  white-space: nowrap;
+  background: linear-gradient(
+    to right,
+    #6666ff,
+    #0099ff,
+    #00ff00,
+    #ff3399,
+    #6666ff
+  );
+  background-clip: text;
+  background-size: 400% 100%;
+  will-change: background-position;
+}
+
 [data-theme="dark"] .hats .hat h2 i {
   text-shadow: 0.0625rem 0.0625rem 0.125rem rgba(0, 0, 0, 0.25);
 }
@@ -59,23 +76,6 @@
 
 [data-theme="light"] .hats .hat p {
   color: #282f49;
-}
-
-.hats .hat h2 i {
-  display: inline-block;
-  color: transparent;
-  white-space: nowrap;
-  background: linear-gradient(
-    to right,
-    #6666ff,
-    #0099ff,
-    #00ff00,
-    #ff3399,
-    #6666ff
-  );
-  background-clip: text;
-  background-size: 400% 100%;
-  will-change: background-position;
 }
 
 .hats .hat h2 [class*="phrases_"][class*="play_"] i {
@@ -130,6 +130,24 @@
     transform 150ms ease-in-out;
 }
 
+.hats .hat .details .content p {
+  padding: 0 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.25rem;
+}
+
+[data-theme="dark"] .hats .hat .details .content p,
+[data-theme="dark"] .hats .hat .details .toggle,
+[data-theme="dark"] .hats .hat .details .toggle .icon {
+  color: #e5e7eb;
+}
+
+[data-theme="light"] .hats .hat .details .content p,
+[data-theme="light"] .hats .hat .details .toggle,
+[data-theme="light"] .hats .hat .details .toggle .icon {
+  color: #4b5563;
+}
+
 [data-theme="dark"] .hats .hat .details .toggle:hover,
 [data-theme="dark"] .hats .hat .details .toggle:hover .icon {
   color: color-mix(in oklab, white 70%, #e5e7eb 30%);
@@ -152,30 +170,12 @@
   border-top: 0.0625rem solid color-mix(in oklab, #8a94a3 25%, transparent);
 }
 
-.hats .hat .details .content p {
-  padding: 0 0.75rem;
-  font-size: 0.95rem;
-  line-height: 1.25rem;
-}
-
 .hats .hat .details .content p:first-of-type {
   margin-top: 0.5rem;
 }
 
 .hats .hat .details .content p:last-of-type {
   margin-bottom: 0.5rem;
-}
-
-[data-theme="dark"] .hats .hat .details .content p,
-[data-theme="dark"] .hats .hat .details .toggle,
-[data-theme="dark"] .hats .hat .details .toggle .icon {
-  color: #e5e7eb;
-}
-
-[data-theme="light"] .hats .hat .details .content p,
-[data-theme="light"] .hats .hat .details .toggle,
-[data-theme="light"] .hats .hat .details .toggle .icon {
-  color: #4b5563;
 }
 
 @keyframes rainbow {
@@ -213,6 +213,16 @@
     animation: none;
   }
 
+  .hats .hat[aria-label="Innovator"] > p {
+    display: inline-block;
+    width: 100%;
+  }
+
+  [data-theme] .hats .hat p {
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+
   [data-theme] .hats .hat p,
   .hats .hat .details .content p {
     font-size: 0.82rem;
@@ -225,16 +235,6 @@
     .content
     p:nth-of-type(2) {
     margin-right: 4rem;
-  }
-
-  .hats .hat[aria-label="Innovator"] > p {
-    display: inline-block;
-    width: 100%;
-  }
-
-  [data-theme] .hats .hat p {
-    margin-bottom: 1rem;
-    font-weight: 400;
   }
 
   .hats .hat h2 [class*="word_"] {

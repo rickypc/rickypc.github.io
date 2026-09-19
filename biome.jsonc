@@ -61,6 +61,12 @@
       "correctness": {
         "noChildrenProp": "off",
         "noNestedComponentDefinitions": "warn",
+        "noUnknownPseudoClass": {
+          "level": "error",
+          "options": {
+            "ignore": ["global"]
+          }
+        },
         "useExhaustiveDependencies": "warn",
         "useHookAtTopLevel": "error",
         "useJsxKeyInIterable": "error",
@@ -72,9 +78,11 @@
           "level": "error",
           "options": { "max": 5 }
         },
+        "noFloatingPromises": "error",
         "noIdenticalTestTitle": "error",
         "noImpliedEval": "error",
         "noLoopFunc": "error",
+        "noMisusedPromises": "error",
         "noReactStringRefs": "error",
         "useExpect": "error",
         "useImportsFirst": "error",
@@ -131,6 +139,7 @@
           "level": "error",
           "options": { "allow": ["~"] }
         },
+        "noDuplicateObjectKeys": "error",
         "noExplicitAny": "off",
         "noSparseArray": "error",
         "useDefaultSwitchClauseLast": "error"
@@ -139,30 +148,16 @@
   },
   "overrides": [
     {
-      "includes": ["**/*.css"],
-      "linter": {
-        "rules": {
-          "correctness": {
-            "noUnknownPseudoClass": {
-              "level": "error",
-              "options": {
-                "ignore": ["global"]
-              }
-            }
-          },
-          "style": {
-            "noDescendingSpecificity": "off"
-          }
-        }
-      }
-    },
-    {
       "includes": ["**/*.{json,jsonc}"],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noExplicitAny": "off"
-          }
+      "json": {
+        "formatter": {
+          "enabled": true,
+          "indentStyle": "space",
+          "indentWidth": 2
+        },
+        "parser": {
+          "allowComments": true,
+          "allowTrailingCommas": true
         }
       }
     },
@@ -189,7 +184,6 @@
           "Bun",
           "describe",
           "expect",
-          "it",
           "jest",
           "test"
         ]

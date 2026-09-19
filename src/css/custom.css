@@ -129,6 +129,21 @@ html:not(.plugin-\@easyops-cn\/docusaurus-search-local)
   opacity: 0;
 }
 
+.navbar__item.navbar__item--github,
+.navbar__item.navbar__item--linkedin,
+.navbar__item.navbar__item--translate {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.25rem;
+  border-radius: 50%;
+  transition: background var(--ifm-transition-fast);
+}
+
+.navbar__item.navbar__item--linkedin,
+.navbar__item.navbar__item--translate {
+  padding: 0.25rem 0.35rem 0.25rem 0.35rem;
+}
+
 #__docusaurus [aria-label="Skip to main content"][role="region"],
 #__docusaurus.docusaurus--exclusive
   nav.navbar
@@ -195,23 +210,8 @@ nav.navbar::before {
   text-shadow: 0 0.03125rem 0.0625rem rgba(0, 0, 0, 0.4);
 }
 
-.navbar__item.navbar__item--github,
-.navbar__item.navbar__item--linkedin,
-.navbar__item.navbar__item--translate {
-  width: 2rem;
-  height: 2rem;
-  margin-right: 0.25rem;
-  border-radius: 50%;
-  transition: background var(--ifm-transition-fast);
-}
-
 .navbar__item.navbar__item--github {
   padding: 0.25rem 0.275rem 0.25rem 0.275rem;
-}
-
-.navbar__item.navbar__item--linkedin,
-.navbar__item.navbar__item--translate {
-  padding: 0.25rem 0.35rem 0.25rem 0.35rem;
 }
 
 .navbar__items [class*="navbarSearchContainer_"] {

@@ -169,14 +169,13 @@ section.block:last-of-type {
     line-height: 1;
   }
 
-  .block .col a,
-  .block .col article,
-  .block .col li,
-  .block .col li strong,
-  .block .col li strong em,
-  .block .col li strong em a,
-  .block .col p {
+  .block .col a {
     font-size: 0.825rem;
+  }
+
+  .block .col h3,
+  .block .col h3 a {
+    font-size: 0.95rem;
   }
 
   .block .col h2,
@@ -187,6 +186,15 @@ section.block:last-of-type {
     text-shadow: none;
   }
 
+  .block .col article,
+  .block .col li,
+  .block .col li strong,
+  .block .col li strong em,
+  .block .col li strong em a,
+  .block .col p {
+    font-size: 0.825rem;
+  }
+
   .block .col h2 {
     margin: 0.5rem 0 0.15rem 0;
     font-size: 1.1rem;
@@ -194,11 +202,6 @@ section.block:last-of-type {
 
   .block .col h3 {
     margin: 0.35rem 0 0.15rem 0;
-  }
-
-  .block .col h3,
-  .block .col h3 a {
-    font-size: 0.95rem;
   }
 
   .block.educations .col article,
@@ -255,13 +258,7 @@ section.block:last-of-type {
   }
 
   @media print {
-    .block .col a,
-    .block .col article,
-    .block .col li,
-    .block .col li strong,
-    .block .col li strong em,
-    .block .col li strong em a,
-    .block .col p {
+    .block .col a {
       font-size: 0.81rem;
     }
 
@@ -273,6 +270,15 @@ section.block:last-of-type {
     .block .col h3,
     .block .col h3 a {
       font-size: 0.94rem;
+    }
+
+    .block .col article,
+    .block .col li,
+    .block .col li strong,
+    .block .col li strong em,
+    .block .col li strong em a,
+    .block .col p {
+      font-size: 0.81rem;
     }
 
     [data-theme] .block .col h3 .affiliation,

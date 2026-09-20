@@ -47,6 +47,19 @@ const config: Linter.Config[] = [
       ],
       'import/no-unresolved': ['error', { ignore: ['^[@#].+$'] }],
       'max-depth': ['error', 4],
+      'no-secrets/no-secrets': [
+        'error',
+        {
+          ignoreContent: [
+            /@docusaurus\//,
+            /@site\/src\/font\/.*\.woff2/,
+            /[A-Z]+_GEOMETRY\.fontSizes/,
+            /asetnsamples\b/,
+            /ChildProcessWithoutNullStreams/,
+            /https?:\/\//,
+          ],
+        },
+      ],
     },
     settings: {
       'import/core-modules': ['@docusaurus/theme-common', '@docusaurus/utils'],

@@ -18,8 +18,8 @@ export default memo(function DocCategoryGeneratedIndexPageWrapper(props: Props):
     <>
       <PageMetadata {...props.categoryGeneratedIndex}>
         <script type="application/ld+json">{context(props.categoryGeneratedIndex)}</script>
-        <meta name="twitter:description" content={props.categoryGeneratedIndex.description} />
-        <meta name="twitter:title" content={props.categoryGeneratedIndex.title} />
+        <meta content={props.categoryGeneratedIndex.description} name="twitter:description" />
+        <meta content={props.categoryGeneratedIndex.title} name="twitter:title" />
       </PageMetadata>
       <DocCategoryGeneratedIndexPage {...props} />
     </>

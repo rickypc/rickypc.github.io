@@ -67,8 +67,8 @@ export default memo(function Collapsible({
           {items.map((item) => (
             <Item
               current={active === item}
-              key={key(item, 'collapsible')}
               item={item}
+              key={key(item, 'collapsible')}
               onClick={onItemClick}
               {...rest}
             />

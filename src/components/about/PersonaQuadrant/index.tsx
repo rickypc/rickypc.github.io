@@ -44,7 +44,7 @@ export default memo(function PersonaQuadrant({
           >
             <path d="M0 0v6l9-3z" />
           </marker>
-          <radialGradient id="radial" cx="38%" cy="30%" r="78%">
+          <radialGradient cx="38%" cy="30%" id="radial" r="78%">
             <stop offset="0%" />
             <stop offset="16%" />
             <stop offset="30%" />
@@ -90,7 +90,7 @@ export default memo(function PersonaQuadrant({
             d="M20 0v200M40 0v200M60 0v200M80 0v200M100 0v200M120 0v200M140 0v200M160 0v200M180 0v200M0 20h200M0 40h200M0 60h200M0 80h200M0 100h200M0 120h200M0 140h200M0 160h200M0 180h200M0 200h200"
           />
           <path className="axis" d="M0 100h200M100 0v200" />
-          <circle r="10" cx={circle.x} cy={circle.y} fill="url(#radial)" />
+          <circle cx={circle.x} cy={circle.y} fill="url(#radial)" r="10" />
         </g>
       </svg>
     </>

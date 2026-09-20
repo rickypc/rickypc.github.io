@@ -82,7 +82,7 @@ describe('Link', () => {
   describe('without href', () => {
     test('renders span when validate=true and href is missing', () => {
       render(
-        <Link className="no-link" validate title="missing">
+        <Link className="no-link" title="missing" validate>
           No Link
         </Link>,
       );

@@ -3,7 +3,10 @@
   "assist": {
     "actions": {
       "source": {
+        "noDuplicateClasses": "on",
         "organizeImports": "on",
+        "useSortedAttributes": "on",
+        "useSortedEnumMembers": "on",
         "useSortedInterfaceMembers": "on",
         "useSortedKeys": "on",
         "useSortedProperties": "on"
@@ -11,7 +14,7 @@
     }
   },
   "files": {
-    "includes": ["**", "!!{build,.docusaurus,coverage,node_modules,supports}"]
+    "ignoreUnknown": true
   },
   "formatter": {
     "indentStyle": "space",
@@ -31,14 +34,6 @@
   },
   "linter": {
     "rules": {
-      "a11y": {
-        "noSvgWithoutTitle": "error",
-        "useAnchorContent": "error",
-        "useButtonType": "error",
-        "useKeyWithClickEvents": "error",
-        "useKeyWithMouseEvents": "error",
-        "useValidAnchor": "error"
-      },
       "complexity": {
         "noExcessiveCognitiveComplexity": {
           "level": "error",
@@ -52,56 +47,40 @@
             "skipIifes": true
           }
         },
-        "noUselessSwitchCase": "warn",
+        "noUselessSwitchCase": "error",
         "useMaxParams": {
           "level": "error",
           "options": { "max": 10 }
         }
       },
       "correctness": {
-        "noChildrenProp": "off",
-        "noNestedComponentDefinitions": "warn",
+        "noNestedComponentDefinitions": "error",
         "noUnknownPseudoClass": {
           "level": "error",
           "options": {
             "ignore": ["global"]
           }
         },
-        "useExhaustiveDependencies": "warn",
-        "useHookAtTopLevel": "error",
-        "useJsxKeyInIterable": "error",
-        "useUniqueElementIds": "warn"
+        "useUniqueElementIds": "error"
       },
       "nursery": {
         "noConditionalExpect": "error",
-        "noExcessiveNestedCallbacks": {
-          "level": "error",
-          "options": { "max": 5 }
-        },
+        "noExcessiveNestedCallbacks": "error",
         "noFloatingPromises": "error",
         "noIdenticalTestTitle": "error",
         "noImpliedEval": "error",
         "noLoopFunc": "error",
         "noMisusedPromises": "error",
         "noReactStringRefs": "error",
+        "useExhaustiveSwitchCases": "error",
         "useExpect": "error",
         "useImportsFirst": "error",
-        "useThisInClassMethods": {
-          "level": "error",
-          "options": { "ignoreOverrideMethods": false }
-        },
+        "useThisInClassMethods": "error",
         "useVarsOnTop": "error"
       },
       "preset": "recommended",
-      "security": {
-        "noDangerouslySetInnerHtml": "error",
-        "noDangerouslySetInnerHtmlWithChildren": "error"
-      },
       "style": {
-        "noExcessiveClassesPerFile": {
-          "level": "error",
-          "options": { "maxClasses": 1 }
-        },
+        "noExcessiveClassesPerFile": "error",
         "noExcessiveLinesPerFile": {
           "level": "error",
           "options": { "maxLines": 1000, "skipBlankLines": true }
@@ -135,58 +114,19 @@
         "useDefaultSwitchClause": "error"
       },
       "suspicious": {
-        "noBitwiseOperators": {
-          "level": "error",
-          "options": { "allow": ["~"] }
-        },
-        "noDuplicateObjectKeys": "error",
-        "noExplicitAny": "off",
-        "noSparseArray": "error",
-        "useDefaultSwitchClauseLast": "error"
+        "noExplicitAny": "off"
       }
     }
   },
   "overrides": [
     {
-      "includes": ["**/*.{json,jsonc}"],
-      "json": {
-        "formatter": {
-          "enabled": true,
-          "indentStyle": "space",
-          "indentWidth": 2
-        },
-        "parser": {
-          "allowComments": true,
-          "allowTrailingCommas": true
-        }
-      }
-    },
-    {
       "includes": ["**/e2e/*.spec.ts"],
-      "javascript": {
-        "globals": ["test"]
-      },
       "linter": {
         "rules": {
           "nursery": {
             "useExpect": "off"
           }
         }
-      }
-    },
-    {
-      "includes": ["**/unit/*.test.{ts,tsx}"],
-      "javascript": {
-        "globals": [
-          "afterEach",
-          "beforeAll",
-          "beforeEach",
-          "Bun",
-          "describe",
-          "expect",
-          "jest",
-          "test"
-        ]
       }
     }
   ],

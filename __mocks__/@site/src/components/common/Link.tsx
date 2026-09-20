@@ -31,9 +31,9 @@ export default function Link({
     // eslint-disable-next-line @docusaurus/no-html-links
     <a
       data-testid={`link-${title || 'title'}`}
+      data-validate={validate?.toString()}
       data-whiletap={JSON.stringify(whileTap || {})}
       title={title}
-      data-validate={validate?.toString()}
       {...rest}
     >
       {children}

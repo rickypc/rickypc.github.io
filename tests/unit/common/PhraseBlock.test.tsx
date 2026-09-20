@@ -21,7 +21,7 @@ describe('PhraseBlock', () => {
       unify: false,
     };
 
-    render(<PhraseBlock className="extra" infix="*" prefix="+" suffix="-" phrase={phrase} />);
+    render(<PhraseBlock className="extra" infix="*" phrase={phrase} prefix="+" suffix="-" />);
 
     const context = screen.getByTestId('codeblock-context');
     // eslint-disable-next-line testing-library/no-node-access
@@ -63,7 +63,7 @@ describe('PhraseBlock', () => {
 
   test('does not render Buttons when the rendered code is empty', () => {
     const phrase = { children: null, testId: 'empty', unify: false };
-    render(<PhraseBlock infix="*" prefix="P" suffix="S" phrase={phrase} />);
+    render(<PhraseBlock infix="*" phrase={phrase} prefix="P" suffix="S" />);
     expect(screen.queryByTestId('buttons')).toBeNull();
   });
 });

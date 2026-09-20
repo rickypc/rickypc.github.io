@@ -73,8 +73,8 @@ export default memo(function DocTagDocListPageWrapper(props: Props): ReactElemen
     <>
       <PageMetadata {...metadata}>
         <script type="application/ld+json">{context(metadata)}</script>
-        <meta name="twitter:description" content={metadata.description} />
-        <meta name="twitter:title" content={metadata.title} />
+        <meta content={metadata.description} name="twitter:description" />
+        <meta content={metadata.title} name="twitter:title" />
       </PageMetadata>
       <DocTagDocListPage {...props} />
     </>

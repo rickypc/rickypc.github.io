@@ -46,8 +46,8 @@ export default memo(function Layout({
         <script type="application/ld+json">{context({ description, keywords, title })}</script>
         {pageSchema && <script type="application/ld+json">{pageSchema}</script>}
         {faq?.items?.length && <script type="application/ld+json">{faqContext(faq)}</script>}
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:title" content={title} />
+        <meta content={description} name="twitter:description" />
+        <meta content={title} name="twitter:title" />
       </PageMetadata>
       <main className={className}>
         <div className="container">{children}</div>

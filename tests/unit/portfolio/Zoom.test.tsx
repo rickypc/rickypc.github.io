@@ -21,7 +21,7 @@ describe('portfolio.Zoom', () => {
 
   test('renders closed state when open.picture is not an object and ignores Escape key', () => {
     const open = { alt: 'Alt text', picture: undefined };
-    render(<Zoom open={open} onClick={onClickMock} />);
+    render(<Zoom onClick={onClickMock} open={open} />);
 
     // No body lock
     expect(document.body).not.toHaveClass('no-scroll');
@@ -45,7 +45,7 @@ describe('portfolio.Zoom', () => {
     const picture = { avif: 'x.avif', fallback: {}, webp: 'x.webp' };
 
     // Initial closed render
-    const { rerender } = render(<Zoom open={{ alt, picture: undefined }} onClick={onClickMock} />);
+    const { rerender } = render(<Zoom onClick={onClickMock} open={{ alt, picture: undefined }} />);
 
     const fig = screen.getByTestId('figure');
 
@@ -55,7 +55,7 @@ describe('portfolio.Zoom', () => {
     const focusSpy = jest.spyOn(fig, 'focus');
 
     // Re-render opened
-    rerender(<Zoom open={{ alt, picture }} onClick={onClickMock} />);
+    rerender(<Zoom onClick={onClickMock} open={{ alt, picture }} />);
 
     // Body locked, scrollTop reset, figure focused, image shown
     expect(document.body).toHaveClass('no-scroll');
@@ -66,7 +66,7 @@ describe('portfolio.Zoom', () => {
 
   test('calls onClick when overlay or figure clicked', () => {
     const pic = { avif: '', fallback: {}, webp: '' };
-    render(<Zoom open={{ alt: 'A', picture: pic }} onClick={onClickMock} />);
+    render(<Zoom onClick={onClickMock} open={{ alt: 'A', picture: pic }} />);
 
     fireEvent.click(screen.getByTestId('div'));
     fireEvent.click(screen.getByTestId('figure'));
@@ -75,7 +75,7 @@ describe('portfolio.Zoom', () => {
 
   test('handles key events when opened: ignores non-Escape, fires on Escape, cleans up listener on unmount', () => {
     const pic = { avif: '', fallback: {}, webp: '' };
-    const { unmount } = render(<Zoom open={{ alt: 'K', picture: pic }} onClick={onClickMock} />);
+    const { unmount } = render(<Zoom onClick={onClickMock} open={{ alt: 'K', picture: pic }} />);
 
     // Non-Escape
     fireEvent.keyUp(document, { key: 'Enter' });
@@ -94,13 +94,13 @@ describe('portfolio.Zoom', () => {
   test('removes no-scroll class when open.picture toggles to non-object', () => {
     const alt = 'A';
     const picture = { avif: '', fallback: {}, webp: '' };
-    const { rerender } = render(<Zoom open={{ alt, picture }} onClick={onClickMock} />);
+    const { rerender } = render(<Zoom onClick={onClickMock} open={{ alt, picture }} />);
 
     // initially opened
     expect(document.body).toHaveClass('no-scroll');
 
     // rerender closed
-    rerender(<Zoom open={{ alt, picture: undefined }} onClick={onClickMock} />);
+    rerender(<Zoom onClick={onClickMock} open={{ alt, picture: undefined }} />);
     expect(document.body).not.toHaveClass('no-scroll');
   });
 });

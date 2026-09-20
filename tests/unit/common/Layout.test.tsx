@@ -37,8 +37,8 @@ describe('Layout.with extra metadatas', () => {
     description: 'desc text',
     keywords: ['one', 'two'],
     metadatas: [
-      <meta key="a" name="robots" content="noindex" />,
-      <meta key="b" name="author" content="rick" />,
+      <meta content="noindex" key="a" name="robots" />,
+      <meta content="rick" key="b" name="author" />,
     ],
     title: 'Page Title',
   };

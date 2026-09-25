@@ -92,7 +92,7 @@
     "serve": "docusaurus serve --no-open",
     "start": "docusaurus start --no-open",
     "swizzle": "docusaurus swizzle",
-    "test": "bun run test:deps:ci && bun run test:lint && bun run test:type && bun run test:unit",
+    "test": "bun run test:deps:ci && bun run test:lint && bun run test:type && bun run test:unit:ci",
     "test:biome": "biome check .",
     "test:deps:ci": "bun outdated | grep -vE '\\-\\-\\-|Package|bun' | sed -E 's/^[[:space:]]*│[[:space:]]*//; s/[[:space:]]*│[[:space:]]*/ | /g; s/[[:space:]]*│[[:space:]]*$//'",
     "test:e2e": "playwright test",

@@ -3,12 +3,13 @@
  * All rights reserved.
  */
 
+import { mock, spyOn } from 'bun:test';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import pdfmake, { write } from 'pdfmake';
 
-jest.mock('node:worker_threads', () => {
-  const original = jest.requireActual('node:worker_threads');
+mock.module('node:worker_threads', () => {
+  const original = require('node:worker_threads');
   return {
     ...original,
     workerData: [
@@ -23,23 +24,20 @@ jest.mock('node:worker_threads', () => {
   };
 });
 
-const makeTemplate = (title: string) =>
-  jest.fn(async (path) => ({
+const makeTemplate = (title: string) => ({
+  default: mock(async (path) => ({
     definition: { content: [{ text: `${title}:${path}` }], info: { title } },
     options: { compress: false },
-  }));
-
-['base', 'book', 'condensed', 'roll', 'thangka', 'wheel'].forEach((template) => {
-  jest.mock(`#buddhism/media/pdf/templates/_${template}`, () => makeTemplate(template));
+  })),
 });
 
-jest.mock(
-  '#lib/path/one.md',
-  () => ({
-    transliteration: { children: 'One', title: 'One' },
-  }),
-  { virtual: true },
-);
+['base', 'book', 'condensed', 'roll', 'thangka', 'wheel'].forEach((template) => {
+  mock.module(`#buddhism/media/pdf/templates/_${template}`, () => makeTemplate(template));
+});
+
+mock.module('#lib/path/one.md', () => ({
+  default: { transliteration: { children: 'One', title: 'One' } },
+}));
 
 // Sync.
 const Worker = require('@site/src/plugins/media/workers/generate-pdf').default;
@@ -62,10 +60,10 @@ describe('plugins.media.workers.generate-pdf', () => {
   });
 
   test('logs an error when PDF writing fails', async () => {
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleMock = spyOn(console, 'error').mockImplementation(() => {});
     write.mockRejectedValueOnce(new Error('error'));
 
-    await expect(() =>
+    await expect(
       Worker({
         path: '#lib/path/one.md',
         target: `${outDir}/pdf/one-base.pdf`,

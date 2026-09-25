@@ -3,16 +3,24 @@
  * All rights reserved.
  */
 
-import puja from '#buddhism/practice-daily-life/phrases/_amoghapasa_mani_puja';
-import amoghapasaPadmaUsnisa from '#buddhism/practice-daily-life/phrases/_amoghapasa_padma_usnisa';
+import { mock } from 'bun:test';
 
-jest.mock('#buddhism/practice-daily-life/phrases/_amoghapasa_padma_usnisa', () => ({
+mock.module('#buddhism/practice-daily-life/phrases/_amoghapasa_padma_usnisa', () => ({
   __esModule: true,
   default: {
     sanskrit: { children: 'PADMA_USNISA_SANSKRIT' },
     transliteration: { children: 'PADMA_USNISA_TRANSLIT' },
   },
 }));
+
+// Bun's mock.module is registered at runtime: import the SUT and its sibling after the
+// mock above so the SUT's module-scope read of the sibling sees the mocked value.
+const { default: amoghapasaPadmaUsnisa } = await import(
+  '#buddhism/practice-daily-life/phrases/_amoghapasa_padma_usnisa'
+);
+const { default: puja } = await import(
+  '#buddhism/practice-daily-life/phrases/_amoghapasa_mani_puja'
+);
 
 describe('docs.buddhism.phrases._amoghapasa_mani_puja', () => {
   test('exports the correct core structure', () => {

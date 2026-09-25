@@ -7,7 +7,6 @@ import docusaurus from '@docusaurus/eslint-plugin';
 import parser from '@typescript-eslint/parser';
 import type { Linter } from 'eslint';
 import importPlugin from 'eslint-plugin-import';
-import jest from 'eslint-plugin-jest';
 import * as jsdoc from 'eslint-plugin-jsdoc';
 import noSecrets from 'eslint-plugin-no-secrets';
 import security from 'eslint-plugin-security';
@@ -19,12 +18,10 @@ const config: Linter.Config[] = [
   { ignores: ['build', 'coverage', '.docusaurus', 'supports'] },
   importPlugin.flatConfigs.recommended,
   importPlugin.flatConfigs.typescript,
-  jest.configs['flat/recommended'],
-  jest.configs['flat/style'],
   jsdoc.configs['flat/recommended'],
   security.configs.recommended,
   {
-    files: ['__mocks__/**/*.{ts,tsx}', 'tests/unit/**/*.{ts,tsx}'],
+    files: ['tests/unit/**/*.{ts,tsx}'],
     ...testing.configs['flat/react'],
   },
   {
@@ -62,7 +59,7 @@ const config: Linter.Config[] = [
       ],
     },
     settings: {
-      'import/core-modules': ['@docusaurus/theme-common', '@docusaurus/utils'],
+      'import/core-modules': ['@docusaurus/theme-common', '@docusaurus/utils', 'bun', 'bun:test'],
       // This applies to all.
       'import/resolver': { typescript: true },
     },

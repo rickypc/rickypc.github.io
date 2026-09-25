@@ -1,18 +1,14 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { fireEvent, render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { mock } from 'bun:test';
 import Projects from '@site/src/components/portfolio/Projects';
-
-jest.unmock('@site/src/components/portfolio/Projects');
+import { fireEvent, render, screen } from '@testing-library/react';
 
 describe('portfolio.Projects', () => {
-  const onClickMock = jest.fn();
+  const onClickMock = mock();
 
   test('renders wrapper and no items when filtered is empty', () => {
     const { container } = render(<Projects filtered={[]} onClick={onClickMock} />);

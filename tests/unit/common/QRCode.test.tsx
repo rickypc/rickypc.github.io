@@ -1,17 +1,14 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import QRCode from '@site/src/components/common/QRCode';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
 describe('QRCode', () => {
-  jest.mocked<any>(useDocusaurusContext).mockReturnValue({
+  (useDocusaurusContext as Mocked<typeof useDocusaurusContext>).mockReturnValue({
     siteConfig: { url: 'https://domain.test' },
   });
 

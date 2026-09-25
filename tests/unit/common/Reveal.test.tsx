@@ -1,19 +1,14 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import Reveal from '@site/src/components/common/Reveal';
 import { useVisibility } from '@site/src/hooks/observer';
 import { render, renderHook, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { useRef } from 'react';
 
-const useVisibilityMock = jest.mocked(useVisibility);
-
-jest.unmock('@site/src/components/common/Reveal');
+const useVisibilityMock = useVisibility as Mocked<typeof useVisibility>;
 
 describe('Reveal', () => {
   describe('visibility states', () => {

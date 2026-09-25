@@ -6,12 +6,21 @@
     "ignoreDeprecations": "6.0",
     "noEmit": true,
     "paths": {
+      "@docusaurus/*": [
+        "./node_modules/@docusaurus/core/lib/client/exports/*",
+        "./node_modules/@docusaurus/*"
+      ],
+      "@docusaurus/plugin-content-docs/client": [
+        "./node_modules/@docusaurus/plugin-content-docs/src/client/index.ts"
+      ],
       "@site/*": ["./*"],
+      "@theme/*": ["./src/theme/*"],
       "#buddhism/*": ["./docs/buddhism/*"],
       "#root/*": ["./*"]
     },
-    "strict": true
+    "strict": true,
+    "types": ["bun"]
   },
   "extends": "@docusaurus/tsconfig",
-  "include": ["*.config.ts", "docs", "__mocks__", "src", "tests"]
+  "include": ["*.config.ts", "docs", "src", "tests"]
 }

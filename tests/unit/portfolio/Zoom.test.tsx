@@ -1,21 +1,17 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { fireEvent, render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { mock, spyOn } from 'bun:test';
 import Zoom from '@site/src/components/portfolio/Zoom';
-
-jest.unmock('@site/src/components/portfolio/Zoom');
+import { fireEvent, render, screen } from '@testing-library/react';
 
 describe('portfolio.Zoom', () => {
-  let onClickMock: jest.MockedFunction<any>;
+  let onClickMock: Mocked<any>;
 
   beforeEach(() => {
-    onClickMock = jest.fn();
+    onClickMock = mock();
     document.body.classList.remove('no-scroll');
   });
 
@@ -50,9 +46,9 @@ describe('portfolio.Zoom', () => {
     const fig = screen.getByTestId('figure');
 
     // Spy on scrollTop setter and focus()
-    const scrollSetter = jest.fn();
+    const scrollSetter = mock();
     Object.defineProperty(fig, 'scrollTop', { set: scrollSetter });
-    const focusSpy = jest.spyOn(fig, 'focus');
+    const focusSpy = spyOn(fig, 'focus');
 
     // Re-render opened
     rerender(<Zoom onClick={onClickMock} open={{ alt, picture }} />);

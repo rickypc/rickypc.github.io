@@ -1,18 +1,15 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { layout } from '@site/src/data/home';
 import Home from '@site/src/pages/index';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
 describe('pages.index', () => {
-  jest.mocked<any>(useDocusaurusContext).mockReturnValue({
+  (useDocusaurusContext as Mocked<typeof useDocusaurusContext>).mockReturnValue({
     siteConfig: { url: 'https://domain.test' },
   });
 
@@ -46,7 +43,7 @@ describe('pages.index', () => {
     const layoutEl = screen.getByTestId('layout');
     expect(layoutEl).toBeInTheDocument();
     expect(layoutEl).toHaveAttribute('class', 'home');
-    expect(layoutEl.getAttribute('data-title')).toContain(layout.title);
+    expect(layoutEl.getAttribute('data-title')).toContain(layout.title as string);
 
     const socials = screen.getByTestId('socials');
     expect(socials).toBeInTheDocument();

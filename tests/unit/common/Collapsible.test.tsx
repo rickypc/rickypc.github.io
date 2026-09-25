@@ -1,22 +1,18 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { fireEvent, render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { mock } from 'bun:test';
 import Collapsible from '@site/src/components/common/Collapsible';
-
-jest.unmock('@site/src/components/common/Collapsible');
+import { fireEvent, render, screen } from '@testing-library/react';
 
 describe('Collapsible', () => {
   const items = ['Item 1', 'Item 2', 'Item 3'];
-  let onClick: jest.MockedFunction<any>;
+  let onClick: Mocked<any>;
 
   const renderComponent = (active: string, extraProps = {}) => {
-    onClick = jest.fn();
+    onClick = mock();
     render(<Collapsible active={active} items={items} onClick={onClick} {...extraProps} />);
   };
 

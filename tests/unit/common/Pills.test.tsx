@@ -1,25 +1,21 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { fireEvent, render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { mock } from 'bun:test';
 import Pills from '@site/src/components/common/Pills';
-
-jest.unmock('@site/src/components/common/Pills');
+import { fireEvent, render, screen } from '@testing-library/react';
 
 describe('Pills', () => {
   let container: HTMLElement;
   let dtElements: NodeListOf<HTMLDListElement>;
-  let onClick: jest.MockedFunction<any>;
+  let onClick: Mocked<any>;
   const items = ['apple', 'banana', 'cherry'];
   const prefix = 'fruit';
 
   const renderComponent = (active: string) => {
-    onClick = jest.fn();
+    onClick = mock();
     ({ container } = render(
       <Pills active={active} items={items} onClick={onClick} prefix={prefix} />,
     ));

@@ -1,17 +1,12 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import Layout from '@site/src/components/common/Layout';
 import { context, type FaqItems, faqContext } from '@site/src/data/common';
 import { useWelcome } from '@site/src/hooks/observer';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-
-jest.unmock('@site/src/components/common/Layout');
 
 describe('Layout.useWelcome', () => {
   test('calls useWelcome once on mount', () => {

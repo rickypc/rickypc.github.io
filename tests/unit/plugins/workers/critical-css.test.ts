@@ -3,28 +3,34 @@
  * All rights reserved.
  */
 
+import { mock } from 'bun:test';
 import { readFile, writeFile } from 'node:fs/promises';
-import Worker from '@site/src/plugins/media/workers/critical-css';
-import { process as beastiesProcess } from 'beasties';
+import * as Beasties from 'beasties';
 
-jest.mock('node:fs/promises', () => {
-  const original = jest.requireActual('node:fs/promises');
+const beastiesProcess = (Beasties as Mocked<Beasties.default>).process;
+
+mock.module('node:fs/promises', () => {
+  const original = require('node:fs/promises');
   return {
     ...original,
-    readFile: jest.fn((path) =>
+    readFile: mock((path) =>
       Promise.resolve(`<html ${path.includes('2') ? 'data-beasties-container ' : ''}/>`),
     ),
-    writeFile: jest.fn(() => Promise.resolve()),
+    writeFile: mock(() => Promise.resolve()),
   };
 });
 
-jest.mock('node:worker_threads', () => {
-  const original = jest.requireActual('node:worker_threads');
+mock.module('node:worker_threads', () => {
+  const original = require('node:worker_threads');
   return {
     ...original,
     workerData: [{}, { outDir: './out' }],
   };
 });
+
+// Bun's mock.module is registered at runtime: import the SUT after the mocks above
+// so its module-scope `workerData` read sees the mocked 'node:worker_threads'.
+const { default: Worker } = await import('@site/src/plugins/media/workers/critical-css');
 
 describe('plugins.media.workers.critical-css', () => {
   test('processes HTML file', async () => {

@@ -3,6 +3,8 @@
  * All rights reserved.
  */
 
+import { mock } from 'bun:test';
+
 export default class Audio implements Partial<HTMLAudioElement> {
   currentTime = 0;
 
@@ -38,12 +40,12 @@ export default class Audio implements Partial<HTMLAudioElement> {
     });
   }
 
-  pause = jest.fn(() => {
+  pause = mock(() => {
     this.paused = true;
     this.emit('pause');
   });
 
-  play = jest.fn(async () => {
+  play = mock(async () => {
     this.paused = false;
     this.emit('timeupdate');
   });

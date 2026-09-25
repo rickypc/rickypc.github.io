@@ -3,12 +3,13 @@
  * All rights reserved.
  */
 
+import { mock } from 'bun:test';
 import mockImage from '#buddhism/media/pdf/_image';
 import book from '#buddhism/media/pdf/templates/_book';
 
-jest.mock('#buddhism/media/pdf/_image', () => ({
+mock.module('#buddhism/media/pdf/_image', () => ({
   __esModule: true,
-  default: jest.fn(async () => ({ mocked: true })),
+  default: mock(async () => ({ mocked: true })),
 }));
 
 describe('docs.buddhism.media.pdf.templates._book: non-empty', () => {
@@ -18,14 +19,10 @@ describe('docs.buddhism.media.pdf.templates._book: non-empty', () => {
     right: { path: 'R', width: 10 },
   };
   test('builds a title page correctly', async () => {
-    jest.mock(
-      '#buddhism/book-title',
-      () => ({
-        __esModule: true,
-        default: { pages: [{ images, number: 1, title: 'Cover Title' }], title: 'MyBook' },
-      }),
-      { virtual: true },
-    );
+    mock.module('#buddhism/book-title', () => ({
+      __esModule: true,
+      default: { pages: [{ images, number: 1, title: 'Cover Title' }], title: 'MyBook' },
+    }));
     const result = await book('#buddhism/book-title');
     expect(result.definition.content).toHaveLength(1);
     const [page] = result.definition.content[0];
@@ -51,17 +48,13 @@ describe('docs.buddhism.media.pdf.templates._book: non-empty', () => {
   });
 
   test('builds a content page with chapters and contents', async () => {
-    jest.mock(
-      '#buddhism/book-content',
-      () => ({
-        __esModule: true,
-        default: {
-          pages: [{ chapters: [], contents: ['LeftContent', 'RightContent'], images: {} }],
-          title: 'Chants',
-        },
-      }),
-      { virtual: true },
-    );
+    mock.module('#buddhism/book-content', () => ({
+      __esModule: true,
+      default: {
+        pages: [{ chapters: [], contents: ['LeftContent', 'RightContent'], images: {} }],
+        title: 'Chants',
+      },
+    }));
     const result = await book('#buddhism/book-content');
     const [page, canvas] = result.definition.content[0];
 
@@ -85,20 +78,16 @@ describe('docs.buddhism.media.pdf.templates._book: non-empty', () => {
   });
 
   test('creates divider canvas for non-final pages', async () => {
-    jest.mock(
-      '#buddhism/book-multi',
-      () => ({
-        __esModule: true,
-        default: {
-          pages: [
-            { contents: [1], images, number: 1 },
-            { contents: [], images, number: 2 },
-          ],
-          title: 'Multi',
-        },
-      }),
-      { virtual: true },
-    );
+    mock.module('#buddhism/book-multi', () => ({
+      __esModule: true,
+      default: {
+        pages: [
+          { contents: [1], images, number: 1 },
+          { contents: [], images, number: 2 },
+        ],
+        title: 'Multi',
+      },
+    }));
     const result = await book('#buddhism/book-multi');
     const [, canvas1] = result.definition.content[0];
     const [, canvas2] = result.definition.content[1];
@@ -112,20 +101,20 @@ describe('docs.buddhism.media.pdf.templates._book: non-empty', () => {
 
 describe('docs.buddhism.media.pdf.templates._book: empty', () => {
   test('handles empty pages array', async () => {
-    jest.mock(
-      '#buddhism/book-empty-pages',
-      () => ({ __esModule: true, default: { title: 'Empty' } }),
-      { virtual: true },
-    );
+    mock.module('#buddhism/book-empty-pages', () => ({
+      __esModule: true,
+      default: { title: 'Empty' },
+    }));
     const result = await book('#buddhism/book-empty-pages');
 
     expect(result.definition.content).toEqual([]);
   });
 
   test('handles empty page object', async () => {
-    jest.mock('#buddhism/book-empty-page', () => ({ __esModule: true, default: { pages: [{}] } }), {
-      virtual: true,
-    });
+    mock.module('#buddhism/book-empty-page', () => ({
+      __esModule: true,
+      default: { pages: [{}] },
+    }));
     const result = await book('#buddhism/book-empty-page');
 
     expect(result.definition.content).toEqual([

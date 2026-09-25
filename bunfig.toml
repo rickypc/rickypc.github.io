@@ -1,0 +1,6 @@
+[test]
+coveragePathIgnorePatterns = ["**/bun-test-assets/**", "**/tests/**"]
+coverageReporter = ["lcov", "text"]
+coverageSkipTestFiles = true
+coverageThreshold = { functions = 1.0, lines = 1.0, statements = 1.0 }
+preload = ["./tests/unit/preload.ts"]

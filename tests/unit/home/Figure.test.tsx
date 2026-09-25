@@ -1,20 +1,14 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import Figure from '@site/src/components/home/Figure';
 import { useVisibility } from '@site/src/hooks/observer';
 import { render, renderHook } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { useRef } from 'react';
 
-const useVisibilityMock = jest.mocked(useVisibility);
-
-jest.unmock('@site/src/components/common/Image');
-jest.unmock('@site/src/components/home/Figure');
+const useVisibilityMock = useVisibility as Mocked<typeof useVisibility>;
 
 describe('home.Figure', () => {
   test('renders a <figure> with correct accessibility attributes, CSS class, and nested Image', () => {

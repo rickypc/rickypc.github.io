@@ -3,10 +3,9 @@
  * All rights reserved.
  */
 
-import amitabha from '#buddhism/practice-daily-life/phrases/_amitabha';
-import sukhavativyuha from '#buddhism/practice-daily-life/phrases/_sukhavativyuha';
+import { mock } from 'bun:test';
 
-jest.mock('#buddhism/practice-daily-life/phrases/_amitabha', () => ({
+mock.module('#buddhism/practice-daily-life/phrases/_amitabha', () => ({
   __esModule: true,
   default: {
     chinese: { children: 'AMITABHA_CHINESE' },
@@ -14,6 +13,13 @@ jest.mock('#buddhism/practice-daily-life/phrases/_amitabha', () => ({
     transliteration: { children: 'AMITABHA_TRANSLIT' },
   },
 }));
+
+// Bun's mock.module is registered at runtime: import the SUT and its sibling after the
+// mock above so the SUT's module-scope read of the sibling sees the mocked value.
+const { default: amitabha } = await import('#buddhism/practice-daily-life/phrases/_amitabha');
+const { default: sukhavativyuha } = await import(
+  '#buddhism/practice-daily-life/phrases/_sukhavativyuha'
+);
 
 describe('docs.buddhism._sukhavativyuha', () => {
   test('exports the correct core structure', () => {

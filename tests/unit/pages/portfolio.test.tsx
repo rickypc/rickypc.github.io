@@ -1,16 +1,15 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
+import { mock } from 'bun:test';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { catalog, intro, layout } from '@site/src/data/portfolio';
 import Portfolio from '@site/src/pages/portfolio';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-jest.mock('@site/src/data/portfolio', () => ({
+mock.module('@site/src/data/portfolio', () => ({
   __esModule: true,
   // Deterministic catalog: one item matches Tag1, one does not.
   catalog: [
@@ -22,7 +21,7 @@ jest.mock('@site/src/data/portfolio', () => ({
 }));
 
 describe('pages.portfolio', () => {
-  jest.mocked<any>(useDocusaurusContext).mockReturnValue({
+  (useDocusaurusContext as Mocked<typeof useDocusaurusContext>).mockReturnValue({
     siteConfig: { url: 'https://domain.test' },
   });
 
@@ -30,8 +29,8 @@ describe('pages.portfolio', () => {
     render(<Portfolio />);
     const layoutEl = screen.getByTestId('layout');
     expect(layoutEl.getAttribute('class')).toContain('portfolio');
-    expect(layoutEl.getAttribute('data-description')).toEqual(layout.description);
-    expect(layoutEl.getAttribute('data-title')).toEqual(layout.title);
+    expect(layoutEl.getAttribute('data-description')).toEqual(layout.description as string);
+    expect(layoutEl.getAttribute('data-title')).toEqual(layout.title as string);
   });
 
   test('renders Preamble with expected props', () => {

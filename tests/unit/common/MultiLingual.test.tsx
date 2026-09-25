@@ -1,13 +1,10 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import MultiLingual from '@site/src/components/common/MultiLingual';
+import { render, screen } from '@testing-library/react';
 
 describe('MultiLingual', () => {
   const chinese = { children: 'ch', testId: 'ch' };

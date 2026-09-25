@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+import { mock } from 'bun:test';
 import { body } from '#buddhism/media/_common';
 import thangka, {
   BASE_GEOMETRY,
@@ -10,11 +11,11 @@ import thangka, {
   languageGeometry,
 } from '#buddhism/media/pdf/templates/_thangka';
 
-jest.mock('#buddhism/media/_common', () => {
-  const actual = jest.requireActual('#buddhism/media/_common');
+mock.module('#buddhism/media/_common', () => {
+  const actual = require('#buddhism/media/_common');
   return {
     ...actual,
-    body: jest.fn((phrase) =>
+    body: mock((phrase) =>
       phrase?.title === 'Dhāraṇī'
         ? 'BODY_RESULT_WITH_LONG_TEXT_ON_IT_BEYOND_THRESHOLD'
         : 'BODY_RESULT',
@@ -90,21 +91,17 @@ describe('docs.buddhism.media.pdf.templates._thangka.languageGeometry()', () => 
 
 describe('docs.buddhism.media.pdf.templates._thangka', () => {
   test('handles Tibetan (bo-CN) branch correctly', async () => {
-    jest.mock(
-      '#buddhism/bo',
-      () => ({
-        __esModule: true,
-        default: {
-          lang: 'bo-CN',
-          tibetan: {
-            title: 'Tibetan',
-            typography: { thangka: { default: 9, double: 40, single: 60 } },
-          },
-          transliteration: { title: 'Translit' },
+    mock.module('#buddhism/bo', () => ({
+      __esModule: true,
+      default: {
+        lang: 'bo-CN',
+        tibetan: {
+          title: 'Tibetan',
+          typography: { thangka: { default: 9, double: 40, single: 60 } },
         },
-      }),
-      { virtual: true },
-    );
+        transliteration: { title: 'Translit' },
+      },
+    }));
 
     const result = await thangka('#buddhism/bo');
     const { definition } = result;
@@ -118,7 +115,7 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
 
     // Style chosen based on text length.
     const dynamic = definition.content[7];
-    expect(['double', 'single']).toContain(dynamic.style);
+    expect(['double', 'single']).toContain(dynamic.style as string);
 
     // Tibetan overrides.
     expect(definition.styles.double.font).toBe('Kokonor');
@@ -129,18 +126,14 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
   });
 
   test('handles Sanskrit (sa-IN) branch correctly', async () => {
-    jest.mock(
-      '#buddhism/sa',
-      () => ({
-        __esModule: true,
-        default: {
-          lang: 'sa-IN',
-          sanskrit: { title: 'Dhāraṇī' },
-          transliteration: { title: 'Translit' },
-        },
-      }),
-      { virtual: true },
-    );
+    mock.module('#buddhism/sa', () => ({
+      __esModule: true,
+      default: {
+        lang: 'sa-IN',
+        sanskrit: { title: 'Dhāraṇī' },
+        transliteration: { title: 'Translit' },
+      },
+    }));
 
     const result = await thangka('#buddhism/sa');
     const { definition } = result;
@@ -157,14 +150,10 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
   });
 
   test('handles default (transliteration) branch correctly', async () => {
-    jest.mock(
-      '#buddhism/default',
-      () => ({
-        __esModule: true,
-        default: { lang: 'en-US', transliteration: { title: 'OM MANI PADME HUM' } },
-      }),
-      { virtual: true },
-    );
+    mock.module('#buddhism/default', () => ({
+      __esModule: true,
+      default: { lang: 'en-US', transliteration: { title: 'OM MANI PADME HUM' } },
+    }));
 
     const result = await thangka('#buddhism/default');
     const { definition } = result;
@@ -181,14 +170,10 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
   });
 
   test('uses fallback defaults when fields are missing', async () => {
-    jest.mock(
-      '#buddhism/fallback',
-      () => ({
-        __esModule: true,
-        default: { transliteration: { title: 'Fallback' } },
-      }),
-      { virtual: true },
-    );
+    mock.module('#buddhism/fallback', () => ({
+      __esModule: true,
+      default: { transliteration: { title: 'Fallback' } },
+    }));
 
     const result = await thangka('#buddhism/fallback');
     const { definition } = result;
@@ -202,6 +187,6 @@ describe('docs.buddhism.media.pdf.templates._thangka', () => {
 
     // Style chosen based on default text.
     const dynamic = definition.content[7];
-    expect(['double', 'single']).toContain(dynamic.style);
+    expect(['double', 'single']).toContain(dynamic.style as string);
   });
 });

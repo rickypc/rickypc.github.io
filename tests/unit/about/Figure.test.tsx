@@ -1,15 +1,10 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import Figure from '@site/src/components/about/Figure';
-
-jest.unmock('@site/src/components/about/Figure');
+import { render, screen } from '@testing-library/react';
 
 describe('about.Figure', () => {
   test('renders a figure with shape container and img roles for each type', () => {

@@ -3,12 +3,12 @@
  * All rights reserved.
  */
 
+import { mock } from 'bun:test';
 import { header, phrase, phrases } from '#buddhism/media/_common';
-import consecration from '#buddhism/rituals-ceremonies/_consecration_statue_stupa';
 
-jest.mock('#buddhism/media/_common', () => ({
-  header: jest.fn((title, note) => ({ mockedHeader: true, note, title })),
-  main: jest.fn((a, b, n) => [
+mock.module('#buddhism/media/_common', () => ({
+  header: mock((title, note) => ({ mockedHeader: true, note, title })),
+  main: mock((a, b, n) => [
     {
       a,
       b,
@@ -16,7 +16,7 @@ jest.mock('#buddhism/media/_common', () => ({
       n,
     },
   ]),
-  phrase: jest.fn((path, note, n) => [
+  phrase: mock((path, note, n) => [
     {
       mockedPhrase: true,
       n,
@@ -24,12 +24,18 @@ jest.mock('#buddhism/media/_common', () => ({
       path,
     },
   ]),
-  phrases: jest.fn(() => ['P1', 'P2', 'P3']),
+  phrases: mock(() => ['P1', 'P2', 'P3']),
 }));
 
-const headerCalls = [...jest.mocked(header).mock.calls];
-const phraseCalls = [...jest.mocked(phrase).mock.calls];
-const phrasesCalls = [...jest.mocked(phrases).mock.calls];
+// Bun's mock.module is registered at runtime: import the SUT after the mock above
+// so its module-scope use of '#buddhism/media/_common' sees the mocks.
+const { default: consecration } = await import(
+  '#buddhism/rituals-ceremonies/_consecration_statue_stupa'
+);
+
+const headerCalls = [...(header as Mocked<typeof header>).mock.calls];
+const phraseCalls = [...(phrase as Mocked<typeof phrase>).mock.calls];
+const phrasesCalls = [...(phrases as Mocked<typeof phrases>).mock.calls];
 
 describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
   test('exports the correct top-level structure', () => {

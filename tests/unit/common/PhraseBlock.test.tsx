@@ -1,15 +1,10 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import PhraseBlock from '@site/src/components/common/PhraseBlock';
-
-jest.unmock('@site/src/components/common/PhraseBlock');
+import { render, screen } from '@testing-library/react';
 
 describe('PhraseBlock', () => {
   test('renders single-child phrase with structure and Buttons', () => {

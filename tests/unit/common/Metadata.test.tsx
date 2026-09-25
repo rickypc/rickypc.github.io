@@ -1,17 +1,14 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import Metadata from '@site/src/components/common/Metadata';
 import { usePrint, useReadingTime, useWelcome } from '@site/src/hooks/observer';
+import { render } from '@testing-library/react';
 
-const usePrintMock = jest.mocked(usePrint);
-const useReadingTimeMock = jest.mocked(useReadingTime);
+const usePrintMock = usePrint as Mocked<typeof usePrint>;
+const useReadingTimeMock = useReadingTime as Mocked<typeof useReadingTime>;
 
 describe('Welcome', () => {
   test('calls useWelcome with navigation=false by default and renders nothing', () => {

@@ -1,8 +1,6 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -10,10 +8,9 @@ import { textContent } from '@site/src/data/common';
 import { intro, layout } from '@site/src/data/stories';
 import Stories from '@site/src/pages/stories';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
 describe('pages.stories', () => {
-  jest.mocked<any>(useDocusaurusContext).mockReturnValue({
+  (useDocusaurusContext as Mocked<typeof useDocusaurusContext>).mockReturnValue({
     siteConfig: { url: 'https://domain.test' },
   });
 
@@ -23,8 +20,8 @@ describe('pages.stories', () => {
     const layoutEl = screen.getByTestId('layout');
     expect(layoutEl).toBeInTheDocument();
     expect(layoutEl).toHaveAttribute('class', 'stories');
-    expect(layoutEl.getAttribute('data-description')).toContain(layout.description);
-    expect(layoutEl.getAttribute('data-title')).toContain(layout.title);
+    expect(layoutEl.getAttribute('data-description')).toContain(layout.description as string);
+    expect(layoutEl.getAttribute('data-title')).toContain(layout.title as string);
   });
 
   test('renders Preamble with correct props and text', () => {

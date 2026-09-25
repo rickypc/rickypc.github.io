@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+import { mock } from 'bun:test';
 import { createElement } from 'react';
 import {
   body,
@@ -14,69 +15,53 @@ import {
   properCase,
 } from '#buddhism/media/_common';
 
-jest.mock(
-  '#buddhism/mock-default',
-  () => ({
-    default: {
-      sanskrit: { children: ['A', 'B'] },
-      translation: { title: 'Eng' },
-      transliteration: {
-        children: ['X', 'Y'],
-        repetition: 5,
-        title: 'Trans',
-      },
+mock.module('#buddhism/mock-default', () => ({
+  default: {
+    sanskrit: { children: ['A', 'B'] },
+    translation: { title: 'Eng' },
+    transliteration: {
+      children: ['X', 'Y'],
+      repetition: 5,
+      title: 'Trans',
     },
-  }),
-  { virtual: true },
-);
+  },
+}));
 
-jest.mock(
-  '#buddhism/mock-default-empty',
-  () => ({
-    default: {
-      sanskrit: { children: ['A', 'B'] },
-      translation: { title: '' },
-      transliteration: {
-        children: ['X', 'Y'],
-        repetition: 5,
-        title: 'Trans',
-      },
+mock.module('#buddhism/mock-default-empty', () => ({
+  default: {
+    sanskrit: { children: ['A', 'B'] },
+    translation: { title: '' },
+    transliteration: {
+      children: ['X', 'Y'],
+      repetition: 5,
+      title: 'Trans',
     },
-  }),
-  { virtual: true },
-);
+  },
+}));
 
-jest.mock(
-  '#buddhism/mock-split',
-  () => ({
-    default: {
-      sanskrit: { children: ['A', '', 'B', 'C'] },
-      translation: { title: 'Eng' },
-      transliteration: {
-        children: ['X', '', 'Y', 'Z'],
-        repetition: 2,
-        title: 'Trans',
-      },
+mock.module('#buddhism/mock-split', () => ({
+  default: {
+    sanskrit: { children: ['A', '', 'B', 'C'] },
+    translation: { title: 'Eng' },
+    transliteration: {
+      children: ['X', '', 'Y', 'Z'],
+      repetition: 2,
+      title: 'Trans',
     },
-  }),
-  { virtual: true },
-);
+  },
+}));
 
-jest.mock(
-  '#buddhism/mock-split-empty',
-  () => ({
-    default: {
-      sanskrit: { children: ['A', '', 'B', 'C'] },
-      translation: { title: '' },
-      transliteration: {
-        children: ['X', '', 'Y', 'Z'],
-        repetition: 2,
-        title: 'Trans',
-      },
+mock.module('#buddhism/mock-split-empty', () => ({
+  default: {
+    sanskrit: { children: ['A', '', 'B', 'C'] },
+    translation: { title: '' },
+    transliteration: {
+      children: ['X', '', 'Y', 'Z'],
+      repetition: 2,
+      title: 'Trans',
     },
-  }),
-  { virtual: true },
-);
+  },
+}));
 
 describe('docs.buddhism.media._common.body()', () => {
   test('handles a single string child', () => {

@@ -1,19 +1,14 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import Oracle from '@site/src/components/about/Oracle';
 import { useVisibility } from '@site/src/hooks/observer';
 import { render, renderHook } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { useRef } from 'react';
 
-const useVisibilityMock = jest.mocked(useVisibility);
-
-jest.unmock('@site/src/components/about/Oracle');
+const useVisibilityMock = useVisibility as Mocked<typeof useVisibility>;
 
 describe('about.Oracle', () => {
   test.each([
@@ -39,7 +34,7 @@ describe('about.Oracle', () => {
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const wrapper = container.querySelector('.oraculares');
     expect(wrapper).toBeInstanceOf(HTMLElement);
-    expect(result.current.current).toEqual(wrapper);
+    expect(wrapper).toEqual(result.current.current);
 
     // Three oracular divs.
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access

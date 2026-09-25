@@ -1,15 +1,10 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import Greeting from '@site/src/components/home/Greeting';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-
-jest.unmock('@site/src/components/home/Greeting');
 
 describe('home.Greeting', () => {
   test('renders greeting text, IPA, Playback, and Heart inside Heading', () => {

@@ -3,10 +3,9 @@
  * All rights reserved.
  */
 
-import darsanaMukta from '#buddhism/practice-daily-life/phrases/_darsana_mukta';
-import mahamani from '#buddhism/practice-daily-life/phrases/_mahamani_vipulavimana';
+import { mock } from 'bun:test';
 
-jest.mock('#buddhism/practice-daily-life/phrases/_darsana_mukta', () => ({
+mock.module('#buddhism/practice-daily-life/phrases/_darsana_mukta', () => ({
   __esModule: true,
   default: {
     sanskrit: { children: 'DARSANA_SANSKRIT' },
@@ -14,6 +13,15 @@ jest.mock('#buddhism/practice-daily-life/phrases/_darsana_mukta', () => ({
     transliteration: { children: 'DARSANA_TRANSLIT' },
   },
 }));
+
+// Bun's mock.module is registered at runtime: import the SUT and its sibling after the
+// mock above so the SUT's module-scope read of the sibling sees the mocked value.
+const { default: darsanaMukta } = await import(
+  '#buddhism/practice-daily-life/phrases/_darsana_mukta'
+);
+const { default: mahamani } = await import(
+  '#buddhism/practice-daily-life/phrases/_mahamani_vipulavimana'
+);
 
 describe('docs.buddhism._mahamani_vipulavimana', () => {
   test('exports the correct core structure', () => {

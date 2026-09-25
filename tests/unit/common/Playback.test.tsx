@@ -1,33 +1,30 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
+import { mock } from 'bun:test';
 import Playback from '@site/src/components/common/Playback';
 import useAudio, { type AudioResponse } from '@site/src/hooks/audio';
 import { fireEvent, render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { createRef } from 'react';
 
-jest.unmock('@site/src/components/common/Playback');
-jest.mock('@site/src/hooks/audio');
+mock.module('@site/src/hooks/audio', () => ({ default: mock() }));
 
-const mockUseAudio = useAudio as jest.MockedFunction<typeof useAudio>;
+const mockUseAudio = useAudio as Mocked<typeof useAudio>;
 
 describe('Playback', () => {
   const setup = (status: AudioResponse['status']) => {
-    const onPause = jest.fn();
-    const onPlay = jest.fn();
-    const onStop = jest.fn();
+    const onPause = mock();
+    const onPlay = mock();
+    const onStop = mock();
     const value = status === 'playing' ? 1 : 0;
 
     mockUseAudio.mockReturnValue({
       onPause,
       onPlay,
       onStop,
-      progress: { get: () => value, set: jest.fn() } as any,
+      progress: { get: () => value, set: mock() } as any,
       ref: createRef<HTMLAudioElement>(),
       status,
     });

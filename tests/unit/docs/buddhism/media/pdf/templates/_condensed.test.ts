@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+import { mock } from 'bun:test';
 import { body, substance } from '#buddhism/media/pdf/_strip';
 import condensed from '#buddhism/media/pdf/templates/_condensed';
 
@@ -13,9 +14,9 @@ const geometries = {
 
 type GeometryKey = keyof typeof geometries;
 
-jest.mock('#buddhism/media/pdf/_strip', () => ({
-  body: jest.fn(() => 'BODY_RESULT'),
-  languageGeometry: jest.fn((_, lang, sanskrit, tibetan, transliteration) => {
+mock.module('#buddhism/media/pdf/_strip', () => ({
+  body: mock(() => 'BODY_RESULT'),
+  languageGeometry: mock((_, lang, sanskrit, tibetan, transliteration) => {
     const phrases = { 'bo-CN': tibetan, 'sa-IN': sanskrit };
     return {
       fontSizes: { default: lang === 'bo-CN' ? 9 : 2, title: 1.75 },
@@ -31,7 +32,7 @@ jest.mock('#buddhism/media/pdf/_strip', () => ({
       text: substance(phrases[lang as GeometryKey] || transliteration),
     };
   }),
-  subsequentBody: jest.fn(
+  subsequentBody: mock(
     (fontSizes, infix, prefix, repeat, repeatKey, suffix, text, transliteration) => {
       const count = repeat?.[repeatKey as keyof typeof repeat] || 1;
       return [
@@ -49,27 +50,23 @@ jest.mock('#buddhism/media/pdf/_strip', () => ({
       ];
     },
   ),
-  substance: jest.fn(() => 'SUBSTANCE_RESULT'),
+  substance: mock(() => 'SUBSTANCE_RESULT'),
 }));
 
 describe('docs.buddhism.media.pdf.templates._condensed', () => {
   test('handles Tibetan (bo-CN) branch correctly', async () => {
-    jest.mock(
-      '#buddhism/bo',
-      () => ({
-        __esModule: true,
-        default: {
-          lang: 'bo-CN',
-          tibetan: {
-            repeat: { condensed: 3 },
-            typography: { condensed: { default: 9, title: 7 } },
-          },
-          total: 3,
-          transliteration: { title: 'Mantra' },
+    mock.module('#buddhism/bo', () => ({
+      __esModule: true,
+      default: {
+        lang: 'bo-CN',
+        tibetan: {
+          repeat: { condensed: 3 },
+          typography: { condensed: { default: 9, title: 7 } },
         },
-      }),
-      { virtual: true },
-    );
+        total: 3,
+        transliteration: { title: 'Mantra' },
+      },
+    }));
 
     const result = await condensed('#buddhism/bo');
     const { definition } = result;
@@ -109,18 +106,14 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
   });
 
   test('handles Sanskrit (sa-IN) branch correctly', async () => {
-    jest.mock(
-      '#buddhism/sa',
-      () => ({
-        __esModule: true,
-        default: {
-          lang: 'sa-IN',
-          total: 2,
-          transliteration: { title: 'Dhāraṇī' },
-        },
-      }),
-      { virtual: true },
-    );
+    mock.module('#buddhism/sa', () => ({
+      __esModule: true,
+      default: {
+        lang: 'sa-IN',
+        total: 2,
+        transliteration: { title: 'Dhāraṇī' },
+      },
+    }));
 
     const result = await condensed('#buddhism/sa');
     const { definition } = result;
@@ -139,18 +132,14 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
   });
 
   test('handles default (transliteration) branch correctly', async () => {
-    jest.mock(
-      '#buddhism/default',
-      () => ({
-        __esModule: true,
-        default: {
-          lang: 'en-US',
-          total: 1,
-          transliteration: { title: 'OM MANI PADME HUM' },
-        },
-      }),
-      { virtual: true },
-    );
+    mock.module('#buddhism/default', () => ({
+      __esModule: true,
+      default: {
+        lang: 'en-US',
+        total: 1,
+        transliteration: { title: 'OM MANI PADME HUM' },
+      },
+    }));
 
     const result = await condensed('#buddhism/default');
     const { definition } = result;
@@ -169,14 +158,10 @@ describe('docs.buddhism.media.pdf.templates._condensed', () => {
   });
 
   test('uses all fallback defaults when fields are missing', async () => {
-    jest.mock(
-      '#buddhism/fallback',
-      () => ({
-        __esModule: true,
-        default: { transliteration: { title: 'Fallback' } },
-      }),
-      { virtual: true },
-    );
+    mock.module('#buddhism/fallback', () => ({
+      __esModule: true,
+      default: { transliteration: { title: 'Fallback' } },
+    }));
 
     const result = await condensed('#buddhism/fallback');
     const { definition } = result;

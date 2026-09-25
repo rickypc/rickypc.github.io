@@ -1,19 +1,17 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
+import { mock } from 'bun:test';
 import { context } from '@site/src/data/common';
 import { useWelcome } from '@site/src/hooks/observer';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import DocCategoryGeneratedIndexPageWrapper from '@theme/DocCategoryGeneratedIndexPage';
 import DocCategoryGeneratedIndexPage from '@theme-original/DocCategoryGeneratedIndexPage';
 
-jest.mock('@site/src/data/common', () => ({
-  context: jest.fn((props: Record<string, unknown>) => JSON.stringify({ ld: 'test', props })),
+mock.module('@site/src/data/common', () => ({
+  context: mock((props: Record<string, unknown>) => JSON.stringify({ ld: 'test', props })),
 }));
 
 describe('theme.DocCategoryGeneratedIndexPage', () => {

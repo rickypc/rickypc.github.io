@@ -1,16 +1,11 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import Button from '@site/src/components/common/Button';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { createRef } from 'react';
-
-jest.unmock('@site/src/components/common/Button');
 
 describe('Button', () => {
   test('renders children, applies className, and spreads extra props', () => {

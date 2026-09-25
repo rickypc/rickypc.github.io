@@ -1,18 +1,14 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { render, screen, within } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { mock } from 'bun:test';
 import Content from '@site/src/components/stories/Content';
 import { stories } from '@site/src/data/stories';
+import { render, screen, within } from '@testing-library/react';
 
-jest.unmock('@site/src/components/stories/Content');
-
-jest.mock('@site/src/data/stories', () => ({
+mock.module('@site/src/data/stories', () => ({
   stories: [
     {
       affiliation: { children: 'Aff1', href: '/af1' },
@@ -77,7 +73,7 @@ describe('stories.Content', () => {
         story.title.href,
         story.author.href,
         story.affiliation.href,
-      ]);
+      ] as (string | null)[]);
     });
   });
 });

@@ -1,14 +1,11 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import PersonaQuadrant from '@site/src/components/about/PersonaQuadrant';
 import type { QuadrantAxis, QuadrantLabel } from '@site/src/data/about';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
 describe('about.PersonaQuadrant', () => {
   const axes: QuadrantAxis[] = [

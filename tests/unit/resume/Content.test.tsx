@@ -1,19 +1,14 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Content from '@site/src/components/resume/Content';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-
-jest.unmock('@site/src/components/resume/Content');
 
 describe('resume.Content', () => {
-  jest.mocked<any>(useDocusaurusContext).mockReturnValue({
+  (useDocusaurusContext as Mocked<typeof useDocusaurusContext>).mockReturnValue({
     siteConfig: { url: 'https://domain.test' },
   });
 

@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+import { mock, spyOn } from 'bun:test';
 import type { PluginOptions } from '@docusaurus/plugin-sitemap';
 import { getFileCommitDate } from '@docusaurus/utils';
 
@@ -11,59 +12,50 @@ type SitemapItems = Awaited<ReturnType<CreateSitemapItemsFn>>;
 // After SitemapItems assignment.
 type SitemapItem = SitemapItems[number];
 
-jest.mock('#buddhism/media/audio/_index', () => [
+const audioIndex = [
   ['id_ID-news_tts-medium', '#lib/path/one.md'],
   ['en_US-hfc_male-medium', '#lib/path/_ricky_huang.md'],
   ['id_ID-news_tts-medium', '#lib/path/three.md'],
-]);
-jest.mock('#buddhism/media/pdf/_index', () => [
+];
+const pdfIndex = [
   ['base', '#lib/path/one.md'],
   ['book', '#lib/path/_ricky_huang.md'],
-]);
-jest.mock(
-  '#lib/path/one.md',
-  () => ({
-    transliteration: {
-      children: 'One',
-      title: 'One',
-    },
-  }),
-  { virtual: true },
-);
-jest.mock(
-  '#lib/path/_ricky_huang.md',
-  () => ({
-    transliteration: {
-      children: 'Two',
-      title: 'Two',
-    },
-  }),
-  { virtual: true },
-);
-jest.mock(
-  '#lib/path/three.md',
-  () => ({
-    transliteration: {
-      children: 'Three',
-      title: 'Three',
-    },
-  }),
-  { virtual: true },
-);
+];
+
+mock.module('#buddhism/media/audio/_index', () => ({ default: audioIndex }));
+mock.module('#buddhism/media/pdf/_index', () => ({ default: pdfIndex }));
+mock.module('#lib/path/one.md', () => ({
+  transliteration: {
+    children: 'One',
+    title: 'One',
+  },
+}));
+mock.module('#lib/path/_ricky_huang.md', () => ({
+  transliteration: {
+    children: 'Two',
+    title: 'Two',
+  },
+}));
+mock.module('#lib/path/three.md', () => ({
+  transliteration: {
+    children: 'Three',
+    title: 'Three',
+  },
+}));
 
 // Sync.
-const audio = require('#buddhism/media/audio/_index');
-const pdf = require('#buddhism/media/pdf/_index');
+const audio = require('#buddhism/media/audio/_index').default ?? audioIndex;
+const pdf = require('#buddhism/media/pdf/_index').default ?? pdfIndex;
 const Plugin = require('@site/src/plugins/sitemap');
 
 describe('plugins.sitemap', () => {
   describe('createSitemapItems', () => {
     test('appends pdf entries using git lastmod when available', async () => {
-      const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const spy = spyOn(console, 'error').mockImplementation(() => {});
 
       const defaultItems = [{ url: '/a' }];
-      const defaultCreateSitemapItems = jest.fn(async () => defaultItems);
-      (getFileCommitDate as jest.Mock).mockResolvedValue({
+      const defaultCreateSitemapItems = mock(async () => defaultItems);
+      (getFileCommitDate as Mocked<typeof getFileCommitDate>).mockResolvedValue({
         date: new Date('2025-10-01T07:00:00.000Z'),
       });
 
@@ -103,9 +95,11 @@ describe('plugins.sitemap', () => {
     });
 
     test('falls back to today and prints summary when git throws', async () => {
-      const defaultCreateSitemapItems = jest.fn(async () => []);
-      (getFileCommitDate as jest.Mock).mockRejectedValue(new Error('no commit'));
-      const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const defaultCreateSitemapItems = mock(async () => []);
+      (getFileCommitDate as Mocked<typeof getFileCommitDate>).mockRejectedValue(
+        new Error('no commit'),
+      );
+      const spy = spyOn(console, 'error').mockImplementation(() => {});
 
       const result = await Plugin.createSitemapItems({
         defaultCreateSitemapItems,
@@ -133,12 +127,12 @@ describe('plugins.sitemap', () => {
     });
 
     test('does not print summary when git commit exists', async () => {
-      (getFileCommitDate as jest.Mock).mockResolvedValue({
+      (getFileCommitDate as Mocked<typeof getFileCommitDate>).mockResolvedValue({
         date: new Date('2025-10-01T07:00:00.000Z'),
       });
 
-      const defaultCreateSitemapItems = jest.fn(async () => []);
-      const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const defaultCreateSitemapItems = mock(async () => []);
+      const spy = spyOn(console, 'error').mockImplementation(() => {});
 
       const result = await Plugin.createSitemapItems({
         defaultCreateSitemapItems,

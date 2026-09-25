@@ -3,11 +3,12 @@
  * All rights reserved.
  */
 
+import { mock } from 'bun:test';
 import { body } from '#buddhism/media/pdf/_strip';
 import cintamaniDharmacakraYasti from '#buddhism/rituals-ceremonies/_cintamani_dharmacakra_yasti';
 
-jest.mock('#buddhism/media/pdf/_strip', () => ({
-  body: jest.fn(() => 'BODY_RESULT'),
+mock.module('#buddhism/media/pdf/_strip', () => ({
+  body: mock(() => 'BODY_RESULT'),
 }));
 
 describe('docs.buddhism.rituals-ceremonies._cintamani_dharmacakra_yasti', () => {

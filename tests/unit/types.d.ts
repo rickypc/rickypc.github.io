@@ -3,10 +3,15 @@
  * All rights reserved.
  */
 
-declare module 'beasties' {
-  const Beasties: any;
-  export default Beasties;
-  export const process: any;
+/// <reference types="bun-types/test-globals" />
+
+type Mocked<T extends (...args: any[]) => any> = Mock<T> & ReturnType<T>;
+
+type TestingLibraryMatchers<T> =
+  import('@testing-library/jest-dom/matchers').TestingLibraryMatchers<any, T>;
+
+declare module 'bun:test' {
+  interface Matchers<T = unknown> extends TestingLibraryMatchers<T> {}
 }
 
 declare module 'cli-progress' {

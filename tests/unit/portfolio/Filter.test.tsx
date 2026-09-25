@@ -1,20 +1,16 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
+import { mock } from 'bun:test';
 import Filter from '@site/src/components/portfolio/Filter';
 import { useMedia } from '@site/src/hooks/observer';
 import { fireEvent, render, screen, within } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
-const useMediaMock = jest.mocked(useMedia);
+const useMediaMock = useMedia as Mocked<typeof useMedia>;
 
-jest.unmock('@site/src/components/portfolio/Filter');
-
-jest.mock('@site/src/data/portfolio', () => ({
+mock.module('@site/src/data/portfolio', () => ({
   catalog: [{ tags: ['beta', 'alpha'] }, { tags: ['gamma', 'alpha'] }],
 }));
 
@@ -22,7 +18,7 @@ describe('portfolio.Filter', () => {
   const expectedTags = ['All', 'alpha', 'beta', 'gamma'];
 
   test('renders Collapsible with correct tags when viewport is narrow', () => {
-    const onClickMock = jest.fn();
+    const onClickMock = mock();
     useMediaMock.mockReturnValue([true]);
 
     render(<Filter current="All" onClick={onClickMock} />);
@@ -47,7 +43,7 @@ describe('portfolio.Filter', () => {
   });
 
   test('renders Pills with correct props when viewport is wide', () => {
-    const onClickMock = jest.fn();
+    const onClickMock = mock();
     useMediaMock.mockReturnValue([false]);
 
     render(<Filter current="alpha" onClick={onClickMock} />);

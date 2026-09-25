@@ -1,12 +1,9 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import { useWelcome } from '@site/src/hooks/observer';
-import '@testing-library/jest-dom';
 import { render, screen, within } from '@testing-library/react';
 import NotFoundContent from '@theme/NotFound/Content';
 import type { ReactElement } from 'react';
@@ -17,8 +14,6 @@ type Props = {
 };
 
 const NotFoundContentMock = NotFoundContent as (_: Props) => ReactElement;
-
-jest.unmock('@theme/NotFound/Content');
 
 describe('theme.NotFound.Content', () => {
   test('calls useWelcome with navigation default false', () => {

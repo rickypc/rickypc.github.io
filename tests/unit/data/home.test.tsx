@@ -1,14 +1,11 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import { textContent } from '@site/src/data/common';
 import { faqItems, hats, identity, image, intro, layout, socials } from '@site/src/data/home';
 import { render, within } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
 describe('data.home', () => {
   test('renders greeting fragment with two spans', () => {

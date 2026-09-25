@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+import { mock } from 'bun:test';
 import {
   a11y,
   chunkToWords,
@@ -28,7 +29,7 @@ describe('data.common.a11y()', () => {
       id: 'elem',
       role: 'img',
       title: 'Label',
-    });
+    } as typeof result);
   });
 
   test('works without the second argument', () => {
@@ -252,8 +253,8 @@ describe('data.common.faqEntries()', () => {
 describe('data.common.fetchAsJson()', () => {
   test('returns parsed JSON when fetch resolves with valid JSON', async () => {
     const data = { array: [1, 2, 3], ok: true };
-    const mockFetch = { json: jest.fn().mockResolvedValue(data) };
-    global.fetch = jest.fn().mockResolvedValue(mockFetch);
+    const mockFetch = { json: mock().mockResolvedValue(data) };
+    global.fetch = mock().mockResolvedValue(mockFetch) as unknown as typeof fetch;
 
     const result = await fetchAsJson('https://example.com/api', { method: 'GET' });
 
@@ -263,8 +264,8 @@ describe('data.common.fetchAsJson()', () => {
   });
 
   test('returns empty object when response.json throws (non-JSON body)', async () => {
-    const mockFetch = { json: jest.fn().mockRejectedValue(new Error('invalid json')) };
-    global.fetch = jest.fn().mockResolvedValue(mockFetch);
+    const mockFetch = { json: mock().mockRejectedValue(new Error('invalid json')) };
+    global.fetch = mock().mockResolvedValue(mockFetch) as unknown as typeof fetch;
 
     const result = await fetchAsJson('/no-json');
 
@@ -274,7 +275,9 @@ describe('data.common.fetchAsJson()', () => {
   });
 
   test('propagates fetch rejection error (fetch throws)', async () => {
-    global.fetch = jest.fn().mockRejectedValue(new Error('network failure'));
+    global.fetch = mock().mockRejectedValue(
+      new Error('network failure'),
+    ) as unknown as typeof fetch;
 
     await expect(fetchAsJson('/bad')).rejects.toThrow('network failure');
     expect(global.fetch).toHaveBeenCalledWith('/bad');

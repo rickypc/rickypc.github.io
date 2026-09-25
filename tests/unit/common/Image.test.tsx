@@ -1,19 +1,15 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
+import { jest, mock } from 'bun:test';
 import Image from '@site/src/components/common/Image';
 import { useVisibility } from '@site/src/hooks/observer';
 import { act, fireEvent, render, renderHook, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { useRef } from 'react';
 
-const useVisibilityMock = jest.mocked(useVisibility);
-
-jest.unmock('@site/src/components/common/Image');
+const useVisibilityMock = useVisibility as Mocked<typeof useVisibility>;
 
 const basePicture = {
   avif: 'img.avif',
@@ -83,7 +79,7 @@ describe('Image.link wrapper', () => {
 
 describe('Image.preSrc background and load behavior', () => {
   test('applies preSrc background, sets alt on load, and clears preSrc after delay', () => {
-    const onLoad = jest.fn();
+    const onLoad = mock();
     const { container } = render(<Image alt="Alt text" onLoad={onLoad} picture={basePicture} />);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const pic = container.querySelector('picture');
@@ -101,7 +97,7 @@ describe('Image.preSrc background and load behavior', () => {
   });
 
   test('invokes onLoad again on subsequent loads without restoring preSrc', async () => {
-    const onLoad = jest.fn();
+    const onLoad = mock();
     const { container } = render(<Image alt="Alt" onLoad={onLoad} picture={basePicture} />);
     // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     const img = container.querySelector('img');

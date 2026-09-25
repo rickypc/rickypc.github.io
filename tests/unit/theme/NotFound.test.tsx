@@ -1,13 +1,10 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { translate } from '@docusaurus/Translate';
+import { render, screen } from '@testing-library/react';
 import Layout from '@theme/Layout';
 import NotFound from '@theme/NotFound';
 import NotFoundContent from '@theme/NotFound/Content';

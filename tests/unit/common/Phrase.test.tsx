@@ -1,14 +1,11 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import type { Transliteration } from '@site/src/components/common/MultiLingual';
 import Phrase, { GrPrint, Instruction } from '@site/src/components/common/Phrase';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import type { ReactElement, ReactNode } from 'react';
 
 type Props = {

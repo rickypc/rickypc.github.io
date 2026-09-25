@@ -1,20 +1,18 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { mock } from 'bun:test';
 import { translateTagsPageTitle } from '@docusaurus/theme-common';
 import { context } from '@site/src/data/common';
 import { useWelcome } from '@site/src/hooks/observer';
+import { render, screen } from '@testing-library/react';
 import DocTagsListPageWrapper from '@theme/DocTagsListPage';
 import DocTagsListPage from '@theme-original/DocTagsListPage';
 
-jest.mock('@site/src/data/common', () => ({
-  context: jest.fn((metadata: Record<string, string>) =>
+mock.module('@site/src/data/common', () => ({
+  context: mock((metadata: Record<string, string>) =>
     JSON.stringify({ ld: 'test', meta: metadata }),
   ),
 }));

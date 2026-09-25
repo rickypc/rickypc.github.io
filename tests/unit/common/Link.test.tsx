@@ -1,19 +1,14 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
 import * as useBrokenLinks from '@docusaurus/useBrokenLinks';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Link from '@site/src/components/common/Link';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
-const collectLink = jest.mocked(jest.mocked<any>(useBrokenLinks).collectLink);
-
-jest.unmock('@site/src/components/common/Link');
+const collectLink = (useBrokenLinks as Mocked<typeof useBrokenLinks.default>).collectLink;
 
 describe('Link', () => {
   describe('with href provided', () => {
@@ -33,7 +28,7 @@ describe('Link', () => {
     });
 
     test('renders trailing slashed internal link without rel/target and calls collectLink', () => {
-      jest.mocked<any>(useDocusaurusContext).mockReturnValue({
+      (useDocusaurusContext as Mocked<typeof useDocusaurusContext>).mockReturnValue({
         siteConfig: {
           trailingSlash: true,
           url: 'https://domain.test',
@@ -52,7 +47,7 @@ describe('Link', () => {
     });
 
     test('renders non-trailing slashed internal link without rel/target and calls collectLink', () => {
-      jest.mocked<any>(useDocusaurusContext).mockReturnValue({
+      (useDocusaurusContext as Mocked<typeof useDocusaurusContext>).mockReturnValue({
         siteConfig: {
           trailingSlash: false,
           url: 'https://domain.test',

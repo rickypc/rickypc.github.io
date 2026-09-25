@@ -3,12 +3,13 @@
  * All rights reserved.
  */
 
+import { mock } from 'bun:test';
 import image from '#buddhism/media/pdf/_image';
 import mandalaWheelsStrip from '#buddhism/rituals-ceremonies/_mandala_wheels_strip';
 
-jest.mock('#buddhism/media/pdf/_image', () => ({
+mock.module('#buddhism/media/pdf/_image', () => ({
   __esModule: true,
-  default: jest.fn(async (opts) => ({ mocked: true, ...opts })),
+  default: mock(async (opts) => ({ mocked: true, ...opts })),
 }));
 
 describe('docs.buddhism.rituals-ceremonies._mandala_wheels_strip', () => {

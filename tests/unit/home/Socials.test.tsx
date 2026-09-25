@@ -1,16 +1,11 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { render, screen, within } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import Socials from '@site/src/components/home/Socials';
 import { socials } from '@site/src/data/home';
-
-jest.unmock('@site/src/components/home/Socials');
+import { render, screen, within } from '@testing-library/react';
 
 describe('home.Socials', () => {
   test('renders one link per social entry', () => {

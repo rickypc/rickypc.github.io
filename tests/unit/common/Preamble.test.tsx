@@ -1,15 +1,10 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import Preamble, { Intro } from '@site/src/components/common/Preamble';
-
-jest.unmock('@site/src/components/common/Preamble');
+import { render, screen } from '@testing-library/react';
 
 describe('Preamble', () => {
   const intro = {

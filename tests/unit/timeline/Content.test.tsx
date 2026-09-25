@@ -1,28 +1,24 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { render, within } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { mock } from 'bun:test';
 import Content from '@site/src/components/timeline/Content';
 import { clsx } from '@site/src/data/common';
 import { timelines } from '@site/src/data/timeline';
 import { useMedia, usePrint } from '@site/src/hooks/observer';
+import { render, within } from '@testing-library/react';
 
-const useMediaMock = jest.mocked(useMedia);
-const usePrintMock = jest.mocked(usePrint);
+const useMediaMock = useMedia as Mocked<typeof useMedia>;
+const usePrintMock = usePrint as Mocked<typeof usePrint>;
 
-jest.unmock('@site/src/components/timeline/Content');
-
-jest.mock('@site/src/data/common', () => ({
-  clsx: jest.fn((...classes) => classes.filter(Boolean).join(' ')),
+mock.module('@site/src/data/common', () => ({
+  clsx: mock((...classes) => classes.filter(Boolean).join(' ')),
   key: (value: string, prefix: string) => `${prefix}-${value}`,
 }));
 
-jest.mock('@site/src/data/timeline', () => ({
+mock.module('@site/src/data/timeline', () => ({
   timelines: [
     {
       affiliation: { children: 'Aff1', href: '/a1' },

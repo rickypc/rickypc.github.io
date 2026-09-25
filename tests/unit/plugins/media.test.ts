@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+import { mock, spyOn } from 'bun:test';
 import { execSync, spawn } from 'node:child_process';
 import { EventEmitter } from 'node:events';
 import type { Stats } from 'node:fs';
@@ -24,16 +25,14 @@ type CliActions = {
 };
 
 type Piper = EventEmitter & {
-  kill: jest.Mock;
+  kill: Mocked<any>;
   stderr: EventEmitter;
 };
 
-const accessMock = jest.mocked(access);
-const execSyncMock = jest.mocked(execSync);
 const ffmpeg = (error = 0) => {
   const emitter = new EventEmitter() as any;
-  emitter.end = jest.fn();
-  emitter.kill = jest.fn();
+  emitter.end = mock();
+  emitter.kill = mock();
   emitter.stdin = emitter;
   setImmediate(() => {
     if (error) {
@@ -43,10 +42,10 @@ const ffmpeg = (error = 0) => {
   });
   return emitter;
 };
-const globMock = jest.mocked(glob);
+const globMock = glob as Mocked<typeof glob>;
 const piper = (port: number, action: 'close' | 'error' | 'success' | 'wildcard' = 'success') => {
   const emitter = new EventEmitter() as any;
-  emitter.kill = jest.fn();
+  emitter.kill = mock();
   emitter.stderr = emitter;
   setImmediate(() => {
     if (action === 'close') {
@@ -67,8 +66,6 @@ const piper = (port: number, action: 'close' | 'error' | 'success' | 'wildcard' 
   return emitter;
 };
 const siteConfig = { title: 'site-title', url: 'https://example.com' };
-const spawnMock = jest.mocked(spawn);
-const statMock = jest.mocked(stat);
 const stream = () =>
   new ReadableStream({
     start(controller) {
@@ -83,16 +80,16 @@ const successFetch = () =>
     status: 200,
   });
 
-jest.mock('node:child_process', () => ({
-  execSync: jest.fn(),
-  spawn: jest.fn(),
+mock.module('node:child_process', () => ({
+  execSync: mock(),
+  spawn: mock(),
 }));
 
-jest.mock('node:fs', () => {
-  const original = jest.requireActual('node:fs');
+mock.module('node:fs', () => {
+  const original = require('node:fs');
   return {
     ...original,
-    createWriteStream: jest.fn(() => {
+    createWriteStream: mock(() => {
       const w = new Writable({
         write(_, __, cb) {
           cb();
@@ -104,17 +101,23 @@ jest.mock('node:fs', () => {
   };
 });
 
-jest.mock('node:fs/promises', () => {
-  const original = jest.requireActual('node:fs/promises');
+mock.module('node:fs/promises', () => {
+  const original = require('node:fs/promises');
   return {
     ...original,
-    access: jest.fn(() => Promise.resolve()),
-    mkdir: jest.fn(() => Promise.resolve()),
-    stat: jest.fn(() => Promise.resolve()),
+    access: mock(() => Promise.resolve()),
+    mkdir: mock(() => Promise.resolve()),
+    stat: mock(() => Promise.resolve()),
   };
 });
 
-jest.mock('#root/package.json', () => ({
+// Bun's mock.module is not hoisted: read the live bindings only after registration.
+const accessMock = access as Mocked<typeof access>;
+const execSyncMock = execSync as Mocked<typeof execSync>;
+const spawnMock = spawn as Mocked<typeof spawn>;
+const statMock = stat as Mocked<typeof stat>;
+
+mock.module('#root/package.json', () => ({
   devDependencies: {
     pdfmake: '0.0.0',
   },
@@ -153,42 +156,46 @@ jest.mock('#root/package.json', () => ({
  */
 function makeCli(actions: CliActions) {
   return {
-    action: jest.fn(function action(fn) {
+    action: mock(function action(this: unknown, fn) {
       actions.action = fn;
       return this;
     }),
-    command: jest.fn(function command(name) {
+    command: mock(function command(this: unknown, name) {
       actions.command = name;
       return this;
     }),
-    description: jest.fn(function description() {
+    description: mock(function description(this: unknown) {
       return this;
     }),
-    option: jest.fn(function option() {
+    option: mock(function option(this: unknown) {
       return this;
     }),
   };
 }
 
-const makeTemplate = (title: string) =>
-  jest.fn(async (path) => ({
+const makeTemplate = (title: string) => ({
+  default: mock(async (path) => ({
     definition: { content: [{ text: `${title}:${path}` }], info: { title } },
     options: { compress: false },
-  }));
+  })),
+});
 
-const name = 'media';
-
-jest.mock('#buddhism/media/audio/_index', () => [
+const audioIndex = [
   ['id_ID-news_tts-medium', '#lib/path/one.md'],
   ['en_US-hfc_male-medium', '#lib/path/_ricky_huang.md'],
   ['id_ID-news_tts-medium', '#lib/path/three.md'],
-]);
-jest.mock('#buddhism/media/pdf/_index', () => [
+];
+const pdfIndex = [
   ['base', '#lib/path/one.md'],
   ['book', '#lib/path/_ricky_huang.md'],
-]);
+];
+
+const name = 'media';
+
+mock.module('#buddhism/media/audio/_index', () => ({ default: audioIndex }));
+mock.module('#buddhism/media/pdf/_index', () => ({ default: pdfIndex }));
 ['base', 'book', 'condensed', 'roll', 'thangka', 'wheel'].forEach((template) => {
-  jest.mock(`#buddhism/media/pdf/templates/_${template}`, () => makeTemplate(template));
+  mock.module(`#buddhism/media/pdf/templates/_${template}`, () => makeTemplate(template));
 });
 
 const phrases = [
@@ -198,21 +205,19 @@ const phrases = [
 ];
 
 for (const phrase of phrases) {
-  jest.mock(
-    phrase.path,
-    () => ({
+  mock.module(phrase.path, () => ({
+    default: {
       transliteration: {
         children: phrase.content,
         title: phrase.content,
       },
-    }),
-    { virtual: true },
-  );
+    },
+  }));
 }
 
 // Sync.
-const audio = require('#buddhism/media/audio/_index');
-const pdf = require('#buddhism/media/pdf/_index');
+const audio = require('#buddhism/media/audio/_index').default ?? audioIndex;
+const pdf = require('#buddhism/media/pdf/_index').default ?? pdfIndex;
 const piperRequests = expect.arrayContaining([
   [
     'http://127.0.0.1:5001/synthesize',
@@ -263,10 +268,10 @@ describe(`plugins.${name}.generateAudio: progress bar on update`, () => {
   test('writes audio files and updates progress bar once per m4a', async () => {
     const beforeIncrements = increment.mock.calls.length;
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockImplementation(successFetch);
+    global.fetch = mock().mockImplementation(successFetch) as unknown as typeof fetch;
     const pipers: Piper[] = [];
     let port = 5001;
-    spawnMock.mockImplementation((cmd) => {
+    spawnMock.mockImplementation((cmd: string) => {
       if (cmd.endsWith('python')) {
         const server = piper(port);
         pipers.push(server);
@@ -288,7 +293,7 @@ describe(`plugins.${name}.generateAudio: progress bar on update`, () => {
     );
     expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
     expect(global.fetch).toHaveBeenCalledTimes(length);
-    expect((global.fetch as jest.Mock).mock.calls).toEqual(piperRequests);
+    expect((global.fetch as Mocked<typeof global.fetch>).mock.calls).toEqual(piperRequests);
     expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
     expect(pipers[0].kill).toHaveBeenCalledTimes(1);
     expect(pipers[1].kill).toHaveBeenCalledTimes(1);
@@ -320,14 +325,14 @@ describe(`plugins.${name}.generateAudio: progress bar on skipped`, () => {
 
   test('skip recent audio files, but updates progress bar once per m4a', async () => {
     const beforeIncrements = increment.mock.calls.length;
-    global.fetch = jest.fn().mockImplementation(successFetch);
+    global.fetch = mock().mockImplementation(successFetch) as unknown as typeof fetch;
     const now = Date.now();
     const pipers: Piper[] = [];
     let port = 5001;
 
     accessMock.mockResolvedValueOnce(undefined);
     execSyncMock.mockReturnValueOnce('1.2.3');
-    spawnMock.mockImplementation((cmd) => {
+    spawnMock.mockImplementation((cmd: string) => {
       if (cmd.endsWith('python')) {
         const server = piper(port);
         pipers.push(server);
@@ -336,7 +341,7 @@ describe(`plugins.${name}.generateAudio: progress bar on skipped`, () => {
       }
       return ffmpeg();
     });
-    statMock.mockImplementation((path) =>
+    statMock.mockImplementation((path: string) =>
       Promise.resolve({
         mtimeMs: String(path).includes('/audio/') ? now : 50,
       } as Stats),
@@ -372,7 +377,7 @@ describe(`plugins.${name}.generateAudio: piper failed`, () => {
   const outDir = join(siteDir, out);
 
   test('logs error and returns early when Piper is missing', async () => {
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleMock = spyOn(console, 'error').mockImplementation(() => {});
     execSyncMock.mockReturnValueOnce('');
 
     await Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
@@ -384,11 +389,11 @@ describe(`plugins.${name}.generateAudio: piper failed`, () => {
   });
 
   test('logs error and returns early when Piper failed to start', async () => {
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleMock = spyOn(console, 'error').mockImplementation(() => {});
     const pipers: Piper[] = [];
     let port = 5001;
     execSyncMock.mockReturnValueOnce('1.2.3');
-    spawnMock.mockImplementation((cmd) => {
+    spawnMock.mockImplementation((cmd: string) => {
       if (cmd.endsWith('python')) {
         const server = piper(port, 'close');
         pipers.push(server);
@@ -419,19 +424,23 @@ describe(`plugins.${name}.generateAudio: piper failed`, () => {
     );
     expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
     expect(global.fetch).toHaveBeenCalledTimes(length);
-    expect((global.fetch as jest.Mock).mock.calls).toEqual(piperRequests);
+    expect((global.fetch as Mocked<typeof global.fetch>).mock.calls).toEqual(piperRequests);
     expect(setTotal).toHaveBeenCalledWith(length);
     expect(stop).toHaveBeenCalledTimes(1);
   });
 
   test('logs error when piper responded with failure', async () => {
     const beforeIncrements = increment.mock.calls.length;
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleMock = spyOn(console, 'error').mockImplementation(() => {});
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockResolvedValue({ body: null, ok: false, status: 400 });
+    global.fetch = mock().mockResolvedValue({
+      body: null,
+      ok: false,
+      status: 400,
+    }) as unknown as typeof fetch;
     const pipers: Piper[] = [];
     let port = 5001;
-    spawnMock.mockImplementation((cmd) => {
+    spawnMock.mockImplementation((cmd: string) => {
       if (cmd.endsWith('python')) {
         const server = piper(port);
         pipers.push(server);
@@ -460,7 +469,7 @@ describe(`plugins.${name}.generateAudio: piper failed`, () => {
     );
     expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
     expect(global.fetch).toHaveBeenCalledTimes(length);
-    expect((global.fetch as jest.Mock).mock.calls).toEqual(piperRequests);
+    expect((global.fetch as Mocked<typeof global.fetch>).mock.calls).toEqual(piperRequests);
     expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
     expect(pipers[0].kill).toHaveBeenCalledTimes(1);
     expect(pipers[1].kill).toHaveBeenCalledTimes(1);
@@ -489,12 +498,12 @@ describe(`plugins.${name}.generateAudio: exits error`, () => {
 
   test('logs error when ffmpeg exits non-zero', async () => {
     const beforeIncrements = increment.mock.calls.length;
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleMock = spyOn(console, 'error').mockImplementation(() => {});
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockImplementation(successFetch);
+    global.fetch = mock().mockImplementation(successFetch) as unknown as typeof fetch;
     const pipers: Piper[] = [];
     let port = 5001;
-    spawnMock.mockImplementation((cmd) => {
+    spawnMock.mockImplementation((cmd: string) => {
       if (cmd.endsWith('python')) {
         const server = piper(port);
         pipers.push(server);
@@ -524,7 +533,7 @@ describe(`plugins.${name}.generateAudio: exits error`, () => {
     );
     expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
     expect(global.fetch).toHaveBeenCalledTimes(length);
-    expect((global.fetch as jest.Mock).mock.calls).toEqual(piperRequests);
+    expect((global.fetch as Mocked<typeof global.fetch>).mock.calls).toEqual(piperRequests);
     expect(increment.mock.calls.length - beforeIncrements).toBe(length + 1);
     expect(pipers[0].kill).toHaveBeenCalledTimes(1);
     expect(pipers[1].kill).toHaveBeenCalledTimes(1);
@@ -592,7 +601,7 @@ describe(`plugins.${name}.generateAudioTrack`, () => {
   ]);
 
   test('writes audio file', async () => {
-    global.fetch = jest.fn().mockImplementation(successFetch);
+    global.fetch = mock().mockImplementation(successFetch) as unknown as typeof fetch;
     spawnMock.mockReturnValue(ffmpeg());
     await Plugin.generateAudioTrack({
       generator,
@@ -616,8 +625,12 @@ describe(`plugins.${name}.generateAudioTrack`, () => {
   });
 
   test('logs error when piper responded with failure', async () => {
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
-    global.fetch = jest.fn().mockResolvedValue({ body: null, ok: false, status: 400 });
+    const consoleMock = spyOn(console, 'error').mockImplementation(() => {});
+    global.fetch = mock().mockResolvedValue({
+      body: null,
+      ok: false,
+      status: 400,
+    }) as unknown as typeof fetch;
     await Plugin.generateAudioTrack({
       generator,
       model,
@@ -643,8 +656,8 @@ describe(`plugins.${name}.generateAudioTrack`, () => {
   });
 
   test('logs error when ffmpeg exits non-zero', async () => {
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {});
-    global.fetch = jest.fn().mockImplementation(successFetch);
+    const consoleMock = spyOn(console, 'error').mockImplementation(() => {});
+    global.fetch = mock().mockImplementation(successFetch) as unknown as typeof fetch;
     spawnMock.mockReturnValue(ffmpeg(1));
     await Plugin.generateAudioTrack({
       generator,
@@ -674,7 +687,7 @@ describe(`plugins.${name}.generateAudioTrack`, () => {
   });
 
   test('should handle a missing track gracefully using the fallback object', async () => {
-    global.fetch = jest.fn().mockImplementation(successFetch);
+    global.fetch = mock().mockImplementation(successFetch) as unknown as typeof fetch;
     spawnMock.mockReturnValue(ffmpeg());
     await Plugin.generateAudioTrack({
       generator,
@@ -735,7 +748,7 @@ describe(`plugins.${name}.generatePdf`, () => {
     const beforeIncrements = increment.mock.calls.length;
     const now = Date.now();
     accessMock.mockResolvedValueOnce(undefined);
-    statMock.mockImplementation((path) =>
+    statMock.mockImplementation((path: string) =>
       Promise.resolve({
         mtimeMs: String(path).includes('/pdf/') ? now : 50,
       } as Stats),
@@ -824,7 +837,7 @@ describe(`plugins.${name}.outputPaths`, () => {
       pattern: '*.json',
     },
   ])('$name', async ({ files, pattern, expected }) => {
-    globMock.mockResolvedValue(files);
+    globMock.mockResolvedValue([...files]);
 
     const result = await Plugin.outputPaths(outDir, pattern);
 
@@ -888,10 +901,10 @@ describe(`plugins.${name}.postBuild`, () => {
   test('runs generators and inlineAboveFold concurrently when trailingSlash is true', async () => {
     const ctx = { ...base, siteConfig: { trailingSlash: true } };
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockImplementation(successFetch);
+    global.fetch = mock().mockImplementation(successFetch) as unknown as typeof fetch;
     globMock.mockResolvedValue([`${ctx.outDir}/file1.html`, `${ctx.outDir}/file2.html`]);
     let port = 5000;
-    spawnMock.mockImplementation((cmd) => {
+    spawnMock.mockImplementation((cmd: string) => {
       if (cmd.endsWith('python')) {
         port += 1;
         return piper(port);
@@ -930,9 +943,9 @@ describe(`plugins.${name}.postBuild`, () => {
 
   test('skips inlineAboveFold when trailingSlash is false', async () => {
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockImplementation(successFetch);
+    global.fetch = mock().mockImplementation(successFetch) as unknown as typeof fetch;
     let port = 5000;
-    spawnMock.mockImplementation((cmd) => {
+    spawnMock.mockImplementation((cmd: string) => {
       if (cmd.endsWith('python')) {
         port += 1;
         return piper(port);
@@ -985,7 +998,7 @@ describe(`plugins.${name}.stale`, () => {
     ['target fresh', false, undefined, [50, Date.now(), 50, 50]],
   ])('%s -> expected=%s', async (_, expected, accessReturn, stats) => {
     accessMock[`mock${accessReturn instanceof Error ? 'Rejected' : 'Resolved'}ValueOnce`](
-      accessReturn,
+      accessReturn as never,
     );
     // Mock stat results in order: data, target, template.
     statMock.mockImplementation(() => {
@@ -1030,24 +1043,24 @@ describe(`plugins.${name}.plugin API (default export)`, () => {
     const plugin = Plugin.default({ siteDir: '/ctx/site' });
     const actions: CliActions = {};
     const cli = {
-      action: jest.fn().mockImplementation(function action(fn) {
+      action: mock().mockImplementation(function action(fn) {
         actions.action = fn;
         return cli;
       }),
-      command: jest.fn().mockImplementation(function command(cmd) {
+      command: mock().mockImplementation(function command(cmd) {
         actions.command = cmd;
         return cli;
       }),
-      description: jest.fn().mockReturnThis(),
-      option: jest.fn().mockReturnThis(),
+      description: mock().mockReturnThis(),
+      option: mock().mockReturnThis(),
     };
-    (loadFreshModule as jest.Mock).mockResolvedValue(siteConfig);
+    (loadFreshModule as Mocked<typeof loadFreshModule>).mockResolvedValue(siteConfig);
 
     plugin.extendCli(cli);
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockImplementation(successFetch);
+    global.fetch = mock().mockImplementation(successFetch) as unknown as typeof fetch;
     let port = 5000;
-    spawnMock.mockImplementation((cmd) => {
+    spawnMock.mockImplementation((cmd: string) => {
       if (cmd.endsWith('python')) {
         port += 1;
         return piper(port);
@@ -1080,13 +1093,13 @@ describe(`plugins.${name}.plugin API (default export): error handling`, () => {
     const pluginA = Plugin.default({ siteDir: '/ctx/siteA' });
     const actionsA: CliActions = {};
     const cliA = makeCli(actionsA);
-    (loadFreshModule as jest.Mock).mockResolvedValue(siteConfig);
+    (loadFreshModule as Mocked<typeof loadFreshModule>).mockResolvedValue(siteConfig);
     pluginA.extendCli(cliA);
 
     execSyncMock.mockReturnValueOnce('1.2.3');
-    global.fetch = jest.fn().mockImplementation(successFetch);
+    global.fetch = mock().mockImplementation(successFetch) as unknown as typeof fetch;
     let port = 5000;
-    spawnMock.mockImplementation((cmd) => {
+    spawnMock.mockImplementation((cmd: string) => {
       if (cmd.endsWith('python')) {
         port += 1;
         return piper(port);

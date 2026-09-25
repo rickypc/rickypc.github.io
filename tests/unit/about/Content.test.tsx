@@ -1,17 +1,13 @@
 /*!
  * Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
  * All rights reserved.
- * ----------------------------------------------------------------------------
- * @jest-environment jsdom
  */
 
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { mock } from 'bun:test';
 import Content from '@site/src/components/about/Content';
+import { render, screen } from '@testing-library/react';
 
-jest.unmock('@site/src/components/about/Content');
-
-jest.mock('@site/src/data/about', () => ({
+mock.module('@site/src/data/about', () => ({
   characteristic: {
     attributes: ['Trait One', 'Trait Two'],
     title: 'Key Traits',

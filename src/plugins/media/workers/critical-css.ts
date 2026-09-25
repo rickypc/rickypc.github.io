@@ -12,7 +12,7 @@ type Options = {
 };
 
 const [, { outDir }] = workerData;
-let beasties: typeof Beasties | null = null;
+let beasties: Beasties | null = null;
 
 /**
  * Generates critical CSS for a single HTML file.

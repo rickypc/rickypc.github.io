@@ -103,7 +103,7 @@ describe('docs.buddhism.media.pdf._strip.languageGeometry()', () => {
       repeat: mockTibetan.repeat,
       rollFont: 'Kokonor',
       suffix: '༎',
-      text: undefined,
+      text: undefined as never,
     });
   });
 
@@ -128,7 +128,7 @@ describe('docs.buddhism.media.pdf._strip.languageGeometry()', () => {
       repeat: mockTibetan.repeat,
       rollFont: 'Kokonor',
       suffix: '༎',
-      text: undefined,
+      text: undefined as never,
     });
   });
 
@@ -152,7 +152,7 @@ describe('docs.buddhism.media.pdf._strip.languageGeometry()', () => {
       repeat: mockSanskrit.repeat,
       rollFont: 'NotoSerifDevanagari',
       suffix: '\u0965',
-      text: undefined,
+      text: undefined as never,
     });
   });
 
@@ -176,7 +176,7 @@ describe('docs.buddhism.media.pdf._strip.languageGeometry()', () => {
       repeat: mockSanskrit.repeat,
       rollFont: 'NotoSerifDevanagari',
       suffix: '\u0965',
-      text: undefined,
+      text: undefined as never,
     });
   });
 
@@ -193,7 +193,7 @@ describe('docs.buddhism.media.pdf._strip.languageGeometry()', () => {
       ...BASE_GEOMETRY,
       fontSizes: BASE_GEOMETRY.fontSizes,
       repeat: mockTransliteration.repeat,
-      text: undefined,
+      text: undefined as never,
     });
   });
 });
@@ -221,7 +221,7 @@ describe('docs.buddhism.media.pdf._strip.subsequentBody()', () => {
       [
         {
           text: [
-            { fontSize: '16px', text: 'MANTRA 3x ' },
+            { fontSize: '16px' as unknown as number, text: 'MANTRA 3x ' },
             {
               text: [
                 { style: 'prefix', text: '[' },

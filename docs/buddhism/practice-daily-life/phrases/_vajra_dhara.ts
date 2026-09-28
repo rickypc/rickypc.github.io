@@ -5,8 +5,10 @@
 
 export default {
   chinese: {
+    // biome-ignore-start lint/security/noSecrets: -
     children: '唵 啊 班雜達惹 悉地 吽 吽 · 唵 班雜瑜伽女 吽 呸 梭哈',
     title: '金剛總持',
+    // biome-ignore-end lint/security/noSecrets: -
   },
   path: import.meta.url,
   sanskrit: {

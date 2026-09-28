@@ -50,10 +50,14 @@ describe('Layout.with extra metadatas', () => {
     expect(meta).toHaveAttribute('title', 'Page Title');
 
     const { head } = document;
-    // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="author"]')).toHaveAttribute('content', 'rick');
-    // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+    expect(
+      // eslint-disable-next-line testing-library/no-node-access
+      head.querySelector(/* biome-ignore lint/security/noSecrets: - */ 'meta[name="author"]'),
+    ).toHaveAttribute('content', 'rick');
+    expect(
+      // eslint-disable-next-line testing-library/no-node-access
+      head.querySelector(/* biome-ignore lint/security/noSecrets: - */ 'meta[name="robots"]'),
+    ).toHaveAttribute('content', 'noindex');
   });
 
   test('includes JSON-LD script with page metadata', () => {
@@ -104,10 +108,14 @@ describe('Layout.without metadatas', () => {
       </Layout>,
     );
     const { head } = document;
-    // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="robots"]')).toBeNull();
-    // eslint-disable-next-line testing-library/no-node-access
-    expect(head.querySelector('meta[name="author"]')).toBeNull();
+    expect(
+      // eslint-disable-next-line testing-library/no-node-access
+      head.querySelector(/* biome-ignore lint/security/noSecrets: - */ 'meta[name="robots"]'),
+    ).toBeNull();
+    expect(
+      // eslint-disable-next-line testing-library/no-node-access
+      head.querySelector(/* biome-ignore lint/security/noSecrets: - */ 'meta[name="author"]'),
+    ).toBeNull();
   });
 });
 

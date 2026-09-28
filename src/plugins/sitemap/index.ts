@@ -66,6 +66,7 @@ export async function createSitemapItems({
     }),
   );
   if (uncommitted.length) {
+    // biome-ignore lint/security/noSecrets: -
     console.error('\x1B[31mPlease commit these files so lastmod dates can be generated correctly:');
     console.error(uncommitted.join('\n'));
     console.error('');

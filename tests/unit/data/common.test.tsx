@@ -41,6 +41,7 @@ describe('data.common.a11y()', () => {
   });
 });
 
+// biome-ignore lint/security/noSecrets: -
 describe('data.common.chunkToWords()', () => {
   test.each([
     // 1-19 (below20 cases).
@@ -80,6 +81,7 @@ describe('data.common.chunkToWords()', () => {
     [342, 'three hundred forty-two'],
     [519, 'five hundred nineteen'],
     [987, 'nine hundred eighty-seven'],
+    // biome-ignore lint/security/noSecrets: -
   ])('chunkToWords(%i) -> %s', (input, expected) => {
     expect(chunkToWords(input)).toBe(expected);
   });
@@ -250,6 +252,7 @@ describe('data.common.faqEntries()', () => {
   });
 });
 
+// biome-ignore lint/security/noSecrets: -
 describe('data.common.fetchAsJson()', () => {
   test('returns parsed JSON when fetch resolves with valid JSON', async () => {
     const data = { array: [1, 2, 3], ok: true };
@@ -417,6 +420,7 @@ describe('data.common.numberToWords()', () => {
       999_999_999_999,
       'nine hundred ninety-nine billion nine hundred ninety-nine million nine hundred ninety-nine thousand nine hundred ninety-nine',
     ],
+    // biome-ignore lint/security/noSecrets: -
   ])('numberToWords(%i) -> %s', (input, expected) => {
     expect(numberToWords(input)).toBe(expected);
   });

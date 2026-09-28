@@ -13,13 +13,8 @@
       }
     }
   },
-  "files": {
-    "ignoreUnknown": true
-  },
-  "formatter": {
-    "indentStyle": "space",
-    "indentWidth": 2
-  },
+  "files": { "ignoreUnknown": true },
+  "formatter": { "indentStyle": "space", "indentWidth": 2 },
   "javascript": {
     "formatter": {
       "arrowParentheses": "always",
@@ -28,8 +23,7 @@
       "lineEnding": "lf",
       "lineWidth": 100,
       "operatorLinebreak": "before",
-      "quoteStyle": "single",
-      "semicolons": "always"
+      "quoteStyle": "single"
     }
   },
   "linter": {
@@ -48,19 +42,15 @@
           }
         },
         "noUselessSwitchCase": "error",
-        "useMaxParams": {
-          "level": "error",
-          "options": { "max": 10 }
-        }
+        "useMaxParams": { "level": "error", "options": { "max": 10 } }
       },
       "correctness": {
         "noNestedComponentDefinitions": "error",
         "noUnknownPseudoClass": {
           "level": "error",
-          "options": {
-            "ignore": ["global"]
-          }
+          "options": { "ignore": ["global"] }
         },
+        "useSingleJsDocAsterisk": "error",
         "useUniqueElementIds": "error"
       },
       "nursery": {
@@ -79,6 +69,7 @@
         "useVarsOnTop": "error"
       },
       "preset": "recommended",
+      "security": { "noSecrets": "error" },
       "style": {
         "noExcessiveClassesPerFile": "error",
         "noExcessiveLinesPerFile": {
@@ -113,26 +104,14 @@
         "useBlockStatements": "error",
         "useDefaultSwitchClause": "error"
       },
-      "suspicious": {
-        "noExplicitAny": "off"
-      }
+      "suspicious": { "noExplicitAny": "off" }
     }
   },
   "overrides": [
     {
       "includes": ["**/e2e/*.spec.ts"],
-      "linter": {
-        "rules": {
-          "nursery": {
-            "useExpect": "off"
-          }
-        }
-      }
+      "linter": { "rules": { "nursery": { "useExpect": "off" } } }
     }
   ],
-  "vcs": {
-    "clientKind": "git",
-    "enabled": true,
-    "useIgnoreFile": true
-  }
+  "vcs": { "clientKind": "git", "enabled": true, "useIgnoreFile": true }
 }

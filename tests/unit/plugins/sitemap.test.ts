@@ -115,6 +115,7 @@ describe('plugins.sitemap', () => {
       expect(spy).toHaveBeenCalledTimes(3);
       expect(spy).toHaveBeenNthCalledWith(
         1,
+        // biome-ignore lint/security/noSecrets: -
         '\x1B[31mPlease commit these files so lastmod dates can be generated correctly:',
       );
       expect(spy).toHaveBeenNthCalledWith(

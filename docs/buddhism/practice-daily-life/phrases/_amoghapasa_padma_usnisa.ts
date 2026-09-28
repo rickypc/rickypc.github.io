@@ -5,6 +5,7 @@
 
 export default {
   chinese: {
+    // biome-ignore lint/security/noSecrets: -
     title: '白蓮花頂髻無垢密咒',
   },
   path: import.meta.url,
@@ -23,6 +24,7 @@ export default {
   transliteration: {
     children: 'oṃ padma uṣṇīṣa vimale hūṃ phaṭ',
     // Amoghapāśa Lotus Pinnacle.
+    // biome-ignore lint/security/noSecrets: -
     title: 'Amoghapāśa Padma Uṣṇīṣa',
   },
 };

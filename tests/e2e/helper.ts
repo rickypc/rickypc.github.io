@@ -98,6 +98,7 @@ const audioSpectrogram = (path: string): Promise<Buffer> =>
       '-loglevel',
       'quiet',
       '-filter_complex',
+      // biome-ignore lint/security/noSecrets: -
       'asetnsamples=n=4096:p=0,highpass=f=80,lowpass=f=300,showwavespic=s=1024x512,scale=1024x512',
       '-frames:v',
       '1',
@@ -239,20 +240,25 @@ export const hasJsonLd = async (options: Options) => {
 
 export const hasMetadatas = async (options: Options) => {
   expect(
+    // biome-ignore lint/security/noSecrets: -
     await (options.page as Page).locator('head>meta[name="description"]').getAttribute('content'),
   ).toMatchSnapshot('meta-description.txt');
   expect(
+    // biome-ignore lint/security/noSecrets: -
     await (options.page as Page).locator('head>meta[name="keywords"]').getAttribute('content'),
   ).toMatchSnapshot('meta-keywords.txt');
   expect(
     await (options.page as Page)
+      // biome-ignore lint/security/noSecrets: -
       .locator('head>meta[property="og:description"]')
       .getAttribute('content'),
   ).toMatchSnapshot('meta-og-description.txt');
   expect(
+    // biome-ignore lint/security/noSecrets: -
     await (options.page as Page).locator('head>meta[property="og:title"]').getAttribute('content'),
   ).toMatchSnapshot('meta-og-title.txt');
   expect(
+    // biome-ignore lint/security/noSecrets: -
     await (options.page as Page).locator('head>meta[property="og:type"]').getAttribute('content'),
   ).toEqual('website');
   expect(

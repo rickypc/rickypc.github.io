@@ -515,6 +515,7 @@ export async function generateAudio(
   )?.trim()}`;
 
   if (generator === 'piper:') {
+    // biome-ignore lint/security/noSecrets: -
     console.error('\x1B[31mPiper not found - activate the correct venv.\x1B[0m');
     return;
   }
@@ -523,6 +524,7 @@ export async function generateAudio(
     1,
     0,
     { color: '\x1B[35m', task: 'Map Tracks' },
+    // biome-ignore lint/security/noSecrets: -
     { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
   );
   bars.update();
@@ -531,6 +533,7 @@ export async function generateAudio(
   bars.update();
   bar.setTotal(audio.length);
   (bar as any).options.format =
+    // biome-ignore lint/security/noSecrets: -
     '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m';
   bar.update(0, { task: 'Make Audio' });
 
@@ -593,6 +596,7 @@ export async function generateAudio(
     servers.clear();
   }
   (bar as any).options.format =
+    // biome-ignore lint/security/noSecrets: -
     '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bars.update();
   bar.stop();
@@ -643,6 +647,7 @@ export async function generatePdf(
     await pool.destroy();
   }
   (bar as any).options.format =
+    // biome-ignore lint/security/noSecrets: -
     '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bars.update();
   bar.stop();
@@ -659,6 +664,7 @@ export async function inlineAboveFold(outDir: string, bars: MultiBar): Promise<v
     1,
     0,
     { color: '\x1B[36m', task: 'Find HTML ' },
+    // biome-ignore lint/security/noSecrets: -
     { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
   );
   bars.update();
@@ -667,6 +673,7 @@ export async function inlineAboveFold(outDir: string, bars: MultiBar): Promise<v
   bars.update();
   bar.setTotal(paths.length);
   (bar as any).options.format =
+    // biome-ignore lint/security/noSecrets: -
     '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m';
   bar.update(0, { task: 'Inline CSS' });
   const pool = new Tinypool({
@@ -686,6 +693,7 @@ export async function inlineAboveFold(outDir: string, bars: MultiBar): Promise<v
     await pool.destroy();
   }
   (bar as any).options.format =
+    // biome-ignore lint/security/noSecrets: -
     '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
   bars.update();
   bar.stop();
@@ -704,6 +712,7 @@ export async function postBuild({ outDir, siteConfig, siteDir }: LoadContext): P
     barIncompleteChar: '░',
     emptyOnZero: true,
     format:
+      // biome-ignore lint/security/noSecrets: -
       '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m',
     hideCursor: true,
     // It doesn't support length === 0.
@@ -765,6 +774,7 @@ export default function plugin(context: LoadContext): Plugin {
             fallbacks: [
               'system-ui',
               '-apple-system',
+              // biome-ignore lint/security/noSecrets: -
               'BlinkMacSystemFont',
               'Segoe UI',
               'Roboto',

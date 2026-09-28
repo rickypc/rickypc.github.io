@@ -6,6 +6,7 @@
 export default {
   chinese: {
     children: '唵 牟尼 牟尼 嘛哈牟尼 釋迦牟尼 梭哈',
+    // biome-ignore lint/security/noSecrets: -
     title: '釋迦牟尼佛',
   },
   path: import.meta.url,

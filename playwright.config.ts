@@ -15,10 +15,7 @@ module.exports = defineConfig({
   fullyParallel: true,
   outputDir: './playwright/results',
   projects: [
-    {
-      name: 'audio',
-      testMatch: /.*audio\.spec\.ts/,
-    },
+    { name: 'audio', testMatch: /.*audio\.spec\.ts/ },
     {
       name: 'chromium',
       testIgnore: /.*(audio|pdf)\.spec\.ts/,
@@ -39,10 +36,7 @@ module.exports = defineConfig({
       testIgnore: /.*(audio|pdf)\.spec\.ts/,
       use: { ...devices['iPhone 12'] },
     },
-    {
-      name: 'pdf',
-      testMatch: /.*pdf\.spec\.ts/,
-    },
+    { name: 'pdf', testMatch: /.*pdf\.spec\.ts/ },
     {
       name: 'webkit',
       testIgnore: /.*(audio|pdf)\.spec\.ts/,
@@ -54,10 +48,7 @@ module.exports = defineConfig({
   retries: process.env.CI ? 2 : 0,
   snapshotPathTemplate: './playwright/snapshots/{testFilePath}/{arg}-{projectName}{ext}',
   testDir: './tests/e2e',
-  use: {
-    baseURL: process.env.BASE_URL || 'http://localhost:3000',
-    trace: 'on-first-retry',
-  },
+  use: { baseURL: process.env.BASE_URL || 'http://localhost:3000', trace: 'on-first-retry' },
   webServer: {
     command: 'npm run start',
     reuseExistingServer: !process.env.CI,

@@ -5,6 +5,7 @@
 
 export default {
   chinese: {
+    // biome-ignore-start lint/security/noSecrets: -
     childrenx: [
       '巴那帝巴大 唯臘媽尼 昔卡巴當 三媽地呀密',
       '阿地那他那 唯臘媽尼 昔卡巴當 三媽地呀密',
@@ -20,6 +21,7 @@ export default {
       '我受持不妄語學處',
       '我受持不飲酒學處',
     ].join(' · '),
+    // biome-ignore-end lint/security/noSecrets: -
   },
   pali: {
     sinhala: {

@@ -15,10 +15,7 @@ const config: Config = {
   future: { faster: true, v4: true },
   /*
   headTags: [
-    {
-      attributes: { href: 'https://counterapi.com', rel: 'preconnect' },
-      tagName: 'link',
-    },
+    { attributes: { href: 'https://counterapi.com', rel: 'preconnect' }, tagName: 'link' },
   ],
   */
   i18n: {
@@ -105,12 +102,7 @@ const config: Config = {
           to: 'https://www.linkedin.com/in/rihuang',
         },
       ],
-      logo: {
-        alt: 'Logo',
-        height: 'auto',
-        src: '/img/logo.webp',
-        width: 'auto',
-      },
+      logo: { alt: 'Logo', height: 'auto', src: '/img/logo.webp', width: 'auto' },
       title: 'Ricky Huang',
     },
   } satisfies ThemeConfig,

@@ -13,6 +13,7 @@ export default {
     title: 'Three Roots Refuge',
   },
   transliteration: {
+    // biome-ignore lint/security/noSecrets: -
     children: 'namo gurubhyaḥ । namo devábhyaḥ । namo ḍākinībhyaḥ',
     title: 'Trimūla Śaraṇa',
   },

@@ -74,16 +74,18 @@ describe('timeline.Content', () => {
       expect(imgLink).toHaveAttribute('class', 'logo');
       expect(imgLink).toHaveAttribute('href', timeline.affiliation.href);
       const picture = within(w).getByTestId('picture');
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.querySelector('source[type="image/avif"]')).toHaveAttribute(
-        'srcSet',
-        timeline.picture.avif,
-      );
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.querySelector('source[type="image/webp"]')).toHaveAttribute(
-        'srcSet',
-        timeline.picture.webp,
-      );
+      expect(
+        // eslint-disable-next-line testing-library/no-node-access
+        picture.querySelector(
+          /* biome-ignore lint/security/noSecrets: - */ 'source[type="image/avif"]',
+        ),
+      ).toHaveAttribute('srcSet', timeline.picture.avif);
+      expect(
+        // eslint-disable-next-line testing-library/no-node-access
+        picture.querySelector(
+          /* biome-ignore lint/security/noSecrets: - */ 'source[type="image/webp"]',
+        ),
+      ).toHaveAttribute('srcSet', timeline.picture.webp);
 
       // Article & inner class.
       const article = within(w).getByTestId('article');

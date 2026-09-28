@@ -5,6 +5,7 @@
 
 export default {
   chinese: {
+    // biome-ignore-start lint/security/noSecrets: -
     children: [
       '唵 阿蜜哩多婆囉 婆囉婆囉 缽囉婆囉 毘輸地 吽吽 帕帕 梭哈',
       '唵 阿蜜哩多尾盧吉尼 伽婆 僧囉叉尼 阿羯叉尼 吽吽 帕帕 梭哈',
@@ -13,6 +14,7 @@ export default {
       '唵 摩尼達哩 伐折哩尼 摩訶鉢底娑囉 吽吽 帕帕 梭哈',
     ].join(' · '),
     title: '大隨求陀羅尼',
+    // biome-ignore-end lint/security/noSecrets: -
   },
   path: import.meta.url,
   sanskrit: {

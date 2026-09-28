@@ -17,7 +17,9 @@ mock.module('@site/src/data/common', () => ({
   ),
 }));
 
+// biome-ignore lint/security/noSecrets: -
 describe('theme.DocTagsListPage', () => {
+  // biome-ignore lint/security/noSecrets: -
   test('injects meta tags, calls useWelcome, and forwards props to original DocTagsListPage', () => {
     const description = expect.stringContaining('Practical notes on Buddhism');
     const props = { someProp: 'value', tags: [] };

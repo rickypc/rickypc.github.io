@@ -15,6 +15,7 @@ export default {
   },
   transliteration: {
     children:
+      // biome-ignore lint/security/noSecrets: -
       'oṃ sūkṣme sūkṣme same samaye śānte dānte samārope anālambe tarambe yaśovati mahāteje nirākulanirvāṇe sarvabuddhādhiṣṭhānādhiṣṭhite svāhā',
     repetition: 3,
     title: 'Vairocana Sarvakatāḍanavidhiḥ',

@@ -6,6 +6,7 @@
 export default {
   chinese: {
     children: '離婆離婆帝 求訶求訶帝 陀羅尼帝 尼訶囉帝 毗黎你帝 摩訶伽帝 真陵幹帝 莎婆訶',
+    // biome-ignore lint/security/noSecrets: -
     title: '七佛滅罪真言',
   },
   lang: 'sa-IN',

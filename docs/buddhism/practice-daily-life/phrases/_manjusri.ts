@@ -5,8 +5,10 @@
 
 export default {
   chinese: {
+    // biome-ignore-start lint/security/noSecrets: -
     children: '唵 阿喇巴札那 諦',
     title: '文殊師利菩薩',
+    // biome-ignore-end lint/security/noSecrets: -
   },
   path: import.meta.url,
   sanskrit: {

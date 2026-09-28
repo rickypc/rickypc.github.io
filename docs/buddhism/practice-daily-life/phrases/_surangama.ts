@@ -6,6 +6,7 @@
 export default {
   chinese: {
     children:
+      // biome-ignore lint/security/noSecrets: -
       '唵 啊拿咧 啊拿咧 維夏爹 維夏爹 維拉 瓦就拉他咧 般他 般他尼 瓦就辣帕兒尼 帕 · 吽 通隆 帕 梭哈',
     title: '楞嚴咒心',
   },

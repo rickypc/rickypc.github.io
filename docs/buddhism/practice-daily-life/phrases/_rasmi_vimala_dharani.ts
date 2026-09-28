@@ -5,6 +5,7 @@
 
 export default {
   chinese: {
+    // biome-ignore lint/security/noSecrets: -
     title: '無垢淨光大陀羅尼經',
   },
   path: import.meta.url,

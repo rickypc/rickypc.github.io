@@ -14,9 +14,9 @@ import {
   mock,
   test,
 } from 'bun:test';
+import { writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename } from 'node:path';
-import { pathToFileURL } from 'node:url';
 import { GlobalRegistrator } from '@happy-dom/global-registrator';
 import { createElement } from 'react';
 
@@ -28,12 +28,13 @@ const { file, main } = Bun;
 const assets = {
   cached: new Set<string>(),
   css: new Proxy({}, { get: (_target, key) => (key === '__esModule' ? false : key) }),
-  dir: pathToFileURL(`${tmpdir()}/bun-test-assets/`),
+  dir: new URL(`file://${tmpdir()}/bun-test-assets/`),
   image(name: string) {
     const url = new URL(`${name}.cjs`, assets.dir);
     const path = url.pathname;
     if (!assets.cached.has(path)) {
-      Bun.write(url, `module.exports = ${JSON.stringify(name)};\n`);
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
+      writeFileSync(url, `module.exports = ${JSON.stringify(name)};\n`);
       assets.cached.add(path);
     }
     return path;

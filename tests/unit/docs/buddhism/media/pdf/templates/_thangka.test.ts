@@ -23,6 +23,7 @@ mock.module('#buddhism/media/_common', () => {
   };
 });
 
+// biome-ignore lint/security/noSecrets: -
 describe('docs.buddhism.media.pdf.templates._thangka.languageFontSizes()', () => {
   test('should return thangka typography from context when it exists', () => {
     const mockContext = {

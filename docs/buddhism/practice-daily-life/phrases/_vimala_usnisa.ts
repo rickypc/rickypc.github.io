@@ -5,6 +5,7 @@
 
 export default {
   chinese: {
+    // biome-ignore lint/security/noSecrets: -
     title: '無垢仏頂',
   },
   path: import.meta.url,
@@ -25,12 +26,15 @@ export default {
     title: 'གཙུག་ཏོར་དྲི་མེད',
   },
   translation: {
+    // biome-ignore lint/security/noSecrets: -
     title: 'Great Wisdom - Stainless Uṣṇīṣa',
   },
   transliteration: {
+    // biome-ignore-start lint/security/noSecrets: -
     children:
       'oṃ namastryadhvikānāṃ । sarva tathāgata hṛdaya garbhe । jvāla jvāla । dharmadhātu garbhe । saṁbhara mama āyuḥ saṃśodhaya mama sarva pāpaṁ । sarva tathāgata samanta uṣṇīṣa vimale viśuddhe । hūṁ hūṁ hūṁ hūṁ । aṁ vaṁ saṁ jaḥ svāhā',
     repetition: 21,
     title: 'Vimala Uṣṇīṣa',
+    // biome-ignore-end lint/security/noSecrets: -
   },
 };

@@ -48,6 +48,7 @@ export default {
                 ' (',
                 { color: 'red', text: 'prajñā' },
                 ') nāḍī to the ',
+                // biome-ignore lint/security/noSecrets: -
                 { color: '#ffd814', text: 'svādhiṣṭhāna' },
                 ', hold our breath there for 3 to 5 seconds while tightening and pulling up the anal sphincter, exhaling black smoke through the right nostril while releasing the anal sphincter, ',
                 { color: 'green', text: 'green' },
@@ -65,6 +66,7 @@ export default {
                 ' (',
                 { color: 'gray', text: 'upāya' },
                 ') nāḍī to the ',
+                // biome-ignore lint/security/noSecrets: -
                 { color: '#ffd814', text: 'svādhiṣṭhāna' },
                 ', hold our breath there for 3 to 5 seconds while tightening and pulling up the anal sphincter, exhaling black smoke through the left nostril while releasing the anal sphincter, ',
                 { color: 'green', text: 'green' },
@@ -82,6 +84,7 @@ export default {
                 '-',
                 { color: 'gray', text: 'piṅgala' },
                 ' nāḍīs to the ',
+                // biome-ignore lint/security/noSecrets: -
                 { color: '#ffd814', text: 'svādhiṣṭhāna' },
                 ', hold our breath there for 3 to 5 seconds while tightening and pulling up the anal sphincter, exhaling through both nostrils while releasing the anal sphincter, ',
                 { color: 'green', text: 'green' },
@@ -324,6 +327,7 @@ export default {
       number: '9',
     },
     {
+      // biome-ignore lint/security/noSecrets: -
       chapters: ['Sukhāvatīvyūha', 'Ekādaśamukhalokeśvara'],
       contents: [
         [...phrase('#buddhism/practice-daily-life/phrases/_sukhavativyuha.ts')],
@@ -331,6 +335,7 @@ export default {
       ],
       images: {
         left: { alt: 'Amitābha', path: '#buddhism/img/amitabha.webp' },
+        // biome-ignore lint/security/noSecrets: -
         right: { alt: 'Ekādaśamukhalokeśvara', path: '#buddhism/img/ekadasamukha.webp' },
       },
       number: '11',

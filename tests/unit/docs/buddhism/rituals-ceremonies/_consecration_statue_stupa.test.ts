@@ -137,6 +137,7 @@ describe('docs.buddhism.rituals-ceremonies._consecration_statue_stupa', () => {
       '#buddhism/practice-daily-life/phrases/_prarthanasiddhih.ts',
       '',
       0,
+      // biome-ignore lint/security/noSecrets: -
       'Prārthanāsiddhiḥ [Fulfillment of Aspiration]',
     ]);
   });

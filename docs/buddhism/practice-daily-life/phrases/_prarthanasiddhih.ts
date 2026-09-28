@@ -17,7 +17,9 @@ export default {
     title: 'Fulfillment of Aspiration',
   },
   transliteration: {
+    // biome-ignore-start lint/security/noSecrets: -
     children: 'pañcendriyāvabodhanīye svāhā । jaya jaya sujaya',
     title: 'Prārthanāsiddhiḥ',
+    // biome-ignore-end lint/security/noSecrets: -
   },
 };

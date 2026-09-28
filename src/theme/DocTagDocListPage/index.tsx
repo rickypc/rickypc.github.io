@@ -35,7 +35,9 @@ const usePageTitle = (props: Props): string => {
   return translate(
     {
       description: 'The title of the page for a docs tag',
+      // biome-ignore lint/security/noSecrets: -
       id: 'theme.docs.tagDocListPageTitle',
+      // biome-ignore lint/security/noSecrets: -
       message: '{nDocsTagged} with "{tagName}"',
     },
     { nDocsTagged: nDocsTaggedPlural(props.tag.count), tagName: props.tag.label },

@@ -289,6 +289,7 @@ describe(`plugins.${name}.generateAudio: progress bar on update`, () => {
       1,
       0,
       { color: '\x1B[35m', task: 'Map Tracks' },
+      // biome-ignore lint/security/noSecrets: -
       { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
     );
     expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
@@ -355,6 +356,7 @@ describe(`plugins.${name}.generateAudio: progress bar on skipped`, () => {
       1,
       0,
       { color: '\x1B[35m', task: 'Map Tracks' },
+      // biome-ignore lint/security/noSecrets: -
       { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
     );
     expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
@@ -420,6 +422,7 @@ describe(`plugins.${name}.generateAudio: piper failed`, () => {
       1,
       0,
       { color: '\x1B[35m', task: 'Map Tracks' },
+      // biome-ignore lint/security/noSecrets: -
       { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
     );
     expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
@@ -465,6 +468,7 @@ describe(`plugins.${name}.generateAudio: piper failed`, () => {
       1,
       0,
       { color: '\x1B[35m', task: 'Map Tracks' },
+      // biome-ignore lint/security/noSecrets: -
       { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
     );
     expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
@@ -529,6 +533,7 @@ describe(`plugins.${name}.generateAudio: exits error`, () => {
       1,
       0,
       { color: '\x1B[35m', task: 'Map Tracks' },
+      // biome-ignore lint/security/noSecrets: -
       { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
     );
     expect(mkdir).toHaveBeenCalledWith(join(outDir, 'audio'), { recursive: true });
@@ -786,6 +791,7 @@ describe(`plugins.${name}.inlineAboveFold`, () => {
       0,
       expect.objectContaining({ task: 'Find HTML ' }),
       expect.objectContaining({
+        // biome-ignore lint/security/noSecrets: -
         format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m',
       }),
     );

@@ -19,6 +19,7 @@ export default {
   transliteration: {
     children: 'oṃ sarva tathāgata mahāpūja pratīccha hoḥ । oṃ puruṣāya hoḥ',
     repetition: 3,
+    // biome-ignore lint/security/noSecrets: -
     title: 'Abhiṣekapūjā',
   },
 };

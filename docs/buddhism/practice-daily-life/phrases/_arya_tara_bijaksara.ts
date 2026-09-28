@@ -6,6 +6,7 @@
 export default {
   chinese: {
     children: '湯',
+    // biome-ignore lint/security/noSecrets: -
     title: '綠度母種子字',
   },
   pali: {

@@ -87,8 +87,12 @@ describe('Phrase', () => {
       <PhraseMock transliteration={{ ...transliteration, repetition: 0 }} />,
     );
     expect(screen.queryByTestId(/^link-/)).toBeNull();
-    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
-    expect(container.querySelector('.support [data-testid="playback"]')).toBeInTheDocument();
+    expect(
+      // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
+      container.querySelector(
+        /* biome-ignore lint/security/noSecrets: - */ '.support [data-testid="playback"]',
+      ),
+    ).toBeInTheDocument();
   });
 
   describe('repetition badge', () => {

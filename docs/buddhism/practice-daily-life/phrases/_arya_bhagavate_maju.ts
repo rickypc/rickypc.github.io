@@ -6,6 +6,7 @@
 export default {
   chinese: {
     children: '唵 阿利也 蘇利哆 陀密 梭哈',
+    // biome-ignore lint/security/noSecrets: -
     title: '天上聖母',
   },
   path: import.meta.url,

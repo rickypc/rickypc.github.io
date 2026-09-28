@@ -6,6 +6,7 @@
 export default {
   chinese: {
     children: '唵 灑兒哇 咑他噶咑 烏殊尼沙 施達打巴遮 吽 帕 吽 嘛嘛 吽 尼 梭哈',
+    // biome-ignore lint/security/noSecrets: -
     title: '大白伞盖佛母',
   },
   path: import.meta.url,
@@ -21,6 +22,7 @@ export default {
   transliteration: {
     children: 'oṃ sarva tathāgata uṣṇīṣa sitātapatre hūṃ phaṭ hūṃ mama hūṃ ni svāhā',
     // White Parasol Goddess.
+    // biome-ignore lint/security/noSecrets: -
     title: 'Uṣṇīṣa Sitātapatrā Hṛdaya',
   },
 };

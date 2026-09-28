@@ -13,6 +13,7 @@ import vimalaUsnisa from './_vimala_usnisa';
 
 export default {
   chinese: {
+    // biome-ignore lint/security/noSecrets: -
     title: '六部大陀羅尼',
   },
   path: import.meta.url,

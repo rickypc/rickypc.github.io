@@ -5,6 +5,7 @@
 
 export default {
   chinese: {
+    // biome-ignore-start lint/security/noSecrets: -
     children: [
       '曩莫悉怛哩野地尾迦南 薩婆怛他蘖多南',
       '唵 部尾婆嚩娜嚩梨 嚩者梨者者𪘨',
@@ -29,6 +30,7 @@ export default {
       '唵 薩嚩 怛他櫱多塢瑟抳沙 馱覩 畝捺囉尼 薩嚩 怛他蘖多 娑馱覩 尾部使多地瑟恥帝 吽 吽 莎訶',
     ].join(' · '),
     title: '一切如來心秘密全身舍利寶篋印陀羅尼經',
+    // biome-ignore-end lint/security/noSecrets: -
   },
   path: import.meta.url,
   sanskrit: {
@@ -113,6 +115,7 @@ export default {
   transliteration: {
     // https://huntingtonarchive.org/resources/downloads/sutras/10Mitsung/Ushnisha%20Dharani.doc.pdf
     children: [
+      // biome-ignore-start lint/security/noSecrets: -
       'namastryadhvikānāṃ sarvatathāgatānāṃ',
       'oṃ bhuvibhavanavare vacanavacati',
       'suru suru dhara dhara',
@@ -134,6 +137,7 @@ export default {
       'sarva tathāgata hṛdaya dhātu mudre svāhā',
       'supratiṣṭhitastūpe tathāgatādhiṣṭhite huru huru hūṃ hūṃ svāhā',
       'oṃ sarva tathāgatoṣṇīṣa dhātu mudrāṇi sarva tathāgata sadhātu vibhūṣitādhiṣṭhite hūṃ hūṃ svāhā',
+      // biome-ignore-end lint/security/noSecrets: -
     ].join(' । '),
     // Secret Relics Casket.
     title: 'Guhyadhātukaraṇḍa',

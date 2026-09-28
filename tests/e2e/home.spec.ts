@@ -112,6 +112,7 @@ test.describe('isolated tests', () => {
       browserName,
       page,
       selector:
+        // biome-ignore lint/security/noSecrets: -
         'section.row article[aria-label="Innovator"] [class*="character_"][style*="opacity: 1"]:nth-of-type(9)',
       testInfo,
       url,
@@ -122,6 +123,7 @@ test.describe('isolated tests', () => {
       hasScreenshot({
         page,
         selector:
+          // biome-ignore lint/security/noSecrets: -
           'section.row article[aria-label="Innovator"] [class*="character_"][style*="opacity: 1"]:nth-of-type(9)',
         testInfo,
         theme,

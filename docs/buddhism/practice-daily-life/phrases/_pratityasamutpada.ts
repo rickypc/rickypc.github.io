@@ -7,6 +7,7 @@ const core = {
   chinese: {
     children: [
       '耶 達摩 訶圖缽婆婆 訶敦 提舍 達多伽多 烏嚩左',
+      // biome-ignore lint/security/noSecrets: -
       '提舍拶 友 尼囉陀 伊縛婆提 摩訶沙門那',
     ].join(' · '),
   },

@@ -44,6 +44,7 @@ describe('docs.buddhism.media.pdf._strip.body()', () => {
   });
 });
 
+// biome-ignore lint/security/noSecrets: -
 describe('docs.buddhism.media.pdf._strip.languageFontSizes()', () => {
   test('should return typography from context when the exact typography key exists', () => {
     const mockContext = { typography: { roll: { default: 12, title: 10 } } };

@@ -1,0 +1,56 @@
+# Copyright © 2015 Richard Huang <rickypc@users.noreply.github.com>
+# All rights reserved.
+
+name: Validations
+on:
+  pull_request:
+    types: [ edited, opened, reopened, synchronize ]
+  push:
+    branches:
+      - main
+jobs:
+  deps:
+    name: Deps
+    runs-on: ubuntu-slim
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Validate
+        uses: ./.github/actions/validate
+        with:
+          command: bun run test:deps:ci
+  lint:
+    name: Lint
+    runs-on: ubuntu-slim
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Validate
+        uses: ./.github/actions/validate
+        with:
+          command: bun run test:lint
+  types:
+    name: Types
+    runs-on: ubuntu-slim
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Validate
+        uses: ./.github/actions/validate
+        with:
+          command: bun run test:type
+  unit:
+    name: Unit
+    runs-on: ubuntu-slim
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Validate
+        uses: ./.github/actions/validate
+        with:
+          command: bun run test:unit:ci
+      - name: Codecov
+        uses: codecov/codecov-action@v7
+        with:
+          fail_ci_if_error: true
+          flags: unittests

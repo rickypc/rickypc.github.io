@@ -11,6 +11,7 @@ type AudioManagerType = typeof import('@site/src/lib/audioManager').default;
 // The silent instance must load FIRST so the non-silent (default) instance is the one
 // whose coverage counters survive into the report.
 document.documentElement.dataset.volume = 'silent';
+// biome-ignore lint/security/noSecrets: -
 const silentSpec = '@site/src/lib/audioManager?volume=silent';
 const { default: silentAudioManager } = (await import(silentSpec)) as {
   default: AudioManagerType;

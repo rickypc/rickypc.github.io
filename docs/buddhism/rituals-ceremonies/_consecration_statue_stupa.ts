@@ -131,6 +131,7 @@ export default {
             '#buddhism/practice-daily-life/phrases/_abhiseka_puja.ts',
             '',
             3,
+            // biome-ignore lint/security/noSecrets: -
             'Abhiṣekapūjā [Empowerement Offering]',
           ),
         ],
@@ -179,6 +180,7 @@ export default {
             '#buddhism/practice-daily-life/phrases/_prarthanasiddhih.ts',
             '',
             0,
+            // biome-ignore lint/security/noSecrets: -
             'Prārthanāsiddhiḥ [Fulfillment of Aspiration]',
           ),
         ],

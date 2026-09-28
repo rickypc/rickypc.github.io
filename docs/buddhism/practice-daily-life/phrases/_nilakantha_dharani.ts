@@ -5,6 +5,7 @@
 
 export default {
   chinese: {
+    // biome-ignore-start lint/security/noSecrets: -
     children: [
       '唵 阿波嚧醯 盧迦帝 迦羅帝 夷醯唎 摩訶菩提薩埵 薩婆薩婆',
       '摩囉 摩囉 摩摩 醯唎馱孕',
@@ -33,6 +34,7 @@ export default {
     ].join(' · '),
     // 大悲咒.
     title: '青頸陀羅尼',
+    // biome-ignore-end lint/security/noSecrets: -
   },
   lang: 'sa-IN',
   path: import.meta.url,

@@ -71,6 +71,7 @@ test.describe('isolated tests', () => {
     test(`has correct ${theme.toLowerCase()} theme screenshot`, async ({ page }, testInfo) =>
       hasScreenshot({
         page,
+        // biome-ignore lint/security/noSecrets: -
         selector: 'article[class^="portfolio_"]:nth-of-type(12) div[class^="indicators_"]',
         testInfo,
         theme,

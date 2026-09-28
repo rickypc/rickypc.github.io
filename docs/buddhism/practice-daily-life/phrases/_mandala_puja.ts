@@ -15,6 +15,7 @@ export default {
   transliteration: {
     children: 'oṃ guru ārya tārā saparivāraṇām idaṃ ratna maṇḍalakaṃ niryātayāmi',
     repetition: 7,
+    // biome-ignore lint/security/noSecrets: -
     title: 'Maṇḍalapūjā',
   },
 };

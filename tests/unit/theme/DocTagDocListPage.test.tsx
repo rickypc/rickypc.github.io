@@ -17,7 +17,9 @@ mock.module('@site/src/data/common', () => ({
   ),
 }));
 
+// biome-ignore lint/security/noSecrets: -
 describe('theme.DocTagDocListPage', () => {
+  // biome-ignore lint/security/noSecrets: -
   test('injects meta tags, calls useWelcome, and forwards props to original DocTagDocListPage', () => {
     const props = {
       extra: 'value',

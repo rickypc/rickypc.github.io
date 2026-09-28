@@ -5,10 +5,12 @@
 
 export default {
   chinese: {
+    // biome-ignore-start lint/security/noSecrets: -
     // https://zh.wikisource.org/zh-hant/%E5%8D%81%E4%B8%80%E9%9D%A2%E8%A7%80%E9%9F%B3%E9%99%80%E7%BE%85%E5%B0%BC#%E5%94%90%E7%8E%84%E5%A5%98%E7%89%88
     children:
       '唵 達囉 達囉 · 地履 地履 · 杜嚕 杜嚕 · 壹𪘨 伐𪘨 · 折隷 折隷 · 鉢囉折隷 鉢囉折隷 · 俱蘇謎 俱蘇摩伐隷 · 壹履 弭履 止履 · 止徵 社摩波隷耶 · 波羅摩 戍陀薩埵 莫訶 迦嚧尼迦 莎訶',
     title: '十一面观音陀罗尼',
+    // biome-ignore-end lint/security/noSecrets: -
   },
   path: import.meta.url,
   sanskrit: {
@@ -35,6 +37,7 @@ export default {
       'oṃ dhara dhara । dhīre dhīre । dhuru dhuru । iṭṭe viṭṭe । cale cale । pracale pracale । kusume kusumavare । ili mili viṭi । citti jvālaṃ āpanāya । parama śuddhasattva mahā kāruṇika svāhā',
     repetition: 3,
     // The eleven-faced lord of the world (Avalokiteśvara).
+    // biome-ignore lint/security/noSecrets: -
     title: 'Ekādaśamukhalokeśvara',
   },
 };

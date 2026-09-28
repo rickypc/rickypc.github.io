@@ -15,6 +15,7 @@ export default {
   },
   transliteration: {
     children:
+      // biome-ignore lint/security/noSecrets: -
       'oṃ tāre tārāye । hūṃ hūṃ hūṃ । samayasthite । bhara bhara । sarvābharaṇavibhūṣite । padmani padma । mahāpadmāsanasthite । hasa hasa । trailokyavarade । sarvadevadānavapūjite smarāhi । bhagavate tāre smarāhi । bhagavān tathāgatasya purata samayaṃ । dhara dhara । mahāsattvāvalokite maṇikanakavicitrābharaṇe । oṃ vilokāya [say the name] bhagavate tāre । hrīṃ hrīṃ hrīṃ phaṭ svāhā',
     title: 'Āryatārā Svapratijñā Nāma Dhāraṇī',
   },

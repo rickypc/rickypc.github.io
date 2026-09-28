@@ -5,8 +5,10 @@
 
 export default {
   chinese: {
+    // biome-ignore-start lint/security/noSecrets: -
     children: '唵 揭諦 揭諦 波羅揭諦 波羅僧揭諦 菩提 梭哈',
     title: '般若波羅蜜多',
+    // biome-ignore-end lint/security/noSecrets: -
   },
   pali: {
     children: 'oṃ gate gate pāragate pārasaṃgate bodhi svāhā',

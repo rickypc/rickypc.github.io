@@ -5,6 +5,7 @@
 
 export default {
   chinese: {
+    // biome-ignore lint/security/noSecrets: -
     title: '遠塔陀羅尼',
   },
   path: import.meta.url,

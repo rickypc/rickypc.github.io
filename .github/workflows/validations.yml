@@ -48,7 +48,7 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: bun run test:unit:ci
+          command: openssl rand -base64 32 > .provenance && bun run test:unit:ci
       - name: Codecov
         uses: codecov/codecov-action@v7
         with:

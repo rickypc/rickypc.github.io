@@ -14,7 +14,7 @@ import {
   mock,
   test,
 } from 'bun:test';
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename } from 'node:path';
 import { GlobalRegistrator } from '@happy-dom/global-registrator';
@@ -24,11 +24,14 @@ type Matchers = Record<string, (...args: unknown[]) => unknown>;
 
 process.env.TZ = 'UTC';
 
+const dir = `${tmpdir()}/bun-test-assets/`;
 const { file, main } = Bun;
+// eslint-disable-next-line security/detect-non-literal-fs-filename
+mkdirSync(dir, { recursive: true });
 const assets = {
   cached: new Set<string>(),
   css: new Proxy({}, { get: (_target, key) => (key === '__esModule' ? false : key) }),
-  dir: new URL(`file://${tmpdir()}/bun-test-assets/`),
+  dir: new URL(`file://${dir}`),
   image(name: string) {
     const url = new URL(`${name}.cjs`, assets.dir);
     const path = url.pathname;

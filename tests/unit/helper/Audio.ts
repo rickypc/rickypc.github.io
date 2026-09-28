@@ -7,17 +7,11 @@ import { mock } from 'bun:test';
 
 export default class Audio implements Partial<HTMLAudioElement> {
   currentTime = 0;
-
   duration = 10;
-
   private listeners: Record<string, (() => void)[]> = {};
-
   paused = false;
-
   preload: HTMLAudioElement['preload'] = 'metadata';
-
   src = '';
-
   volume = 1;
 
   constructor(src?: string) {
@@ -27,15 +21,12 @@ export default class Audio implements Partial<HTMLAudioElement> {
   }
 
   addEventListener(event: string, listener: any) {
-    // eslint-disable-next-line security/detect-object-injection
-    this.listeners[event] = this.listeners[event] || [];
-    // eslint-disable-next-line security/detect-object-injection
-    this.listeners[event].push(listener);
+    this.listeners[event as string] = this.listeners[event as string] || [];
+    this.listeners[event as string].push(listener);
   }
 
   emit(event: string) {
-    // eslint-disable-next-line security/detect-object-injection
-    (this.listeners[event] || []).forEach((fn) => {
+    (this.listeners[event as string] || []).forEach((fn) => {
       fn();
     });
   }
@@ -51,7 +42,8 @@ export default class Audio implements Partial<HTMLAudioElement> {
   });
 
   removeEventListener(event: string, listener: any) {
-    // eslint-disable-next-line security/detect-object-injection
-    this.listeners[event] = (this.listeners[event] || []).filter((fn) => fn !== listener);
+    this.listeners[event as string] = (this.listeners[event as string] || []).filter(
+      (fn) => fn !== listener,
+    );
   }
 }

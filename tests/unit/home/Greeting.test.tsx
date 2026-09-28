@@ -29,10 +29,7 @@ describe('home.Greeting', () => {
     expect(playback).toHaveAttribute('data-path', expect.stringContaining('_ricky_huang'));
     expect(playback).toHaveAttribute(
       'data-transliteration',
-      JSON.stringify({
-        children: 'Ricky Huang',
-        title: 'Ricky Huang',
-      }),
+      JSON.stringify({ children: 'Ricky Huang', title: 'Ricky Huang' }),
     );
 
     // Heart component.

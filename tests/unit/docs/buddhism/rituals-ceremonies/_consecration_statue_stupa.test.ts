@@ -8,22 +8,8 @@ import { header, phrase, phrases } from '#buddhism/media/_common';
 
 mock.module('#buddhism/media/_common', () => ({
   header: mock((title, note) => ({ mockedHeader: true, note, title })),
-  main: mock((a, b, n) => [
-    {
-      a,
-      b,
-      mockedMain: true,
-      n,
-    },
-  ]),
-  phrase: mock((path, note, n) => [
-    {
-      mockedPhrase: true,
-      n,
-      note,
-      path,
-    },
-  ]),
+  main: mock((a, b, n) => [{ a, b, mockedMain: true, n }]),
+  phrase: mock((path, note, n) => [{ mockedPhrase: true, n, note, path }]),
   phrases: mock(() => ['P1', 'P2', 'P3']),
 }));
 

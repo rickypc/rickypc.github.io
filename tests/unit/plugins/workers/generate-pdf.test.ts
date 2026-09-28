@@ -64,11 +64,7 @@ describe('plugins.media.workers.generate-pdf', () => {
     write.mockRejectedValueOnce(new Error('error'));
 
     await expect(
-      Worker({
-        path: '#lib/path/one.md',
-        target: `${outDir}/pdf/one-base.pdf`,
-        template: 'base',
-      }),
+      Worker({ path: '#lib/path/one.md', target: `${outDir}/pdf/one-base.pdf`, template: 'base' }),
     ).rejects.toThrow();
 
     expect(consoleMock).toHaveBeenCalledTimes(1);

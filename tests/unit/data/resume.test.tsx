@@ -185,10 +185,7 @@ describe('data.resume.header', () => {
 
   test('returns default object with contacts, heading, and roles', () => {
     const result = header({
-      siteConfig: {
-        ...mockSiteConfig,
-        themeConfig: {},
-      } as DocusaurusConfig,
+      siteConfig: { ...mockSiteConfig, themeConfig: {} } as DocusaurusConfig,
     });
 
     expect(result).toHaveProperty('contacts');

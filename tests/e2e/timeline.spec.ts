@@ -56,20 +56,10 @@ test.describe('isolated tests', () => {
   test('has navigations', async ({ page }, testInfo) => hasNavigations({ page, testInfo, url }));
 
   test('has correct print screenshot', async ({ browserName, page }, testInfo) =>
-    hasPrint({
-      browserName,
-      page,
-      testInfo,
-      url,
-    }));
+    hasPrint({ browserName, page, testInfo, url }));
 
   ['Dark', 'Light'].forEach((theme) => {
     test(`has correct ${theme.toLowerCase()} theme screenshot`, async ({ page }, testInfo) =>
-      hasScreenshot({
-        page,
-        testInfo,
-        theme,
-        url,
-      }));
+      hasScreenshot({ page, testInfo, theme, url }));
   });
 });

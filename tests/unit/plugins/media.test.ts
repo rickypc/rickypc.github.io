@@ -73,17 +73,9 @@ const stream = () =>
       controller.close();
     },
   });
-const successFetch = () =>
-  Promise.resolve({
-    body: stream(),
-    ok: true,
-    status: 200,
-  });
+const successFetch = () => Promise.resolve({ body: stream(), ok: true, status: 200 });
 
-mock.module('node:child_process', () => ({
-  execSync: mock(),
-  spawn: mock(),
-}));
+mock.module('node:child_process', () => ({ execSync: mock(), spawn: mock() }));
 
 mock.module('node:fs', () => {
   const original = require('node:fs');
@@ -118,9 +110,7 @@ const spawnMock = spawn as Mocked<typeof spawn>;
 const statMock = stat as Mocked<typeof stat>;
 
 mock.module('#root/package.json', () => ({
-  devDependencies: {
-    pdfmake: '0.0.0',
-  },
+  devDependencies: { pdfmake: '0.0.0' },
   imports: {
     '@alias/*': 'src/aliased/*',
     '@alias/utils/*': 'src/aliased/utils/*',

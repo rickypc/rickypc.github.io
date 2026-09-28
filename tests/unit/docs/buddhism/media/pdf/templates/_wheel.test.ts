@@ -94,11 +94,7 @@ describe('docs.buddhism.media.pdf.templates._wheel', () => {
     expect(substance).toHaveBeenCalledTimes(1);
 
     // Tibetan settings applied.
-    expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 9,
-      lineHeight: 0.84,
-    });
+    expect(definition.defaultStyle).toEqual({ font: 'NotoSans', fontSize: 9, lineHeight: 0.84 });
 
     // Prefix/roll fonts.
     expect(definition.styles.prefix.font).toBe('Kokonor');
@@ -136,21 +132,13 @@ describe('docs.buddhism.media.pdf.templates._wheel', () => {
   test('handles Sanskrit (sa-IN) branch correctly', async () => {
     mock.module('#buddhism/sa', () => ({
       __esModule: true,
-      default: {
-        lang: 'sa-IN',
-        total: 2,
-        transliteration: { title: 'Dhāraṇī' },
-      },
+      default: { lang: 'sa-IN', total: 2, transliteration: { title: 'Dhāraṇī' } },
     }));
 
     const result = await wheel('#buddhism/sa');
     const { definition } = result;
 
-    expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 6,
-      lineHeight: 0.81,
-    });
+    expect(definition.defaultStyle).toEqual({ font: 'NotoSans', fontSize: 6, lineHeight: 0.81 });
 
     expect(definition.styles.prefix.font).toBe('NotoSerifDevanagari');
     expect(definition.styles.roll.font).toBe('NotoSerifDevanagari');
@@ -162,21 +150,13 @@ describe('docs.buddhism.media.pdf.templates._wheel', () => {
   test('handles default (transliteration) branch correctly', async () => {
     mock.module('#buddhism/default', () => ({
       __esModule: true,
-      default: {
-        lang: 'en-US',
-        total: 1,
-        transliteration: { title: 'OM MANI PADME HUM' },
-      },
+      default: { lang: 'en-US', total: 1, transliteration: { title: 'OM MANI PADME HUM' } },
     }));
 
     const result = await wheel('#buddhism/default');
     const { definition } = result;
 
-    expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 6,
-      lineHeight: 0.71,
-    });
+    expect(definition.defaultStyle).toEqual({ font: 'NotoSans', fontSize: 6, lineHeight: 0.71 });
 
     expect(definition.info.title).toBe('Om mani padme hum prayer roll');
 
@@ -193,11 +173,7 @@ describe('docs.buddhism.media.pdf.templates._wheel', () => {
     const { definition } = result;
 
     // Default font sizes + lineHeight.
-    expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 9,
-      lineHeight: 0.84,
-    });
+    expect(definition.defaultStyle).toEqual({ font: 'NotoSans', fontSize: 9, lineHeight: 0.84 });
 
     // Default repeat = {} -> wheel=1, roll=1.
     expect(body).toHaveBeenCalledTimes(6);

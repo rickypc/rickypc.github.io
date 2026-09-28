@@ -25,9 +25,7 @@ const { default: puja } = await import(
 describe('docs.buddhism.phrases._amoghapasa_mani_puja', () => {
   test('exports the correct core structure', () => {
     expect(puja.core).toEqual({
-      sanskrit: {
-        children: 'ॐ अमोघ पूजा मणिपद्म वज्रे तथागत विलोकिते समन्त प्रसर हूँ',
-      },
+      sanskrit: { children: 'ॐ अमोघ पूजा मणिपद्म वज्रे तथागत विलोकिते समन्त प्रसर हूँ' },
       transliteration: {
         children: 'oṃ amogha pūja maṇipadma vajre tathāgata vilokite samanta prasara hūṃ',
       },

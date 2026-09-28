@@ -35,11 +35,7 @@ describe('docs.buddhism._sukhavativyuha', () => {
       [sukhavativyuha.core.sanskrit.children, amitabha.sanskrit.children].join(' । '),
     );
 
-    expect(sukhavativyuha.sanskrit.repeat).toEqual({
-      condensed: 51,
-      roll: 18,
-      wheel: 17,
-    });
+    expect(sukhavativyuha.sanskrit.repeat).toEqual({ condensed: 51, roll: 18, wheel: 17 });
   });
 
   test('builds the translation section correctly', () => {

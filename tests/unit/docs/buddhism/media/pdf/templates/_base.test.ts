@@ -10,10 +10,7 @@ describe('docs.buddhism.media.pdf.templates._base', () => {
   test('loads definition and options from required module', async () => {
     mock.module('#buddhism/default', () => ({
       default: () => ({
-        definition: {
-          info: { keywords: ['a', 'b'] },
-          pageSize: 'A4',
-        },
+        definition: { info: { keywords: ['a', 'b'] }, pageSize: 'A4' },
       }),
     }));
 

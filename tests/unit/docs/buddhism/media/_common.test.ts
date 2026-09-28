@@ -19,11 +19,7 @@ mock.module('#buddhism/mock-default', () => ({
   default: {
     sanskrit: { children: ['A', 'B'] },
     translation: { title: 'Eng' },
-    transliteration: {
-      children: ['X', 'Y'],
-      repetition: 5,
-      title: 'Trans',
-    },
+    transliteration: { children: ['X', 'Y'], repetition: 5, title: 'Trans' },
   },
 }));
 
@@ -31,11 +27,7 @@ mock.module('#buddhism/mock-default-empty', () => ({
   default: {
     sanskrit: { children: ['A', 'B'] },
     translation: { title: '' },
-    transliteration: {
-      children: ['X', 'Y'],
-      repetition: 5,
-      title: 'Trans',
-    },
+    transliteration: { children: ['X', 'Y'], repetition: 5, title: 'Trans' },
   },
 }));
 
@@ -43,11 +35,7 @@ mock.module('#buddhism/mock-split', () => ({
   default: {
     sanskrit: { children: ['A', '', 'B', 'C'] },
     translation: { title: 'Eng' },
-    transliteration: {
-      children: ['X', '', 'Y', 'Z'],
-      repetition: 2,
-      title: 'Trans',
-    },
+    transliteration: { children: ['X', '', 'Y', 'Z'], repetition: 2, title: 'Trans' },
   },
 }));
 
@@ -55,11 +43,7 @@ mock.module('#buddhism/mock-split-empty', () => ({
   default: {
     sanskrit: { children: ['A', '', 'B', 'C'] },
     translation: { title: '' },
-    transliteration: {
-      children: ['X', '', 'Y', 'Z'],
-      repetition: 2,
-      title: 'Trans',
-    },
+    transliteration: { children: ['X', '', 'Y', 'Z'], repetition: 2, title: 'Trans' },
   },
 }));
 
@@ -98,9 +82,7 @@ describe('docs.buddhism.media._common.instruction()', () => {
   test('wraps a single string into an instruction object', () => {
     const result = instruction('Read this');
 
-    expect(result).toEqual({
-      text: [{ style: 'instruction', text: 'Read this' }],
-    });
+    expect(result).toEqual({ text: [{ style: 'instruction', text: 'Read this' }] });
   });
 
   test('wraps multiple strings into instruction objects', () => {
@@ -149,10 +131,7 @@ describe('docs.buddhism.media._common.header()', () => {
   test('returns section + section-set styles when commentaries is empty', () => {
     const result = header('My Title');
 
-    expect(result).toEqual({
-      style: ['section', 'section-set'],
-      text: 'My Title',
-    });
+    expect(result).toEqual({ style: ['section', 'section-set'], text: 'My Title' });
   });
 
   test('handles array commentaries correctly', () => {

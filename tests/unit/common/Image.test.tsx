@@ -15,10 +15,7 @@ const basePicture = {
   avif: 'img.avif',
   fallback: {
     preSrc: 'preSrc.jpg',
-    src: {
-      images: [{ path: 'fallback.jpg', width: 100 }],
-      srcSet: 'fallbackSrcSet',
-    },
+    src: { images: [{ path: 'fallback.jpg', width: 100 }], srcSet: 'fallbackSrcSet' },
   },
   webp: 'img.webp',
 };

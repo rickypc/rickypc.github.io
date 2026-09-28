@@ -62,11 +62,7 @@ describe('docs.buddhism._pratitya_samutpada', () => {
   test('builds the tibetan section correctly', () => {
     expect(pratitya.tibetan.children).toBe(pratitya.core.tibetan.children);
 
-    expect(pratitya.tibetan.repeat).toEqual({
-      condensed: 129,
-      roll: 46,
-      wheel: 44,
-    });
+    expect(pratitya.tibetan.repeat).toEqual({ condensed: 129, roll: 46, wheel: 44 });
 
     expect(pratitya.tibetan.title).toBe('རྟེན་ཅིང་འབྲེལ་བར་འབྱུང་བའི་ཚིགས་སུ་བཅད་པ།');
   });

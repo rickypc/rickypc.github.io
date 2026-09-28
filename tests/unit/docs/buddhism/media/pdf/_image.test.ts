@@ -48,14 +48,7 @@ describe('docs.buddhism.media.pdf._image', () => {
   });
 
   test('adds alt text when provided', async () => {
-    const result = await image(
-      {
-        alt: 'Caption',
-        path: './img.png',
-        width: 100,
-      },
-      mockResolver,
-    );
+    const result = await image({ alt: 'Caption', path: './img.png', width: 100 }, mockResolver);
 
     expect(result?.[1]).toEqual({
       alignment: 'center',
@@ -68,11 +61,7 @@ describe('docs.buddhism.media.pdf._image', () => {
 
   test('uses custom margin when provided', async () => {
     const result = await image(
-      {
-        height: 100,
-        margin: [1, 2, 3, 4],
-        path: './img.png',
-      },
+      { height: 100, margin: [1, 2, 3, 4], path: './img.png' },
       mockResolver,
     );
 

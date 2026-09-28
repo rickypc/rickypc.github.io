@@ -9,53 +9,17 @@ import { render, screen } from '@testing-library/react';
 
 describe('about.PersonaQuadrant', () => {
   const axes: QuadrantAxis[] = [
-    {
-      anchor: 'middle',
-      text: 'X Axis',
-      transform: '',
-      x: 100,
-      y: 230,
-    },
-    {
-      anchor: 'end',
-      text: 'Y Axis',
-      transform: 'rotate(-90)',
-      x: -10,
-      y: 100,
-    },
+    { anchor: 'middle', text: 'X Axis', transform: '', x: 100, y: 230 },
+    { anchor: 'end', text: 'Y Axis', transform: 'rotate(-90)', x: -10, y: 100 },
   ];
 
   const circle = { x: 120, y: 80 };
 
   const labels: QuadrantLabel[] = [
-    {
-      anchor: 'start',
-      text: 'Top Left',
-      title: 'TL',
-      x: 0,
-      y: 0,
-    },
-    {
-      anchor: 'end',
-      text: 'Top Right',
-      title: 'TR',
-      x: 200,
-      y: 0,
-    },
-    {
-      anchor: 'start',
-      text: 'Bottom Left',
-      title: 'BL',
-      x: 0,
-      y: 200,
-    },
-    {
-      anchor: 'end',
-      text: 'Bottom Right',
-      title: 'BR',
-      x: 200,
-      y: 200,
-    },
+    { anchor: 'start', text: 'Top Left', title: 'TL', x: 0, y: 0 },
+    { anchor: 'end', text: 'Top Right', title: 'TR', x: 200, y: 0 },
+    { anchor: 'start', text: 'Bottom Left', title: 'BL', x: 0, y: 200 },
+    { anchor: 'end', text: 'Bottom Right', title: 'BR', x: 200, y: 200 },
   ];
 
   test('renders an accessible SVG with all the children', () => {

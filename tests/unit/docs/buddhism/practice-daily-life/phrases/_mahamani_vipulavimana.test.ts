@@ -45,11 +45,7 @@ describe('docs.buddhism._mahamani_vipulavimana', () => {
       [mahamani.core.tibetan.children, darsanaMukta.tibetan.children].join('། '),
     );
 
-    expect(mahamani.tibetan.repeat).toEqual({
-      condensed: 39,
-      roll: 14,
-      wheel: 13,
-    });
+    expect(mahamani.tibetan.repeat).toEqual({ condensed: 39, roll: 14, wheel: 13 });
   });
 
   test('builds the translation section correctly', () => {

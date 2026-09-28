@@ -36,11 +36,7 @@ test.describe
     test('has correct URL', async ({ baseURL }) => hasUrl({ baseURL, page, url }));
     test('has correct metadatas', async () => hasMetadatas({ page }));
     test('has GEO JSON-LD blocks', async () =>
-      hasJsonLd({
-        expected: ['Review'],
-        faqId: '/stories#faq',
-        page,
-      }));
+      hasJsonLd({ expected: ['Review'], faqId: '/stories#faq', page }));
     test('has correct header', async () => hasHeader({ page }));
     // biome-ignore lint/correctness/noEmptyPattern: -
     test('has active navigation', async ({}, testInfo) =>
@@ -66,12 +62,7 @@ test.describe('isolated tests', () => {
   test('has navigations', async ({ page }, testInfo) => hasNavigations({ page, testInfo, url }));
 
   test('has correct print screenshot', async ({ browserName, page }, testInfo) =>
-    hasPrint({
-      browserName,
-      page,
-      testInfo,
-      url,
-    }));
+    hasPrint({ browserName, page, testInfo, url }));
 
   ['Dark', 'Light'].forEach((theme) => {
     test(`has correct ${theme.toLowerCase()} theme screenshot`, async ({ page }, testInfo) =>

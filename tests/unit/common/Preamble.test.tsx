@@ -7,10 +7,7 @@ import Preamble, { Intro } from '@site/src/components/common/Preamble';
 import { render, screen } from '@testing-library/react';
 
 describe('Preamble', () => {
-  const intro = {
-    description: 'This is a sample description.',
-    title: 'Sample Title',
-  };
+  const intro = { description: 'This is a sample description.', title: 'Sample Title' };
 
   test('renders preamble header, heading, and description', () => {
     render(<Preamble intro={intro} />);

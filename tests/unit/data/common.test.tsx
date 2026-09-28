@@ -110,11 +110,7 @@ describe('data.common.context()', () => {
   });
 
   test('accepts overrides for description, keywords, and title', () => {
-    const overrides = {
-      description: 'CustomDesc',
-      keywords: ['x', 'y', 'z'],
-      title: 'MyTitle',
-    };
+    const overrides = { description: 'CustomDesc', keywords: ['x', 'y', 'z'], title: 'MyTitle' };
     const parsed = JSON.parse(context(overrides));
     expect(parsed.description).toBe('CustomDesc');
     expect(parsed.keywords).toBe('x,y,z');
@@ -130,11 +126,7 @@ describe('data.common.context()', () => {
     const reviewParsed = JSON.parse(context({ schema: 'Review' }));
     expect(reviewParsed['@type']).toBe('Review');
     expect(reviewParsed.author).toEqual({ '@type': 'Person', name: 'Ricky Huang' });
-    expect(reviewParsed.reviewRating).toEqual({
-      '@type': 'Rating',
-      bestRating: 5,
-      ratingValue: 5,
-    });
+    expect(reviewParsed.reviewRating).toEqual({ '@type': 'Rating', bestRating: 5, ratingValue: 5 });
 
     const profileParsed = JSON.parse(context({ schema: 'ProfilePage' }));
     expect(profileParsed.author).toBeUndefined();
@@ -222,12 +214,7 @@ describe('data.common.faqEntries()', () => {
 
   test('collapses internal whitespace and trims', () => {
     const entries = faqEntries({
-      items: [
-        {
-          answer: '  spaced   out  ',
-          question: '  what   now  ',
-        },
-      ],
+      items: [{ answer: '  spaced   out  ', question: '  what   now  ' }],
       slug: 'about',
     });
     expect(entries[0].name).toBe('what now');

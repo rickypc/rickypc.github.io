@@ -8,10 +8,7 @@ import Content from '@site/src/components/about/Content';
 import { render, screen } from '@testing-library/react';
 
 mock.module('@site/src/data/about', () => ({
-  characteristic: {
-    attributes: ['Trait One', 'Trait Two'],
-    title: 'Key Traits',
-  },
+  characteristic: { attributes: ['Trait One', 'Trait Two'], title: 'Key Traits' },
   headline: 'Test Headline',
   paragraphs: ['First paragraph.', 'Second paragraph.'],
 }));

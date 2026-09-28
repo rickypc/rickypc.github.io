@@ -66,21 +66,12 @@ describe('docs.buddhism.rituals-ceremonies._cintamani_dharmacakra_yasti', () => 
 
     dividerSection.canvas?.forEach((line) => {
       expect(line).toEqual(
-        expect.objectContaining({
-          lineWidth: 0.25,
-          type: 'line',
-          y1: 0,
-          y2: 0,
-        }),
+        expect.objectContaining({ lineWidth: 0.25, type: 'line', y1: 0, y2: 0 }),
       );
     });
 
     // Default style.
-    expect(definition.defaultStyle).toEqual({
-      font: 'NotoSans',
-      fontSize: 6,
-      lineHeight: 0.84,
-    });
+    expect(definition.defaultStyle).toEqual({ font: 'NotoSans', fontSize: 6, lineHeight: 0.84 });
 
     // Info.
     expect(definition.info.title).toBe('Prayer wheel life force pillar');

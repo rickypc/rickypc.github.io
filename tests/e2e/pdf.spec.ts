@@ -27,13 +27,7 @@ test.describe('pdf isolated tests', () => {
   files.forEach((file) => {
     // biome-ignore lint/correctness/noEmptyPattern: -
     test(`validates PDF: ${file}`, async ({}, testInfo) => {
-      await hasPdf({
-        file,
-        // eslint-disable-next-line security/detect-object-injection
-        pages: pages[file] ?? 1,
-        testInfo,
-        url: join(pdfDir, file),
-      });
+      await hasPdf({ file, pages: pages[file as string] ?? 1, testInfo, url: join(pdfDir, file) });
     });
   });
 });

@@ -25,22 +25,13 @@ const pdfIndex = [
 mock.module('#buddhism/media/audio/_index', () => ({ default: audioIndex }));
 mock.module('#buddhism/media/pdf/_index', () => ({ default: pdfIndex }));
 mock.module('#lib/path/one.md', () => ({
-  transliteration: {
-    children: 'One',
-    title: 'One',
-  },
+  transliteration: { children: 'One', title: 'One' },
 }));
 mock.module('#lib/path/_ricky_huang.md', () => ({
-  transliteration: {
-    children: 'Two',
-    title: 'Two',
-  },
+  transliteration: { children: 'Two', title: 'Two' },
 }));
 mock.module('#lib/path/three.md', () => ({
-  transliteration: {
-    children: 'Three',
-    title: 'Three',
-  },
+  transliteration: { children: 'Three', title: 'Three' },
 }));
 
 // Sync.

@@ -140,14 +140,7 @@ export default function useAudio(path: string, volume = 1): AudioResponse {
   }, [onStateChange]);
 
   return useMemo(
-    () => ({
-      onPause,
-      onPlay,
-      onStop,
-      progress,
-      ref,
-      status,
-    }),
+    () => ({ onPause, onPlay, onStop, progress, ref, status }),
     [onPause, onPlay, onStop, progress, status],
   );
 }

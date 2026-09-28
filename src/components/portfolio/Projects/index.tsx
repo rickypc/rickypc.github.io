@@ -86,16 +86,7 @@ const Project = memo(function Project({
       transition={transition}
     >
       <figure>
-        <Carousel
-          {...{
-            images,
-            onClick,
-            open,
-            prefix,
-            ref: carousel,
-            title,
-          }}
-        />
+        <Carousel {...{ images, onClick, open, prefix, ref: carousel, title }} />
         <figcaption>
           <Heading as="h2">
             <Link href={href} translate="no" validate>

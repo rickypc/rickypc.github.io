@@ -65,12 +65,7 @@ export default async function run({ path, target, template }: Options) {
   );
   const kokonor = join(import.meta.dirname, '..', 'font', 'kokonor', 'Kokonor-Regular.ttf');
   pdfmake.addFonts({
-    Kokonor: {
-      bold: kokonor,
-      bolditalics: kokonor,
-      italics: kokonor,
-      normal: kokonor,
-    },
+    Kokonor: { bold: kokonor, bolditalics: kokonor, italics: kokonor, normal: kokonor },
     NotoSans: {
       bold: join(import.meta.dirname, '..', 'font', 'noto', 'NotoSans-Bold.ttf'),
       bolditalics: join(import.meta.dirname, '..', 'font', 'noto', 'NotoSans-BoldItalic.ttf'),
@@ -89,13 +84,7 @@ export default async function run({ path, target, template }: Options) {
   const date = new Date();
   const { definition } = await templates[template as keyof Templates](path);
   const stamp = createHash(algorithm)
-    .update(
-      JSON.stringify({
-        date,
-        definition,
-        generator,
-      }),
-    )
+    .update(JSON.stringify({ date, definition, generator }))
     .digest('hex');
   // After stamp assignment.
   const document = pdfmake.createPdf({
@@ -106,9 +95,7 @@ export default async function run({ path, target, template }: Options) {
       author: siteConfig.title,
       creationDate: date,
       creator: siteConfig.url,
-      custom: {
-        provenance: createHmac(algorithm, provenance).update(stamp).digest('base64'),
-      },
+      custom: { provenance: createHmac(algorithm, provenance).update(stamp).digest('base64') },
       modDate: date,
       producer: siteConfig.url,
       stamp: `${algorithm}:${stamp}`,

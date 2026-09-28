@@ -30,50 +30,13 @@ export type Transliteration = {
 };
 
 const linguals = [
-  {
-    infix: '।',
-    label: 'संस्कृतम्-Sanskrit',
-    prefix: '꣼ ',
-    suffix: '॥',
-  },
-  {
-    group: 'sanskrit',
-    infix: '𑗂',
-    label: '𑖭𑖿𑖠𑖩𑖿-Siddhaṃ',
-    prefix: '꣼ ',
-    suffix: '𑗃',
-  },
-  {
-    infix: '།',
-    label: 'བོད་སྐད་-Tibetan',
-    prefix: '༄༅། །',
-    suffix: '༎',
-  },
-  {
-    infix: '.',
-    label: 'Pāli',
-    prefix: '꣼ ',
-    suffix: '෴',
-  },
-  {
-    group: 'pali',
-    infix: '.',
-    label: 'සිංහල-Sinhala',
-    prefix: '꣼ ',
-    suffix: '෴',
-  },
-  {
-    infix: '·',
-    label: '中文-Chinese',
-    prefix: '꣼ ',
-    suffix: '。',
-  },
-  {
-    infix: 'ฯ',
-    label: 'ไทย-Thai',
-    prefix: '꣼ ',
-    suffix: '๚',
-  },
+  { infix: '।', label: 'संस्कृतम्-Sanskrit', prefix: '꣼ ', suffix: '॥' },
+  { group: 'sanskrit', infix: '𑗂', label: '𑖭𑖿𑖠𑖩𑖿-Siddhaṃ', prefix: '꣼ ', suffix: '𑗃' },
+  { infix: '།', label: 'བོད་སྐད་-Tibetan', prefix: '༄༅། །', suffix: '༎' },
+  { infix: '.', label: 'Pāli', prefix: '꣼ ', suffix: '෴' },
+  { group: 'pali', infix: '.', label: 'සිංහල-Sinhala', prefix: '꣼ ', suffix: '෴' },
+  { infix: '·', label: '中文-Chinese', prefix: '꣼ ', suffix: '。' },
+  { infix: 'ฯ', label: 'ไทย-Thai', prefix: '꣼ ', suffix: '๚' },
 ];
 
 /**
@@ -127,8 +90,7 @@ export default memo(function MultiLingual({
       const lang = tail(key(label), '-');
       const path = group?.split('.') ?? [];
       path.push(lang);
-      // eslint-disable-next-line security/detect-object-injection
-      const phrase = path.reduce((acc: any, segment) => acc?.[segment], languages);
+      const phrase = path.reduce((acc: any, segment) => acc?.[segment as string], languages);
       if (!phrase?.children) {
         return null;
       }

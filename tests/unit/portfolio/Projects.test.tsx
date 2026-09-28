@@ -55,13 +55,11 @@ describe('portfolio.Projects', () => {
     expect(items).toHaveLength(filtered.length);
 
     filtered.forEach((proj, index) => {
-      // eslint-disable-next-line security/detect-object-injection
-      const item = items[index];
+      const item = items[index as number];
       fireEvent.mouseEnter(item);
 
       // Carousel stub receives prefix.
-      // eslint-disable-next-line security/detect-object-injection
-      const carousel = screen.getAllByTestId('carousel')[index];
+      const carousel = screen.getAllByTestId('carousel')[index as number];
       expect(carousel).toHaveAttribute('prefix', proj.prefix);
 
       // Tags list.
@@ -72,26 +70,21 @@ describe('portfolio.Projects', () => {
       const tagItems = tagsList?.querySelectorAll('li');
       expect(tagItems).toHaveLength(proj.tags.length);
       proj.tags.forEach((tag, i) => {
-        // eslint-disable-next-line security/detect-object-injection
-        expect(tagItems?.[i]).not.toHaveAttribute('aria-hidden');
-        // eslint-disable-next-line security/detect-object-injection
-        expect(tagItems?.[i]).toHaveTextContent(tag);
+        expect(tagItems?.[i as number]).not.toHaveAttribute('aria-hidden');
+        expect(tagItems?.[i as number]).toHaveTextContent(tag);
       });
 
       // Heading with Link and Heart.
-      // eslint-disable-next-line security/detect-object-injection
-      const heading = screen.getAllByTestId('heading')[index];
+      const heading = screen.getAllByTestId('heading')[index as number];
       expect(heading.tagName).toBe('H2');
 
-      // eslint-disable-next-line security/detect-object-injection
-      const link = screen.getAllByTestId(/^link-/)[index];
+      const link = screen.getAllByTestId(/^link-/)[index as number];
       expect(link).toHaveAttribute('data-validate', 'true');
       expect(link).toHaveAttribute('href', proj.href);
       expect(link).toHaveAttribute('translate', 'no');
       expect(link).toHaveTextContent(proj.title);
 
-      // eslint-disable-next-line security/detect-object-injection
-      const heart = screen.getAllByTestId('heart')[index];
+      const heart = screen.getAllByTestId('heart')[index as number];
       expect(heart).toHaveAttribute('id', `portfolio-${proj.prefix}`);
 
       // Description paragraph.

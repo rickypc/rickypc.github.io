@@ -325,31 +325,10 @@ export default memo(function Carousel({
           ref: viewport,
         }}
       >
-        <Slider
-          {...{
-            active,
-            images,
-            onClick,
-            prefix,
-            printing,
-            resizing,
-            setActive,
-            viewport,
-          }}
-        />
+        <Slider {...{ active, images, onClick, prefix, printing, resizing, setActive, viewport }} />
         <Previous {...{ active, images, onClick: setActive }} />
         <Next {...{ active, images, onClick: setActive }} />
-        <Indicators
-          {...{
-            active,
-            cycle,
-            duration,
-            images,
-            onClick: setActive,
-            prefix,
-            stopped,
-          }}
-        />
+        <Indicators {...{ active, cycle, duration, images, onClick: setActive, prefix, stopped }} />
       </div>
     </div>
   );

@@ -36,8 +36,7 @@ describe('data.home', () => {
       // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
       const img = container.querySelector('img');
       expect(img).toBeInTheDocument();
-      // eslint-disable-next-line security/detect-object-injection
-      expect(img).toHaveAttribute('alt', expectedAlts[i]);
+      expect(img).toHaveAttribute('alt', expectedAlts[i as number]);
     });
   });
 

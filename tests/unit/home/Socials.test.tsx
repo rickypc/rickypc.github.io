@@ -22,8 +22,7 @@ describe('home.Socials', () => {
     expect(links).toHaveLength(socials.length);
 
     links.forEach((link, i) => {
-      // eslint-disable-next-line security/detect-object-injection
-      const { href, title } = socials[i];
+      const { href, title } = socials[i as number];
       expect(link).toHaveAttribute('href', href);
       expect(link).toHaveAttribute('title', title);
       const icon = within(link).getByLabelText(title);

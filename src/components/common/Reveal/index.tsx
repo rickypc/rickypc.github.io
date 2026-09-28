@@ -66,10 +66,7 @@ const Word = memo(function Word({ children, delay }: WordProps): ReactElement {
           hidden: { opacity: 0 },
           show: {
             opacity: 1,
-            transition: {
-              delayChildren: delay * 0.25,
-              staggerChildren: 0.05,
-            },
+            transition: { delayChildren: delay * 0.25, staggerChildren: 0.05 },
           },
         }}
       >

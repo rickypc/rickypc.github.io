@@ -59,8 +59,7 @@ describe('timeline.Content', () => {
     wrappers.forEach((w, idx) => {
       // Position classes.
       const expectedPosClass = idx % 2 === 0 ? 'right' : 'left';
-      // eslint-disable-next-line security/detect-object-injection
-      const timeline = timelines[idx];
+      const timeline = timelines[idx as number];
       expect(w).toHaveClass(expectedPosClass);
 
       // clsx called with (position, styles.timeline).

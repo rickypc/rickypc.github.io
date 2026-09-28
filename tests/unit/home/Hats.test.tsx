@@ -44,10 +44,8 @@ describe('home.Hats', () => {
     expect(articles).toHaveLength(4);
 
     for (let i = 0, j = articles.length; i < j; i += 1) {
-      // eslint-disable-next-line security/detect-object-injection
-      const article = articles[i];
-      // eslint-disable-next-line security/detect-object-injection
-      const expected = expecteds[i];
+      const article = articles[i as number];
+      const expected = expecteds[i as number];
 
       // eslint-disable-next-line testing-library/no-node-access
       const description = article.querySelector('p');

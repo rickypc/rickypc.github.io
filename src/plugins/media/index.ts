@@ -210,14 +210,7 @@ export async function generateAudioTrack({
   const { album, description, genre, track } = tracks.get(path) ?? {};
   const date = new Date();
   const stamp = createHash(algorithm)
-    .update(
-      JSON.stringify({
-        date,
-        generator,
-        model,
-        utteranceText,
-      }),
-    )
+    .update(JSON.stringify({ date, generator, model, utteranceText }))
     .digest('hex');
   // After stamp assignment.
   const metadata = [
@@ -550,14 +543,7 @@ export async function generateAudio(
         await Promise.all(
           batch.map(async ([model, path]) => {
             const target = join(audioDir, `${fileName(path)}.m4a`);
-            if (
-              await stale({
-                data: path,
-                model,
-                siteDir,
-                target,
-              })
-            ) {
+            if (await stale({ data: path, model, siteDir, target })) {
               if (!servers.has(model)) {
                 servers.set(model, piperServer(siteDir, model, ports.get(model) as number));
               }

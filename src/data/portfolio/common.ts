@@ -5,10 +5,6 @@
 
 import type { Transition } from 'motion/react';
 
-const transition: Transition = {
-  damping: 25,
-  stiffness: 120,
-  type: 'spring',
-};
+const transition: Transition = { damping: 25, stiffness: 120, type: 'spring' };
 
 export default transition;

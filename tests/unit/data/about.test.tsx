@@ -106,8 +106,7 @@ describe('data.about.paragraphs', () => {
 
 describe('data.about.quadrants', () => {
   const quadrant = (name: keyof typeof quadrants) => {
-    // eslint-disable-next-line security/detect-object-injection
-    const q = quadrants[name];
+    const q = quadrants[name as keyof typeof quadrants];
 
     expect(typeof q.alt).toBe('string');
 

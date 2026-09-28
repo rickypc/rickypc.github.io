@@ -85,8 +85,7 @@ describe('portfolio.index', () => {
       expect(Object.keys(picture)).toEqual(expect.arrayContaining(expectedPicKeys));
 
       expectedPicKeys.forEach((k) => {
-        // eslint-disable-next-line security/detect-object-injection
-        const entry = picture[k];
+        const entry = picture[k as keyof typeof picture];
         const isModuleLike = entry && typeof entry === 'object' && 'default' in entry;
         const isPrimitiveLike = typeof entry === 'string' || typeof entry === 'number';
         expect(isModuleLike || isPrimitiveLike).toBeTruthy();

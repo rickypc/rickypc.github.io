@@ -41,8 +41,7 @@ export default memo(function Metadata({ navigation = false }: Props): ReactEleme
       });
     } else {
       details.forEach((el, index) => {
-        // eslint-disable-next-line security/detect-object-injection
-        if (!snapshots.current[index]) {
+        if (!snapshots.current[index as number]) {
           el.dataset.collapsed = 'true';
           el.open = false;
           Object.assign((el.querySelector(':scope > div') as HTMLElement).style, {

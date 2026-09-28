@@ -200,24 +200,10 @@ export const quadrants = {
   people: {
     alt: 'Transformer People Type',
     axes: [
-      {
-        anchor: 'middle',
-        text: 'INFLUENCE',
-        x: 100,
-        y: 221,
-      },
-      {
-        anchor: 'middle',
-        text: 'ADAPTABILITY',
-        transform: 'rotate(-90)',
-        x: -100,
-        y: -10,
-      },
+      { anchor: 'middle', text: 'INFLUENCE', x: 100, y: 221 },
+      { anchor: 'middle', text: 'ADAPTABILITY', transform: 'rotate(-90)', x: -100, y: -10 },
     ] as QuadrantAxis[],
-    circle: {
-      x: 190,
-      y: 30,
-    } as QuadrantPosition,
+    circle: { x: 190, y: 30 } as QuadrantPosition,
     labels: [
       {
         anchor: 'start',
@@ -256,24 +242,10 @@ export const quadrants = {
   task: {
     alt: 'Transactor Task Type',
     axes: [
-      {
-        anchor: 'middle',
-        text: 'DELIVERY',
-        x: 100,
-        y: 221,
-      },
-      {
-        anchor: 'middle',
-        text: 'THOUGHT',
-        transform: 'rotate(-90)',
-        x: -100,
-        y: -10,
-      },
+      { anchor: 'middle', text: 'DELIVERY', x: 100, y: 221 },
+      { anchor: 'middle', text: 'THOUGHT', transform: 'rotate(-90)', x: -100, y: -10 },
     ] as QuadrantAxis[],
-    circle: {
-      x: 190,
-      y: 10,
-    } as QuadrantPosition,
+    circle: { x: 190, y: 10 } as QuadrantPosition,
     labels: [
       {
         anchor: 'start',

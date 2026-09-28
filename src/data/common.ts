@@ -177,12 +177,10 @@ export const chunkToWords = (input: number): string => {
     response.push(tens[Math.floor(num / 10)]);
     num %= 10;
     if (num > 0) {
-      // eslint-disable-next-line security/detect-object-injection
-      response.push(`-${below20[num]}`);
+      response.push(`-${below20[num as number]}`);
     }
   } else if (num > 0) {
-    // eslint-disable-next-line security/detect-object-injection
-    response.push(below20[num]);
+    response.push(below20[num as number]);
   }
   return response.join('');
 };
@@ -232,8 +230,7 @@ export const numberToWords = (input: number): string => {
     const chunk = num % 1000;
     if (chunk > 0) {
       const chunkWords = chunkToWords(chunk);
-      // eslint-disable-next-line security/detect-object-injection
-      const suffix = thousands[chunkIndex];
+      const suffix = thousands[chunkIndex as number];
       words = `${chunkWords}${suffix ? ` ${suffix}` : ''}${words ? ` ${words}` : ''}`;
     }
     num = Math.floor(num / 1000);

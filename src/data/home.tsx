@@ -483,9 +483,5 @@ export const layout: LayoutProps = {
 
 export const socials: SocialProps[] = [
   { href: 'https://github.com/rickypc', Icon: FaGithub, title: 'Github' },
-  {
-    href: 'https://www.linkedin.com/in/rihuang',
-    Icon: FaLinkedin,
-    title: 'Linkedin',
-  },
+  { href: 'https://www.linkedin.com/in/rihuang', Icon: FaLinkedin, title: 'Linkedin' },
 ];

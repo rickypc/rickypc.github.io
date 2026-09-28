@@ -69,11 +69,7 @@ const Timeline = memo(function Timeline({
 export default memo(function Content() {
   const { scrollYProgress } = useScroll();
   // After scrollYProgress assignment.
-  const scaleY = useSpring(scrollYProgress, {
-    damping: 30,
-    restDelta: 0.001,
-    stiffness: 100,
-  });
+  const scaleY = useSpring(scrollYProgress, { damping: 30, restDelta: 0.001, stiffness: 100 });
   const [single] = useMedia('screen and (max-width: 48rem)');
 
   const position = useCallback(

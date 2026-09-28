@@ -35,8 +35,7 @@ describe('Pills', () => {
       expect(dtElements).toHaveLength(items.length);
 
       items.forEach((item, idx) => {
-        // eslint-disable-next-line security/detect-object-injection
-        const dt = dtElements[idx];
+        const dt = dtElements[idx as number];
         // eslint-disable-next-line testing-library/no-node-access
         const span = dt.querySelector('span:not([data-layoutid])');
         expect(span).toHaveTextContent(item);

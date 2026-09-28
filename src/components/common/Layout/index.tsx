@@ -31,14 +31,7 @@ export default memo(function Layout({
 }: PropsWithChildren<LayoutProps>): ReactElement {
   useWelcome();
   const pageSchema =
-    schema && schema !== 'ProfilePage'
-      ? context({
-          description,
-          keywords,
-          schema,
-          title,
-        })
-      : null;
+    schema && schema !== 'ProfilePage' ? context({ description, keywords, schema, title }) : null;
   return (
     <ThemeLayout>
       <PageMetadata description={description} keywords={keywords} title={title}>

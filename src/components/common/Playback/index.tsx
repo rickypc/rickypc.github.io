@@ -57,11 +57,7 @@ function GrPlay(props: IconBaseProps): ReactElement {
     attr: { viewBox: '0 0 24 24' },
     child: [
       {
-        attr: {
-          fill: 'none',
-          points: '5 22 23 12 5 2',
-          strokeWidth: '2',
-        },
+        attr: { fill: 'none', points: '5 22 23 12 5 2', strokeWidth: '2' },
         child: [],
         tag: 'polygon',
       },
@@ -109,14 +105,7 @@ function GrStop(props: IconBaseProps): ReactElement {
     attr: { viewBox: '0 0 24 24' },
     child: [
       {
-        attr: {
-          fill: 'none',
-          height: '16',
-          strokeWidth: '2',
-          width: '16',
-          x: '4',
-          y: '4',
-        },
+        attr: { fill: 'none', height: '16', strokeWidth: '2', width: '16', x: '4', y: '4' },
         child: [],
         tag: 'rect',
       },
@@ -146,27 +135,11 @@ export default memo(function Playback({
   }
 
   const states = {
-    idle: {
-      handler: onPlay,
-      icon: <GrPlay />,
-      label: 'Play',
-      stoppable: false,
-    },
-    paused: {
-      handler: onPlay,
-      icon: <GrResume />,
-      label: 'Resume',
-      stoppable: true,
-    },
-    playing: {
-      handler: onPause,
-      icon: <GrPause />,
-      label: 'Pause',
-      stoppable: true,
-    },
+    idle: { handler: onPlay, icon: <GrPlay />, label: 'Play', stoppable: false },
+    paused: { handler: onPlay, icon: <GrResume />, label: 'Resume', stoppable: true },
+    playing: { handler: onPause, icon: <GrPause />, label: 'Pause', stoppable: true },
   };
-  // eslint-disable-next-line security/detect-object-injection
-  const view = states[status];
+  const view = states[status as keyof typeof states];
 
   return (
     <div className={styles.controls}>

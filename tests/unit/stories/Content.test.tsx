@@ -43,8 +43,7 @@ describe('stories.Content', () => {
     expect(articles).toHaveLength(stories.length);
 
     articles.forEach((article, idx) => {
-      // eslint-disable-next-line security/detect-object-injection
-      const story = stories[idx];
+      const story = stories[idx as number];
 
       // article has the story CSS class.
       expect(article).toHaveClass('story');

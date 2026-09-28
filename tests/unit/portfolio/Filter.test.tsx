@@ -33,8 +33,7 @@ describe('portfolio.Filter', () => {
     const buttons = withinColl.getAllByRole('button');
     expect(buttons).toHaveLength(expectedTags.length);
     buttons.forEach((btn, i) => {
-      // eslint-disable-next-line security/detect-object-injection
-      expect(btn).toHaveTextContent(expectedTags[i]);
+      expect(btn).toHaveTextContent(expectedTags[i as number]);
     });
 
     // Clicking a tag invokes onClick with that tag.

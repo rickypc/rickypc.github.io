@@ -261,6 +261,10 @@ nav.navbar::before {
   background: var(--ifm-color-emphasis-200);
 }
 
+.plugin-docs details summary em {
+  font-size: 0.85rem;
+}
+
 .plugin-docs hr {
   background-color: var(--ifm-color-emphasis-300);
 }

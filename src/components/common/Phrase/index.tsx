@@ -40,6 +40,12 @@ type SupportProps = {
   transliteration: Transliteration;
 };
 
+type WordsProps = {
+  transliteration: Transliteration & {
+    children: string;
+  };
+};
+
 /**
  * Renders the `prayer wheel` icon.
  * @param {object} props - React props passed to the icon component.
@@ -234,7 +240,6 @@ const Repetition = memo(function Repetition({ value = 1 }: RepetitionProps): Rea
   );
 });
 
-// istanbul ignore next
 const Support = memo(function Support({
   path,
   repetition = 0,
@@ -273,4 +278,18 @@ export default memo(function Phrase({
       <Support {...{ path, repetition, transliteration }} />
     </>
   ) : null;
+});
+
+export const Words = memo(function Words({ transliteration }: WordsProps) {
+  return transliteration.children.split(' ').map((word: string, index: number, arr: string[]) => {
+    const first = index === 0;
+    const last = index === arr.length - 1;
+    return (
+      <>
+        {!first && last ? 'and ' : ''}
+        <code>{word}</code>
+        {last ? '' : ', '}
+      </>
+    );
+  });
 });

@@ -4,7 +4,7 @@
  */
 
 import type { Transliteration } from '@site/src/components/common/MultiLingual';
-import Phrase, { GrPrint, Instruction } from '@site/src/components/common/Phrase';
+import Phrase, { GrPrint, Instruction, Words } from '@site/src/components/common/Phrase';
 import { render, screen } from '@testing-library/react';
 import type { ReactElement, ReactNode } from 'react';
 
@@ -163,5 +163,42 @@ describe('Phrase', () => {
       const div = screen.getByText('Read this');
       expect(div).toHaveClass('instruction');
     });
+  });
+});
+
+describe('Words', () => {
+  test('should render a single word cleanly without any punctuation separators', () => {
+    const props = {
+      transliteration: { children: 'hello' },
+    } as any;
+    const { container } = render(<Words {...props} />);
+
+    expect(container.textContent).toBe('hello');
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
+    expect(container.querySelector('code')?.textContent).toBe('hello');
+  });
+
+  test('should separate two words with an and', () => {
+    const props = {
+      transliteration: { children: 'hello world' },
+    } as any;
+    const { container } = render(<Words {...props} />);
+
+    expect(container.textContent).toBe('hello, and world');
+  });
+
+  test('should chain multiple words using commas and append and for the final element', () => {
+    const props = {
+      transliteration: { children: 'one two three' },
+    } as any;
+    const { container } = render(<Words {...props} />);
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
+    const codes = container.querySelectorAll('code');
+
+    expect(container.textContent).toBe('one, two, and three');
+    expect(codes.length).toBe(3);
+    expect(codes[0].textContent).toBe('one');
+    expect(codes[1].textContent).toBe('two');
+    expect(codes[2].textContent).toBe('three');
   });
 });

@@ -8,6 +8,8 @@ import type { Config } from '@docusaurus/types';
 import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
 import * as sitemap from '#root/src/plugins/sitemap';
 
+const production = process.env.NODE_ENV === 'production';
+
 const config: Config = {
   baseUrl: '/',
   deploymentBranch: 'gh-pages',
@@ -50,6 +52,16 @@ const config: Config = {
     ],
   ],
   projectName: 'rickypc.github.io',
+  scripts: production
+    ? [
+        {
+          async: true,
+          // biome-ignore lint/security/noSecrets: -
+          'data-key': 'WoBNtMfK6b80xlTMYbheZA',
+          src: 'https://analytics.ahrefs.com/analytics.js',
+        },
+      ]
+    : [],
   themeConfig: {
     colorMode: { respectPrefersColorScheme: true },
     footer: {
@@ -119,7 +131,7 @@ const config: Config = {
     ],
   ],
   title: 'Ricky Huang',
-  trailingSlash: process.env.NODE_ENV === 'production',
+  trailingSlash: production,
   url: 'https://ricky.one',
 };
 

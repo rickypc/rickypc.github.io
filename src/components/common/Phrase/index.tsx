@@ -10,7 +10,7 @@ import PhraseBlock from '@site/src/components/common/PhraseBlock';
 import Playback from '@site/src/components/common/Playback';
 import { clsx, fileName, key, tail } from '@site/src/data/common';
 import MDXDetails from '@theme-original/MDXComponents/Details';
-import { Children, memo, type ReactElement, type ReactNode } from 'react';
+import { Children, Fragment, memo, type ReactElement, type ReactNode } from 'react';
 import type { IconBaseProps } from 'react-icons';
 import { GenIcon } from 'react-icons/lib';
 import pdf from '#buddhism/media/pdf/_index';
@@ -284,12 +284,13 @@ export const Words = memo(function Words({ transliteration }: WordsProps) {
   return transliteration.children.split(' ').map((word: string, index: number, arr: string[]) => {
     const first = index === 0;
     const last = index === arr.length - 1;
+    const unique = `${key(word)}-${index}`;
     return (
-      <>
+      <Fragment key={unique}>
         {!first && last ? 'and ' : ''}
         <code>{word}</code>
         {last ? '' : ', '}
-      </>
+      </Fragment>
     );
   });
 });

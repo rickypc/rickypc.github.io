@@ -3,30 +3,30 @@
 
 buddhism:
   description: >-
-    Core Buddhist principles that shape how all topics connect, highlighting
-    mindfulness, compassion, and impermanence as the base.
+    Core Buddhist principles that shape how all topics connect, highlighting mindfulness,
+    compassion, and impermanence as the base.
   label: Buddhism
 
 foundations-core-view:
   description: >-
-    Essential views on karma, rebirth, and liberation that form the structural
-    base linking philosophy, practice, ritual, and guidance.
+    Essential views on karma, rebirth, and liberation that form the structural base linking
+    philosophy, practice, ritual, and guidance.
   label: Foundations & Core View
 
 practice-daily-life:
   description: >-
-    Practical methods for meditation, ethics, and emotional clarity that apply
-    foundational views directly to everyday choices and life.
+    Practical methods for meditation, ethics, and emotional clarity that apply foundational views
+    directly to everyday choices and life.
   label: Practice & Daily Life
 
 rituals-ceremonies:
   description: >-
-    Supportive sacred actions -prayers, mantras, and consecrations- that
-    integrate with study and practice to reinforce spiritual intent.
+    Supportive sacred actions -prayers, mantras, and consecrations- that integrate with study and
+    practice to reinforce spiritual intent.
   label: Rituals & Ceremonies
 
 teachers-lineage-modern-practice:
   description: >-
-    Guidance on lineage, teachers, and modern challenges, connecting authentic
-    instruction with core views, practice, and ritual forms.
+    Guidance on lineage, teachers, and modern challenges, connecting authentic instruction with core
+    views, practice, and ritual forms.
   label: Teachers, Lineage & Modern Practice

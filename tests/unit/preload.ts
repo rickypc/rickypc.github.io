@@ -14,9 +14,9 @@ import {
   mock,
   test,
 } from 'bun:test';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { basename } from 'node:path';
+import { basename, join } from 'node:path';
 import { GlobalRegistrator } from '@happy-dom/global-registrator';
 import { createElement } from 'react';
 
@@ -29,18 +29,16 @@ const { file, main } = Bun;
 // eslint-disable-next-line security/detect-non-literal-fs-filename
 mkdirSync(dir, { recursive: true });
 const assets = {
-  cached: new Set<string>(),
   css: new Proxy({}, { get: (_target, key) => (key === '__esModule' ? false : key) }),
-  dir: new URL(`file://${dir}`),
-  image(name: string) {
-    const url = new URL(`${name}.cjs`, assets.dir);
-    const path = url.pathname;
-    if (!assets.cached.has(path)) {
+  image(path: string) {
+    const name = basename(path).replace(/\.cjs$/, '');
+    const target = join(dir, `${name}.cjs`);
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    if (!existsSync(target)) {
       // eslint-disable-next-line security/detect-non-literal-fs-filename
-      writeFileSync(url, `module.exports = ${JSON.stringify(name)};\n`);
-      assets.cached.add(path);
+      writeFileSync(target, `module.exports=${JSON.stringify(name)};`);
     }
-    return path;
+    return target;
   },
   matchers: {} as Matchers,
   methods: {
@@ -89,8 +87,8 @@ Bun.plugin({
       exports: { default: assets.css },
       loader: 'object',
     }));
-    build.onResolve({ filter: /\.(gif|jpe?g|png)$/i }, ({ path }) => ({
-      path: assets.image(basename(path)),
+    build.onResolve({ filter: /\.(gif|jpe?g|png)(?:\.cjs)?$/i }, ({ path }) => ({
+      path: assets.image(path),
     }));
     build.onLoad({ filter: /\.svg$/i }, () => ({
       exports: { default: assets.svg },

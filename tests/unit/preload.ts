@@ -14,10 +14,11 @@ import {
   mock,
   test,
 } from 'bun:test';
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { Module } from 'node:module';
 import { tmpdir } from 'node:os';
 import { basename, join } from 'node:path';
 import { GlobalRegistrator } from '@happy-dom/global-registrator';
+import type { OnLoadArgs, OnLoadResult, OnResolveArgs } from 'bun';
 import { createElement } from 'react';
 
 type Matchers = Record<string, (...args: unknown[]) => unknown>;
@@ -26,21 +27,29 @@ process.env.TZ = 'UTC';
 
 const dir = `${tmpdir()}/bun-test-assets/`;
 const { file, main } = Bun;
-// eslint-disable-next-line security/detect-non-literal-fs-filename
-mkdirSync(dir, { recursive: true });
 const assets = {
-  css: new Proxy({}, { get: (_target, key) => (key === '__esModule' ? false : key) }),
-  image(path: string) {
+  css(_args: OnLoadArgs): OnLoadResult {
+    return {
+      exports: {
+        default: new Proxy({}, { get: (_target, key) => (key === '__esModule' ? false : key) }),
+      },
+      loader: 'object',
+    };
+  },
+  image({ path }: OnResolveArgs) {
     const name = basename(path).replace(/\.cjs$/, '');
     const target = join(dir, `${name}.cjs`);
-    // eslint-disable-next-line security/detect-non-literal-fs-filename
-    if (!existsSync(target)) {
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      writeFileSync(target, `module.exports=${JSON.stringify(name)};`);
-    }
-    return target;
+    // After target assignment.
+    const module = new Module(target, undefined);
+    module.exports = name;
+    module.loaded = true;
+    require.cache[target as keyof typeof require.cache] = module;
+    return { path: target };
   },
   matchers: {} as Matchers,
+  media({ path }: OnLoadArgs): OnLoadResult {
+    return { exports: { default: basename(path) }, loader: 'object' };
+  },
   methods: {
     afterAll,
     afterEach,
@@ -54,8 +63,15 @@ const assets = {
     xtest: test.skip,
   } as const,
   mocks: await file(new URL('./mocks.json', import.meta.url)).json(),
-  svg({ ref, ...props }: Record<string, unknown> & { ref?: unknown }) {
-    return createElement('svg', { ...props, ref });
+  svg(_args: OnLoadArgs): OnLoadResult {
+    return {
+      exports: {
+        default({ ref, ...props }: Record<string, unknown> & { ref?: unknown }) {
+          return createElement('svg', { ...props, ref });
+        },
+      },
+      loader: 'object',
+    };
   },
   utilsCached: new WeakMap<object, object>(),
 };
@@ -79,21 +95,10 @@ const boundUtils = (utils: Record<string, unknown>) => {
 Bun.plugin({
   name: 'bun-asset-transformer',
   setup(build) {
-    build.onLoad({ filter: /\.(avif|ico|mp3|mp4|ogg|pdf|ttf|wav|webp|woff2?)$/i }, ({ path }) => ({
-      exports: { default: basename(path) },
-      loader: 'object',
-    }));
-    build.onLoad({ filter: /\.css$/i }, () => ({
-      exports: { default: assets.css },
-      loader: 'object',
-    }));
-    build.onResolve({ filter: /\.(gif|jpe?g|png)(?:\.cjs)?$/i }, ({ path }) => ({
-      path: assets.image(path),
-    }));
-    build.onLoad({ filter: /\.svg$/i }, () => ({
-      exports: { default: assets.svg },
-      loader: 'object',
-    }));
+    build.onLoad({ filter: /\.(avif|ico|mp3|mp4|ogg|pdf|ttf|wav|webp|woff2?)$/i }, assets.media);
+    build.onLoad({ filter: /\.css$/i }, assets.css);
+    build.onResolve({ filter: /\.(gif|jpe?g|png)(?:\.cjs)?$/i }, assets.image);
+    build.onLoad({ filter: /\.svg$/i }, assets.svg);
   },
 });
 

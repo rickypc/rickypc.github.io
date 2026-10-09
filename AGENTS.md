@@ -6,6 +6,9 @@ Because this repository is public, project-specific rules and conventions live i
 knowledge base** (not committed to the repo) to avoid exposing local machine paths and other private
 context. The full project instructions are retrieved on demand.
 
+This repository is owner-frozen against band refill: run the reflow transform in its default
+over-limit mode only, never point `--band` at it, and keep the committed corpus byte-identical.
+
 ## How to load project conventions
 
 Run the knowledge-base skill to retrieve the canonical project conventions:

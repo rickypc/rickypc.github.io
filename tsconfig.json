@@ -1,26 +1,15 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "baseUrl": ".",
-    "checkJs": false,
-    "ignoreDeprecations": "6.0",
+    "jsx": "react-jsx",
     "noEmit": true,
     "paths": {
-      "@docusaurus/*": [
-        "./node_modules/@docusaurus/core/lib/client/exports/*",
-        "./node_modules/@docusaurus/*"
-      ],
-      "@docusaurus/plugin-content-docs/client": [
-        "./node_modules/@docusaurus/plugin-content-docs/src/client/index.ts"
-      ],
       "@site/*": ["./*"],
       "@theme/*": ["./src/theme/*"],
       "#buddhism/*": ["./docs/buddhism/*"],
       "#root/*": ["./*"]
     },
+    "skipLibCheck": true,
     "strict": true,
-    "types": ["bun"]
   },
-  "extends": "@docusaurus/tsconfig",
   "include": ["*.config.ts", "docs", "src", "tests"]
 }

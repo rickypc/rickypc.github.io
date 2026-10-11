@@ -4,7 +4,7 @@
  */
 
 import docusaurus from '@docusaurus/eslint-plugin';
-import parser from '@typescript-eslint/parser';
+import * as parser from '@typescript-eslint/parser';
 import type { Linter } from 'eslint';
 import importPlugin from 'eslint-plugin-import';
 import * as jsdoc from 'eslint-plugin-jsdoc';
@@ -13,7 +13,7 @@ import testing from 'eslint-plugin-testing-library';
 
 const config: Linter.Config[] = [
   // Order Matters™!
-  { ignores: ['build', 'coverage', '.docusaurus', 'supports'] },
+  { ignores: ['build', 'coverage', '.docusaurus', 'playwright', 'supports'] },
   importPlugin.flatConfigs.recommended,
   importPlugin.flatConfigs.typescript,
   jsdoc.configs['flat/recommended'],

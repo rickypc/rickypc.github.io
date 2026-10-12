@@ -53,11 +53,11 @@ describe('data.timeline.intro', () => {
 
 describe('data.timeline.layout', () => {
   test('description', () => {
-    expect(layout.description).toMatch(/^Milestones across Ricky Huang's career arc/);
+    expect(layout.description).toMatch(/^Ricky Huang's career timeline: 30\+ years/);
   });
 
   test('title', () => {
-    expect(layout.title).toBe('Timeline - Career, Education & Technical Milestones');
+    expect(layout.title).toBe('Career Timeline - 30+ Years, One Continuous Arc');
   });
 
   test('keywords', () => {

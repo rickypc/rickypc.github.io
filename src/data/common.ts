@@ -302,17 +302,16 @@ export { fileName, key, tail };
  * - strings and numbers (returned directly)
  * - arrays of nodes (flattened and concatenated)
  * - React elements (recursing into their children)
- * @param {ReactNode} node - Any React node, including elements, arrays,
- *   fragments, or primitives.
- * @returns {string} A concatenated string containing all leaf text found
- *   within the node.
+ * @param {ReactNode} node - Any React node, including elements, arrays, fragments, or primitives.
+ * @returns {string} A concatenated string containing all leaf text found within the node, with
+ *   whitespace runs collapsed to single spaces and the edges trimmed.
  */
 export function textContent(node: ReactNode): string {
   if (['number', 'string'].includes(typeof node)) {
     return String(node);
   }
   if (Array.isArray(node)) {
-    return node.map(textContent).join(' ');
+    return node.map(textContent).join(' ').replace(/\s+/g, ' ').trim();
   }
   if (isValidElement(node)) {
     return textContent((node as ReactElement<PropsWithChildren>).props.children);

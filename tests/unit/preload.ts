@@ -15,8 +15,7 @@ import {
   test,
 } from 'bun:test';
 import { Module } from 'node:module';
-import { tmpdir } from 'node:os';
-import { basename, join } from 'node:path';
+import { basename, dirname, join, resolve } from 'node:path';
 import { GlobalRegistrator } from '@happy-dom/global-registrator';
 import type { OnLoadArgs, OnLoadResult, OnResolveArgs } from 'bun';
 import { createElement } from 'react';
@@ -25,8 +24,8 @@ type Matchers = Record<string, (...args: unknown[]) => unknown>;
 
 process.env.TZ = 'UTC';
 
-const dir = `${tmpdir()}/bun-test-assets/`;
 const { file, main } = Bun;
+const root = resolve(import.meta.dir, '../..');
 const assets = {
   css(_args: OnLoadArgs): OnLoadResult {
     return {
@@ -36,9 +35,13 @@ const assets = {
       loader: 'object',
     };
   },
-  image({ path }: OnResolveArgs) {
+  image({ importer, path }: OnResolveArgs) {
     const name = basename(path).replace(/\.cjs$/, '');
-    const target = join(dir, `${name}.cjs`);
+    // Bun 1.4.3 resolves the specifier before consulting require.cache, so the seeded module must
+    // be keyed by a path that exists on disk.
+    const target = path.startsWith('@site/')
+      ? join(root, path.slice('@site/'.length))
+      : resolve(importer ? dirname(importer) : root, path);
     // After target assignment.
     const module = new Module(target, undefined);
     module.exports = name;

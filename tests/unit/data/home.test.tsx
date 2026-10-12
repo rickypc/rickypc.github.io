@@ -61,7 +61,7 @@ describe('data.home', () => {
   test('exports intro with description and title', () => {
     // eslint-disable-next-line testing-library/no-node-access
     expect((intro.description as any).props.children).toHaveLength(15);
-    expect(textContent(intro.description)).toMatch(/^I started in architecture/);
+    expect(textContent(intro.description)).toMatch(/^You need an engineer who can design a system/);
     expect(intro.title).toMatch(/^Engineering Leader & Full-Stack/);
   });
 
@@ -71,13 +71,13 @@ describe('data.home', () => {
 
   test('exports layout with description, keywords array, and title', () => {
     expect(typeof layout.description).toBe('string');
-    expect(layout.description).toMatch(/an engineer who started in architecture/);
+    expect(layout.description).toMatch(/engineering leader and full stack developer/);
 
     expect(Array.isArray(layout.keywords)).toBeTruthy();
     expect(layout.keywords?.length).toBeGreaterThan(0);
 
     expect(typeof layout.title).toBe('string');
-    expect(layout.title).toContain('Engineering Leadership');
+    expect(layout.title).toContain('Engineering Leader');
   });
 
   test('exports two socials entries with href, title, and Icon component', () => {

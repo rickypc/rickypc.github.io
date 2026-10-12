@@ -9,7 +9,7 @@
       "#root/*": ["./*"]
     },
     "skipLibCheck": true,
-    "strict": true,
+    "strict": true
   },
   "include": ["*.config.ts", "docs", "src", "tests"]
 }

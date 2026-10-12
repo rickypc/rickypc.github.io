@@ -24,7 +24,7 @@ describe('data.about.characteristic', () => {
       expect(attr.length).toBeGreaterThan(0);
     });
     expect(typeof characteristic.title).toBe('string');
-    expect(characteristic.title).toContain('defines my approach');
+    expect(characteristic.title).toContain('defines my leadership style');
   });
 });
 
@@ -45,14 +45,14 @@ describe('data.about.faqItems', () => {
 
   test('preserves canonical facts in the rewritten intro', () => {
     const pitch = textContent(intro.description);
-    expect(pitch).toMatch(/vision/);
-    expect(pitch).toMatch(/rising action and core work/);
+    expect(pitch).toMatch(/people skills/);
     expect(pitch).toMatch(/operating philosophy/);
     expect(pitch).toMatch(/Transformer on people/);
     expect(pitch).toMatch(/Transactor on tasks/);
     expect(pitch).toMatch(/structural discipline from architecture/);
+    expect(pitch).toMatch(/telemetry rigor from AirIQ/);
     expect(pitch).toMatch(/planet-scale ceiling from CheetahMail/);
-    expect(pitch).toMatch(/durability bar from the Tier-1 Experian service/);
+    expect(pitch).toMatch(/durability bar from the mission-critical Experian service/);
   });
 });
 
@@ -60,7 +60,7 @@ describe('data.about.headline', () => {
   test('is a non-empty string', () => {
     expect(typeof headline).toBe('string');
     expect(headline.length).toBeGreaterThan(0);
-    expect(headline).toMatch(/People, Purpose, and Results/);
+    expect(headline).toMatch(/Leadership with People Skills/);
   });
 });
 

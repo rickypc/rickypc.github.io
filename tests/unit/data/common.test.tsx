@@ -529,7 +529,7 @@ describe('data.common.textContent()', () => {
         {undefined}
       </div>
     );
-    expect(textContent(node)).toBe('  ok ');
+    expect(textContent(node)).toBe('ok');
   });
 
   test('handles fragments correctly', () => {

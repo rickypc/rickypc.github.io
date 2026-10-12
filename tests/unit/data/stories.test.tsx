@@ -24,12 +24,12 @@ describe('data.stories.faqItems', () => {
     });
   });
 
-  test('preserves the canonical horizon facts threaded through the rewritten pitch', () => {
+  test('preserves the canonical facts threaded through the rewritten pitch', () => {
     const pitch = textContent(intro.description);
-    expect(pitch).toMatch(/horizon/);
+    expect(pitch).toMatch(/References are harder to fake/);
     expect(pitch).toMatch(/decades of engineering/);
     expect(pitch).toMatch(/trust/);
-    expect(pitch).toMatch(/Tier-1 essential service/);
+    expect(pitch).toMatch(/mission-critical service/);
     expect(pitch).toMatch(/5\+ years of zero production defects/);
     expect(pitch).toMatch(/spec-driven development/);
   });
@@ -48,11 +48,11 @@ describe('data.stories.intro', () => {
 
 describe('data.stories.layout', () => {
   test('description', () => {
-    expect(layout.description).toMatch(/^Peer testimonials and hard-won lessons/);
+    expect(layout.description).toMatch(/^Ricky Huang's developer testimonials/);
   });
 
   test('title', () => {
-    expect(layout.title).toBe('Stories, Testimonials & Lessons from the Journey');
+    expect(layout.title).toBe('Developer Testimonials - Four Peers in Their Own Words');
   });
 
   test('keywords', () => {

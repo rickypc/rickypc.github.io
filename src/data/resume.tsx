@@ -640,167 +640,126 @@ export const experiences = {
 
 export const faqItems: FaqItems[] = [
   {
-    answer: oneLine(`Principal Engineer in practice operating AI-native,
-      spec-driven development loops. Technical footprint spans cloud-native,
-      event-driven backends (AWS Kinesis/EventBridge/SQS/SNS, Go/Python/C#)
-      with specialist-level depth, generalist breadth across React, databases
-      (DynamoDB/MySQL/Oracle/SQL Server), observability (Datadog), and AI
-      tooling (Bedrock, agentic loops, SDD). The breadth makes the depth
-      useful - one person owns the system end-to-end, from architecture to
-      on-call. This is the same end-to-end thesis the Home page opens with and
-      the Portfolio proves system by system.`),
+    answer: oneLine(`Principal Engineer in practice, running AI-native, spec-driven development
+      loops. The depth: specialist-level, cloud-native, event-driven backends
+      (AWS Kinesis/EventBridge/SQS/SNS, Go/Python/C#). The breadth: React, databases
+      (DynamoDB/MySQL/Oracle/SQL Server), observability (Datadog), and AI tooling (Bedrock, agentic
+      loops, SDD). One person owns the system end-to-end, from architecture to on-call.`),
     question: "What is Ricky's technical architecture footprint?",
   },
   {
-    answer: oneLine(`I own and maintain mission-critical, Tier-1 enterprise
-      systems backed by rigorous production metrics. Throughput: 50K
-      requests per minute average, surging over 1M per minute. Speed: 50 ms
-      latency at p99. Scale: 300K-400K records processed per minute.
-      Stability: zero production defects for over 5 consecutive years.
-      Previously at Experian CheetahMail, I engineered infrastructure
-      sustaining 1 billion emails per day with minimal error rates. I also
-      specialize in rescuing unstable systems - I inherited an essential
-      service crashing every 2-4 hours and stabilized it to month-long
-      continuous uptime within 30 days. Every number here is the measurable
-      shape of a theme running through the whole site - durability as a
-      design choice.`),
+    answer: oneLine(`I own and maintain mission-critical, mission-critical enterprise systems, and
+      the production metrics are rigorous. Throughput: 50K requests per minute average, surging over
+      1M per minute. Speed: 50 ms latency at p99. Scale: 300K-400K records processed per minute.
+      Stability: zero production defects for over 5 consecutive years. Earlier at Experian
+      CheetahMail, I engineered infrastructure sustaining 1 billion emails per day with minimal
+      error rates. I also rescue unstable systems: I inherited an essential service crashing every
+      2-4 hours and stabilized it to month-long continuous uptime within 30 days.`),
     question: "What are Ricky's core production metrics and system reliability records?",
   },
   {
-    answer: oneLine(`I actively leverage modern AI to drive engineering
-      efficiency rather than just using it for basic code generation. I was
-      the first engineer at Experian to establish Spec-Driven Development
-      (SDD) running autonomous, agentic AI loops against technical
-      specifications. This initiative effectively turned my group into the
-      company's pioneer SDD team, shifting us away from manual scaffolding
-      and significantly accelerating our development velocity. The same
-      learn-the-rigor-then-ship-against-it cadence that took me back to
-      Stanford mid-career, applied to the whole team.`),
+    answer: oneLine(`I use modern AI for real engineering efficiency; code generation is the
+      smallest part of it. I was the first engineer at Experian to establish Spec-Driven Development
+      (SDD): autonomous, agentic AI loops working against technical specifications. That made my
+      group the company's pioneer SDD team. We dropped manual scaffolding and shipped measurably
+      faster. It is the same learn-the-rigor-then-ship-against-it cadence that took me back to
+      Stanford mid-career, now applied to a whole team.`),
     question: 'How does Ricky actually use AI to improve engineering outcomes?',
   },
   {
-    answer: oneLine(`Over a 20-year tenure spanning Experian CheetahMail and
-      Experian Consumer Services, my contributions have been consistently
-      recognized with top-tier accolades including the Platinum Aspire Award
-      (top 1% performance), the Pinnacle Award for Engineering Excellence, and
-      over 20 Spot Awards. In 2026 alone, I received three Collaborate to Win
-      Spot Awards for serving as the heart and brains of the engineering team.
-      This recognition was driven by delivering measurable business value:
-      (1) Built an internal tool ground-up for a tenant that scaled from
-      under $100K to hundreds of millions in revenue; (2) Designed a Tier-1
-      service operating at just 5% of a licensed third-party replacement
-      cost; (3) Scaled CheetahMail to sustain 1 billion emails daily;
-      (4) Transformed a service crashing every 2-4 hours into month-long
-      stability within 30 days; (5) Recently designed, tested, and deployed
-      an emergency incident fix in under two hours (2026 Spot Award). Read
-      these five as the plot points of the five chapters that precede this
-      appendix.`),
+    answer: oneLine(`Across 20 years spanning Experian CheetahMail and Experian Consumer Services,
+      the recognition has stayed consistent. The honors include the Platinum Aspire Award (top 1%
+      performance), the Pinnacle Award for Engineering Excellence, and over 20 Spot Awards. In 2026
+      alone, I received three Collaborate to Win Spot Awards for serving as the heart and brains of
+      the engineering team. The measurable business value behind it: (1) Built an internal tool
+      ground-up for a tenant that scaled from under $100K to hundreds of millions in revenue; (2)
+      Designed a mission-critical service operating at just 5% of a licensed third-party replacement
+      cost; (3) Scaled CheetahMail to sustain 1 billion emails daily; (4) Transformed a service
+      crashing every 2-4 hours into month-long stability within 30 days; (5) Designed, tested, and
+      deployed an emergency incident fix in under two hours (2026 Spot Award).`),
     question: "What is the breadth of Ricky's impact and recognition at Experian?",
   },
   {
-    answer: oneLine(`Two clean examples: (1) an internal tool I built ground-up
-      for a tenant grew from under $100K a year in revenue to hundreds of
-      millions of dollars, with my systems still backing the business today;
-      (2) the Tier-1 essential service operates at roughly 5% of the yearly
-      cost of a licensed third-party replacement (licensing alone far higher,
-      operations included). This is the cost-design discipline of the site -
-      the principle that recurs from Home through Portfolio to this appendix,
-      in dollars.`),
+    answer: oneLine(`Two clean examples: (1) an internal tool I built ground-up for a tenant grew
+      from under $100K a year in revenue to hundreds of millions of dollars, and my systems still
+      back that business today; (2) the mission-critical service runs at roughly 5% of the yearly
+      cost of a licensed third-party replacement (licensing alone far higher, operations included).
+      That is the cost-design discipline, in dollars.`),
     question: 'Can Ricky show dollar impact or avoided cost?',
   },
   {
-    answer: oneLine(`Both, deliberately: specialist-level depth in
-      cloud-native, event-driven backends (AWS Kinesis, EventBridge, SQS,
-      SNS, plus Go, Python, and C#), generalist breadth across front-end
-      (React), databases (DynamoDB, MySQL, Oracle, SQL Server),
-      observability (Datadog), and AI tooling (Bedrock, agentic loops,
-      spec-driven development). The breadth is what makes the depth useful
-      - one person owns the system end-to-end.`),
+    answer: oneLine(`Both, on purpose. Specialist-level depth in cloud-native, event-driven
+      backends: AWS Kinesis, EventBridge, SQS, SNS, plus Go, Python, and C#. Generalist breadth
+      across front-end (React), databases (DynamoDB, MySQL, Oracle, SQL Server), observability
+      (Datadog), and AI tooling (Bedrock, agentic loops, spec-driven development). The breadth is
+      what makes the depth useful: one person owns the system end-to-end.`),
     question: 'Is Ricky a generalist or a specialist?',
   },
   {
-    answer: oneLine(`Across a US-Hyderabad split (10.5-hour gap), I protect
-      overlapping hours for high-impact Agile ceremonies and Parking Lot
-      sessions, reserving them for complex architectural alignment and
-      blockers rather than basic status updates. Async continuity is
-      non-negotiable: every US evening, we drop detailed context, PR links,
-      and clear priorities into organized Slack threads so the IST team can
-      start immediately without waiting on us. Treating async communication
-      as a core requirement - not an afterthought - creates a predictable
-      follow-the-sun cycle where both sides operate with high autonomy and
+    answer: oneLine(`Across a US-Hyderabad split (10.5-hour gap), I protect overlapping hours for
+      high-impact Agile ceremonies and Parking Lot sessions, keeping them for complex architectural
+      alignment and blockers; basic status updates live in writing. Async continuity is
+      non-negotiable: every US evening, we drop detailed context, PR links, and clear priorities
+      into organized Slack threads so the IST team can start immediately without waiting on us. That
+      async discipline creates a predictable follow-the-sun cycle - high autonomy on both sides,
       zero friction.`),
     question: 'How does Ricky actually build trust and velocity on a distributed team?',
   },
   {
-    answer: oneLine(`Yes: we had a greedy data-ingestion service capped at 500
-      records per batch, causing fragmented downstream data. During a tight
-      two-week sprint, the fastest fix would have been a hardcoded second
-      loop - massive tech debt and brittle against volume spikes. I chose a
-      configurable rate-limiter that dynamically maximized intake based
-      on resource availability inside a set window. We more than doubled
-      target capacity, delivered within the sprint, and gave
-      users an uninterrupted customer-journey view. A clean instance of
-      resisting the fashionable shortcut for the boring choice that runs
-      five years out.`),
+    answer: oneLine(`Yes: a greedy data-ingestion service was capped at 500 records per batch, and
+      the downstream data came out fragmented. The sprint was two weeks, and the fastest fix was a
+      hardcoded second loop - heavy tech debt, brittle against volume spikes. I chose a configurable
+      rate-limiter that dynamically maximized intake based on resource availability inside a set
+      window. We more than doubled target capacity, delivered within the sprint, and gave users an
+      uninterrupted customer-journey view. The shortcut would have been fashionable; the boring
+      choice was built to run for five years.`),
     question: 'Can Ricky describe a time he had to choose speed over quality?',
   },
   {
-    answer: oneLine(`Yes: on a recent production incident, I designed, tested,
-      and deployed a mitigatory solution in less than two hours (recognized in
-      a 2026 Spot Award), and I've built deep observability into services using
-      Datadog for faster incident detection and resolution.`),
+    answer: oneLine(`Yes: on a recent production incident, I designed, tested, and deployed a
+      mitigating fix in less than two hours (recognized in a 2026 Spot Award). I also build deep
+      observability into services with Datadog, so incidents are detected and resolved faster.`),
     question: 'Does Ricky lead incidents and on-call work?',
   },
   {
-    answer: oneLine(`30+ years hands-on, including 20+ years at Experian - 7+
-      at Experian CheetahMail (where I received the Pinnacle Award for
-      engineering excellence), followed by 13+ at Experian Consumer
-      Services across three roles. Earlier tenure at AirIQ and RazorGator,
-      with parallel independent work delivery across 9 portfolio projects since
-      1995. The Timeline walks the arc in order; this appendix lists it
-      flat.`),
+    answer: oneLine(`30+ years hands-on, including 20+ years at Experian: 7+ at Experian
+      CheetahMail, where I received the Pinnacle Award for engineering excellence, then 13+ at
+      Experian Consumer Services across three roles. Before that, AirIQ and RazorGator, with
+      independent work running in parallel across 9 portfolio projects since 1995. The Timeline page
+      tells the story in order.`),
     question: 'How much experience does Ricky have, and is it stable?',
   },
   {
-    answer: oneLine(`Yes: in my Experian Consumer Services tenure I turned a
-      service hitting production issues every 2-4 hours into one sustaining
-      multi-day then monthly stability within a month, and earlier at
-      Experian CheetahMail I helped sustain a billion emails a day with
-      minimum error rate.`),
+    answer: oneLine(`Yes: at Experian Consumer Services I turned a service hitting production issues
+      every 2-4 hours into one that held multi-day, then monthly, stability within a month. Earlier,
+      at Experian CheetahMail, I helped sustain a billion emails a day with a minimum error rate.`),
     question: 'Has Ricky run high-throughput and high-reliability systems before?',
   },
   {
-    answer: oneLine(`Senior Software Engineer at Experian Consumer Services,
-      operating as Principal Engineer in practice. Based in Orange County,
-      CA. US citizen (clearance-eligible). Open to relocation for the right
-      opportunity.`),
+    answer: oneLine(`Senior Software Engineer at Experian Consumer Services, operating as Principal
+      Engineer in practice. Based in Orange County, CA. US citizen (clearance-eligible). Open to
+      relocation for the right opportunity.`),
     question: "What is Ricky's current role and location?",
   },
   {
-    answer: oneLine(`No - stable in current role, no external interviews or
-      internal moves in the past 6-12 months. I keep my profile open to
-      discover unique, high-impact technical challenges that match my
-      expertise.`),
+    answer: oneLine(`No. I am stable in my current role, with no external interviews or internal
+      moves in the past 6-12 months. My profile stays open for unique, high-impact technical
+      challenges that match my expertise.`),
     question: 'Has Ricky interviewed or changed teams recently?',
   },
   {
-    answer: oneLine(`I would not leave lightly - 20+ years at Experian is the
-      proof. The search is additive: a role with more design leverage, a wider
-      blast radius for architecture decisions, or an org further along the
-      AI-native / spec-driven path I already leads - not an escape from a bad
-      fit. The horizon sketched on the Stories page, stated plainly.`),
+    answer: oneLine(`I would not leave lightly - 20+ years at Experian is the proof. The search is
+      additive: a role with more design leverage, a wider blast radius for architecture decisions,
+      or an org further along the AI-native, spec-driven path I already lead. The Stories page
+      sketches that horizon in more detail.`),
     question: 'Why would Ricky leave his current role?',
   },
   {
-    answer: oneLine(`Listen first, ship second. I would start by understanding
-      the existing architecture, observability, and team rituals - then
-      identify the highest-leverage bottleneck (latency, throughput, or
-      reliability) and deliver a measurable fix within the first month. The
-      second month scales that pattern; the third month drives team-wide
-      adoption. Immediate value comes from fixing the biggest pain point, not
-      from re-architecting everything on day one. The cadence introduced on
-      the Home page, operationalized - and closing the loop on this six-part
-      story.`),
+    answer: oneLine(`Listen first, ship second. I would start by learning the existing architecture,
+      observability, and team rituals, then find the highest-leverage bottleneck (latency,
+      throughput, or reliability) and deliver a measurable fix within the first month. The second
+      month scales that pattern; the third month drives team-wide adoption. Day one is for the
+      biggest pain point; the wider re-architecture follows the evidence.`),
     question: 'What would Ricky focus on in his first 90 days at a new company?',
   },
 ];
@@ -846,9 +805,8 @@ export const header = ({ siteConfig }: HeaderProps) => {
 export const schema: SchemaType = 'ProfilePage';
 
 export const layout: LayoutProps = {
-  description: oneLine(`A Principal Engineer resume for Ricky Huang: cloud
-    systems, backend architecture, scalable platform design, durability, and
-    end-to-end ownership.`),
+  description: oneLine(`Ricky Huang's principal engineer resume: 30+ years of shipped systems, from
+    billion-email scale to today's AWS platforms. Scan the record, then say hello.`),
   faq: { items: faqItems, slug: 'resume' },
   keywords: [
     'principal engineer resume',
@@ -881,7 +839,7 @@ export const layout: LayoutProps = {
   ],
   */
   schema,
-  title: 'Principal Engineer Resume - Cloud & Distributed Systems',
+  title: 'Principal Engineer Resume - 30+ Years, Proven at Scale',
 };
 
 export const leadership = {
@@ -908,30 +866,29 @@ export const leadership = {
 export const preamble = {
   content: (
     <>
-      This is the strategic appendix - the resume, distilled to scannable form, mirroring the themes
-      of the five chapters that precede it. Principal Engineer architecting, building, and scaling
-      production systems across cloud, distributed, and event-driven environments. I define
-      technical direction, design end-to-end architectures, and deliver systems that are reliable,
-      observable, and built to last - the same structural instinct that opens the&nbsp;
+      Most resumes sound the same by the second page. This one is built to be scanned. Principal
+      Engineer architecting, building, and scaling production systems across cloud, distributed, and
+      event-driven environments. I define technical direction, design end-to-end architectures, and
+      deliver systems that are reliable, observable, and built to last - the track record the&nbsp;
       <Link href="/" title="Home">
         Home
       </Link>
-      &nbsp;page, pressure-tested in the&nbsp;
+      &nbsp;page introduces, the&nbsp;
       <Link href="/portfolio" title="Portfolio">
         Portfolio
       </Link>
-      &nbsp;body of work, codified on&nbsp;
+      &nbsp;body of work proves, the&nbsp;
       <Link href="/about" title="About">
         About
       </Link>
-      , and pointed forward from&nbsp;
+      &nbsp;page explains, and the&nbsp;
       <Link href="/stories" title="Stories">
         Stories
       </Link>
-      . Equally comfortable writing code, designing APIs, reviewing architectures, or debugging
-      complex failures in production. Known for clear technical judgment, deep hands-on expertise,
-      and the ability to turn ambiguous problems into well-engineered solutions. Every metric below
-      is the dollar and uptime shape of the themes running through the whole site.
+      &nbsp;page points forward. Comfortable writing code, designing APIs, reviewing architectures,
+      or debugging complex failures in production. Known for clear technical judgment, deep hands-on
+      expertise, and a record of turning ambiguous problems into well-engineered solutions. Every
+      metric below is measured - in dollars or in uptime.
     </>
   ),
   heading: {
@@ -1002,29 +959,16 @@ export { storyMap } from '@site/src/data/stories';
 export const strengths = {
   children: (
     <ul>
+      <li>Architecture & system design for distributed, cloud-native platforms</li>
+      <li>Hands-on engineering across Python, Go, C#, TypeScript, and Node.js</li>
+      <li>AWS expertise: Fargate, Lambda, DynamoDB, Kinesis, EventBridge, SQS/SNS</li>
       <li>
-        Architecture & system design for distributed, cloud-native platforms - structural discipline
-        carried from the origin story
+        Technical ownership: standards, code quality, observability, reliability - proven across
+        five years of zero defects
       </li>
+      <li>Cross-functional leadership with clear technical direction</li>
       <li>
-        Hands-on engineering across Python, Go, C#, TypeScript, and Node.js - breadth that makes the
-        depth useful
-      </li>
-      <li>
-        AWS expertise: Fargate, Lambda, DynamoDB, Kinesis, EventBridge, SQS/SNS - the stack behind
-        the Portfolio body of work
-      </li>
-      <li>
-        Technical ownership: standards, code quality, observability, reliability - the durability
-        bar proven across five years of zero defects
-      </li>
-      <li>
-        Cross-functional leadership with clear technical direction - the listen-first, ship-second
-        cadence
-      </li>
-      <li>
-        Execution under pressure; trusted to deliver critical systems - a service crashing every 2-4
-        hours, stabilized within a month
+        Execution under pressure: a service crashing every 2-4 hours, stabilized within a month
       </li>
     </ul>
   ),

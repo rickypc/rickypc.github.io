@@ -6,6 +6,7 @@
 import type { Options, ThemeConfig } from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
 import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
+import remarkSmartSpace from '#root/src/plugins/remark-smart-space';
 import * as sitemap from '#root/src/plugins/sitemap';
 
 const production = process.env.NODE_ENV === 'production';
@@ -44,7 +45,7 @@ const config: Config = {
       'classic',
       {
         blog: false,
-        docs: {},
+        docs: { remarkPlugins: [remarkSmartSpace] },
         gtag: { trackingID: ['G-5G7P214N03', 'G-657RY80FJE', 'G-JYD543XZTH'] },
         sitemap,
         theme: { customCss: require.resolve('#root/src/css/custom.css') },

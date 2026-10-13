@@ -23,11 +23,11 @@
  *   else, it preserves stock JSX deletion behavior.
  */
 
+type JsxTextNode = UnknownNode & TextNode;
+
 export type TextNode = { value: string };
 
 type UnknownNode = Record<string, unknown>;
-
-type JsxTextNode = UnknownNode & TextNode;
 
 const INLINE_TAGS = new Set([
   'a',

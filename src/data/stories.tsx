@@ -94,38 +94,41 @@ export const faqItems: FaqItems[] = [
 export const intro: IntroProps = {
   description: (
     <>
-      Anyone can write their own praise. References are harder to fake.&nbsp;
+      Anyone can write their own praise. References are harder to fake.
       {humanizeYears(total, 'decades')} of engineering leaves two kinds of proof: systems that keep
       running, and colleagues whose trust keeps compounding. The four testimonials below are the
       second kind - each one named, linked, and tied to work you can check (independent work
       breadth, CheetahMail scale, rescue work, depth across stacks). The person those peers describe
       now maintains a mission-critical service with 5+ years of zero production defects, received a
       Platinum Aspire Award (top 1% performance) and roughly 20 EMF Hero and Spot Awards since, and
-      was first in his company to set up&nbsp;
-      <Link href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/#what-is-spec-driven-development">
+      was first in his company to set up
+      <Link
+        href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/#what-is-spec-driven-development"
+        title="Spec-Driven Development"
+      >
         spec-driven development
       </Link>
-      . If the themes running through&nbsp;
+      . If the themes running through
       <Link href="/" title="Home">
         Home
       </Link>
-      ,&nbsp;
+      ,
       <Link href="/timeline" title="Timeline">
         Timeline
       </Link>
-      ,&nbsp;
+      ,
       <Link href="/portfolio" title="Portfolio">
         Portfolio
       </Link>
-      , and&nbsp;
+      , and
       <Link href="/about" title="About">
         About
       </Link>
-      &nbsp;describe the builder you need, the next step is a conversation. The&nbsp;
+      describe the builder you need, the next step is a conversation. The
       <Link href="/resume" title="Resume">
         Resume
       </Link>
-      &nbsp;page is the scannable record that closes the loop.
+      page is the scannable record that closes the loop.
     </>
   ),
   title: 'Stories',

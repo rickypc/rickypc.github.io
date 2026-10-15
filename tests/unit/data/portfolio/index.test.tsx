@@ -50,8 +50,9 @@ describe('portfolio.index', () => {
     expect(typeof first.title).toBe('string');
     expect(first.title.length).toBeGreaterThan(0);
 
-    expect(typeof first.description).toBe('string');
-    expect(first.description.length).toBeGreaterThan(0);
+    const firstDescription = textContent(first.description);
+    expect(typeof firstDescription).toBe('string');
+    expect(firstDescription.length).toBeGreaterThan(0);
 
     expect(typeof first.prefix).toBe('string');
     expect(first.prefix.length).toBeGreaterThan(0);
@@ -97,7 +98,7 @@ describe('portfolio.index', () => {
     expect(typeof intro).toBe('object');
 
     expect(typeof intro.description).toBe('object');
-    expect((intro.description as any).props.children).toHaveLength(7);
+    expect((intro.description as any).props.children).toHaveLength(9);
 
     expect(intro.title).toBe('Portfolio');
   });

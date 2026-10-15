@@ -6,8 +6,8 @@
 import type { Options, ThemeConfig } from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
 import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
-import remarkSmartSpace from '#root/src/plugins/remark-smart-space';
 import * as sitemap from '#root/src/plugins/sitemap';
+import { remarkSmartSpace } from '#root/src/plugins/smart-space';
 
 const production = process.env.NODE_ENV === 'production';
 
@@ -15,7 +15,7 @@ const config: Config = {
   baseUrl: '/',
   deploymentBranch: 'gh-pages',
   favicon: 'img/favicon.ico',
-  future: { faster: true, v4: true },
+  future: { faster: { swcJsLoader: false }, v4: true },
   /*
   headTags: [
     { attributes: { href: 'https://counterapi.com', rel: 'preconnect' }, tagName: 'link' },

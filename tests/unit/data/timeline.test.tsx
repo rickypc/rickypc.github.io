@@ -45,7 +45,7 @@ describe('data.timeline.intro', () => {
     expect(typeof intro).toBe('object');
 
     expect(typeof intro.description).toBe('object');
-    expect((intro.description as any).props.children).toHaveLength(7);
+    expect((intro.description as any).props.children).toHaveLength(15);
 
     expect(intro.title).toBe('Timeline');
   });
@@ -116,8 +116,9 @@ describe('data.timeline.timelines', () => {
       }
 
       test('description non-empty string', () => {
-        expect(item.description).toEqual(expect.any(String));
-        expect(item.description.length).toBeGreaterThan(0);
+        const itemDescription = textContent(item.description);
+        expect(itemDescription).toEqual(expect.any(String));
+        expect(itemDescription.length).toBeGreaterThan(0);
       });
 
       test('title children and href', () => {

@@ -149,20 +149,20 @@ export const hats = [
       content: (
         <>
           <p>
-            My&nbsp;
+            My
             <Link href="/timeline" title="track record">
               track record
             </Link>
-            &nbsp;is stepping into teams where delivery is stalled, ownership is unclear, or the
-            system no longer fits the business. Within the first weeks I map the bottleneck -
-            usually a mix of technical debt, missing standards, and unclear decision rights - and
-            put one set of drawings on the wall: a single technical vision, named owners, and a
-            quality bar the team can self-enforce. The pattern is consistent: ambiguity shrinks,
-            decisions get easier, and&nbsp;
+            is stepping into teams where delivery is stalled, ownership is unclear, or the system no
+            longer fits the business. Within the first weeks I map the bottleneck - usually a mix of
+            technical debt, missing standards, and unclear decision rights - and put one set of
+            drawings on the wall: a single technical vision, named owners, and a quality bar the
+            team can self-enforce. The pattern is consistent: ambiguity shrinks, decisions get
+            easier, and
             <Link href="/about" title="people-first leadership">
               people-first leadership
             </Link>
-            &nbsp;becomes the bridge between intent and shipped work.
+            becomes the bridge between intent and shipped work.
           </p>
           <p>
             I&#39;m known for stepping into difficult situations - unclear requirements, legacy
@@ -170,11 +170,11 @@ export const hats = [
             a path forward. I mentor engineers at every level, helping them grow their judgment,
             technical confidence, and ability to deliver under pressure. Whether the job is
             long-term platform strategy or unblocking a mid-release team, my style stays steady and
-            pragmatic, and the&nbsp;
+            pragmatic, and the
             <Link href="/resume" title="Resume">
               Resume
             </Link>
-            &nbsp;page shows the results, with specifics.
+            page shows the results, with specifics.
           </p>
         </>
       ),
@@ -215,19 +215,21 @@ export const hats = [
       content: (
         <>
           <p>
-            The&nbsp;
+            The
             <Link href="/resume" title="breadth">
               breadth
             </Link>
-            &nbsp;that matters here is depth you can audit: I hold a React render boundary, a Go
-            event handler, and a DynamoDB access pattern in the same design loop, then ship the fix
-            across every layer without bouncing between owners. Because I see both sides of the
-            call, service boundaries come out tighter. The result is&nbsp;
+            that matters here is depth you can audit: I hold a React render boundary, a Go event
+            handler, and a DynamoDB access pattern in the same design loop, then ship the fix across
+            every layer without bouncing between owners. Because I see both sides of the call,
+            service boundaries come out tighter. The result is
             <Link href="/portfolio" title="fewer integration surprises">
               fewer integration surprises
             </Link>
-            &nbsp;- I write the contracts I live with - and faster decisions when a production issue
-            moves across layers and providers at the same time.
+            {/* Keep leading whitespace to prevent JSX from stripping it */}
+            <span> - I write the contracts I live with -</span>
+            and faster decisions when a production issue moves across layers and providers at the
+            same time.
           </p>
           <p>
             The instinct started with an architecture degree, earned before I ever wrote a service:
@@ -241,11 +243,11 @@ export const hats = [
             production issue, I keep a deep understanding of how each layer affects the others. This
             whole-stack view helps teams ship faster and keep complexity down. It also avoids the
             hidden costs of systems built in isolation - costs you can see measured, in dollars, on
-            the&nbsp;
+            the
             <Link href="/resume" title="Resume">
               Resume
             </Link>
-            &nbsp;page.
+            page.
           </p>
         </>
       ),
@@ -266,9 +268,10 @@ export const hats = [
         <Link href="/about" title="engineering depth, creative thinking, and business strategy">
           engineering depth, creative thinking, and business strategy
         </Link>
+        <span> to turn ideas into well-tested solutions. </span>
         <span>
-          &nbsp;to turn ideas into well-tested solutions. I work at the intersection of innovation
-          and execution, using modern tools to accelerate exploration and sharpen product direction.
+          I work at the intersection of innovation and execution, using modern tools to accelerate
+          exploration and sharpen product direction.
         </span>
       </>
     ),
@@ -277,19 +280,19 @@ export const hats = [
         <>
           <p>
             The concrete version: when product brings a half-formed idea, I&#39;m usually the one
-            who&nbsp;
+            who
             <Link href="/portfolio" title="prototypes the first cut">
               prototypes the first cut
             </Link>
             , runs it past real data or users, and tells the team what&#39;s essential and
             what&#39;s decoration. Spec-driven development loops and LLM-assisted exploration let me
             cover five design paths in the time a team used to spend debating one, so we avoid the
-            trap of shipping something technically impressive that nobody asked for. What&nbsp;
+            trap of shipping something technically impressive that nobody asked for. What
             <Link href="/resume" title="makes it stick">
               makes it stick
             </Link>
-            &nbsp;is the rigor: the AI moves fast, but the validation loop is what turns a guess
-            into a decision.
+            is the rigor: the AI moves fast, but the validation loop is what turns a guess into a
+            decision.
           </p>
           <p>
             I was the first engineer at my company to set up spec-driven development; that loop
@@ -298,12 +301,11 @@ export const hats = [
             prototyping new features, or weighing architectural tradeoffs, I challenge assumptions,
             simplify complexity, and uncover missed opportunities. The approach stays creative yet
             grounded, balancing innovation with execution, and the result is solutions that are
-            technically strong and strategically aligned with business goals - the alignment
-            the&nbsp;
+            technically strong and strategically aligned with business goals - the alignment the
             <Link href="/about" title="About">
               About
             </Link>
-            &nbsp;page codifies as an operating philosophy rather than a happy accident.
+            page codifies as an operating philosophy rather than a happy accident.
           </p>
         </>
       ),
@@ -320,11 +322,7 @@ export const hats = [
     ),
     description: (
       <>
-        <span>
-          With&nbsp;
-          {humanizeYears(total, 'over')}
-          &nbsp;of&nbsp;
-        </span>
+        <span>With {humanizeYears(total, 'over')} of </span>
         <Link href="/timeline" title="experience and a deep foundation">
           experience and a deep foundation
         </Link>
@@ -341,32 +339,31 @@ export const hats = [
       content: (
         <>
           <p>
-            The waves I&#39;ve shipped through -&nbsp;
+            The waves I&#39;ve shipped through -
             <Link href="/timeline" title={humanizeYears(total, 'decades')}>
               {humanizeYears(total, 'decades')}
             </Link>
-            &nbsp;of them - aren&#39;t nostalgia. They&#39;re the reason I stop teams from adopting
-            a framework just because it&#39;s popular, and the reason I&#39;ll choose to ship the
+            of them - aren&#39;t nostalgia. They&#39;re the reason I stop teams from adopting a
+            framework just because it&#39;s popular, and the reason I&#39;ll choose to ship the
             boring choice that&#39;s going to run five years from now. I&#39;ve seen the patterns
             that aged well (small boundaries, observable behavior, replaceable parts) and the ones
             that didn&#39;t - and that pattern memory is the unfair advantage I bring to
             architecture calls.
           </p>
           <p>
-            External dependencies stay a last resort for mission-critical systems - a trade
-            the&nbsp;
+            External dependencies stay a last resort for mission-critical systems - a trade the
             <Link href="/stories" title="Stories">
               Stories
             </Link>
-            &nbsp;page tells behind that instinct. My work focuses on building resilient platforms,
+            page tells behind that instinct. My work focuses on building resilient platforms,
             improving architectural foundations, and helping organizations modernize without losing
             stability. Whether we&#39;re evolving legacy systems, introducing new patterns, or
-            shaping long-term strategy, I bring a&nbsp;
+            shaping long-term strategy, I bring a
             <Link href="/stories" title="forward-looking mindset">
               forward-looking mindset
             </Link>
-            &nbsp;grounded in practical experience, so teams adopt new technology thoughtfully
-            instead of reactively and stay ahead of change while keeping reliability and trust.
+            grounded in practical experience, so teams adopt new technology thoughtfully instead of
+            reactively and stay ahead of change while keeping reliability and trust.
           </p>
         </>
       ),
@@ -405,37 +402,39 @@ export const intro: IntroProps = {
       Most profiles can&#39;t prove they can. I started in architecture - the kind with load-bearing
       walls - and never stopped building that way. Today I design and deliver cloud-native,
       distributed platforms that power high-volume, business-critical products, and I bring clarity,
-      technical depth, and strong architectural judgment to complex problems. The pattern
-      across&nbsp;
+      technical depth, and strong architectural judgment to complex problems. The pattern across
       {humanizeYears(total, 'decades')} of hands-on work taught me one lesson: the same person who
       designs the system should also build it and run it in production. The measurable result is a
       mission-critical service I maintain - a 50 ms p99, 5+ years of zero production defects,
       running for roughly 5% of what a licensed replacement would cost per year. I lead a small
-      delivery team as tech lead and was the first in my company to set up&nbsp;
-      <Link href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/#what-is-spec-driven-development">
+      delivery team as tech lead and was the first in my company to set up
+      <Link
+        href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/#what-is-spec-driven-development"
+        title="Spec-Driven Development"
+      >
         spec-driven development
       </Link>
-      . This page is the front door; the same themes carry through the&nbsp;
+      . This page is the front door; the same themes carry through the
       <Link href="/about" title="About">
         About
       </Link>
-      ,&nbsp;
+      ,
       <Link href="/portfolio" title="Portfolio">
         Portfolio
       </Link>
-      ,&nbsp;
+      ,
       <Link href="/timeline" title="Timeline">
         Timeline
       </Link>
-      ,&nbsp;
+      ,
       <Link href="/stories" title="Stories">
         Stories
       </Link>
-      , and&nbsp;
+      , and
       <Link href="/resume" title="Resume">
         Resume
       </Link>
-      &nbsp;pages
+      pages
     </>
   ),
   title: 'Engineering Leader & Full-Stack Architect Building Scalable, Resilient Systems',

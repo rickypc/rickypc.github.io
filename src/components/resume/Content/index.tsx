@@ -138,9 +138,8 @@ const Experience = memo(function Experience({ summary }: ExperienceProps) {
           </Link>
         </em>
       </strong>
-      &nbsp;-&nbsp;
-      {summary.content}
-      &nbsp;
+      {/* Keep leading whitespace to prevent JSX from stripping it */}
+      <span> - {summary.content}</span>
       <em className={styles.tags}>({tags})</em>
     </article>
   );

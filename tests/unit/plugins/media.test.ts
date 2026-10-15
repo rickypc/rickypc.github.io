@@ -1020,9 +1020,10 @@ describe(`plugins.${name}.stale`, () => {
 });
 
 describe(`plugins.${name}.plugin API (default export)`, () => {
-  test('configureWebpack returns expected shape and includes Fontaine transform', () => {
+  test('configureWebpack rewires the Docusaurus JS rule loader to babel.config.ts', () => {
     const plugin = Plugin.default({ outDir: 'out' });
-    const cw = plugin.configureWebpack({}, false);
+    const tsRule = { test: /\.[jt]sx?$/i, use: [{ loader: 'builtin:swc-loader', options: {} }] };
+    const cw = plugin.configureWebpack({ module: { rules: [tsRule] } }, false);
     expect(cw.devServer.static[0].publicPath).toBe('/audio');
     expect(cw.devServer.static[1].publicPath).toBe('/pdf');
     expect(cw.plugins).toEqual(
@@ -1033,6 +1034,26 @@ describe(`plugins.${name}.plugin API (default export)`, () => {
       ]),
     );
     expect(plugin.name).toBe(name);
+    const loader = {
+      loader: require.resolve('babel-loader'),
+      options: {
+        babelrc: false,
+        caller: { name: 'client' },
+        configFile: require.resolve('#root/babel.config.ts'),
+      },
+    };
+    expect(tsRule.use).toEqual([loader]);
+    const serverRule = {
+      test: /\.[jt]sx?$/i,
+      use: [{ loader: 'builtin:swc-loader', options: {} }],
+    };
+    plugin.configureWebpack({ module: { rules: [serverRule] } }, true);
+    expect(serverRule.use).toEqual([
+      { ...loader, options: { ...loader.options, caller: { name: 'server' } } },
+    ]);
+    expect(() => plugin.configureWebpack({}, false)).toThrow(
+      /Unable to find the Docusaurus JS rule/,
+    );
   });
 
   test('extendCli action: explicit args resolve config path and invoke postBuild side-effects', async () => {

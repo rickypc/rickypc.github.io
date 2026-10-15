@@ -98,8 +98,9 @@ describe('data.about.paragraphs', () => {
     expect(Array.isArray(paragraphs)).toBeTruthy();
     expect(paragraphs).toHaveLength(2);
     paragraphs.forEach((p) => {
-      expect(typeof p).toBe('string');
-      expect(p.length).toBeGreaterThan(0);
+      const paragraph = textContent(p);
+      expect(typeof paragraph).toBe('string');
+      expect(paragraph.length).toBeGreaterThan(0);
     });
   });
 });

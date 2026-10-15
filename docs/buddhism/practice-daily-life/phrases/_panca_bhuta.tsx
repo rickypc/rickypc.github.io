@@ -19,13 +19,13 @@ export default {
         <span style={{ color: '#ffd814' }}>लं</span>
         <span>हो शुद्धेशुद्धे । </span>
         <span style={{ color: 'blue' }}>ए</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'green' }}>यं</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'red' }}>रं</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'gray' }}>बं</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: '#ffd814' }}>लं</span>
         <span> शुद्धे शोधनये स्वाहा</span>
       </>
@@ -47,13 +47,13 @@ export default {
         <span style={{ color: '#ffd814' }}>laṃ</span>
         <span> ho śuddhe śuddhe । </span>
         <span style={{ color: 'blue' }}>e</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'green' }}>yaṃ</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'red' }}>raṃ</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'gray' }}>vaṃ</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: '#ffd814' }}>laṃ</span>
         <span> śuddhe śodhanaye svāhā</span>
       </>

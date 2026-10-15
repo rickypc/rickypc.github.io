@@ -87,10 +87,7 @@ const Hat = memo(function Hat({
   return (
     <article aria-label={label} className={styles.hat}>
       <Heading as="h2">
-        <span className={styles.reader}>
-          {label}
-          &nbsp;
-        </span>
+        <span className={styles.reader}>{label}</span>
         {children}
       </Heading>
       <p>{description}</p>

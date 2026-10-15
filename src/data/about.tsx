@@ -115,15 +115,15 @@ export const intro: IntroProps = {
       axis and a task axis: a Transformer on people, a Transactor on tasks. That position is an
       operating philosophy built in four places - the structural discipline from architecture, the
       telemetry rigor from AirIQ, the planet-scale ceiling from CheetahMail, and the durability bar
-      from the mission-critical Experian service. Check the systems behind it on the&nbsp;
+      from the mission-critical Experian service. Check the systems behind it on the
       <Link href="/portfolio" title="Portfolio">
         Portfolio
       </Link>
-      &nbsp;page, then trace the years that built it on the&nbsp;
+      page, then trace the years that built it on the
       <Link href="/timeline" title="Timeline">
         Timeline
       </Link>
-      &nbsp;page.
+      page.
     </>
   ),
   title: 'About Ricky Huang',
@@ -167,9 +167,15 @@ export const paragraphs = [
   oneLine(`The two graphs on this page show one profile from two angles. The people graph plots
     adaptability against influence; the task graph plots thought against delivery. My position lands
     high on all four axes - I listen closely, adjust fast, think carefully, and finish what I start.`),
-  oneLine(`That profile holds up under pressure. I read the room, name the real problem, and line up
-    the people who can solve it, then keep the work moving until it ships. Modern tools help me
-    think and iterate faster, and the Stories page shows the same traits in other people's words.`),
+  <>
+    That profile holds up under pressure. I read the room, name the real problem, and line up the
+    people who can solve it, then keep the work moving until it ships. Modern tools help me think
+    and iterate faster, and the
+    <Link href="/stories" title="Stories">
+      Stories
+    </Link>
+    page shows the same traits in other people's words.
+  </>,
 ];
 
 export const quadrants = {

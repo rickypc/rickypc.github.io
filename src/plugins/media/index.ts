@@ -85,6 +85,8 @@ type Track = {
   track: number;
 };
 
+type WebpackRule = { test?: unknown; use?: unknown[] };
+
 const algorithm = 'sha256';
 // 24 * 60 * 60 * 1000.
 export const MS_PER_DAY = 86400000;
@@ -714,6 +716,8 @@ export async function postBuild({ outDir, siteConfig, siteDir }: LoadContext): P
 
 /**
  * Main entry for custom Docusaurus plugin.
+ * The configureWebpack lifecycle rewires the stock Docusaurus JS rule to babel.config.ts before
+ * returning its webpack fragment, so JSX text keeps HTML whitespace semantics.
  * @param {object} context - Docusaurus build context (e.g. webpack, CLI).
  * @returns {{
  *   configureWebpack: (object, boolean) => void,
@@ -724,7 +728,27 @@ export async function postBuild({ outDir, siteConfig, siteDir }: LoadContext): P
  */
 export default function plugin(context: LoadContext): Plugin {
   return {
-    configureWebpack(_: any, isServer: boolean) {
+    configureWebpack(config, isServer) {
+      // Replaces the stock Docusaurus JS rule loader so JSX text in .ts/.tsx sources keeps
+      // HTML whitespace semantics through babel.config.ts, wired to babelSmartSpace from
+      // src/plugins/smart-space. Docusaurus only consumes webpack.jsLoader from siteConfig,
+      // never from plugin fragments, so the rule must be rewired in place on the base config
+      // passed to this lifecycle.
+      const rules = config.module?.rules as WebpackRule[] | undefined;
+      const tsRule = rules?.find((rule) => String(rule?.test) === String(/\.[jt]sx?$/i));
+      if (!tsRule) {
+        throw new Error('Unable to find the Docusaurus JS rule to attach babel.config.ts.');
+      }
+      tsRule.use = [
+        {
+          loader: require.resolve('babel-loader'),
+          options: {
+            babelrc: false,
+            caller: { name: isServer ? 'server' : 'client' },
+            configFile: require.resolve('#root/babel.config.ts'),
+          },
+        },
+      ];
       return {
         devServer: {
           compress: true,

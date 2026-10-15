@@ -8,6 +8,7 @@ import type { LayoutProps } from '@site/src/components/common/Layout';
 import Link from '@site/src/components/common/Link';
 import type { IntroProps } from '@site/src/components/common/Preamble';
 import { type FaqItems, oneLine, type SchemaType } from '@site/src/data/common';
+import type { JSX } from 'react';
 
 export type TimelineProps = {
   affiliation: {
@@ -16,7 +17,7 @@ export type TimelineProps = {
     translate?: 'no' | 'yes';
   };
   className?: string;
-  description: string;
+  description: JSX.Element | string;
   picture: PictureInfo;
   prefix: string;
   title: {
@@ -84,24 +85,38 @@ export const intro: IntroProps = {
     <>
       You read a career history to check three things: tenure, stability, and growth. Most make you
       dig. These milestones give you all three in order, earliest roots first. The arc starts with
-      an engineering background at Petra Christian University, where I learned to plan, design, and
-      construct physical structures. That discipline carried into software as an independent
-      professional in 1995 - through RazorGator, AirIQ, Experian CheetahMail, and into Experian
-      Consumer Services, where the work continues today. Each step widened the scope of what I could
-      build, and the opening promises live on the&nbsp;
+      an engineering background at
+      <Link href="https://petra.ac.id/?lang=en" title="Petra Christian University">
+        Petra Christian University
+      </Link>
+      , where I learned to plan, design, and construct physical structures. That discipline carried
+      into software as an independent professional in 1995 - through
+      <Link href="https://www.tickpick.com" title="RazorGator">
+        RazorGator
+      </Link>
+      ,
+      <Link href="https://www.airiq.com" title="AirIQ">
+        AirIQ
+      </Link>
+      , Experian CheetahMail, and into
+      <Link href="https://www.experian.com" title="Experian Consumer Services">
+        Experian Consumer Services
+      </Link>
+      , where the work continues today. Each step widened the scope of what I could build, and the
+      opening promises live on the
       <Link href="/" title="Home">
         Home
       </Link>
-      &nbsp;page, the core projects on&nbsp;
+      page, the core projects on
       <Link href="/portfolio" title="Portfolio">
         Portfolio
       </Link>
       . Read both to see the capabilities this arc built - the telemetry discipline from AirIQ, the
-      billion-message scale of CheetahMail, and the cost-design discipline itemized on the&nbsp;
+      billion-message scale of CheetahMail, and the cost-design discipline itemized on the
       <Link href="/resume" title="Resume">
         Resume
       </Link>
-      &nbsp;page as 5% of a licensed replacement.
+      page as 5% of a licensed replacement.
     </>
   ),
   title: 'Timeline',
@@ -156,13 +171,34 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.experian.com/corporate/experian-interactive',
       translate: 'no',
     },
-    description: oneLine(`The role I hold today. I accepted the Senior Software Engineer role at
-      Experian Consumer Services to sharpen technical leadership and expand entrepreneurial range,
-      and the recognition compounded: multiple Experian Platinum Aspire, EMF Hero - Above and
-      Beyond, and recurring Experian Spot - Excellence in Action awards. Behind the recognition sits
-      the work - the mission-critical service at 50 ms p99, 5+ years of zero defects, running for
-      roughly 5% of a licensed replacement's cost. The Resume itemizes those systems as proof; the
-      Portfolio shows the wider platform that surrounds them.`),
+    description: (
+      <>
+        The role I hold today. I accepted the
+        <Link
+          href="https://en.wikipedia.org/wiki/Software_engineering"
+          title="Senior Software Engineer"
+        >
+          Senior Software Engineer
+        </Link>
+        role at
+        <Link href="https://www.experian.com" title="Experian Consumer Services">
+          Experian Consumer Services
+        </Link>
+        to sharpen technical leadership and expand entrepreneurial range, and the recognition
+        compounded: multiple Experian Platinum Aspire, EMF Hero - Above and Beyond, and recurring
+        Experian Spot - Excellence in Action awards. Behind the recognition sits the work - the
+        mission-critical service at 50 ms p99, 5+ years of zero defects, running for roughly 5% of a
+        licensed replacement's cost. The
+        <Link href="/resume" title="Resume">
+          Resume
+        </Link>
+        itemizes those systems as proof; the
+        <Link href="/portfolio" title="Portfolio">
+          Portfolio
+        </Link>
+        shows the wider platform that surrounds them.
+      </>
+    ),
     picture: {
       avif: require('@site/src/pages/timeline/img/experian.avif').default,
       fallback: require('@site/src/pages/timeline/img/experian.jpg'),
@@ -181,13 +217,31 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.stanford.edu',
       translate: 'no',
     },
-    description: oneLine(`A deliberate pause for theory, set between two decades of practice. I
-      completed advanced computer science coursework from Stanford University: Automata, Machine
-      Learning, and Mining Massive Datasets. The work strengthened theoretical foundations in
-      computation, gave practical experience with modern ML techniques, and built proficiency in
-      large-scale data processing. I earned a Certificate of Completion with Distinction in Mining
-      Massive Datasets for exceptional performance. The same drive later made me the first in my
-      company to set up spec-driven development - learn the rigor, then ship against it.`),
+    description: (
+      <>
+        A deliberate pause for theory, set between two decades of practice. I completed advanced
+        computer science coursework from
+        <Link href="https://www.stanford.edu" title="Stanford University">
+          Stanford University
+        </Link>
+        : Automata,
+        <Link href="https://en.wikipedia.org/wiki/Machine_learning" title="Machine Learning">
+          Machine Learning
+        </Link>
+        , and Mining Massive Datasets. The work strengthened theoretical foundations in computation,
+        gave practical experience with modern ML techniques, and built proficiency in large-scale
+        data processing. I earned a Certificate of Completion with Distinction in Mining Massive
+        Datasets for exceptional performance. The same drive later made me the first in my company
+        to set up
+        <Link
+          href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/#what-is-spec-driven-development"
+          title="Spec-Driven Development"
+        >
+          spec-driven development
+        </Link>
+        <span> - learn the rigor, then ship against it.</span>
+      </>
+    ),
     picture: {
       avif: require('@site/src/pages/timeline/img/stanford.avif').default,
       fallback: require('@site/src/pages/timeline/img/stanford.jpg'),
@@ -206,12 +260,27 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.experian.com/corporate/experian-interactive',
       translate: 'no',
     },
-    description: oneLine(`The pivot into Experian. I accepted the Automation Engineer position at
-      Experian Consumer Services to deepen technical versatility and broaden engineering expertise,
-      then was promoted to Senior Automation Engineer, continuing to drive innovation and efficiency
-      across automated systems. Here the telemetry discipline from tracking GPS signals at AirIQ met
-      the throughput discipline of a billion emails a day at CheetahMail. That combination produced
-      the cost-design instinct threaded through every page of this site.`),
+    description: (
+      <>
+        The pivot into
+        <Link href="https://www.experian.com" title="Experian">
+          Experian
+        </Link>
+        . I accepted the Automation Engineer position at Experian Consumer Services to deepen
+        technical versatility and broaden engineering expertise, then was promoted to Senior
+        Automation Engineer, continuing to drive innovation and efficiency across automated systems.
+        Here the telemetry discipline from tracking
+        <Link href="https://en.wikipedia.org/wiki/Global_Positioning_System" title="GPS">
+          GPS
+        </Link>
+        signals at
+        <Link href="https://www.airiq.com" title="AirIQ">
+          AirIQ
+        </Link>
+        met the throughput discipline of a billion emails a day at CheetahMail. That combination
+        produced the cost-design instinct threaded through every page of this site.
+      </>
+    ),
     picture: {
       avif: require('@site/src/pages/timeline/img/experian.avif').default,
       fallback: require('@site/src/pages/timeline/img/experian.jpg'),
@@ -230,13 +299,31 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.fullerton.edu',
       translate: 'no',
     },
-    description: oneLine(`The bridge between two fields. I graduated from California State
-      University, Fullerton with a Master's in Software Engineering, gaining expertise in delivering
-      mission-ready, software-enabled systems that drive productivity, spark innovation, and create
-      competitive advantage. My final project received the Outstanding Graduate Project award for
-      the Master of Science in Software Engineering. This is where the structural-planning
-      discipline from Petra formally became a system-design discipline - the stepping stone to the
-      CheetahMail work that followed. See Portfolio for the systems and Stories for the people who were there.`),
+    description: (
+      <>
+        The bridge between two fields. I graduated from
+        <Link href="https://www.fullerton.edu" title="California State University, Fullerton">
+          California State University, Fullerton
+        </Link>
+        with a Master's in Software Engineering, gaining expertise in delivering mission-ready,
+        software-enabled systems that drive productivity, spark innovation, and create competitive
+        advantage. My final project received the Outstanding Graduate Project award for the Master
+        of Science in Software Engineering. This is where the structural-planning discipline from
+        <Link href="https://petra.ac.id/?lang=en" title="Petra">
+          Petra
+        </Link>
+        formally became a system-design discipline - the stepping stone to the CheetahMail work that
+        followed. See
+        <Link href="/portfolio" title="Portfolio">
+          Portfolio
+        </Link>
+        for the systems and
+        <Link href="/stories" title="Stories">
+          Stories
+        </Link>
+        for the people who were there.
+      </>
+    ),
     picture: {
       avif: require('@site/src/pages/timeline/img/csuf.avif').default,
       fallback: require('@site/src/pages/timeline/img/csuf.jpg'),
@@ -255,13 +342,27 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.experian.com/marketing/',
       translate: 'no',
     },
-    description: oneLine(`The first planet-scale test. I accepted the Senior Software Engineer role
-      at Experian CheetahMail to strengthen engineering depth and grow as a leader, earned the
-      Experian CheetahMail Pinnacle award for engineering excellence, and was later promoted to
-      Software Development Lead, driving team performance and technical excellence. The Pinnacle
-      Award itself was earned for powering email at the scale of a billion messages a day - traffic
-      that taught me how architecture holds at that volume. That scale is still the ceiling I
-      measure new systems against, and the Portfolio page shows it with screenshots.`),
+    description: (
+      <>
+        The first planet-scale test. I accepted the
+        <Link
+          href="https://en.wikipedia.org/wiki/Software_engineering"
+          title="Senior Software Engineer"
+        >
+          Senior Software Engineer
+        </Link>
+        role at Experian CheetahMail to strengthen engineering depth and grow as a leader, earned
+        the Experian CheetahMail Pinnacle award for engineering excellence, and was later promoted
+        to Software Development Lead, driving team performance and technical excellence. The
+        Pinnacle Award itself was earned for powering email at the scale of a billion messages a day
+        <span> - traffic that taught me how architecture holds at that volume.</span>
+        That scale is still the ceiling I measure new systems against, and the
+        <Link href="/portfolio" title="Portfolio">
+          Portfolio
+        </Link>
+        page shows it with screenshots.
+      </>
+    ),
     picture: {
       avif: require('@site/src/pages/timeline/img/cheetahmail.avif').default,
       fallback: require('@site/src/pages/timeline/img/cheetahmail.jpg'),
@@ -280,13 +381,27 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.airiq.com',
       translate: 'no',
     },
-    description: oneLine(`Real-time systems, learned hands-on. I accepted a Software Engineer
-      position at AirIQ, building on the wireless asset management work previously developed under
-      the Aircept name. The role expanded my hands-on experience with GPS tracking systems and
-      real-time data platforms, and planted the roots of the high-volume pipeline discipline I later
-      applied at Experian Consumer Services. The telemetry patterns learned here are the same ones
-      that later took a mission-critical service with frequent production issues to month-long
-      stability within a month. The Resume page details that turnaround.`),
+    description: (
+      <>
+        Real-time systems, learned hands-on. I accepted a Software Engineer position at AirIQ,
+        building on the wireless asset management work previously developed under the Aircept name.
+        The role expanded my hands-on experience with
+        <Link href="https://en.wikipedia.org/wiki/Global_Positioning_System" title="GPS">
+          GPS
+        </Link>
+        tracking systems and real-time data platforms, and planted the roots of the high-volume
+        pipeline discipline I later applied at
+        <Link href="https://www.experian.com" title="Experian Consumer Services">
+          Experian Consumer Services
+        </Link>
+        . The telemetry patterns learned here are the same ones that later took a mission-critical
+        service with frequent production issues to month-long stability within a month. The
+        <Link href="/resume" title="Resume">
+          Resume
+        </Link>
+        page details that turnaround.
+      </>
+    ),
     picture: {
       avif: require('@site/src/pages/timeline/img/airiq.avif').default,
       fallback: require('@site/src/pages/timeline/img/airiq.jpg'),
@@ -305,12 +420,26 @@ export const timelines: TimelineProps[] = [
       href: 'https://www.tickpick.com',
       translate: 'no',
     },
-    description: oneLine(`The earliest full-stack role. I accepted a Web Developer position at
-      RazorGator to strengthen front-end and back-end development skills, deepening my expertise in
-      building dynamic, user-focused web applications within a fast-paced e-commerce environment.
-      This is where the full-stack instinct first clicked: the same person should own the call on
-      both sides. The Yahoo! Tickets integration built here has its own gallery on the Portfolio
-      page.`),
+    description: (
+      <>
+        The earliest full-stack role. I accepted a Web Developer position at
+        <Link href="https://www.tickpick.com" title="RazorGator">
+          RazorGator
+        </Link>
+        to strengthen front-end and back-end development skills, deepening my expertise in building
+        dynamic, user-focused web applications within a fast-paced e-commerce environment. This is
+        where the full-stack instinct first clicked: the same person should own the call on both
+        sides. The
+        <Link href="https://www.yahoo.com" title="Yahoo!">
+          Yahoo!
+        </Link>
+        Tickets integration built here has its own gallery on the
+        <Link href="/portfolio" title="Portfolio">
+          Portfolio
+        </Link>
+        page.
+      </>
+    ),
     picture: {
       avif: require('@site/src/pages/timeline/img/razorgator.avif').default,
       fallback: require('@site/src/pages/timeline/img/razorgator.jpg'),
@@ -329,12 +458,32 @@ export const timelines: TimelineProps[] = [
       href: 'https://petra.ac.id/?lang=en',
       translate: 'no',
     },
-    description: oneLine(`Where the discipline started. I graduated from Petra Christian University
-      with a Bachelor's degree in Architecture, gaining a deep understanding of planning, designing,
-      and constructing physical structures. Those skills later translated into software development,
-      shaping how I approach system design, structure, and user experience. The same
-      planning-before-pouring instinct opens the Home page and compounds, decade by decade, into the
-      Resume's track record.`),
+    description: (
+      <>
+        Where the discipline started. I graduated from
+        <Link href="https://petra.ac.id/?lang=en" title="Petra Christian University">
+          Petra Christian University
+        </Link>
+        with a Bachelor's degree in Architecture, gaining a deep understanding of planning,
+        designing, and constructing physical structures. Those skills later translated into
+        <Link
+          href="https://en.wikipedia.org/wiki/Software_engineering"
+          title="Software Development"
+        >
+          software development
+        </Link>
+        , shaping how I approach system design, structure, and user experience. The same
+        planning-before-pouring instinct opens the
+        <Link href="/" title="Home">
+          Home
+        </Link>
+        page and compounds, decade by decade, into the
+        <Link href="/resume" title="Resume">
+          Resume
+        </Link>
+        's track record.
+      </>
+    ),
     picture: {
       avif: require('@site/src/pages/timeline/img/petra.avif').default,
       fallback: require('@site/src/pages/timeline/img/petra.jpg'),
@@ -349,14 +498,47 @@ export const timelines: TimelineProps[] = [
   },
   {
     affiliation: { children: 'Self Employed', href: '/' },
-    description: oneLine(`The parallel track. Independent work has run underneath every employed
-      chapter since 1995. As an independent professional I have worn many hats - balancing roles
-      with precision, adapting to shifting challenges, and thriving in fast-paced environments. I
-      bring a wealth of insights, hands-on experience, and technical depth to every partnership and
-      employer I collaborate with. The independent work body is its own sub-arc on
-      Portfolio - GigaOm, Rainbow Guitars, Fortini, Exhibit Transport, S&M Bikes, Clipper,
-      AnchorBlue, WheelBuilder, Pacifica - and the partners behind those projects are the voices on
-      the Stories page.`),
+    description: (
+      <>
+        The parallel track. Independent work has run underneath every employed chapter since 1995.
+        As an independent professional I have worn many hats - balancing roles with precision,
+        adapting to shifting challenges, and thriving in fast-paced environments. I bring a wealth
+        of insights, hands-on experience, and technical depth to every partnership and employer I
+        collaborate with. The independent work body is its own sub-arc on
+        <Link href="/portfolio" title="Portfolio">
+          Portfolio
+        </Link>
+        <span> - </span>
+        <Link href="https://gigaom.com" title="GigaOm">
+          GigaOm
+        </Link>
+        ,
+        <Link href="https://www.rainbowguitars.com" title="Rainbow Guitars">
+          Rainbow Guitars
+        </Link>
+        , Fortini, Exhibit Transport,
+        <Link href="https://www.sandmbikes.com" title="S&M Bikes">
+          S&M Bikes
+        </Link>
+        ,
+        <Link href="https://www.clippercorp.com" title="Clipper">
+          Clipper
+        </Link>
+        , AnchorBlue,
+        <Link href="https://wheelbuilder.com" title="WheelBuilder">
+          WheelBuilder
+        </Link>
+        ,
+        <Link href="https://www.pacificaservices.com" title="Pacifica">
+          Pacifica
+        </Link>
+        <span> - and the partners behind those projects are the voices on the </span>
+        <Link href="/stories" title="Stories">
+          Stories
+        </Link>
+        page.
+      </>
+    ),
     // This is smaller size than the one in home.
     picture: {
       avif: require('@site/src/pages/timeline/img/self.avif').default,

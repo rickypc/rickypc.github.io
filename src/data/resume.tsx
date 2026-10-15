@@ -308,7 +308,7 @@ export const certifications = {
       achievements: (
         <ul>
           <li>
-            Mining Massive Datasets -&nbsp;
+            Mining Massive Datasets -
             <strong>
               <em>With Distinction</em>
             </strong>
@@ -869,24 +869,24 @@ export const preamble = {
       Most resumes sound the same by the second page. This one is built to be scanned. Principal
       Engineer architecting, building, and scaling production systems across cloud, distributed, and
       event-driven environments. I define technical direction, design end-to-end architectures, and
-      deliver systems that are reliable, observable, and built to last - the track record the&nbsp;
+      deliver systems that are reliable, observable, and built to last - the track record the
       <Link href="/" title="Home">
         Home
       </Link>
-      &nbsp;page introduces, the&nbsp;
+      page introduces, the
       <Link href="/portfolio" title="Portfolio">
         Portfolio
       </Link>
-      &nbsp;body of work proves, the&nbsp;
+      body of work proves, the
       <Link href="/about" title="About">
         About
       </Link>
-      &nbsp;page explains, and the&nbsp;
+      page explains, and the
       <Link href="/stories" title="Stories">
         Stories
       </Link>
-      &nbsp;page points forward. Comfortable writing code, designing APIs, reviewing architectures,
-      or debugging complex failures in production. Known for clear technical judgment, deep hands-on
+      page points forward. Comfortable writing code, designing APIs, reviewing architectures, or
+      debugging complex failures in production. Known for clear technical judgment, deep hands-on
       expertise, and a record of turning ambiguous problems into well-engineered solutions. Every
       metric below is measured - in dollars or in uptime.
     </>
@@ -907,39 +907,39 @@ export const skills = {
     <ul>
       <li>
         <strong>Cloud & Infrastructure:</strong>
-        &nbsp;AWS Fargate, Lambda, API Gateway, ALB, Route 53, S3, VPC
+        AWS Fargate, Lambda, API Gateway, ALB, Route 53, S3, VPC
       </li>
       <li>
         <strong>Event-Driven Systems:</strong>
-        &nbsp;Kinesis, Firehose, EventBridge, SQS, SNS
+        Kinesis, Firehose, EventBridge, SQS, SNS
       </li>
       <li>
         <strong>Databases:</strong>
-        &nbsp;DynamoDB, MySQL, Oracle, SQL Server
+        DynamoDB, MySQL, Oracle, SQL Server
       </li>
       <li>
         <strong>Languages:</strong>
-        &nbsp;Python, Go (Golang), C#, PHP, TypeScript, Node.js
+        Python, Go (Golang), C#, PHP, TypeScript, Node.js
       </li>
       <li>
         <strong>AI & Modern Tooling:</strong>
-        &nbsp;AWS Bedrock
+        AWS Bedrock
       </li>
       <li>
         <strong>Observability:</strong>
-        &nbsp;Datadog (APM, logs, metrics, dashboards)
+        Datadog (APM, logs, metrics, dashboards)
       </li>
       <li>
         <strong>Architecture:</strong>
-        &nbsp;Distributed systems, microservices, event-driven design, serverless
+        Distributed systems, microservices, event-driven design, serverless
       </li>
       <li>
         <strong>DevOps:</strong>
-        &nbsp;Docker, CI/CD, Git workflows
+        Docker, CI/CD, Git workflows
       </li>
       <li>
         <strong>Front-End:</strong>
-        &nbsp;React, HTML5, CSS
+        React, HTML5, CSS
       </li>
     </ul>
   ),
@@ -960,8 +960,58 @@ export const strengths = {
   children: (
     <ul>
       <li>Architecture & system design for distributed, cloud-native platforms</li>
-      <li>Hands-on engineering across Python, Go, C#, TypeScript, and Node.js</li>
-      <li>AWS expertise: Fargate, Lambda, DynamoDB, Kinesis, EventBridge, SQS/SNS</li>
+      <li>
+        Hands-on engineering across
+        <Link href="https://www.python.org/" title="Python">
+          Python
+        </Link>
+        ,
+        <Link href="https://go.dev/" title="Go">
+          Go
+        </Link>
+        ,
+        <Link href="https://dotnet.microsoft.com/en-us/languages/csharp" title="C#">
+          C#
+        </Link>
+        ,
+        <Link href="https://www.typescriptlang.org" title="TypeScript">
+          TypeScript
+        </Link>
+        , and
+        <Link href="https://nodejs.org/en" title="Node.js">
+          Node.js
+        </Link>
+      </li>
+      <li>
+        AWS expertise:
+        <Link href="https://aws.amazon.com/fargate" title="Fargate">
+          Fargate
+        </Link>
+        ,
+        <Link href="https://aws.amazon.com/lambda" title="Lambda">
+          Lambda
+        </Link>
+        ,
+        <Link href="https://aws.amazon.com/dynamodb" title="DynamoDB">
+          DynamoDB
+        </Link>
+        ,
+        <Link href="https://aws.amazon.com/kinesis" title="Kinesis">
+          Kinesis
+        </Link>
+        ,
+        <Link href="https://aws.amazon.com/eventbridge" title="EventBridge">
+          EventBridge
+        </Link>
+        ,
+        <Link href="https://aws.amazon.com/sqs" title="SQS">
+          SQS
+        </Link>
+        <span> /</span>
+        <Link href="https://aws.amazon.com/sns" title="SNS">
+          SNS
+        </Link>
+      </li>
       <li>
         Technical ownership: standards, code quality, observability, reliability - proven across
         five years of zero defects

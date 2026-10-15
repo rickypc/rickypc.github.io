@@ -11,11 +11,11 @@ import { clsx, key } from '@site/src/data/common';
 import transition from '@site/src/data/portfolio/common';
 import Heading from '@theme/Heading';
 import { AnimatePresence, domMax, LayoutGroup, LazyMotion, motion } from 'motion/react';
-import { memo, type ReactElement, useCallback, useEffect, useRef, useState } from 'react';
+import { type JSX, memo, type ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import styles from './styles.module.css';
 
 type Filtered = {
-  description: string;
+  description: JSX.Element | string;
   href?: string;
   images: ImageProps[];
   prefix: string;

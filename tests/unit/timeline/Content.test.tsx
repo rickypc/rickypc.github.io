@@ -5,7 +5,7 @@
 
 import { mock } from 'bun:test';
 import Content from '@site/src/components/timeline/Content';
-import { clsx } from '@site/src/data/common';
+import { clsx, textContent } from '@site/src/data/common';
 import { timelines } from '@site/src/data/timeline';
 import { useMedia, usePrint } from '@site/src/hooks/observer';
 import { render, within } from '@testing-library/react';
@@ -113,7 +113,7 @@ describe('timeline.Content', () => {
       expect(affLink).toHaveTextContent(timeline.affiliation.children);
 
       // Description.
-      const p = within(article).getByText(timeline.description);
+      const p = within(article).getByText(textContent(timeline.description));
       expect(p).toBeInTheDocument();
     });
   });

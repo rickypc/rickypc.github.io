@@ -10,13 +10,20 @@ import { type FaqItems, oneLine, type SchemaType } from '@site/src/data/common';
 
 export const catalog = [
   {
-    description: oneLine(`The flagship I run today lives inside one of the nation's major credit
-      bureaus. Millions of people use it free, on web and mobile, for secure credit reports, credit
-      scores, and identity monitoring as they track and improve their financial health. Smart Money
-      extends it into digital banking - checking and savings accounts, pre-approved credit cards,
-      and personalized loan options - while a mission-critical service inside holds 50 ms p99 on
-      tens of billions of records monthly, 5+ years of zero production defects, at roughly 5% of a
-      licensed replacement's cost per year.`),
+    description: (
+      <>
+        The flagship I run today lives inside one of the nation's major credit bureaus. Millions of
+        people use it free, on web and mobile, for secure credit reports, credit scores, and
+        identity monitoring as they track and improve their financial health.
+        <Link href="https://www.experian.com/money/experian-smart-money/" title="Smart Money">
+          Smart Money
+        </Link>
+        extends it into digital banking - checking and savings accounts, pre-approved credit cards,
+        and personalized loan options - while a mission-critical service inside holds 50 ms p99 on
+        tens of billions of records monthly, 5+ years of zero production defects, at roughly 5% of a
+        licensed replacement's cost per year.
+      </>
+    ),
     href: 'https://experian.com',
     images: [
       {
@@ -85,12 +92,38 @@ export const catalog = [
     title: 'Consumer Credit & Financial Wellness Platform',
   },
   {
-    description: oneLine(`The earliest flagship is still the ceiling: Yahoo!, Starbucks, Walgreens,
-      SiriusXM, and Carnival ran targeted, personalized, data-driven campaigns on this B2B platform,
-      at billions of emails per day. Segmentation, tracking, and reporting let marketing teams
-      orchestrate campaigns and measure performance across diverse audiences. The structural-design
-      instinct met planet-scale traffic here for the first time - the Pinnacle Award on the Timeline
-      was earned here, and everything after is measured against this bar.`),
+    description: (
+      <>
+        The earliest flagship is still the ceiling:
+        <Link href="https://www.yahoo.com" title="Yahoo!">
+          Yahoo!
+        </Link>
+        ,
+        <Link href="https://www.starbucks.com" title="Starbucks">
+          Starbucks
+        </Link>
+        ,
+        <Link href="https://www.walgreens.com" title="Walgreens">
+          Walgreens
+        </Link>
+        ,
+        <Link href="https://www.siriusxm.com" title="SiriusXM">
+          SiriusXM
+        </Link>
+        , and
+        <Link href="https://www.carnivalcorp.com" title="Carnival">
+          Carnival
+        </Link>
+        ran targeted, personalized, data-driven campaigns on this B2B platform, at billions of
+        emails per day. Segmentation, tracking, and reporting let marketing teams orchestrate
+        campaigns and measure performance across diverse audiences. The structural-design instinct
+        met planet-scale traffic here for the first time - the Pinnacle Award on the
+        <Link href="/timeline" title="Timeline">
+          Timeline
+        </Link>
+        was earned here, and everything after is measured against this bar.
+      </>
+    ),
     href: 'https://meetmarigold.com',
     images: [
       {
@@ -142,12 +175,26 @@ export const catalog = [
     title: 'Enterprise Email Marketing Platform',
   },
   {
-    description: oneLine(`Scale arrived early here. Sellers published live event inventory - sports,
-      concerts, and theater - straight into Yahoo!'s high-traffic ecosystem on a flexible SOAP Web
-      Services architecture, sustaining millions of user sessions with reliable performance under
-      heavy load. Event discovery and purchasing served a global audience, and the full-stack vision
-      from RazorGator met its public-scale test here - one team owning the call on both sides of the
-      wire.`),
+    description: (
+      <>
+        Scale arrived early here. Sellers published live event inventory - sports, concerts, and
+        theater - straight into
+        <Link href="https://www.yahoo.com" title="Yahoo!">
+          Yahoo!
+        </Link>
+        's high-traffic ecosystem on a flexible
+        <Link href="https://en.wikipedia.org/wiki/SOAP" title="SOAP">
+          SOAP
+        </Link>
+        Web Services architecture, sustaining millions of user sessions with reliable performance
+        under heavy load. Event discovery and purchasing served a global audience, and the
+        full-stack vision from
+        <Link href="https://www.tickpick.com" title="RazorGator">
+          RazorGator
+        </Link>
+        met its public-scale test here - one team owning the call on both sides of the wire.
+      </>
+    ),
     href: undefined,
     images: [
       {
@@ -183,12 +230,27 @@ export const catalog = [
     title: 'Yahoo! Tickets',
   },
   {
-    description: oneLine(`Independent work, built to last. A custom WordPress plugin powered
-      GigaOm's multi-channel coverage of startups, emerging technologies, and industry trends. It
-      scaled to millions of monthly visitors, with flexible editorial workflows, scalable content
-      delivery, and high reader engagement. The committed-partner testimonial from Esteban Chavez on
-      the Stories page was earned here, and across the independent retail and logistics entries
-      below - outside any single employer.`),
+    description: (
+      <>
+        Independent work, built to last. A custom
+        <Link href="https://wordpress.com" title="WordPress">
+          WordPress
+        </Link>
+        plugin powered
+        <Link href="https://gigaom.com" title="GigaOm">
+          GigaOm
+        </Link>
+        's multi-channel coverage of startups, emerging technologies, and industry trends. It scaled
+        to millions of monthly visitors, with flexible editorial workflows, scalable content
+        delivery, and high reader engagement. The committed-partner testimonial from Esteban Chavez
+        on the
+        <Link href="/stories" title="Stories">
+          Stories
+        </Link>
+        page was earned here, and across the independent retail and logistics entries below -
+        outside any single employer.
+      </>
+    ),
     href: 'https://gigaom.com',
     images: [
       {
@@ -272,12 +334,27 @@ export const catalog = [
     title: 'GigaOm Publishing Platform',
   },
   {
-    description: oneLine(`My first transactional commerce role. An online marketplace for reselling
-      tickets to sports, theater, and concert events, plus curated travel packages for major games.
-      It served both B2B and B2C models. High-volume search, purchasing flows, and partner
-      integrations had to deliver transactional reliability, operational flexibility, and scale
-      across multiple business lines. The diverse stack forced one lesson early: the same person has
-      to see all of it. That depth-versus-breadth lesson later anchored the About philosophy.`),
+    description: (
+      <>
+        My first transactional commerce role. An online marketplace for reselling tickets to sports,
+        theater, and concert events, plus curated travel packages for major games. It served both
+        <Link href="https://en.wikipedia.org/wiki/Business-to-business" title="B2B">
+          B2B
+        </Link>
+        and
+        <Link href="https://en.wikipedia.org/wiki/Direct-to-consumer" title="B2C">
+          B2C
+        </Link>
+        models. High-volume search, purchasing flows, and partner integrations had to deliver
+        transactional reliability, operational flexibility, and scale across multiple business
+        lines. The diverse stack forced one lesson early: the same person has to see all of it. That
+        depth-versus-breadth lesson later anchored the
+        <Link href="/about" title="About">
+          About
+        </Link>
+        philosophy.
+      </>
+    ),
     href: 'https://www.tickpick.com',
     images: [
       {
@@ -351,11 +428,19 @@ export const catalog = [
     title: 'Rainbow Guitars E-Commerce Platform',
   },
   {
-    description: oneLine(`Handmade goods ask for a quiet, confident stage. This lifestyle commerce
-      experience framed handcrafted, artisan products with the brand's own values and aesthetic -
-      rich visual storytelling, a premium shopping experience, authentic and curated. It is one of
-      the four catalog entries no longer live today; businesses change, the rigor that built them
-      stays, and the Stories page holds the partners who were there.`),
+    description: (
+      <>
+        Handmade goods ask for a quiet, confident stage. This lifestyle commerce experience framed
+        handcrafted, artisan products with the brand's own values and aesthetic - rich visual
+        storytelling, a premium shopping experience, authentic and curated. It is one of the four
+        catalog entries no longer live today; businesses change, the rigor that built them stays,
+        and the
+        <Link href="/stories" title="Stories">
+          Stories
+        </Link>
+        page holds the partners who were there.
+      </>
+    ),
     href: undefined,
     images: [
       {
@@ -374,12 +459,19 @@ export const catalog = [
     title: 'Fortini Home Artisan Retail Platform',
   },
   {
-    description: oneLine(`A trade show is logistics with a deadline. This global system served
-      exhibitors, exhibit houses, and event organizers. International shipping workflows,
-      operational visibility, and seamless coordination let clients manage complex logistics and
-      deliver standout event experiences worldwide. Many moving parts, tight coordination - a
-      recurring pattern in this body of work, and a direct antecedent of the event-driven
-      architectures on the Resume.`),
+    description: (
+      <>
+        A trade show is logistics with a deadline. This global system served exhibitors, exhibit
+        houses, and event organizers. International shipping workflows, operational visibility, and
+        seamless coordination let clients manage complex logistics and deliver standout event
+        experiences worldwide. Many moving parts, tight coordination - a recurring pattern in this
+        body of work, and a direct antecedent of the event-driven architectures on the
+        <Link href="/resume" title="Resume">
+          Resume
+        </Link>
+        .
+      </>
+    ),
     href: undefined,
     images: [
       {
@@ -398,10 +490,21 @@ export const catalog = [
     title: 'Exhibit Transport Logistics Platform',
   },
   {
-    description: oneLine(`BMX gear takes a beating. S&M Bikes needed a storefront as bold as its
-      brand, showcasing rugged, high-performance BMX products built for real-world demand, with
-      robust product management and customer engagement. These systems had to take hard use and keep
-      running - the same durability bar I later applied to mission-critical services.`),
+    description: (
+      <>
+        <Link href="https://en.wikipedia.org/wiki/BMX_bike" title="BMX">
+          BMX
+        </Link>
+        gear takes a beating.
+        <Link href="https://www.sandmbikes.com" title="S&M Bikes">
+          S&M Bikes
+        </Link>
+        needed a storefront as bold as its brand, showcasing rugged, high-performance BMX products
+        built for real-world demand, with robust product management and customer engagement. These
+        systems had to take hard use and keep running - the same durability bar I later applied to
+        mission-critical services.
+      </>
+    ),
     href: 'https://www.sandmbikes.com',
     images: [
       {
@@ -420,11 +523,18 @@ export const catalog = [
     title: 'S&M Bikes Commerce Platform',
   },
   {
-    description: oneLine(`Service, sold as a system. Clipper Corp used this platform to deliver
-      tailored solutions that increase revenue and reduce operational costs - flexible,
-      client-facing, and scalable enough to keep innovating for a global audience. It is the
-      cost-design discipline in one line: build the thing that increases revenue and reduces cost,
-      then keep it running for years.`),
+    description: (
+      <>
+        Service, sold as a system.
+        <Link href="https://www.clippercorp.com" title="Clipper Corp">
+          Clipper Corp
+        </Link>
+        used this platform to deliver tailored solutions that increase revenue and reduce
+        operational costs - flexible, client-facing, and scalable enough to keep innovating for a
+        global audience. It is the cost-design discipline in one line: build the thing that
+        increases revenue and reduces cost, then keep it running for years.
+      </>
+    ),
     href: 'https://www.clippercorp.com',
     images: [
       {
@@ -443,13 +553,24 @@ export const catalog = [
     title: 'Clipper Corp Service Solutions Platform',
   },
   {
-    description: oneLine(`Tracking a fleet in real time, before that was normal. This wireless
-      asset-management system followed vehicles and high-value equipment continuously. GPS-based
-      monitoring, internet-enabled telemetry, and a robust backend and user interface layer did the
-      work. Clients got location intelligence, alerts, and operational visibility. It set the
-      groundwork for connected mobility and large-scale fleet tracking. The telemetry discipline
-      learned here later took a mission-critical service from frequent production issues to
-      month-long stability within a month (see Resume).`),
+    description: (
+      <>
+        Tracking a fleet in real time, before that was normal. This wireless asset-management system
+        followed vehicles and high-value equipment continuously.
+        <Link href="https://en.wikipedia.org/wiki/Global_Positioning_System" title="GPS">
+          GPS
+        </Link>
+        -based monitoring, internet-enabled telemetry, and a robust backend and user interface layer
+        did the work. Clients got location intelligence, alerts, and operational visibility. It set
+        the groundwork for connected mobility and large-scale fleet tracking. The telemetry
+        discipline learned here later took a mission-critical service from frequent production
+        issues to month-long stability within a month (see
+        <Link href="/resume" title="Resume">
+          Resume
+        </Link>
+        ).
+      </>
+    ),
     href: 'https://www.airiq.com',
     images: [
       {
@@ -484,11 +605,19 @@ export const catalog = [
     title: 'Real-Time GPS Asset Tracking Platform',
   },
   {
-    description: oneLine(`A national youth clothing brand, online for the first time. The platform
-      launched AnchorBlue's digital presence with product discovery, merchandising, and seamless
-      purchasing. It extended the brand beyond its physical stores and gave shoppers a modern retail
-      experience. No longer live today; like every entry in this catalog, the work stays verifiable
-      through the partners on the Stories page.`),
+    description: (
+      <>
+        A national youth clothing brand, online for the first time. The platform launched
+        AnchorBlue's digital presence with product discovery, merchandising, and seamless
+        purchasing. It extended the brand beyond its physical stores and gave shoppers a modern
+        retail experience. No longer live today; like every entry in this catalog, the work stays
+        verifiable through the partners on the
+        <Link href="/stories" title="Stories">
+          Stories
+        </Link>
+        page.
+      </>
+    ),
     href: undefined,
     images: [
       {
@@ -515,11 +644,18 @@ export const catalog = [
     title: 'AnchorBlue E-Commerce Platform',
   },
   {
-    description: oneLine(`Every wheel is built to order. WheelBuilder's platform carried its
-      commitment to high-quality wheel craftsmanship online. Custom configuration, meticulous parts
-      selection, and global ordering connected riders worldwide with performance they could trust.
-      Precision was the daily job here - the same discipline that later held a mission-critical
-      service at 50 ms p99 for 5+ years with zero defects.`),
+    description: (
+      <>
+        Every wheel is built to order.
+        <Link href="https://wheelbuilder.com" title="WheelBuilder">
+          WheelBuilder
+        </Link>
+        's platform carried its commitment to high-quality wheel craftsmanship online. Custom
+        configuration, meticulous parts selection, and global ordering connected riders worldwide
+        with performance they could trust. Precision was the daily job here - the same discipline
+        that later held a mission-critical service at 50 ms p99 for 5+ years with zero defects.
+      </>
+    ),
     href: 'https://wheelbuilder.com',
     images: [
       {
@@ -538,11 +674,18 @@ export const catalog = [
     title: 'WheelBuilder Custom Wheel Platform',
   },
   {
-    description: oneLine(`An engineering firm, extended into a digital marketplace. This dynamic
-      services platform carried a respected engineering and management firm online. Consistent,
-      responsive client engagement, scalable operations, and room for evolving industry demands
-      reinforced long-term client trust. A colleague's testimonial sits on the Stories page: the
-      human shape of the rigor this whole catalog demanded.`),
+    description: (
+      <>
+        An engineering firm, extended into a digital marketplace. This dynamic services platform
+        carried a respected engineering and management firm online. Consistent, responsive client
+        engagement, scalable operations, and room for evolving industry demands reinforced long-term
+        client trust. A colleague's testimonial sits on the
+        <Link href="/stories" title="Stories">
+          Stories
+        </Link>
+        page: the human shape of the rigor this whole catalog demanded.
+      </>
+    ),
     href: 'https://www.pacificaservices.com',
     images: [
       {
@@ -665,24 +808,27 @@ export const intro: IntroProps = {
       to check either. This catalog is built to be checked: 15 production systems across cloud,
       media, commerce, logistics, and ticketing, each one shipped, run under real load, and shown
       with the technology stack that brought it to life, the impact it delivered, and the lesson it
-      taught. The&nbsp;
+      taught. The
       <Link href="/timeline" title="Timeline">
         Timeline
       </Link>
-      &nbsp;page gives the years behind them. Two peaks anchor the set: a billion emails a day at
-      CheetahMail, and the mission-critical Experian service I maintain today at 50 ms p99, 5+ years
-      of zero production defects, at roughly 5% of what a licensed replacement would cost per year.
-      One internal tool here grew its business from under $100K a year to hundreds of millions in
-      revenue; my systems still back that business today. Read these as the proof behind the
-      promises made on the&nbsp;
+      page gives the years behind them. Two peaks anchor the set: a billion emails a day at
+      CheetahMail, and the mission-critical
+      <Link href="https://www.experian.com" title="Experian">
+        Experian
+      </Link>
+      service I maintain today at 50 ms p99, 5+ years of zero production defects, at roughly 5% of
+      what a licensed replacement would cost per year. One internal tool here grew its business from
+      under $100K a year to hundreds of millions in revenue; my systems still back that business
+      today. Read these as the proof behind the promises made on the
       <Link href="/" title="Home">
         Home
       </Link>
-      &nbsp;page - and the raw material the&nbsp;
+      page - and the raw material the
       <Link href="/resume" title="Resume">
         Resume
       </Link>
-      &nbsp;page distills into a strategic appendix.
+      page distills into a strategic appendix.
     </>
   ),
   title: 'Portfolio',

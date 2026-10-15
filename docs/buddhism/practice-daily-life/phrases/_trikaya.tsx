@@ -8,9 +8,9 @@ export default {
     children: (
       <>
         <span style={{ color: 'gray' }}>ॐ</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'red' }}>आः</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'blue' }}>हूँ</span>
       </>
     ),
@@ -20,9 +20,9 @@ export default {
     children: (
       <>
         <span style={{ color: 'gray' }}>oṃ</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'red' }}>āḥ</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'blue' }}>hūṃ</span>
       </>
     ),

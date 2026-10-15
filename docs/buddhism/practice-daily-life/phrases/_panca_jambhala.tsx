@@ -8,13 +8,13 @@ export default {
     children: (
       <>
         <span style={{ color: '#ffd814' }}>ॐ जम्भल जलेन्द्रये स्वाहा॥</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'red' }}>ॐ जम्भल जलेन्द्रये धनम् मेधी ह्रीः डाकिनी जम्भल सांभारा स्वाहा॥</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span>ॐ जम्भल जलेन्द्रये वसुधारिणी स्वाहा॥</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'gray' }}>ॐ पद्म क्रोध आर्य जम्भल हृदय हूँ फट्॥</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'green' }}>ॐ कर्म जम्भल आः स्वाहा</span>
       </>
     ),
@@ -24,13 +24,13 @@ export default {
     children: (
       <>
         <span style={{ color: '#ffd814' }}>ཨོཾ་ཛམྦྷ་ལ་ཛ་ལེནྟྲ་ཡ་སྭཱཧཱ༎</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'red' }}>ཨོཾ་ཛམྦྷ་ལ་ཛ་ལེན་དྲ་ཡེ་དྷ་ན་མི་དྷི་ཧྲཱྀཿ་ཌཱིཀི་ནཱིཛ་ལ་སམྦྷརཾ་སྭཱ་ཧཱ༎</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span>ཨོཾ་ཛམྦྷ་ལ་ཛ་ལེན་དྲ་ཡེ་བ་སུ་དྷ་རི་ཎི་སྭཱ་ཧཱ༎</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'gray' }}>ཨོཾ་པདྨ་ཀྲོ་དྷ་ཨརྱ་ཛམྦྷ་ལ་ཧྲི་ད་ཡ་ཧཱུཾ་ཕཊ༎</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'green' }}>ཨོཾ་ཀརྨ་ཛམྦྷ་ལ་ཨཱཿསྭཱ་ཧཱ</span>
       </>
     ),
@@ -40,15 +40,15 @@ export default {
     children: (
       <>
         <span style={{ color: '#ffd814' }}>oṃ jambhala jalendraye svāhā॥</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'red' }}>
           oṃ jambhala jalendraye dhanam medhī hrīḥ ḍākinī jambhala sambhara svāhā॥
         </span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span>oṃ jambhala jalendraye vasudhāriṇī svāhā॥</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'gray' }}>oṃ padma krodha ārya jambhala hṛdaya hūṃ phaṭ॥</span>
-        <span>&nbsp;</span>
+        <span> </span>
         <span style={{ color: 'green' }}>oṃ karma jambhala āḥ svāhā</span>
       </>
     ),

@@ -180,8 +180,8 @@ describe('docs.buddhism.media._common.main()', () => {
 });
 
 describe('docs.buddhism.media._common.phrase()', () => {
-  test('builds a full phrase block with header + main', () => {
-    const result = phrase('#buddhism/mock-default', 'Note', 3);
+  test('builds a full phrase block with header + main', async () => {
+    const result = await phrase('#buddhism/mock-default', 'Note', 3);
 
     expect(result).toEqual([
       header('Trans [Eng]', 'Note'),
@@ -189,8 +189,8 @@ describe('docs.buddhism.media._common.phrase()', () => {
     ]);
   });
 
-  test('uses transliteration.repetition when repetition arg is 0', () => {
-    const result = phrase('#buddhism/mock-default-empty');
+  test('uses transliteration.repetition when repetition arg is 0', async () => {
+    const result = await phrase('#buddhism/mock-default-empty');
 
     expect(result).toEqual([
       header('Trans', ''),
@@ -198,16 +198,16 @@ describe('docs.buddhism.media._common.phrase()', () => {
     ]);
   });
 
-  test('uses explicit title when provided', () => {
-    const result = phrase('#buddhism/mock-default', '', 0, 'Custom Title');
+  test('uses explicit title when provided', async () => {
+    const result = await phrase('#buddhism/mock-default', '', 0, 'Custom Title');
 
     expect(result[0]).toEqual(header('Custom Title', ''));
   });
 });
 
 describe('docs.buddhism.media._common.phrases()', () => {
-  test('splits sanskrit/transliteration at empty string and builds two blocks', () => {
-    const result = phrases('#buddhism/mock-split', 'Note');
+  test('splits sanskrit/transliteration at empty string and builds two blocks', async () => {
+    const result = await phrases('#buddhism/mock-split', 'Note');
 
     expect(result).toEqual([
       [
@@ -221,8 +221,8 @@ describe('docs.buddhism.media._common.phrases()', () => {
     ]);
   });
 
-  test('splits sanskrit/transliteration at empty string and builds two blocks (no title)', () => {
-    const result = phrases('#buddhism/mock-split-empty', 'Note');
+  test('splits sanskrit/transliteration at empty string and builds two blocks (no title)', async () => {
+    const result = await phrases('#buddhism/mock-split-empty', 'Note');
 
     expect(result).toEqual([
       [
@@ -236,8 +236,8 @@ describe('docs.buddhism.media._common.phrases()', () => {
     ]);
   });
 
-  test('uses explicit title when provided', () => {
-    const result = phrases('#buddhism/mock-split', undefined, 0, 'Custom Title');
+  test('uses explicit title when provided', async () => {
+    const result = await phrases('#buddhism/mock-split', undefined, 0, 'Custom Title');
 
     expect(result[0][0]).toEqual(header('Custom Title', ''));
   });

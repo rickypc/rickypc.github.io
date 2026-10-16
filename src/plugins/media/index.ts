@@ -760,6 +760,12 @@ export default function plugin(context: LoadContext): Plugin {
         mergeStrategy: { 'module.rules': 'prepend' },
         module: {
           rules: [
+            // Restores webpack's full CJS interop shims (require.resolveWeak in the generated
+            // .docusaurus docs content registry) that the root "type": "module" otherwise
+            // strips from these strict-ESM-marked sources; this is exactly their pre-"type"
+            // module type. MDX is intentionally excluded: its modules are javascript/auto by
+            // default and the MDX fallback plugin assumes mdx-matching rules carry "include".
+            { test: /\.(?:[cm]?[jt]sx?)$/i, type: 'javascript/auto' },
             {
               test: /\.(?:jpe?g|png)$/i,
               use: [

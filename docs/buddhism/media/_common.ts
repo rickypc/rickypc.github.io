@@ -50,17 +50,15 @@ export const main = (sanskrit: Commentaries, transliteration: Commentaries, repe
     : { style: ['phrase', 'phrase-set'], text: transliteration },
 ];
 
-export const phrase = (
+export const phrase = async (
   path: string,
   commentaries: Commentaries = '',
   repetition = 0,
   title = '',
 ) => {
-  /* eslint-disable security/detect-non-literal-require */
   const {
     default: { sanskrit, translation, transliteration },
-  } = require(path);
-  /* eslint-enable security/detect-non-literal-require */
+  } = await import(path);
   return [
     header(
       title || `${transliteration.title}${translation?.title ? ` [${translation.title}]` : ''}`,
@@ -74,17 +72,15 @@ export const phrase = (
   ];
 };
 
-export const phrases = (
+export const phrases = async (
   path: string,
   commentaries: Commentaries = '',
   repetition = 0,
   title = '',
 ) => {
-  /* eslint-disable security/detect-non-literal-require */
   const {
     default: { sanskrit, translation, transliteration },
-  } = require(path);
-  /* eslint-enable security/detect-non-literal-require */
+  } = await import(path);
   const translationTitle = translation?.title ? ` [${translation.title}]` : '';
   return [
     [

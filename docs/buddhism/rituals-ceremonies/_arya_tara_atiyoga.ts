@@ -27,13 +27,13 @@ export default {
       chapters: ['Maṅgala', 'Viśuddhi'],
       contents: [
         [
-          ...phrase(
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_mala.ts',
             ' (recite the prayer, gently blow on the mālā and rub it lightly)',
-          ),
-          ...phrase('#buddhism/practice-daily-life/phrases/_japa.ts'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_dharma.ts'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_namaskara.ts'),
+          )),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_japa.ts')),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_dharma.ts')),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_namaskara.ts')),
         ],
         [
           { style: ['section', 'section-set'], text: 'Prāṇāyāma [Breathing]' },
@@ -106,10 +106,10 @@ export default {
     {
       chapters: ['Trimūla Śaraṇa', 'Mettā-Bhāvanā'],
       contents: [
-        [...phrase('#buddhism/practice-daily-life/phrases/_trimula_sarana.ts')],
+        [...(await phrase('#buddhism/practice-daily-life/phrases/_trimula_sarana.ts'))],
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_surangama.ts'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_maha_cakra_vajra.ts'),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_surangama.ts')),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_maha_cakra_vajra.ts')),
         ],
       ],
       images: {
@@ -122,10 +122,12 @@ export default {
       chapters: ['Mettā-Bhāvanā', 'Āhvāna'],
       contents: [
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_amoghapasa_mani_puja.ts'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_sapta_atitabuddha_karasaniya.ts'),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_amoghapasa_mani_puja.ts')),
+          ...(await phrase(
+            '#buddhism/practice-daily-life/phrases/_sapta_atitabuddha_karasaniya.ts',
+          )),
         ],
-        [...phrase('#buddhism/practice-daily-life/phrases/_ahvana.ts')],
+        [...(await phrase('#buddhism/practice-daily-life/phrases/_ahvana.ts'))],
       ],
       images: {
         left: { alt: 'Sapta Atītabuddha', path: '#buddhism/img/7-past-buddhas.webp' },
@@ -138,12 +140,12 @@ export default {
       chapters: ['Viśuddhi'],
       contents: [
         [
-          ...phrase(
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_aksara.ts',
             ' (bindu at our heart)',
             0,
             'Śūnyatā [Primordial State]',
-          ),
+          )),
           header('Pañcabhūta [Five Elements]', [
             ' (bindu at our heart radiates out these infinite lights one by one: ',
             { style: 'sanskrit', text: 'ए' },
@@ -235,7 +237,7 @@ export default {
           },
         ],
         [
-          ...phrase(
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_aksara.ts',
             [
               ' (bindu at our heart radiates out infinite rainbow lights to all the dimensions of: ',
@@ -248,7 +250,7 @@ export default {
             ],
             0,
             'Śūnyatā [Primordial State]',
-          ),
+          )),
         ],
       ],
       images: {
@@ -263,7 +265,7 @@ export default {
       chapters: ['Āryatārā'],
       contents: [
         [
-          ...phrase(
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_arya_tara.ts',
             [
               ' (receive their light, wisdom, and empowerment, which dissolves into Noble Tārā above our ',
@@ -272,17 +274,19 @@ export default {
             ],
             108,
             'Āryatārā Hṛdaya Japa [Noble Tārā Essence (Heart) Recitation]',
-          ),
-          ...phrase('#buddhism/practice-daily-life/phrases/_arya_tara_astaghora_tarani_sutra.ts'),
+          )),
+          ...(await phrase(
+            '#buddhism/practice-daily-life/phrases/_arya_tara_astaghora_tarani_sutra.ts',
+          )),
         ],
         [
-          ...phrase(
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_arya_tara_nama.ts',
             ' (directly invoking and addressing Noble Tārā)',
             0,
             'Āryatārā Āghoṣa [Invocation]',
-          ),
-          ...phrase(
+          )),
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_arya_tara_bijaksara.ts',
             [
               ' (Noble Tārā above our head descends through our ',
@@ -293,7 +297,7 @@ export default {
             ],
             0,
             'Āryatārā Ātma Utpatti [Self-Generation]',
-          ),
+          )),
         ],
       ],
       images: {
@@ -306,18 +310,18 @@ export default {
       chapters: ['Āryatārā', 'Sitātārā'],
       contents: [
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_arya_tara.ts', [
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_arya_tara.ts', [
             " (bindu at our heart radiates infinite Noble Tārā's ",
             { color: 'green', style: 'instruction', text: 'green' },
             ' lights and communicates with all enlightened beings to activate and receive their wisdom)',
-          ]),
+          ])),
         ],
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_sita_tara.ts', [
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_sita_tara.ts', [
             " (bindu at our heart radiates infinite White Tārā's ",
             { color: 'gray', style: 'instruction', text: 'white' },
             ' lights and communicates with all enlightened beings to activate and receive their wisdom)',
-          ]),
+          ])),
         ],
       ],
       images: {
@@ -330,8 +334,8 @@ export default {
       // biome-ignore lint/security/noSecrets: -
       chapters: ['Sukhāvatīvyūha', 'Ekādaśamukhalokeśvara'],
       contents: [
-        [...phrase('#buddhism/practice-daily-life/phrases/_sukhavativyuha.ts')],
-        [...phrase('#buddhism/practice-daily-life/phrases/_ekadasamukhalokesvara.ts')],
+        [...(await phrase('#buddhism/practice-daily-life/phrases/_sukhavativyuha.ts'))],
+        [...(await phrase('#buddhism/practice-daily-life/phrases/_ekadasamukhalokesvara.ts'))],
       ],
       images: {
         left: { alt: 'Amitābha', path: '#buddhism/img/amitabha.webp' },
@@ -342,7 +346,9 @@ export default {
     },
     {
       chapters: ['Mahāmaṇi Vipulavimāna'],
-      contents: [[...phrase('#buddhism/practice-daily-life/phrases/_mahamani_vipulavimana.ts')]],
+      contents: [
+        [...(await phrase('#buddhism/practice-daily-life/phrases/_mahamani_vipulavimana.ts'))],
+      ],
       images: {
         left: { alt: 'Avalokiteśvara', path: '#buddhism/img/guan-yin.webp' },
         right: {
@@ -356,10 +362,10 @@ export default {
       chapters: ['Vajragītā'],
       contents: [
         [
-          ...phrase(
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_vajra_gita.ts',
             " (remain within the all-pervasive expanse of the mind's nature)",
-          ),
+          )),
         ],
       ],
       images: { left: { alt: 'Samantabhadra', path: '#buddhism/img/samantabhadra.webp' } },
@@ -397,17 +403,17 @@ export default {
             ],
             3,
           ),
-          ...phrase(
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_mandala_puja.ts',
             ' (maṇḍala arpaṇa mudrā with the sun behind our back and the moon in front of us. Offering self-generated and pure land to all enlightened beings)',
-          ),
+          )),
         ],
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_rakta_tara.ts', [
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_rakta_tara.ts', [
             " (bindu at our heart radiates infinite Red Tārā's ",
             { color: 'red', style: 'instruction', text: 'red' },
             ' lights and communicates with all enlightened beings to activate and receive their wisdom)',
-          ]),
+          ])),
         ],
       ],
       images: {
@@ -423,8 +429,8 @@ export default {
     {
       chapters: ['Dhanadatārā', 'Prajñāpāramitā Hṛdaya'],
       contents: [
-        [...phrase('#buddhism/practice-daily-life/phrases/_dhanadatara.ts')],
-        [...phrase('#buddhism/practice-daily-life/phrases/_prajna_paramita.ts')],
+        [...(await phrase('#buddhism/practice-daily-life/phrases/_dhanadatara.ts'))],
+        [...(await phrase('#buddhism/practice-daily-life/phrases/_prajna_paramita.ts'))],
       ],
       images: {
         left: { alt: 'Dhanadatārā', path: '#buddhism/img/dhanadatara.webp' },
@@ -557,11 +563,11 @@ export default {
         [
           header('Puṇya Pariṇāmanā [Merit Dedication]', ' (in our own words)'),
           { margin: [0, 7.5, 0, 7.5], text: '' },
-          ...phrase('#buddhism/practice-daily-life/phrases/_arya_tara_svapratijna_nama.ts'),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_arya_tara_svapratijna_nama.ts')),
         ],
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_parinamana.ts'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_arya_tara_sataksara.ts'),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_parinamana.ts')),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_arya_tara_sataksara.ts')),
         ],
       ],
       number: '14',

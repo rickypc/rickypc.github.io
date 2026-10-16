@@ -33,6 +33,13 @@ describe('docs.buddhism.media.pdf._image', () => {
     expect(result).toBeNull();
   });
 
+  test('default resolver resolves relative image paths via import.meta.resolve', async () => {
+    const result = await image({ path: './_image.ts' });
+
+    expect(readFileSync).toHaveBeenCalledWith(expect.stringContaining('_image.ts'));
+    expect(result?.[0]?.image).toContain('data:image/png;base64,');
+  });
+
   test('returns a pdfMake image object for PNG', async () => {
     const result = await image({ path: './img.png' }, mockResolver);
 

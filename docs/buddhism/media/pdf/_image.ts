@@ -5,6 +5,7 @@
 
 import { readFileSync } from 'node:fs';
 import { extname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
 export type Image = {
@@ -30,7 +31,10 @@ const pixels = 300 / 72;
  *   used to locate the image file.
  * @returns {object} pdfMake compatible image object.
  */
-export default async function image(img: Image, resolver: ImageResolver = require.resolve) {
+export default async function image(
+  img: Image,
+  resolver: ImageResolver = (imagePath) => fileURLToPath(import.meta.resolve(imagePath)),
+) {
   if (!img?.path) {
     return null;
   }

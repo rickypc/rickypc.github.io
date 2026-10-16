@@ -5,7 +5,7 @@
 
 import { header, phrase, phrases } from '#buddhism/media/_common';
 
-const pratityasamutpadaSamudayaNirodha = phrases(
+const pratityasamutpadaSamudayaNirodha = await phrases(
   '#buddhism/practice-daily-life/phrases/_pratityasamutpada_samudaya_nirodha.ts',
 );
 
@@ -25,19 +25,19 @@ export default {
       chapters: ['Maṅgala', 'Abhiṣeka'],
       contents: [
         [
-          ...phrase(
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_mala.ts',
             ' (recite the prayer, gently blow on the mālā and rub it lightly)',
-          ),
-          ...phrase('#buddhism/practice-daily-life/phrases/_japa.ts'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_dharma.ts'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_namaskara.ts'),
+          )),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_japa.ts')),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_dharma.ts')),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_namaskara.ts')),
         ],
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_saranagamana_cittotpada.ts'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_catvary_apramanani.ts'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_prajna_paramita.ts', '', 7),
-          ...phrase('#buddhism/practice-daily-life/phrases/_sunyata.ts'),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_saranagamana_cittotpada.ts')),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_catvary_apramanani.ts')),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_prajna_paramita.ts', '', 7)),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_sunyata.ts')),
         ],
       ],
       number: '3',
@@ -51,13 +51,15 @@ export default {
       chapters: ['Abhiṣeka'],
       contents: [
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_anekajati.ts'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_pratityasamutpada.ts'),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_anekajati.ts')),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_pratityasamutpada.ts')),
         ],
         [
-          ...phrase('#buddhism/practice-daily-life/phrases/_vairocana_sarvakata_danavidhih.ts'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_ratnadhvaja_parikrama.ts'),
-          ...phrase('#buddhism/practice-daily-life/phrases/_vimala_usnisa.ts'),
+          ...(await phrase(
+            '#buddhism/practice-daily-life/phrases/_vairocana_sarvakata_danavidhih.ts',
+          )),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_ratnadhvaja_parikrama.ts')),
+          ...(await phrase('#buddhism/practice-daily-life/phrases/_vimala_usnisa.ts')),
         ],
       ],
       number: '6',
@@ -115,33 +117,33 @@ export default {
       chapters: ['Abhiṣeka'],
       contents: [
         [
-          ...phrase(
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_caksu_unmilana.ts',
             '',
             3,
             'Cakṣu Unmīlana [Eye-Opening]',
-          ),
-          ...phrase(
+          )),
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_panca_jnana.ts',
             '',
             3,
             'Pañcajñāna [Five Wisdoms]',
-          ),
-          ...phrase(
+          )),
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_abhiseka_puja.ts',
             '',
             3,
             // biome-ignore lint/security/noSecrets: -
             'Abhiṣekapūjā [Empowerement Offering]',
-          ),
+          )),
         ],
         [
-          ...phrase(
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_supratistha.ts',
             ' (perfect consecration mudrā: left hand above the items, palm down with the thumb pressing the little finger; right hand below the items, palm up with the thumb pressing the little finger)',
             3,
             'Supratiṣṭha [Perfect Consecration]',
-          ),
+          )),
           header('Puṇya Pariṇāmanā [Merit Dedication]', ' (in our own words)'),
           { margin: [0, 7.5, 0, 7.5], text: '' },
         ],
@@ -176,13 +178,13 @@ export default {
           { style: ['phrase', 'phrase-set'], text: "yan lag dr'ug chu sung gi tra shi shog।" },
           { style: ['phrase', 'phrase-set'], text: "tha' dr'äl d'on d'am thug kyi tra shi shog।" },
           { style: ['phrase', 'phrase-set'], text: "gyäl wa'i ku sung thug kyi tra shi shog॥" },
-          ...phrase(
+          ...(await phrase(
             '#buddhism/practice-daily-life/phrases/_prarthanasiddhih.ts',
             '',
             0,
             // biome-ignore lint/security/noSecrets: -
             'Prārthanāsiddhiḥ [Fulfillment of Aspiration]',
-          ),
+          )),
         ],
       ],
       number: '8',

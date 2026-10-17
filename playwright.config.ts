@@ -3,12 +3,12 @@
  * All rights reserved.
  */
 
-const { defineConfig, devices } = require('@playwright/test');
+import { defineConfig, devices } from '@playwright/test';
 
 // Widely used desktop viewport.
 const viewport = { height: 1080, width: 1920 };
 
-module.exports = defineConfig({
+export default defineConfig({
   expect: { timeout: 5000 },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,

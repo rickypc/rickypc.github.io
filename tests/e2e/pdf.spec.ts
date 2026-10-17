@@ -8,8 +8,7 @@ import { join } from 'node:path';
 import { expect, hasPdf, test } from './helper';
 
 test.describe('pdf isolated tests', () => {
-  const pdfDir = join(__dirname, '..', '..', 'build', 'pdf');
-  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const pdfDir = join(import.meta.dirname, '..', '..', 'build', 'pdf');
   const files = readdirSync(pdfDir).filter((file) => file.endsWith('.pdf'));
   const pages: Record<string, number> = {
     'arya-tara-atiyoga.pdf': 6,

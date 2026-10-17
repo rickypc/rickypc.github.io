@@ -41,7 +41,7 @@ export type Options = Partial<PlaywrightTestArgs> &
     url?: string;
   };
 
-export const afterAll = async (context: BrowserContext) => context.close();
+export const afterAll = async (context: BrowserContext) => context?.close();
 
 const audioMetadata = (path: string) =>
   new Promise((resolve, reject) => {

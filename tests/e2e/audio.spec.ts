@@ -8,8 +8,7 @@ import { join } from 'node:path';
 import { expect, hasAudio, test } from './helper';
 
 test.describe('audio isolated tests', () => {
-  const audioDir = join(__dirname, '..', '..', 'build', 'audio');
-  // eslint-disable-next-line security/detect-non-literal-fs-filename
+  const audioDir = join(import.meta.dirname, '..', '..', 'build', 'audio');
   const files = readdirSync(audioDir).filter((file) => file.endsWith('.m4a'));
 
   test('validates total number of M4As', async () => {

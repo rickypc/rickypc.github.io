@@ -31,8 +31,7 @@
     "pdfmake": "0.3.11",
     "timeable-promise": "1.7.4",
     "tinypool": "2.2.0",
-    "ts-checker-rspack-plugin": "1.7.1",
-    "tsx": "4.23.15"
+    "ts-checker-rspack-plugin": "1.7.1"
   },
   "engines": {
     "node": ">=26.0"
@@ -52,10 +51,10 @@
     "@testing-library/react": "16.3.3",
     "@types/eslint-plugin-security": "3.0.1",
     "@typescript-eslint/parser": "8.71.2",
-    "eslint": "10.12.0",
+    "eslint": "10.13.0",
     "eslint-import-resolver-typescript": "4.4.5",
     "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-jsdoc": "65.3.6",
+    "eslint-plugin-jsdoc": "65.3.8",
     "eslint-plugin-security": "4.2.0",
     "eslint-plugin-testing-library": "7.16.2",
     "jiti": "2.7.0",
@@ -75,15 +74,15 @@
   },
   "private": true,
   "scripts": {
-    "build": "docusaurus build",
-    "build:media": "docusaurus build:media",
-    "clear": "docusaurus clear",
-    "deploy": "docusaurus deploy",
-    "docusaurus": "docusaurus",
+    "build": "bunx --bun docusaurus build",
+    "build:media": "bunx --bun docusaurus build:media",
+    "clear": "bunx --bun docusaurus clear",
+    "deploy": "bunx --bun docusaurus deploy",
+    "docusaurus": "bunx --bun docusaurus",
     "prestart": "bun run build:media",
-    "serve": "docusaurus serve --no-open",
-    "start": "docusaurus start --no-open",
-    "swizzle": "docusaurus swizzle",
+    "serve": "bunx --bun docusaurus serve --no-open",
+    "start": "bunx --bun docusaurus start --no-open",
+    "swizzle": "bunx --bun docusaurus swizzle",
     "test": "bun run test:deps:ci && bun run test:lint && bun run test:type && bun run test:unit:ci",
     "test:biome": "biome check .",
     "test:deps:ci": "bun outdated | grep -vE '\\-\\-\\-|Package|bun' | sed -E 's/^[[:space:]]*│[[:space:]]*//; s/[[:space:]]*│[[:space:]]*/ | /g; s/[[:space:]]*│[[:space:]]*$//'",
@@ -94,8 +93,8 @@
     "test:type": "bun check",
     "test:unit": "bun test --parallel ./tests/unit",
     "test:unit:ci": "CI=true bun test --parallel --reporter=dots ./tests/unit",
-    "write-heading-ids": "docusaurus write-heading-ids",
-    "write-translations": "docusaurus write-translations"
+    "write-heading-ids": "bunx --bun docusaurus write-heading-ids",
+    "write-translations": "bunx --bun docusaurus write-translations"
   },
   "trustedDependencies": [
     "core-js",

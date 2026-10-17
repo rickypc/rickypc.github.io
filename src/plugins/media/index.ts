@@ -611,7 +611,6 @@ export async function generatePdf(
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   await mkdir(pdfDir, { recursive: true });
   const pool = new Tinypool({
-    execArgv: ['--experimental-worker', '--import', 'tsx'],
     filename: fileURLToPath(new URL('./workers/generate-pdf.ts', import.meta.url)),
     workerData: {
       algorithm,
@@ -665,7 +664,6 @@ export async function inlineAboveFold(outDir: string, bars: MultiBar): Promise<v
     '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m';
   bar.update(0, { task: 'Inline CSS' });
   const pool = new Tinypool({
-    execArgv: ['--experimental-worker', '--import', 'tsx'],
     filename: fileURLToPath(new URL('./workers/critical-css.ts', import.meta.url)),
     workerData: { outDir },
   });

@@ -461,6 +461,13 @@
     "motion/react": "./mocks/motion/react",
     "react-icons/lib": "./mocks/react-icons/lib"
   },
+  "tests/unit/plugins/media.helpers.test.ts": {
+    "@docusaurus/utils": "./mocks/@docusaurus/utils",
+    "cli-progress": "./mocks/cli-progress",
+    "fast-glob": "./mocks/fast-glob",
+    "fontaine": "./mocks/fontaine",
+    "tinypool": "./mocks/tinypool"
+  },
   "tests/unit/plugins/media.test.ts": {
     "@docusaurus/utils": "./mocks/@docusaurus/utils",
     "cli-progress": "./mocks/cli-progress",
@@ -613,6 +620,9 @@
     "@theme/Heading": "./mocks/@theme/Heading",
     "@theme/Layout": "./mocks/@theme/Layout",
     "@theme/NotFound/Content": "./mocks/@theme/NotFound/Content",
+    "motion/react": "./mocks/motion/react"
+  },
+  "tests/unit/theme/Root.test.tsx": {
     "motion/react": "./mocks/motion/react"
   },
   "tests/unit/timeline/Content.test.tsx": {

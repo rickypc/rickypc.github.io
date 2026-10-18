@@ -25,7 +25,6 @@ import concurrent from 'timeable-promise/concurrent';
 // eslint-disable-next-line import/no-named-as-default
 import Tinypool from 'tinypool';
 import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
-
 // Templates & definitions.
 import { body, properCase } from '#buddhism/media/_common';
 import audio from '#buddhism/media/audio/_index';
@@ -33,6 +32,7 @@ import utterance from '#buddhism/media/audio/_utterance';
 import pdf from '#buddhism/media/pdf/_index';
 import { devDependencies, imports } from '#root/package.json';
 import { fileName, oneLine } from '#root/src/data/common';
+import { MilestoneStream } from './milestone-stream';
 
 type AudioDetails = {
   album: string;
@@ -304,6 +304,51 @@ export async function lastModified(path: string): Promise<number> {
  */
 export async function outputPaths(outDir: string, pattern: string): Promise<string[]> {
   return glob(`**/${pattern}`, { absolute: true, cwd: outDir });
+}
+
+/**
+ * Inline above-the-fold CSS into generated HTML files.
+ * @param {string} outDir - The output directory containing built HTML files.
+ * @param {MultiBar} bars - A MultiBar instance used to render progress bars.
+ * @returns {Promise<void>} Resolves when all HTML files have been processed.
+ */
+export async function inlineAboveFold(outDir: string, bars: MultiBar): Promise<void> {
+  const bar = bars.create(
+    1,
+    0,
+    { color: '\x1B[36m', task: 'Find HTML ' },
+    // biome-ignore lint/security/noSecrets: -
+    { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
+  );
+  bars.update();
+  const paths = await outputPaths(outDir, '*.html');
+  bar.increment();
+  bars.update();
+  bar.setTotal(paths.length);
+  (bar as any).options.format =
+    // biome-ignore lint/security/noSecrets: -
+    '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m';
+  bar.update(0, { task: 'Inline CSS' });
+  const pool = new Tinypool({
+    filename: fileURLToPath(new URL('./workers/critical-css.ts', import.meta.url)),
+    workerData: { outDir },
+  });
+  try {
+    await Promise.all(
+      paths.map(async (path) => {
+        await pool.run({ path });
+        bar.increment();
+        bars.update();
+      }),
+    );
+  } finally {
+    await pool.destroy();
+  }
+  (bar as any).options.format =
+    // biome-ignore lint/security/noSecrets: -
+    '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
+  bars.update();
+  bar.stop();
 }
 
 /**
@@ -641,51 +686,6 @@ export async function generatePdf(
 }
 
 /**
- * Inline above-the-fold CSS into generated HTML files.
- * @param {string} outDir - The output directory containing built HTML files.
- * @param {MultiBar} bars - A MultiBar instance used to render progress bars.
- * @returns {Promise<void>} Resolves when all HTML files have been processed.
- */
-export async function inlineAboveFold(outDir: string, bars: MultiBar): Promise<void> {
-  const bar = bars.create(
-    1,
-    0,
-    { color: '\x1B[36m', task: 'Find HTML ' },
-    // biome-ignore lint/security/noSecrets: -
-    { format: '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m' },
-  );
-  bars.update();
-  const paths = await outputPaths(outDir, '*.html');
-  bar.increment();
-  bars.update();
-  bar.setTotal(paths.length);
-  (bar as any).options.format =
-    // biome-ignore lint/security/noSecrets: -
-    '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m';
-  bar.update(0, { task: 'Inline CSS' });
-  const pool = new Tinypool({
-    filename: fileURLToPath(new URL('./workers/critical-css.ts', import.meta.url)),
-    workerData: { outDir },
-  });
-  try {
-    await Promise.all(
-      paths.map(async (path) => {
-        await pool.run({ path });
-        bar.increment();
-        bars.update();
-      }),
-    );
-  } finally {
-    await pool.destroy();
-  }
-  (bar as any).options.format =
-    // biome-ignore lint/security/noSecrets: -
-    '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total}\x1B[0m';
-  bars.update();
-  bar.stop();
-}
-
-/**
  * Generates PDFs and inline above-the-fold CSS, with progress bar.
  * @param {object} options - Post-build configuration.
  * @param {string} options.outDir - Directory to output generated PDFs.
@@ -701,8 +701,12 @@ export async function postBuild({ outDir, siteConfig, siteDir }: LoadContext): P
       // biome-ignore lint/security/noSecrets: -
       '{color}● {task} {bar}\x1B[0m ({percentage}%) \x1B[2m{value}/{total} | ETA: {eta}s\x1B[0m',
     hideCursor: true,
+    // Seeds the payload and schedules renders on non-TTY streams; without it create() returns
+    // early, {task} stays literal, and the caller-driven updates write one fragment per percent.
+    noTTYOutput: true,
     // It doesn't support length === 0.
     stopOnComplete: true,
+    stream: process.stderr.isTTY ? process.stderr : new MilestoneStream(process.stderr),
   });
   await Promise.all([
     generateAudio({ outDir, siteConfig, siteDir } as LoadContext, bars),

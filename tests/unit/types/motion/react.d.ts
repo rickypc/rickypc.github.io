@@ -9,4 +9,8 @@ declare module 'motion/react' {
   export const listeners: {
     [key: string]: (..._args: any[]) => void;
   };
+
+  export const motionConfigProps: {
+    [key: string]: unknown;
+  };
 }

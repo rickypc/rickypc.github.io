@@ -13,12 +13,15 @@ import {
   type PageScreenshotOptions,
   type PlaywrightTestArgs,
   type PlaywrightTestOptions,
+  type Route,
   type TestInfo,
   test,
 } from '@playwright/test';
 import { pdfToPng } from 'pdf-to-png-converter';
 
 export type BandCallback<T, U = T> = (_value: T, _index?: number, _array?: T[]) => U | Promise<U>;
+
+type ErrorAttachment = { body: Buffer | string; contentType: string; name: string };
 
 type Locators = {
   desktop: Locator;
@@ -38,10 +41,35 @@ export type Options = Partial<PlaywrightTestArgs> &
     selector?: string;
     testInfo?: TestInfo;
     theme?: string;
+    timeout?: number;
     url?: string;
   };
 
 export const afterAll = async (context: BrowserContext) => context?.close();
+
+// Measurement endpoints never settle in some environments and skew real analytics; block the
+// pure-tracking hosts plus any `/collect` beacon path so `networkidle` resolves deterministically
+// while real links (e.g. `www.google.com`) stay untouched.
+const COLLECT =
+  /\/[gjr]\/collect|googletagmanager\.com|google-analytics\.com|analytics\.ahrefs\.com/;
+
+const attachOnError = async (
+  options: Options,
+  run: () => unknown,
+  build: () => Promise<ErrorAttachment>,
+): Promise<void> => {
+  try {
+    await run();
+  } catch (error) {
+    try {
+      const { name, ...attachment } = await build();
+      await (options.testInfo as TestInfo).attach(name, attachment);
+    } catch {
+      // Attachment is best-effort once the assertion has already failed.
+    }
+    throw error;
+  }
+};
 
 const audioMetadata = (path: string) =>
   new Promise((resolve, reject) => {
@@ -123,32 +151,36 @@ const audioSpectrogram = (path: string): Promise<Buffer> =>
 export const band = async <T>(count: number, callback: BandCallback<number, T>) =>
   Promise.all([...Array(count).keys()].map(callback));
 
+// Single installer shared by the two disjoint page origins: the per-test `context` fixture
+// (`routedTest`) and the serial `beforeAll` context. Neither covers the other - the fixture never
+// sees the serial page and `beforeAll` never sees fixture pages - while popups inherit context
+// routes either way.
+const blockTrackers = async (target: Page | BrowserContext): Promise<void> => {
+  await target.route(COLLECT, (route: Route) => route.abort());
+};
+
 export const beforeAll = async (options: Options) => {
   const context = await (options.browser as Browser).newContext();
+  await blockTrackers(context);
   const page: Page = await context.newPage();
   await page.goto(options.url as string, { waitUntil: 'load' });
   return { context, page };
 };
 
-export { type BrowserContext, expect, type Page };
-
-const mobile = (testInfo: Options['testInfo']) =>
-  /^mobile/i.test(testInfo?.project?.name as string);
-
-export const hasActiveNavigation = async (options: Options) => {
-  const patterns: Record<string, RegExp> = {};
-  if (mobile(options.testInfo)) {
-    await (options.page as Page).locator('nav .navbar__inner button.navbar__toggle').click();
-    patterns['nav.navbar .navbar-sidebar__items'] = /menu__link--active/;
-  } else {
-    patterns['nav.navbar .navbar__items'] = /navbar__link--active/;
+const drawn = async ({ page, selector, timeout = 775 }: Options): Promise<void> => {
+  if (!page) {
+    return;
   }
-  for (const [locator, pattern] of Object.entries(patterns)) {
-    await expect((options.page as Page).locator(locator).getByRole('link', options)).toHaveClass(
-      pattern,
-    );
+  if (selector) {
+    await page.waitForSelector(selector, { state: 'visible', timeout }).catch(() => {});
+  } else {
+    await page.evaluate(() => {
+      return new Promise((resolve) => requestAnimationFrame(resolve));
+    });
   }
 };
+
+export { type BrowserContext, expect, type Page };
 
 export const hasAudio = async (options: Options) => {
   const signature = Buffer.from(
@@ -157,20 +189,28 @@ export const hasAudio = async (options: Options) => {
   );
   const spectrogram = await audioSpectrogram(options.url as string);
 
-  expect(signature).toMatchSnapshot(`${options.file}/signature.json`);
-  expect(spectrogram).toMatchSnapshot(`${options.file}/spectrogram.png`, {
-    // 6.5%.
-    maxDiffPixelRatio: 0.065,
-  });
-
-  await (options.testInfo as TestInfo).attach(`${options.file} signature`, {
-    body: signature,
-    contentType: 'application/json',
-  });
-  await (options.testInfo as TestInfo).attach(`${options.file} spectrogram`, {
-    body: spectrogram,
-    contentType: 'image/png',
-  });
+  await attachOnError(
+    options,
+    () => expect(signature).toMatchSnapshot(`${options.file}/signature.json`),
+    async () => ({
+      body: signature,
+      contentType: 'application/json',
+      name: `${options.file} signature`,
+    }),
+  );
+  await attachOnError(
+    options,
+    () =>
+      expect(spectrogram).toMatchSnapshot(`${options.file}/spectrogram.png`, {
+        // 6.5%.
+        maxDiffPixelRatio: 0.065,
+      }),
+    async () => ({
+      body: spectrogram,
+      contentType: 'image/png',
+      name: `${options.file} spectrogram`,
+    }),
+  );
 };
 
 const hasDesktopNavigations = async (nav: Locators, theme: Locators) => {
@@ -295,6 +335,125 @@ const hasMobileNavigations = async (nav: Locators, theme: Locators) => {
   await expect(theme.mobile.getByRole('button', { name: 'light mode' })).toBeVisible();
 };
 
+export const hasPdf = async (options: Options) => {
+  const images = await pdfToPng(options.url as string);
+  expect(images).toHaveLength(options.pages as number);
+  await Promise.all(
+    images.map(async (img, i) =>
+      attachOnError(
+        options,
+        () => expect(img.content).toMatchSnapshot(`${options.file}/page-${i}.png`),
+        async () => ({
+          body: img.content as Buffer,
+          contentType: 'image/png',
+          name: `${options.file} page ${i + 1}`,
+        }),
+      ),
+    ),
+  );
+};
+
+export const hasPlayback = async (options: Options) => {
+  await (options.page as Page).goto(`${options.url}?docusaurus-data-volume=silent`, {
+    waitUntil: 'domcontentloaded',
+  });
+  // The controls container also holds the Stop button once playback starts, so the bare selector
+  // matches two elements and strict mode throws whenever a poll lands after Stop mounts. Scope
+  // every step to the Play/Pause toggle itself, which never collides with Stop.
+  const toggle = (options.page as Page).locator(
+    `${options.selector}[title="Pause"],${options.selector}[title="Play"]`,
+  );
+  if (!(await toggle.isVisible())) {
+    return;
+  }
+  await expect(toggle).toHaveAttribute('title', /play/i);
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('title', /pause/i);
+  await (options.page as Page).waitForFunction(
+    (el) => el?.getAttribute('title')?.toLowerCase() !== 'pause',
+    await toggle.elementHandle(),
+  );
+  await expect(toggle).toHaveAttribute('title', /play/i);
+};
+
+export const hasPrint = async (options: Options) => {
+  test.skip(options.browserName !== 'chromium', 'Print only works in Chromium');
+  (options.testInfo as TestInfo).setTimeout(60000);
+  const search = (options.url as string).includes('portfolio')
+    ? '?docusaurus-data-carousel-play=manual'
+    : '';
+  await (options.page as Page).goto(`${options.url}${search}`, { waitUntil: 'networkidle' });
+  await (options.page as Page).evaluate(() => window.dispatchEvent(new Event('beforeprint')));
+  const last = (options.page as Page).locator('picture > img').last();
+  if (await last?.count?.()) {
+    await last.scrollIntoViewIfNeeded();
+  }
+  await (options.page as Page).waitForLoadState('networkidle');
+  await drawn(options);
+  const pdf = await (options.page as Page).pdf({ format: 'Letter', printBackground: true });
+  const images = await pdfToPng(pdf.buffer.slice(pdf.byteOffset, pdf.byteOffset + pdf.byteLength));
+  await Promise.all(
+    images.map(async (img, i) =>
+      attachOnError(
+        options,
+        () => expect(img.content).toMatchSnapshot(`print-page-${i}.png`),
+        async () => ({
+          body: img.content as Buffer,
+          contentType: 'image/png',
+          name: `Print page ${i + 1}`,
+        }),
+      ),
+    ),
+  );
+};
+
+export const hasScreenshot = async (options: Options) => {
+  const screenshotOptions: PageScreenshotOptions = { fullPage: true, scale: 'css' };
+  const themeLower = (options.theme as string).toLowerCase();
+  // After themeLower assignment.
+  let search = `?docusaurus-theme=${themeLower}`;
+  if ((options.url as string).includes('portfolio')) {
+    search += '&docusaurus-data-carousel-play=manual';
+  }
+  // The app honors `prefers-reduced-motion` via MotionConfig (`src/theme/Root.tsx`); the runner
+  // emulates the same preference so spring/rAF motion settles instantly and screenshots stay
+  // deterministic.
+  await (options.page as Page).emulateMedia({ reducedMotion: 'reduce' });
+  await (options.page as Page).goto(`${options.url}${search}`, { waitUntil: 'networkidle' });
+  await drawn(options);
+  await attachOnError(
+    options,
+    () => expect(options.page as Page).toHaveScreenshot(`${themeLower}.png`, screenshotOptions),
+    async () => ({
+      body: await (options.page as Page).screenshot(screenshotOptions),
+      contentType: 'image/png',
+      name: `${options.theme} Theme`,
+    }),
+  );
+};
+
+export const hasUrl = async (options: Options) =>
+  expect(options.page as Page).toHaveURL(`${options.baseURL}${options.url}`);
+
+const mobile = (testInfo: Options['testInfo']) =>
+  /^mobile/i.test(testInfo?.project?.name as string);
+
+// After mobile assingment.
+export const hasActiveNavigation = async (options: Options) => {
+  const patterns: Record<string, RegExp> = {};
+  if (mobile(options.testInfo)) {
+    await (options.page as Page).locator('nav .navbar__inner button.navbar__toggle').click();
+    patterns['nav.navbar .navbar-sidebar__items'] = /menu__link--active/;
+  } else {
+    patterns['nav.navbar .navbar__items'] = /navbar__link--active/;
+  }
+  for (const [locator, pattern] of Object.entries(patterns)) {
+    await expect((options.page as Page).locator(locator).getByRole('link', options)).toHaveClass(
+      pattern,
+    );
+  }
+};
+
 export const hasNavigations = async (options: Options) => {
   await (options.page as Page).goto(options.url as string, { waitUntil: 'domcontentloaded' });
 
@@ -320,104 +479,11 @@ export const hasNavigations = async (options: Options) => {
   }
 };
 
-export const hasPdf = async (options: Options) => {
-  const images = await pdfToPng(options.url as string);
-  expect(images).toHaveLength(options.pages as number);
-  await Promise.all(
-    images.map(async (img, i) => {
-      expect(img.content).toMatchSnapshot(`${options.file}/page-${i}.png`);
-      await (options.testInfo as TestInfo).attach(`${options.file} page ${i + 1}`, {
-        body: img.content,
-        contentType: 'image/png',
-      });
-    }),
-  );
-};
+const routedTest = test.extend<{ context: BrowserContext }>({
+  context: async ({ context }, use) => {
+    await blockTrackers(context);
+    await use(context);
+  },
+});
 
-export const hasPlayback = async (options: Options) => {
-  await (options.page as Page).goto(`${options.url}?docusaurus-data-volume=silent`, {
-    waitUntil: 'domcontentloaded',
-  });
-  const locator = (options.page as Page).locator(options.selector as string);
-  if (!(await locator.isVisible())) {
-    return;
-  }
-  await expect(locator).toHaveAttribute('title', /play/i);
-  await locator.click();
-  await expect(locator).toHaveAttribute('title', /pause/i);
-  await (options.page as Page).waitForFunction(
-    (el) => el?.getAttribute('title')?.toLowerCase() !== 'pause',
-    await locator.elementHandle(),
-  );
-  await expect(locator).toHaveAttribute('title', /play/i);
-};
-
-export const hasPrint = async (options: Options) => {
-  test.skip(options.browserName !== 'chromium', 'Print only works in Chromium');
-  (options.testInfo as TestInfo).setTimeout(60000);
-  const search = (options.url as string).includes('portfolio')
-    ? '?docusaurus-data-carousel-play=manual'
-    : '';
-  await (options.page as Page).goto(`${options.url}${search}`, { waitUntil: 'networkidle' });
-  await (options.page as Page).evaluate(() => window.dispatchEvent(new Event('beforeprint')));
-  const last = (options.page as Page).locator('picture > img').last();
-  if (await last?.count?.()) {
-    await last.scrollIntoViewIfNeeded();
-  }
-  await (options.page as Page).waitForLoadState('networkidle');
-  await (options.page as Page).evaluate(
-    async () =>
-      new Promise((resolve) => {
-        setTimeout(() => requestAnimationFrame(resolve), 750);
-      }),
-  );
-  if (options.selector) {
-    await (options.page as Page)
-      .waitForSelector(options.selector, { timeout: 750 })
-      .catch(() => {});
-  }
-  const pdf = await (options.page as Page).pdf({
-    format: 'Letter',
-    printBackground: true,
-  });
-  const images = await pdfToPng(pdf.buffer.slice(pdf.byteOffset, pdf.byteOffset + pdf.byteLength));
-  await Promise.all(
-    images.map(async (img, i) => {
-      expect(img.content).toMatchSnapshot(`print-page-${i}.png`);
-      await (options.testInfo as TestInfo).attach(`Print page ${i + 1}`, {
-        body: img.content,
-        contentType: 'image/png',
-      });
-    }),
-  );
-};
-
-export const hasScreenshot = async (options: Options) => {
-  const screenshotOptions: PageScreenshotOptions = {
-    animations: 'disabled',
-    fullPage: true,
-    scale: 'css',
-  };
-  const themeLower = (options.theme as string).toLowerCase();
-  // After themeLower assignment.
-  let search = `?docusaurus-theme=${themeLower}`;
-  if ((options.url as string).includes('portfolio')) {
-    search += '&docusaurus-data-carousel-play=manual';
-  }
-  await (options.page as Page).goto(`${options.url}${search}`, { waitUntil: 'networkidle' });
-  if (options.selector) {
-    await (options.page as Page)
-      .waitForSelector(options.selector, { timeout: 750 })
-      .catch(() => {});
-  }
-  await expect(options.page as Page).toHaveScreenshot(`${themeLower}.png`, screenshotOptions);
-  await (options.testInfo as TestInfo).attach(`${options.theme} Theme`, {
-    body: await (options.page as Page).screenshot(screenshotOptions),
-    contentType: 'image/png',
-  });
-};
-
-export const hasUrl = async (options: Options) =>
-  expect(options.page as Page).toHaveURL(`${options.baseURL}${options.url}`);
-
-export { mobile, test };
+export { mobile, routedTest as test };

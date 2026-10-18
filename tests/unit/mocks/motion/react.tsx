@@ -222,6 +222,20 @@ export const motion = {
   ),
 };
 
+export const motionConfigProps: { [key: string]: unknown } = {};
+
+/**
+ * Minimal mock motion/react/MotionConfig component that records props and renders children.
+ * @param {PropsWithChildren} props
+ *   The component props.
+ * @returns {ReactElement}
+ *   The motion/react/MotionConfig component.
+ */
+export function MotionConfig({ children, ...props }: PropsWithChildren): ReactElement {
+  Object.assign(motionConfigProps, props);
+  return <>{children}</>;
+}
+
 export const useMotionValue = mock((value) => {
   let response = value;
   return {

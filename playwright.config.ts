@@ -50,8 +50,14 @@ export default defineConfig({
   testDir: './tests/e2e',
   use: { baseURL: process.env.BASE_URL || 'http://localhost:3000', trace: 'on-first-retry' },
   webServer: {
-    command: 'npm run start',
+    /* Snapshots match the production build's rendering. The dev server's DOM lacks the SSR
+     * `<!-- -->` text-node markers the static build keeps, which changes text-run kerning and
+     * shifts glyphs by subpixels - deterministic ~0.01% screenshot diffs (e.g. resume themes) plus
+     * cold-compile timeouts. Build + serve so every run compares against the shipped site.
+     */
+    command: 'bun run build && bun run serve',
     reuseExistingServer: !process.env.CI,
+    timeout: 600_000,
     url: 'http://localhost:3000',
   },
   /* Opt out of parallel tests on CI. */

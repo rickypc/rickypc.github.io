@@ -41,6 +41,7 @@
             "skipIifes": true
           }
         },
+        "noExcessiveNestedCallbacks": "error",
         "noUselessSwitchCase": "error",
         "useMaxParams": { "level": "error", "options": { "max": 10 } }
       },
@@ -54,19 +55,10 @@
         "useUniqueElementIds": "error"
       },
       "nursery": {
-        "noConditionalExpect": "error",
-        "noExcessiveNestedCallbacks": "error",
         "noFloatingPromises": "error",
-        "noIdenticalTestTitle": "error",
         "noImpliedEval": "error",
-        "noLoopFunc": "error",
         "noMisusedPromises": "error",
-        "noReactStringRefs": "error",
-        "useExhaustiveSwitchCases": "error",
-        "useExpect": "error",
-        "useImportsFirst": "error",
-        "useThisInClassMethods": "error",
-        "useVarsOnTop": "error"
+        "useExhaustiveSwitchCases": "error"
       },
       "preset": "recommended",
       "security": { "noSecrets": "error" },
@@ -102,15 +94,25 @@
           }
         },
         "useBlockStatements": "error",
-        "useDefaultSwitchClause": "error"
+        "useDefaultSwitchClause": "error",
+        "useImportsFirst": "error",
+        "useThisInClassMethods": "error",
+        "useVarsOnTop": "error"
       },
-      "suspicious": { "noExplicitAny": "off" }
+      "suspicious": {
+        "noConditionalExpect": "error",
+        "noExplicitAny": "off",
+        "noIdenticalTestTitle": "error",
+        "noLoopFunc": "error",
+        "noReactStringRefs": "error",
+        "useExpect": "error"
+      }
     }
   },
   "overrides": [
     {
       "includes": ["**/e2e/*.spec.ts"],
-      "linter": { "rules": { "nursery": { "useExpect": "off" } } }
+      "linter": { "rules": { "suspicious": { "useExpect": "off" } } }
     }
   ],
   "vcs": { "clientKind": "git", "enabled": true, "useIgnoreFile": true }

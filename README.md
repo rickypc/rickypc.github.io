@@ -50,6 +50,5 @@ mindset. I embrace challenges and consistently deliver outcomes that matter.
 
 This website is built using [open-source](https://en.wikipedia.org/wiki/Open_source) technologies,
 including but not limited to:
-
 - [Docusaurus](https://docusaurus.io)
 - [React](https://react.dev)

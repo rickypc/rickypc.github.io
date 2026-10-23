@@ -73,7 +73,7 @@ class AudioManager {
    * @param {number} [duration] - Number of steps used to fade out the volume.
    * @returns {Promise<void>} Resolves once fading and pausing are complete.
    */
-  // biome-ignore lint/nursery/useThisInClassMethods: -
+  // biome-ignore lint/style/useThisInClassMethods: -
   async pause(audio: MaybeAudio, duration = 30) {
     if (!audio || audio.paused) {
       return;

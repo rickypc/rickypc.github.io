@@ -9,8 +9,9 @@ type GenIconConfig = {
   tag?: string;
 };
 
-export const GenIcon = (config: GenIconConfig) =>
-  function GetIcon(props: IconBaseProps) {
+export const GenIcon = (config: GenIconConfig) => {
+  // biome-ignore lint/correctness/noComponentHookFactories: needs nested invocation contract.
+  return function GenIcon(props: IconBaseProps) {
     return (
       <svg
         data-config={JSON.stringify(config)}
@@ -20,3 +21,4 @@ export const GenIcon = (config: GenIconConfig) =>
       />
     );
   };
+};

@@ -538,6 +538,48 @@ describe(`plugins.${name}.generateAudio: exits error`, () => {
   });
 });
 
+describe(`plugins.${name}.generateAudio: cleanup`, () => {
+  const { length } = audio;
+  const out = `${name}-test-out`;
+  const siteDir = tmpdir();
+  // After siteDir assignment.
+  const outDir = join(siteDir, out);
+
+  test('ignores piper kill failures so the remaining servers still get cleaned up', async () => {
+    const consoleMock = spyOn(console, 'error').mockImplementation(() => {});
+    execSyncMock.mockReturnValueOnce('1.2.3');
+    global.fetch = mock().mockImplementation(successFetch) as unknown as typeof fetch;
+    const pipers: Piper[] = [];
+    let port = 5001;
+    spawnMock.mockImplementation((cmd: string) => {
+      if (cmd.endsWith('python')) {
+        const server = piper(port);
+        if (pipers.length === 0) {
+          // The first piper is already dead: its kill throws and the cleanup
+          // catch must swallow the failure without rejecting generateAudio.
+          server.kill.mockImplementationOnce(() => {
+            throw new Error('ESRCH');
+          });
+        }
+        pipers.push(server);
+        port += 1;
+        return server;
+      }
+      return ffmpeg();
+    });
+
+    await Plugin.generateAudio({ outDir, siteConfig, siteDir }, MultiBar());
+
+    expect(barUpdate).toHaveBeenCalledWith(0, { task: 'Make Audio' });
+    expect(consoleMock).not.toHaveBeenCalled();
+    expect(global.fetch).toHaveBeenCalledTimes(length);
+    expect(pipers[0].kill).toHaveBeenCalledTimes(1);
+    expect(pipers[0].kill).toHaveBeenCalledWith('SIGTERM');
+    expect(pipers[1].kill).toHaveBeenCalledTimes(1);
+    expect(stop).toHaveBeenCalledTimes(1);
+  });
+});
+
 describe(`plugins.${name}.generateAudioMetadata`, () => {
   test('generates counters, ports, and tracks metadata correctly', () => {
     const result = Plugin.generateAudioMetadata();

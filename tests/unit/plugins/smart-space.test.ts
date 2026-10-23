@@ -202,4 +202,25 @@ describe('plugins.smart-space.remark', () => {
     Plugin(tree);
     expect((tree.children as TextNode[])[1].value).toBe('   \n   ');
   });
+
+  test('keeps raw in sync with value when the remark node carries raw', () => {
+    const tree = {
+      children: [{ raw: 'word1  \n  word2', type: 'JSXText', value: 'word1  \n  word2' }],
+      type: 'JSXElement',
+    };
+    Plugin(tree);
+
+    // The rehype serializer prints raw, so it must mirror the rewritten value.
+    expect((tree.children as TextNode[])[0].value).toBe('word1 word2');
+    expect((tree.children[0] as TextNode & { raw?: string }).raw).toBe('word1 word2');
+  });
+
+  test('skips invalid children entries while still rewriting valid siblings', () => {
+    const tree = {
+      children: [null, { type: 'JSXText', value: 'word1  \n  word2' }, 'stray'],
+      type: 'JSXElement',
+    };
+    Plugin(tree);
+    expect((tree.children as TextNode[])[1].value).toBe('word1 word2');
+  });
 });

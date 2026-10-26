@@ -71,6 +71,8 @@
   "tests/unit/common/Layout.test.tsx": {
     "@docusaurus/router": "./mocks/@docusaurus/router",
     "@docusaurus/theme-common": "./mocks/@docusaurus/theme-common/index",
+    "@docusaurus/useDocusaurusContext": "./mocks/@docusaurus/useDocusaurusContext",
+    "@docusaurus/useGlobalData": "./mocks/@docusaurus/useGlobalData",
     "@docusaurus/useIsBrowser": "./mocks/@docusaurus/useIsBrowser",
     "@site/src/hooks/observer": "./mocks/@site/src/hooks/observer",
     "@theme/Layout": "./mocks/@theme/Layout"
@@ -81,7 +83,11 @@
     "motion/react": "./mocks/motion/react"
   },
   "tests/unit/common/Metadata.test.tsx": {
+    "@docusaurus/plugin-content-docs/client": "./mocks/@docusaurus/plugin-content-docs/client",
     "@docusaurus/router": "./mocks/@docusaurus/router",
+    "@docusaurus/theme-common": "./mocks/@docusaurus/theme-common/index",
+    "@docusaurus/useDocusaurusContext": "./mocks/@docusaurus/useDocusaurusContext",
+    "@docusaurus/useGlobalData": "./mocks/@docusaurus/useGlobalData",
     "@docusaurus/useIsBrowser": "./mocks/@docusaurus/useIsBrowser",
     "@site/src/hooks/observer": "./mocks/@site/src/hooks/observer"
   },
@@ -460,6 +466,10 @@
     "@theme/Layout": "./mocks/@theme/Layout",
     "motion/react": "./mocks/motion/react",
     "react-icons/lib": "./mocks/react-icons/lib"
+  },
+  "tests/unit/plugins/article-schema.test.ts": {
+    "@docusaurus/utils": "./mocks/@docusaurus/utils",
+    "fast-glob": "./mocks/fast-glob"
   },
   "tests/unit/plugins/media.helpers.test.ts": {
     "@docusaurus/utils": "./mocks/@docusaurus/utils",

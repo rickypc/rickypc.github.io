@@ -5,7 +5,7 @@
 
 import { PageMetadata, translateTagsPageTitle } from '@docusaurus/theme-common';
 import type { WrapperProps } from '@docusaurus/types';
-import { context } from '@site/src/data/common';
+import { graphFor, PERSON_NODE, profilePageNode } from '@site/src/data/common';
 import { useWelcome } from '@site/src/hooks/observer';
 import DocTagsListPage from '@theme-original/DocTagsListPage';
 import { memo, type ReactElement } from 'react';
@@ -39,7 +39,9 @@ export default memo(function DocTagsListPageWrapper(props: Props): ReactElement 
   return (
     <>
       <PageMetadata {...metadata}>
-        <script type="application/ld+json">{context(metadata)}</script>
+        <script type="application/ld+json">
+          {graphFor([profilePageNode(metadata), PERSON_NODE])}
+        </script>
         <meta content={metadata.description} name="twitter:description" />
         <meta content={metadata.title} name="twitter:title" />
       </PageMetadata>

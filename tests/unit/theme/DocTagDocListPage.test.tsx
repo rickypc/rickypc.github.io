@@ -5,16 +5,20 @@
 
 import { mock } from 'bun:test';
 import { usePluralForm } from '@docusaurus/theme-common';
-import { context } from '@site/src/data/common';
+import { profilePageNode } from '@site/src/data/common';
 import { useWelcome } from '@site/src/hooks/observer';
 import { render, screen } from '@testing-library/react';
 import DocTagDocListPageWrapper from '@theme/DocTagDocListPage';
 import DocTagDocListPage from '@theme-original/DocTagDocListPage';
 
+const personNode = { '@id': 'https://ricky.one#Person', '@type': 'Person' };
+
 mock.module('@site/src/data/common', () => ({
-  context: mock((metadata: Record<string, string>) =>
-    JSON.stringify({ ld: 'test', meta: metadata }),
+  graphFor: mock((nodes: Record<string, unknown>[]) =>
+    JSON.stringify({ '@context': 'test', '@graph': nodes }),
   ),
+  PERSON_NODE: personNode,
+  profilePageNode: mock((metadata: Record<string, unknown>) => ({ ld: 'node', metadata })),
 }));
 
 // biome-ignore lint/security/noSecrets: -
@@ -38,8 +42,8 @@ describe('theme.DocTagDocListPage', () => {
 
     expect(usePluralForm).toHaveBeenCalled();
 
-    expect(context).toHaveBeenCalledTimes(1);
-    expect(context).toHaveBeenNthCalledWith(
+    expect(profilePageNode).toHaveBeenCalledTimes(1);
+    expect(profilePageNode).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
         description: expect.stringContaining(props.tag.label),
@@ -54,12 +58,18 @@ describe('theme.DocTagDocListPage', () => {
       .querySelector('script[type="application/ld+json"]');
     expect(script).toBeInTheDocument();
     expect(JSON.parse(script?.textContent || '{}')).toEqual({
-      ld: 'test',
-      meta: expect.objectContaining({
-        description: expect.stringContaining(props.tag.label),
-        keywords: expect.arrayContaining(['mindfulness']),
-        title: 'translated:theme.docs.tagDocListPageTitle:{nDocsTagged} with "{tagName}"',
-      }),
+      '@context': 'test',
+      '@graph': [
+        {
+          ld: 'node',
+          metadata: expect.objectContaining({
+            description: expect.stringContaining(props.tag.label),
+            keywords: expect.arrayContaining(['mindfulness']),
+            title: 'translated:theme.docs.tagDocListPageTitle:{nDocsTagged} with "{tagName}"',
+          }),
+        },
+        personNode,
+      ],
     });
 
     const { head } = document;

@@ -5,4 +5,4 @@
 
 import { mock } from 'bun:test';
 
-export const useLocation = mock();
+export const useLocation = mock(() => ({ pathname: '/' }));

@@ -6,20 +6,41 @@
 import { mock } from 'bun:test';
 import {
   a11y,
+  articleDatesFor,
+  articleUrl,
+  blogPostingNode,
+  breadcrumbListNode,
   chunkToWords,
   clsx,
-  context,
-  faqContext,
+  collectionPageNode,
   faqEntries,
+  faqPageNode,
   fetchAsJson,
   fileName,
+  graphFor,
   humanizeYears,
   key,
   numberToWords,
   oneLine,
+  PERSON_NODE,
+  profilePageNode,
+  reviewNode,
   tail,
   textContent,
 } from '@site/src/data/common';
+
+const articleFacts = {
+  dateModified: '2026-10-01T00:00:00.000Z',
+  datePublished: '2025-06-01T00:00:00.000Z',
+  description: 'Article description',
+  keywords: ['buddhism', 'karma'],
+  title: 'Why We Are Born',
+  url: 'https://ricky.one/docs/buddhism/foundations-core-view/why-we-are-born/',
+};
+const defaultKeywords =
+  'ricky huang,richard huang,full stack developer,professional software engineer,engineering leader,value proposition,technical innovation,technology foundation,business strategy,business objective,software engineering,innovator,smart creative,secure product,high quality,master degree';
+const facts = { description: 'CustomDesc', keywords: ['x', 'y', 'z'], title: 'MyTitle' };
+const personRef = { '@id': 'https://ricky.one#Person' };
 
 describe('data.common.a11y()', () => {
   test('returns aria-label and title props, merging additional attributes', () => {
@@ -38,6 +59,42 @@ describe('data.common.a11y()', () => {
       'aria-label': 'OnlyLabel',
       title: 'OnlyLabel',
     });
+  });
+});
+
+describe('data.common.articleDatesFor()', () => {
+  const dates = { '/resume/': { dateModified: 'modified', datePublished: 'published' } };
+
+  test('matches the exact permalink', () => {
+    expect(articleDatesFor(dates, '/resume/')).toEqual({
+      dateModified: 'modified',
+      datePublished: 'published',
+    });
+  });
+
+  test('matches across trailing slashes', () => {
+    expect(articleDatesFor(dates, '/resume')).toEqual({
+      dateModified: 'modified',
+      datePublished: 'published',
+    });
+    expect(articleDatesFor({ '/resume': dates['/resume/'] }, '/resume/')).toEqual({
+      dateModified: 'modified',
+      datePublished: 'published',
+    });
+  });
+
+  test('returns undefined without a match', () => {
+    expect(articleDatesFor(dates, '/about/')).toBeUndefined();
+    expect(articleDatesFor(undefined, '/resume/')).toBeUndefined();
+  });
+});
+
+describe('data.common.articleUrl()', () => {
+  test.each([
+    ['https://ricky.one', '/resume/', 'https://ricky.one/resume/'],
+    ['https://ricky.one', '/resume', 'https://ricky.one/resume/'],
+  ])('articleUrl(%s, %s) -> %s', (siteUrl, permalink, expected) => {
+    expect(articleUrl(siteUrl, permalink)).toBe(expected);
   });
 });
 
@@ -94,75 +151,6 @@ describe('data.common.clsx()', () => {
 
   test('ignores falsey and non-string values', () => {
     expect(clsx('foo', null, undefined, 0, '', 'bar')).toBe('foo bar');
-  });
-});
-
-describe('data.common.context()', () => {
-  test('returns a JSON string containing default schema.org ProfilePage', () => {
-    const json = JSON.parse(context());
-    expect(json['@context']).toBe('https://schema.org/');
-    expect(json['@type']).toBe('ProfilePage');
-    expect(json.description).toContain('Engineering Leader');
-    expect(typeof json.keywords).toBe('string');
-    expect(json.mainEntity['@type']).toBe('Person');
-    expect(Array.isArray(json.mainEntity.alumniOf)).toBeTruthy();
-    expect(json.url).toBe('https://ricky.one');
-  });
-
-  test('accepts overrides for description, keywords, and title', () => {
-    const overrides = { description: 'CustomDesc', keywords: ['x', 'y', 'z'], title: 'MyTitle' };
-    const parsed = JSON.parse(context(overrides));
-    expect(parsed.description).toBe('CustomDesc');
-    expect(parsed.keywords).toBe('x,y,z');
-    expect(parsed.name).toBe('MyTitle');
-  });
-
-  test('accepts a custom schema override', () => {
-    const parsed = JSON.parse(context({ schema: 'CollectionPage' }));
-    expect(parsed['@type']).toBe('CollectionPage');
-  });
-
-  test('includes author and reviewRating only when schema is Review', () => {
-    const reviewParsed = JSON.parse(context({ schema: 'Review' }));
-    expect(reviewParsed['@type']).toBe('Review');
-    expect(reviewParsed.author).toEqual({ '@type': 'Person', name: 'Ricky Huang' });
-    expect(reviewParsed.reviewRating).toEqual({ '@type': 'Rating', bestRating: 5, ratingValue: 5 });
-
-    const profileParsed = JSON.parse(context({ schema: 'ProfilePage' }));
-    expect(profileParsed.author).toBeUndefined();
-    expect(profileParsed.reviewRating).toBeUndefined();
-
-    const collectionParsed = JSON.parse(context({ schema: 'CollectionPage' }));
-    expect(collectionParsed.author).toBeUndefined();
-    expect(collectionParsed.reviewRating).toBeUndefined();
-  });
-});
-
-describe('data.common.faqContext()', () => {
-  test('returns a JSON string with FAQPage schema and mainEntity array', () => {
-    const json = JSON.parse(faqContext({ items: [{ answer: 'A', question: 'Q' }], slug: 'about' }));
-    expect(json['@context']).toBe('https://schema.org/');
-    expect(json['@type']).toBe('FAQPage');
-    expect(json.url).toBe('https://ricky.one/about');
-    expect(json['@id']).toBe('https://ricky.one/about#faq');
-    expect(Array.isArray(json.mainEntity)).toBeTruthy();
-    expect(json.mainEntity[0]).toMatchObject({
-      '@type': 'Question',
-      acceptedAnswer: { '@type': 'Answer', text: 'A' },
-      name: 'Q',
-    });
-  });
-
-  test('uses the root slug for the home page', () => {
-    const json = JSON.parse(faqContext({ items: [{ answer: 'A', question: 'Q' }], slug: '' }));
-    expect(json.url).toBe('https://ricky.one/');
-    expect(json['@id']).toBe('https://ricky.one/#faq');
-    expect(json.mainEntity[0]['@id']).toBe('https://ricky.one/#faq-1');
-  });
-
-  test('produces empty mainEntity when all entries are empty', () => {
-    const json = JSON.parse(faqContext({ items: [{ answer: '', question: '' }], slug: 'resume' }));
-    expect(json.mainEntity).toEqual([]);
   });
 });
 
@@ -292,6 +280,207 @@ describe('data.common.fileName()', () => {
 
   test('removes leading hyphens after replacement', () => {
     expect(fileName('_hello_world', 'condensed')).toBe('hello-world-condensed');
+  });
+});
+
+describe('data.common.graph article node', () => {
+  test('blogPostingNode emits the article node with every legacy field', () => {
+    const node = blogPostingNode(articleFacts);
+    expect(node).toEqual({
+      '@id': 'https://ricky.one/docs/buddhism/foundations-core-view/why-we-are-born/#article',
+      '@type': 'BlogPosting',
+      author: personRef,
+      dateModified: '2026-10-01T00:00:00.000Z',
+      datePublished: '2025-06-01T00:00:00.000Z',
+      description: 'Article description',
+      headline: 'Why We Are Born',
+      image: 'https://ricky.one/img/self.png',
+      inLanguage: 'en-US',
+      keywords: 'buddhism,karma',
+      mainEntityOfPage: {
+        '@id': 'https://ricky.one/docs/buddhism/foundations-core-view/why-we-are-born/',
+        '@type': 'WebPage',
+      },
+      name: 'Why We Are Born',
+      publisher: personRef,
+      url: 'https://ricky.one/docs/buddhism/foundations-core-view/why-we-are-born/',
+    });
+    expect(Object.hasOwn(node, 'mainEntity')).toBe(false);
+  });
+
+  test('blogPostingNode applies the legacy defaults and omits dates for omitted facts', () => {
+    expect(blogPostingNode()).toEqual({
+      '@id': 'https://ricky.one#article',
+      '@type': 'BlogPosting',
+      author: personRef,
+      dateModified: undefined,
+      datePublished: undefined,
+      description: 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
+      headline: 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
+      image: 'https://ricky.one/img/self.png',
+      inLanguage: 'en-US',
+      keywords: defaultKeywords,
+      mainEntityOfPage: { '@id': 'https://ricky.one', '@type': 'WebPage' },
+      name: 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
+      publisher: personRef,
+      url: 'https://ricky.one',
+    });
+  });
+});
+
+describe('data.common.graph breadcrumb node', () => {
+  test('mirrors the theme BreadcrumbList shape, dropping link-less items', () => {
+    expect(
+      breadcrumbListNode(
+        [
+          { href: '/docs/category/buddhism', label: 'Buddhism' },
+          { label: 'Current Doc' },
+          { href: '/docs/buddhism/x/y/', label: 'Y' },
+        ],
+        'https://ricky.one',
+      ),
+    ).toEqual({
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          item: 'https://ricky.one/docs/category/buddhism',
+          name: 'Buddhism',
+          position: 1,
+        },
+        {
+          '@type': 'ListItem',
+          item: 'https://ricky.one/docs/buddhism/x/y/',
+          name: 'Y',
+          position: 2,
+        },
+      ],
+    });
+  });
+
+  test('emits an empty list when every item lacks a link', () => {
+    expect(breadcrumbListNode([{ label: 'A' }, { label: 'B' }], 'https://ricky.one')).toEqual({
+      '@type': 'BreadcrumbList',
+      itemListElement: [],
+    });
+  });
+});
+
+describe('data.common.graph faq node', () => {
+  test('faqPageNode emits the FAQPage node with Question entities', () => {
+    const node = faqPageNode({ items: [{ answer: 'A', question: 'Q' }], slug: 'about' });
+    expect(node).toEqual({
+      '@id': 'https://ricky.one/about#faq',
+      '@type': 'FAQPage',
+      inLanguage: 'en-US',
+      mainEntity: [
+        {
+          '@id': 'https://ricky.one/about#faq-1',
+          '@type': 'Question',
+          acceptedAnswer: {
+            '@id': 'https://ricky.one/about#faq-1-answer',
+            '@type': 'Answer',
+            inLanguage: 'en-US',
+            text: 'A',
+          },
+          inLanguage: 'en-US',
+          name: 'Q',
+        },
+      ],
+      url: 'https://ricky.one/about',
+    });
+    expect(Object.hasOwn(node, '@context')).toBe(false);
+    expect(faqPageNode({ items: [{ answer: 'A', question: 'Q' }], slug: '' })['@id']).toBe(
+      'https://ricky.one/#faq',
+    );
+    expect(
+      faqPageNode({ items: [{ answer: '', question: '' }], slug: 'resume' }).mainEntity,
+    ).toEqual([]);
+  });
+});
+
+describe('data.common.graph page nodes', () => {
+  test('profilePageNode emits the ProfilePage node with the person referenced by @id', () => {
+    const node = profilePageNode(facts);
+    expect(node).toEqual({
+      '@type': 'ProfilePage',
+      description: 'CustomDesc',
+      headline: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic',
+      keywords: 'x,y,z',
+      mainEntity: personRef,
+      name: 'MyTitle',
+      url: 'https://ricky.one',
+    });
+    expect(Object.hasOwn(node, '@context')).toBe(false);
+  });
+
+  test('profilePageNode applies the legacy defaults for omitted facts', () => {
+    expect(profilePageNode()).toEqual({
+      '@type': 'ProfilePage',
+      description: 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
+      headline: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic',
+      keywords: defaultKeywords,
+      mainEntity: personRef,
+      name: 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator',
+      url: 'https://ricky.one',
+    });
+  });
+
+  test('collectionPageNode emits the CollectionPage node without article-only fields', () => {
+    const node = collectionPageNode(facts);
+    expect(node).toEqual({
+      '@type': 'CollectionPage',
+      description: 'CustomDesc',
+      headline: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic',
+      keywords: 'x,y,z',
+      mainEntity: personRef,
+      name: 'MyTitle',
+      url: 'https://ricky.one',
+    });
+    expect(Object.hasOwn(node, 'author')).toBe(false);
+    expect(Object.hasOwn(node, 'reviewRating')).toBe(false);
+    expect(Object.hasOwn(node, 'image')).toBe(false);
+    expect(Object.hasOwn(node, 'inLanguage')).toBe(false);
+    expect(Object.hasOwn(node, 'mainEntityOfPage')).toBe(false);
+    expect(Object.hasOwn(node, 'datePublished')).toBe(false);
+  });
+
+  test('reviewNode references the person for author and mainEntity and keeps the rating', () => {
+    expect(reviewNode(facts)).toEqual({
+      '@type': 'Review',
+      author: personRef,
+      description: 'CustomDesc',
+      headline: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic',
+      keywords: 'x,y,z',
+      mainEntity: personRef,
+      name: 'MyTitle',
+      reviewRating: { '@type': 'Rating', bestRating: 5, ratingValue: 5 },
+      url: 'https://ricky.one',
+    });
+  });
+});
+
+describe('data.common.graphFor()', () => {
+  test('wraps nodes in one @context graph document', () => {
+    const parsed = JSON.parse(graphFor([profilePageNode(facts), PERSON_NODE]));
+    expect(parsed['@context']).toBe('https://schema.org/');
+    expect(parsed['@graph']).toHaveLength(2);
+    expect(parsed['@graph'][0]).toEqual(profilePageNode(facts));
+    expect(parsed['@graph'][1]).toEqual(PERSON_NODE);
+  });
+
+  test('author, publisher, and mainEntity all resolve to the same Person @id', () => {
+    const article = blogPostingNode(articleFacts);
+    const page = profilePageNode(facts);
+    const review = reviewNode(facts);
+    const ids = [
+      article.author['@id'],
+      article.publisher['@id'],
+      page.mainEntity['@id'],
+      review.author['@id'],
+      review.mainEntity['@id'],
+    ];
+    expect(new Set(ids)).toEqual(new Set([PERSON_NODE['@id']]));
   });
 });
 

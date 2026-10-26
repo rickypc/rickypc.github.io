@@ -5,16 +5,20 @@
 
 import { mock } from 'bun:test';
 import { translateTagsPageTitle } from '@docusaurus/theme-common';
-import { context } from '@site/src/data/common';
+import { profilePageNode } from '@site/src/data/common';
 import { useWelcome } from '@site/src/hooks/observer';
 import { render, screen } from '@testing-library/react';
 import DocTagsListPageWrapper from '@theme/DocTagsListPage';
 import DocTagsListPage from '@theme-original/DocTagsListPage';
 
+const personNode = { '@id': 'https://ricky.one#Person', '@type': 'Person' };
+
 mock.module('@site/src/data/common', () => ({
-  context: mock((metadata: Record<string, string>) =>
-    JSON.stringify({ ld: 'test', meta: metadata }),
+  graphFor: mock((nodes: Record<string, unknown>[]) =>
+    JSON.stringify({ '@context': 'test', '@graph': nodes }),
   ),
+  PERSON_NODE: personNode,
+  profilePageNode: mock((metadata: Record<string, unknown>) => ({ ld: 'node', metadata })),
 }));
 
 // biome-ignore lint/security/noSecrets: -
@@ -28,8 +32,8 @@ describe('theme.DocTagsListPage', () => {
 
     expect(translateTagsPageTitle).toHaveBeenCalled();
 
-    expect(context).toHaveBeenCalledTimes(1);
-    expect(context).toHaveBeenNthCalledWith(
+    expect(profilePageNode).toHaveBeenCalledTimes(1);
+    expect(profilePageNode).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
         description: expect.stringContaining('Practical notes on Buddhism'),
@@ -44,12 +48,18 @@ describe('theme.DocTagsListPage', () => {
       .querySelector('script[type="application/ld+json"]');
     expect(script).toBeInTheDocument();
     expect(JSON.parse(script?.textContent || '{}')).toEqual({
-      ld: 'test',
-      meta: expect.objectContaining({
-        description,
-        keywords: expect.arrayContaining(['mindfulness']),
-        title: 'Tags',
-      }),
+      '@context': 'test',
+      '@graph': [
+        {
+          ld: 'node',
+          metadata: expect.objectContaining({
+            description,
+            keywords: expect.arrayContaining(['mindfulness']),
+            title: 'Tags',
+          }),
+        },
+        personNode,
+      ],
     });
 
     const { head } = document;

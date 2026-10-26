@@ -8,7 +8,7 @@ import {
   babelSmartSpace,
   // Node ESM type-stripping resolves this config import, so the .ts extension is required.
   // eslint-disable-next-line import/extensions
-} from '#root/src/plugins/smart-space/index.ts';
+} from '#root/src/plugins/smart-space.ts';
 
 /**
  * Babel configuration for the site: babelSmartSpace keeps JSX text whitespace HTML-semantic in

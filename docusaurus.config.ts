@@ -6,6 +6,7 @@
 import type { Options, ThemeConfig } from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
 import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
+import { remarkMetadata } from '#root/src/plugins/metadata';
 import * as sitemap from '#root/src/plugins/sitemap';
 import { remarkSmartSpace } from '#root/src/plugins/smart-space';
 
@@ -39,13 +40,16 @@ const config: Config = {
   onBrokenLinks: 'throw',
   onDuplicateRoutes: 'throw',
   organizationName: 'rickypc',
-  plugins: [require.resolve('#root/src/plugins/media/index.ts')],
+  plugins: [
+    require.resolve('#root/src/plugins/article-schema.ts'),
+    require.resolve('#root/src/plugins/media/index.ts'),
+  ],
   presets: [
     [
       'classic',
       {
         blog: false,
-        docs: { remarkPlugins: [remarkSmartSpace] },
+        docs: { remarkPlugins: [remarkMetadata, remarkSmartSpace] },
         gtag: { trackingID: ['G-5G7P214N03', 'G-657RY80FJE', 'G-JYD543XZTH'] },
         sitemap,
         theme: { customCss: require.resolve('#root/src/css/custom.css') },

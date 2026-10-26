@@ -167,6 +167,24 @@ export const beforeAll = async (options: Options) => {
   return { context, page };
 };
 
+const collectTypes = (nodes: Record<string, unknown>[], types: Set<string>): string | undefined => {
+  let faqId: string | undefined;
+  nodes.forEach((node) => {
+    const type = node['@type'];
+    if (Array.isArray(type)) {
+      (type as string[]).forEach((t) => {
+        types.add(t);
+      });
+    } else if (type) {
+      types.add(type as string);
+    }
+    if (type === 'FAQPage' && typeof node['@id'] === 'string') {
+      faqId = node['@id'];
+    }
+  });
+  return faqId;
+};
+
 const drawn = async ({ page, selector, timeout = 775 }: Options): Promise<void> => {
   if (!page) {
     return;
@@ -255,18 +273,10 @@ export const hasJsonLd = async (options: Options) => {
   scripts.forEach((text) => {
     try {
       const parsed = JSON.parse(text);
-      if (parsed['@type']) {
-        if (Array.isArray(parsed['@type'])) {
-          parsed['@type'].forEach((t: string) => {
-            types.add(t);
-          });
-        } else {
-          types.add(parsed['@type'] as string);
-        }
-      }
-      if (parsed['@type'] === 'FAQPage' && typeof parsed['@id'] === 'string') {
-        faqId = parsed['@id'];
-      }
+      const nodes: Record<string, unknown>[] = Array.isArray(parsed['@graph'])
+        ? parsed['@graph']
+        : [parsed];
+      faqId = collectTypes(nodes, types) ?? faqId;
     } catch {
       // ignore non-JSON blocks
     }

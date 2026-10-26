@@ -5,7 +5,7 @@
 
 import { PageMetadata } from '@docusaurus/theme-common';
 import type { WrapperProps } from '@docusaurus/types';
-import { context } from '@site/src/data/common';
+import { graphFor, PERSON_NODE, profilePageNode } from '@site/src/data/common';
 import { useWelcome } from '@site/src/hooks/observer';
 import DocCategoryGeneratedIndexPage from '@theme-original/DocCategoryGeneratedIndexPage';
 import { memo, type ReactElement } from 'react';
@@ -17,7 +17,9 @@ export default memo(function DocCategoryGeneratedIndexPageWrapper(props: Props):
   return (
     <>
       <PageMetadata {...props.categoryGeneratedIndex}>
-        <script type="application/ld+json">{context(props.categoryGeneratedIndex)}</script>
+        <script type="application/ld+json">
+          {graphFor([profilePageNode(props.categoryGeneratedIndex), PERSON_NODE])}
+        </script>
         <meta content={props.categoryGeneratedIndex.description} name="twitter:description" />
         <meta content={props.categoryGeneratedIndex.title} name="twitter:title" />
       </PageMetadata>

@@ -51,13 +51,7 @@ const DEFAULT_KEYWORDS: string[] = [
 
 const DEFAULT_TITLE = 'Engineering Leader, Full Stack Developer, Smart Creative, Innovator';
 
-const FAQ_CONTEXT = {
-  '@context': 'https://schema.org/',
-  '@type': 'FAQPage',
-  inLanguage: 'en-US',
-};
-
-const PERSON_ENTITY = {
+export const PERSON_NODE = {
   '@id': 'https://ricky.one#Person',
   '@type': 'Person',
   address: {
@@ -128,7 +122,7 @@ const PERSON_ENTITY = {
   },
 };
 
-const REVIEW_AUTHOR = { '@type': 'Person', name: PERSON_ENTITY.name };
+const PERSON_REF = { '@id': PERSON_NODE['@id'] };
 
 const REVIEW_RATING = { '@type': 'Rating', bestRating: 5, ratingValue: 5 };
 
@@ -155,13 +149,78 @@ const thousands: string[] = [
   'quintillion',
 ];
 
-export type FaqItems = { answer: ReactNode; question: ReactNode };
+export type ArticleDates = Record<string, { dateModified: string; datePublished: string }>;
 
 export type Faq = { items: FaqItems[]; slug: string };
 
-export type SchemaType = 'CollectionPage' | 'FAQPage' | 'Person' | 'ProfilePage' | 'Review';
+export type FaqItems = { answer: ReactNode; question: ReactNode };
+
+export type NodeFacts = {
+  dateModified?: string;
+  datePublished?: string;
+  description?: string;
+  keywords?: string[];
+  title?: string;
+  url?: string;
+};
+
+export type SchemaType =
+  | 'BlogPosting'
+  | 'CollectionPage'
+  | 'FAQPage'
+  | 'Person'
+  | 'ProfilePage'
+  | 'Review';
 
 export const a11y = (value?: string, rest = {}) => ({ 'aria-label': value, title: value, ...rest });
+
+export const articleDatesFor = (
+  dates: ArticleDates | undefined,
+  permalink: string,
+): ArticleDates[string] | undefined =>
+  dates?.[permalink as string] ?? dates?.[`${permalink}/`] ?? dates?.[permalink.replace(/\/$/, '')];
+
+export const articleUrl = (siteUrl: string, permalink: string): string =>
+  `${siteUrl}${permalink.endsWith('/') ? permalink : `${permalink}/`}`;
+
+export const blogPostingNode = ({
+  dateModified,
+  datePublished,
+  description = DEFAULT_DESCRIPTION,
+  keywords = DEFAULT_KEYWORDS,
+  title = DEFAULT_TITLE,
+  url = 'https://ricky.one',
+}: NodeFacts = {}) => ({
+  '@id': `${url}#article`,
+  '@type': 'BlogPosting',
+  author: PERSON_REF,
+  dateModified,
+  datePublished,
+  description,
+  headline: title,
+  image: PERSON_NODE.image,
+  inLanguage: 'en-US',
+  keywords: keywords.join(','),
+  mainEntityOfPage: { '@id': url, '@type': 'WebPage' },
+  name: title,
+  publisher: PERSON_REF,
+  url,
+});
+
+export const breadcrumbListNode = (
+  breadcrumbs: { href?: string; label: string }[],
+  siteUrl: string,
+) => ({
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbs
+    .filter((breadcrumb) => breadcrumb.href)
+    .map((breadcrumb, index) => ({
+      '@type': 'ListItem',
+      item: `${siteUrl}${breadcrumb.href}`,
+      name: breadcrumb.label,
+      position: index + 1,
+    })),
+});
 
 export const chunkToWords = (input: number): string => {
   let num = input;
@@ -188,25 +247,6 @@ export const chunkToWords = (input: number): string => {
 export const clsx = (...classes: (boolean | null | number | string | undefined)[]) =>
   classes.filter((cls) => cls && typeof cls === 'string').join(' ');
 
-export const context = ({
-  description = DEFAULT_DESCRIPTION,
-  keywords = DEFAULT_KEYWORDS,
-  schema = 'ProfilePage',
-  title = DEFAULT_TITLE,
-} = {}) =>
-  JSON.stringify({
-    '@context': 'https://schema.org/',
-    '@type': schema,
-    ...(schema === 'Review' ? { author: REVIEW_AUTHOR } : {}),
-    description,
-    headline: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic',
-    keywords: keywords.join(','),
-    mainEntity: PERSON_ENTITY,
-    name: title,
-    ...(schema === 'Review' ? { reviewRating: REVIEW_RATING } : {}),
-    url: 'https://ricky.one',
-  });
-
 export const fetchAsJson = async (
   ...args: Parameters<typeof fetch>
 ): Promise<Response | Record<string, unknown>> => {
@@ -216,6 +256,30 @@ export const fetchAsJson = async (
   } catch {
     return {};
   }
+};
+
+export const graphFor = (nodes: object[]) =>
+  JSON.stringify({ '@context': 'https://schema.org/', '@graph': nodes });
+
+const key = (
+  value?: ReactNode,
+  prefix = '',
+  prefixSeparator = '-',
+  suffix = '',
+  suffixSeparator = '',
+) => {
+  const begin = prefix ? `${prefix}${prefixSeparator}` : '';
+  const end = suffix ? `${suffixSeparator}${suffix}` : '';
+  if (typeof value !== 'string' || !value.normalize) {
+    return `${begin}${end}`;
+  }
+  const str = (value as string)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase?.()
+    .replace(/\s+/, '-')
+    .replace(/\.[^/.]+$/, '');
+  return `${begin}${str}${end}`;
 };
 
 // Before humanizeYears assignment.
@@ -258,31 +322,30 @@ export const humanizeYears = (num: number, format = 'exact') => {
   }
 };
 
-const key = (
-  value?: ReactNode,
-  prefix = '',
-  prefixSeparator = '-',
-  suffix = '',
-  suffixSeparator = '',
-) => {
-  const begin = prefix ? `${prefix}${prefixSeparator}` : '';
-  const end = suffix ? `${suffixSeparator}${suffix}` : '';
-  if (typeof value !== 'string' || !value.normalize) {
-    return `${begin}${end}`;
-  }
-  const str = (value as string)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase?.()
-    .replace(/\s+/, '-')
-    .replace(/\.[^/.]+$/, '');
-  return `${begin}${str}${end}`;
-};
-
 export const oneLine = (text: string) => text.replace(/\n\s*/g, ' ');
+
+export const profilePageNode = ({
+  description = DEFAULT_DESCRIPTION,
+  keywords = DEFAULT_KEYWORDS,
+  title = DEFAULT_TITLE,
+}: NodeFacts = {}) => ({
+  '@type': 'ProfilePage',
+  description,
+  headline: 'Ricky Huang Leadership, Full Stack Development, Innovation, and Characteristic',
+  keywords: keywords.join(','),
+  mainEntity: PERSON_REF,
+  name: title,
+  url: 'https://ricky.one',
+});
 
 const tail = (path: string, keyword: string) =>
   path?.slice((path?.lastIndexOf(keyword) || -1) + 1) || '';
+
+// After profilePageNode assignment.
+export const collectionPageNode = (facts: NodeFacts = {}) => ({
+  ...profilePageNode(facts),
+  '@type': 'CollectionPage',
+});
 
 // After key & tail assignments.
 const fileName = (path: string, template?: string) => {
@@ -294,6 +357,13 @@ const fileName = (path: string, template?: string) => {
 };
 
 export { fileName, key, tail };
+
+export const reviewNode = (facts: NodeFacts = {}) => ({
+  ...profilePageNode(facts),
+  '@type': 'Review',
+  author: PERSON_REF,
+  reviewRating: REVIEW_RATING,
+});
 
 /**
  * Recursively extracts all textual content from a ReactNode.
@@ -319,7 +389,7 @@ export function textContent(node: ReactNode): string {
   return '';
 }
 
-// After textContent assignment, and before faqContext assignment.
+// After textContent assignment.
 export const faqEntries = (faq: Faq) => {
   const url = `https://ricky.one/${faq.slug}`;
   return faq.items
@@ -342,12 +412,10 @@ export const faqEntries = (faq: Faq) => {
     }));
 };
 
-export const faqContext = (faq: Faq) => {
-  const url = `https://ricky.one/${faq.slug}`;
-  return JSON.stringify({
-    ...FAQ_CONTEXT,
-    '@id': `${url}#faq`,
-    mainEntity: faqEntries(faq),
-    url,
-  });
-};
+export const faqPageNode = (faq: Faq) => ({
+  '@id': `https://ricky.one/${faq.slug}#faq`,
+  '@type': 'FAQPage',
+  inLanguage: 'en-US',
+  mainEntity: faqEntries(faq),
+  url: `https://ricky.one/${faq.slug}`,
+});

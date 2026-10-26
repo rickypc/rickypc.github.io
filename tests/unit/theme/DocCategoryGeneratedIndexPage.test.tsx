@@ -4,14 +4,20 @@
  */
 
 import { mock } from 'bun:test';
-import { context } from '@site/src/data/common';
+import { profilePageNode } from '@site/src/data/common';
 import { useWelcome } from '@site/src/hooks/observer';
 import { render, screen } from '@testing-library/react';
 import DocCategoryGeneratedIndexPageWrapper from '@theme/DocCategoryGeneratedIndexPage';
 import DocCategoryGeneratedIndexPage from '@theme-original/DocCategoryGeneratedIndexPage';
 
+const personNode = { '@id': 'https://ricky.one#Person', '@type': 'Person' };
+
 mock.module('@site/src/data/common', () => ({
-  context: mock((props: Record<string, unknown>) => JSON.stringify({ ld: 'test', props })),
+  graphFor: mock((nodes: Record<string, unknown>[]) =>
+    JSON.stringify({ '@context': 'test', '@graph': nodes }),
+  ),
+  PERSON_NODE: personNode,
+  profilePageNode: mock((metadata: Record<string, unknown>) => ({ ld: 'node', metadata })),
 }));
 
 describe('theme.DocCategoryGeneratedIndexPage', () => {
@@ -29,8 +35,8 @@ describe('theme.DocCategoryGeneratedIndexPage', () => {
 
     render(<DocCategoryGeneratedIndexPageWrapper {...props} />);
 
-    expect(context).toHaveBeenCalledTimes(1);
-    expect(context).toHaveBeenNthCalledWith(
+    expect(profilePageNode).toHaveBeenCalledTimes(1);
+    expect(profilePageNode).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
         description: props.categoryGeneratedIndex.description,
@@ -45,12 +51,18 @@ describe('theme.DocCategoryGeneratedIndexPage', () => {
       .querySelector('script[type="application/ld+json"]');
     expect(script).toBeInTheDocument();
     expect(JSON.parse(script?.textContent || '{}')).toEqual({
-      ld: 'test',
-      props: expect.objectContaining({
-        description: props.categoryGeneratedIndex.description,
-        keywords: props.categoryGeneratedIndex.keywords,
-        title: props.categoryGeneratedIndex.title,
-      }),
+      '@context': 'test',
+      '@graph': [
+        {
+          ld: 'node',
+          metadata: expect.objectContaining({
+            description: props.categoryGeneratedIndex.description,
+            keywords: props.categoryGeneratedIndex.keywords,
+            title: props.categoryGeneratedIndex.title,
+          }),
+        },
+        personNode,
+      ],
     });
 
     const { head } = document;

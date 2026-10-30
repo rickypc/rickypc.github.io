@@ -31,8 +31,7 @@
     "fontaine": "1.0.3",
     "pdfmake": "0.3.13",
     "timeable-promise": "1.7.4",
-    "tinypool": "2.2.0",
-    "ts-checker-rspack-plugin": "1.7.1"
+    "tinypool": "2.2.0"
   },
   "engines": {
     "node": ">=26.0"

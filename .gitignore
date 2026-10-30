@@ -8,10 +8,10 @@ cover.jpg
 .docusaurus
 .DS_Store
 .env.*
+*.lock
 *.log*
 /models
 /node_modules
-package-lock.json
 /playwright/.cache/
 /playwright/report/
 /playwright/results/

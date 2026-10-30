@@ -24,7 +24,6 @@ import { FontaineTransform } from 'fontaine';
 import concurrent from 'timeable-promise/concurrent';
 // eslint-disable-next-line import/no-named-as-default
 import Tinypool from 'tinypool';
-import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
 // Templates & definitions.
 import { body, properCase } from '#buddhism/media/_common';
 import audio from '#buddhism/media/audio/_index';
@@ -806,7 +805,6 @@ export default function plugin(context: LoadContext): Plugin {
               'sans-serif',
             ],
           }),
-          new TsCheckerRspackPlugin() as any,
         ],
       };
     },

@@ -3,6 +3,23 @@
  * All rights reserved.
  */
 
+/* The reading-time row reserves the same vertical gap that a markdown h2 adds above itself
+ * (infima's --ifm-h2-vertical-rhythm-top rhythm), so docs pages that open without a heading keep
+ * the height of the ones that have one. Headings directly after the row drop their own top margin
+ * so pages that do open with a heading keep exactly the same total gap.
+ */
+.metadata {
+  display: block;
+  margin-bottom: calc(var(--ifm-h2-vertical-rhythm-top) * var(--ifm-leading));
+}
+
+.metadata + :global(h1),
+.metadata + :global(h2),
+.metadata + :global(h3),
+.metadata + :global(h4) {
+  margin-top: 0;
+}
+
 .metadata .readingTime {
   opacity: 0.75;
 }

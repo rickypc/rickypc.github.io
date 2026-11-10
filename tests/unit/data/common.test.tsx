@@ -20,6 +20,7 @@ import {
   graphFor,
   humanizeYears,
   key,
+  normalizeRoute,
   numberToWords,
   oneLine,
   PERSON_NODE,
@@ -553,6 +554,29 @@ describe('data.common.key()', () => {
   test('normalizes diacritics before whitespace and extension stripping', () => {
     expect(key('Ānāpāna Sati')).toBe('anapana-sati');
     expect(key('Nibbāna.txt')).toBe('nibbana');
+  });
+
+  test('returns only the prefix and suffix for non-string input', () => {
+    expect(key(null, 'pre', '-', 'end')).toBe('pre-end');
+  });
+});
+
+// biome-ignore lint/security/noSecrets: the describe title string trips the noSecrets heuristic
+describe('data.common.normalizeRoute()', () => {
+  test('strips a trailing slash so a route universe key matches its shorthand', () => {
+    expect(normalizeRoute('/about/')).toBe('/about');
+  });
+
+  test('keeps a route without a trailing slash unchanged', () => {
+    expect(normalizeRoute('/about')).toBe('/about');
+  });
+
+  test('normalizes the home route to an empty string', () => {
+    expect(normalizeRoute('/')).toBe('');
+  });
+
+  test.each([undefined, null, 42, {}])('returns undefined for non-string input (%p)', (input) => {
+    expect(normalizeRoute(input)).toBeUndefined();
   });
 });
 

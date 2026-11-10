@@ -338,9 +338,6 @@ export const profilePageNode = ({
   url: 'https://ricky.one',
 });
 
-const tail = (path: string, keyword: string) =>
-  path?.slice((path?.lastIndexOf(keyword) || -1) + 1) || '';
-
 // After profilePageNode assignment.
 export const collectionPageNode = (facts: NodeFacts = {}) => ({
   ...profilePageNode(facts),
@@ -348,6 +345,9 @@ export const collectionPageNode = (facts: NodeFacts = {}) => ({
 });
 
 // After key & tail assignments.
+const tail = (path: string, keyword: string) =>
+  path?.slice((path?.lastIndexOf(keyword) || -1) + 1) || '';
+
 const fileName = (path: string, template?: string) => {
   let response = key(tail(path, '/').replace(/_/g, '-').replace(/^-/, ''));
   if (['condensed', 'thangka', 'wheel'].includes(template || '')) {
@@ -357,6 +357,13 @@ const fileName = (path: string, template?: string) => {
 };
 
 export { fileName, key, tail };
+
+export const normalizeRoute = (path: unknown): string | undefined => {
+  if (typeof path !== 'string') {
+    return undefined;
+  }
+  return path.endsWith('/') ? path.slice(0, -1) : path;
+};
 
 export const reviewNode = (facts: NodeFacts = {}) => ({
   ...profilePageNode(facts),

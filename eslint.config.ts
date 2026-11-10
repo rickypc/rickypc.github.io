@@ -20,7 +20,14 @@ const config: Linter.Config[] = [
   security.configs.recommended,
   { files: ['tests/unit/**/*.{ts,tsx}'], ...testing.configs['flat/react'] },
   {
-    languageOptions: { ecmaVersion: 2024, globals: { HTMLAudioElement: 'readonly' } },
+    languageOptions: {
+      ecmaVersion: 2024,
+      globals: {
+        AbortController: 'readonly',
+        AbortSignal: 'readonly',
+        HTMLAudioElement: 'readonly',
+      },
+    },
     plugins: { '@docusaurus': docusaurus as any },
     rules: {
       ...(docusaurus.configs.recommended.rules as any),

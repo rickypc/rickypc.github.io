@@ -24,19 +24,11 @@
 }
 
 [data-theme="dark"] .content:before {
-  background: repeating-linear-gradient(
-    to bottom,
-    #bac3d4 0 0.5rem,
-    transparent 0.5rem 1rem
-  );
+  background: repeating-linear-gradient(to bottom, #bac3d4 0 0.5rem, transparent 0.5rem 1rem);
 }
 
 [data-theme="light"] .content:before {
-  background: repeating-linear-gradient(
-    to bottom,
-    #ccd1d9 0 0.5rem,
-    transparent 0.5rem 1rem
-  );
+  background: repeating-linear-gradient(to bottom, #ccd1d9 0 0.5rem, transparent 0.5rem 1rem);
 }
 
 .content .indicator {

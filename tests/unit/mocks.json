@@ -190,6 +190,16 @@
     "motion/react": "./mocks/motion/react",
     "react-icons/lib": "./mocks/react-icons/lib"
   },
+  "tests/unit/data/model-context-isolation.test.tsx": {
+    "@docusaurus/router": "./mocks/@docusaurus/router",
+    "@docusaurus/theme-common": "./mocks/@docusaurus/theme-common/index",
+    "@docusaurus/useDocusaurusContext": "./mocks/@docusaurus/useDocusaurusContext",
+    "@docusaurus/useGlobalData": "./mocks/@docusaurus/useGlobalData",
+    "@docusaurus/useIsBrowser": "./mocks/@docusaurus/useIsBrowser",
+    "@site/src/hooks/observer": "./mocks/@site/src/hooks/observer",
+    "@theme-original/DocItem": "./mocks/@theme-original/DocItem",
+    "@theme/Layout": "./mocks/@theme/Layout"
+  },
   "tests/unit/data/portfolio/common.test.ts": {
     "motion/react": "./mocks/motion/react"
   },
@@ -590,6 +600,11 @@
     "@site/src/hooks/observer": "./mocks/@site/src/hooks/observer",
     "@theme-original/DocCategoryGeneratedIndexPage": "./mocks/@theme-original/DocCategoryGeneratedIndexPage",
     "@theme/Heading": "./mocks/@theme/Heading"
+  },
+  "tests/unit/theme/DocItem.test.tsx": {
+    "@docusaurus/router": "./mocks/@docusaurus/router",
+    "@docusaurus/useGlobalData": "./mocks/@docusaurus/useGlobalData",
+    "@theme-original/DocItem": "./mocks/@theme-original/DocItem"
   },
   "tests/unit/theme/DocTagDocListPage.test.tsx": {
     "@docusaurus/router": "./mocks/@docusaurus/router",

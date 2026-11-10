@@ -5,4 +5,6 @@
 
 import { mock } from 'bun:test';
 
+export const useHistory = mock(() => ({ push: mock() }));
+
 export const useLocation = mock(() => ({ pathname: '/' }));

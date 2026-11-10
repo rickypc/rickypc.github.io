@@ -27,14 +27,7 @@
   display: inline-block;
   color: transparent;
   white-space: nowrap;
-  background: linear-gradient(
-    to right,
-    #6666ff,
-    #0099ff,
-    #00ff00,
-    #ff3399,
-    #6666ff
-  );
+  background: linear-gradient(to right, #6666ff, #0099ff, #00ff00, #ff3399, #6666ff);
   background-clip: text;
   background-size: 400% 100%;
   will-change: background-position;
@@ -229,11 +222,7 @@
     line-height: 1.1rem;
   }
 
-  .hats
-    .hat[aria-label="Full Stack Developer"]
-    .details
-    .content
-    p:nth-of-type(2) {
+  .hats .hat[aria-label="Full Stack Developer"] .details .content p:nth-of-type(2) {
     margin-right: 4rem;
   }
 

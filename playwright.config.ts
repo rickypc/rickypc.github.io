@@ -18,29 +18,39 @@ export default defineConfig({
     { name: 'audio', testMatch: /.*audio\.spec\.ts/ },
     {
       name: 'chromium',
-      testIgnore: /.*(audio|pdf)\.spec\.ts/,
+      testIgnore: /.*(audio|pdf|webmcp)\.spec\.ts/,
       use: { ...devices['Desktop Chrome'], viewport },
     },
     {
       name: 'firefox',
-      testIgnore: /.*(audio|pdf)\.spec\.ts/,
+      testIgnore: /.*(audio|pdf|webmcp)\.spec\.ts/,
       use: { ...devices['Desktop Firefox'], viewport },
     },
     {
       name: 'mobile-chrome',
-      testIgnore: /.*(audio|pdf)\.spec\.ts/,
+      testIgnore: /.*(audio|pdf|webmcp)\.spec\.ts/,
       use: { ...devices['Pixel 5'] },
     },
     {
       name: 'mobile-safari',
-      testIgnore: /.*(audio|pdf)\.spec\.ts/,
+      testIgnore: /.*(audio|pdf|webmcp)\.spec\.ts/,
       use: { ...devices['iPhone 12'] },
     },
     { name: 'pdf', testMatch: /.*pdf\.spec\.ts/ },
     {
       name: 'webkit',
-      testIgnore: /.*(audio|pdf)\.spec\.ts/,
+      testIgnore: /.*(audio|pdf|webmcp)\.spec\.ts/,
       use: { ...devices['Desktop Safari'], viewport },
+    },
+    {
+      name: 'webmcp',
+      testMatch: /.*webmcp\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        // biome-ignore lint/security/noSecrets: the WebMCP feature flag strings trip the heuristic
+        launchOptions: { args: ['--enable-features=WebMCPTesting', '--enable-webmcp-testing'] },
+        viewport,
+      },
     },
   ],
   reporter: [['html', { outputFolder: './playwright/report' }]],

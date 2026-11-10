@@ -38,14 +38,8 @@
   text-align: left;
 }
 
-[data-theme="dark"]
-  :global(.theme-layout-main):has(> .home)
-  + footer:global(.footer) {
-  background-color: color-mix(
-    in oklab,
-    var(--ifm-footer-background-color) 65%,
-    transparent
-  );
+[data-theme="dark"] :global(.theme-layout-main):has(> .home) + footer:global(.footer) {
+  background-color: color-mix(in oklab, var(--ifm-footer-background-color) 65%, transparent);
   border-bottom: 0.0625rem solid
     color-mix(in oklab, var(--ifm-footer-background-color) 65%, transparent);
 }

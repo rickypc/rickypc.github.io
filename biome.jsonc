@@ -14,7 +14,7 @@
     }
   },
   "files": { "ignoreUnknown": true },
-  "formatter": { "indentStyle": "space", "indentWidth": 2 },
+  "formatter": { "indentStyle": "space", "indentWidth": 2, "lineWidth": 100 },
   "javascript": {
     "formatter": {
       "arrowParentheses": "always",
@@ -109,6 +109,7 @@
       }
     }
   },
+  "markdown": { "parser": { "frontmatter": true } },
   "overrides": [
     {
       "includes": ["**/e2e/*.spec.ts"],

@@ -839,7 +839,7 @@ export const schema: SchemaType = 'CollectionPage';
 
 export const layout: LayoutProps = {
   description: oneLine(`Ricky Huang's software engineering portfolio: 15 systems shipped, from
-    billion-email scale to a mission-critical Experian service. See the proof, then say hello.`),
+    billion-email scale to a mission-critical Experian service. See proof, then say hello.`),
   faq: { items: faqItems, slug: 'portfolio' },
   keywords: [
     'software engineering portfolio',

@@ -21,7 +21,6 @@
       "delimiterSpacing": false,
       "jsxQuoteStyle": "double",
       "lineEnding": "lf",
-      "lineWidth": 100,
       "operatorLinebreak": "before",
       "quoteStyle": "single"
     }

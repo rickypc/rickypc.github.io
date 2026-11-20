@@ -35,6 +35,15 @@
 
 @font-face {
   font-display: swap;
+  font-family: "Noto Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url(/src/font/notosansmono/BngrUXNETWXI6LwhGYvaxZikqZqK6fBq6kPvUce2oAZcdthSBUsYck4-_FNJ093dU2YVP8c9MA.woff2)
+    format("woff2");
+}
+
+@font-face {
+  font-display: swap;
   font-family: "Noto Serif Devanagari";
   font-style: normal;
   font-weight: 400;

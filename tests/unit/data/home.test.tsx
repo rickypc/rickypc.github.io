@@ -71,7 +71,7 @@ describe('data.home', () => {
 
   test('exports layout with description, keywords array, and title', () => {
     expect(typeof layout.description).toBe('string');
-    expect(layout.description).toMatch(/engineering leader and full stack developer/);
+    expect(layout.description).toMatch(/engineering leader and full stack architect/);
 
     expect(Array.isArray(layout.keywords)).toBeTruthy();
     expect(layout.keywords?.length).toBeGreaterThan(0);

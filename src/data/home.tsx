@@ -441,9 +441,9 @@ export const intro: IntroProps = {
 };
 
 export const layout: LayoutProps = {
-  description: oneLine(`Ricky Huang: engineering leader and full stack developer -
+  description: oneLine(`Ricky Huang: engineering leader and full stack architect -
     ${humanizeYears(total, 'over')} of durable cloud-native platforms and mission-critical proof.
-    See the systems, then say hello.`),
+    See systems, say hello.`),
   faq: { items: faqItems, slug: '' },
   keywords: [
     'engineering leader',
@@ -477,7 +477,7 @@ export const layout: LayoutProps = {
     />,
   ],
   schema: 'ProfilePage',
-  title: 'Engineering Leader & Full Stack Developer - 30+ Years',
+  title: 'Engineering Leader & Full-Stack Architect',
 };
 
 export const socials: SocialProps[] = [

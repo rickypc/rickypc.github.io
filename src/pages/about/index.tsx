@@ -11,10 +11,15 @@ import Preamble from '@site/src/components/common/Preamble';
 import QRCode from '@site/src/components/common/QRCode';
 import { intro, layout } from '@site/src/data/about';
 import { clsx } from '@site/src/data/common';
-import { memo } from 'react';
+import { memo, type ReactElement } from 'react';
 import styles from './styles.module.css';
 
-export default memo(function About() {
+/**
+ * About route: the leadership-profile narrative beside the persona quadrant charts, the oracular
+ * animation, and a QR card.
+ * @returns {ReactElement} The about page element wrapped in the shared `Layout` and `Preamble`.
+ */
+export default memo(function About(): ReactElement {
   return (
     <Layout {...layout}>
       <Preamble intro={intro} />

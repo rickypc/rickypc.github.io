@@ -14,6 +14,12 @@ export type FilterProps = {
   onClick: (_: string) => void;
 };
 
+/**
+ * Portfolio tag filter: every tag used across the project catalog, sorted with `All` in front. A
+ * media query swaps the pill row for a collapsible menu on narrow screens.
+ * @param {FilterProps} props - The active tag and the handler called with the clicked tag.
+ * @returns {ReactElement} The pill row or the collapsible menu, depending on viewport width.
+ */
 export default memo(function Filter({ current, onClick }: FilterProps): ReactElement {
   const [collapsible] = useMedia('screen and (max-width: 62rem)');
 

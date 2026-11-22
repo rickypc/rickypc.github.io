@@ -66,7 +66,12 @@ const Timeline = memo(function Timeline({
   );
 });
 
-export default memo(function Content() {
+/**
+ * Timeline page body: the experience entries alternating left and right around the centre rail. A
+ * spring applied to `useScroll` progress grows that rail as the page is scrolled.
+ * @returns {ReactElement} A list of timeline entries followed by the scroll indicator.
+ */
+export default memo(function Content(): ReactElement {
   const { scrollYProgress } = useScroll();
   // After scrollYProgress assignment.
   const scaleY = useSpring(scrollYProgress, { damping: 30, restDelta: 0.001, stiffness: 100 });

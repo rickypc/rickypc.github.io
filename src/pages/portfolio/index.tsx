@@ -17,7 +17,7 @@ import {
   type ToolDescriptor,
 } from '@site/src/data/model-context';
 import { catalog, intro, layout } from '@site/src/data/portfolio';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, type ReactElement, useCallback, useEffect, useState } from 'react';
 import styles from './styles.module.css';
 
 type FilterableProject = { tags: string[]; title: string };
@@ -60,7 +60,13 @@ const filterTool = (
   name: 'filter-projects',
 });
 
-export default memo(function Portfolio() {
+/**
+ * Portfolio route: the tag filter pills, the project cards built from the catalog, and the zoom
+ * lightbox for the selected project image. A `filter-projects` WebMCP tool is registered while the
+ * page is mounted, so an agent can drive the same tag-filter path a visitor clicks.
+ * @returns {ReactElement} The catalog page element wrapped in the shared `Layout` and `Preamble`.
+ */
+export default memo(function Portfolio(): ReactElement {
   const [[current, filtered], setFilter] = useState(['All', catalog]);
   const [open, setOpen] = useState({});
 

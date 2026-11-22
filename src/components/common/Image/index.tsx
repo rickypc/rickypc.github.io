@@ -223,6 +223,13 @@ const Picture = memo(function Picture({
   );
 });
 
+/**
+ * Responsive picture for the portfolio slides, home figures, and timeline entries. Sources load
+ * only once an IntersectionObserver sees the picture, unless `live` forces them.
+ * @param {ImageProps} props - Picture sources, alt text, fetch priority, ref, load handler, and the
+ *   optional link props that wrap the picture.
+ * @returns {ReactElement} The picture, inside a `Link` when `link` is supplied.
+ */
 export default memo(function Image({ link, ...rest }: ImageProps): ReactElement {
   return link ? (
     <Link {...link}>

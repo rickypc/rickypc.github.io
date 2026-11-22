@@ -106,6 +106,13 @@ const Phrase = memo(function Phrase({ children, coeff = 0, delays }: PhraseProps
   });
 });
 
+/**
+ * Word-by-word fade-in for the rotating role labels in the home page greeting: each phrase splits
+ * into words and each word into characters that appear in sequence. An IntersectionObserver hook
+ * arms the animation once the span scrolls into view.
+ * @param {RevealProps} props - The label text to animate and a coefficient offsetting each delay.
+ * @returns {ReactElement} The span holding every phrase, hidden from assistive technology.
+ */
 export default memo(function Reveal({ children, coeff }: RevealProps): ReactElement {
   const label: ReactNode[] = [];
   const phrases = Children.map(children, (child) => {

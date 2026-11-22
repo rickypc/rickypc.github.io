@@ -20,6 +20,11 @@ const Social = memo(function Social({ href, Icon, title }: SocialProps): ReactEl
   );
 });
 
+/**
+ * Social profile links under the home page role cards: one list item per profile, its icon linking
+ * to that profile with the network name as the tooltip and accessible label.
+ * @returns {ReactElement} The unordered list of icon links.
+ */
 export default memo(function Socials() {
   return (
     <ul className={styles.social}>

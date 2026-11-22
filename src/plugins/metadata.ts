@@ -70,8 +70,9 @@ const isTitleNode = (child: RootChildNode): boolean =>
 
 /**
  * Remark attacher that inserts a `<Metadata />` element into each routed docs page.
- * @returns {ReturnType} The remark transformer performing the insertion (see the module header for
- *   the position rules and the pipeline gotchas it accounts for).
+ * @returns {(root: RootNode, file: VFileLike) => void} The remark transformer performing the
+ *   insertion (see the module header for the position rules and the pipeline gotchas it accounts
+ *   for).
  */
 export function remarkMetadata() {
   return (root: RootNode, file: VFileLike) => {

@@ -256,6 +256,14 @@ const Slider = memo(function Slider({
   );
 });
 
+/**
+ * Image carousel inside each portfolio project card: a draggable viewport with arrow buttons and
+ * cycling indicators. Autoplay is gated by an `IntersectionObserver` hook and paused for print,
+ * resize, hover, and an opened lightbox.
+ * @param {CarouselProps} props - The slide images, autoplay interval, lightbox click handler, the
+ *   opened image, id prefix, title, and the ref exposing the pause handle.
+ * @returns {ReactElement} The carousel viewport with its slider, arrows, and indicators.
+ */
 export default memo(function Carousel({
   duration = 5000,
   images,

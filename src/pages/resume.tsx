@@ -10,10 +10,15 @@ import QRCode from '@site/src/components/common/QRCode';
 import Content from '@site/src/components/resume/Content';
 import { clsx } from '@site/src/data/common';
 import { header, layout } from '@site/src/data/resume';
-import { memo, useMemo } from 'react';
+import { memo, type ReactElement, useMemo } from 'react';
 import styles from './resume.module.css';
 
-export default memo(function Resume() {
+/**
+ * Resume route: the headline, role line, and contact links read from the Docusaurus site config,
+ * above the career history sections.
+ * @returns {ReactElement} The resume page element wrapped in the shared `Layout` and `Preamble`.
+ */
+export default memo(function Resume(): ReactElement {
   const { siteConfig } = useDocusaurusContext();
   const props = useMemo(() => header({ siteConfig }), [siteConfig]);
   return (

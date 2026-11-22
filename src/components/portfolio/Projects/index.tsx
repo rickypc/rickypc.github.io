@@ -102,6 +102,14 @@ const Project = memo(function Project({
   );
 });
 
+/**
+ * Project grid on the portfolio page: one card per filtered project with its carousel, title link,
+ * description, and tag list. `AnimatePresence` and `LayoutGroup` animate the cards as the filter
+ * narrows the list.
+ * @param {ProjectsProps} props - The filtered project entries, the slide click handler, and the
+ *   image currently opened in the lightbox.
+ * @returns {ReactElement} A list of project cards inside the animated layout group.
+ */
 export default memo(function Projects({ filtered, onClick, open }: ProjectsProps): ReactElement {
   const [hovered, setHovered] = useState(-1);
   const createHoverStart = useCallback((index: number) => () => setHovered(index), []);

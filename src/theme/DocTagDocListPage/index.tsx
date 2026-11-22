@@ -44,6 +44,14 @@ const usePageTitle = (props: Props): string => {
   );
 };
 
+/**
+ * Wraps the theme's `DocTagDocListPage` for one docs tag and injects a `PageMetadata` block with a
+ * tag-specific description, keyword list, and Twitter tags. The same block emits the JSON-LD
+ * `@graph` pairing the page node with the author's profile node.
+ * @param {Props} props - The wrapper props handed over by Docusaurus, whose tag label and count
+ *   feed the keywords and the pluralised translated page title.
+ * @returns {ReactElement} The metadata block above the unmodified tag listing page.
+ */
 export default memo(function DocTagDocListPageWrapper(props: Props): ReactElement {
   const { label } = props.tag;
   const metadata = {

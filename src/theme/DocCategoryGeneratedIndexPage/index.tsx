@@ -12,6 +12,14 @@ import { memo, type ReactElement } from 'react';
 
 type Props = WrapperProps<typeof DocCategoryGeneratedIndexPage>;
 
+/**
+ * Wraps the theme's `DocCategoryGeneratedIndexPage` for auto-generated category index routes and
+ * injects a `PageMetadata` block with Twitter title and description tags. The same block emits the
+ * JSON-LD `@graph` pairing the page node with the author's profile node.
+ * @param {Props} props - The wrapper props handed over by Docusaurus, whose generated index
+ *   metadata seeds the injected tags and structured data.
+ * @returns {ReactElement} The metadata block above the unmodified generated index page.
+ */
 export default memo(function DocCategoryGeneratedIndexPageWrapper(props: Props): ReactElement {
   useWelcome({ navigation: false });
   return (

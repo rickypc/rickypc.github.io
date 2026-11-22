@@ -5,10 +5,15 @@
 
 import { clsx } from '@site/src/data/common';
 import { useVisibility } from '@site/src/hooks/observer';
-import { memo } from 'react';
+import { memo, type ReactElement } from 'react';
 import styles from './styles.module.css';
 
-export default memo(function Oracle() {
+/**
+ * Decorative oracle on the About page: three stacked panels carrying no text of their own.
+ * An `IntersectionObserver` hook adds the play class only while the stack is on screen.
+ * @returns {ReactElement} The oracle wrapper and its three layered panels.
+ */
+export default memo(function Oracle(): ReactElement {
   const { ref, visible } = useVisibility<HTMLDivElement>({ threshold: 0.15 });
   return (
     <div className={clsx(visible && styles.play, styles.oracle)}>

@@ -83,6 +83,12 @@ const printResumeTool = (): ToolDescriptor => ({
   name: 'print-resume',
 });
 
+/**
+ * Page shell shared by the site routes, wrapping the theme layout, page meta tags, and main area.
+ * @param {PropsWithChildren<LayoutProps>} props - Page title, description, keywords, schema
+ *   variant, extra metadata nodes, optional FAQ entries, and the class for the main element.
+ * @returns {ReactElement} The themed layout carrying page metadata and the children it wraps.
+ */
 export default memo(function Layout({
   children,
   className,

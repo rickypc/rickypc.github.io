@@ -8,10 +8,15 @@ import { characteristic, headline, paragraphs } from '@site/src/data/about';
 import { key } from '@site/src/data/common';
 import Heading from '@theme/Heading';
 import { domAnimation, LazyMotion, motion } from 'motion/react';
-import { memo } from 'react';
+import { memo, type ReactElement } from 'react';
 import styles from './styles.module.css';
 
-export default memo(function Content() {
+/**
+ * About page body: the level-2 headline with its heart anchor, the intro paragraphs, and the
+ * characteristic traits as a list; the article fades and scales in as it scrolls into view.
+ * @returns {ReactElement} The animated article holding those headings, paragraphs, and trait items.
+ */
+export default memo(function Content(): ReactElement {
   return (
     <LazyMotion features={domAnimation}>
       <motion.article

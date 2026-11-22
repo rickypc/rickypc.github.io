@@ -15,6 +15,12 @@ type ContentProps = {
   navigation?: boolean;
 };
 
+/**
+ * 404 body: the oversized 404 glyph, the "secret place" notice, and the link back to the homepage.
+ * @param {ContentProps} props - Optional wrapper class plus the flag handed to `useWelcome` to keep
+ *   the navbar navigation active on the error route.
+ * @returns {ReactElement} The main element holding the artwork, copy, and recovery link.
+ */
 export default memo(function Content({
   className,
   navigation = false,

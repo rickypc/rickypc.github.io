@@ -54,6 +54,11 @@ const capOutcome = (outcome: ToolOutcome | undefined): ToolOutcome => {
   return truncated ? { ...capped, truncated } : capped;
 };
 
+/**
+ * Reads the host `modelContext` object that WebMCP tool registration needs.
+ * @returns {ModelContext | undefined} The context, or undefined during SSR and on hosts that
+ *   expose none.
+ */
 export const getModelContext = (): ModelContext | undefined => {
   if (typeof document === 'undefined') {
     return undefined;
@@ -134,8 +139,8 @@ const wrapTool = (descriptor: ToolDescriptor, signal: AbortSignal): ToolDescript
  * absent (or the caller's signal already aborted), `{ error }` means the descriptor list
  * was rejected, and an `AbortController` is a live registration.
  * @param {readonly ToolDescriptor[]} tools - The descriptors to register.
- * @param {object} [options] - Optional caller-owned abort signal.
- * @param {AbortSignal} [options.signal] - Optional caller-owned abort signal.
+ * @param {object} [options] - A caller-owned abort signal that unregisters the tools early.
+ * @param {AbortSignal} [options.signal] - The signal itself.
  * @returns {AbortController | { error: string } | undefined} Cancellation handle, or the failure reason.
  */
 export const registerTools = (

@@ -26,6 +26,12 @@ export type ButtonProps = {
   };
 };
 
+/**
+ * Motion-animated button behind the portfolio carousel arrows, playback controls, and hat toggles.
+ * @param {PropsWithChildren<ButtonProps>} props - Button label, styling, ref, pointer handlers, and
+ *   the optional tap-scale animation target.
+ * @returns {ReactElement} The rendered button.
+ */
 export default memo(function Button({
   children,
   className,

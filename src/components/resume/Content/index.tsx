@@ -215,7 +215,12 @@ const Testimonials = memo(function Testimonials() {
   );
 });
 
-export default memo(function Content() {
+/**
+ * Entire resume page body: the summary, strengths, leadership, experience, education,
+ * certification, skill, and testimonial sections, then the code background behind them.
+ * @returns {ReactElement} A fragment stacking every resume section in reading order.
+ */
+export default memo(function Content(): ReactElement {
   return (
     <>
       <Preamble />

@@ -12,6 +12,14 @@ import { memo, type ReactElement } from 'react';
 
 type Props = WrapperProps<typeof DocTagsListPage>;
 
+/**
+ * Wraps the theme's `DocTagsListPage`, the all-tags index, and injects a `PageMetadata` block with
+ * a fixed SEO description, keyword list, and Twitter tags. The same block emits the JSON-LD
+ * `@graph` pairing the page node with the author's profile node.
+ * @param {Props} props - The wrapper props handed over by Docusaurus; the injected metadata is
+ *   fixed copy, so they are only re-spread onto the original component.
+ * @returns {ReactElement} The metadata block above the unmodified tags index.
+ */
 export default memo(function DocTagsListPageWrapper(props: Props): ReactElement {
   const metadata = {
     description:

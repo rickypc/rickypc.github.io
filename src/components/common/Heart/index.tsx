@@ -38,6 +38,11 @@ const storage = (key) => {
 };
 */
 
+/**
+ * Reaction slot reserved beside a story, timeline entry, or project card on the site.
+ * @param {HeartProps} props - The entry id behind the slot key and an optional class name.
+ * @returns {ReactElement} The styled span holding that slot.
+ */
 export default memo(function Heart({ className, id }: HeartProps): ReactElement {
   const key = `heart-${id}`;
   return <span className={clsx(className, styles.reaction)} key={key} />;

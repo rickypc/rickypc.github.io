@@ -12,6 +12,13 @@ import { memo, type ReactElement } from 'react';
 
 type Props = WrapperProps<typeof NotFound>;
 
+/**
+ * Wraps the theme's `NotFound`, replacing its markup with the site `Layout` around
+ * `NotFoundContent` so the error route shares the site chrome. The `Layout` injects the 404 title,
+ * description, keywords, and JSON-LD graph in place of the theme defaults.
+ * @param {Props} props - The wrapper props handed over by Docusaurus, spread onto the 404 content.
+ * @returns {ReactElement} The layout-wrapped 404 page.
+ */
 export default memo(function NotFoundWrapper(props: Props): ReactElement {
   const layout = {
     description:

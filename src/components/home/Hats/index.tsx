@@ -96,6 +96,11 @@ const Hat = memo(function Hat({
   );
 });
 
+/**
+ * Role cards stacked in the home page body, one per entry of the site's hat data, each showing its
+ * animated label, a description, and a collapsible detail note.
+ * @returns {ReactElement} The container listing every role card.
+ */
 export default memo(function Hats() {
   return (
     <div className={styles.hats}>

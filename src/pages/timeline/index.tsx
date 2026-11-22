@@ -9,10 +9,15 @@ import QRCode from '@site/src/components/common/QRCode';
 import Content from '@site/src/components/timeline/Content';
 import { clsx } from '@site/src/data/common';
 import { intro, layout } from '@site/src/data/timeline';
-import { memo } from 'react';
+import { memo, type ReactElement } from 'react';
 import styles from './styles.module.css';
 
-export default memo(function Timeline() {
+/**
+ * Timeline route: career milestone articles alternating along a scroll-driven spine and filed
+ * under year headings.
+ * @returns {ReactElement} The timeline page element wrapped in the shared `Layout` and `Preamble`.
+ */
+export default memo(function Timeline(): ReactElement {
   return (
     <Layout className={styles.timeline} {...layout}>
       <Preamble intro={intro} />

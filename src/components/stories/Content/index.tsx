@@ -70,7 +70,12 @@ const Story = memo(function Story({
   );
 });
 
-export default memo(function Content() {
+/**
+ * Stories page body: one endorsement card per testimonial, with its headline link, quote, role,
+ * author, and affiliation.
+ * @returns {ReactElement} A list of story cards, one per entry in the stories data.
+ */
+export default memo(function Content(): ReactElement {
   return (
     <div className={styles.content}>
       {stories.map(({ header, ...rest }) => (

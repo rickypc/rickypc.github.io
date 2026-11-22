@@ -102,6 +102,14 @@ const useMetadata = (props: MetadataProps) =>
     title: props.title || '',
   });
 
+/**
+ * Phrase and verse panel: each phrase line printed inside a code-block shell with the supplied
+ * prefix, infix, and suffix punctuation. The lines are stringified into code-block metadata so the
+ * copy button yields plain text.
+ * @param {PhraseBlockProps} props - The phrase payload with children and title, plus the affix
+ *   strings and an optional container class.
+ * @returns {ReactElement} The titled panel holding the phrase lines and the code block buttons.
+ */
 export default memo(function PhraseBlock({
   className = '',
   infix,

@@ -117,6 +117,13 @@ function GrStop(props: IconBaseProps): ReactElement {
 const radius = 16;
 const strokeDasharray = 2 * Math.PI * radius;
 
+/**
+ * Pronunciation player under the home greeting and beside each phrase: a play, pause, or resume
+ * button, a stop button while playback runs, and a ring tracking how much of the clip is left. The
+ * ring's dash offset is a spring-driven motion value derived from the audio hook's progress.
+ * @param {PlaybackProps} props - The clip path, an optional class, and the volume multiplier.
+ * @returns {ReactElement | null} The controls, or nothing when the clip is missing.
+ */
 export default memo(function Playback({
   className,
   path,

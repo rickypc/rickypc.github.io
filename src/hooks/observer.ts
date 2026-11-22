@@ -128,6 +128,9 @@ export function useResize(delay = 250) {
   return [resizing];
 }
 
+/**
+ * Layout effect in the browser, a plain effect during server rendering.
+ */
 export const useSafeLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 /**

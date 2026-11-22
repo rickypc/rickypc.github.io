@@ -5,7 +5,7 @@
 
 import type { QuadrantAxis, QuadrantLabel, QuadrantPosition } from '@site/src/data/about';
 import { a11y, clsx, key } from '@site/src/data/common';
-import { memo } from 'react';
+import { memo, type ReactElement } from 'react';
 import styles from './styles.module.css';
 
 type PersonaQuadrantProps = {
@@ -16,13 +16,20 @@ type PersonaQuadrantProps = {
   labels: QuadrantLabel[];
 };
 
+/**
+ * One persona-quadrant chart on the About page: an SVG grid with axis arrows, captioned labels, and
+ * a gradient dot marking where that personality type sits.
+ * @param {PersonaQuadrantProps} props - Alt text, the axis and label entries, the dot position, and
+ *   the CSS class naming this quadrant.
+ * @returns {ReactElement} The labelled quadrant chart.
+ */
 export default memo(function PersonaQuadrant({
   alt,
   axes,
   circle,
   className,
   labels,
-}: PersonaQuadrantProps) {
+}: PersonaQuadrantProps): ReactElement {
   return (
     <>
       {/* biome-ignore lint/a11y/noSvgWithoutTitle: - */}

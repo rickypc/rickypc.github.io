@@ -239,6 +239,10 @@ const visits = (node: unknown): void => {
   visitProperties(record);
 };
 
+/**
+ * Babel adapter for .ts/.tsx sources: rewrites each JSXText run and keeps `extra.rawValue` in sync.
+ * @returns {BabelPlugin} The plugin consumed by babel.config.ts.
+ */
 export const babelSmartSpace = (): BabelPlugin => ({
   name: 'smart-space',
   visitor: {
@@ -256,4 +260,8 @@ export const babelSmartSpace = (): BabelPlugin => ({
   },
 });
 
+/**
+ * Remark adapter for MDX sources: runs the same shared rules over the parsed tree.
+ * @returns {(tree: unknown) => void} The transformer that visits every JSX text node.
+ */
 export const remarkSmartSpace = (): ((tree: unknown) => void) => visits;

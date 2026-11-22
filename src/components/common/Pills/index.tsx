@@ -55,6 +55,14 @@ const Item = memo(function Item({
   );
 });
 
+/**
+ * Tag filter pills on the portfolio page: one clickable, keyboard-operable pill per tag, the
+ * selected one covered by a gradient highlight that slides across the row. LazyMotion and a shared
+ * layout id animate that highlight as the selection changes.
+ * @param {PillsProps} props - The tag labels, the selected label, the click handler, the shared
+ *   layout id prefix, and an optional translation flag.
+ * @returns {ReactElement} The definition list of pills.
+ */
 export default memo(function Pills({
   active,
   items,

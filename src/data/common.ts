@@ -172,17 +172,40 @@ export type SchemaType =
   | 'ProfilePage'
   | 'Review';
 
+/**
+ * Builds the matching `aria-label` and `title` pair used on icon-only controls.
+ * @param {string} [value] - The accessible text.
+ * @param {object} [rest] - Extra attributes merged after the label pair.
+ * @returns {object} The prop object to spread onto the element.
+ */
 export const a11y = (value?: string, rest = {}) => ({ 'aria-label': value, title: value, ...rest });
 
+/**
+ * Looks up a page’s dates, tolerating the trailing-slash variants of a permalink.
+ * @param {ArticleDates} [dates] - The dates map published by the article-schema plugin.
+ * @param {string} permalink - The routed URL to look up.
+ * @returns {ArticleDates[string] | undefined} The entry, whichever slash form matched.
+ */
 export const articleDatesFor = (
   dates: ArticleDates | undefined,
   permalink: string,
 ): ArticleDates[string] | undefined =>
   dates?.[permalink as string] ?? dates?.[`${permalink}/`] ?? dates?.[permalink.replace(/\/$/, '')];
 
+/**
+ * Turns a permalink into the absolute URL the site actually serves.
+ * @param {string} siteUrl - The site origin, without a trailing slash.
+ * @param {string} permalink - The routed URL of the article.
+ * @returns {string} The canonical URL, always ending in a slash.
+ */
 export const articleUrl = (siteUrl: string, permalink: string): string =>
   `${siteUrl}${permalink.endsWith('/') ? permalink : `${permalink}/`}`;
 
+/**
+ * Builds the `BlogPosting` schema node for one article, defaulting to the site identity.
+ * @param {NodeFacts} [facts] - Optional dates, description, keywords, title, and url overrides.
+ * @returns {object} The schema node, linked to the author person node.
+ */
 export const blogPostingNode = ({
   dateModified,
   datePublished,
@@ -207,6 +230,12 @@ export const blogPostingNode = ({
   url,
 });
 
+/**
+ * Builds the `BreadcrumbList` schema node from the breadcrumbs that were rendered.
+ * @param {object[]} breadcrumbs - Entries with a label and href; the href-less crumb is dropped.
+ * @param {string} siteUrl - The site origin used to make each crumb absolute.
+ * @returns {object} The schema node with positionally ordered list items.
+ */
 export const breadcrumbListNode = (
   breadcrumbs: { href?: string; label: string }[],
   siteUrl: string,
@@ -222,6 +251,11 @@ export const breadcrumbListNode = (
     })),
 });
 
+/**
+ * Spells one 0-999 chunk as English words; used by `numberToWords`.
+ * @param {number} input - The chunk to spell.
+ * @returns {string} Its word form, without separators.
+ */
 export const chunkToWords = (input: number): string => {
   let num = input;
   const response: string[] = [];
@@ -244,9 +278,19 @@ export const chunkToWords = (input: number): string => {
   return response.join('');
 };
 
+/**
+ * Joins the truthy string class names, dropping falsy and non-string values.
+ * @param {(boolean | null | number | string | undefined)[]} classes - Candidate class names.
+ * @returns {string} The space-separated class attribute value.
+ */
 export const clsx = (...classes: (boolean | null | number | string | undefined)[]) =>
   classes.filter((cls) => cls && typeof cls === 'string').join(' ');
 
+/**
+ * Fetches a URL and parses its JSON body.
+ * @param {unknown[]} args - The same arguments global fetch accepts.
+ * @returns {Promise<object>} The parsed body, or an empty object when the body is not JSON.
+ */
 export const fetchAsJson = async (
   ...args: Parameters<typeof fetch>
 ): Promise<Response | Record<string, unknown>> => {
@@ -258,9 +302,23 @@ export const fetchAsJson = async (
   }
 };
 
+/**
+ * Wraps schema nodes in one schema.org graph payload.
+ * @param {object[]} nodes - The schema nodes to embed.
+ * @returns {string} The JSON string for a `application/ld+json` script.
+ */
 export const graphFor = (nodes: object[]) =>
   JSON.stringify({ '@context': 'https://schema.org/', '@graph': nodes });
 
+/**
+ * Slugs a label: diacritics stripped, lowercased, first whitespace run and extension removed.
+ * @param {ReactNode} [value] - The label to slugify.
+ * @param {string} [prefix] - Segment placed before the label.
+ * @param {string} [prefixSeparator] - Separator between the prefix and the label.
+ * @param {string} [suffix] - Segment placed after the label.
+ * @param {string} [suffixSeparator] - Separator between the label and the suffix.
+ * @returns {string} The key used for routes, PDFs, and React keys.
+ */
 const key = (
   value?: ReactNode,
   prefix = '',
@@ -283,6 +341,11 @@ const key = (
 };
 
 // Before humanizeYears assignment.
+/**
+ * Spells a non-negative integer as English words, up to quintillions.
+ * @param {number} input - The number to spell.
+ * @returns {string} Its word form.
+ */
 export const numberToWords = (input: number): string => {
   let num = input;
   if (num === 0) {
@@ -303,6 +366,12 @@ export const numberToWords = (input: number): string => {
   return words.trim();
 };
 
+/**
+ * Words a year count, rounding up to a decade when the wording implies an approximation.
+ * @param {number} num - The number of years.
+ * @param {string} [format] - 'decades', 'over', 'plus', or the default exact count.
+ * @returns {string} The wording to display.
+ */
 export const humanizeYears = (num: number, format = 'exact') => {
   const rounded = num < 10 ? num : Math.floor(num / 10) * 10;
   // After rounded assignment.
@@ -322,8 +391,18 @@ export const humanizeYears = (num: number, format = 'exact') => {
   }
 };
 
+/**
+ * Flattens a multi-line text block onto one line, used for metadata that forbids newlines.
+ * @param {string} text - The source text.
+ * @returns {string} The same text with every newline collapse to a space.
+ */
 export const oneLine = (text: string) => text.replace(/\n\s*/g, ' ');
 
+/**
+ * Builds the `ProfilePage` schema node describing the site’s single author.
+ * @param {NodeFacts} [facts] - Optional description, keywords, and title overrides.
+ * @returns {object} The schema node, referencing the author person node.
+ */
 export const profilePageNode = ({
   description = DEFAULT_DESCRIPTION,
   keywords = DEFAULT_KEYWORDS,
@@ -339,15 +418,32 @@ export const profilePageNode = ({
 });
 
 // After profilePageNode assignment.
+/**
+ * The author profile node re-typed as a `CollectionPage` for index pages.
+ * @param {NodeFacts} [facts] - Overrides passed through to `profilePageNode`.
+ * @returns {object} The schema node.
+ */
 export const collectionPageNode = (facts: NodeFacts = {}) => ({
   ...profilePageNode(facts),
   '@type': 'CollectionPage',
 });
 
 // After key & tail assignments.
+/**
+ * Splits a path at the last occurrence of a keyword.
+ * @param {string} path - The path to slice.
+ * @param {string} keyword - The marker to search backwards for.
+ * @returns {string} What follows the marker, or an empty string when it is absent.
+ */
 const tail = (path: string, keyword: string) =>
   path?.slice((path?.lastIndexOf(keyword) || -1) + 1) || '';
 
+/**
+ * Derives a generated media file name from its source path.
+ * @param {string} path - The source file path.
+ * @param {string} [template] - The template name, appended for the template-specific variants.
+ * @returns {string} The slugified file name, without an extension.
+ */
 const fileName = (path: string, template?: string) => {
   let response = key(tail(path, '/').replace(/_/g, '-').replace(/^-/, ''));
   if (['condensed', 'thangka', 'wheel'].includes(template || '')) {
@@ -358,6 +454,11 @@ const fileName = (path: string, template?: string) => {
 
 export { fileName, key, tail };
 
+/**
+ * Removes the trailing slash so routes from different sources compare equal.
+ * @param {unknown} path - The candidate route.
+ * @returns {string | undefined} The slash-free route, or undefined for a non-string path.
+ */
 export const normalizeRoute = (path: unknown): string | undefined => {
   if (typeof path !== 'string') {
     return undefined;
@@ -365,6 +466,11 @@ export const normalizeRoute = (path: unknown): string | undefined => {
   return path.endsWith('/') ? path.slice(0, -1) : path;
 };
 
+/**
+ * Builds the `Review` schema node: the author profile plus the site’s fixed rating.
+ * @param {NodeFacts} [facts] - Overrides passed through to `profilePageNode`.
+ * @returns {object} The schema node.
+ */
 export const reviewNode = (facts: NodeFacts = {}) => ({
   ...profilePageNode(facts),
   '@type': 'Review',
@@ -397,6 +503,11 @@ export function textContent(node: ReactNode): string {
 }
 
 // After textContent assignment.
+/**
+ * Converts one FAQ block into `Question` and `Answer` schema entries, dropping empty pairs.
+ * @param {Faq} faq - The FAQ slug and its question/answer items.
+ * @returns {object[]} The entries, each anchored to the page URL.
+ */
 export const faqEntries = (faq: Faq) => {
   const url = `https://ricky.one/${faq.slug}`;
   return faq.items
@@ -419,6 +530,11 @@ export const faqEntries = (faq: Faq) => {
     }));
 };
 
+/**
+ * Wraps `faqEntries` in the `FAQPage` schema node for one FAQ route.
+ * @param {Faq} faq - The FAQ slug and its items.
+ * @returns {object} The schema node.
+ */
 export const faqPageNode = (faq: Faq) => ({
   '@id': `https://ricky.one/${faq.slug}#faq`,
   '@type': 'FAQPage',

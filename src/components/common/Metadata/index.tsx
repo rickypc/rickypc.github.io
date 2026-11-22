@@ -34,6 +34,11 @@ const ReadingTime = memo(function ReadingTime(): ReactElement | null {
   return minutes || seconds ? <span className={styles.readingTime}>{text}</span> : null;
 });
 
+/**
+ * Docs-page meta strip: the reading-time line on an article plus that route's structured data.
+ * @param {Props} props - The flag marking a doc navigation page, which hides the reading time.
+ * @returns {ReactElement} A fragment holding the JSON-LD block and the reading-time line.
+ */
 export default memo(function Metadata({ navigation = false }: Props): ReactElement {
   const [printing] = usePrint();
   const doc = useDoc();

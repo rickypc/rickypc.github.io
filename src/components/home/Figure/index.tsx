@@ -7,10 +7,16 @@ import Image from '@site/src/components/common/Image';
 import { a11y } from '@site/src/data/common';
 import { image } from '@site/src/data/home';
 import { domAnimation, LazyMotion, motion } from 'motion/react';
-import { memo } from 'react';
+import { memo, type ReactElement } from 'react';
 import styles from './styles.module.css';
 
-export default memo(function Figure() {
+/**
+ * Portrait figure in the narrow right column of the home page, wrapping the high-priority hero
+ * image beside the role cards. A delayed motion transition fades and scales it in the first time it
+ * enters the viewport.
+ * @returns {ReactElement} The figure element holding the hero portrait.
+ */
+export default memo(function Figure(): ReactElement {
   return (
     <LazyMotion features={domAnimation}>
       <motion.figure

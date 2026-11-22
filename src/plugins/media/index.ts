@@ -91,13 +91,13 @@ const algorithm = 'sha256';
 export const MS_PER_DAY = 86400000;
 const provenance = Buffer.from(readFileSync('.provenance', 'utf8').trim(), 'base64');
 
-// ----------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // Generic supporting methods.
-// ----------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 
 /**
- * Resolve a file path relative to the site directory, applying custom import
- * mappings if the path matches a configured prefix.
+ * Resolve a file path relative to the site directory, applying custom import mappings if the path
+ * matches a configured prefix.
  * @param {string} path - The original file path to resolve.
  * @param {string} siteDir - The root directory of the site.
  * @returns {string} The resolved absolute file path.
@@ -179,7 +179,7 @@ export function generateAudioMetadata(): AudioMetadata {
  * @param {DocusaurusConfig} options.siteConfig - The site configuration.
  * @param {string} options.siteDir - Absolute path to the site directory.
  * @param {string} options.target - Path to the target file.
- * @param {object} options.tracks - Tracks map.
+ * @param {Map<string, object>} options.tracks - Track metadata keyed by source path.
  */
 export async function generateAudioTrack({
   generator,
@@ -283,9 +283,9 @@ export async function generateAudioTrack({
 /**
  * Get the last modified time of a file in milliseconds.
  * @param {string} path - The file system path to check.
- * @returns {Promise<number>} A promise that resolves to the file's last modified
- * time in milliseconds since the UNIX epoch. If the file does not exist or an
- * error occurs, the promise resolves to `0`.
+ * @returns {Promise<number>} A promise that resolves to the file's last modified time in
+ *   milliseconds since the UNIX epoch. If the file does not exist or an error occurs, the promise
+ *   resolves to `0`.
  */
 export async function lastModified(path: string): Promise<number> {
   // eslint-disable-next-line security/detect-non-literal-fs-filename
@@ -295,8 +295,8 @@ export async function lastModified(path: string): Promise<number> {
 }
 
 /**
- * Recursively collects file paths from a given output directory and filters them
- * using a glob pattern.
+ * Recursively collects file paths from a given output directory and filters them using a glob
+ * pattern.
  * @param {string} outDir - The root output directory to search within.
  * @param {string} pattern - A glob pattern used to filter files.
  * @returns {Promise<string[]>} An array of matching file paths.
@@ -355,8 +355,7 @@ export async function inlineAboveFold(outDir: string, bars: MultiBar): Promise<v
  * @param {string} siteDir - Absolute path to the site directory.
  * @param {string} model - Piper model filename (e.g. 'en_US-amy-medium').
  * @param {number} port - Port to run the server on.
- * @returns {Promise<ChildProcessWithoutNullStreams>} Resolves once the server
- *   is ready.
+ * @returns {Promise<ChildProcessWithoutNullStreams>} Resolves once the server is ready.
  */
 export async function piperServer(
   siteDir: string,
@@ -406,22 +405,14 @@ export async function piperServer(
 }
 
 /**
- * Determine whether a target file is considered stale based on the
- * modification time of its associated model file.
+ * Determine whether a target file is considered stale based on the modification time of its
+ * associated model file.
  * @param {object} options - Options for the model staleness check.
  * @param {string} options.model - Model name used to generate the target.
  * @param {string} options.siteDir - Root directory of the site.
- * @param {number} options.targetModified - Last modified timestamp of the
- *   target file.
- * @returns {Promise<boolean>} A promise that resolves to `true` if the model
- *   is newer than the target, otherwise `false`.
- * @example
- * const isModelStale = await staleModel({
- *   model: 'en_US-model_name',
- *   siteDir: '/root',
- *   targetModified: 1718049600000,
- * });
- * // -> true if the resolved model file is newer than the target timestamp.
+ * @param {number} options.targetModified - Last modified timestamp of the target file.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if the model is newer than the
+ *   target, otherwise `false`.
  */
 async function staleModel({ model, siteDir, targetModified }: StaleModel): Promise<boolean> {
   if (!model) {
@@ -436,23 +427,14 @@ async function staleModel({ model, siteDir, targetModified }: StaleModel): Promi
 }
 
 /**
- * Determine whether a target file is considered stale based on the
- * modification time of its associated template file.
+ * Determine whether a target file is considered stale based on the modification time of its
+ * associated template file.
  * @param {object} options - Options for the template staleness check.
  * @param {string} options.siteDir - Root directory of the site.
- * @param {number} options.targetModified - Last modified timestamp of the
- *   target file.
- * @param {string} options.template - Template name used to generate the
- *   target.
- * @returns {Promise<boolean>} A promise that resolves to `true` if the
- *   template is newer than the target, otherwise `false`.
- * @example
- * const isTemplateStale = await staleTemplate({
- *   siteDir: '/root',
- *   targetModified: 1718049600000,
- *   template: 'article',
- * });
- * // -> true if the resolved template file is newer than the target timestamp.
+ * @param {number} options.targetModified - Last modified timestamp of the target file.
+ * @param {string} options.template - Template name used to generate the target.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if the template is newer than the
+ *   target, otherwise `false`.
  */
 async function staleTemplate({
   siteDir,
@@ -467,29 +449,17 @@ async function staleTemplate({
 }
 
 /**
- * Determine whether a target file is considered stale based on its existence,
- * modification times of related files, and a maximum age threshold.
+ * Determine whether a target file is considered stale based on its existence, modification times of
+ * related files, and a maximum age threshold.
  * @param {object} options - Options for staleness check.
  * @param {string} options.data - Path to the data file.
- * @param {number} options.maxAgeDays - Maximum allowed age in days before the
- *   target is stale.
+ * @param {number} options.maxAgeDays - Maximum allowed age in days before the target is stale.
  * @param {string} options.model - Model name used to generate the target.
  * @param {string} options.siteDir - Root directory of the site.
- * @param {string} options.template - Template name used to generate the
- *   target.
+ * @param {string} options.template - Template name used to generate the target.
  * @param {string} options.target - Path to the target file.
- * @returns {Promise<boolean>} A promise that resolves to `true` if the target
- *   is stale, otherwise `false`.
- * @example
- * const isStale = await stale({
- *   data: 'content/articles.json',
- *   maxAgeDays: 3,
- *   model: 'en_US-model_name',
- *   siteDir: '/root',
- *   template: 'article',
- *   target: '/root/build/articles.html',
- * });
- * // -> true if target is missing, older than data/template, or past cutoff.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if the target is missing, older
+ *   than its data, model, or template, or past the age cutoff.
  */
 export async function stale({
   data,
@@ -529,15 +499,14 @@ export async function stale({
   return false;
 }
 
-// ----------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // postBuild supporting methods.
-// ----------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 
 /**
  * Generate audio files.
  * @param {object} context - The Docusaurus load context.
- * @param {string} context.outDir - The output directory where generated files
- *   are located.
+ * @param {string} context.outDir - The output directory where generated files are located.
  * @param {object} context.siteConfig - The site configuration object.
  * @param {string} context.siteDir - The root directory of the site.
  * @param {MultiBar} bars - A MultiBar instance used to render progress bars.
@@ -637,8 +606,7 @@ export async function generateAudio(
 /**
  * Generate PDF files.
  * @param {object} context - The Docusaurus load context.
- * @param {string} context.outDir - The output directory where generated files
- *   are located.
+ * @param {string} context.outDir - The output directory where generated files are located.
  * @param {object} context.siteConfig - The site configuration object.
  * @param {string} context.siteDir - The root directory of the site.
  * @param {MultiBar} bars - A MultiBar instance used to render progress bars.
@@ -716,25 +684,20 @@ export async function postBuild({ outDir, siteConfig, siteDir }: LoadContext): P
 }
 
 /**
- * Main entry for custom Docusaurus plugin.
- * The configureWebpack lifecycle rewires the stock Docusaurus JS rule to babel.config.ts before
- * returning its webpack fragment, so JSX text keeps HTML whitespace semantics.
+ * Main entry for custom Docusaurus plugin. The configureWebpack lifecycle rewires the stock
+ * Docusaurus JS rule to babel.config.ts before returning its webpack fragment, so JSX text keeps
+ * HTML whitespace semantics.
  * @param {object} context - Docusaurus build context (e.g. webpack, CLI).
- * @returns {{
- *   configureWebpack: (object, boolean) => void,
- *   extendCli: (object) => void,
- *   name: string,
- *   postBuild: (object) => void,
- * }} Plugin interface with lifecycle methods and name.
+ * @returns {Plugin} The plugin interface with its lifecycle methods and name.
  */
 export default function plugin(context: LoadContext): Plugin {
   return {
     configureWebpack(config, isServer) {
-      // Replaces the stock Docusaurus JS rule loader so JSX text in .ts/.tsx sources keeps
-      // HTML whitespace semantics through babel.config.ts, wired to babelSmartSpace from
-      // src/plugins/smart-space. Docusaurus only consumes webpack.jsLoader from siteConfig,
-      // never from plugin fragments, so the rule must be rewired in place on the base config
-      // passed to this lifecycle.
+      // Replaces the stock Docusaurus JS rule loader so JSX text in .ts/.tsx sources keeps HTML
+      // whitespace semantics through babel.config.ts, wired to babelSmartSpace from
+      // src/plugins/smart-space. Docusaurus only consumes webpack.jsLoader from siteConfig, never
+      // from plugin fragments, so the rule must be rewired in place on the base config passed to
+      // this lifecycle.
       const rules = config.module?.rules as WebpackRule[] | undefined;
       const tsRule = rules?.find((rule) => String(rule?.test) === String(/\.[jt]sx?$/i));
       if (!tsRule) {
@@ -762,10 +725,10 @@ export default function plugin(context: LoadContext): Plugin {
         module: {
           rules: [
             // Restores webpack's full CJS interop shims (require.resolveWeak in the generated
-            // .docusaurus docs content registry) that the root "type": "module" otherwise
-            // strips from these strict-ESM-marked sources; this is exactly their pre-"type"
-            // module type. MDX is intentionally excluded: its modules are javascript/auto by
-            // default and the MDX fallback plugin assumes mdx-matching rules carry "include".
+            // .docusaurus docs content registry) that the root "type": "module" otherwise strips
+            // from these strict-ESM-marked sources; this is exactly their pre-"type" module type.
+            // MDX is intentionally excluded: its modules are javascript/auto by default and the MDX
+            // fallback plugin assumes mdx-matching rules carry "include".
             { test: /\.(?:[cm]?[jt]sx?)$/i, type: 'javascript/auto' },
             {
               test: /\.(?:jpe?g|png)$/i,

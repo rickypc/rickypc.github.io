@@ -11,10 +11,15 @@ import Greeting from '@site/src/components/home/Greeting';
 import Hats from '@site/src/components/home/Hats';
 import Socials from '@site/src/components/home/Socials';
 import { intro, layout } from '@site/src/data/home';
-import { memo } from 'react';
+import { memo, type ReactElement } from 'react';
 import styles from './index.module.css';
 
-export default memo(function Home() {
+/**
+ * Home route: the greeting with its audio playback control, the role cards, the social icon links,
+ * the portrait figure, and a QR card.
+ * @returns {ReactElement} The landing page element wrapped in the shared `Layout` and `Preamble`.
+ */
+export default memo(function Home(): ReactElement {
   return (
     <Layout className={styles.home} {...layout}>
       <Preamble

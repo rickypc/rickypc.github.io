@@ -7,6 +7,11 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { memo, type ReactElement } from 'react';
 import styles from './styles.module.css';
 
+/**
+ * QR code of the site's own URL, shown at the foot of the home, about, resume, stories, timeline,
+ * and portfolio pages as one SVG path of module squares with a portrait in the middle.
+ * @returns {ReactElement} The square graphic titled with the site hostname.
+ */
 export default memo(function QRCode(): ReactElement {
   const { siteConfig } = useDocusaurusContext();
   return (

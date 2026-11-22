@@ -15,6 +15,12 @@ export type ZoomProps = {
   open: ImageProps;
 };
 
+/**
+ * Portfolio lightbox: a dimmed overlay that enlarges the project image passed in `open`. Escape
+ * closes the overlay and body scrolling is locked while it stays open.
+ * @param {ZoomProps} props - The close handler and the image payload shown when one is open.
+ * @returns {ReactElement} The overlay and its figure, empty until an image is supplied.
+ */
 export default memo(function Zoom({ onClick, open }: ZoomProps): ReactElement {
   const opened = typeof open?.picture === 'object';
   const ref = useRef<HTMLElement | null>(null);

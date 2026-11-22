@@ -8,7 +8,7 @@
  * script emitted by the injected `Metadata` component carries the BreadcrumbList node (built from
  * the same `useSidebarBreadcrumbs()` data), keeping exactly one `application/ld+json` script per
  * docs page.
- * @returns {ReturnType} Always null; the visible breadcrumb navigation itself stays untouched.
+ * @returns {null} Always null; the visible breadcrumb navigation itself stays untouched.
  */
 export default function DocBreadcrumbsStructuredDataWrapper(): null {
   return null;

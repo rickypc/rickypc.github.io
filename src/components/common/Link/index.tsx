@@ -23,6 +23,12 @@ export type LinkProps = {
   };
 };
 
+/**
+ * Site anchor used in MDX and data-driven cards, optionally scaled down while pressed.
+ * @param {PropsWithChildren<LinkProps>} props - Href and label, title, ref, target and rel
+ *   overrides, translation flag, and the flag that validates the href.
+ * @returns {ReactElement} The anchor, or a span when an href-less link is validated.
+ */
 export default memo(function Link({
   children,
   className,

@@ -764,6 +764,11 @@ export const faqItems: FaqItems[] = [
   },
 ];
 
+/**
+ * Assembles the resume page header: contact icons and links, the name heading, and the role line.
+ * @param {HeaderProps} props - The site config; its navbar items supply the social hrefs.
+ * @returns {object} The contacts, heading, and roles fragments.
+ */
 export const header = ({ siteConfig }: HeaderProps) => {
   const items = (siteConfig.themeConfig as ThemeConfig).navbar?.items || [];
   return {

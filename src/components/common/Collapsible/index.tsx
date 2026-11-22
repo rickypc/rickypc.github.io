@@ -41,6 +41,12 @@ const Item = memo(function Item({ current, item, onClick, ...rest }: ItemProps):
   );
 });
 
+/**
+ * Portfolio filter menu: the chosen label on a button above the hidden list of filter options.
+ * @param {CollapsibleProps} props - The active option, the full option list, the selection handler,
+ *   and an optional translation override.
+ * @returns {ReactElement} The toggle button plus the list of option nodes it reveals.
+ */
 export default memo(function Collapsible({
   active,
   items,

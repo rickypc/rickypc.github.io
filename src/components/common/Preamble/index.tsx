@@ -22,6 +22,12 @@ export type PreambleProps = {
   row?: string;
 };
 
+/**
+ * Page intro block: an optional lead-in node, the level-1 title, its description, and children.
+ * @param {PropsWithChildren<IntroProps>} props - Intro content, including the optional `before`
+ *   and `after` nodes and any children rendered below the description.
+ * @returns {ReactElement} The intro block.
+ */
 export const Intro = memo(function Intro({
   after,
   before,
@@ -43,6 +49,11 @@ export const Intro = memo(function Intro({
   );
 });
 
+/**
+ * Page header that centres an `Intro` inside the theme's row and column wrappers.
+ * @param {PreambleProps} props - The intro payload plus optional row and column class overrides.
+ * @returns {ReactElement} The header element.
+ */
 export default memo(function Preamble({ col, intro, row }: PreambleProps): ReactElement {
   return (
     <>

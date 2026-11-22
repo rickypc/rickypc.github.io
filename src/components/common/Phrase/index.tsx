@@ -176,6 +176,11 @@ export function GrPrint(props: IconBaseProps): ReactElement {
   })(props);
 }
 
+/**
+ * Instruction block: a collapsible picture when an image exists, otherwise the plain instruction.
+ * @param {InstructionProps} props - The optional image and text plus the phrase transliteration.
+ * @returns {ReactElement | undefined} The block, or nothing when neither image nor text is given.
+ */
 export const Instruction = memo(function Instruction({
   image,
   text,
@@ -264,6 +269,12 @@ const Support = memo(function Support({
   return children.length ? <div className={styles.support}>{children}</div> : null;
 });
 
+/**
+ * One prayer phrase: its instruction, the transliterated block, and the download/playback row.
+ * @param {PhraseProps} props - Source path, optional image/instruction/repetition, and the
+ *   transliteration record that drives the phrase.
+ * @returns {ReactElement | null} Nothing when the transliteration is missing.
+ */
 export default memo(function Phrase({
   image,
   instruction,
@@ -280,6 +291,11 @@ export default memo(function Phrase({
   ) : null;
 });
 
+/**
+ * Formats the words of a transliteration as an inline comma-separated list.
+ * @param {WordsProps} props - The transliteration record whose `children` hold the words.
+ * @returns {ReactElement[]} One node per word, with `and ` before the last one.
+ */
 export const Words = memo(function Words({ transliteration }: WordsProps) {
   return transliteration.children.split(' ').map((word: string, index: number, arr: string[]) => {
     const first = index === 0;
